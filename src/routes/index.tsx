@@ -1,26 +1,448 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { useState } from "react";
+import ArrowButton from "../components/ArrowButton";
 
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: "Fun Teknoloji – Geleceği Bugün Keşfedin" },
+      { name: "description", content: "Yapay zeka, yazılım geliştirme ve akıllı sistemler alanında öncü çözümlerle işinizi dijital dönüşümün merkezine taşıyoruz." },
+    ],
+  }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. For sites with multiple pages (About, Services, Contact, etc.),
-// create separate route files (about.tsx, services.tsx, contact.tsx) — don't put all pages in this file.
-function PlaceholderIndex() {
+function Index() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
+    <main className="space-y-0">
+      <HeroSection />
+      <LogoMarquee />
+      <WhatWeDoSection />
+      <FeaturesSection />
+      <HowItWorksSection />
+      <ServicesSection />
+      <CaseStudySection />
+      <TestimonialsSection />
+      <FAQSection />
+      <CTASection />
+    </main>
   );
 }
 
-function Index() {
-  return <PlaceholderIndex />;
+/* ============ HERO ============ */
+function HeroSection() {
+  return (
+    <section className="pt-28 px-4 lg:px-5">
+      <div className="bg-[#F3F5F8] max-w-[1880px] mx-auto relative pt-20 md:pt-32 border overflow-hidden border-[#F3F5F8] rounded-3xl xl:rounded-[32px]">
+        {/* Decorative lines */}
+        <div className="hidden md:block absolute w-full h-full top-0 left-0 z-10">
+          <div className="absolute left-[7%] 2xl:left-[16%] w-px h-full bg-[#E8EBF0] top-0" />
+          <div className="absolute right-[7%] 2xl:right-[16%] w-px h-full bg-[#E8EBF0] top-0" />
+          <div className="absolute w-full h-px bg-[#E8EBF0] top-[43%]" />
+        </div>
+
+        <div className="main-container relative z-30">
+          <div className="text-center mb-12 lg:mb-24">
+            <h1 className="text-heading-3 md:text-heading-2 lg:text-heading-1 font-medium mb-4">
+              Geleceğin Teknolojileri <br className="hidden md:block" />
+              Bugün Bizimle
+            </h1>
+            <p className="max-w-[750px] mx-auto mb-8 md:mb-14 text-tagline-1 text-[#12161F]/60">
+              Yapay zeka, yazılım geliştirme ve akıllı sistemler alanında öncü çözümlerle işinizi
+              dijital dönüşümün merkezine taşıyoruz.
+            </p>
+            <div className="flex md:flex-row flex-col gap-3 items-center justify-center">
+              <ArrowButton to="/services" variant="dark">Keşfet</ArrowButton>
+              <ArrowButton to="/contact" variant="light">Başlayın</ArrowButton>
+            </div>
+          </div>
+
+          {/* Hero image placeholder */}
+          <div className="max-w-[1016px] mx-auto -mb-1">
+            <div className="bg-gradient-to-b from-[#DDE1E8] to-[#F3F5F8] rounded-t-2xl aspect-[16/10] flex items-center justify-center">
+              <div className="text-center">
+                <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-2xl bg-white shadow-lg">
+                  <span className="text-3xl font-bold text-[#12161F]">F</span>
+                </div>
+                <p className="text-[#12161F]/40 text-sm">Fun Teknoloji Platform</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ============ LOGO MARQUEE ============ */
+function LogoMarquee() {
+  const logos = ["TechCorp", "InnovateLab", "DataFlow", "CloudNine", "SmartSys"];
+  return (
+    <section className="py-10 overflow-hidden">
+      <div className="relative">
+        <div className="absolute left-0 top-0 h-full w-[15%] bg-gradient-to-r from-white to-transparent z-10" />
+        <div className="absolute right-0 top-0 h-full w-[15%] bg-gradient-to-l from-white to-transparent z-10" />
+        <div className="flex animate-marquee items-center gap-16 py-6">
+          {[...logos, ...logos].map((logo, i) => (
+            <div key={i} className="min-w-[180px] flex items-center justify-center">
+              <div className="flex items-center gap-2 opacity-40">
+                <div className="h-8 w-8 rounded-lg bg-[#12161F]/10" />
+                <span className="text-lg font-semibold text-[#12161F]/50">{logo}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ============ WHAT WE DO ============ */
+function WhatWeDoSection() {
+  return (
+    <section className="px-4 lg:px-5">
+      <div className="bg-[#12161F] max-w-[1880px] rounded-3xl xl:rounded-[32px] px-5 mx-auto">
+        <div className="max-w-[1400px] mx-auto py-20 lg:py-32 xl:py-40">
+          <h2 className="text-center text-white font-light text-heading-4 sm:text-heading-3 md:text-heading-2 lg:text-heading-1 leading-[1.3]">
+            İşletmelerin etkileşimi artırmak, dönüşümleri yükseltmek ve büyümede yeni zirvelere ulaşmak için yapay zeka destekli pazarlama çözümlerinden yararlanmalarına yardımcı oluyoruz.
+          </h2>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ============ FEATURES ============ */
+function FeaturesSection() {
+  return (
+    <section className="px-4 lg:px-5 mt-10">
+      <div className="bg-[#F3F5F8] mx-auto max-w-[1880px] rounded-3xl py-20 lg:py-32">
+        <div className="main-container">
+          <div className="mb-12 space-y-4 text-center lg:mx-auto lg:max-w-[740px]">
+            <span className="badge-fun badge-fun-white">Özellikler</span>
+            <h2 className="text-heading-4 md:text-heading-3 font-medium">
+              Mobil deneyiminizi geliştiren güçlü özellikler.
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {/* Feature 1 - Large */}
+            <div className="relative min-h-[450px] md:min-h-[600px] overflow-hidden rounded-[20px] bg-white p-8 lg:p-10">
+              <div className="absolute bottom-0 left-0 z-10 h-[300px] w-full bg-gradient-to-t from-white to-transparent" />
+              <div className="absolute bottom-8 left-8 z-20 max-w-[450px]">
+                <h3 className="text-heading-5 font-medium mb-2">Sesi kopyalayın</h3>
+                <p className="text-tagline-1 text-[#12161F]/60">Her bileşen, bir çıktı oluşturmak için girdilerin ağırlıklı toplamına bir aktivasyon fonksiyonu uygular.</p>
+              </div>
+              <div className="absolute right-0 top-10 w-[80%] h-[60%] bg-gradient-to-br from-[#D4F5E9] to-[#F3F5F8] rounded-2xl" />
+            </div>
+
+            {/* Feature 2+3 stacked */}
+            <div className="space-y-8">
+              <div className="rounded-[20px] bg-white p-6 md:p-8">
+                <div className="bg-[#F3F5F8] rounded-2xl py-8 mb-6 flex items-center justify-center min-h-[200px]">
+                  <div className="flex -space-x-4">
+                    {[1,2,3,4].map(i => (
+                      <div key={i} className="h-14 w-32 rounded-full bg-white border border-[#E8EBF0] flex items-center gap-2 px-2 shadow-sm">
+                        <div className="h-10 w-10 rounded-full bg-gradient-to-br from-[#D4F5E9] to-[#E8EBF0]" />
+                        <div className="space-y-1">
+                          <div className="h-2 w-12 bg-[#12161F]/10 rounded" />
+                          <div className="h-1.5 w-8 bg-[#12161F]/5 rounded" />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <h3 className="text-heading-6 md:text-heading-5 font-medium mb-1">Videonuz için seslendirme oluşturun.</h3>
+                <p className="text-tagline-1 text-[#12161F]/60 max-w-[450px]">Birbirine bağlı düğümlerden oluşan ağ, katmanlar halinde organize edilir.</p>
+              </div>
+
+              <div className="rounded-[20px] bg-white p-6 md:p-8">
+                <div className="flex items-center justify-center -space-x-8 mb-6">
+                  {[12, 0, -12].map((rotate, i) => (
+                    <div key={i} className={`w-[160px] h-[200px] rounded-xl bg-gradient-to-br ${i === 1 ? 'from-[#12161F] to-[#2A2E38] z-10' : 'from-[#F3F5F8] to-white shadow-lg'}`} style={{ transform: `rotate(${rotate}deg)` }}>
+                      <div className="p-4 space-y-2">
+                        <div className={`h-3 w-20 rounded ${i === 1 ? 'bg-white/20' : 'bg-[#12161F]/10'}`} />
+                        <div className={`h-2 w-16 rounded ${i === 1 ? 'bg-white/10' : 'bg-[#12161F]/5'}`} />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <h3 className="text-heading-6 md:text-heading-5 font-medium mb-1">Tamamlanan dosyalarınızı alın.</h3>
+                <p className="text-tagline-1 text-[#12161F]/60 max-w-[450px]">Girdiler ağırlıklarıyla çarpılır, toplanır ve aktivasyon fonksiyonundan geçirilir.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ============ HOW IT WORKS ============ */
+function HowItWorksSection() {
+  const steps = [
+    { title: "Çoklu ses seçenekleri.", desc: "Markanızın tarzına uygun çok çeşitli erkek ve kadın sesleri arasından seçim yapın.", bg: "bg-[#D4F5E9]" },
+    { title: "Gerçekçi ve net ses", desc: "Hedef kitleniz için otantik ve ilgi çekici hissettiren gerçekçi konuşmalar sunun.", bg: "bg-[#F3F5F8]" },
+    { title: "Hızlı ve kolay dönüşüm.", desc: "Metninizi saniyeler içinde sese dönüştürün — teknik beceri gerekmez.", bg: "bg-[#D4F5E9]" },
+  ];
+  return (
+    <section className="py-20 md:py-32">
+      <div className="main-container">
+        <div className="mb-12 text-center lg:mx-auto lg:max-w-[730px]">
+          <span className="badge-fun badge-fun-gray mb-4 inline-block">Nasıl Çalışır</span>
+          <h2 className="text-heading-4 md:text-heading-3 font-medium mb-3">Fun Teknoloji ile Yapay Zeka Sesi Oluşturun</h2>
+          <p className="text-tagline-1 text-[#12161F]/60">Güçlü yapay zeka ses teknolojisi ile metni anında doğal, insan benzeri seslere dönüştürün.</p>
+        </div>
+
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-8 relative">
+          {steps.map((step, i) => (
+            <div key={i} className={`${step.bg} flex w-full max-w-[408px] flex-col justify-between rounded-[20px] p-10 min-h-[320px]`}>
+              <div className="text-center">
+                <div className="mx-auto h-16 w-16 rounded-2xl bg-[#12161F]/5 flex items-center justify-center mb-4">
+                  <span className="text-2xl font-bold text-[#12161F]/30">{i + 1}</span>
+                </div>
+              </div>
+              <div className="text-center space-y-2">
+                <h3 className="text-heading-6 md:text-heading-5 font-medium">{step.title}</h3>
+                <p className="text-tagline-1 text-[#12161F]/60">{step.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-14 text-center">
+          <ArrowButton to="/pricing" variant="dark">Ses Oluştur</ArrowButton>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ============ SERVICES ============ */
+function ServicesSection() {
+  const services = [
+    { title: "Kusursuz Görüntü Stili Transferi", desc: "Görüntülerinizi gündüzden geceye veya yazdan kışa, herhangi bir stile zahmetsizce dönüştürün.", full: true },
+    { title: "Otomatik Arka Plan Değiştirme", desc: "Ürün çekimleri ve portreler için mükemmel, profesyonel sonuçlar için fotoğraflardaki arka planları anında değiştirin." },
+    { title: "Yüksek Çözünürlüklü Ölçeklendirme", desc: "Daha keskin, daha net ve daha ayrıntılı sonuçlar için görüntülerinizi yapay zeka destekli ölçeklendirme ile geliştirin." },
+    { title: "Akıllı Nesne Kaldırma", desc: "İstenmeyen nesneleri, filigranları veya kusurları görüntülerden doğal bir şekilde kaldırın." },
+    { title: "Toplu Görüntü İşleme", desc: "Düzenlemeleri ve iyileştirmeleri aynı anda birden fazla görüntüye uygulayarak zaman kazanın." },
+    { title: "Yaratıcı Filtreler ve Efektler", desc: "Görüntülerinize benzersiz ve profesyonel bir dokunuş kazandırmak için yaratıcı filtreler uygulayın." },
+  ];
+
+  return (
+    <section className="py-14 md:py-24 overflow-hidden">
+      <div className="main-container">
+        <div className="mb-12 text-center lg:max-w-[730px] lg:mx-auto">
+          <span className="badge-fun badge-fun-gray mb-5 inline-block">Hizmetlerimiz</span>
+          <h2 className="text-heading-4 md:text-heading-3 font-medium mb-3">Dünya genelindeki lider şirketler Fun Teknoloji'ye güveniyor.</h2>
+          <p className="text-tagline-1 text-[#12161F]/60 lg:max-w-[530px] lg:mx-auto">İşinizi büyütmek ve dijital dünyada öne çıkmak için sunduğumuz profesyonel çözümleri keşfedin.</p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {services.map((service, i) => (
+            <div key={i} className={`${i === 0 ? 'md:col-span-2' : ''} group`}>
+              <div className={`bg-[#F3F5F8] h-full rounded-3xl border border-[#F3F5F8] p-6 md:p-8 ${i === 0 ? 'grid grid-cols-1 md:grid-cols-12 gap-6' : 'grid grid-cols-1 md:grid-cols-2 gap-6'}`}>
+                <aside className={`${i === 0 ? 'md:col-span-4' : ''} pt-8 flex flex-col justify-between space-y-5`}>
+                  <div className="space-y-2">
+                    <h3 className="text-heading-5 md:text-heading-4 font-medium">{service.title}</h3>
+                    <p className="text-tagline-1 text-[#12161F]/60">{service.desc}</p>
+                  </div>
+                  <Link to="/services" className="flex h-12 w-12 md:h-14 md:w-14 items-center justify-center rounded-full bg-[#12161F] ring-8 ring-white transition-all hover:bg-[#6C5CE7]">
+                    <svg className="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
+                    </svg>
+                  </Link>
+                </aside>
+                <div className={`${i === 0 ? 'md:col-span-8' : ''} rounded-xl overflow-hidden bg-gradient-to-br from-[#DDE1E8] to-[#F3F5F8] min-h-[240px] md:min-h-[300px] group-hover:scale-[1.02] transition-transform duration-500 flex items-center justify-center`}>
+                  <div className="text-center p-8">
+                    <div className="mx-auto h-16 w-16 rounded-2xl bg-white/60 flex items-center justify-center mb-3">
+                      <span className="text-2xl font-bold text-[#12161F]/20">{i + 1}</span>
+                    </div>
+                    <p className="text-sm text-[#12161F]/30">{service.title}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ============ CASE STUDY ============ */
+function CaseStudySection() {
+  const cases = [
+    { title: "Sağlık hizmetlerinde yapay zeka destekli hasta bakımı.", desc: "Sağlık hizmeti sağlayıcılarını akıllı, ölçeklenebilir çözümlerle güçlendiriyoruz.", full: true },
+    { title: "Daha iyi içgörüler için perakende analitiği", desc: "Alışveriş yapanların davranışlarını anlayın ve veri odaklı kararlar alın." },
+    { title: "Lojistikte akıllı rota optimizasyonu", desc: "Verimliliği artırmak için rotaları ve teslimat süreçlerini otomatikleştirin." },
+  ];
+
+  return (
+    <section className="py-16 lg:py-28">
+      <div className="main-container">
+        <div className="text-center mb-12 lg:mb-16">
+          <h2 className="text-heading-4 md:text-heading-3 font-medium mb-3">Platformumuzun gücünü deneyimleyin.</h2>
+          <p className="max-w-[680px] mx-auto text-tagline-1 text-[#12161F]/60">Platformumuz, zahmetsiz navigasyon sağlayan temiz, kullanıcı dostu bir arayüzle hazırlanmıştır.</p>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-14">
+          {cases.map((cs, i) => (
+            <div key={i} className={`${i === 0 ? 'lg:col-span-2' : ''}`}>
+              <div className="space-y-6">
+                <div className={`relative w-full ${i === 0 ? 'h-[300px] lg:h-[600px]' : 'h-[300px] lg:h-[500px]'} rounded-[20px] overflow-hidden group cursor-pointer`}>
+                  <div className="absolute inset-0 bg-gradient-to-br from-[#12161F]/5 to-[#12161F]/20 group-hover:from-[#12161F]/20 group-hover:to-[#12161F]/40 transition-all duration-500" />
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="h-24 w-24 rounded-3xl bg-white/20 backdrop-blur-sm flex items-center justify-center">
+                      <span className="text-4xl font-bold text-[#12161F]/30">{i + 1}</span>
+                    </div>
+                  </div>
+                  <div className="opacity-0 group-hover:opacity-100 transition-all duration-500 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                    <ArrowButton href="#" variant="green">Detayları görüntüle</ArrowButton>
+                  </div>
+                </div>
+                <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4 md:justify-between">
+                  <h3 className="text-heading-6 sm:text-heading-5 font-medium">{cs.title}</h3>
+                  <p className="max-w-[257px] text-tagline-1 text-[#12161F]/60 text-left md:text-right">{cs.desc}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-14 text-center">
+          <ArrowButton href="#" variant="dark">Tüm projeleri gör</ArrowButton>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ============ TESTIMONIALS ============ */
+function TestimonialsSection() {
+  const testimonials = [
+    { name: "Darrell Steward", text: "Küçük bir işletme sahibi olarak, hizmetiniz nakit akışını yönetmede ve finansal stratejileri optimize etmede hayat kurtarıcı oldu. Beklentilerimi gerçekten aştı." },
+    { name: "Sarah Johnson", text: "Ses kopyalama özelliği kesinlikle inanılmaz! İçeriğim için saatler yerine dakikalar içinde profesyonel seslendirmeler oluşturabildim." },
+    { name: "Michael Chen", text: "Yapay zeka ses teknolojisi oyun değiştirici oldu! Podcast'lerimiz için hızlı ve yüksek kaliteli sesli içerikler üretebiliyoruz." },
+    { name: "Emma Rodriguez", text: "Bir dil öğretmeni olarak bu araç, birden fazla dilde telaffuz örnekleri oluşturmak için paha biçilemez oldu." },
+    { name: "David Kim", text: "Ses üretiminin doğruluğu ve hızı akıllara durgunluk verici. Ses üretim süremizi %80 azalttık." },
+    { name: "Lisa Thompson", text: "Bu platform sesli kitap oluşturma şeklimizi dönüştürdü. Ses sentezi o kadar doğal ve etkileyici ki, dinleyicilerimiz bağlı kalıyor." },
+  ];
+
+  const colors = ["from-[#F4F8E7] to-[#D485FF]", "from-[#E8F4FD] to-[#4A90E2]", "from-[#FFE8E8] to-[#FF6B6B]", "from-[#F0E6FF] to-[#8B5CF6]", "from-[#E6F7FF] to-[#1890FF]", "from-[#FFF7E6] to-[#FF8C00]"];
+
+  return (
+    <section className="py-16 md:py-24">
+      <div className="main-container">
+        <div className="text-center mb-14">
+          <span className="badge-fun badge-fun-green mb-4 inline-block">Yorumlar</span>
+          <h2 className="text-heading-4 md:text-heading-3 font-medium xl:max-w-[906px] xl:mx-auto">
+            Kullanıcı hikayeleri: İnsanların neden Fun Teknoloji'yi sevdiğini keşfedin!
+          </h2>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {testimonials.map((t, i) => (
+            <article key={i} className="bg-white border border-[#E8EBF0] rounded-[20px] p-6 sm:p-8">
+              <div className="flex items-center justify-between pb-5">
+                <div className="flex gap-1">
+                  {[...Array(5)].map((_, j) => (
+                    <svg key={j} className="h-4 w-4" viewBox="0 0 16 16" fill="none">
+                      <path d="M7.257.486c.275-.648 1.211-.648 1.486 0l1.623 3.827a1 1 0 00.68.484l4.213.331c.714.056 1.003.93.459 1.387l-3.21 2.696a1 1 0 00-.259.783l.98 4.031c.166.683-.591 1.223-1.203.857l-3.606-2.16a1 1 0 00-1.04 0l-3.607 2.16c-.611.366-1.369-.174-1.203-.857l.981-4.031a1 1 0 00-.26-.783L.282 6.515C-.261 6.058.028 5.184.742 5.128l4.213-.331a1 1 0 00.68-.484L7.257.486z" fill="#864FFE" />
+                    </svg>
+                  ))}
+                </div>
+                <svg className="h-5 w-5" viewBox="0 0 25 24" fill="none">
+                  <path d="M17.844 4.242h2.76l-6.03 6.777 7.094 9.223h-5.554l-4.35-5.594-4.978 5.594h-2.762l6.45-7.25-6.806-8.75h5.696l3.932 5.113 4.548-5.113zm-.969 14.376h1.53L8.532 5.782H6.891l9.984 12.836z" fill="#12161F" />
+                </svg>
+              </div>
+              <p className="pb-6 text-tagline-1 text-[#12161F]/80">{t.text}</p>
+              <div className="flex items-center gap-3">
+                <div className={`h-11 w-11 rounded-full bg-gradient-to-br ${colors[i]} flex items-center justify-center`}>
+                  <span className="text-sm font-bold text-white">{t.name[0]}</span>
+                </div>
+                <h3 className="text-sm sm:text-base font-semibold">{t.name}</h3>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ============ FAQ ============ */
+function FAQSection() {
+  const [openIndex, setOpenIndex] = useState<number | null>(0);
+  const faqs = [
+    { q: "Yapay Zeka Nedir?", a: "Yapay Zeka (YZ), öğrenme, akıl yürütme, problem çözme ve karar verme gibi tipik olarak insan zekası gerektiren görevleri yerine getirebilen bilgisayar sistemlerini ifade eder. YZ teknolojileri arasında makine öğrenimi, doğal dil işleme, bilgisayarlı görü ve robotik yer alır." },
+    { q: "Makine Öğrenimi Yapay Zeka ile Nasıl Bağlantılıdır?", a: "Makine öğrenimi, yapay zekanın bir alt dalıdır ve sistemlerin deneyimlerden öğrenmesini, açıkça programlanmadan gelişmesini sağlar." },
+    { q: "Yapay Zeka işletmeler için güvenli mi?", a: "Evet, doğru güvenlik önlemleri alındığında yapay zeka işletmeler için güvenlidir. Veri şifreleme, erişim kontrolü ve düzenli güvenlik denetimleri ile güvenli bir ortam sağlanır." },
+    { q: "Fun Teknoloji'nin yapay zeka çözümleri ne kadar özelleştirilebilir?", a: "Çözümlerimiz tamamen özelleştirilebilir. İşletmenizin benzersiz ihtiyaçlarına ve iş akışlarına uygun olarak yapılandırılabilir." },
+    { q: "Entegrasyon süreci ne kadar sürer?", a: "Standart entegrasyon süreci genellikle 2-4 hafta arasında tamamlanır. Karmaşık projelerde bu süre uzayabilir ancak ekibimiz süreci hızlandırmak için sizinle yakın çalışır." },
+  ];
+
+  return (
+    <section className="px-4 lg:px-5">
+      <div className="bg-[#F3F5F8] max-w-[1880px] mx-auto py-20 md:py-28 rounded-2xl md:rounded-[32px]">
+        <div className="main-container">
+          <div className="text-center space-y-4 max-w-[720px] mx-auto mb-14">
+            <span className="badge-fun badge-fun-white uppercase">SSS</span>
+            <h2 className="text-heading-4 md:text-heading-3 font-medium">Anlamanız gereken tüm temel bilgiler.</h2>
+            <p className="text-tagline-1 text-[#12161F]/60">Kısa ve bilgilendirici yanıtlar sunarak bu bölüm, kullanıcıların çözümler bulmasına yardımcı olur.</p>
+          </div>
+
+          <div className="max-w-[770px] mx-auto space-y-4">
+            {faqs.map((faq, i) => (
+              <div key={i} className={`bg-white rounded-2xl md:rounded-[32px] px-6 md:px-8 ${openIndex === i ? 'accordion-item active' : 'accordion-item'}`}>
+                <button
+                  className="flex items-center justify-between py-6 md:py-8 w-full cursor-pointer"
+                  onClick={() => setOpenIndex(openIndex === i ? null : i)}
+                >
+                  <span className="flex-1 text-left text-tagline-1 lg:text-heading-6 font-normal text-[#12161F]">{faq.q}</span>
+                  <span className={`accordion-arrow ml-2.5 block transition-transform duration-300 ${openIndex === i ? 'rotate-180' : ''}`}>
+                    <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                    </svg>
+                  </span>
+                </button>
+                <div className={`overflow-hidden transition-all duration-400 ${openIndex === i ? 'max-h-[500px]' : 'max-h-0'}`}>
+                  <div className="border-t border-[#DDE1E8] pt-6 pb-8">
+                    <p className="text-tagline-1 text-[#12161F]/60">{faq.a}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ============ CTA ============ */
+function CTASection() {
+  return (
+    <section className="px-4 lg:px-5 py-16 md:py-24">
+      <div className="bg-[#12161F] max-w-[1880px] mx-auto rounded-3xl xl:rounded-[32px] py-20 md:py-28 px-5">
+        <div className="main-container text-center">
+          <h2 className="text-heading-4 md:text-heading-3 lg:text-heading-2 font-medium text-white mb-4">
+            Bugün kullanmaya başlayın.
+          </h2>
+          <p className="text-tagline-1 text-white/60 max-w-[600px] mx-auto mb-10">
+            Yapay zeka destekli çözümlerimizi hemen keşfedin ve dijital dönüşümünüzü başlatın.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 items-center justify-center">
+            <ArrowButton to="/contact" variant="light">App Store</ArrowButton>
+            <a href="#" className="btn-fun bg-white/10 text-white hover:bg-white/20 transition-all">
+              <span>Google Play</span>
+              <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
 }

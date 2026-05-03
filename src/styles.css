@@ -4,20 +4,6 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/*
- * Design system definition.
- *
- * The @theme inline block maps CSS custom properties to Tailwind utility
- * classes (e.g. --color-primary -> bg-primary, text-primary).
- *
- * The :root and .dark blocks define the actual color values using oklch.
- * All colors MUST use oklch format.
- *
- * To add a new semantic color:
- * 1. Add the variable to :root (light value) and .dark (dark value)
- * 2. Register it in @theme inline as --color-<name>: var(--<name>)
- */
-
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -59,6 +45,18 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Fun Teknoloji custom colors */
+  --color-fun-secondary: var(--fun-secondary);
+  --color-fun-accent: var(--fun-accent);
+  --color-fun-bg-2: var(--fun-bg-2);
+  --color-fun-bg-3: var(--fun-bg-3);
+  --color-fun-bg-12: var(--fun-bg-12);
+  --color-fun-green: var(--fun-green);
+  --color-fun-stroke-1: var(--fun-stroke-1);
+  --color-fun-stroke-2: var(--fun-stroke-2);
+  --color-fun-stroke-3: var(--fun-stroke-3);
+  --color-fun-purple: var(--fun-purple);
 }
 
 :root {
@@ -95,6 +93,18 @@
   --sidebar-accent-foreground: oklch(0.208 0.042 265.755);
   --sidebar-border: oklch(0.929 0.013 255.508);
   --sidebar-ring: oklch(0.704 0.04 256.788);
+
+  /* Fun Teknoloji palette */
+  --fun-secondary: #12161F;
+  --fun-accent: #F8F9FA;
+  --fun-bg-2: #F3F5F8;
+  --fun-bg-3: #F7F8FA;
+  --fun-bg-12: #F3F5F8;
+  --fun-green: #D4F5E9;
+  --fun-stroke-1: #E8EBF0;
+  --fun-stroke-2: #DDE1E8;
+  --fun-stroke-3: #E8EBF0;
+  --fun-purple: #864FFE;
 }
 
 .dark {
@@ -130,6 +140,17 @@
   --sidebar-accent-foreground: oklch(0.984 0.003 247.858);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.551 0.027 264.364);
+
+  --fun-secondary: #12161F;
+  --fun-accent: #F8F9FA;
+  --fun-bg-2: #1A1E28;
+  --fun-bg-3: #1E222D;
+  --fun-bg-12: #1A1E28;
+  --fun-green: #1A3D2E;
+  --fun-stroke-1: #2A2E38;
+  --fun-stroke-2: #2A2E38;
+  --fun-stroke-3: #2A2E38;
+  --fun-purple: #864FFE;
 }
 
 @layer base {
@@ -140,5 +161,132 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+    font-family: 'Inter Tight', sans-serif;
   }
+}
+
+/* ============ Fun Teknoloji Typography ============ */
+.text-heading-1 { font-size: 72px; line-height: 1.15; }
+.text-heading-2 { font-size: 56px; line-height: 1.2; }
+.text-heading-3 { font-size: 44px; line-height: 1.25; }
+.text-heading-4 { font-size: 36px; line-height: 1.3; }
+.text-heading-5 { font-size: 28px; line-height: 1.35; }
+.text-heading-6 { font-size: 22px; line-height: 1.4; }
+.text-tagline-1 { font-size: 16px; line-height: 1.6; }
+.text-tagline-2 { font-size: 14px; line-height: 1.6; }
+.text-tagline-3 { font-size: 13px; line-height: 1.6; }
+
+@media (max-width: 768px) {
+  .text-heading-1 { font-size: 36px; }
+  .text-heading-2 { font-size: 32px; }
+  .text-heading-3 { font-size: 28px; }
+  .text-heading-4 { font-size: 24px; }
+  .text-heading-5 { font-size: 22px; }
+}
+
+/* ============ Fun Teknoloji Buttons ============ */
+.btn-fun {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 28px;
+  border-radius: 9999px;
+  font-weight: 500;
+  font-size: 16px;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.5s ease;
+  text-decoration: none;
+}
+
+.btn-fun-dark {
+  background-color: #12161F;
+  color: white;
+}
+.btn-fun-dark:hover {
+  background-color: #6C5CE7;
+}
+
+.btn-fun-light {
+  background-color: #F3F5F8;
+  color: #12161F;
+}
+.btn-fun-light:hover {
+  background-color: #12161F;
+  color: white;
+}
+
+.btn-fun-green {
+  background-color: #D4F5E9;
+  color: #12161F;
+}
+.btn-fun-green:hover {
+  background-color: #6C5CE7;
+  color: white;
+}
+
+/* ============ Fun Teknoloji Badges ============ */
+.badge-fun {
+  display: inline-block;
+  padding: 6px 16px;
+  border-radius: 9999px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.badge-fun-white {
+  background-color: white;
+  color: #12161F;
+}
+
+.badge-fun-gray {
+  background-color: #F3F5F8;
+  color: #12161F;
+}
+
+.badge-fun-green {
+  background-color: #D4F5E9;
+  color: #12161F;
+}
+
+/* ============ Fun Teknoloji Container ============ */
+.main-container {
+  max-width: 1290px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* ============ Marquee Animation ============ */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+}
+
+/* ============ Accordion ============ */
+.accordion-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+}
+
+.accordion-item.active .accordion-content {
+  max-height: 500px;
+}
+
+.accordion-item.active .accordion-arrow {
+  transform: rotate(180deg);
+}
+
+.accordion-arrow {
+  transition: transform 0.3s ease;
+}
+
+/* ============ Arrow Button Animation ============ */
+.arrow-btn-icon {
+  transition: transform 0.4s ease;
 }
