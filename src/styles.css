@@ -57,6 +57,10 @@
   --color-fun-stroke-2: var(--fun-stroke-2);
   --color-fun-stroke-3: var(--fun-stroke-3);
   --color-fun-purple: var(--fun-purple);
+  --color-fun-surface: var(--fun-surface);
+  --color-fun-card: var(--fun-card);
+  --color-fun-text: var(--fun-text);
+  --color-fun-text-muted: var(--fun-text-muted);
 }
 
 :root {
@@ -105,6 +109,10 @@
   --fun-stroke-2: #DDE1E8;
   --fun-stroke-3: #E8EBF0;
   --fun-purple: #864FFE;
+  --fun-surface: #F3F5F8;
+  --fun-card: #ffffff;
+  --fun-text: #12161F;
+  --fun-text-muted: rgba(18, 22, 31, 0.6);
 }
 
 .dark {
@@ -141,8 +149,8 @@
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.551 0.027 264.364);
 
-  --fun-secondary: #12161F;
-  --fun-accent: #F8F9FA;
+  --fun-secondary: #F3F5F8;
+  --fun-accent: #1A1E28;
   --fun-bg-2: #1A1E28;
   --fun-bg-3: #1E222D;
   --fun-bg-12: #1A1E28;
@@ -151,6 +159,10 @@
   --fun-stroke-2: #2A2E38;
   --fun-stroke-3: #2A2E38;
   --fun-purple: #864FFE;
+  --fun-surface: #1A1E28;
+  --fun-card: #1E222D;
+  --fun-text: #F3F5F8;
+  --fun-text-muted: rgba(243, 245, 248, 0.6);
 }
 
 @layer base {
@@ -162,6 +174,7 @@
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: 'Inter Tight', sans-serif;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 }
 
@@ -201,25 +214,26 @@
 }
 
 .btn-fun-dark {
-  background-color: #12161F;
-  color: white;
+  background-color: var(--fun-text);
+  color: var(--color-background);
 }
 .btn-fun-dark:hover {
   background-color: #6C5CE7;
-}
-
-.btn-fun-light {
-  background-color: #F3F5F8;
-  color: #12161F;
-}
-.btn-fun-light:hover {
-  background-color: #12161F;
   color: white;
 }
 
+.btn-fun-light {
+  background-color: var(--fun-surface);
+  color: var(--fun-text);
+}
+.btn-fun-light:hover {
+  background-color: var(--fun-text);
+  color: var(--color-background);
+}
+
 .btn-fun-green {
-  background-color: #D4F5E9;
-  color: #12161F;
+  background-color: var(--fun-green);
+  color: var(--fun-text);
 }
 .btn-fun-green:hover {
   background-color: #6C5CE7;
@@ -236,18 +250,18 @@
 }
 
 .badge-fun-white {
-  background-color: white;
-  color: #12161F;
+  background-color: var(--fun-card);
+  color: var(--fun-text);
 }
 
 .badge-fun-gray {
-  background-color: #F3F5F8;
-  color: #12161F;
+  background-color: var(--fun-surface);
+  color: var(--fun-text);
 }
 
 .badge-fun-green {
-  background-color: #D4F5E9;
-  color: #12161F;
+  background-color: var(--fun-green);
+  color: var(--fun-text);
 }
 
 /* ============ Fun Teknoloji Container ============ */
@@ -290,3 +304,11 @@
 .arrow-btn-icon {
   transition: transform 0.4s ease;
 }
+
+/* ============ Semantic Color Helpers ============ */
+.fun-bg { background-color: var(--color-background); }
+.fun-surface { background-color: var(--fun-surface); }
+.fun-card-bg { background-color: var(--fun-card); }
+.fun-text { color: var(--fun-text); }
+.fun-text-muted { color: var(--fun-text-muted); }
+.fun-border { border-color: var(--fun-stroke-1); }
