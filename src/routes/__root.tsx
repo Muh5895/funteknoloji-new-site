@@ -36,6 +36,10 @@ export const Route = createRootRoute({
       { property: "og:locale", content: "tr_TR" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@funteknoloji_" },
+      { name: "twitter:title", content: "Fun Teknoloji – Geleceği Bugün Keşfedin" },
+      { name: "twitter:description", content: "Yenilikçi çözümlerimiz ve gelişmiş altyapımız ile iş süreçlerinizi hızlandırın, ekiplerinizi güçlendirin ve teknolojiyle fark yaratın." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/3c678074-4945-45b7-8aa6-419bb0cfeb3b/id-preview-c8c5d5e6--ee5ded8d-c91d-4dc8-b2aa-d038f66c0d63.lovable.app-1777809266254.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/3c678074-4945-45b7-8aa6-419bb0cfeb3b/id-preview-c8c5d5e6--ee5ded8d-c91d-4dc8-b2aa-d038f66c0d63.lovable.app-1777809266254.png" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
