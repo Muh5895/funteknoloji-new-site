@@ -247,7 +247,7 @@ function ServicesSection() {
                     <h3 className="text-heading-5 md:text-heading-4 font-medium fun-text">{service.title}</h3>
                     <p className="text-tagline-1 fun-text-muted">{service.desc}</p>
                   </div>
-                  <Link to="/services" className="flex h-12 w-12 md:h-14 md:w-14 items-center justify-center rounded-full ring-8 transition-all hover:bg-[#6C5CE7]" style={{ backgroundColor: 'var(--fun-text)', ringColor: 'var(--fun-card)' }}>
+                  <Link to="/services" className="flex h-12 w-12 md:h-14 md:w-14 items-center justify-center rounded-full ring-8 ring-[var(--fun-card)] transition-all hover:bg-[#6C5CE7]" style={{ backgroundColor: 'var(--fun-text)' }}>
                     <svg className="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
                     </svg>
