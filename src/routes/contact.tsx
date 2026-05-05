@@ -6,8 +6,6 @@ export const Route = createFileRoute("/contact")({
     meta: [
       { title: "İletişim – Fun Teknoloji" },
       { name: "description", content: "Fun Teknoloji ile iletişime geçin. Projeleriniz için bize ulaşın." },
-      { property: "og:title", content: "İletişim – Fun Teknoloji" },
-      { property: "og:description", content: "Fun Teknoloji ile iletişime geçin." },
     ],
   }),
   component: ContactPage,
@@ -24,75 +22,40 @@ function ContactPage() {
 
   return (
     <main>
-      {/* Hero */}
       <section className="pt-32 pb-16 px-4 lg:px-5">
-        <div className="bg-[#F3F5F8] max-w-[1880px] mx-auto rounded-3xl xl:rounded-[32px] py-20 md:py-28 px-5">
+        <div className="max-w-[1880px] mx-auto rounded-3xl xl:rounded-[32px] py-20 md:py-28 px-5" style={{ backgroundColor: 'var(--fun-surface)' }}>
           <div className="main-container text-center">
             <span className="badge-fun badge-fun-white mb-4 inline-block">İletişim</span>
-            <h1 className="text-heading-3 md:text-heading-2 lg:text-heading-1 font-medium mb-4">
-              Bizimle iletişime geçin
-            </h1>
-            <p className="max-w-[600px] mx-auto text-tagline-1 text-[#12161F]/60">
-              Projeleriniz, sorularınız veya iş birliği teklifleriniz için bize ulaşın. En kısa sürede size dönüş yapacağız.
-            </p>
+            <h1 className="text-heading-3 md:text-heading-2 lg:text-heading-1 font-medium mb-4 fun-text">Bizimle iletişime geçin</h1>
+            <p className="max-w-[600px] mx-auto text-tagline-1 fun-text-muted">Projeleriniz, sorularınız veya iş birliği teklifleriniz için bize ulaşın.</p>
           </div>
         </div>
       </section>
 
-      {/* Contact Content */}
       <section className="py-16 md:py-24">
         <div className="main-container">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
-            {/* Form */}
             <div className="lg:col-span-7">
-              <div className="bg-white border border-[#E8EBF0] rounded-3xl p-8 md:p-10">
-                <h2 className="text-heading-5 font-medium mb-8">Mesaj Gönderin</h2>
+              <div className="rounded-3xl p-8 md:p-10 border" style={{ backgroundColor: 'var(--fun-card)', borderColor: 'var(--fun-stroke-1)' }}>
+                <h2 className="text-heading-5 font-medium mb-8 fun-text">Mesaj Gönderin</h2>
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <div>
-                      <label className="block text-sm font-medium text-[#12161F] mb-2">Ad Soyad</label>
-                      <input
-                        type="text"
-                        value={formData.name}
-                        onChange={e => setFormData(p => ({ ...p, name: e.target.value }))}
-                        className="w-full rounded-xl border border-[#E8EBF0] px-4 py-3 text-sm outline-none focus:border-[#12161F] transition-colors"
-                        placeholder="Adınız Soyadınız"
-                        required
-                      />
+                      <label className="block text-sm font-medium fun-text mb-2">Ad Soyad</label>
+                      <input type="text" value={formData.name} onChange={e => setFormData(p => ({ ...p, name: e.target.value }))} className="w-full rounded-xl px-4 py-3 text-sm outline-none transition-colors" style={{ backgroundColor: 'var(--fun-surface)', borderColor: 'var(--fun-stroke-1)', borderWidth: 1, color: 'var(--fun-text)' }} placeholder="Adınız Soyadınız" required />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-[#12161F] mb-2">E-posta</label>
-                      <input
-                        type="email"
-                        value={formData.email}
-                        onChange={e => setFormData(p => ({ ...p, email: e.target.value }))}
-                        className="w-full rounded-xl border border-[#E8EBF0] px-4 py-3 text-sm outline-none focus:border-[#12161F] transition-colors"
-                        placeholder="ornek@mail.com"
-                        required
-                      />
+                      <label className="block text-sm font-medium fun-text mb-2">E-posta</label>
+                      <input type="email" value={formData.email} onChange={e => setFormData(p => ({ ...p, email: e.target.value }))} className="w-full rounded-xl px-4 py-3 text-sm outline-none transition-colors" style={{ backgroundColor: 'var(--fun-surface)', borderColor: 'var(--fun-stroke-1)', borderWidth: 1, color: 'var(--fun-text)' }} placeholder="ornek@mail.com" required />
                     </div>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-[#12161F] mb-2">Konu</label>
-                    <input
-                      type="text"
-                      value={formData.subject}
-                      onChange={e => setFormData(p => ({ ...p, subject: e.target.value }))}
-                      className="w-full rounded-xl border border-[#E8EBF0] px-4 py-3 text-sm outline-none focus:border-[#12161F] transition-colors"
-                      placeholder="Konu başlığı"
-                      required
-                    />
+                    <label className="block text-sm font-medium fun-text mb-2">Konu</label>
+                    <input type="text" value={formData.subject} onChange={e => setFormData(p => ({ ...p, subject: e.target.value }))} className="w-full rounded-xl px-4 py-3 text-sm outline-none transition-colors" style={{ backgroundColor: 'var(--fun-surface)', borderColor: 'var(--fun-stroke-1)', borderWidth: 1, color: 'var(--fun-text)' }} placeholder="Konu başlığı" required />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-[#12161F] mb-2">Mesaj</label>
-                    <textarea
-                      value={formData.message}
-                      onChange={e => setFormData(p => ({ ...p, message: e.target.value }))}
-                      rows={6}
-                      className="w-full rounded-xl border border-[#E8EBF0] px-4 py-3 text-sm outline-none focus:border-[#12161F] transition-colors resize-none"
-                      placeholder="Mesajınızı yazın..."
-                      required
-                    />
+                    <label className="block text-sm font-medium fun-text mb-2">Mesaj</label>
+                    <textarea value={formData.message} onChange={e => setFormData(p => ({ ...p, message: e.target.value }))} rows={6} className="w-full rounded-xl px-4 py-3 text-sm outline-none resize-none transition-colors" style={{ backgroundColor: 'var(--fun-surface)', borderColor: 'var(--fun-stroke-1)', borderWidth: 1, color: 'var(--fun-text)' }} placeholder="Mesajınızı yazın..." required />
                   </div>
                   <button type="submit" className="btn-fun btn-fun-dark w-full sm:w-auto">
                     Gönder
@@ -103,8 +66,6 @@ function ContactPage() {
                 </form>
               </div>
             </div>
-
-            {/* Contact Info */}
             <div className="lg:col-span-5 space-y-6">
               <div className="bg-[#12161F] rounded-3xl p-8 md:p-10 text-white">
                 <h3 className="text-heading-6 font-medium mb-6">İletişim Bilgileri</h3>
@@ -115,34 +76,16 @@ function ContactPage() {
                   <ContactInfoItem icon="🕐" title="Çalışma Saatleri" value="Pazartesi - Cuma: 09:00 - 18:00" />
                 </div>
               </div>
-
-              <div className="bg-[#D4F5E9] rounded-3xl p-8 md:p-10">
-                <h3 className="text-heading-6 font-medium mb-4">Sosyal Medya</h3>
-                <p className="text-tagline-1 text-[#12161F]/60 mb-6">Bizi sosyal medyada takip edin ve en güncel gelişmelerden haberdar olun.</p>
+              <div className="rounded-3xl p-8 md:p-10" style={{ backgroundColor: 'var(--fun-green)' }}>
+                <h3 className="text-heading-6 font-medium mb-4 fun-text">Sosyal Medya</h3>
+                <p className="text-tagline-1 fun-text-muted mb-6">Bizi sosyal medyada takip edin.</p>
                 <div className="flex flex-wrap gap-3">
-                  {[
-                    { name: "Instagram", url: "https://www.instagram.com/funteknoloji/" },
-                    { name: "YouTube", url: "https://www.youtube.com/@FunTeknoloji" },
-                    { name: "LinkedIn", url: "https://www.linkedin.com/company/funteknoloji" },
-                    { name: "X", url: "https://x.com/funteknoloji_" },
-                  ].map(s => (
-                    <a key={s.name} href={s.url} target="_blank" rel="noopener noreferrer" className="rounded-full bg-white px-5 py-2.5 text-sm font-medium text-[#12161F] hover:bg-[#12161F] hover:text-white transition-all">
-                      {s.name}
-                    </a>
+                  {[{ name: "Instagram", url: "https://www.instagram.com/funteknoloji/" }, { name: "YouTube", url: "https://www.youtube.com/@FunTeknoloji" }, { name: "LinkedIn", url: "https://www.linkedin.com/company/funteknoloji" }, { name: "X", url: "https://x.com/funteknoloji_" }].map(s => (
+                    <a key={s.name} href={s.url} target="_blank" rel="noopener noreferrer" className="rounded-full px-5 py-2.5 text-sm font-medium transition-all hover:bg-[#12161F] hover:text-white" style={{ backgroundColor: 'var(--fun-card)', color: 'var(--fun-text)' }}>{s.name}</a>
                   ))}
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Map placeholder */}
-      <section className="px-4 lg:px-5 pb-16 md:pb-24">
-        <div className="max-w-[1880px] mx-auto rounded-3xl overflow-hidden bg-[#F3F5F8] h-[300px] md:h-[400px] flex items-center justify-center">
-          <div className="text-center">
-            <p className="text-[#12161F]/30 text-lg">🗺️</p>
-            <p className="text-[#12161F]/30 text-sm mt-2">İstanbul, Türkiye</p>
           </div>
         </div>
       </section>
