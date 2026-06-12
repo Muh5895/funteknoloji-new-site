@@ -48,21 +48,21 @@ function ContactPage() {
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <div>
-                      <label className="block text-sm font-medium fun-text mb-2">Ad Soyad</label>
-                      <input type="text" value={formData.name} onChange={e => setFormData(p => ({ ...p, name: e.target.value }))} className="w-full rounded-xl px-4 py-3 text-sm outline-none transition-colors" style={{ backgroundColor: 'var(--fun-surface)', borderColor: 'var(--fun-stroke-1)', borderWidth: 1, color: 'var(--fun-text)' }} placeholder="Adınız Soyadınız" required />
+                      <label htmlFor="contact-name" className="block text-sm font-medium fun-text mb-2">Ad Soyad</label>
+                      <input id="contact-name" name="name" type="text" autoComplete="name" value={formData.name} onChange={e => setFormData(p => ({ ...p, name: e.target.value }))} className="w-full rounded-xl px-4 py-3 text-sm outline-none transition-colors" style={{ backgroundColor: 'var(--fun-surface)', borderColor: 'var(--fun-stroke-1)', borderWidth: 1, color: 'var(--fun-text)' }} placeholder="Adınız Soyadınız" required />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium fun-text mb-2">E-posta</label>
-                      <input type="email" value={formData.email} onChange={e => setFormData(p => ({ ...p, email: e.target.value }))} className="w-full rounded-xl px-4 py-3 text-sm outline-none transition-colors" style={{ backgroundColor: 'var(--fun-surface)', borderColor: 'var(--fun-stroke-1)', borderWidth: 1, color: 'var(--fun-text)' }} placeholder="ornek@mail.com" required />
+                      <label htmlFor="contact-email" className="block text-sm font-medium fun-text mb-2">E-posta</label>
+                      <input id="contact-email" name="email" type="email" autoComplete="email" value={formData.email} onChange={e => setFormData(p => ({ ...p, email: e.target.value }))} className="w-full rounded-xl px-4 py-3 text-sm outline-none transition-colors" style={{ backgroundColor: 'var(--fun-surface)', borderColor: 'var(--fun-stroke-1)', borderWidth: 1, color: 'var(--fun-text)' }} placeholder="ornek@mail.com" required />
                     </div>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium fun-text mb-2">Konu</label>
-                    <input type="text" value={formData.subject} onChange={e => setFormData(p => ({ ...p, subject: e.target.value }))} className="w-full rounded-xl px-4 py-3 text-sm outline-none transition-colors" style={{ backgroundColor: 'var(--fun-surface)', borderColor: 'var(--fun-stroke-1)', borderWidth: 1, color: 'var(--fun-text)' }} placeholder="Konu başlığı" required />
+                    <label htmlFor="contact-subject" className="block text-sm font-medium fun-text mb-2">Konu</label>
+                    <input id="contact-subject" name="subject" type="text" value={formData.subject} onChange={e => setFormData(p => ({ ...p, subject: e.target.value }))} className="w-full rounded-xl px-4 py-3 text-sm outline-none transition-colors" style={{ backgroundColor: 'var(--fun-surface)', borderColor: 'var(--fun-stroke-1)', borderWidth: 1, color: 'var(--fun-text)' }} placeholder="Konu başlığı" required />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium fun-text mb-2">Mesaj</label>
-                    <textarea value={formData.message} onChange={e => setFormData(p => ({ ...p, message: e.target.value }))} rows={6} className="w-full rounded-xl px-4 py-3 text-sm outline-none resize-none transition-colors" style={{ backgroundColor: 'var(--fun-surface)', borderColor: 'var(--fun-stroke-1)', borderWidth: 1, color: 'var(--fun-text)' }} placeholder="Mesajınızı yazın..." required />
+                    <label htmlFor="contact-message" className="block text-sm font-medium fun-text mb-2">Mesaj</label>
+                    <textarea id="contact-message" name="message" value={formData.message} onChange={e => setFormData(p => ({ ...p, message: e.target.value }))} rows={6} className="w-full rounded-xl px-4 py-3 text-sm outline-none resize-none transition-colors" style={{ backgroundColor: 'var(--fun-surface)', borderColor: 'var(--fun-stroke-1)', borderWidth: 1, color: 'var(--fun-text)' }} placeholder="Mesajınızı yazın..." required />
                   </div>
                   <button type="submit" className="btn-fun btn-fun-dark w-full sm:w-auto">
                     Gönder
