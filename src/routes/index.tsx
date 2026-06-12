@@ -28,7 +28,6 @@ function Index() {
       <FeaturesSection />
       <HowItWorksSection />
       <ServicesSection />
-      <CaseStudySection />
       <TestimonialsSection />
       <FAQSection />
       <CTASection />
@@ -146,11 +145,11 @@ function FeaturesSection() {
 
             <div className="space-y-8">
               <div className="rounded-[20px] p-6 md:p-8" style={{ backgroundColor: 'var(--fun-card)' }}>
-                <div className="rounded-2xl py-8 mb-6 flex items-center justify-center min-h-[200px]" style={{ backgroundColor: 'var(--fun-surface)' }}>
-                  <div className="flex -space-x-4">
+                <div className="rounded-2xl py-8 mb-6 flex items-center justify-center min-h-[200px] overflow-hidden px-4" style={{ backgroundColor: 'var(--fun-surface)' }}>
+                  <div className="flex -space-x-4 md:-space-x-4 scale-[0.8] sm:scale-100 transition-transform">
                     {[1,2,3,4].map(i => (
-                      <div key={i} className="h-14 w-32 rounded-full flex items-center gap-2 px-2 shadow-sm" style={{ backgroundColor: 'var(--fun-card)', borderColor: 'var(--fun-stroke-1)', borderWidth: 1 }}>
-                        <div className="h-10 w-10 rounded-full" style={{ background: 'linear-gradient(135deg, var(--fun-green), var(--fun-stroke-1))' }} />
+                      <div key={i} className="h-14 w-32 shrink-0 rounded-full flex items-center gap-2 px-2 shadow-sm" style={{ backgroundColor: 'var(--fun-card)', borderColor: 'var(--fun-stroke-1)', borderWidth: 1 }}>
+                        <div className="h-10 w-10 rounded-full shrink-0" style={{ background: 'linear-gradient(135deg, var(--fun-green), var(--fun-stroke-1))' }} />
                         <div className="space-y-1">
                           <div className="h-2 w-12 rounded" style={{ backgroundColor: 'var(--fun-stroke-1)' }} />
                           <div className="h-1.5 w-8 rounded" style={{ backgroundColor: 'var(--fun-stroke-2)' }} />
@@ -271,54 +270,6 @@ function ServicesSection() {
               </div>
             </div>
           ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ============ CASE STUDY ============ */
-function CaseStudySection() {
-  const cases = [
-    { title: "Sağlık hizmetlerinde yapay zeka destekli hasta bakımı.", desc: "Sağlık hizmeti sağlayıcılarını akıllı, ölçeklenebilir çözümlerle güçlendiriyoruz." },
-    { title: "Daha iyi içgörüler için perakende analitiği", desc: "Alışveriş yapanların davranışlarını anlayın ve veri odaklı kararlar alın." },
-    { title: "Lojistikte akıllı rota optimizasyonu", desc: "Verimliliği artırmak için rotaları ve teslimat süreçlerini otomatikleştirin." },
-  ];
-
-  return (
-    <section className="py-16 lg:py-28">
-      <div className="main-container">
-        <div className="text-center mb-12 lg:mb-16">
-          <h2 className="text-heading-4 md:text-heading-3 font-medium mb-3 fun-text">Platformumuzun gücünü deneyimleyin.</h2>
-          <p className="max-w-[680px] mx-auto text-tagline-1 fun-text-muted">Platformumuz, zahmetsiz navigasyon sağlayan temiz, kullanıcı dostu bir arayüzle hazırlanmıştır.</p>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-14">
-          {cases.map((cs, i) => (
-            <div key={i} className={`${i === 0 ? 'lg:col-span-2' : ''}`}>
-              <div className="space-y-6">
-                <div className={`relative w-full ${i === 0 ? 'h-[300px] lg:h-[600px]' : 'h-[300px] lg:h-[500px]'} rounded-[20px] overflow-hidden group cursor-pointer`} style={{ backgroundColor: 'var(--fun-surface)' }}>
-                  <div className="absolute inset-0 bg-gradient-to-br from-transparent to-black/20 group-hover:to-black/40 transition-all duration-500" />
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="h-24 w-24 rounded-3xl backdrop-blur-sm flex items-center justify-center" style={{ backgroundColor: 'var(--fun-card)', opacity: 0.8 }}>
-                      <span className="text-4xl font-bold fun-text-muted">{i + 1}</span>
-                    </div>
-                  </div>
-                  <div className="opacity-0 group-hover:opacity-100 transition-all duration-500 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                    <ArrowButton href="#" variant="green">Detayları görüntüle</ArrowButton>
-                  </div>
-                </div>
-                <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4 md:justify-between">
-                  <h3 className="text-heading-6 sm:text-heading-5 font-medium fun-text">{cs.title}</h3>
-                  <p className="max-w-[257px] text-tagline-1 fun-text-muted text-left md:text-right">{cs.desc}</p>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <div className="mt-14 text-center">
-          <ArrowButton href="#" variant="dark">Tüm projeleri gör</ArrowButton>
         </div>
       </div>
     </section>

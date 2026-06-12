@@ -3,6 +3,7 @@ import appCss from "../styles.css?url";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import IntroSplash from "../components/IntroSplash";
+import NexyAssistant from "../components/NexyAssistant";
 import { LanguageProvider } from "../lib/i18n";
 
 const THEME_INIT = `
@@ -44,6 +45,9 @@ export const Route = createRootRoute({
       { name: "twitter:description", content: "Yenilikçi teknoloji çözümleri." },
     ],
     links: [
+      { rel: "icon", type: "image/png", href: logoDark.url, media: "(prefers-color-scheme: light)" },
+      { rel: "icon", type: "image/png", href: logoLight.url, media: "(prefers-color-scheme: dark)" },
+      { rel: "apple-touch-icon", href: logoDark.url },
       { rel: "stylesheet", href: appCss },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
@@ -94,6 +98,7 @@ function RootComponent() {
       <Header />
       <Outlet />
       <Footer />
+      <NexyAssistant />
     </LanguageProvider>
   );
 }

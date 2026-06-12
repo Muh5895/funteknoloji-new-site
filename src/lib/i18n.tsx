@@ -24,6 +24,8 @@ const tr: Dict = {
   "theme.dark": "Koyu temaya geç",
   "lang.label": "Dil seç",
   "intro.skip": "Atla",
+  "asistan.merhaba": "Merhaba! Ben Nexy, size nasıl yardımcı olabilirim?",
+  "asistan.chat.placeholder": "Mesajınızı buraya yazın...",
 };
 
 const en: Dict = {
@@ -46,6 +48,8 @@ const en: Dict = {
   "theme.dark": "Switch to dark",
   "lang.label": "Choose language",
   "intro.skip": "Skip",
+  "asistan.merhaba": "Hello! I'm Nexy, how can I help you?",
+  "asistan.chat.placeholder": "Type your message here...",
 };
 
 const dicts: Record<Lang, Dict> = { tr, en };

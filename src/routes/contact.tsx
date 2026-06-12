@@ -78,8 +78,8 @@ function ContactPage() {
                 <h3 className="text-heading-6 font-medium mb-6">İletişim Bilgileri</h3>
                 <div className="space-y-6">
                   <ContactInfoItem icon="📍" title="Adres" value="İstanbul, Türkiye" />
-                  <ContactInfoItem icon="📧" title="E-posta" value="info@funteknoloji.com" />
-                  <ContactInfoItem icon="📞" title="Telefon" value="+90 (212) 000 00 00" />
+                  <ContactInfoItem icon="📧" title="E-posta" value="info@funteknoloji.com" href="mailto:info@funteknoloji.com" />
+                  <ContactInfoItem icon="📞" title="Telefon" value="+90 (212) 000 00 00" href="tel:+902120000000" />
                   <ContactInfoItem icon="🕐" title="Çalışma Saatleri" value="Pazartesi - Cuma: 09:00 - 18:00" />
                 </div>
               </div>
@@ -100,13 +100,17 @@ function ContactPage() {
   );
 }
 
-function ContactInfoItem({ icon, title, value }: { icon: string; title: string; value: string }) {
+function ContactInfoItem({ icon, title, value, href }: { icon: string; title: string; value: string; href?: string }) {
   return (
     <div className="flex items-start gap-4">
       <span className="text-xl">{icon}</span>
       <div>
         <p className="text-sm text-white/40 mb-1">{title}</p>
-        <p className="text-tagline-1 text-white">{value}</p>
+        {href ? (
+          <a href={href} className="text-tagline-1 text-white hover:text-[#D4F5E9] transition-colors">{value}</a>
+        ) : (
+          <p className="text-tagline-1 text-white">{value}</p>
+        )}
       </div>
     </div>
   );

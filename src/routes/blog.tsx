@@ -19,10 +19,9 @@ export const Route = createFileRoute("/blog")({
 
 function BlogPage() {
   const posts = [
-    { title: "Yapay Zeka 2025'te İş Dünyasını Nasıl Dönüştürüyor?", desc: "Yapay zekanın iş süreçlerindeki etkisi ve gelecek trendleri hakkında kapsamlı bir analiz.", date: "15 Nisan 2025", tag: "Yapay Zeka" },
+    { title: "Yakında Sizlerle", desc: "Yeni projelerimiz ve teknolojik çözümlerimiz üzerinde çalışıyoruz. Çok yakında burada olacağız.", date: "2025", tag: "Gelecek" },
     { title: "Modern Web Geliştirme Trendleri", desc: "React, Next.js ve modern frontend teknolojileriyle hızlı ve ölçeklenebilir web uygulamaları.", date: "10 Nisan 2025", tag: "Web Geliştirme" },
     { title: "Siber Güvenlikte Yapay Zeka Kullanımı", desc: "Yapay zeka destekli güvenlik çözümleri ile tehditleri proaktif olarak tespit edin.", date: "5 Nisan 2025", tag: "Güvenlik" },
-    { title: "QuakeSafe: Afet Anında Bilgiye Hızlı Erişim", desc: "QuakeSafe uygulaması, deprem ve acil durumlarda kritik bilgilere internet olmasa bile ulaşmanızı sağlar.", date: "1 Nisan 2025", tag: "Ürünler" },
     { title: "Bulut Bilişimde Maliyet Optimizasyonu", desc: "Bulut altyapı maliyetlerinizi optimize etmek için pratik stratejiler ve en iyi uygulamalar.", date: "25 Mart 2025", tag: "Bulut" },
     { title: "Mobil Uygulama Geliştirmede En İyi Pratikler", desc: "Cross-platform geliştirme, performans optimizasyonu ve kullanıcı deneyimi ipuçları.", date: "20 Mart 2025", tag: "Mobil" },
   ];

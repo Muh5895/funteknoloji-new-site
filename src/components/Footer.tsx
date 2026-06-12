@@ -1,6 +1,8 @@
 import { Link } from "@tanstack/react-router";
+import { useLang } from "../lib/i18n";
 
 export default function Footer() {
+  const { t } = useLang();
   return (
     <footer className="fun-surface relative overflow-hidden" style={{ backgroundColor: 'var(--fun-surface)' }}>
       <div className="main-container">
@@ -18,7 +20,7 @@ export default function Footer() {
                 Yenilikçi çözümlerimizle geleceği bugünden inşa ediyoruz.
               </p>
               <div className="flex items-center gap-3">
-                <SocialLink href="https://www.instagram.com/funteknoloji/" label="Instagram">
+                <SocialLink href="https://www.instagram.com/funteknoloji" label="Instagram">
                   <svg className="h-4 w-4" viewBox="0 0 16 16" fill="none">
                     <rect x="1" y="1" width="14" height="14" rx="4" stroke="currentColor" strokeWidth="1.5" />
                     <circle cx="8" cy="8" r="3" stroke="currentColor" strokeWidth="1.5" />
@@ -33,7 +35,7 @@ export default function Footer() {
                   </svg>
                 </SocialLink>
                 <div className="h-5 w-px" style={{ backgroundColor: 'var(--fun-stroke-1)' }} />
-                <SocialLink href="https://www.linkedin.com/company/funteknoloji" label="LinkedIn">
+                <SocialLink href="https://www.linkedin.com/company/funteknoloji/" label="LinkedIn">
                   <svg className="h-3.5 w-3.5" viewBox="0 0 13 11" fill="none">
                     <path d="M1.5 4V10M11.5 10V7C11.5 5.067 9.933 3.5 8 3.5C6.067 3.5 4.5 5.067 4.5 7V10M4.5 7V10M1.5 1V2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
                   </svg>
@@ -44,6 +46,12 @@ export default function Footer() {
                     <path d="M17.844 4.242h2.76l-6.03 6.777 7.094 9.223h-5.554l-4.35-5.594-4.978 5.594h-2.762l6.45-7.25-6.806-8.75h5.696l3.932 5.113 4.548-5.113zm-.969 14.376h1.53L8.532 5.782H6.891l9.984 12.836z" fill="currentColor" />
                   </svg>
                 </SocialLink>
+                <div className="h-5 w-px" style={{ backgroundColor: 'var(--fun-stroke-1)' }} />
+                <SocialLink href="https://discord.gg/funteknoloji" label="Discord">
+                  <svg className="h-4 w-4" viewBox="0 0 16 16" fill="currentColor">
+                    <path d="M13.545 2.907a13.227 13.227 0 0 0-3.257-1.011.05.05 0 0 0-.052.025c-.141.25-.297.577-.406.833a12.19 12.19 0 0 0-3.658 0 8.258 8.258 0 0 0-.412-.833.051.051 0 0 0-.052-.025 13.259 13.259 0 0 0-3.257 1.011.041.041 0 0 0-.021.018C.356 6.024-.213 9.047.066 12.032c.001.014.01.028.021.037a13.276 13.276 0 0 0 3.995 2.02.05.05 0 0 0 .056-.019c.308-.42.582-.863.818-1.329a.05.05 0 0 0-.027-.07 8.736 8.736 0 0 1-1.248-.595.05.05 0 0 1-.005-.085c.103-.077.206-.159.303-.242a.05.05 0 0 1 .051-.007c2.619 1.196 5.454 1.196 8.041 0a.052.052 0 0 1 .053.007c.097.083.2.165.303.242a.05.05 0 0 1-.006.085 8.254 8.254 0 0 1-1.248.595.05.05 0 0 0-.027.07c.236.466.51.909.817 1.329a.05.05 0 0 0 .056.019 13.235 13.235 0 0 0 4.001-2.02.049.049 0 0 0 .021-.037c.334-3.451-.559-6.449-2.366-9.106a.034.034 0 0 0-.02-.019Zm-8.198 7.307c-.789 0-1.438-.724-1.438-1.612 0-.889.637-1.613 1.438-1.613.807 0 1.45.73 1.438 1.613 0 .888-.631 1.612-1.438 1.612Zm5.316 0c-.788 0-1.438-.724-1.438-1.612 0-.889.637-1.613 1.438-1.613.807 0 1.451.73 1.438 1.613 0 .888-.631 1.612-1.438 1.612Z" />
+                  </svg>
+                </SocialLink>
               </div>
             </div>
           </div>
@@ -51,29 +59,29 @@ export default function Footer() {
           {/* Links */}
           <div className="col-span-12 grid grid-cols-12 gap-x-0 gap-y-8 lg:col-span-8">
             <div className="col-span-6 md:col-span-4">
-              <FooterSection title="Şirket">
-                <FooterLink to="/about">Hakkımızda</FooterLink>
-                <FooterLink to="/team">Ekibimiz</FooterLink>
-                <FooterLink href="#">Kariyer</FooterLink>
+              <FooterSection title={t("nav.company")}>
+                <FooterLink to="/about">{t("nav.about")}</FooterLink>
+                <FooterLink to="/team">{t("nav.team")}</FooterLink>
+                <FooterLink href="#">{t("nav.career")}</FooterLink>
                 <FooterLink href="#">Vaka Çalışmaları</FooterLink>
                 <FooterLink href="#">Yorumlar</FooterLink>
               </FooterSection>
             </div>
             <div className="col-span-6 md:col-span-4">
-              <FooterSection title="Platform">
-                <FooterLink to="/services">Hizmetler</FooterLink>
-                <FooterLink to="/pricing">Fiyatlandırma</FooterLink>
+              <FooterSection title={t("nav.platform")}>
+                <FooterLink to="/services">{t("nav.services")}</FooterLink>
+                <FooterLink to="/pricing">{t("nav.pricing")}</FooterLink>
                 <FooterLink href="#">Özellikler</FooterLink>
                 <FooterLink href="#">Entegrasyonlar</FooterLink>
                 <FooterLink href="#">Güvenlik</FooterLink>
               </FooterSection>
             </div>
             <div className="col-span-6 md:col-span-4">
-              <FooterSection title="Kaynaklar">
-                <FooterLink to="/blog">Blog</FooterLink>
-                <FooterLink href="#">SSS</FooterLink>
-                <FooterLink href="#">Destek</FooterLink>
-                <FooterLink to="/contact">İletişim</FooterLink>
+              <FooterSection title={t("nav.resources")}>
+                <FooterLink to="/blog">{t("nav.blog")}</FooterLink>
+                <FooterLink href="#">{t("nav.faq")}</FooterLink>
+                <FooterLink href="#">{t("nav.support")}</FooterLink>
+                <FooterLink to="/contact">{t("nav.contact")}</FooterLink>
                 <FooterLink href="#">Dokümantasyon</FooterLink>
               </FooterSection>
             </div>

@@ -37,8 +37,8 @@ function PricingPage() {
             <h1 className="text-heading-3 md:text-heading-2 lg:text-heading-1 font-medium mb-4 fun-text">İhtiyacınıza uygun planı seçin</h1>
             <p className="max-w-[600px] mx-auto text-tagline-1 fun-text-muted mb-8">Esnek fiyatlandırma seçenekleriyle her ölçekteki işletme için uygun çözümler.</p>
             <div className="inline-flex items-center gap-3 rounded-full p-1.5" style={{ backgroundColor: 'var(--fun-card)' }}>
-              <button className={`rounded-full px-5 py-2.5 text-sm font-medium transition-all ${!annual ? 'btn-fun-dark' : 'fun-text-muted'}`} onClick={() => setAnnual(false)}>Aylık</button>
-              <button className={`rounded-full px-5 py-2.5 text-sm font-medium transition-all ${annual ? 'btn-fun-dark' : 'fun-text-muted'}`} onClick={() => setAnnual(true)}>Yıllık <span className="text-xs text-[#6C5CE7]">%33 tasarruf</span></button>
+              <button className={`rounded-full px-5 py-2.5 text-sm font-medium ${!annual ? 'btn-fun-dark' : 'fun-text-muted'}`} onClick={() => setAnnual(false)}>Aylık</button>
+              <button className={`rounded-full px-5 py-2.5 text-sm font-medium ${annual ? 'btn-fun-dark' : 'fun-text-muted'}`} onClick={() => setAnnual(true)}>Yıllık <span className="text-xs text-[#6C5CE7]">%33 tasarruf</span></button>
             </div>
           </div>
         </div>
@@ -48,7 +48,7 @@ function PricingPage() {
         <div className="main-container">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {plans.map((plan, i) => (
-              <div key={i} className={`${plan.dark ? 'bg-[#12161F] text-white ring-2 ring-[#6C5CE7]' : 'border'} rounded-3xl p-8 md:p-10 relative`} style={!plan.dark ? { backgroundColor: 'var(--fun-card)', borderColor: 'var(--fun-stroke-1)' } : {}}>
+              <div key={i} className={`${plan.dark ? 'bg-[#12161F] text-white ring-2 ring-[#6C5CE7]' : 'border'} rounded-3xl p-8 md:p-10 relative transition-none`} style={!plan.dark ? { backgroundColor: 'var(--fun-card)', borderColor: 'var(--fun-stroke-1)' } : {}}>
                 {plan.popular && <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#6C5CE7] text-white text-xs font-medium px-4 py-1.5 rounded-full">En Popüler</span>}
                 <div className="mb-8">
                   <h3 className={`text-heading-6 font-medium mb-2 ${plan.dark ? '' : 'fun-text'}`}>{plan.name}</h3>
