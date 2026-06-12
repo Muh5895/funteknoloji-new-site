@@ -1,6 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import ArrowButton from "../components/ArrowButton";
+import { useLang } from "../lib/i18n";
+import CountUp from "../components/CountUp";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -20,24 +22,25 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
+  const { t } = useLang();
   return (
     <main className="space-y-0">
-      <HeroSection />
+      <HeroSection t={t} />
       <LogoMarquee />
-      <WhatWeDoSection />
-      <FeaturesSection />
-      <HowItWorksSection />
-      <ServicesSection />
-      <CaseStudySection />
+      <WhatWeDoSection t={t} />
+      <FeaturesSection t={t} />
+      <HowItWorksSection t={t} />
+      <ServicesSection t={t} />
+      <CaseStudySection t={t} />
       <TestimonialsSection />
       <FAQSection />
-      <CTASection />
+      <CTASection t={t} />
     </main>
   );
 }
 
 /* ============ HERO ============ */
-function HeroSection() {
+function HeroSection({ t }: { t: (k: string) => string }) {
   return (
     <section className="pt-28 px-4 lg:px-5">
       <div className="max-w-[1880px] mx-auto relative pt-20 md:pt-32 border overflow-hidden rounded-3xl xl:rounded-[32px]" style={{ backgroundColor: 'var(--fun-surface)', borderColor: 'var(--fun-stroke-1)' }}>
@@ -49,18 +52,16 @@ function HeroSection() {
 
         <div className="main-container relative z-30">
           <div className="text-center mb-12 lg:mb-24">
-            <span className="badge-fun badge-fun-gray mb-4 inline-block text-xs tracking-wider">Türkiye'nin Yenilikçi Teknoloji Şirketi</span>
+            <span className="badge-fun badge-fun-gray mb-4 inline-block text-xs tracking-wider">{t("home.hero.badge")}</span>
             <h1 className="text-heading-3 md:text-heading-2 lg:text-heading-1 font-medium mb-4 fun-text">
-              Geleceğin Teknolojileri <br className="hidden md:block" />
-              Bugün Bizimle
+              {t("home.hero.title")}
             </h1>
             <p className="max-w-[750px] mx-auto mb-8 md:mb-14 text-tagline-1 fun-text-muted">
-              Yapay zeka, yazılım geliştirme ve akıllı sistemler alanında öncü çözümlerle işinizi
-              dijital dönüşümün merkezine taşıyoruz.
+              {t("home.hero.desc")}
             </p>
             <div className="flex md:flex-row flex-col gap-3 items-center justify-center">
-              <ArrowButton to="/services" variant="dark">Keşfet</ArrowButton>
-              <ArrowButton to="/contact" variant="light">Başlayın</ArrowButton>
+              <ArrowButton to="/services" variant="dark">{t("home.hero.explore")}</ArrowButton>
+              <ArrowButton to="/contact" variant="light">{t("home.hero.start")}</ArrowButton>
             </div>
           </div>
 
@@ -84,7 +85,27 @@ function HeroSection() {
 function LogoMarquee() {
   const logos = ["TechCorp", "InnovateLab", "DataFlow", "CloudNine", "SmartSys"];
   return (
-    <section className="py-10 overflow-hidden">
+    <section className="py-20 overflow-hidden border-y" style={{ borderColor: 'var(--fun-stroke-1)' }}>
+      <div className="main-container mb-12">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+          <div>
+            <div className="text-4xl md:text-5xl font-bold fun-text mb-2"><CountUp end={500} />+</div>
+            <div className="text-sm fun-text-muted uppercase tracking-wider">Mutlu Müşteri</div>
+          </div>
+          <div>
+            <div className="text-4xl md:text-5xl font-bold fun-text mb-2"><CountUp end={150} />+</div>
+            <div className="text-sm fun-text-muted uppercase tracking-wider">Tamamlanan Proje</div>
+          </div>
+          <div>
+            <div className="text-4xl md:text-5xl font-bold fun-text mb-2"><CountUp end={50} />+</div>
+            <div className="text-sm fun-text-muted uppercase tracking-wider">Uzman Kadro</div>
+          </div>
+          <div>
+            <div className="text-4xl md:text-5xl font-bold fun-text mb-2"><CountUp end={24} />/7</div>
+            <div className="text-sm fun-text-muted uppercase tracking-wider">Destek</div>
+          </div>
+        </div>
+      </div>
       <div className="relative">
         <div className="absolute left-0 top-0 h-full w-[15%] z-10" style={{ background: 'linear-gradient(to right, var(--color-background), transparent)' }} />
         <div className="absolute right-0 top-0 h-full w-[15%] z-10" style={{ background: 'linear-gradient(to left, var(--color-background), transparent)' }} />
@@ -104,13 +125,13 @@ function LogoMarquee() {
 }
 
 /* ============ WHAT WE DO ============ */
-function WhatWeDoSection() {
+function WhatWeDoSection({ t }: { t: (k: string) => string }) {
   return (
     <section className="px-4 lg:px-5">
       <div className="bg-[#12161F] max-w-[1880px] rounded-3xl xl:rounded-[32px] px-5 mx-auto">
         <div className="max-w-[1400px] mx-auto py-20 lg:py-32 xl:py-40">
           <h2 className="text-center text-white font-light text-heading-4 sm:text-heading-3 md:text-heading-2 lg:text-heading-1 leading-[1.3]">
-            İşletmelerin etkileşimi artırmak, dönüşümleri yükseltmek ve büyümede yeni zirvelere ulaşmak için yapay zeka destekli pazarlama çözümlerinden yararlanmalarına yardımcı oluyoruz.
+            {t("home.whatwedo.text")}
           </h2>
         </div>
       </div>
@@ -119,18 +140,26 @@ function WhatWeDoSection() {
 }
 
 /* ============ FEATURES ============ */
-function FeaturesSection() {
+function FeaturesSection({ t }: { t: (k: string) => string }) {
+  const CheckIcon = () => (
+    <div className="h-5 w-5 rounded-full bg-[var(--fun-green)] flex items-center justify-center shrink-0 animate-bounce">
+      <svg className="h-3 w-3 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+      </svg>
+    </div>
+  );
+
   return (
     <section className="px-4 lg:px-5 mt-10">
       <div className="mx-auto max-w-[1880px] rounded-3xl py-20 lg:py-32" style={{ backgroundColor: 'var(--fun-surface)' }}>
         <div className="main-container">
           <div className="mb-12 space-y-4 text-center lg:mx-auto lg:max-w-[740px]">
-            <span className="badge-fun badge-fun-white">Özellikler</span>
+            <span className="badge-fun badge-fun-white">{t("home.features.badge")}</span>
             <h2 className="text-heading-4 md:text-heading-3 font-medium fun-text">
-              Güçlü Özelliklerle Daha Akıllıca Çalışın
+              {t("home.features.title")}
             </h2>
             <p className="text-tagline-1 fun-text-muted">
-              Fun Teknoloji ile işlerinizi daha hızlı, güvenli ve verimli yönetin. Modern çözümlerimiz her platformda sorunsuz çalışır.
+              {t("home.features.desc")}
             </p>
           </div>
 
@@ -138,8 +167,12 @@ function FeaturesSection() {
             <div className="relative min-h-[450px] md:min-h-[600px] overflow-hidden rounded-[20px] p-8 lg:p-10" style={{ backgroundColor: 'var(--fun-card)' }}>
               <div className="absolute bottom-0 left-0 z-10 h-[300px] w-full" style={{ background: `linear-gradient(to top, var(--fun-card), transparent)` }} />
               <div className="absolute bottom-8 left-8 z-20 max-w-[450px]">
-                <h3 className="text-heading-5 font-medium mb-2 fun-text">Geleceğe Hazır Çözümler</h3>
-                <p className="text-tagline-1 fun-text-muted">İşlerinizi hızlandıran ve verimliliği artıran yapay zeka ve otomasyon teknolojileri.</p>
+                <h3 className="text-heading-5 font-medium mb-2 fun-text">{t("home.features.card1.title")}</h3>
+                <p className="text-tagline-1 fun-text-muted mb-4">{t("home.features.card1.desc")}</p>
+                <div className="space-y-2">
+                  <div className="flex items-center gap-2 text-sm fun-text"><CheckIcon /> %100 Verimlilik Artışı</div>
+                  <div className="flex items-center gap-2 text-sm fun-text"><CheckIcon /> Yapay Zeka Desteği</div>
+                </div>
               </div>
               <div className="absolute right-0 top-10 w-[80%] h-[60%] rounded-2xl" style={{ background: 'linear-gradient(135deg, var(--fun-green), var(--fun-surface))' }} />
             </div>
@@ -159,8 +192,8 @@ function FeaturesSection() {
                     ))}
                   </div>
                 </div>
-                <h3 className="text-heading-6 md:text-heading-5 font-medium mb-1 fun-text">Web'den Mobil'e Sorunsuz Deneyim</h3>
-                <p className="text-tagline-1 fun-text-muted max-w-[450px]">Modern web ve mobil uygulamalarla her cihazda kusursuz performans.</p>
+                <h3 className="text-heading-6 md:text-heading-5 font-medium mb-1 fun-text">{t("home.features.card2.title")}</h3>
+                <p className="text-tagline-1 fun-text-muted max-w-[450px]">{t("home.features.card2.desc")}</p>
               </div>
 
               <div className="rounded-[20px] p-6 md:p-8" style={{ backgroundColor: 'var(--fun-card)' }}>
@@ -174,8 +207,8 @@ function FeaturesSection() {
                     </div>
                   ))}
                 </div>
-                <h3 className="text-heading-6 md:text-heading-5 font-medium mb-1 fun-text">Verileriniz Bizimle Güvende</h3>
-                <p className="text-tagline-1 fun-text-muted max-w-[450px]">Gelişmiş güvenlik önlemleriyle tüm iş süreçlerinizi güvenle yönetin.</p>
+                <h3 className="text-heading-6 md:text-heading-5 font-medium mb-1 fun-text">{t("home.features.card3.title")}</h3>
+                <p className="text-tagline-1 fun-text-muted max-w-[450px]">{t("home.features.card3.desc")}</p>
               </div>
             </div>
           </div>
@@ -186,19 +219,19 @@ function FeaturesSection() {
 }
 
 /* ============ HOW IT WORKS ============ */
-function HowItWorksSection() {
+function HowItWorksSection({ t }: { t: (k: string) => string }) {
   const steps = [
-    { title: "Çoklu ses seçenekleri.", desc: "Markanızın tarzına uygun çok çeşitli erkek ve kadın sesleri arasından seçim yapın.", bg: "var(--fun-green)" },
-    { title: "Gerçekçi ve net ses", desc: "Hedef kitleniz için otantik ve ilgi çekici hissettiren gerçekçi konuşmalar sunun.", bg: "var(--fun-surface)" },
-    { title: "Hızlı ve kolay dönüşüm.", desc: "Metninizi saniyeler içinde sese dönüştürün — teknik beceri gerekmez.", bg: "var(--fun-green)" },
+    { title: t("home.howitworks.step1.title"), desc: t("home.howitworks.step1.desc"), bg: "var(--fun-green)" },
+    { title: t("home.howitworks.step2.title"), desc: t("home.howitworks.step2.desc"), bg: "var(--fun-surface)" },
+    { title: t("home.howitworks.step3.title"), desc: t("home.howitworks.step3.desc"), bg: "var(--fun-green)" },
   ];
   return (
     <section className="py-20 md:py-32">
       <div className="main-container">
         <div className="mb-12 text-center lg:mx-auto lg:max-w-[730px]">
-          <span className="badge-fun badge-fun-gray mb-4 inline-block">Nasıl Çalışır</span>
-          <h2 className="text-heading-4 md:text-heading-3 font-medium mb-3 fun-text">Fun Teknoloji ile Yapay Zeka Sesi Oluşturun</h2>
-          <p className="text-tagline-1 fun-text-muted">Güçlü yapay zeka ses teknolojisi ile metni anında doğal, insan benzeri seslere dönüştürün.</p>
+          <span className="badge-fun badge-fun-gray mb-4 inline-block">{t("home.howitworks.badge")}</span>
+          <h2 className="text-heading-4 md:text-heading-3 font-medium mb-3 fun-text">{t("home.howitworks.title")}</h2>
+          <p className="text-tagline-1 fun-text-muted">{t("home.howitworks.desc")}</p>
         </div>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-8 relative">
@@ -218,7 +251,7 @@ function HowItWorksSection() {
         </div>
 
         <div className="mt-14 text-center">
-          <ArrowButton to="/pricing" variant="dark">Ses Oluştur</ArrowButton>
+          <ArrowButton to="/services" variant="dark">{t("home.hero.explore")}</ArrowButton>
         </div>
       </div>
     </section>
@@ -226,7 +259,7 @@ function HowItWorksSection() {
 }
 
 /* ============ SERVICES ============ */
-function ServicesSection() {
+function ServicesSection({ t }: { t: (k: string) => string }) {
   const services = [
     { title: "Kusursuz Görüntü Stili Transferi", desc: "Görüntülerinizi gündüzden geceye veya yazdan kışa, herhangi bir stile zahmetsizce dönüştürün." },
     { title: "Otomatik Arka Plan Değiştirme", desc: "Ürün çekimleri ve portreler için mükemmel, profesyonel sonuçlar için fotoğraflardaki arka planları anında değiştirin." },
@@ -240,9 +273,9 @@ function ServicesSection() {
     <section className="py-14 md:py-24 overflow-hidden">
       <div className="main-container">
         <div className="mb-12 text-center lg:max-w-[730px] lg:mx-auto">
-          <span className="badge-fun badge-fun-gray mb-5 inline-block">Hizmetlerimiz</span>
-          <h2 className="text-heading-4 md:text-heading-3 font-medium mb-3 fun-text">Dünya genelindeki lider şirketler Fun Teknoloji'ye güveniyor.</h2>
-          <p className="text-tagline-1 fun-text-muted lg:max-w-[530px] lg:mx-auto">İşinizi büyütmek ve dijital dünyada öne çıkmak için sunduğumuz profesyonel çözümleri keşfedin.</p>
+          <span className="badge-fun badge-fun-gray mb-5 inline-block">{t("home.services.badge")}</span>
+          <h2 className="text-heading-4 md:text-heading-3 font-medium mb-3 fun-text">{t("home.services.title")}</h2>
+          <p className="text-tagline-1 fun-text-muted lg:max-w-[530px] lg:mx-auto">{t("home.services.desc")}</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -328,12 +361,12 @@ function CaseStudySection() {
 /* ============ TESTIMONIALS ============ */
 function TestimonialsSection() {
   const testimonials = [
-    { name: "Darrell Steward", text: "Küçük bir işletme sahibi olarak, hizmetiniz nakit akışını yönetmede ve finansal stratejileri optimize etmede hayat kurtarıcı oldu. Beklentilerimi gerçekten aştı." },
-    { name: "Sarah Johnson", text: "Ses kopyalama özelliği kesinlikle inanılmaz! İçeriğim için saatler yerine dakikalar içinde profesyonel seslendirmeler oluşturabildim." },
-    { name: "Michael Chen", text: "Bu teknoloji podcast üretimimizde devrim yarattı. Kalite o kadar gerçekçi ki, dinleyicilerimiz orijinal kayıtlarımızdan farkı anlayamıyor." },
-    { name: "Emma Rodriguez", text: "Bir dil öğretmeni olarak bu araç, birden fazla dilde telaffuz örnekleri oluşturmak için paha biçilemez oldu. Öğrencilerim doğal sesli sesleri seviyor!" },
-    { name: "David Kim", text: "Ses üretiminin doğruluğu ve hızı akıllara durgunluk verici. Olağanüstü kalite standartlarını korurken ses üretim süremizi %80 azalttık." },
-    { name: "Lisa Thompson", text: "Bu platform sesli kitap oluşturma şeklimizi dönüştürdü. Ses sentezi o kadar doğal ve etkileyici ki, dinleyicilerimiz tüm deneyim boyunca tamamen bağlı kalıyor." },
+    { name: "Darrell Steward", text: "Küçük bir işletme sahibi olarak, sunduğunuz yazılım çözümleri operasyonel verimliliğimizi artırmada hayat kurtarıcı oldu. Beklentilerimi gerçekten aştı." },
+    { name: "Sarah Johnson", text: "Yapay zeka entegrasyonu kesinlikle inanılmaz! İş süreçlerimizi otomatize ederek büyük zaman tasarrufu sağladık." },
+    { name: "Michael Chen", text: "Bu teknoloji veri analitiği süreçlerimizde devrim yarattı. İçgörüler o kadar derin ki, kararlarımızı artık çok daha güvenle alıyoruz." },
+    { name: "Emma Rodriguez", text: "Bir proje yöneticisi olarak bu araç, ekipler arası koordinasyonu sağlamak için paha biçilemez oldu. Kullanıcı dostu arayüzü harika!" },
+    { name: "David Kim", text: "Geliştirme süreçlerinin hızı ve kalitesi akıllara durgunluk verici. Olağanüstü kalite standartlarını korurken projelerimizi vaktinde teslim alabildik." },
+    { name: "Lisa Thompson", text: "Bu platform dijital varlığımızı yönetme şeklimizi dönüştürdü. Teknoloji o kadar modern ve etkileyici ki, tüm ekibimiz hayran kaldı." },
   ];
 
   const colors = ["from-[#F4F8E7] to-[#D485FF]", "from-[#E8F4FD] to-[#4A90E2]", "from-[#FFE8E8] to-[#FF6B6B]", "from-[#F0E6FF] to-[#8B5CF6]", "from-[#E6F7FF] to-[#1890FF]", "from-[#FFF7E6] to-[#FF8C00]"];
@@ -430,21 +463,21 @@ function FAQSection() {
 }
 
 /* ============ CTA ============ */
-function CTASection() {
+function CTASection({ t }: { t: (k: string) => string }) {
   return (
     <section className="px-4 lg:px-5 py-16 md:py-24">
       <div className="bg-[#12161F] max-w-[1880px] mx-auto rounded-3xl xl:rounded-[32px] py-20 md:py-28 px-5">
         <div className="main-container text-center">
           <h2 className="text-heading-4 md:text-heading-3 lg:text-heading-2 font-medium text-white mb-4">
-            Bugün kullanmaya başlayın.
+            {t("home.cta.title")}
           </h2>
           <p className="text-tagline-1 text-white/60 max-w-[600px] mx-auto mb-10">
-            Herhangi bir sorunuz veya yardıma ihtiyacınız olursa destek ekibimizle iletişime geçin.
+            {t("home.cta.desc")}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 items-center justify-center">
-            <ArrowButton to="/contact" variant="light">İletişime Geçin</ArrowButton>
+            <ArrowButton to="/contact" variant="light">{t("home.cta.button")}</ArrowButton>
             <a href="#" className="btn-fun bg-white/10 text-white hover:bg-white/20 transition-all">
-              <span>Daha Fazla Bilgi</span>
+              <span>{t("home.cta.more")}</span>
               <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75" />
               </svg>

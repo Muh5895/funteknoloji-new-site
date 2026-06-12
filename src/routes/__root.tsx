@@ -87,10 +87,15 @@ function RootShell({ children }: { children: React.ReactNode }) {
   );
 }
 
+import { useLocation } from "@tanstack/react-router";
+
 function RootComponent() {
+  const location = useLocation();
+  const isHomePage = location.pathname === "/";
+
   return (
     <LanguageProvider>
-      <IntroSplash />
+      {!isHomePage && <IntroSplash />}
       <Header />
       <Outlet />
       <Footer />

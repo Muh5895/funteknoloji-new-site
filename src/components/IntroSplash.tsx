@@ -59,13 +59,6 @@ export default function IntroSplash() {
         onContextMenu={(e) => e.preventDefault()}
         className="h-full w-full object-cover pointer-events-none select-none"
       />
-      <button
-        onClick={finish}
-        aria-label="Tanıtım videosunu atla"
-        className="absolute bottom-6 right-6 rounded-full bg-white/10 px-5 py-2 text-sm text-white backdrop-blur-md transition hover:bg-white/20"
-      >
-        Atla →
-      </button>
     </div>
   );
 }

@@ -139,12 +139,14 @@ function Dropdown({ id, label, open, onOpen, children }: { id: string; label: st
         </svg>
       </button>
       {open && (
-        <div
-          role="menu"
-          className="absolute left-1/2 top-full z-50 mt-2 w-[320px] -translate-x-1/2 rounded-2xl border p-3 shadow-2xl animate-fade-in origin-top"
-          style={{ backgroundColor: "var(--fun-card)", borderColor: "var(--fun-stroke-1)" }}
-        >
-          {children}
+        <div className="absolute left-1/2 top-full z-50 -translate-x-1/2 pt-2">
+          <div
+            role="menu"
+            className="w-[320px] rounded-2xl border p-3 shadow-2xl animate-in fade-in zoom-in-95 duration-200 origin-top"
+            style={{ backgroundColor: "var(--fun-card)", borderColor: "var(--fun-stroke-1)" }}
+          >
+            {children}
+          </div>
         </div>
       )}
     </div>
