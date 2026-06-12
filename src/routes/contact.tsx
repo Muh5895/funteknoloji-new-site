@@ -6,7 +6,14 @@ export const Route = createFileRoute("/contact")({
     meta: [
       { title: "İletişim – Fun Teknoloji" },
       { name: "description", content: "Fun Teknoloji ile iletişime geçin. Projeleriniz için bize ulaşın." },
+      { property: "og:title", content: "İletişim – Fun Teknoloji" },
+      { property: "og:description", content: "Fun Teknoloji ile iletişime geçin. Projeleriniz için bize ulaşın." },
+      { property: "og:url", content: "https://build-dream-flow-91.lovable.app/contact" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:title", content: "İletişim – Fun Teknoloji" },
+      { name: "twitter:description", content: "Fun Teknoloji ile iletişime geçin. Projeleriniz için bize ulaşın." },
     ],
+    links: [{ rel: "canonical", href: "https://build-dream-flow-91.lovable.app/contact" }],
   }),
   component: ContactPage,
 });

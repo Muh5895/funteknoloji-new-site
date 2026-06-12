@@ -6,7 +6,14 @@ export const Route = createFileRoute("/services")({
     meta: [
       { title: "Hizmetlerimiz – Fun Teknoloji" },
       { name: "description", content: "Yapay zeka, yazılım geliştirme ve dijital dönüşüm hizmetlerimizi keşfedin." },
+      { property: "og:title", content: "Hizmetlerimiz – Fun Teknoloji" },
+      { property: "og:description", content: "Yapay zeka, yazılım geliştirme ve dijital dönüşüm hizmetlerimizi keşfedin." },
+      { property: "og:url", content: "https://build-dream-flow-91.lovable.app/services" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:title", content: "Hizmetlerimiz – Fun Teknoloji" },
+      { name: "twitter:description", content: "Yapay zeka, yazılım geliştirme ve dijital dönüşüm hizmetlerimizi keşfedin." },
     ],
+    links: [{ rel: "canonical", href: "https://build-dream-flow-91.lovable.app/services" }],
   }),
   component: ServicesPage,
 });

@@ -7,7 +7,14 @@ export const Route = createFileRoute("/pricing")({
     meta: [
       { title: "Fiyatlandırma – Fun Teknoloji" },
       { name: "description", content: "Fun Teknoloji fiyatlandırma planları. İhtiyacınıza uygun planı seçin." },
+      { property: "og:title", content: "Fiyatlandırma – Fun Teknoloji" },
+      { property: "og:description", content: "Fun Teknoloji fiyatlandırma planları. İhtiyacınıza uygun planı seçin." },
+      { property: "og:url", content: "https://build-dream-flow-91.lovable.app/pricing" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:title", content: "Fiyatlandırma – Fun Teknoloji" },
+      { name: "twitter:description", content: "Fun Teknoloji fiyatlandırma planları. İhtiyacınıza uygun planı seçin." },
     ],
+    links: [{ rel: "canonical", href: "https://build-dream-flow-91.lovable.app/pricing" }],
   }),
   component: PricingPage,
 });
