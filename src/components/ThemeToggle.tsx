@@ -1,37 +1,38 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useLang } from "../lib/i18n";
 
 export default function ThemeToggle() {
+  const { t } = useLang();
   const [dark, setDark] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    const stored = typeof window !== "undefined" ? localStorage.getItem("theme") : null;
-    if (stored === "dark" || (!stored && typeof window !== "undefined" && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
-      setDark(true);
-      document.documentElement.classList.add("dark");
-    }
+    setMounted(true);
+    setDark(document.documentElement.classList.contains("dark"));
   }, []);
 
   const toggle = () => {
-    setDark((prev) => {
-      const next = !prev;
-      if (next) {
-        document.documentElement.classList.add("dark");
-        localStorage.setItem("theme", "dark");
-      } else {
-        document.documentElement.classList.remove("dark");
-        localStorage.setItem("theme", "light");
-      }
-      return next;
-    });
+    const next = !document.documentElement.classList.contains("dark");
+    if (next) {
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("theme", "dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("theme", "light");
+    }
+    setDark(next);
   };
 
   return (
     <button
       onClick={toggle}
-      className="flex h-9 w-9 items-center justify-center rounded-full transition-all hover:bg-[var(--fun-surface)]"
-      aria-label={dark ? "Açık temaya geç" : "Koyu temaya geç"}
+      type="button"
+      className="flex h-10 w-10 items-center justify-center rounded-full border transition-all hover:scale-110"
+      style={{ borderColor: "var(--fun-stroke-1)", color: "var(--fun-text)" }}
+      aria-label={mounted && dark ? t("theme.light") : t("theme.dark")}
+      title={mounted && dark ? t("theme.light") : t("theme.dark")}
     >
-      {dark ? (
+      {mounted && dark ? (
         <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
           <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
         </svg>
