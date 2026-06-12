@@ -23,13 +23,29 @@ function BlogPage() {
 
   useEffect(() => {
     async function fetchPosts() {
-      const { data, error } = await supabase
-        .from("blog")
-        .select("id, title, description, image_url, tag, created_at")
-        .order("created_at", { ascending: false });
+      try {
+        const { data, error } = await supabase
+          .from("blog")
+          .select("*")
+          .order("created_at", { ascending: false });
 
-      if (data) setPosts(data);
-      setLoading(false);
+        if (error) throw error;
+        if (data) {
+          const formattedPosts = data.map((p: any) => ({
+            id: p.id,
+            title: p.title,
+            description: p.description || p.content || "",
+            image_url: p.image_url || p.image || "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b",
+            tag: p.tag || "Teknoloji",
+            created_at: p.created_at
+          }));
+          setPosts(formattedPosts);
+        }
+      } catch (err) {
+        console.error("Blog fetch error:", err);
+      } finally {
+        setLoading(false);
+      }
     }
     fetchPosts();
   }, []);

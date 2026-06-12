@@ -3,21 +3,24 @@ import appCss from "../styles.css?url";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import IntroSplash from "../components/IntroSplash";
+import NexyAssistant from "../components/NexyAssistant";
 import { LanguageProvider } from "../lib/i18n";
+import { Toaster } from "../components/ui/sonner";
 
 const THEME_INIT = `
 (function(){try{var s=localStorage.getItem('theme');var d=s?s==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;if(d)document.documentElement.classList.add('dark');var l=localStorage.getItem('lang');if(l==='en'||l==='tr')document.documentElement.lang=l;}catch(e){}})();
 `;
 
 function NotFoundComponent() {
+  const { t } = useLang();
   return (
     <div className="flex min-h-dvh items-center justify-center px-4" style={{ backgroundColor: "var(--color-background)" }}>
       <div className="max-w-md text-center">
-        <h1 className="text-7xl font-bold fun-text">404</h1>
-        <h2 className="mt-4 text-xl font-semibold fun-text">Sayfa bulunamadı</h2>
-        <p className="mt-2 text-sm fun-text-muted">Aradığınız sayfa mevcut değil veya taşınmış olabilir.</p>
+        <h1 className="text-7xl font-bold fun-text">{t("404.title")}</h1>
+        <h2 className="mt-4 text-xl font-semibold fun-text">{t("404.subtitle")}</h2>
+        <p className="mt-2 text-sm fun-text-muted">{t("404.desc")}</p>
         <div className="mt-6">
-          <Link to="/" className="btn-fun btn-fun-dark">Ana Sayfa</Link>
+          <Link to="/" className="btn-fun btn-fun-dark">{t("404.home")}</Link>
         </div>
       </div>
     </div>
@@ -99,7 +102,9 @@ function RootComponent() {
       {!isHomePage && <IntroSplash />}
       <Header />
       <Outlet />
+      <NexyAssistant />
       <Footer />
+      <Toaster position="top-center" richColors />
     </LanguageProvider>
   );
 }

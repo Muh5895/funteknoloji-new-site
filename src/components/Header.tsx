@@ -66,10 +66,6 @@ export default function Header() {
             <DropdownItem to="/contact" title={t("nav.contact")} desc="Bizimle iletişime geçin." />
             <DropdownItem to="/sitemap" title={t("nav.sitemap")} desc="Site haritamız." />
           </Dropdown>
-
-          <Link to="/pricing" className="rounded-full px-4 py-2.5 text-sm fun-text-muted transition-all hover:fun-text hover:scale-105">
-            {t("nav.pricing")}
-          </Link>
         </nav>
 
         {/* Desktop CTA */}
@@ -77,7 +73,7 @@ export default function Header() {
           <LanguageSwitcher />
           <ThemeToggle />
           <a href="https://waitlist.funteknoloji.com" className="btn-fun btn-fun-dark !py-2.5 !px-5 !text-sm">
-            Bekleme Listesine Katıl
+            {t("nav.waitlist")}
           </a>
         </div>
 
@@ -124,12 +120,12 @@ export default function Header() {
               <Link to="/blog" className="block rounded-xl px-4 py-3 fun-text-muted hover:bg-[var(--fun-surface)]" onClick={() => setMobileOpen(false)}>{t("nav.blog")}</Link>
               <Link to="/contact" className="block rounded-xl px-4 py-3 fun-text-muted hover:bg-[var(--fun-surface)]" onClick={() => setMobileOpen(false)}>{t("nav.contact")}</Link>
               <Link to="/sitemap" className="block rounded-xl px-4 py-3 fun-text-muted hover:bg-[var(--fun-surface)]" onClick={() => setMobileOpen(false)}>{t("nav.sitemap")}</Link>
-              <Link to="/privacy-policy" className="block rounded-xl px-4 py-3 fun-text-muted hover:bg-[var(--fun-surface)]" onClick={() => setMobileOpen(false)}>Gizlilik Politikası</Link>
-              <Link to="/service-policy" className="block rounded-xl px-4 py-3 fun-text-muted hover:bg-[var(--fun-surface)]" onClick={() => setMobileOpen(false)}>Hizmet Politikası</Link>
+              <Link to="/privacy-policy" className="block rounded-xl px-4 py-3 fun-text-muted hover:bg-[var(--fun-surface)]" onClick={() => setMobileOpen(false)}>{t("nav.privacy_policy_short")}</Link>
+              <Link to="/service-policy" className="block rounded-xl px-4 py-3 fun-text-muted hover:bg-[var(--fun-surface)]" onClick={() => setMobileOpen(false)}>{t("nav.service_policy_short")}</Link>
             </MobileAccordion>
           </nav>
           <div className="mt-4 flex flex-col gap-2">
-            <a href="https://waitlist.funteknoloji.com" className="btn-fun btn-fun-dark w-full text-center" onClick={() => setMobileOpen(false)}>Bekleme Listesine Katıl</a>
+            <a href="https://waitlist.funteknoloji.com" className="btn-fun btn-fun-dark w-full text-center" onClick={() => setMobileOpen(false)}>{t("nav.waitlist")}</a>
           </div>
         </div>
       )}
@@ -138,9 +134,26 @@ export default function Header() {
 }
 
 function Dropdown({ id, label, open, onOpen, children }: { id: string; label: string; open: boolean; onOpen: (id: string | null) => void; children: React.ReactNode }) {
+  const [timeoutId, setTimeoutId] = useState<number | null>(null);
+
+  const handleMouseEnter = () => {
+    if (timeoutId) {
+      window.clearTimeout(timeoutId);
+      setTimeoutId(null);
+    }
+    onOpen(id);
+  };
+
+  const handleMouseLeave = () => {
+    const id = window.setTimeout(() => {
+      onOpen(null);
+    }, 150);
+    setTimeoutId(id);
+  };
+
   return (
-    <div className="relative" onMouseEnter={() => onOpen(id)} onMouseLeave={() => onOpen(null)} onClick={() => onOpen(open ? null : id)}>
-      <button type="button" aria-expanded={open} aria-haspopup="menu" className="flex items-center gap-1 rounded-full px-4 py-2.5 text-sm fun-text-muted transition-all hover:fun-text">
+    <div className="relative" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} onClick={() => onOpen(open ? null : id)}>
+      <button type="button" aria-expanded={open} aria-haspopup="menu" className={`flex items-center gap-1 rounded-full px-4 py-2.5 text-sm transition-all ${open ? 'fun-text bg-[var(--fun-surface)]' : 'fun-text-muted hover:fun-text'}`}>
         {label}
         <svg className={`h-4 w-4 transition-transform ${open ? "rotate-180" : ""}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
           <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
