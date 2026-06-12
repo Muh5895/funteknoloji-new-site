@@ -76,7 +76,7 @@ function HeroSection({ t }: { t: (k: string) => string }) {
 function LogoMarquee() {
   const logos = ["TechCorp", "InnovateLab", "DataFlow", "CloudNine", "SmartSys"];
   return (
-    <section className="py-20 overflow-hidden border-y" style={{ borderColor: 'var(--fun-stroke-1)' }}>
+    <section className="py-20 overflow-hidden border-y px-4 lg:px-0" style={{ borderColor: 'var(--fun-stroke-1)' }}>
       <div className="main-container mb-12">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
           <div>
@@ -217,7 +217,7 @@ function HowItWorksSection({ t }: { t: (k: string) => string }) {
     { title: t("home.howitworks.step3.title"), desc: t("home.howitworks.step3.desc"), bg: "var(--fun-green)" },
   ];
   return (
-    <section className="py-20 md:py-32">
+    <section className="py-20 md:py-32 px-4 lg:px-0">
       <div className="main-container">
         <div className="mb-12 text-center lg:mx-auto lg:max-w-[730px]">
           <span className="badge-fun badge-fun-gray mb-4 inline-block">{t("home.howitworks.badge")}</span>
@@ -252,18 +252,18 @@ function HowItWorksSection({ t }: { t: (k: string) => string }) {
 /* ============ SERVICES ============ */
 function ServicesSection({ t }: { t: (k: string) => string }) {
   const services = [
-    { title: "Kusursuz Görüntü Stili Transferi", desc: "Görüntülerinizi gündüzden geceye veya yazdan kışa, herhangi bir stile zahmetsizce dönüştürün." },
-    { title: "Otomatik Arka Plan Değiştirme", desc: "Ürün çekimleri ve portreler için mükemmel, profesyonel sonuçlar için fotoğraflardaki arka planları anında değiştirin." },
-    { title: "Yüksek Çözünürlüklü Ölçeklendirme", desc: "Daha keskin, daha net ve daha ayrıntılı sonuçlar için görüntülerinizi yapay zeka destekli ölçeklendirme ile geliştirin." },
-    { title: "Akıllı Nesne Kaldırma", desc: "İstenmeyen nesneleri, filigranları veya kusurları görüntülerden doğal bir şekilde kaldırın." },
-    { title: "Toplu Görüntü İşleme", desc: "Düzenlemeleri ve iyileştirmeleri aynı anda birden fazla görüntüye uygulayarak zaman kazanın." },
-    { title: "Yaratıcı Filtreler ve Efektler", desc: "Görüntülerinize benzersiz ve profesyonel bir dokunuş kazandırmak için yaratıcı filtreler uygulayın." },
+    { title: "Özel Yazılım Geliştirme", desc: "İşletmenizin ihtiyaçlarına özel, ölçeklenebilir ve yüksek performanslı yazılım çözümleri üretiyoruz." },
+    { title: "Yapay Zeka Entegrasyonu", desc: "Mevcut iş süreçlerinizi yapay zeka ve makine öğrenimi modelleri ile optimize ederek verimliliği artırıyoruz." },
+    { title: "Mobil Uygulama Çözümleri", desc: "iOS ve Android platformlarında kullanıcı dostu ve modern mobil uygulamalar geliştiriyoruz." },
+    { title: "Bulut Bilişim Hizmetleri", desc: "Güvenli ve esnek bulut altyapıları ile verilerinizi yönetiyor ve iş sürekliliğinizi sağlıyoruz." },
+    { title: "Veri Analitiği ve İş Zekası", desc: "Verilerinizi anlamlı içgörülere dönüştürerek daha doğru kararlar almanıza yardımcı oluyoruz." },
+    { title: "Siber Güvenlik Danışmanlığı", desc: "Dijital varlıklarınızı en son teknoloji güvenlik önlemleri ile koruma altına alıyoruz." },
   ];
 
   return (
-    <section className="py-14 md:py-24 overflow-hidden">
+    <section className="py-14 md:py-24 overflow-hidden px-4 lg:px-0">
       <div className="main-container">
-        <div className="mb-12 text-center lg:max-w-[730px] lg:mx-auto">
+        <div className="mb-12 text-center lg:max-w-[850px] lg:mx-auto">
           <span className="badge-fun badge-fun-gray mb-5 inline-block">{t("home.services.badge")}</span>
           <h2 className="text-heading-4 md:text-heading-3 font-medium mb-3 fun-text">{t("home.services.title")}</h2>
           <p className="text-tagline-1 fun-text-muted lg:max-w-[530px] lg:mx-auto">{t("home.services.desc")}</p>
@@ -304,13 +304,13 @@ function ServicesSection({ t }: { t: (k: string) => string }) {
 /* ============ CASE STUDY ============ */
 function CaseStudySection() {
   const cases = [
-    { title: "Sağlık hizmetlerinde yapay zeka destekli hasta bakımı.", desc: "Sağlık hizmeti sağlayıcılarını akıllı, ölçeklenebilir çözümlerle güçlendiriyoruz." },
-    { title: "Daha iyi içgörüler için perakende analitiği", desc: "Alışveriş yapanların davranışlarını anlayın ve veri odaklı kararlar alın." },
-    { title: "Lojistikte akıllı rota optimizasyonu", desc: "Verimliliği artırmak için rotaları ve teslimat süreçlerini otomatikleştirin." },
+    { title: "Finansal Veri Analitiği", desc: "Banka ve finans kuruluşları için yapay zeka destekli risk analizi ve portföy yönetimi." },
+    { title: "Akıllı Şehir Sistemleri", desc: "Trafik yönetimi ve enerji verimliliği için IoT tabanlı akıllı altyapı çözümleri." },
+    { title: "E-ticaret Optimizasyonu", desc: "Kişiselleştirilmiş öneri motorları ve stok yönetim sistemleri ile satışlarınızı artırın." },
   ];
 
   return (
-    <section className="py-16 lg:py-28">
+    <section className="py-16 lg:py-28 px-4 lg:px-5">
       <div className="main-container">
         <div className="text-center mb-12 lg:mb-16">
           <h2 className="text-heading-4 md:text-heading-3 font-medium mb-3 fun-text">Platformumuzun gücünü deneyimleyin.</h2>
@@ -363,7 +363,7 @@ function TestimonialsSection() {
   const colors = ["from-[#F4F8E7] to-[#D485FF]", "from-[#E8F4FD] to-[#4A90E2]", "from-[#FFE8E8] to-[#FF6B6B]", "from-[#F0E6FF] to-[#8B5CF6]", "from-[#E6F7FF] to-[#1890FF]", "from-[#FFF7E6] to-[#FF8C00]"];
 
   return (
-    <section className="py-16 md:py-24">
+    <section className="py-16 md:py-24 px-4 lg:px-0">
       <div className="main-container">
         <div className="text-center mb-14">
           <span className="badge-fun badge-fun-green mb-4 inline-block">Yorumlar</span>
@@ -406,7 +406,7 @@ function TestimonialsSection() {
 function FAQSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
   const faqs = [
-    { q: "Fun Teknoloji nedir?", a: "Fun Teknoloji, yapay zeka ve modern teknolojileri kullanarak işletmelere ve bireylere değer katan yenilikçi çözümler sunan bir teknoloji şirketidir." },
+    { q: "Fun Teknoloji ne tür hizmetler sunuyor?", a: "Yazılım geliştirme, yapay zeka entegrasyonu, veri analitiği ve siber güvenlik gibi geniş bir yelpazede teknolojik çözümler sunuyoruz." },
     { q: "Fun Teknoloji'yi kullanmak için ne yapmam gerekiyor?", a: "Platformumuza kayıt olarak hemen kullanmaya başlayabilirsiniz. Detaylı bilgi için iletişim sayfamızdan bize ulaşabilirsiniz." },
     { q: "Fun Teknoloji hangi hizmetleri sunacak?", a: "Yapay zeka çözümleri, web ve mobil uygulama geliştirme, bulut altyapı, veri analitiği, siber güvenlik ve dijital pazarlama hizmetleri sunmaktayız." },
     { q: "Verilerim güvende mi?", a: "Evet, gelişmiş şifreleme ve güvenlik protokolleri ile tüm verileriniz en yüksek güvenlik standartlarında korunmaktadır." },

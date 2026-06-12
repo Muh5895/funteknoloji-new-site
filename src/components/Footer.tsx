@@ -1,17 +1,29 @@
 import { Link } from "@tanstack/react-router";
+import { useState, useEffect } from "react";
 
 const LOGO_DARK = "https://framerusercontent.com/images/wYtLTUyXkZSH6e5ElqNpfbb4xT4.png?scale-down-to=512&width=1024&height=1024";
+const LOGO_LIGHT = "https://framerusercontent.com/images/cOsd9aFSLcyMQvEdo60L3fUo.png?width=1563&height=1563";
 
 export default function Footer() {
+  const [isDark, setIsDark] = useState(false);
+
+  useEffect(() => {
+    const update = () => setIsDark(document.documentElement.classList.contains("dark"));
+    update();
+    const obs = new MutationObserver(update);
+    obs.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
+    return () => obs.disconnect();
+  }, []);
+
   return (
-    <footer className="fun-surface relative overflow-hidden" style={{ backgroundColor: 'var(--fun-surface)' }}>
+    <footer className="fun-surface relative overflow-hidden px-4 lg:px-0" style={{ backgroundColor: 'var(--fun-surface)' }}>
       <div className="main-container">
         <div className="grid grid-cols-12 gap-x-0 gap-y-12 pt-16 pb-16 lg:gap-x-8 xl:pt-24">
           {/* Logo & description */}
           <div className="col-span-12 lg:col-span-4">
             <div className="max-w-[306px]">
               <div className="flex items-center gap-2">
-                <img src={LOGO_DARK} alt="Fun Teknoloji" width={40} height={40} className="h-10 w-10 object-contain brightness-0 dark:brightness-100 invert dark:invert-0" />
+                <img src={isDark ? LOGO_LIGHT : LOGO_DARK} alt="Fun Teknoloji" width={40} height={40} className="h-10 w-10 object-contain" />
                 <span className="text-lg font-semibold fun-text">Fun Teknoloji</span>
               </div>
               <p className="mt-4 mb-7 fun-text-muted text-tagline-1">
@@ -55,17 +67,16 @@ export default function Footer() {
                 <FooterLink to="/about">Hakkımızda</FooterLink>
                 <FooterLink to="/team">Ekibimiz</FooterLink>
                 <FooterLink href="#">Kariyer</FooterLink>
-                <FooterLink href="#">Vaka Çalışmaları</FooterLink>
-                <FooterLink href="#">Yorumlar</FooterLink>
+                <FooterLink to="/contact">İletişim</FooterLink>
+                <FooterLink to="/sitemap">Site Haritası</FooterLink>
               </FooterSection>
             </div>
             <div className="col-span-6 md:col-span-4">
               <FooterSection title="Platform">
                 <FooterLink to="/services">Hizmetler</FooterLink>
                 <FooterLink to="/pricing">Fiyatlandırma</FooterLink>
-                <FooterLink href="#">Özellikler</FooterLink>
-                <FooterLink href="#">Entegrasyonlar</FooterLink>
-                <FooterLink href="#">Güvenlik</FooterLink>
+              <FooterLink to="/privacy-policy">Gizlilik Politikası</FooterLink>
+              <FooterLink to="/service-policy">Hizmet Politikası</FooterLink>
               </FooterSection>
             </div>
             <div className="col-span-6 md:col-span-4">
@@ -73,8 +84,8 @@ export default function Footer() {
                 <FooterLink to="/blog">Blog</FooterLink>
                 <FooterLink href="#">SSS</FooterLink>
                 <FooterLink href="#">Destek</FooterLink>
-                <FooterLink to="/contact">İletişim</FooterLink>
-                <FooterLink href="#">Dokümantasyon</FooterLink>
+                <FooterLink to="/privacy-policy">Gizlilik Politikası</FooterLink>
+                <FooterLink to="/service-policy">Hizmet Politikası</FooterLink>
               </FooterSection>
             </div>
           </div>

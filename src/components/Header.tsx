@@ -64,13 +64,11 @@ export default function Header() {
             <DropdownItem to="/blog" title={t("nav.blog")} desc="En son yazılarımız." />
             <DropdownItem href="#" title={t("nav.faq")} desc="Sık sorulan sorular." />
             <DropdownItem to="/contact" title={t("nav.contact")} desc="Bizimle iletişime geçin." />
+            <DropdownItem to="/sitemap" title={t("nav.sitemap")} desc="Site haritamız." />
           </Dropdown>
 
           <Link to="/pricing" className="rounded-full px-4 py-2.5 text-sm fun-text-muted transition-all hover:fun-text hover:scale-105">
             {t("nav.pricing")}
-          </Link>
-          <Link to="/sitemap" className="rounded-full px-4 py-2.5 text-sm fun-text-muted transition-all hover:fun-text hover:scale-105">
-            {t("nav.sitemap")}
           </Link>
         </nav>
 
@@ -108,17 +106,27 @@ export default function Header() {
       {/* Mobile Menu */}
       {mobileOpen && (
         <div
-          className="mt-2 rounded-3xl border p-5 shadow-2xl xl:hidden animate-scale-in origin-top"
+          className="mt-2 rounded-3xl border p-5 shadow-2xl xl:hidden animate-scale-in origin-top overflow-y-auto max-h-[80vh]"
           style={{ backgroundColor: "var(--fun-card)", borderColor: "var(--fun-stroke-1)" }}
         >
-          <nav className="space-y-1" aria-label="Mobil navigasyon">
-            <Link to="/about" className="block rounded-xl px-4 py-3 fun-text-muted transition-colors hover:bg-[var(--fun-surface)] hover:fun-text" onClick={() => setMobileOpen(false)}>{t("nav.about")}</Link>
-            <Link to="/team" className="block rounded-xl px-4 py-3 fun-text-muted transition-colors hover:bg-[var(--fun-surface)] hover:fun-text" onClick={() => setMobileOpen(false)}>{t("nav.team")}</Link>
-            <Link to="/services" className="block rounded-xl px-4 py-3 fun-text-muted transition-colors hover:bg-[var(--fun-surface)] hover:fun-text" onClick={() => setMobileOpen(false)}>{t("nav.services")}</Link>
-            <Link to="/pricing" className="block rounded-xl px-4 py-3 fun-text-muted transition-colors hover:bg-[var(--fun-surface)] hover:fun-text" onClick={() => setMobileOpen(false)}>{t("nav.pricing")}</Link>
-            <Link to="/blog" className="block rounded-xl px-4 py-3 fun-text-muted transition-colors hover:bg-[var(--fun-surface)] hover:fun-text" onClick={() => setMobileOpen(false)}>{t("nav.blog")}</Link>
-            <Link to="/contact" className="block rounded-xl px-4 py-3 fun-text-muted transition-colors hover:bg-[var(--fun-surface)] hover:fun-text" onClick={() => setMobileOpen(false)}>{t("nav.contact")}</Link>
-            <Link to="/sitemap" className="block rounded-xl px-4 py-3 fun-text-muted transition-colors hover:bg-[var(--fun-surface)] hover:fun-text" onClick={() => setMobileOpen(false)}>{t("nav.sitemap")}</Link>
+          <nav className="space-y-2" aria-label="Mobil navigasyon">
+            <MobileAccordion label={t("nav.company")}>
+              <Link to="/about" className="block rounded-xl px-4 py-3 fun-text-muted hover:bg-[var(--fun-surface)]" onClick={() => setMobileOpen(false)}>{t("nav.about")}</Link>
+              <Link to="/team" className="block rounded-xl px-4 py-3 fun-text-muted hover:bg-[var(--fun-surface)]" onClick={() => setMobileOpen(false)}>{t("nav.team")}</Link>
+            </MobileAccordion>
+
+            <MobileAccordion label={t("nav.platform")}>
+              <Link to="/services" className="block rounded-xl px-4 py-3 fun-text-muted hover:bg-[var(--fun-surface)]" onClick={() => setMobileOpen(false)}>{t("nav.services")}</Link>
+              <Link to="/pricing" className="block rounded-xl px-4 py-3 fun-text-muted hover:bg-[var(--fun-surface)]" onClick={() => setMobileOpen(false)}>{t("nav.pricing")}</Link>
+            </MobileAccordion>
+
+            <MobileAccordion label={t("nav.resources")}>
+              <Link to="/blog" className="block rounded-xl px-4 py-3 fun-text-muted hover:bg-[var(--fun-surface)]" onClick={() => setMobileOpen(false)}>{t("nav.blog")}</Link>
+              <Link to="/contact" className="block rounded-xl px-4 py-3 fun-text-muted hover:bg-[var(--fun-surface)]" onClick={() => setMobileOpen(false)}>{t("nav.contact")}</Link>
+              <Link to="/sitemap" className="block rounded-xl px-4 py-3 fun-text-muted hover:bg-[var(--fun-surface)]" onClick={() => setMobileOpen(false)}>{t("nav.sitemap")}</Link>
+              <Link to="/privacy-policy" className="block rounded-xl px-4 py-3 fun-text-muted hover:bg-[var(--fun-surface)]" onClick={() => setMobileOpen(false)}>Gizlilik Politikası</Link>
+              <Link to="/service-policy" className="block rounded-xl px-4 py-3 fun-text-muted hover:bg-[var(--fun-surface)]" onClick={() => setMobileOpen(false)}>Hizmet Politikası</Link>
+            </MobileAccordion>
           </nav>
           <div className="mt-4 flex flex-col gap-2">
             <Link to="/contact" className="btn-fun btn-fun-dark w-full text-center" onClick={() => setMobileOpen(false)}>{t("nav.cta")}</Link>
@@ -131,7 +139,7 @@ export default function Header() {
 
 function Dropdown({ id, label, open, onOpen, children }: { id: string; label: string; open: boolean; onOpen: (id: string | null) => void; children: React.ReactNode }) {
   return (
-    <div className="relative" onMouseEnter={() => onOpen(id)} onMouseLeave={() => onOpen(null)}>
+    <div className="relative" onMouseEnter={() => onOpen(id)} onMouseLeave={() => onOpen(null)} onClick={() => onOpen(open ? null : id)}>
       <button type="button" aria-expanded={open} aria-haspopup="menu" className="flex items-center gap-1 rounded-full px-4 py-2.5 text-sm fun-text-muted transition-all hover:fun-text">
         {label}
         <svg className={`h-4 w-4 transition-transform ${open ? "rotate-180" : ""}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
@@ -170,4 +178,24 @@ function DropdownItem({ to, href, title, desc }: { to?: string; href?: string; t
   );
   if (to) return <Link to={to} className={className}>{content}</Link>;
   return <a href={href || "#"} className={className}>{content}</a>;
+}
+
+function MobileAccordion({ label, children }: { label: string; children: React.ReactNode }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="border-b last:border-0" style={{ borderColor: 'var(--fun-stroke-1)' }}>
+      <button
+        onClick={() => setOpen(!open)}
+        className="flex w-full items-center justify-between py-4 px-4 text-sm font-semibold fun-text"
+      >
+        {label}
+        <svg className={`h-4 w-4 transition-transform duration-300 ${open ? "rotate-180" : ""}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+        </svg>
+      </button>
+      <div className={`overflow-hidden transition-all duration-300 ${open ? "max-h-[1000px] pb-4" : "max-h-0"}`}>
+        <div className="pl-4 space-y-1">{children}</div>
+      </div>
+    </div>
+  );
 }
