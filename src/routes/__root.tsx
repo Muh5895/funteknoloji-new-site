@@ -2,20 +2,22 @@ import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/r
 import appCss from "../styles.css?url";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import IntroSplash from "../components/IntroSplash";
+import { LanguageProvider } from "../lib/i18n";
+
+const THEME_INIT = `
+(function(){try{var s=localStorage.getItem('theme');var d=s?s==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;if(d)document.documentElement.classList.add('dark');var l=localStorage.getItem('lang');if(l==='en'||l==='tr')document.documentElement.lang=l;}catch(e){}})();
+`;
 
 function NotFoundComponent() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-white px-4">
+    <div className="flex min-h-dvh items-center justify-center px-4" style={{ backgroundColor: "var(--color-background)" }}>
       <div className="max-w-md text-center">
-        <h1 className="text-7xl font-bold text-[#12161F]">404</h1>
-        <h2 className="mt-4 text-xl font-semibold text-[#12161F]">Sayfa bulunamadı</h2>
-        <p className="mt-2 text-sm text-[#12161F]/60">
-          Aradığınız sayfa mevcut değil veya taşınmış olabilir.
-        </p>
+        <h1 className="text-7xl font-bold fun-text">404</h1>
+        <h2 className="mt-4 text-xl font-semibold fun-text">Sayfa bulunamadı</h2>
+        <p className="mt-2 text-sm fun-text-muted">Aradığınız sayfa mevcut değil veya taşınmış olabilir.</p>
         <div className="mt-6">
-          <Link to="/" className="btn-fun btn-fun-dark">
-            Ana Sayfa
-          </Link>
+          <Link to="/" className="btn-fun btn-fun-dark">Ana Sayfa</Link>
         </div>
       </div>
     </div>
@@ -28,24 +30,41 @@ export const Route = createRootRoute({
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "Fun Teknoloji – Geleceği Bugün Keşfedin" },
-      { name: "description", content: "Yenilikçi çözümlerimiz ve gelişmiş altyapımız ile iş süreçlerinizi hızlandırın, ekiplerinizi güçlendirin ve teknolojiyle fark yaratın." },
+      { name: "description", content: "Yapay zeka, yazılım geliştirme ve akıllı sistemler alanında öncü çözümlerle işinizi dijital dönüşümün merkezine taşıyoruz." },
       { name: "author", content: "Fun Teknoloji" },
+      { name: "theme-color", content: "#000000" },
       { property: "og:title", content: "Fun Teknoloji – Geleceği Bugün Keşfedin" },
-      { property: "og:description", content: "Yenilikçi çözümlerimiz ve gelişmiş altyapımız ile iş süreçlerinizi hızlandırın, ekiplerinizi güçlendirin ve teknolojiyle fark yaratın." },
+      { property: "og:description", content: "Yenilikçi çözümlerimiz ve gelişmiş altyapımız ile iş süreçlerinizi hızlandırın." },
       { property: "og:type", content: "website" },
       { property: "og:locale", content: "tr_TR" },
+      { property: "og:site_name", content: "Fun Teknoloji" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@funteknoloji_" },
       { name: "twitter:title", content: "Fun Teknoloji – Geleceği Bugün Keşfedin" },
-      { name: "twitter:description", content: "Yenilikçi çözümlerimiz ve gelişmiş altyapımız ile iş süreçlerinizi hızlandırın, ekiplerinizi güçlendirin ve teknolojiyle fark yaratın." },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/3c678074-4945-45b7-8aa6-419bb0cfeb3b/id-preview-c8c5d5e6--ee5ded8d-c91d-4dc8-b2aa-d038f66c0d63.lovable.app-1777809266254.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/3c678074-4945-45b7-8aa6-419bb0cfeb3b/id-preview-c8c5d5e6--ee5ded8d-c91d-4dc8-b2aa-d038f66c0d63.lovable.app-1777809266254.png" },
+      { name: "twitter:description", content: "Yenilikçi teknoloji çözümleri." },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100..900;1,100..900&display=swap" },
+    ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          name: "Fun Teknoloji",
+          url: "https://build-dream-flow-91.lovable.app",
+          sameAs: [
+            "https://www.instagram.com/funteknoloji/",
+            "https://www.youtube.com/@FunTeknoloji",
+            "https://www.linkedin.com/company/funteknoloji",
+            "https://x.com/funteknoloji_",
+          ],
+        }),
+      },
     ],
   }),
   shellComponent: RootShell,
@@ -58,6 +77,7 @@ function RootShell({ children }: { children: React.ReactNode }) {
     <html lang="tr">
       <head>
         <HeadContent />
+        <script dangerouslySetInnerHTML={{ __html: THEME_INIT }} />
       </head>
       <body>
         {children}
@@ -69,10 +89,11 @@ function RootShell({ children }: { children: React.ReactNode }) {
 
 function RootComponent() {
   return (
-    <>
+    <LanguageProvider>
+      <IntroSplash />
       <Header />
       <Outlet />
       <Footer />
-    </>
+    </LanguageProvider>
   );
 }

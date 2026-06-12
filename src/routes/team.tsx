@@ -6,7 +6,14 @@ export const Route = createFileRoute("/team")({
     meta: [
       { title: "Ekibimiz – Fun Teknoloji" },
       { name: "description", content: "Fun Teknoloji'nin dinamik ekibini tanıyın." },
+      { property: "og:title", content: "Ekibimiz – Fun Teknoloji" },
+      { property: "og:description", content: "Fun Teknoloji'nin dinamik ekibini tanıyın." },
+      { property: "og:url", content: "https://build-dream-flow-91.lovable.app/team" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:title", content: "Ekibimiz – Fun Teknoloji" },
+      { name: "twitter:description", content: "Fun Teknoloji'nin dinamik ekibini tanıyın." },
     ],
+    links: [{ rel: "canonical", href: "https://build-dream-flow-91.lovable.app/team" }],
   }),
   component: TeamPage,
 });

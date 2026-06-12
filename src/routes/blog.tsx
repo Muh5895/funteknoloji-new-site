@@ -5,7 +5,14 @@ export const Route = createFileRoute("/blog")({
     meta: [
       { title: "Blog – Fun Teknoloji" },
       { name: "description", content: "Fun Teknoloji blog yazıları, teknoloji haberleri ve içgörüler." },
+      { property: "og:title", content: "Blog – Fun Teknoloji" },
+      { property: "og:description", content: "Fun Teknoloji blog yazıları, teknoloji haberleri ve içgörüler." },
+      { property: "og:url", content: "https://build-dream-flow-91.lovable.app/blog" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:title", content: "Blog – Fun Teknoloji" },
+      { name: "twitter:description", content: "Fun Teknoloji blog yazıları, teknoloji haberleri ve içgörüler." },
     ],
+    links: [{ rel: "canonical", href: "https://build-dream-flow-91.lovable.app/blog" }],
   }),
   component: BlogPage,
 });

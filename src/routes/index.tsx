@@ -7,7 +7,14 @@ export const Route = createFileRoute("/")({
     meta: [
       { title: "Fun Teknoloji – Geleceği Bugün Keşfedin" },
       { name: "description", content: "Yapay zeka, yazılım geliştirme ve akıllı sistemler alanında öncü çözümlerle işinizi dijital dönüşümün merkezine taşıyoruz." },
+      { property: "og:title", content: "Fun Teknoloji – Geleceği Bugün Keşfedin" },
+      { property: "og:description", content: "Yapay zeka, yazılım geliştirme ve akıllı sistemler alanında öncü çözümlerle işinizi dijital dönüşümün merkezine taşıyoruz." },
+      { property: "og:url", content: "https://build-dream-flow-91.lovable.app/" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:title", content: "Fun Teknoloji – Geleceği Bugün Keşfedin" },
+      { name: "twitter:description", content: "Yapay zeka, yazılım geliştirme ve akıllı sistemler alanında öncü çözümlerle işinizi dijital dönüşümün merkezine taşıyoruz." },
     ],
+    links: [{ rel: "canonical", href: "https://build-dream-flow-91.lovable.app/" }],
   }),
   component: Index,
 });

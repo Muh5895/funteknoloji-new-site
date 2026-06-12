@@ -6,7 +6,14 @@ export const Route = createFileRoute("/about")({
     meta: [
       { title: "Hakkımızda – Fun Teknoloji" },
       { name: "description", content: "Fun Teknoloji'yi daha yakından tanıyın. Misyonumuz, vizyonumuz ve değerlerimiz." },
+      { property: "og:title", content: "Hakkımızda – Fun Teknoloji" },
+      { property: "og:description", content: "Fun Teknoloji'yi daha yakından tanıyın. Misyonumuz, vizyonumuz ve değerlerimiz." },
+      { property: "og:url", content: "https://build-dream-flow-91.lovable.app/about" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:title", content: "Hakkımızda – Fun Teknoloji" },
+      { name: "twitter:description", content: "Fun Teknoloji'yi daha yakından tanıyın. Misyonumuz, vizyonumuz ve değerlerimiz." },
     ],
+    links: [{ rel: "canonical", href: "https://build-dream-flow-91.lovable.app/about" }],
   }),
   component: AboutPage,
 });
