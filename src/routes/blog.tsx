@@ -1,5 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useLang } from "../lib/i18n";
+import { useEffect, useState } from "react";
+import { supabase } from "../lib/supabase";
 
 export const Route = createFileRoute("/blog")({
   head: () => ({
@@ -20,9 +22,23 @@ export const Route = createFileRoute("/blog")({
 
 function BlogPage() {
   const { t } = useLang();
-  const posts: any[] = [
-    // Örnek veriler kaldırıldı
-  ];
+  const [posts, setPosts] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchPosts() {
+      const { data, error } = await supabase
+        .from('blog')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (!error && data) {
+        setPosts(data);
+      }
+      setLoading(false);
+    }
+    fetchPosts();
+  }, []);
 
   const tagColors: Record<string, string> = {
     "Yapay Zeka": "bg-[#864FFE]/10 text-[#864FFE]",
@@ -47,10 +63,14 @@ function BlogPage() {
 
       <section className="py-16 md:py-24">
         <div className="main-container">
-          {posts.length > 0 ? (
+          {loading ? (
+            <div className="text-center py-20">
+              <p className="text-tagline-1 fun-text-muted">Yükleniyor...</p>
+            </div>
+          ) : posts.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {posts.map((post, i) => (
-                <article key={i} className="rounded-3xl border overflow-hidden transition-all hover:shadow-lg" style={{ backgroundColor: 'var(--fun-card)', borderColor: 'var(--fun-stroke-1)' }}>
+                <article key={post.id || i} className="rounded-3xl border overflow-hidden transition-all hover:shadow-lg" style={{ backgroundColor: 'var(--fun-card)', borderColor: 'var(--fun-stroke-1)' }}>
                   <div className="h-[200px] flex items-center justify-center" style={{ backgroundColor: 'var(--fun-surface)' }}>
                     <div className="h-16 w-16 rounded-2xl flex items-center justify-center" style={{ backgroundColor: 'var(--fun-card)' }}>
                       <span className="text-2xl font-bold fun-text-muted">{i + 1}</span>
@@ -58,11 +78,11 @@ function BlogPage() {
                   </div>
                   <div className="p-6 md:p-8">
                     <div className="flex items-center gap-3 mb-4">
-                      <span className={`text-xs font-medium px-3 py-1 rounded-full ${tagColors[post.tag] || ''}`}>{post.tag}</span>
-                      <span className="text-xs fun-text-muted">{post.date}</span>
+                      <span className={`text-xs font-medium px-3 py-1 rounded-full ${tagColors[post.tag] || 'bg-[#864FFE]/10 text-[#864FFE]'}`}>{post.tag || 'Teknoloji'}</span>
+                      <span className="text-xs fun-text-muted">{post.created_at ? new Date(post.created_at).toLocaleDateString('tr-TR') : ''}</span>
                     </div>
                     <h3 className="text-heading-6 font-medium mb-2 fun-text">{post.title}</h3>
-                    <p className="text-tagline-1 fun-text-muted mb-4">{post.desc}</p>
+                    <p className="text-tagline-1 fun-text-muted mb-4">{post.description}</p>
                     <span className="text-sm font-medium fun-text inline-flex items-center gap-1 cursor-pointer hover:text-[#864FFE] transition-colors">
                       Devamını oku
                       <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>

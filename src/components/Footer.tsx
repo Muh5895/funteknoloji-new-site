@@ -1,5 +1,7 @@
 import { Link } from "@tanstack/react-router";
 
+const LOGO_DARK = "https://framerusercontent.com/images/wYtLTUyXkZSH6e5ElqNpfbb4xT4.png?scale-down-to=512&width=1024&height=1024";
+
 export default function Footer() {
   return (
     <footer className="fun-surface relative overflow-hidden" style={{ backgroundColor: 'var(--fun-surface)' }}>
@@ -9,9 +11,7 @@ export default function Footer() {
           <div className="col-span-12 lg:col-span-4">
             <div className="max-w-[306px]">
               <div className="flex items-center gap-2">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl" style={{ backgroundColor: 'var(--fun-text)' }}>
-                  <span className="text-lg font-bold" style={{ color: 'var(--color-background)' }}>F</span>
-                </div>
+                <img src={LOGO_DARK} alt="Fun Teknoloji" width={40} height={40} className="h-10 w-10 object-contain brightness-0 dark:brightness-100 invert dark:invert-0" />
                 <span className="text-lg font-semibold fun-text">Fun Teknoloji</span>
               </div>
               <p className="mt-4 mb-7 fun-text-muted text-tagline-1">
@@ -82,10 +82,10 @@ export default function Footer() {
 
         {/* Bottom */}
         <div className="flex flex-col items-center justify-between gap-4 border-t py-6 md:flex-row" style={{ borderColor: 'var(--fun-stroke-1)' }}>
-          <p className="text-sm fun-text-muted">© 2025 Fun Teknoloji. Tüm hakları saklıdır.</p>
+          <p className="text-sm fun-text-muted">© 2026 Fun Teknoloji. Tüm hakları saklıdır.</p>
           <div className="flex items-center gap-6">
-            <a href="#" className="text-sm fun-text-muted hover:fun-text transition-colors">Gizlilik Politikası</a>
-            <a href="#" className="text-sm fun-text-muted hover:fun-text transition-colors">Şartlar ve Koşullar</a>
+            <Link to="/privacy-policy" className="text-sm fun-text-muted hover:fun-text transition-colors">Gizlilik Politikası</Link>
+            <Link to="/service-policy" className="text-sm fun-text-muted hover:fun-text transition-colors">Hizmet Politikası</Link>
           </div>
         </div>
       </div>

@@ -3,8 +3,8 @@ import { useState, useEffect } from "react";
 import ThemeToggle from "./ThemeToggle";
 import LanguageSwitcher from "./LanguageSwitcher";
 import { useLang } from "../lib/i18n";
-import logoDark from "../assets/logo-dark.png.asset.json";
-import logoLight from "../assets/logo-light.png.asset.json";
+const LOGO_DARK = "https://framerusercontent.com/images/wYtLTUyXkZSH6e5ElqNpfbb4xT4.png?scale-down-to=512&width=1024&height=1024";
+const LOGO_LIGHT = "https://framerusercontent.com/images/cOsd9aFSLcyMQvEdo60L3fUo.png?width=1563&height=1563";
 
 export default function Header() {
   const { t } = useLang();
@@ -37,7 +37,7 @@ export default function Header() {
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2.5 transition-transform hover:scale-[1.03]" aria-label="Fun Teknoloji – Ana sayfa">
           <img
-            src={isDark ? logoLight.url : logoDark.url}
+            src={isDark ? LOGO_LIGHT : LOGO_DARK}
             alt="Fun Teknoloji"
             width={44}
             height={44}

@@ -43,7 +43,7 @@ function Index() {
 function HeroSection({ t }: { t: (k: string) => string }) {
   return (
     <section className="pt-28 px-4 lg:px-5">
-      <div className="max-w-[1880px] mx-auto relative pt-20 md:pt-32 border overflow-hidden rounded-3xl xl:rounded-[32px]" style={{ backgroundColor: 'var(--fun-surface)', borderColor: 'var(--fun-stroke-1)' }}>
+      <div className="max-w-[1880px] mx-auto relative pt-20 md:pt-32 border overflow-hidden rounded-3xl xl:rounded-[32px] animate-in fade-in slide-in-from-bottom-8 duration-1000" style={{ backgroundColor: 'var(--fun-surface)', borderColor: 'var(--fun-stroke-1)' }}>
         <div className="hidden md:block absolute w-full h-full top-0 left-0 z-10">
           <div className="absolute left-[7%] 2xl:left-[16%] w-px h-full top-0" style={{ backgroundColor: 'var(--fun-stroke-1)' }} />
           <div className="absolute right-[7%] 2xl:right-[16%] w-px h-full top-0" style={{ backgroundColor: 'var(--fun-stroke-1)' }} />
@@ -52,27 +52,18 @@ function HeroSection({ t }: { t: (k: string) => string }) {
 
         <div className="main-container relative z-30">
           <div className="text-center mb-12 lg:mb-24">
-            <span className="badge-fun badge-fun-gray mb-4 inline-block text-xs tracking-wider">{t("home.hero.badge")}</span>
-            <h1 className="text-heading-3 md:text-heading-2 lg:text-heading-1 font-medium mb-4 fun-text">
-              {t("home.hero.title")}
+            <span className="badge-fun badge-fun-gray mb-4 inline-block text-xs tracking-wider animate-in zoom-in duration-700 delay-300 fill-mode-both">{t("home.hero.badge")}</span>
+            <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-6 tracking-tight animate-in fade-in slide-in-from-top-4 duration-1000 delay-500 fill-mode-both">
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-white/80 to-white/40 dark:from-white dark:via-white/90 dark:to-white/50">
+                {t("home.hero.title")}
+              </span>
             </h1>
-            <p className="max-w-[750px] mx-auto mb-8 md:mb-14 text-tagline-1 fun-text-muted">
+            <p className="max-w-[850px] mx-auto mb-8 md:mb-14 text-lg md:text-xl lg:text-2xl fun-text-muted leading-relaxed animate-in fade-in duration-1000 delay-700 fill-mode-both">
               {t("home.hero.desc")}
             </p>
-            <div className="flex md:flex-row flex-col gap-3 items-center justify-center">
-              <ArrowButton to="/services" variant="dark">{t("home.hero.explore")}</ArrowButton>
-              <ArrowButton to="/contact" variant="light">{t("home.hero.start")}</ArrowButton>
-            </div>
-          </div>
-
-          <div className="max-w-[1016px] mx-auto -mb-1">
-            <div className="rounded-t-2xl aspect-[16/10] flex items-center justify-center" style={{ background: 'linear-gradient(to bottom, var(--fun-stroke-2), var(--fun-surface))' }}>
-              <div className="text-center">
-                <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-2xl shadow-lg" style={{ backgroundColor: 'var(--fun-card)' }}>
-                  <span className="text-3xl font-bold fun-text">F</span>
-                </div>
-                <p className="text-sm fun-text-muted">Fun Teknoloji Platform</p>
-              </div>
+            <div className="flex md:flex-row flex-col gap-4 items-center justify-center animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-1000 fill-mode-both">
+              <ArrowButton to="/services" variant="dark" className="w-full md:w-auto h-14 text-lg">{t("home.hero.explore")}</ArrowButton>
+              <ArrowButton to="/contact" variant="light" className="w-full md:w-auto h-14 text-lg">{t("home.hero.start")}</ArrowButton>
             </div>
           </div>
         </div>

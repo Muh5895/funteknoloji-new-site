@@ -13,6 +13,8 @@ import { Route as TeamRouteImport } from './routes/team'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as SitemapRouteImport } from './routes/sitemap'
 import { Route as ServicesRouteImport } from './routes/services'
+import { Route as ServicePolicyRouteImport } from './routes/service-policy'
+import { Route as PrivacyPolicyRouteImport } from './routes/privacy-policy'
 import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as BlogRouteImport } from './routes/blog'
@@ -37,6 +39,16 @@ const SitemapRoute = SitemapRouteImport.update({
 const ServicesRoute = ServicesRouteImport.update({
   id: '/services',
   path: '/services',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ServicePolicyRoute = ServicePolicyRouteImport.update({
+  id: '/service-policy',
+  path: '/service-policy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyPolicyRoute = PrivacyPolicyRouteImport.update({
+  id: '/privacy-policy',
+  path: '/privacy-policy',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PricingRoute = PricingRouteImport.update({
@@ -71,6 +83,8 @@ export interface FileRoutesByFullPath {
   '/blog': typeof BlogRoute
   '/contact': typeof ContactRoute
   '/pricing': typeof PricingRoute
+  '/privacy-policy': typeof PrivacyPolicyRoute
+  '/service-policy': typeof ServicePolicyRoute
   '/services': typeof ServicesRoute
   '/sitemap': typeof SitemapRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -82,6 +96,8 @@ export interface FileRoutesByTo {
   '/blog': typeof BlogRoute
   '/contact': typeof ContactRoute
   '/pricing': typeof PricingRoute
+  '/privacy-policy': typeof PrivacyPolicyRoute
+  '/service-policy': typeof ServicePolicyRoute
   '/services': typeof ServicesRoute
   '/sitemap': typeof SitemapRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -94,6 +110,8 @@ export interface FileRoutesById {
   '/blog': typeof BlogRoute
   '/contact': typeof ContactRoute
   '/pricing': typeof PricingRoute
+  '/privacy-policy': typeof PrivacyPolicyRoute
+  '/service-policy': typeof ServicePolicyRoute
   '/services': typeof ServicesRoute
   '/sitemap': typeof SitemapRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -107,6 +125,8 @@ export interface FileRouteTypes {
     | '/blog'
     | '/contact'
     | '/pricing'
+    | '/privacy-policy'
+    | '/service-policy'
     | '/services'
     | '/sitemap'
     | '/sitemap.xml'
@@ -118,6 +138,8 @@ export interface FileRouteTypes {
     | '/blog'
     | '/contact'
     | '/pricing'
+    | '/privacy-policy'
+    | '/service-policy'
     | '/services'
     | '/sitemap'
     | '/sitemap.xml'
@@ -129,6 +151,8 @@ export interface FileRouteTypes {
     | '/blog'
     | '/contact'
     | '/pricing'
+    | '/privacy-policy'
+    | '/service-policy'
     | '/services'
     | '/sitemap'
     | '/sitemap.xml'
@@ -141,6 +165,8 @@ export interface RootRouteChildren {
   BlogRoute: typeof BlogRoute
   ContactRoute: typeof ContactRoute
   PricingRoute: typeof PricingRoute
+  PrivacyPolicyRoute: typeof PrivacyPolicyRoute
+  ServicePolicyRoute: typeof ServicePolicyRoute
   ServicesRoute: typeof ServicesRoute
   SitemapRoute: typeof SitemapRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
@@ -175,6 +201,20 @@ declare module '@tanstack/react-router' {
       path: '/services'
       fullPath: '/services'
       preLoaderRoute: typeof ServicesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/service-policy': {
+      id: '/service-policy'
+      path: '/service-policy'
+      fullPath: '/service-policy'
+      preLoaderRoute: typeof ServicePolicyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy-policy': {
+      id: '/privacy-policy'
+      path: '/privacy-policy'
+      fullPath: '/privacy-policy'
+      preLoaderRoute: typeof PrivacyPolicyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/pricing': {
@@ -221,6 +261,8 @@ const rootRouteChildren: RootRouteChildren = {
   BlogRoute: BlogRoute,
   ContactRoute: ContactRoute,
   PricingRoute: PricingRoute,
+  PrivacyPolicyRoute: PrivacyPolicyRoute,
+  ServicePolicyRoute: ServicePolicyRoute,
   ServicesRoute: ServicesRoute,
   SitemapRoute: SitemapRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
