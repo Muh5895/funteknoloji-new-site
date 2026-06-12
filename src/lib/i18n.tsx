@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 
-export type Lang = "tr" | "en";
+export type Lang = "tr" | "en" | "de" | "fr" | "es" | "az";
 
 type Dict = Record<string, string>;
 
@@ -20,16 +20,26 @@ const tr: Dict = {
   "nav.faq": "SSS",
   "nav.support": "Destek",
   "nav.contact": "İletişim",
+  "nav.projects": "Projeler",
+  "nav.docs": "Dokümantasyon",
+  "nav.waitlist": "Bekleme Listesine Katıl",
+  "nav.policies": "Politikalar",
+  "nav.privacy": "Gizlilik Politikası",
+  "nav.service_policy": "Hizmet Politikası",
+
   "theme.light": "Açık temaya geç",
   "theme.dark": "Koyu temaya geç",
   "lang.label": "Dil seç",
   "intro.skip": "Atla",
+
   "home.hero.badge": "Türkiye'nin Yenilikçi Teknoloji Şirketi",
   "home.hero.title": "Geleceğin Teknolojileri Bugün Bizimle",
   "home.hero.desc": "Yapay zeka, yazılım geliştirme ve akıllı sistemler alanında öncü çözümlerle işinizi dijital dönüşümün merkezine taşıyoruz.",
-  "home.hero.explore": "Keşfet",
-  "home.hero.start": "Başlayın",
+  "home.hero.explore": "Hizmetleri Keşfet",
+  "home.hero.start": "Bekleme Listesine Katıl",
+
   "home.whatwedo.text": "İşletmelerin etkileşimi artırmak, dönüşümleri yükseltmek ve büyümede yeni zirvelere ulaşmak için yapay zeka destekli çözümlerden yararlanmalarına yardımcı oluyoruz.",
+
   "home.features.badge": "Özellikler",
   "home.features.title": "Güçlü Özelliklerle Daha Akıllıca Çalışın",
   "home.features.desc": "Fun Teknoloji ile işlerinizi daha hızlı, güvenli ve verimli yönetin. Modern çözümlerimiz her platformda sorunsuz çalışır.",
@@ -39,6 +49,7 @@ const tr: Dict = {
   "home.features.card2.desc": "Modern web ve mobil uygulamalarla her cihazda kusursuz performans.",
   "home.features.card3.title": "Verileriniz Bizimle Güvende",
   "home.features.card3.desc": "Gelişmiş güvenlik önlemleriyle tüm iş süreçlerinizi güvenle yönetin.",
+
   "home.howitworks.badge": "Nasıl Çalışır",
   "home.howitworks.title": "Fun Teknoloji ile Dijital Dönüşüm",
   "home.howitworks.desc": "Güçlü teknolojik altyapımız ile işinizi geleceğe hazırlıyoruz.",
@@ -48,22 +59,49 @@ const tr: Dict = {
   "home.howitworks.step2.desc": "Modern teknolojiler kullanarak yüksek performanslı ve ölçeklenebilir sistemler inşa ediyoruz.",
   "home.howitworks.step3.title": "Hızlı Entegrasyon",
   "home.howitworks.step3.desc": "Çözümlerimizi iş süreçlerinize sorunsuz ve hızlı bir şekilde entegre ediyoruz.",
+
   "home.services.badge": "Hizmetlerimiz",
   "home.services.title": "Dünya genelindeki lider şirketler Fun Teknoloji'ye güveniyor.",
   "home.services.desc": "İşinizi büyütmek ve dijital dünyada öne çıkmak için sunduğumuz profesyonel çözümleri keşfedin.",
+
   "home.cta.title": "Bugün kullanmaya başlayın.",
   "home.cta.desc": "Herhangi bir sorunuz veya yardıma ihtiyacınız olursa destek ekibimizle iletişime geçin.",
   "home.cta.button": "İletişime Geçin",
   "home.cta.more": "Daha Fazla Bilgi",
+
+  "home.stats.clients": "Mutlu Müşteri",
+  "home.stats.projects": "Tamamlanan Proje",
+  "home.stats.team": "Uzman Kadro",
+  "home.stats.support": "Kesintisiz Destek",
+
   "team.badge": "Ekibimiz",
   "team.title": "Arkamızdaki güç",
   "team.desc": "Tutkulu ve yetenekli ekibimizle geleceğin teknolojilerini bugünden inşa ediyoruz.",
   "team.join.title": "Ekibimize katılın",
   "team.join.desc": "Yetenekli profesyonelleri arıyoruz. Kariyer fırsatları için bize ulaşın.",
+
   "blog.badge": "Blog",
   "blog.title": "Teknoloji Dünyasından",
   "blog.desc": "En son teknoloji haberleri, içgörüler ve rehberler.",
   "blog.empty": "Yakında yeni içeriklerle buradayız.",
+
+  "pricing.badge": "Fiyatlandırma",
+  "pricing.title": "Yeni Paketlerimiz Yakında Burada",
+  "pricing.desc": "Şu an sistemlerimizi daha verimli ve ekonomik hale getirmek için çalışıyoruz. Yeni abonelik modellerimiz çok yakında yayında olacak.",
+  "pricing.waitlist": "Bekleme Listesine Katıl",
+  "pricing.contact": "Bize Ulaşın",
+
+  "footer.rights": "Tüm hakları saklıdır.",
+  "footer.description": "Geleceğin teknolojilerini bugünden inşa ediyoruz.",
+
+  "contact.title": "Bize Ulaşın",
+  "contact.desc": "Sorularınız için buradayız.",
+  "contact.form.name": "Adınız",
+  "contact.form.email": "E-posta Adresiniz",
+  "contact.form.subject": "Konu",
+  "contact.form.message": "Mesajınız",
+  "contact.form.send": "Mesaj Gönder",
+  "contact.form.success": "Mesajınız başarıyla gönderildi!",
 };
 
 const en: Dict = {
@@ -75,23 +113,33 @@ const en: Dict = {
   "nav.sitemap": "Sitemap",
   "nav.login": "Sign in",
   "nav.cta": "Get started",
-  "nav.about": "About",
-  "nav.team": "Team",
+  "nav.about": "About Us",
+  "nav.team": "Our Team",
   "nav.career": "Careers",
   "nav.blog": "Blog",
   "nav.faq": "FAQ",
   "nav.support": "Support",
   "nav.contact": "Contact",
+  "nav.projects": "Projects",
+  "nav.docs": "Documentation",
+  "nav.waitlist": "Join Waitlist",
+  "nav.policies": "Policies",
+  "nav.privacy": "Privacy Policy",
+  "nav.service_policy": "Service Policy",
+
   "theme.light": "Switch to light",
   "theme.dark": "Switch to dark",
   "lang.label": "Choose language",
   "intro.skip": "Skip",
+
   "home.hero.badge": "Turkey's Innovative Technology Company",
   "home.hero.title": "Future Technologies With Us Today",
   "home.hero.desc": "We move your business to the center of digital transformation with pioneering solutions in AI, software development, and smart systems.",
-  "home.hero.explore": "Explore",
-  "home.hero.start": "Get Started",
+  "home.hero.explore": "Explore Services",
+  "home.hero.start": "Join Waitlist",
+
   "home.whatwedo.text": "We help businesses leverage AI-powered solutions to increase engagement, boost conversions, and reach new heights in growth.",
+
   "home.features.badge": "Features",
   "home.features.title": "Work Smarter with Powerful Features",
   "home.features.desc": "Manage your business faster, safer, and more efficiently with Fun Teknoloji. Our modern solutions work seamlessly on every platform.",
@@ -101,6 +149,7 @@ const en: Dict = {
   "home.features.card2.desc": "Perfect performance on every device with modern web and mobile applications.",
   "home.features.card3.title": "Your Data is Safe with Us",
   "home.features.card3.desc": "Manage all your business processes securely with advanced security measures.",
+
   "home.howitworks.badge": "How It Works",
   "home.howitworks.title": "Digital Transformation with Fun Teknoloji",
   "home.howitworks.desc": "We prepare your business for the future with our strong technological infrastructure.",
@@ -110,25 +159,57 @@ const en: Dict = {
   "home.howitworks.step2.desc": "We build high-performance and scalable systems using modern technologies.",
   "home.howitworks.step3.title": "Fast Integration",
   "home.howitworks.step3.desc": "We integrate our solutions into your business processes seamlessly and quickly.",
+
   "home.services.badge": "Our Services",
   "home.services.title": "Leading companies worldwide trust Fun Teknoloji.",
   "home.services.desc": "Explore our professional solutions to grow your business and stand out in the digital world.",
+
   "home.cta.title": "Start using today.",
   "home.cta.desc": "Contact our support team if you have any questions or need help.",
   "home.cta.button": "Contact Us",
   "home.cta.more": "Learn More",
+
+  "home.stats.clients": "Happy Clients",
+  "home.stats.projects": "Completed Projects",
+  "home.stats.team": "Expert Staff",
+  "home.stats.support": "Continuous Support",
+
   "team.badge": "Our Team",
   "team.title": "The power behind us",
   "team.desc": "Building future technologies today with our passionate and talented team.",
   "team.join.title": "Join our team",
   "team.join.desc": "We are looking for talented professionals. Contact us for career opportunities.",
+
   "blog.badge": "Blog",
   "blog.title": "From the Tech World",
   "blog.desc": "Latest technology news, insights, and guides.",
   "blog.empty": "Coming soon with new content.",
+
+  "pricing.badge": "Pricing",
+  "pricing.title": "Our New Plans Coming Soon",
+  "pricing.desc": "We are currently working on making our systems more efficient and affordable. Our new subscription models will be live very soon.",
+  "pricing.waitlist": "Join Waitlist",
+  "pricing.contact": "Contact Us",
+
+  "footer.rights": "All rights reserved.",
+  "footer.description": "Building future technologies today.",
+
+  "contact.title": "Contact Us",
+  "contact.desc": "We are here for your questions.",
+  "contact.form.name": "Your Name",
+  "contact.form.email": "Your Email",
+  "contact.form.subject": "Subject",
+  "contact.form.message": "Your Message",
+  "contact.form.send": "Send Message",
+  "contact.form.success": "Your message has been sent successfully!",
 };
 
-const dicts: Record<Lang, Dict> = { tr, en };
+const az: Dict = { ...tr, "nav.company": "Şirkət", "nav.platform": "Platforma", "nav.resources": "Resurslar", "nav.pricing": "Qiymətləndirmə", "nav.services": "Xidmətlər", "nav.cta": "Başlayın", "nav.about": "Haqqımızda", "nav.team": "Komandamız", "nav.blog": "Bloq", "nav.contact": "Əlaqə" };
+const de: Dict = { ...en, "nav.company": "Unternehmen", "nav.platform": "Plattform", "nav.resources": "Ressourcen", "nav.pricing": "Preise", "nav.services": "Dienstleistungen", "nav.cta": "Loslegen", "nav.about": "Über uns", "nav.team": "Unser Team", "nav.blog": "Blog", "nav.contact": "Kontakt" };
+const fr: Dict = { ...en, "nav.company": "Entreprise", "nav.platform": "Plateforme", "nav.resources": "Ressources", "nav.pricing": "Tarification", "nav.services": "Services", "nav.cta": "Commencer", "nav.about": "À propos", "nav.team": "Notre équipe", "nav.blog": "Blog", "nav.contact": "Contact" };
+const es: Dict = { ...en, "nav.company": "Empresa", "nav.platform": "Plataforma", "nav.resources": "Recursos", "nav.pricing": "Precios", "nav.services": "Servicios", "nav.cta": "Empezar", "nav.about": "Sobre nosotros", "nav.team": "Nuestro equipo", "nav.blog": "Blog", "nav.contact": "Contacto" };
+
+const dicts: Record<Lang, Dict> = { tr, en, de, fr, es, az };
 
 interface Ctx {
   lang: Lang;
@@ -143,7 +224,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const stored = (typeof window !== "undefined" && localStorage.getItem("lang")) as Lang | null;
-    if (stored === "tr" || stored === "en") setLangState(stored);
+    if (stored) setLangState(stored);
   }, []);
 
   useEffect(() => {

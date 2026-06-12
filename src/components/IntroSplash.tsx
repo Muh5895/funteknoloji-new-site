@@ -24,14 +24,28 @@ export default function IntroSplash() {
 
   const finish = () => {
     setFading(true);
-    setTimeout(() => setShow(false), 600);
+    setTimeout(() => {
+        setShow(false);
+        document.body.style.overflow = "";
+    }, 600);
   };
 
   useEffect(() => {
     if (!show) return;
     const v = videoRef.current;
     if (!v) return;
-    v.play().catch(() => finish());
+
+    const playVideo = async () => {
+        try {
+            await v.play();
+        } catch (err) {
+            console.error("Video play failed:", err);
+            finish();
+        }
+    };
+
+    playVideo();
+
     // safety: max 10s
     const t = setTimeout(finish, 10000);
     return () => clearTimeout(t);
@@ -55,7 +69,10 @@ export default function IntroSplash() {
         disableRemotePlayback
         controlsList="nodownload noremoteplayback nofullscreen noplaybackrate"
         onEnded={finish}
-        onError={finish}
+        onError={(e) => {
+            console.error("Video error:", e);
+            finish();
+        }}
         onContextMenu={(e) => e.preventDefault()}
         className="h-full w-full object-cover pointer-events-none select-none"
       />

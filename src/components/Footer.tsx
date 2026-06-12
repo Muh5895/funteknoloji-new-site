@@ -30,30 +30,9 @@ export default function Footer() {
                 Yenilikçi çözümlerimizle geleceği bugünden inşa ediyoruz.
               </p>
               <div className="flex items-center gap-3">
-                <SocialLink href="https://www.instagram.com/funteknoloji/" label="Instagram">
-                  <svg className="h-4 w-4" viewBox="0 0 16 16" fill="none">
-                    <rect x="1" y="1" width="14" height="14" rx="4" stroke="currentColor" strokeWidth="1.5" />
-                    <circle cx="8" cy="8" r="3" stroke="currentColor" strokeWidth="1.5" />
-                    <circle cx="11.5" cy="4.5" r="0.75" fill="currentColor" />
-                  </svg>
-                </SocialLink>
-                <div className="h-5 w-px" style={{ backgroundColor: 'var(--fun-stroke-1)' }} />
-                <SocialLink href="https://www.youtube.com/@FunTeknoloji" label="YouTube">
-                  <svg className="h-4 w-4" viewBox="0 0 22 16" fill="none">
-                    <path d="M16.668 15C18.972 15.084 20.91 13.29 21 10.986V5.02C20.91 2.716 18.972 .919 16.668 1.003H5.332C3.028.919 1.09 2.716 1 5.02V10.986C1.09 13.29 3.028 15.087 5.332 15.003H16.668Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                    <path d="M10.508 5.177L13.669 7.325C13.874 7.445 14 7.664 14 7.901C14 8.138 13.874 8.358 13.669 8.477L10.508 10.827C9.908 11.234 9 10.887 9 10.251V5.751C9 5.118 9.909 4.77 10.508 5.177Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                  </svg>
-                </SocialLink>
-                <div className="h-5 w-px" style={{ backgroundColor: 'var(--fun-stroke-1)' }} />
-                <SocialLink href="https://www.linkedin.com/company/funteknoloji" label="LinkedIn">
-                  <svg className="h-3.5 w-3.5" viewBox="0 0 13 11" fill="none">
-                    <path d="M1.5 4V10M11.5 10V7C11.5 5.067 9.933 3.5 8 3.5C6.067 3.5 4.5 5.067 4.5 7V10M4.5 7V10M1.5 1V2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                  </svg>
-                </SocialLink>
-                <div className="h-5 w-px" style={{ backgroundColor: 'var(--fun-stroke-1)' }} />
-                <SocialLink href="https://x.com/funteknoloji_" label="X">
-                  <svg className="h-4 w-4" viewBox="0 0 25 24" fill="none">
-                    <path d="M17.844 4.242h2.76l-6.03 6.777 7.094 9.223h-5.554l-4.35-5.594-4.978 5.594h-2.762l6.45-7.25-6.806-8.75h5.696l3.932 5.113 4.548-5.113zm-.969 14.376h1.53L8.532 5.782H6.891l9.984 12.836z" fill="currentColor" />
+                <SocialLink href="https://discord.com/invite/f8K8FuZRTX" label="Discord">
+                  <svg className="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515a.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0a12.64 12.64 0 0 0-.617-1.25a.077.077 0 0 0-.079-.037a19.736 19.736 0 0 0-4.885 1.515a.069.069 0 0 0-.032.027C.533 9.048-.32 13.58.099 18.057a.082.082 0 0 0 .031.057a19.9 19.9 0 0 0 5.993 3.03a.078.077 0 0 0 .084-.028a14.09 14.09 0 0 0 1.226-1.994a.076.076 0 0 0-.041-.106a13.107 13.107 0 0 1-1.872-.892a.077.077 0 0 1-.008-.128a10.2 10.2 0 0 0 .372-.292a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.372.292a.077.077 0 0 1-.006.128c-.592.35-1.214.647-1.872.892a.076.076 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028a19.839 19.839 0 0 0 6.002-3.03a.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.956-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.955-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.946 2.418-2.157 2.418z" />
                   </svg>
                 </SocialLink>
               </div>
@@ -66,7 +45,6 @@ export default function Footer() {
               <FooterSection title="Şirket">
                 <FooterLink to="/about">Hakkımızda</FooterLink>
                 <FooterLink to="/team">Ekibimiz</FooterLink>
-                <FooterLink href="#">Kariyer</FooterLink>
                 <FooterLink to="/contact">İletişim</FooterLink>
                 <FooterLink to="/sitemap">Site Haritası</FooterLink>
               </FooterSection>
@@ -75,17 +53,14 @@ export default function Footer() {
               <FooterSection title="Platform">
                 <FooterLink to="/services">Hizmetler</FooterLink>
                 <FooterLink to="/pricing">Fiyatlandırma</FooterLink>
-              <FooterLink to="/privacy-policy">Gizlilik Politikası</FooterLink>
-              <FooterLink to="/service-policy">Hizmet Politikası</FooterLink>
+                <FooterLink to="/projects">Projelerimiz</FooterLink>
               </FooterSection>
             </div>
             <div className="col-span-6 md:col-span-4">
               <FooterSection title="Kaynaklar">
                 <FooterLink to="/blog">Blog</FooterLink>
-                <FooterLink href="#">SSS</FooterLink>
-                <FooterLink href="#">Destek</FooterLink>
-                <FooterLink to="/privacy-policy">Gizlilik Politikası</FooterLink>
-                <FooterLink to="/service-policy">Hizmet Politikası</FooterLink>
+                <FooterLink to="/faq">SSS</FooterLink>
+                <FooterLink to="/docs">Dokümantasyon</FooterLink>
               </FooterSection>
             </div>
           </div>

@@ -12,9 +12,13 @@ export default function LanguageSwitcher() {
     return () => document.removeEventListener("mousedown", h);
   }, []);
 
-  const langs: { code: Lang; label: string; flag: string }[] = [
-    { code: "tr", label: "Türkçe", flag: "🇹🇷" },
-    { code: "en", label: "English", flag: "🇬🇧" },
+  const langs: { code: Lang; label: string; flagUrl: string }[] = [
+    { code: "tr", label: "Türkçe", flagUrl: "https://flagcdn.com/w40/tr.png" },
+    { code: "en", label: "English", flagUrl: "https://flagcdn.com/w40/gb.png" },
+    { code: "az", label: "Azərbaycanca", flagUrl: "https://flagcdn.com/w40/az.png" },
+    { code: "de", label: "Deutsch", flagUrl: "https://flagcdn.com/w40/de.png" },
+    { code: "fr", label: "Français", flagUrl: "https://flagcdn.com/w40/fr.png" },
+    { code: "es", label: "Español", flagUrl: "https://flagcdn.com/w40/es.png" },
   ];
 
   const current = langs.find((l) => l.code === lang)!;
@@ -30,7 +34,7 @@ export default function LanguageSwitcher() {
         className="flex h-10 items-center gap-2 rounded-full border px-3 text-sm font-medium transition-all hover:scale-105"
         style={{ borderColor: "var(--fun-stroke-1)", color: "var(--fun-text)" }}
       >
-        <span aria-hidden="true">{current.flag}</span>
+        <img src={current.flagUrl} alt="" className="w-5 h-auto rounded-sm object-cover" />
         <span className="uppercase">{current.code}</span>
       </button>
       {open && (
@@ -47,7 +51,7 @@ export default function LanguageSwitcher() {
                 className={`flex w-full items-center gap-3 px-4 py-2.5 text-sm transition-colors hover:bg-[var(--fun-surface)] ${l.code === lang ? "font-semibold" : ""}`}
                 style={{ color: "var(--fun-text)" }}
               >
-                <span aria-hidden="true">{l.flag}</span>
+                <img src={l.flagUrl} alt="" className="w-4 h-auto rounded-sm object-cover" />
                 <span>{l.label}</span>
               </button>
             </li>

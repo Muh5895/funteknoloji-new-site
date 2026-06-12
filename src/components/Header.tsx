@@ -51,18 +51,18 @@ export default function Header() {
           <Dropdown id="company" label={t("nav.company")} open={openDropdown === "company"} onOpen={setOpenDropdown}>
             <DropdownItem to="/about" title={t("nav.about")} desc="Bizi daha yakından tanıyın." />
             <DropdownItem to="/team" title={t("nav.team")} desc="Dinamik ekibimizi keşfedin." />
-            <DropdownItem href="#" title={t("nav.career")} desc="Ekibimize katılın." />
           </Dropdown>
 
           <Dropdown id="platform" label={t("nav.platform")} open={openDropdown === "platform"} onOpen={setOpenDropdown}>
             <DropdownItem to="/services" title={t("nav.services")} desc="Tüm hizmetlerimiz." />
+            <DropdownItem to="/projects" title={t("nav.projects")} desc="Geliştirdiğimiz projeler." />
             <DropdownItem to="/pricing" title={t("nav.pricing")} desc="Fiyat planlarımız." />
-            <DropdownItem href="#" title="Güvenlik" desc="Güvenlik standartlarımız." />
           </Dropdown>
 
           <Dropdown id="resources" label={t("nav.resources")} open={openDropdown === "resources"} onOpen={setOpenDropdown}>
             <DropdownItem to="/blog" title={t("nav.blog")} desc="En son yazılarımız." />
-            <DropdownItem href="#" title={t("nav.faq")} desc="Sık sorulan sorular." />
+            <DropdownItem to="/faq" title="Sık Sorulan Sorular" desc="Sık sorulan sorular." />
+            <DropdownItem to="/docs" title={t("nav.docs")} desc="Teknik dokümantasyon." />
             <DropdownItem to="/contact" title={t("nav.contact")} desc="Bizimle iletişime geçin." />
             <DropdownItem to="/sitemap" title={t("nav.sitemap")} desc="Site haritamız." />
           </Dropdown>
@@ -76,9 +76,9 @@ export default function Header() {
         <div className="hidden items-center gap-2 xl:flex">
           <LanguageSwitcher />
           <ThemeToggle />
-          <Link to="/contact" className="btn-fun btn-fun-dark !py-2.5 !px-5 !text-sm">
-            {t("nav.cta")}
-          </Link>
+          <a href="https://waitlist.funteknoloji.com" className="btn-fun btn-fun-dark !py-2.5 !px-5 !text-sm">
+            Bekleme Listesine Katıl
+          </a>
         </div>
 
         {/* Mobile buttons */}
@@ -129,7 +129,7 @@ export default function Header() {
             </MobileAccordion>
           </nav>
           <div className="mt-4 flex flex-col gap-2">
-            <Link to="/contact" className="btn-fun btn-fun-dark w-full text-center" onClick={() => setMobileOpen(false)}>{t("nav.cta")}</Link>
+            <a href="https://waitlist.funteknoloji.com" className="btn-fun btn-fun-dark w-full text-center" onClick={() => setMobileOpen(false)}>Bekleme Listesine Katıl</a>
           </div>
         </div>
       )}

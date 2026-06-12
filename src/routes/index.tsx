@@ -26,7 +26,6 @@ function Index() {
   return (
     <main className="space-y-0">
       <HeroSection t={t} />
-      <LogoMarquee />
       <WhatWeDoSection t={t} />
       <FeaturesSection t={t} />
       <HowItWorksSection t={t} />
@@ -44,26 +43,32 @@ function HeroSection({ t }: { t: (k: string) => string }) {
   return (
     <section className="pt-28 px-4 lg:px-5">
       <div className="max-w-[1880px] mx-auto relative pt-20 md:pt-32 border overflow-hidden rounded-3xl xl:rounded-[32px] animate-in fade-in slide-in-from-bottom-8 duration-1000" style={{ backgroundColor: 'var(--fun-surface)', borderColor: 'var(--fun-stroke-1)' }}>
+        {/* Background Gradient */}
+        <div className="absolute inset-0 z-0 opacity-30 dark:opacity-20 pointer-events-none">
+          <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full blur-[120px] bg-gradient-to-br from-[#6C5CE7] to-transparent" />
+          <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full blur-[120px] bg-gradient-to-br from-[#864FFE] to-transparent" />
+        </div>
+
         <div className="hidden md:block absolute w-full h-full top-0 left-0 z-10">
           <div className="absolute left-[7%] 2xl:left-[16%] w-px h-full top-0" style={{ backgroundColor: 'var(--fun-stroke-1)' }} />
           <div className="absolute right-[7%] 2xl:right-[16%] w-px h-full top-0" style={{ backgroundColor: 'var(--fun-stroke-1)' }} />
           <div className="absolute w-full h-px top-[43%]" style={{ backgroundColor: 'var(--fun-stroke-1)' }} />
         </div>
 
-        <div className="main-container relative z-30">
-          <div className="text-center mb-12 lg:mb-24">
-            <span className="badge-fun badge-fun-gray mb-4 inline-block text-xs tracking-wider animate-in zoom-in duration-700 delay-300 fill-mode-both">{t("home.hero.badge")}</span>
-            <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-6 tracking-tight animate-in fade-in slide-in-from-top-4 duration-1000 delay-500 fill-mode-both">
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-white/80 to-white/40 dark:from-white dark:via-white/90 dark:to-white/50">
+        <div className="main-container relative z-30 flex flex-col items-center justify-center min-h-[60vh] text-center">
+          <div className="mb-12 lg:mb-24 w-full">
+            <span className="badge-fun badge-fun-gray mb-6 inline-block text-xs tracking-wider animate-in zoom-in duration-700 delay-300 fill-mode-both">{t("home.hero.badge")}</span>
+            <h1 className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-bold mb-8 tracking-tight animate-in fade-in slide-in-from-top-4 duration-1000 delay-500 fill-mode-both leading-[1.1]">
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#12161F] via-[#6C5CE7] to-[#864FFE] dark:from-white dark:via-white/90 dark:to-white/50">
                 {t("home.hero.title")}
               </span>
             </h1>
-            <p className="max-w-[850px] mx-auto mb-8 md:mb-14 text-lg md:text-xl lg:text-2xl fun-text-muted leading-relaxed animate-in fade-in duration-1000 delay-700 fill-mode-both">
+            <p className="max-w-[950px] mx-auto mb-10 md:mb-16 text-xl md:text-2xl lg:text-3xl fun-text-muted leading-relaxed animate-in fade-in duration-1000 delay-700 fill-mode-both">
               {t("home.hero.desc")}
             </p>
-            <div className="flex md:flex-row flex-col gap-4 items-center justify-center animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-1000 fill-mode-both">
-              <ArrowButton to="/services" variant="dark" className="w-full md:w-auto h-14 text-lg">{t("home.hero.explore")}</ArrowButton>
-              <ArrowButton to="/contact" variant="light" className="w-full md:w-auto h-14 text-lg">{t("home.hero.start")}</ArrowButton>
+            <div className="flex md:flex-row flex-col gap-5 items-center justify-center animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-1000 fill-mode-both">
+              <ArrowButton to="/services" variant="dark" className="w-full md:w-auto h-16 px-8 text-xl font-medium shadow-2xl shadow-indigo-500/20">{t("home.hero.explore")}</ArrowButton>
+              <ArrowButton href="https://waitlist.funteknoloji.com" variant="light" className="w-full md:w-auto h-16 px-8 text-xl font-medium border-2">{t("home.hero.start")}</ArrowButton>
             </div>
           </div>
         </div>
@@ -132,13 +137,6 @@ function WhatWeDoSection({ t }: { t: (k: string) => string }) {
 
 /* ============ FEATURES ============ */
 function FeaturesSection({ t }: { t: (k: string) => string }) {
-  const CheckIcon = () => (
-    <div className="h-5 w-5 rounded-full bg-[var(--fun-green)] flex items-center justify-center shrink-0 animate-bounce">
-      <svg className="h-3 w-3 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-      </svg>
-    </div>
-  );
 
   return (
     <section className="px-4 lg:px-5 mt-10">
@@ -160,10 +158,6 @@ function FeaturesSection({ t }: { t: (k: string) => string }) {
               <div className="absolute bottom-8 left-8 z-20 max-w-[450px]">
                 <h3 className="text-heading-5 font-medium mb-2 fun-text">{t("home.features.card1.title")}</h3>
                 <p className="text-tagline-1 fun-text-muted mb-4">{t("home.features.card1.desc")}</p>
-                <div className="space-y-2">
-                  <div className="flex items-center gap-2 text-sm fun-text"><CheckIcon /> %100 Verimlilik Artışı</div>
-                  <div className="flex items-center gap-2 text-sm fun-text"><CheckIcon /> Yapay Zeka Desteği</div>
-                </div>
               </div>
               <div className="absolute right-0 top-10 w-[80%] h-[60%] rounded-2xl" style={{ background: 'linear-gradient(135deg, var(--fun-green), var(--fun-surface))' }} />
             </div>
