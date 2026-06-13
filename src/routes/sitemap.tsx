@@ -37,6 +37,8 @@ function SitemapPage() {
       title: t("nav.resources"),
       links: [
         { to: "/blog", label: t("nav.blog"), desc: t("nav.blog.desc") },
+        { to: "/changelog", label: t("nav.changelog"), desc: t("nav.changelog.desc") },
+        { to: "/brand-kit", label: t("nav.brand_kit"), desc: t("nav.brand_kit.desc") },
         { to: "/faq", label: t("nav.faq"), desc: t("nav.faq.desc") },
         { to: "/docs", label: t("nav.docs"), desc: t("nav.docs.desc") },
         { to: "/contact", label: t("nav.contact"), desc: t("nav.contact.desc") },

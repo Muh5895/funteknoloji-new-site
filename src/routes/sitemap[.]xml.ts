@@ -10,6 +10,8 @@ const entries = [
   { path: "/pricing", changefreq: "monthly", priority: "0.8" },
   { path: "/team", changefreq: "monthly", priority: "0.6" },
   { path: "/blog", changefreq: "weekly", priority: "0.7" },
+  { path: "/changelog", changefreq: "monthly", priority: "0.5" },
+  { path: "/brand-kit", changefreq: "monthly", priority: "0.5" },
   { path: "/contact", changefreq: "yearly", priority: "0.7" },
   { path: "/sitemap", changefreq: "monthly", priority: "0.3" },
 ];

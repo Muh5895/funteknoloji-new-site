@@ -18,6 +18,7 @@ function PostPage() {
   useEffect(() => {
     async function fetchPost() {
       if (!supabase) {
+        console.warn("Supabase not configured");
         setLoading(false);
         return;
       }

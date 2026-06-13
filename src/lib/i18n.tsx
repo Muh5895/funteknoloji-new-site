@@ -175,6 +175,10 @@ const tr: Dict = {
   "404.desc": "Aradığınız sayfa mevcut değil veya taşınmış olabilir.",
   "404.home": "Ana Sayfa",
 
+  "error.title": "Bir şeyler yanlış gitti",
+  "error.desc": "Beklenmedik bir hata oluştu. Lütfen tekrar deneyin.",
+  "error.retry": "Tekrar Dene",
+
   "contact.title": "Bize Ulaşın",
   "contact.desc": "Sorularınız için buradayız.",
   "contact.form.name": "Adınız",
@@ -412,6 +416,10 @@ const en: Dict = {
   "404.subtitle": "Page not found",
   "404.desc": "The page you are looking for does not exist or has been moved.",
   "404.home": "Home",
+
+  "error.title": "Something went wrong",
+  "error.desc": "An unexpected error occurred. Please try again.",
+  "error.retry": "Try again",
 
   "contact.title": "Contact Us",
   "contact.desc": "We are here for your questions.",

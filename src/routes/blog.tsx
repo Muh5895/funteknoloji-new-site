@@ -25,6 +25,7 @@ function BlogPage() {
     async function fetchPosts() {
       try {
         if (!supabase) {
+           console.warn("Supabase not configured");
            setLoading(false);
            return;
         }
