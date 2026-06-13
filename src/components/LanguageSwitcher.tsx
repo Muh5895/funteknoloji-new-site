@@ -13,12 +13,12 @@ export default function LanguageSwitcher() {
   }, []);
 
   const langs: { code: Lang; label: string; flagUrl: string }[] = [
-    { code: "tr", label: "Türkçe", flagUrl: "https://flagcdn.com/w40/tr.png" },
-    { code: "en", label: "English", flagUrl: "https://flagcdn.com/w40/gb.png" },
-    { code: "az", label: "Azərbaycanca", flagUrl: "https://flagcdn.com/w40/az.png" },
-    { code: "de", label: "Deutsch", flagUrl: "https://flagcdn.com/w40/de.png" },
-    { code: "fr", label: "Français", flagUrl: "https://flagcdn.com/w40/fr.png" },
-    { code: "es", label: "Español", flagUrl: "https://flagcdn.com/w40/es.png" },
+    { code: "tr", label: "Türkçe", flagUrl: "https://flagcdn.com/tr.svg" },
+    { code: "en", label: "English", flagUrl: "https://flagcdn.com/gb.svg" },
+    { code: "az", label: "Azərbaycan dili", flagUrl: "https://flagcdn.com/az.svg" },
+    { code: "de", label: "Deutsch", flagUrl: "https://flagcdn.com/de.svg" },
+    { code: "fr", label: "Français", flagUrl: "https://flagcdn.com/fr.svg" },
+    { code: "es", label: "Español", flagUrl: "https://flagcdn.com/es.svg" },
   ];
 
   const current = langs.find((l) => l.code === lang)!;
@@ -34,8 +34,8 @@ export default function LanguageSwitcher() {
         className="flex h-10 items-center gap-2 rounded-full border px-3 text-sm font-medium transition-all hover:scale-105"
         style={{ borderColor: "var(--fun-stroke-1)", color: "var(--fun-text)" }}
       >
-        <div className="w-5 h-5 rounded-full overflow-hidden border border-[var(--fun-stroke-1)]">
-          <img src={current.flagUrl} alt="" className="w-full h-full object-cover" />
+        <div className="w-5 h-5 rounded-full overflow-hidden border border-[var(--fun-stroke-1)] flex items-center justify-center bg-white">
+          <img src={current.flagUrl} alt="" className="min-w-[140%] min-h-[140%] object-cover shrink-0" />
         </div>
         <span className="uppercase">{current.code}</span>
       </button>
@@ -53,8 +53,8 @@ export default function LanguageSwitcher() {
                 className={`flex w-full items-center gap-3 px-4 py-2.5 text-sm transition-colors hover:bg-[var(--fun-surface)] ${l.code === lang ? "font-semibold" : ""}`}
                 style={{ color: "var(--fun-text)" }}
               >
-                <div className="w-4 h-4 rounded-full overflow-hidden border border-[var(--fun-stroke-1)]">
-                  <img src={l.flagUrl} alt="" className="w-full h-full object-cover" />
+                <div className="w-4 h-4 rounded-full overflow-hidden border border-[var(--fun-stroke-1)] flex items-center justify-center bg-white">
+                  <img src={l.flagUrl} alt="" className="min-w-[140%] min-h-[140%] object-cover shrink-0" />
                 </div>
                 <span>{l.label}</span>
               </button>

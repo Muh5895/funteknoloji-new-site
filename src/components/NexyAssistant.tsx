@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useLang } from "../lib/i18n";
+import { toast } from "sonner";
 
 export default function NexyAssistant() {
   const { t } = useLang();
@@ -35,6 +36,23 @@ export default function NexyAssistant() {
     }
   };
 
+  const getNexyBrainResponse = (input: string) => {
+    const text = input.toLowerCase();
+    if (text.includes("fiyat") || text.includes("paket") || text.includes("ücret") || text.includes("price") || text.includes("qiymət")) {
+      return "Fiyatlandırma politikalarımız üzerinde çalışıyoruz. En güncel paketler için Fiyatlandırma sayfamızı takip edebilirsiniz.";
+    }
+    if (text.includes("neler") || text.includes("hizmet") || text.includes("service") || text.includes("xidmət")) {
+      return "Yapay zeka entegrasyonu, özel yazılım geliştirme, mobil uygulama ve siber güvenlik alanlarında profesyonel çözümler sunuyoruz.";
+    }
+    if (text.includes("kim") || text.includes("kurucu") || text.includes("founder") || text.includes("muhammed")) {
+      return "Fun Teknoloji, Muhammed Erbay tarafından 2025 yılında vizyoner bir teknoloji şirketi olarak kurulmuştur.";
+    }
+    if (text.includes("iletişim") || text.includes("ulaş") || text.includes("contact") || text.includes("əlaqə")) {
+      return "Bize iletişim sayfasındaki formdan veya support@funteknoloji.com adresinden ulaşabilirsiniz!";
+    }
+    return t("nexy.chat.response");
+  };
+
   const handleSend = (e: React.FormEvent) => {
     e.preventDefault();
     if (!userInput.trim()) return;
@@ -44,8 +62,21 @@ export default function NexyAssistant() {
     setUserInput("");
 
     setTimeout(() => {
-      setChatMessages([...newMsgs, { role: 'nexy', text: t("nexy.chat.response") || "Size nasıl yardımcı olabilirim? Lütfen bekleme listemize katılın veya iletişim sayfasından bize ulaşın." }]);
+      const response = getNexyBrainResponse(userInput);
+      setChatMessages([...newMsgs, { role: 'nexy', text: response }]);
     }, 1000);
+  };
+
+  const copyToClipboard = (text: string) => {
+    navigator.clipboard.writeText(text);
+    toast.success("Mesaj kopyalandı");
+  };
+
+  const speak = (text: string) => {
+    const ut = new SpeechSynthesisUtterance(text);
+    const langMap: Record<string, string> = { tr: "tr-TR", en: "en-US", az: "tr-TR", de: "de-DE", fr: "fr-FR", es: "es-ES" };
+    ut.lang = langMap[useLang().lang] || "en-US";
+    window.speechSynthesis.speak(ut);
   };
 
   if (!visible) return null;
@@ -63,22 +94,32 @@ export default function NexyAssistant() {
 
       {/* Chat Window */}
       {isOpen && (
-        <div className="w-[320px] sm:w-[380px] h-[450px] rounded-3xl bg-[var(--fun-card)] border border-[var(--fun-stroke-1)] shadow-2xl flex flex-col overflow-hidden animate-in zoom-in-95 duration-300 origin-bottom-right">
-          <div className="p-4 border-b flex items-center justify-between bg-[var(--fun-surface)]" style={{ borderColor: 'var(--fun-stroke-1)' }}>
+        <div className="w-[320px] sm:w-[420px] h-[550px] rounded-3xl bg-[var(--fun-card)] border border-[var(--fun-stroke-1)] shadow-2xl flex flex-col overflow-hidden animate-in zoom-in-95 duration-300 origin-bottom-right">
+          <div className="p-5 border-b flex items-center justify-between bg-[var(--fun-surface)]" style={{ borderColor: 'var(--fun-stroke-1)' }}>
             <div className="flex items-center gap-3">
-              <img src="/nexy.png" alt="Nexy" className="h-10 w-10 object-contain" />
+              <img src="/nexy.png" alt="Nexy" className="h-12 w-12 object-contain" />
               <div>
-                <p className="font-bold fun-text text-sm">Nexy</p>
-                <p className="text-[10px] text-green-500 font-medium uppercase tracking-widest">Online</p>
+                <p className="font-bold fun-text">Nexy</p>
+                <p className="text-[10px] fun-text-muted font-medium uppercase tracking-widest">Fun Teknoloji Asistanı</p>
               </div>
             </div>
             <button onClick={() => setIsOpen(false)} className="h-8 w-8 rounded-full hover:bg-[var(--fun-stroke-1)] flex items-center justify-center fun-text transition-colors">✕</button>
           </div>
-          <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-dots">
+          <div className="flex-1 overflow-y-auto p-5 space-y-5 bg-dots">
             {chatMessages.map((m, i) => (
               <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                <div className={`max-w-[80%] p-3 rounded-2xl text-sm ${m.role === 'user' ? 'bg-[var(--fun-purple)] text-white rounded-tr-none' : 'bg-[var(--fun-surface)] fun-text rounded-tl-none border border-[var(--fun-stroke-1)]'}`}>
+                <div className={`relative group/msg max-w-[85%] p-4 rounded-2xl text-[15px] ${m.role === 'user' ? 'bg-[var(--fun-purple)] text-white rounded-tr-none' : 'bg-[var(--fun-surface)] fun-text rounded-tl-none border border-[var(--fun-stroke-1)]'}`}>
                   {m.text}
+                  {m.role === 'nexy' && (
+                    <div className="absolute top-1/2 -right-12 -translate-y-1/2 flex flex-col gap-1 opacity-0 group-hover/msg:opacity-100 transition-opacity">
+                      <button onClick={() => copyToClipboard(m.text)} className="h-5 w-5 flex items-center justify-center rounded bg-[var(--fun-card)] border border-[var(--fun-stroke-1)] fun-text hover:bg-[var(--fun-purple)] hover:text-white transition-colors" title="Kopyala">
+                        <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                      </button>
+                      <button onClick={() => speak(m.text)} className="h-5 w-5 flex items-center justify-center rounded bg-[var(--fun-card)] border border-[var(--fun-stroke-1)] fun-text hover:bg-[var(--fun-purple)] hover:text-white transition-colors" title="Sesli Oku">
+                        <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" /></svg>
+                      </button>
+                    </div>
+                  )}
                 </div>
               </div>
             ))}
@@ -108,14 +149,13 @@ export default function NexyAssistant() {
         onClick={toggleChat}
         aria-label="Nexy asistanı aç"
       >
-        <div className="absolute -inset-4 rounded-full bg-[var(--fun-purple)]/10 animate-pulse group-hover:bg-[var(--fun-purple)]/20 pointer-events-none" />
         <img
           src="/nexy.png"
           alt="Nexy"
-          className={`h-24 w-auto object-contain transition-all duration-500 relative z-10 ${isOpen ? 'scale-90 brightness-75' : 'hover:scale-110 hover:-rotate-6'}`}
+          className={`h-28 w-auto object-contain transition-all duration-500 relative z-10 ${isOpen ? 'scale-75 brightness-75' : 'hover:scale-110 hover:-rotate-6 drop-shadow-2xl'}`}
         />
         {!isOpen && (
-          <div className="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-red-500 border-2 border-[var(--color-background)] animate-bounce" />
+          <div className="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-[var(--fun-purple)] border-2 border-[var(--color-background)] animate-bounce shadow-lg" />
         )}
       </button>
     </div>

@@ -83,6 +83,7 @@ export default function Footer() {
                 <FooterLink to="/blog">{t("nav.blog")}</FooterLink>
                 <FooterLink to="/faq">{t("nav.faq")}</FooterLink>
                 <FooterLink to="/docs">{t("nav.docs")}</FooterLink>
+                <FooterLink href="https://status.funteknoloji.com">{t("footer.status")}</FooterLink>
               </FooterSection>
             </div>
           </div>
@@ -90,10 +91,10 @@ export default function Footer() {
 
         {/* Bottom */}
         <div className="flex flex-col items-center justify-between gap-4 border-t py-6 md:flex-row" style={{ borderColor: 'var(--fun-stroke-1)' }}>
-          <p className="text-sm fun-text-muted">© 2026 Fun Teknoloji. {t("footer.rights")}</p>
+          <p className="text-[13px] fun-text-muted">© 2026 Fun Teknoloji. {t("footer.rights")}</p>
           <div className="flex items-center gap-6">
-            <Link to="/privacy-policy" className="text-sm fun-text-muted hover:fun-text transition-colors">{t("nav.privacy_policy_short")}</Link>
-            <Link to="/service-policy" className="text-sm fun-text-muted hover:fun-text transition-colors">{t("nav.service_policy_short")}</Link>
+            <Link to="/privacy-policy" className="text-[13px] fun-text-muted hover:fun-text transition-colors">{t("nav.privacy_policy_short")}</Link>
+            <Link to="/service-policy" className="text-[13px] fun-text-muted hover:fun-text transition-colors">{t("nav.service_policy_short")}</Link>
           </div>
         </div>
       </div>
@@ -119,7 +120,7 @@ function FooterSection({ title, children }: { title: string; children: React.Rea
 }
 
 function FooterLink({ to, href, children }: { to?: string; href?: string; children: React.ReactNode }) {
-  const className = "text-tagline-1 fun-text-muted hover:fun-text transition-colors";
+  const className = "text-[15px] fun-text-muted hover:fun-text transition-colors";
   if (to) return <li><Link to={to} className={className}>{children}</Link></li>;
-  return <li><a href={href || "#"} className={className}>{children}</a></li>;
+  return <li><a href={href || "#"} target={href?.startsWith("http") ? "_blank" : undefined} className={className}>{children}</a></li>;
 }

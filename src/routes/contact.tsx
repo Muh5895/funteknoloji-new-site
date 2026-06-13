@@ -43,11 +43,20 @@ function ContactPage() {
       toast.error(t("contact.form.invalid_email"));
       return false;
     }
-    if (formData.subject.length <= 7) {
+
+    const isGibberish = (str: string) => {
+      // Basic check: No vowels or repetitive chars
+      const noVowels = !/[aeiouyüöıiə]/.test(str.toLowerCase());
+      const tooRepetitive = /(.)\1{4,}/.test(str);
+      const tooShortWords = str.split(' ').every(w => w.length > 0 && w.length < 3) && str.length > 20;
+      return noVowels || tooRepetitive || tooShortWords;
+    };
+
+    if (formData.subject.length <= 7 || isGibberish(formData.subject)) {
       toast.error(t("contact.form.invalid_subject"));
       return false;
     }
-    if (formData.message.length <= 15) {
+    if (formData.message.length <= 15 || isGibberish(formData.message)) {
       toast.error(t("contact.form.invalid_message"));
       return false;
     }

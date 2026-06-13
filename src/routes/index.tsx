@@ -26,7 +26,7 @@ function Index() {
   return (
     <main className="space-y-0">
       <HeroSection t={t} />
-      <LogoMarquee t={t} />
+      <StatsSection t={t} />
       <WhatWeDoSection t={t} />
       <FeaturesSection t={t} />
       <HowItWorksSection t={t} />
@@ -77,12 +77,11 @@ function HeroSection({ t }: { t: (k: string) => string }) {
   );
 }
 
-/* ============ LOGO MARQUEE ============ */
-function LogoMarquee({ t }: { t: (k: string) => string }) {
-  const logos = ["TechCorp", "InnovateLab", "DataFlow", "CloudNine", "SmartSys"];
+/* ============ STATS SECTION ============ */
+function StatsSection({ t }: { t: (k: string) => string }) {
   return (
-    <section className="py-20 overflow-hidden border-y px-4 lg:px-0" style={{ borderColor: 'var(--fun-stroke-1)' }}>
-      <div className="main-container mb-12">
+    <section className="py-20 border-y px-4 lg:px-0" style={{ borderColor: 'var(--fun-stroke-1)' }}>
+      <div className="main-container">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
           <div>
             <div className="text-4xl md:text-5xl font-bold fun-text mb-2"><CountUp end={500} />+</div>
@@ -100,20 +99,6 @@ function LogoMarquee({ t }: { t: (k: string) => string }) {
             <div className="text-4xl md:text-5xl font-bold fun-text mb-2"><CountUp end={24} />/7</div>
             <div className="text-sm fun-text-muted uppercase tracking-wider">{t("home.stats.support")}</div>
           </div>
-        </div>
-      </div>
-      <div className="relative">
-        <div className="absolute left-0 top-0 h-full w-[15%] z-10" style={{ background: 'linear-gradient(to right, var(--color-background), transparent)' }} />
-        <div className="absolute right-0 top-0 h-full w-[15%] z-10" style={{ background: 'linear-gradient(to left, var(--color-background), transparent)' }} />
-        <div className="flex animate-marquee items-center gap-16 py-6">
-          {[...logos, ...logos].map((logo, i) => (
-            <div key={i} className="min-w-[180px] flex items-center justify-center">
-              <div className="flex items-center gap-2 opacity-40">
-                <div className="h-8 w-8 rounded-lg" style={{ backgroundColor: 'var(--fun-stroke-1)' }} />
-                <span className="text-lg font-semibold fun-text-muted">{logo}</span>
-              </div>
-            </div>
-          ))}
         </div>
       </div>
     </section>

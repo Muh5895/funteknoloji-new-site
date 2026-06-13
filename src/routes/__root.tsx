@@ -4,7 +4,7 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import IntroSplash from "../components/IntroSplash";
 import NexyAssistant from "../components/NexyAssistant";
-import { LanguageProvider } from "../lib/i18n";
+import { LanguageProvider, useLang } from "../lib/i18n";
 import { Toaster } from "../components/ui/sonner";
 
 const THEME_INIT = `
