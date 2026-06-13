@@ -13,12 +13,20 @@ import { Route as TeamRouteImport } from './routes/team'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as SitemapRouteImport } from './routes/sitemap'
 import { Route as ServicesRouteImport } from './routes/services'
+import { Route as ServicePolicyRouteImport } from './routes/service-policy'
+import { Route as ProjectsRouteImport } from './routes/projects'
+import { Route as PrivacyPolicyRouteImport } from './routes/privacy-policy'
 import { Route as PricingRouteImport } from './routes/pricing'
+<<<<<<< Updated upstream
+import { Route as FaqRouteImport } from './routes/faq'
+=======
+>>>>>>> Stashed changes
 import { Route as DocsRouteImport } from './routes/docs'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as BlogRouteImport } from './routes/blog'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as BlogPostIdRouteImport } from './routes/blog.$postId'
 
 const TeamRoute = TeamRouteImport.update({
   id: '/team',
@@ -40,11 +48,34 @@ const ServicesRoute = ServicesRouteImport.update({
   path: '/services',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ServicePolicyRoute = ServicePolicyRouteImport.update({
+  id: '/service-policy',
+  path: '/service-policy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProjectsRoute = ProjectsRouteImport.update({
+  id: '/projects',
+  path: '/projects',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyPolicyRoute = PrivacyPolicyRouteImport.update({
+  id: '/privacy-policy',
+  path: '/privacy-policy',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PricingRoute = PricingRouteImport.update({
   id: '/pricing',
   path: '/pricing',
   getParentRoute: () => rootRouteImport,
 } as any)
+<<<<<<< Updated upstream
+const FaqRoute = FaqRouteImport.update({
+  id: '/faq',
+  path: '/faq',
+  getParentRoute: () => rootRouteImport,
+} as any)
+=======
+>>>>>>> Stashed changes
 const DocsRoute = DocsRouteImport.update({
   id: '/docs',
   path: '/docs',
@@ -70,43 +101,72 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BlogPostIdRoute = BlogPostIdRouteImport.update({
+  id: '/$postId',
+  path: '/$postId',
+  getParentRoute: () => BlogRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/blog': typeof BlogRoute
+  '/blog': typeof BlogRouteWithChildren
   '/contact': typeof ContactRoute
   '/docs': typeof DocsRoute
+<<<<<<< Updated upstream
+  '/faq': typeof FaqRoute
+=======
+>>>>>>> Stashed changes
   '/pricing': typeof PricingRoute
+  '/privacy-policy': typeof PrivacyPolicyRoute
+  '/projects': typeof ProjectsRoute
+  '/service-policy': typeof ServicePolicyRoute
   '/services': typeof ServicesRoute
   '/sitemap': typeof SitemapRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/team': typeof TeamRoute
+  '/blog/$postId': typeof BlogPostIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/blog': typeof BlogRoute
+  '/blog': typeof BlogRouteWithChildren
   '/contact': typeof ContactRoute
   '/docs': typeof DocsRoute
+<<<<<<< Updated upstream
+  '/faq': typeof FaqRoute
+=======
+>>>>>>> Stashed changes
   '/pricing': typeof PricingRoute
+  '/privacy-policy': typeof PrivacyPolicyRoute
+  '/projects': typeof ProjectsRoute
+  '/service-policy': typeof ServicePolicyRoute
   '/services': typeof ServicesRoute
   '/sitemap': typeof SitemapRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/team': typeof TeamRoute
+  '/blog/$postId': typeof BlogPostIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/blog': typeof BlogRoute
+  '/blog': typeof BlogRouteWithChildren
   '/contact': typeof ContactRoute
   '/docs': typeof DocsRoute
+<<<<<<< Updated upstream
+  '/faq': typeof FaqRoute
+=======
+>>>>>>> Stashed changes
   '/pricing': typeof PricingRoute
+  '/privacy-policy': typeof PrivacyPolicyRoute
+  '/projects': typeof ProjectsRoute
+  '/service-policy': typeof ServicePolicyRoute
   '/services': typeof ServicesRoute
   '/sitemap': typeof SitemapRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/team': typeof TeamRoute
+  '/blog/$postId': typeof BlogPostIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -116,11 +176,19 @@ export interface FileRouteTypes {
     | '/blog'
     | '/contact'
     | '/docs'
+<<<<<<< Updated upstream
+    | '/faq'
+=======
+>>>>>>> Stashed changes
     | '/pricing'
+    | '/privacy-policy'
+    | '/projects'
+    | '/service-policy'
     | '/services'
     | '/sitemap'
     | '/sitemap.xml'
     | '/team'
+    | '/blog/$postId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -128,11 +196,19 @@ export interface FileRouteTypes {
     | '/blog'
     | '/contact'
     | '/docs'
+<<<<<<< Updated upstream
+    | '/faq'
+=======
+>>>>>>> Stashed changes
     | '/pricing'
+    | '/privacy-policy'
+    | '/projects'
+    | '/service-policy'
     | '/services'
     | '/sitemap'
     | '/sitemap.xml'
     | '/team'
+    | '/blog/$postId'
   id:
     | '__root__'
     | '/'
@@ -140,20 +216,35 @@ export interface FileRouteTypes {
     | '/blog'
     | '/contact'
     | '/docs'
+<<<<<<< Updated upstream
+    | '/faq'
+=======
+>>>>>>> Stashed changes
     | '/pricing'
+    | '/privacy-policy'
+    | '/projects'
+    | '/service-policy'
     | '/services'
     | '/sitemap'
     | '/sitemap.xml'
     | '/team'
+    | '/blog/$postId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
-  BlogRoute: typeof BlogRoute
+  BlogRoute: typeof BlogRouteWithChildren
   ContactRoute: typeof ContactRoute
   DocsRoute: typeof DocsRoute
+<<<<<<< Updated upstream
+  FaqRoute: typeof FaqRoute
+=======
+>>>>>>> Stashed changes
   PricingRoute: typeof PricingRoute
+  PrivacyPolicyRoute: typeof PrivacyPolicyRoute
+  ProjectsRoute: typeof ProjectsRoute
+  ServicePolicyRoute: typeof ServicePolicyRoute
   ServicesRoute: typeof ServicesRoute
   SitemapRoute: typeof SitemapRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
@@ -190,6 +281,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ServicesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/service-policy': {
+      id: '/service-policy'
+      path: '/service-policy'
+      fullPath: '/service-policy'
+      preLoaderRoute: typeof ServicePolicyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/projects': {
+      id: '/projects'
+      path: '/projects'
+      fullPath: '/projects'
+      preLoaderRoute: typeof ProjectsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy-policy': {
+      id: '/privacy-policy'
+      path: '/privacy-policy'
+      fullPath: '/privacy-policy'
+      preLoaderRoute: typeof PrivacyPolicyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/pricing': {
       id: '/pricing'
       path: '/pricing'
@@ -197,6 +309,16 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PricingRouteImport
       parentRoute: typeof rootRouteImport
     }
+<<<<<<< Updated upstream
+    '/faq': {
+      id: '/faq'
+      path: '/faq'
+      fullPath: '/faq'
+      preLoaderRoute: typeof FaqRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+=======
+>>>>>>> Stashed changes
     '/docs': {
       id: '/docs'
       path: '/docs'
@@ -232,16 +354,40 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/blog/$postId': {
+      id: '/blog/$postId'
+      path: '/$postId'
+      fullPath: '/blog/$postId'
+      preLoaderRoute: typeof BlogPostIdRouteImport
+      parentRoute: typeof BlogRoute
+    }
   }
 }
+
+interface BlogRouteChildren {
+  BlogPostIdRoute: typeof BlogPostIdRoute
+}
+
+const BlogRouteChildren: BlogRouteChildren = {
+  BlogPostIdRoute: BlogPostIdRoute,
+}
+
+const BlogRouteWithChildren = BlogRoute._addFileChildren(BlogRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
-  BlogRoute: BlogRoute,
+  BlogRoute: BlogRouteWithChildren,
   ContactRoute: ContactRoute,
   DocsRoute: DocsRoute,
+<<<<<<< Updated upstream
+  FaqRoute: FaqRoute,
+=======
+>>>>>>> Stashed changes
   PricingRoute: PricingRoute,
+  PrivacyPolicyRoute: PrivacyPolicyRoute,
+  ProjectsRoute: ProjectsRoute,
+  ServicePolicyRoute: ServicePolicyRoute,
   ServicesRoute: ServicesRoute,
   SitemapRoute: SitemapRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,

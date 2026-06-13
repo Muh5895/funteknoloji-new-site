@@ -1,23 +1,60 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+<<<<<<< Updated upstream
+import { useLang } from "../lib/i18n";
+import { useEffect, useState } from "react";
+import { supabase } from "../lib/supabase";
+=======
 import { useState } from "react";
+>>>>>>> Stashed changes
 
 export const Route = createFileRoute("/blog")({
-  head: () => ({
-    meta: [
-      { title: "Blog – Fun Teknoloji" },
-      { name: "description", content: "Fun Teknoloji blog yazıları, teknoloji haberleri ve içgörüler." },
-      { property: "og:title", content: "Blog – Fun Teknoloji" },
-      { property: "og:description", content: "Fun Teknoloji blog yazıları, teknoloji haberleri ve içgörüler." },
-      { property: "og:url", content: "https://build-dream-flow-91.lovable.app/blog" },
-      { property: "og:type", content: "website" },
-      { name: "twitter:title", content: "Blog – Fun Teknoloji" },
-      { name: "twitter:description", content: "Fun Teknoloji blog yazıları, teknoloji haberleri ve içgörüler." },
-    ],
-    links: [{ rel: "canonical", href: "https://build-dream-flow-91.lovable.app/blog" }],
-  }),
   component: BlogPage,
 });
 
+<<<<<<< Updated upstream
+interface BlogPost {
+  id: string;
+  title: string;
+  description: string;
+  image_url: string;
+  tag: string;
+  created_at: string;
+}
+
+function BlogPage() {
+  const { t, lang } = useLang();
+  const [posts, setPosts] = useState<BlogPost[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchPosts() {
+      try {
+        const { data, error } = await supabase
+          .from("blog")
+          .select("*")
+          .order("created_at", { ascending: false });
+
+        if (error) throw error;
+        if (data) {
+          const formattedPosts = data.map((p: any) => ({
+            id: p.id,
+            title: p.title,
+            description: p.description || p.content || "",
+            image_url: p.image_url || p.image || "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b",
+            tag: p.tag || "Teknoloji",
+            created_at: p.created_at
+          }));
+          setPosts(formattedPosts);
+        }
+      } catch (err) {
+        console.error("Blog fetch error:", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchPosts();
+  }, []);
+=======
 const posts = [
   {
     id: 1,
@@ -146,21 +183,32 @@ function BlogPage() {
       </main>
     );
   }
+>>>>>>> Stashed changes
 
   return (
     <main>
       <section className="pt-32 pb-16 px-4 lg:px-5">
         <div className="max-w-[1880px] mx-auto rounded-3xl xl:rounded-[32px] py-20 md:py-28 px-5" style={{ backgroundColor: 'var(--fun-surface)' }}>
           <div className="main-container text-center">
-            <span className="badge-fun badge-fun-white mb-4 inline-block">Blog</span>
-            <h1 className="text-heading-3 md:text-heading-2 lg:text-heading-1 font-medium mb-4 fun-text">Teknoloji Dünyasından</h1>
-            <p className="max-w-[600px] mx-auto text-tagline-1 fun-text-muted">En son teknoloji haberleri, içgörüler ve rehberler.</p>
+            <span className="badge-fun badge-fun-white mb-4 inline-block">{t("blog.badge")}</span>
+            <h1 className="text-heading-3 md:text-heading-2 lg:text-heading-1 font-medium mb-4 fun-text">{t("blog.title")}</h1>
+            <p className="max-w-[600px] mx-auto text-tagline-1 fun-text-muted">{t("blog.desc")}</p>
           </div>
         </div>
       </section>
 
-      <section className="py-16 md:py-24">
+      <section className="py-20">
         <div className="main-container">
+<<<<<<< Updated upstream
+          {loading ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {[1, 2, 3].map((i) => (
+                <div key={i} className="animate-pulse">
+                  <div className="aspect-video bg-[var(--fun-surface)] rounded-2xl mb-4"></div>
+                  <div className="h-4 w-24 bg-[var(--fun-surface)] rounded mb-2"></div>
+                  <div className="h-6 w-full bg-[var(--fun-surface)] rounded mb-2"></div>
+                  <div className="h-4 w-2/3 bg-[var(--fun-surface)] rounded"></div>
+=======
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {posts.map((post, i) => (
               <article
@@ -176,12 +224,30 @@ function BlogPage() {
                   <div className="h-16 w-16 rounded-2xl flex items-center justify-center" style={{ backgroundColor: 'var(--fun-card)' }}>
                     <span className="text-2xl font-bold fun-text-muted">{post.id}</span>
                   </div>
+>>>>>>> Stashed changes
                 </div>
-                <div className="p-6 md:p-8">
-                  <div className="flex items-center gap-3 mb-4">
-                    <span className={`text-xs font-medium px-3 py-1 rounded-full ${tagColors[post.tag] || ''}`}>{post.tag}</span>
-                    <span className="text-xs fun-text-muted">{post.date}</span>
+              ))}
+            </div>
+          ) : posts.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {posts.map((post) => (
+                <Link key={post.id} to={`/blog/${post.id}`} className="group">
+                  <div className="aspect-video rounded-2xl overflow-hidden mb-4 bg-[var(--fun-surface)]">
+                    <img src={post.image_url} alt={post.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                   </div>
+<<<<<<< Updated upstream
+                  <span className="text-xs font-bold text-[var(--fun-purple)] uppercase tracking-wider mb-2 block">{post.tag}</span>
+                  <h3 className="text-xl font-bold fun-text mb-2 group-hover:text-[var(--fun-purple)] transition-colors">{post.title}</h3>
+                  <p className="text-fun-text-muted text-sm line-clamp-2">{post.description}</p>
+                </Link>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-20">
+               <h2 className="text-2xl font-medium fun-text-muted">{t("blog.empty")}</h2>
+            </div>
+          )}
+=======
                   <h3 className="text-heading-6 font-medium mb-2 fun-text group-hover:text-[#864FFE] transition-colors">{post.title}</h3>
                   <p className="text-tagline-1 fun-text-muted mb-4 line-clamp-2">{post.desc}</p>
                   <span className="text-sm font-medium fun-text inline-flex items-center gap-1 transition-colors group-hover:gap-2">
@@ -194,6 +260,7 @@ function BlogPage() {
               </article>
             ))}
           </div>
+>>>>>>> Stashed changes
         </div>
       </section>
     </main>
