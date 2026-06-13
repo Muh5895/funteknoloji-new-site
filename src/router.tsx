@@ -3,7 +3,6 @@ import { routeTree } from "./routeTree.gen";
 
 function DefaultErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   const router = useRouter();
-  const { t } = (router.options.context as any)?.langContext || { t: (s: string) => s };
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
@@ -24,9 +23,9 @@ function DefaultErrorComponent({ error, reset }: { error: Error; reset: () => vo
             />
           </svg>
         </div>
-        <h1 className="text-2xl font-bold tracking-tight text-foreground">{t("error.title") || "Something went wrong"}</h1>
+        <h1 className="text-2xl font-bold tracking-tight text-foreground">Bir şeyler yanlış gitti</h1>
         <p className="mt-2 text-sm text-muted-foreground">
-          {t("error.desc") || "An unexpected error occurred. Please try again."}
+          Beklenmedik bir hata oluştu. Lütfen tekrar deneyin.
         </p>
         {import.meta.env.DEV && error.message && (
           <pre className="mt-4 max-h-40 overflow-auto rounded-md bg-muted p-3 text-left font-mono text-xs text-destructive">
@@ -41,13 +40,13 @@ function DefaultErrorComponent({ error, reset }: { error: Error; reset: () => vo
             }}
             className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
           >
-            {t("error.retry") || "Try again"}
+            Tekrar Dene
           </button>
           <a
             href="/"
             className="inline-flex items-center justify-center rounded-md border border-input bg-background px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent"
           >
-            Go home
+            Ana Sayfa
           </a>
         </div>
       </div>

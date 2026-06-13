@@ -72,7 +72,7 @@ export const Route = createRootRoute({
     ],
   }),
   shellComponent: RootShell,
-  component: RootComponentWithContext,
+  component: RootComponent,
   notFoundComponent: NotFoundComponent,
 });
 
@@ -91,10 +91,7 @@ function RootShell({ children }: { children: React.ReactNode }) {
   );
 }
 
-import { useLocation } from "@tanstack/react-router";
-
 function RootComponent() {
-  const langContext = useLang();
   return (
     <LanguageProvider>
       <Header />
@@ -103,37 +100,5 @@ function RootComponent() {
       <Footer />
       <Toaster position="top-center" richColors />
     </LanguageProvider>
-  );
-}
-
-function RootComponentWithContext() {
-  return (
-    <LanguageProvider>
-      <RootComponentInner />
-    </LanguageProvider>
-  );
-}
-
-function RootComponentInner() {
-  const langContext = useLang();
-  const router = useRouter();
-
-  useEffect(() => {
-    router.update({
-      context: {
-        ...router.options.context,
-        langContext,
-      },
-    });
-  }, [langContext, router]);
-
-  return (
-    <>
-      <Header />
-      <Outlet />
-      <NexyAssistant />
-      <Footer />
-      <Toaster position="top-center" richColors />
-    </>
   );
 }
