@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
 import { supabase } from "../lib/supabase";
 import { useLang } from "../lib/i18n";
 import ArrowButton from "../components/ArrowButton";
@@ -14,8 +15,6 @@ function PostPage() {
   const { t, lang } = useLang();
   const [post, setPost] = useState<any>(null);
   const [loading, setLoading] = useState(true);
-  const [isTranslating, setIsTranslating] = useState(false);
-  const [translatedContent, setTranslatedContent] = useState<string | null>(null);
 
   useEffect(() => {
     async function fetchPost() {
@@ -43,17 +42,6 @@ function PostPage() {
     fetchPost();
   }, [postId]);
 
-  const handleTranslate = () => {
-    if (!post) return;
-    setIsTranslating(true);
-    // Simulate translation effect
-    setTimeout(() => {
-      setTranslatedContent(post.text || post.description);
-      setIsTranslating(false);
-      toast.success(lang === "tr" ? "Türkçeye çevrildi" : "Translated to active language");
-    }, 1500);
-  };
-
   if (loading) return (
     <div className="flex items-center justify-center min-h-screen">
       <div className="h-12 w-12 border-4 border-[var(--fun-purple)] border-t-transparent rounded-full animate-spin"></div>
@@ -71,18 +59,8 @@ function PostPage() {
     <main className="pt-32 pb-20 px-4 lg:px-5">
       <article className="max-w-[900px] mx-auto">
         <div className="mb-8 flex items-center justify-between">
-           <ArrowButton to="/blog" variant="light" className="!py-2 !px-4 !text-sm">← {t("404.home")}</ArrowButton>
+           <ArrowButton to="/blog" variant="light" className="!py-2 !px-4 !text-sm">← {t("nav.blog")}</ArrowButton>
            <div className="flex items-center gap-4">
-             <button
-               onClick={handleTranslate}
-               disabled={isTranslating}
-               className="text-xs font-bold px-3 py-1.5 rounded-full bg-[var(--fun-purple)] text-white hover:opacity-90 transition-opacity disabled:opacity-50 flex items-center gap-2"
-             >
-               <svg className={`h-3 w-3 ${isTranslating ? 'animate-spin' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
-                 <path strokeLinecap="round" strokeLinejoin="round" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 11.37 9.19 15.87 3 19" />
-               </svg>
-               {isTranslating ? "..." : (lang === "tr" ? "Çevir" : "Translate")}
-             </button>
              <LanguageSwitcher />
            </div>
         </div>
@@ -91,7 +69,7 @@ function PostPage() {
           <div className="flex items-center justify-center gap-3 mb-6 text-sm fun-text-muted uppercase tracking-widest font-bold bg-[var(--fun-surface)] px-4 py-2 rounded-full w-fit mx-auto border border-[var(--fun-stroke-1)]">
             <span>{post.tag || 'Teknoloji'}</span>
             <div className="h-1 w-1 rounded-full bg-current"></div>
-            <span>{new Date(post.created_at).toLocaleDateString('tr-TR')}</span>
+            <span>{new Date(post.created_at).toLocaleDateString(lang === 'tr' ? 'tr-TR' : 'en-US')}</span>
           </div>
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold fun-text mb-8 leading-tight">{post.title}</h1>
           <div className="flex items-center justify-center gap-4">
@@ -100,7 +78,7 @@ function PostPage() {
              </div>
              <div className="text-left">
                <p className="font-bold fun-text">{post.author || 'Fun Teknoloji'}</p>
-               <p className="text-xs fun-text-muted uppercase tracking-tighter">Yazar</p>
+               <p className="text-xs fun-text-muted uppercase tracking-tighter">{lang === 'tr' ? 'Yazar' : 'Author'}</p>
              </div>
           </div>
         </header>
@@ -112,7 +90,7 @@ function PostPage() {
         )}
 
         <div className="prose prose-xl dark:prose-invert max-w-none fun-text leading-relaxed whitespace-pre-wrap animate-in fade-in duration-700">
-          {translatedContent || post.text || post.description}
+          {post.text || post.description}
         </div>
       </article>
     </main>

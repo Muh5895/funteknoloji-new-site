@@ -3,6 +3,7 @@ import appCss from "../styles.css?url";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import NexyAssistant from "../components/NexyAssistant";
+import IntroSplash from "../components/IntroSplash";
 import { LanguageProvider, useLang } from "../lib/i18n";
 import { Toaster } from "../components/ui/sonner";
 
@@ -94,6 +95,7 @@ function RootShell({ children }: { children: React.ReactNode }) {
 function RootComponent() {
   return (
     <LanguageProvider>
+      <IntroSplash />
       <Header />
       <Outlet />
       <NexyAssistant />

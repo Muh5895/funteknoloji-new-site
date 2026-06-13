@@ -127,7 +127,7 @@ const tr: Dict = {
   "home.cta.button": "İletişime Geçin",
   "home.cta.more": "Daha Fazla Bilgi",
 
-  "home.stats.clients": "Mutlu Müşteri",
+  "home.stats.users": "Aktif Kullanıcı",
   "home.stats.projects": "Tamamlanan Proje",
   "home.stats.team": "Uzman Kadro",
   "home.stats.support": "Kesintisiz Destek",
@@ -369,7 +369,7 @@ const en: Dict = {
   "home.cta.button": "Contact Us",
   "home.cta.more": "Learn More",
 
-  "home.stats.clients": "Happy Clients",
+  "home.stats.users": "Active Users",
   "home.stats.projects": "Completed Projects",
   "home.stats.team": "Expert Staff",
   "home.stats.support": "Continuous Support",
