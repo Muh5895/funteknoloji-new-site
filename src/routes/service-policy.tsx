@@ -13,102 +13,68 @@ function ServicePolicy() {
         <div className="mb-16 text-center animate-in fade-in slide-in-from-top-4 duration-700">
           <span className="badge-fun badge-fun-white mb-4 inline-block shadow-sm">{lang === "tr" ? "Yasal" : "Legal"}</span>
           <h1 className="text-4xl md:text-7xl font-bold fun-text mb-6 tracking-tight">
-            {lang === "tr" ? "Hizmet Politikası" : "Service Policy"}
+            {lang === "tr" ? "Kullanım Şartları" : "Terms of Service"}
           </h1>
           <div className="h-1 w-20 bg-[var(--fun-purple)] mx-auto rounded-full mb-6"></div>
-          <p className="fun-text-muted text-lg">{lang === "tr" ? "Son güncelleme: 1 Ocak 2026" : "Last updated: January 1, 2026"}</p>
+          <div className="bg-white/50 dark:bg-black/20 backdrop-blur-sm px-6 py-2 rounded-full w-fit mx-auto border border-[var(--fun-stroke-1)]">
+             <p className="fun-text-muted text-sm font-medium">{lang === "tr" ? "Son Güncelleme Tarihi: 19/03/2026" : "Last Updated: March 19, 2026"}</p>
+          </div>
         </div>
 
         <div className="grid gap-8 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-200 fill-mode-both">
-          <div className="rounded-[32px] p-8 md:p-12 border bg-white dark:bg-[#0D0D0D] shadow-xl shadow-black/5" style={{ borderColor: 'var(--fun-stroke-1)' }}>
-            {lang === "tr" ? (
-              <div className="prose dark:prose-invert max-w-none fun-text space-y-12">
-                <section>
-                  <p className="text-xl leading-relaxed opacity-80">Fun Teknoloji hizmetlerini kullanarak aşağıdaki şartları kabul etmiş sayılırsınız. Bu şartlar, platformumuzdaki tüm etkileşimlerinizi kapsar.</p>
-                </section>
+          <div className="rounded-[40px] p-8 md:p-12 border bg-white dark:bg-[#0D0D0D] shadow-xl shadow-black/5" style={{ borderColor: 'var(--fun-stroke-1)' }}>
+            <div className="prose dark:prose-invert max-w-none fun-text space-y-12">
+               <section>
+                  <p className="text-xl leading-relaxed opacity-80">Fun Teknoloji platformunu kullanarak, hizmetlerimizi güvenli, yasal ve etik kurallar çerçevesinde kullanmayı kabul etmiş olursunuz. İşte temel kullanım şartları:</p>
+               </section>
 
-                <section className="grid md:grid-cols-12 gap-8 border-t pt-12" style={{ borderColor: 'var(--fun-stroke-1)' }}>
-                  <div className="md:col-span-4">
-                    <h2 className="text-2xl font-bold flex items-center gap-3">
-                      <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[var(--fun-purple)] text-white text-sm">1</span>
-                      Hizmet Kullanımı
-                    </h2>
-                  </div>
-                  <div className="md:col-span-8">
-                    <p className="text-lg opacity-70">Hizmetlerimizi yalnızca yasal amaçlarla ve bu politikaya uygun olarak kullanmayı kabul edersiniz. Sistemlerimize zarar verecek, performansı düşürecek veya yetkisiz erişim sağlayacak her türlü girişim kesinlikle yasaktır.</p>
-                  </div>
-                </section>
+               <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                  <PolicySection title="Hesap Kullanımı" num="1">
+                     Platformu kullanabilmek için doğru ve güncel bilgilerle bir hesap oluşturmanız gereklidir. Hesap bilgilerinizin gizliliğinden siz sorumlusunuz.
+                  </PolicySection>
 
-                <section className="grid md:grid-cols-12 gap-8 border-t pt-12" style={{ borderColor: 'var(--fun-stroke-1)' }}>
-                  <div className="md:col-span-4">
-                    <h2 className="text-2xl font-bold flex items-center gap-3">
-                      <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[var(--fun-purple)] text-white text-sm">2</span>
-                      Sorumluluk Sınırı
-                    </h2>
-                  </div>
-                  <div className="md:col-span-8">
-                    <p className="text-lg opacity-70">Fun Teknoloji, hizmetlerin kullanımından kaynaklanan doğrudan veya dolaylı zararlardan, veri kayıplarından, iş kesintilerinden veya kar mahrumiyetinden sorumlu tutulamaz. Hizmetler "olduğu gibi" sunulmaktadır.</p>
-                  </div>
-                </section>
+                  <PolicySection title="Yasal Uygunluk" num="2">
+                     Platform üzerinde paylaştığınız içerik ve gerçekleştirdiğiniz işlemler, yürürlükteki tüm yasalar ve düzenlemelerle uyumlu olmalıdır.
+                  </PolicySection>
 
-                <section className="grid md:grid-cols-12 gap-8 border-t pt-12" style={{ borderColor: 'var(--fun-stroke-1)' }}>
-                  <div className="md:col-span-4">
-                    <h2 className="text-2xl font-bold flex items-center gap-3">
-                      <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[var(--fun-purple)] text-white text-sm">3</span>
-                      Fikri Mülkiyet
-                    </h2>
-                  </div>
-                  <div className="md:col-span-8">
-                    <p className="text-lg opacity-70">Hizmetlerimizdeki tüm içerik, tasarım, logo, yazılım ve ticari markalar Fun Teknoloji'ye aittir. Yazılı iznimiz olmadan kopyalanamaz, çoğaltılamaz veya ticari amaçla kullanılamaz.</p>
-                  </div>
-                </section>
-              </div>
-            ) : (
-              <div className="prose dark:prose-invert max-w-none fun-text space-y-12">
-                <section>
-                  <p className="text-xl leading-relaxed opacity-80">By using Fun Teknoloji services, you agree to the following terms. These terms cover all your interactions on our platform.</p>
-                </section>
+                  <PolicySection title="Güvenlik ve Gizlilik" num="3">
+                     Fun Teknoloji, verilerinizi korumak için gelişmiş güvenlik önlemleri uygular. Hesap güvenliğiniz için şifrelerinizi gizli tutmanız gerekir.
+                  </PolicySection>
 
-                <section className="grid md:grid-cols-12 gap-8 border-t pt-12" style={{ borderColor: 'var(--fun-stroke-1)' }}>
-                  <div className="md:col-span-4">
-                    <h2 className="text-2xl font-bold flex items-center gap-3">
-                      <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[var(--fun-purple)] text-white text-sm">1</span>
-                      Service Use
-                    </h2>
-                  </div>
-                  <div className="md:col-span-8">
-                    <p className="text-lg opacity-70">You agree to use our services only for lawful purposes and in accordance with this policy. Any attempt to damage our systems, degrade performance, or gain unauthorized access is strictly prohibited.</p>
-                  </div>
-                </section>
+                  <PolicySection title="Sorumluluk Reddi" num="4">
+                     Fun Teknoloji, platformdaki içerik ve üçüncü taraf bağlantılar için sınırlı sorumluluk kabul eder. Kullanıcılar, platformu kendi sorumlulukları çerçevesinde kullanır.
+                  </PolicySection>
 
-                <section className="grid md:grid-cols-12 gap-8 border-t pt-12" style={{ borderColor: 'var(--fun-stroke-1)' }}>
-                  <div className="md:col-span-4">
-                    <h2 className="text-2xl font-bold flex items-center gap-3">
-                      <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[var(--fun-purple)] text-white text-sm">2</span>
-                      Limitation of Liability
-                    </h2>
-                  </div>
-                  <div className="md:col-span-8">
-                    <p className="text-lg opacity-70">Fun Teknoloji cannot be held liable for any direct or indirect damages, data loss, business interruption, or loss of profits arising from the use of the services. Services are provided "as is".</p>
-                  </div>
-                </section>
+                  <PolicySection title="Hizmet Değişiklikleri" num="5">
+                     Fun Teknoloji, platformun işlevselliğini geliştirmek amacıyla içerik, özellik veya kullanım koşullarında değişiklik yapma hakkını saklı tutar.
+                  </PolicySection>
 
-                <section className="grid md:grid-cols-12 gap-8 border-t pt-12" style={{ borderColor: 'var(--fun-stroke-1)' }}>
-                  <div className="md:col-span-4">
-                    <h2 className="text-2xl font-bold flex items-center gap-3">
-                      <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[var(--fun-purple)] text-white text-sm">3</span>
-                      Intellectual Property
-                    </h2>
-                  </div>
-                  <div className="md:col-span-8">
-                    <p className="text-lg opacity-70">All content, design, logos, software, and trademarks in our services belong to Fun Teknoloji. They cannot be copied, reproduced, or used for commercial purposes without our written permission.</p>
-                  </div>
-                </section>
-              </div>
-            )}
+                  <PolicySection title="Yaptırımlar" num="6">
+                     Kullanım şartlarının ihlali durumunda, platform hesapları geçici veya kalıcı olarak kısıtlayabilir veya kapatabilir.
+                  </PolicySection>
+               </div>
+
+               <section className="border-t pt-10" style={{ borderColor: 'var(--fun-stroke-1)' }}>
+                  <h2 className="text-2xl font-bold mb-4">İletişim</h2>
+                  <p className="opacity-70">Kullanım Şartları hakkında herhangi bir sorunuz varsa bizimle iletişime geçebilirsiniz:</p>
+                  <p className="mt-4 font-bold text-[var(--fun-purple)]">📧 support@funteknoloji.com</p>
+               </section>
+            </div>
           </div>
         </div>
       </div>
     </main>
+  );
+}
+
+function PolicySection({ title, num, children }: { title: string; num: string; children: React.ReactNode }) {
+  return (
+    <div className="space-y-4">
+      <h2 className="text-2xl font-bold flex items-center gap-3">
+        <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[var(--fun-purple)] text-white text-sm shrink-0">{num}</span>
+        {title}
+      </h2>
+      <div className="text-lg opacity-70 leading-relaxed">{children}</div>
+    </div>
   );
 }

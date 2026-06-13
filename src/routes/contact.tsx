@@ -45,20 +45,27 @@ function ContactPage() {
     }
 
     const isGibberish = (str: string) => {
-      // Basic check: No vowels or repetitive chars
       const noVowels = !/[aeiouyüöıiə]/.test(str.toLowerCase());
       const tooRepetitive = /(.)\1{4,}/.test(str);
-      const tooShortWords = str.split(' ').every(w => w.length > 0 && w.length < 3) && str.length > 20;
-      return noVowels || tooRepetitive || tooShortWords;
+      return noVowels || tooRepetitive;
     };
 
-    if (formData.subject.length <= 7 || isGibberish(formData.subject)) {
-      toast.error(t("contact.form.invalid_subject"));
-      return false;
+    if (formData.subject.length <= 7) {
+       toast.error(t("contact.form.invalid_subject"));
+       return false;
     }
-    if (formData.message.length <= 15 || isGibberish(formData.message)) {
-      toast.error(t("contact.form.invalid_message"));
-      return false;
+    if (isGibberish(formData.subject)) {
+       toast.error(lang === "tr" ? "Lütfen anlamlı bir konu başlığı girin." : "Please enter a meaningful subject.");
+       return false;
+    }
+
+    if (formData.message.length <= 15) {
+       toast.error(t("contact.form.invalid_message"));
+       return false;
+    }
+    if (isGibberish(formData.message)) {
+       toast.error(lang === "tr" ? "Lütfen geçerli bir mesaj metni girin." : "Please enter a valid message text.");
+       return false;
     }
     return true;
   };
@@ -93,7 +100,7 @@ function ContactPage() {
     const { error } = await supabase.from('contact').insert([formData]);
 
     if (!error) {
-      toast.success(t("contact.form.success"));
+      toast.success(t("contact.form.success").replace(" ✅", ""));
       setFormData({ name: "", email: "", subject: "", message: "" });
       setShowCaptcha(false);
       setLastSubmit(Date.now());
@@ -180,8 +187,13 @@ function ContactPage() {
             <h3 className="text-2xl font-bold fun-text mb-2">{t("contact.captcha.title")}</h3>
             <p className="fun-text-muted mb-8 text-sm">{t("contact.captcha.desc")}</p>
 
-            <div className="bg-[var(--fun-surface)] rounded-2xl p-6 text-center mb-8">
+            <div className="bg-[var(--fun-surface)] rounded-2xl p-6 text-center mb-8 relative group">
               <span className="text-3xl font-bold fun-text">{mathProblem.q} = ?</span>
+              <button onClick={generateCaptcha} className="absolute right-4 top-1/2 -translate-y-1/2 p-2 rounded-full hover:bg-[var(--fun-stroke-1)] transition-colors text-fun-text-muted" title="Soruyu Değiştir">
+                <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                </svg>
+              </button>
             </div>
 
             <input

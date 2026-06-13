@@ -11,20 +11,28 @@ export default function NexyAssistant() {
   const [chatMessages, setChatMessages] = useState<{ role: 'nexy' | 'user', text: string }[]>([]);
   const [userInput, setUserInput] = useState("");
 
-  const messageKeys = ["nexy.msg1", "nexy.msg2", "nexy.msg3", "nexy.msg4", "nexy.msg5"];
+  useEffect(() => {
+    const saved = localStorage.getItem("nexy_chat");
+    if (saved) {
+      try {
+        setChatMessages(JSON.parse(saved));
+      } catch (e) {}
+    }
+  }, []);
+
+  useEffect(() => {
+    if (chatMessages.length > 0) {
+      localStorage.setItem("nexy_chat", JSON.stringify(chatMessages));
+    }
+  }, [chatMessages]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setVisible(true);
       if (!isOpen) {
-        setIsTyping(true);
-        const randomKey = messageKeys[Math.floor(Math.random() * messageKeys.length)];
-        setTimeout(() => {
-          setMessageKey(randomKey);
-          setIsTyping(false);
-        }, 1500);
+        setMessageKey("Merhaba! Ben Nexy, Fun Teknoloji asistanıyım. Size nasıl yardımcı olabilirim?");
       }
-    }, 3000);
+    }, 2000);
     return () => clearTimeout(timer);
   }, []);
 
@@ -32,7 +40,7 @@ export default function NexyAssistant() {
     setIsOpen(!isOpen);
     setMessageKey("");
     if (!isOpen && chatMessages.length === 0) {
-      setChatMessages([{ role: 'nexy', text: t("nexy.msg1") }]);
+      setChatMessages([{ role: 'nexy', text: "Merhaba! Ben Nexy, Fun Teknoloji asistanıyım. Size nasıl yardımcı olabilirim?" }]);
     }
   };
 
@@ -136,10 +144,15 @@ export default function NexyAssistant() {
   };
 
   const speak = (text: string) => {
-    const ut = new SpeechSynthesisUtterance(text);
-    const langMap: Record<string, string> = { tr: "tr-TR", en: "en-US", az: "tr-TR", de: "de-DE", fr: "fr-FR", es: "es-ES" };
-    ut.lang = langMap[useLang().lang] || "en-US";
-    window.speechSynthesis.speak(ut);
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+      const ut = new SpeechSynthesisUtterance(text);
+      const langMap: Record<string, string> = { tr: "tr-TR", en: "en-US", az: "tr-TR", de: "de-DE", fr: "fr-FR", es: "es-ES" };
+      ut.lang = langMap[useLang().lang] || "tr-TR";
+      ut.rate = 1.0;
+      ut.pitch = 1.1;
+      window.speechSynthesis.speak(ut);
+    }
   };
 
   if (!visible) return null;
@@ -150,7 +163,7 @@ export default function NexyAssistant() {
       {messageKey && !isOpen && (
         <div className="relative max-w-[250px] rounded-2xl bg-[var(--fun-card)] border border-[var(--fun-stroke-1)] p-4 shadow-2xl">
           <button onClick={() => setMessageKey("")} className="absolute -top-2 -right-2 h-6 w-6 rounded-full bg-[var(--fun-surface)] border border-[var(--fun-stroke-1)] flex items-center justify-center text-xs fun-text hover:bg-[var(--fun-stroke-1)] transition-colors">✕</button>
-          {isTyping ? <TypingIndicator /> : <p className="text-sm fun-text leading-relaxed">{t(messageKey)}</p>}
+          {isTyping ? <TypingIndicator /> : <p className="text-sm fun-text leading-relaxed">{messageKey}</p>}
           <div className="absolute -bottom-2 right-6 h-4 w-4 rotate-45 bg-[var(--fun-card)] border-r border-b border-[var(--fun-stroke-1)]" />
         </div>
       )}

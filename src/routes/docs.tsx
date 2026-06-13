@@ -23,31 +23,18 @@ function DocsPage() {
         <div className="lg:col-span-3">
           <div className="prose dark:prose-invert max-w-none fun-text">
             <h1 className="text-5xl font-bold mb-8">Dokümantasyon</h1>
-            <p className="text-xl opacity-70">Fun Teknoloji ürünleri ve API'ları için teknik rehber.</p>
+            <p className="text-xl opacity-70">Fun Teknoloji ürünleri için teknik rehber ve kullanım kılavuzları.</p>
 
-            <div className="mt-12 space-y-12">
-              <section>
-                <h2 className="text-3xl font-bold mb-4">Giriş</h2>
-                <p>Fun Teknoloji, modern işletmeler için ölçeklenebilir ve yapay zeka destekli altyapılar sunar. Bu dökümantasyon, platformumuzu en verimli şekilde nasıl kullanacağınızı anlatır.</p>
-              </section>
-
-              <section>
-                <h2 className="text-3xl font-bold mb-4">API Entegrasyonu</h2>
-                <p>Uygulamalarınızı Fun Teknoloji ekosistemine bağlamak için REST API'larımızı kullanabilirsiniz.</p>
-                <pre className="p-6 rounded-2xl bg-[#12161F] text-white overflow-x-auto">
-                  <code>{`curl -X GET "https://api.funteknoloji.com/v1/services" \\
-  -H "Authorization: Bearer YOUR_API_KEY"`}</code>
-                </pre>
-              </section>
-
-              <section>
-                <h2 className="text-3xl font-bold mb-4">Güvenlik</h2>
-                <p>Tüm istekleriniz SSL üzerinden şifrelenir ve API anahtarınızla doğrulanır.</p>
-              </section>
-
-              <div className="p-8 rounded-3xl bg-[var(--fun-surface)] border-2 border-dashed border-[var(--fun-stroke-1)] text-center">
-                <p className="fun-text-muted">Daha detaylı dökümantasyon ve SDK'lar için çok yakında güncelleme yapılacaktır.</p>
-              </div>
+            <div className="mt-20 py-20 flex flex-col items-center justify-center text-center space-y-6 rounded-[40px] border-2 border-dashed border-[var(--fun-stroke-1)] bg-[var(--fun-surface)]">
+               <div className="h-20 w-20 rounded-full bg-[var(--fun-purple)]/10 flex items-center justify-center text-[var(--fun-purple)]">
+                  <svg className="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                  </svg>
+               </div>
+               <div>
+                 <h2 className="text-3xl font-bold mb-2">Çok Yakında</h2>
+                 <p className="fun-text-muted max-w-md mx-auto">Platformumuz ve hizmetlerimiz için detaylı kullanım kılavuzları hazırlanmaktadır. En kısa sürede burada olacağız.</p>
+               </div>
             </div>
           </div>
         </div>

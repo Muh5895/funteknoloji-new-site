@@ -85,7 +85,6 @@ export default function Footer() {
                 <FooterLink to="/changelog">{t("nav.changelog")}</FooterLink>
                 <FooterLink to="/brand-kit">{t("nav.brand_kit")}</FooterLink>
                 <FooterLink to="/docs">{t("nav.docs")}</FooterLink>
-                <FooterLink href="https://status.funteknoloji.com">{t("footer.status")}</FooterLink>
               </FooterSection>
             </div>
           </div>
@@ -95,7 +94,14 @@ export default function Footer() {
         <div className="flex flex-col items-center justify-between gap-4 border-t py-6 md:flex-row" style={{ borderColor: 'var(--fun-stroke-1)' }}>
           <p className="text-[13px] fun-text-muted">© 2026 Fun Teknoloji. {t("footer.rights")}</p>
           <div className="flex items-center gap-6">
-            <Link to="/privacy-policy" className="text-[13px] fun-text-muted hover:fun-text transition-colors">{t("nav.privacy_policy_short")}</Link>
+            <div className="flex items-center gap-1">
+               <a href="https://status.funteknoloji.com" target="_blank" rel="noopener noreferrer" className="text-[13px] fun-text-muted hover:fun-text transition-colors flex items-center gap-1.5">
+                  <span className="h-1.5 w-1.5 rounded-full bg-green-500 animate-pulse" />
+                  {t("footer.status")}
+               </a>
+               <span className="text-[var(--fun-stroke-2)]">•</span>
+               <Link to="/privacy-policy" className="text-[13px] fun-text-muted hover:fun-text transition-colors">{t("nav.privacy_policy_short")}</Link>
+            </div>
             <Link to="/service-policy" className="text-[13px] fun-text-muted hover:fun-text transition-colors">{t("nav.service_policy_short")}</Link>
           </div>
         </div>

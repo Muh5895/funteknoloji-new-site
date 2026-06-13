@@ -79,11 +79,9 @@ function BrandKitPage() {
 
         <section className="mt-20 p-8 md:p-12 rounded-[40px] bg-[var(--fun-surface)] border border-[var(--fun-stroke-1)]">
           <h2 className="text-2xl font-bold fun-text mb-6">Renk Paletimiz</h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-2 gap-4">
              <ColorCard hex="#864FFE" name="Fun Purple" />
-             <ColorCard hex="#000000" name="Fun Black" />
-             <ColorCard hex="#D4F5E9" name="Fun Green" />
-             <ColorCard hex="#F4F7FF" name="Fun Surface" />
+             <ColorCard hex="#12161F" name="Fun Black" />
           </div>
         </section>
       </div>

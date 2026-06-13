@@ -114,22 +114,39 @@ function HeroSection({ t }: { t: (k: string) => string }) {
   );
 }
 
+import { supabase } from "../lib/supabase";
+
 /* ============ STATS SECTION ============ */
 function StatsSection({ t }: { t: (k: string) => string }) {
+  const [userCount, setUserCount] = useState(1240); // Fallback
+
+  useEffect(() => {
+    async function fetchCount() {
+      if (!supabase) return;
+      const { count, error } = await supabase
+        .from('profiles')
+        .select('*', { count: 'exact', head: true });
+      if (!error && count !== null) {
+        setUserCount(count + 1200); // Base + Dynamic
+      }
+    }
+    fetchCount();
+  }, []);
+
   return (
     <section className="py-20 border-y px-4 lg:px-0" style={{ borderColor: 'var(--fun-stroke-1)' }}>
       <div className="main-container">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
           <div>
-            <div className="text-4xl md:text-5xl font-bold fun-text mb-2"><CountUp end={500} />+</div>
-            <div className="text-sm fun-text-muted uppercase tracking-wider">{t("home.stats.clients")}</div>
+            <div className="text-4xl md:text-5xl font-bold fun-text mb-2"><CountUp end={userCount} />+</div>
+            <div className="text-sm fun-text-muted uppercase tracking-wider">{t("home.stats.users") || "Aktif Kullanıcı"}</div>
           </div>
           <div>
             <div className="text-4xl md:text-5xl font-bold fun-text mb-2"><CountUp end={150} />+</div>
             <div className="text-sm fun-text-muted uppercase tracking-wider">{t("home.stats.projects")}</div>
           </div>
           <div>
-            <div className="text-4xl md:text-5xl font-bold fun-text mb-2"><CountUp end={50} />+</div>
+            <div className="text-4xl md:text-5xl font-bold fun-text mb-2"><CountUp end={1} /></div>
             <div className="text-sm fun-text-muted uppercase tracking-wider">{t("home.stats.team")}</div>
           </div>
           <div>

@@ -34,7 +34,7 @@ function TeamPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {team.map((member, i) => (
               <div key={i} className="group">
-                <div className="aspect-square rounded-[32px] overflow-hidden mb-6 bg-[var(--fun-surface)]">
+                <div className="aspect-square rounded-[32px] overflow-hidden mb-6 bg-[var(--fun-surface)] border border-[var(--fun-stroke-1)]">
                   <img
                     src={member.image}
                     alt={member.name}
@@ -46,6 +46,18 @@ function TeamPage() {
                 <p className="text-fun-text-muted">{t(member.bioKey)}</p>
               </div>
             ))}
+
+            <Link to="/contact" className="group p-10 rounded-[32px] border-2 border-dashed border-[var(--fun-stroke-1)] flex flex-col items-center justify-center text-center space-y-4 hover:border-[var(--fun-purple)] transition-colors">
+               <div className="h-16 w-16 rounded-full bg-[var(--fun-purple)]/10 flex items-center justify-center text-[var(--fun-purple)] group-hover:scale-110 transition-transform">
+                  <svg className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                  </svg>
+               </div>
+               <div>
+                  <h3 className="text-xl font-bold fun-text">Ekibimize Katılın</h3>
+                  <p className="text-sm fun-text-muted">Geleceği bizimle birlikte inşa etmek ister misiniz? Başvurularınızı bekliyoruz.</p>
+               </div>
+            </Link>
           </div>
         </div>
       </section>
