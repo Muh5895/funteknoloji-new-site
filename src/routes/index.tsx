@@ -31,7 +31,6 @@ function Index() {
       <FeaturesSection t={t} />
       <HowItWorksSection t={t} />
       <ServicesSection t={t} />
-      <CaseStudySection t={t} />
       <TestimonialsSection t={t} />
       <FAQSection t={t} />
       <CTASection t={t} />
@@ -165,10 +164,10 @@ function FeaturesSection({ t }: { t: (k: string) => string }) {
 
             <div className="space-y-8">
               <div className="rounded-[20px] p-6 md:p-8" style={{ backgroundColor: 'var(--fun-card)' }}>
-                <div className="rounded-2xl py-8 mb-6 flex items-center justify-center min-h-[200px]" style={{ backgroundColor: 'var(--fun-surface)' }}>
-                  <div className="flex -space-x-4">
+              <div className="rounded-2xl py-8 mb-6 flex items-center justify-center min-h-[200px] overflow-hidden" style={{ backgroundColor: 'var(--fun-surface)' }}>
+                <div className="flex -space-x-4 px-4 overflow-x-auto no-scrollbar">
                     {[1,2,3,4].map(i => (
-                      <div key={i} className="h-14 w-32 rounded-full flex items-center gap-2 px-2 shadow-sm" style={{ backgroundColor: 'var(--fun-card)', borderColor: 'var(--fun-stroke-1)', borderWidth: 1 }}>
+                    <div key={i} className="h-14 w-32 shrink-0 rounded-full flex items-center gap-2 px-2 shadow-sm" style={{ backgroundColor: 'var(--fun-card)', borderColor: 'var(--fun-stroke-1)', borderWidth: 1 }}>
                         <div className="h-10 w-10 rounded-full" style={{ background: 'linear-gradient(135deg, var(--fun-green), var(--fun-stroke-1))' }} />
                         <div className="space-y-1">
                           <div className="h-2 w-12 rounded" style={{ backgroundColor: 'var(--fun-stroke-1)' }} />
@@ -314,63 +313,15 @@ function ServicesSection({ t }: { t: (k: string) => string }) {
   );
 }
 
-/* ============ CASE STUDY ============ */
-function CaseStudySection({ t }: { t: (k: string) => string }) {
-  const cases = [
-    { title: t("home.cases.item1.title"), desc: t("home.cases.item1.desc") },
-    { title: t("home.cases.item2.title"), desc: t("home.cases.item2.desc") },
-    { title: t("home.cases.item3.title"), desc: t("home.cases.item3.desc") },
-  ];
-
-  return (
-    <section className="py-16 lg:py-28 px-4 lg:px-5">
-      <div className="main-container">
-        <div className="text-center mb-12 lg:mb-16">
-          <h2 className="text-heading-4 md:text-heading-3 font-medium mb-3 fun-text">{t("home.cases.title")}</h2>
-          <p className="max-w-[680px] mx-auto text-tagline-1 fun-text-muted">{t("home.cases.desc")}</p>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-14">
-          {cases.map((cs, i) => (
-            <div key={i} className={`${i === 0 ? 'lg:col-span-2' : ''}`}>
-              <div className="space-y-6">
-                <div className={`relative w-full ${i === 0 ? 'h-[300px] lg:h-[600px]' : 'h-[300px] lg:h-[500px]'} rounded-[20px] overflow-hidden group cursor-pointer`} style={{ backgroundColor: 'var(--fun-surface)' }}>
-                  <div className="absolute inset-0 bg-gradient-to-br from-transparent to-black/20 group-hover:to-black/40 transition-all duration-500" />
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="h-24 w-24 rounded-3xl backdrop-blur-sm flex items-center justify-center" style={{ backgroundColor: 'var(--fun-card)', opacity: 0.8 }}>
-                      <span className="text-4xl font-bold fun-text-muted">{i + 1}</span>
-                    </div>
-                  </div>
-                  <div className="opacity-0 group-hover:opacity-100 transition-all duration-500 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                    <ArrowButton href="#" variant="green">{t("home.cases.view_details")}</ArrowButton>
-                  </div>
-                </div>
-                <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4 md:justify-between">
-                  <h3 className="text-heading-6 sm:text-heading-5 font-medium fun-text">{cs.title}</h3>
-                  <p className="max-w-[257px] text-tagline-1 fun-text-muted text-left md:text-right">{cs.desc}</p>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <div className="mt-14 text-center">
-          <ArrowButton href="#" variant="dark">{t("home.cases.view_all")}</ArrowButton>
-        </div>
-      </div>
-    </section>
-  );
-}
-
 /* ============ TESTIMONIALS ============ */
 function TestimonialsSection({ t }: { t: (k: string) => string }) {
   const testimonials = [
-    { name: "Darrell Steward", text: "Küçük bir işletme sahibi olarak, sunduğunuz yazılım çözümleri operasyonel verimliliğimizi artırmada hayat kurtarıcı oldu. Beklentilerimi gerçekten aştı." },
-    { name: "Sarah Johnson", text: "Yapay zeka entegrasyonu kesinlikle inanılmaz! İş süreçlerimizi otomatize ederek büyük zaman tasarrufu sağladık." },
-    { name: "Michael Chen", text: "Bu teknoloji veri analitiği süreçlerimizde devrim yarattı. İçgörüler o kadar derin ki, kararlarımızı artık çok daha güvenle alıyoruz." },
-    { name: "Emma Rodriguez", text: "Bir proje yöneticisi olarak bu araç, ekipler arası koordinasyonu sağlamak için paha biçilemez oldu. Kullanıcı dostu arayüzü harika!" },
-    { name: "David Kim", text: "Geliştirme süreçlerinin hızı ve kalitesi akıllara durgunluk verici. Olağanüstü kalite standartlarını korurken projelerimizi vaktinde teslim alabildik." },
-    { name: "Lisa Thompson", text: "Bu platform dijital varlığımızı yönetme şeklimizi dönüştürdü. Teknoloji o kadar modern ve etkileyici ki, tüm ekibimiz hayran kaldı." },
+    { name: t("home.testimonials.t1.name"), text: t("home.testimonials.t1.text") },
+    { name: t("home.testimonials.t2.name"), text: t("home.testimonials.t2.text") },
+    { name: t("home.testimonials.t3.name"), text: t("home.testimonials.t3.text") },
+    { name: t("home.testimonials.t4.name"), text: t("home.testimonials.t4.text") },
+    { name: t("home.testimonials.t5.name"), text: t("home.testimonials.t5.text") },
+    { name: t("home.testimonials.t6.name"), text: t("home.testimonials.t6.text") },
   ];
 
   const colors = ["from-[#F4F8E7] to-[#D485FF]", "from-[#E8F4FD] to-[#4A90E2]", "from-[#FFE8E8] to-[#FF6B6B]", "from-[#F0E6FF] to-[#8B5CF6]", "from-[#E6F7FF] to-[#1890FF]", "from-[#FFF7E6] to-[#FF8C00]"];

@@ -47,7 +47,8 @@ export const Route = createRootRoute({
       { name: "twitter:description", content: "Yenilikçi teknoloji çözümleri." },
     ],
     links: [
-      { rel: "icon", href: "https://framerusercontent.com/images/wYtLTUyXkZSH6e5ElqNpfbb4xT4.png?scale-down-to=512&width=1024&height=1024" },
+      { rel: "icon", href: "https://framerusercontent.com/images/wYtLTUyXkZSH6e5ElqNpfbb4xT4.png?width=1024&height=1024", media: "(prefers-color-scheme: light)" },
+      { rel: "icon", href: "https://framerusercontent.com/images/cOsd9aFSLcyMQvEdo60L3fUo.png?width=1024&height=1024", media: "(prefers-color-scheme: dark)" },
       { rel: "stylesheet", href: appCss },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },

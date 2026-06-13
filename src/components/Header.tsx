@@ -49,22 +49,22 @@ export default function Header() {
         {/* Desktop Nav */}
         <nav className="hidden items-center gap-0.5 xl:flex" aria-label="Ana navigasyon">
           <Dropdown id="company" label={t("nav.company")} open={openDropdown === "company"} onOpen={setOpenDropdown}>
-            <DropdownItem to="/about" title={t("nav.about")} desc="Bizi daha yakından tanıyın." />
-            <DropdownItem to="/team" title={t("nav.team")} desc="Dinamik ekibimizi keşfedin." />
+            <DropdownItem to="/about" title={t("nav.about")} desc={t("nav.about.desc")} />
+            <DropdownItem to="/team" title={t("nav.team")} desc={t("nav.team.desc")} />
           </Dropdown>
 
           <Dropdown id="platform" label={t("nav.platform")} open={openDropdown === "platform"} onOpen={setOpenDropdown}>
-            <DropdownItem to="/services" title={t("nav.services")} desc="Tüm hizmetlerimiz." />
-            <DropdownItem to="/projects" title={t("nav.projects")} desc="Geliştirdiğimiz projeler." />
-            <DropdownItem to="/pricing" title={t("nav.pricing")} desc="Fiyat planlarımız." />
+            <DropdownItem to="/services" title={t("nav.services")} desc={t("nav.services.desc")} />
+            <DropdownItem to="/projects" title={t("nav.projects")} desc={t("nav.projects.desc")} />
+            <DropdownItem to="/pricing" title={t("nav.pricing")} desc={t("nav.pricing.desc")} />
           </Dropdown>
 
           <Dropdown id="resources" label={t("nav.resources")} open={openDropdown === "resources"} onOpen={setOpenDropdown}>
-            <DropdownItem to="/blog" title={t("nav.blog")} desc="En son yazılarımız." />
-            <DropdownItem to="/faq" title="Sık Sorulan Sorular" desc="Sık sorulan sorular." />
-            <DropdownItem to="/docs" title={t("nav.docs")} desc="Teknik dokümantasyon." />
-            <DropdownItem to="/contact" title={t("nav.contact")} desc="Bizimle iletişime geçin." />
-            <DropdownItem to="/sitemap" title={t("nav.sitemap")} desc="Site haritamız." />
+            <DropdownItem to="/blog" title={t("nav.blog")} desc={t("nav.blog.desc")} />
+            <DropdownItem to="/faq" title={t("nav.faq")} desc={t("nav.faq.desc")} />
+            <DropdownItem to="/docs" title={t("nav.docs")} desc={t("nav.docs.desc")} />
+            <DropdownItem to="/contact" title={t("nav.contact")} desc={t("nav.contact.desc")} />
+            <DropdownItem to="/sitemap" title={t("nav.sitemap")} desc={t("nav.sitemap.desc")} />
           </Dropdown>
         </nav>
 

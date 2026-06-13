@@ -139,7 +139,12 @@ function ContactPage() {
               <div className="bg-[#12161F] rounded-3xl p-8 md:p-10 text-white">
                 <h3 className="text-heading-6 font-medium mb-6">{t("contact.info.title")}</h3>
                 <div className="space-y-6">
-                  <ContactInfoItem icon="📧" title={t("contact.info.email")} value="support@funteknoloji.com" />
+                  <ContactInfoItem
+                    icon="📧"
+                    title={t("contact.info.email")}
+                    value="support@funteknoloji.com"
+                    href="mailto:support@funteknoloji.com"
+                  />
                   <ContactInfoItem icon="🕐" title={t("contact.info.hours")} value={t("contact.info.hours.value")} />
                 </div>
               </div>
@@ -187,13 +192,17 @@ function ContactPage() {
   );
 }
 
-function ContactInfoItem({ icon, title, value }: { icon: string; title: string; value: string }) {
+function ContactInfoItem({ icon, title, value, href }: { icon: string; title: string; value: string; href?: string }) {
   return (
     <div className="flex items-start gap-4">
       <span className="text-xl">{icon}</span>
       <div>
         <p className="text-sm text-white/40 mb-1">{title}</p>
-        <p className="text-tagline-1 text-white">{value}</p>
+        {href ? (
+          <a href={href} className="text-tagline-1 text-white hover:text-[var(--fun-purple)] transition-colors">{value}</a>
+        ) : (
+          <p className="text-tagline-1 text-white">{value}</p>
+        )}
       </div>
     </div>
   );

@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useLang } from "../lib/i18n";
 
 export const Route = createFileRoute("/sitemap")({
   head: () => ({
@@ -13,39 +14,44 @@ export const Route = createFileRoute("/sitemap")({
   component: SitemapPage,
 });
 
-const sections = [
-  {
-    title: "Şirket",
-    links: [
-      { to: "/about", label: "Hakkımızda", desc: "Bizi daha yakından tanıyın" },
-      { to: "/team", label: "Ekibimiz", desc: "Dinamik ekibimiz" },
-    ],
-  },
-  {
-    title: "Platform",
-    links: [
-      { to: "/services", label: "Hizmetler", desc: "Tüm hizmetlerimiz" },
-      { to: "/pricing", label: "Fiyatlandırma", desc: "Fiyat planları" },
-    ],
-  },
-  {
-    title: "Kaynaklar",
-    links: [
-      { to: "/blog", label: "Blog", desc: "En son yazılar" },
-      { to: "/contact", label: "İletişim", desc: "Bize ulaşın" },
-    ],
-  },
-];
-
 function SitemapPage() {
+  const { t } = useLang();
+
+  const sections = [
+    {
+      title: t("nav.company"),
+      links: [
+        { to: "/about", label: t("nav.about"), desc: t("nav.about.desc") },
+        { to: "/team", label: t("nav.team"), desc: t("nav.team.desc") },
+      ],
+    },
+    {
+      title: t("nav.platform"),
+      links: [
+        { to: "/services", label: t("nav.services"), desc: t("nav.services.desc") },
+        { to: "/projects", label: t("nav.projects"), desc: t("nav.projects.desc") },
+        { to: "/pricing", label: t("nav.pricing"), desc: t("nav.pricing.desc") },
+      ],
+    },
+    {
+      title: t("nav.resources"),
+      links: [
+        { to: "/blog", label: t("nav.blog"), desc: t("nav.blog.desc") },
+        { to: "/faq", label: t("nav.faq"), desc: t("nav.faq.desc") },
+        { to: "/docs", label: t("nav.docs"), desc: t("nav.docs.desc") },
+        { to: "/contact", label: t("nav.contact"), desc: t("nav.contact.desc") },
+      ],
+    },
+  ];
+
   return (
     <main className="pt-32 pb-24">
       <section className="px-4 lg:px-5">
         <div className="main-container">
           <div className="text-center mb-14">
-            <span className="badge-fun badge-fun-gray mb-4 inline-block">Site Haritası</span>
-            <h1 className="text-heading-3 md:text-heading-2 font-medium fun-text mb-3">Tüm Sayfalar</h1>
-            <p className="text-tagline-1 fun-text-muted max-w-[600px] mx-auto">Fun Teknoloji web sitesindeki tüm bölümlere göz atın.</p>
+            <span className="badge-fun badge-fun-gray mb-4 inline-block">{t("nav.sitemap")}</span>
+            <h1 className="text-heading-3 md:text-heading-2 font-medium fun-text mb-3">{t("nav.sitemap")}</h1>
+            <p className="text-tagline-1 fun-text-muted max-w-[600px] mx-auto">{t("nav.sitemap.desc")}</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {sections.map((sec) => (

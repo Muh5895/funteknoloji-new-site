@@ -13,7 +13,7 @@ function TeamPage() {
       name: "Muhammed Erbay",
       role: "Founder & CEO",
       image: "https://framerusercontent.com/images/0ZbQRx8lUAVCEu2vriydHRwGC0.jpg?width=1080&height=1080",
-      bio: "Teknoloji tutkunu ve Fun Teknoloji'nin kurucusu. Geleceğin yapay zeka çözümleri üzerine çalışıyor."
+      bioKey: "team.member.muhammed.bio"
     }
   ];
 
@@ -38,12 +38,12 @@ function TeamPage() {
                   <img
                     src={member.image}
                     alt={member.name}
-                    className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 scale-100 group-hover:scale-110"
+                    className="w-full h-full object-cover transition-all duration-500 scale-100 group-hover:scale-110"
                   />
                 </div>
                 <h3 className="text-2xl font-bold fun-text mb-1">{member.name}</h3>
                 <p className="text-[var(--fun-purple)] font-medium mb-3">{member.role}</p>
-                <p className="text-fun-text-muted">{member.bio}</p>
+                <p className="text-fun-text-muted">{t(member.bioKey)}</p>
               </div>
             ))}
           </div>

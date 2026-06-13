@@ -7,14 +7,6 @@ export const Route = createFileRoute("/projects")({
 
 function ProjectsPage() {
   const { t } = useLang();
-  const projects = [
-    {
-      title: "QuakeSafe",
-      desc: "Afet anında bilgiye hızlı erişim sağlayan, internet gerektirmeyen acil durum uygulaması.",
-      image: "https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=800&auto=format&fit=crop&q=60",
-      link: "#"
-    }
-  ];
 
   return (
     <main className="pt-32 pb-20 px-4 lg:px-5">
@@ -25,19 +17,14 @@ function ProjectsPage() {
           <p className="max-w-[700px] mx-auto fun-text-muted text-lg">Yenilikçi teknolojilerle geliştirdiğimiz çözüm odaklı projelerimiz.</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {projects.map((p, i) => (
-            <div key={i} className="group rounded-[32px] overflow-hidden border bg-[var(--fun-card)]" style={{ borderColor: 'var(--fun-stroke-1)' }}>
-              <div className="aspect-video overflow-hidden">
-                <img src={p.image} alt={p.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
-              </div>
-              <div className="p-8">
-                <h3 className="text-2xl font-bold fun-text mb-3">{p.title}</h3>
-                <p className="fun-text-muted mb-6">{p.desc}</p>
-                <a href={p.link} className="btn-fun btn-fun-dark">Detayları Gör</a>
-              </div>
-            </div>
-          ))}
+        <div className="flex flex-col items-center justify-center py-20 bg-[var(--fun-surface)] rounded-[32px] border-2 border-dashed border-[var(--fun-stroke-1)]">
+           <div className="h-20 w-20 rounded-full bg-[var(--fun-card)] flex items-center justify-center mb-6 shadow-xl">
+             <svg className="h-10 w-10 text-[var(--fun-purple)] animate-pulse" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+               <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+             </svg>
+           </div>
+           <h2 className="text-3xl font-bold fun-text mb-2">Yakında</h2>
+           <p className="fun-text-muted max-w-[450px] text-center">Heyecan verici projelerimiz üzerinde çalışıyoruz. Çok yakında burada paylaşacağız.</p>
         </div>
       </div>
     </main>

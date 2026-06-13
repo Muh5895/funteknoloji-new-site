@@ -34,7 +34,9 @@ export default function LanguageSwitcher() {
         className="flex h-10 items-center gap-2 rounded-full border px-3 text-sm font-medium transition-all hover:scale-105"
         style={{ borderColor: "var(--fun-stroke-1)", color: "var(--fun-text)" }}
       >
-        <img src={current.flagUrl} alt="" className="w-5 h-auto rounded-sm object-cover" />
+        <div className="w-5 h-5 rounded-full overflow-hidden border border-[var(--fun-stroke-1)]">
+          <img src={current.flagUrl} alt="" className="w-full h-full object-cover" />
+        </div>
         <span className="uppercase">{current.code}</span>
       </button>
       {open && (
@@ -51,7 +53,9 @@ export default function LanguageSwitcher() {
                 className={`flex w-full items-center gap-3 px-4 py-2.5 text-sm transition-colors hover:bg-[var(--fun-surface)] ${l.code === lang ? "font-semibold" : ""}`}
                 style={{ color: "var(--fun-text)" }}
               >
-                <img src={l.flagUrl} alt="" className="w-4 h-auto rounded-sm object-cover" />
+                <div className="w-4 h-4 rounded-full overflow-hidden border border-[var(--fun-stroke-1)]">
+                  <img src={l.flagUrl} alt="" className="w-full h-full object-cover" />
+                </div>
                 <span>{l.label}</span>
               </button>
             </li>
