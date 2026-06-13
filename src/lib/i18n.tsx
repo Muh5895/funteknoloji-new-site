@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 
-export type Lang = "tr" | "en";
+export type Lang = "tr" | "en" | "az";
 
 type Dict = Record<string, string>;
 
@@ -20,6 +20,7 @@ const tr: Dict = {
   "nav.faq": "SSS",
   "nav.support": "Destek",
   "nav.contact": "İletişim",
+  "nav.docs": "Dokümantasyon",
   "theme.light": "Açık temaya geç",
   "theme.dark": "Koyu temaya geç",
   "lang.label": "Dil seç",
@@ -42,13 +43,37 @@ const en: Dict = {
   "nav.faq": "FAQ",
   "nav.support": "Support",
   "nav.contact": "Contact",
+  "nav.docs": "Documentation",
   "theme.light": "Switch to light",
   "theme.dark": "Switch to dark",
   "lang.label": "Choose language",
   "intro.skip": "Skip",
 };
 
-const dicts: Record<Lang, Dict> = { tr, en };
+const az: Dict = {
+  "nav.company": "Şirkət",
+  "nav.platform": "Platforma",
+  "nav.resources": "Resurslar",
+  "nav.pricing": "Qiymətləndirmə",
+  "nav.services": "Xidmətlər",
+  "nav.sitemap": "Sayt xəritəsi",
+  "nav.login": "Daxil ol",
+  "nav.cta": "Başlayın",
+  "nav.about": "Haqqımızda",
+  "nav.team": "Komandamız",
+  "nav.career": "Karyera",
+  "nav.blog": "Bloq",
+  "nav.faq": "SSS",
+  "nav.support": "Dəstək",
+  "nav.contact": "Əlaqə",
+  "nav.docs": "Sənədlər",
+  "theme.light": "Açıq mövzu",
+  "theme.dark": "Tünd mövzu",
+  "lang.label": "Dil seçin",
+  "intro.skip": "Keç",
+};
+
+const dicts: Record<Lang, Dict> = { tr, en, az };
 
 interface Ctx {
   lang: Lang;
@@ -63,7 +88,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const stored = (typeof window !== "undefined" && localStorage.getItem("lang")) as Lang | null;
-    if (stored === "tr" || stored === "en") setLangState(stored);
+    if (stored === "tr" || stored === "en" || stored === "az") setLangState(stored);
   }, []);
 
   useEffect(() => {

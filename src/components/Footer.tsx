@@ -14,7 +14,7 @@ export default function Footer() {
                 </div>
                 <span className="text-lg font-semibold fun-text">Fun Teknoloji</span>
               </div>
-              <p className="mt-4 mb-7 fun-text-muted text-tagline-1">
+              <p className="mt-4 mb-7 fun-text-muted text-sm">
                 Yenilikçi çözümlerimizle geleceği bugünden inşa ediyoruz.
               </p>
               <div className="flex items-center gap-3">
@@ -74,7 +74,7 @@ export default function Footer() {
                 <FooterLink href="#">SSS</FooterLink>
                 <FooterLink href="#">Destek</FooterLink>
                 <FooterLink to="/contact">İletişim</FooterLink>
-                <FooterLink href="#">Dokümantasyon</FooterLink>
+                <FooterLink to="/docs">Dokümantasyon</FooterLink>
               </FooterSection>
             </div>
           </div>
@@ -84,6 +84,7 @@ export default function Footer() {
         <div className="flex flex-col items-center justify-between gap-4 border-t py-6 md:flex-row" style={{ borderColor: 'var(--fun-stroke-1)' }}>
           <p className="text-sm fun-text-muted">© 2025 Fun Teknoloji. Tüm hakları saklıdır.</p>
           <div className="flex items-center gap-6">
+            <a href="https://status.funteknoloji.com" target="_blank" rel="noopener noreferrer" className="text-sm fun-text-muted hover:fun-text transition-colors">Sistem Durumu</a>
             <a href="#" className="text-sm fun-text-muted hover:fun-text transition-colors">Gizlilik Politikası</a>
             <a href="#" className="text-sm fun-text-muted hover:fun-text transition-colors">Şartlar ve Koşullar</a>
           </div>
@@ -111,7 +112,7 @@ function FooterSection({ title, children }: { title: string; children: React.Rea
 }
 
 function FooterLink({ to, href, children }: { to?: string; href?: string; children: React.ReactNode }) {
-  const className = "text-tagline-1 fun-text-muted hover:fun-text transition-colors";
+  const className = "text-sm fun-text-muted hover:fun-text transition-colors";
   if (to) return <li><Link to={to} className={className}>{children}</Link></li>;
   return <li><a href={href || "#"} className={className}>{children}</a></li>;
 }

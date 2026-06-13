@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -21,9 +22,31 @@ export const Route = createFileRoute("/contact")({
 function ContactPage() {
   const [formData, setFormData] = useState({ name: "", email: "", subject: "", message: "" });
 
+  const isGibberish = (text: string) => {
+    if (!text) return true;
+    // 1. Repeating characters like "aaaaa"
+    if (/(.)\1{4,}/.test(text)) return true;
+    // 2. Many consonants in a row
+    if (/[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]{7,}/.test(text)) return true;
+    // 3. Very short length
+    if (text.trim().length < 3) return true;
+    return false;
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    alert("Mesajınız gönderildi! En kısa sürede size dönüş yapacağız.");
+
+    if (isGibberish(formData.subject)) {
+      toast.error("Lütfen geçerli bir konu başlığı yazın.");
+      return;
+    }
+
+    if (isGibberish(formData.message) || formData.message.length < 10) {
+      toast.error("Lütfen anlamlı bir mesaj yazın.");
+      return;
+    }
+
+    toast.success("Mesajınız gönderildi! En kısa sürede size dönüş yapacağız.");
     setFormData({ name: "", email: "", subject: "", message: "" });
   };
 

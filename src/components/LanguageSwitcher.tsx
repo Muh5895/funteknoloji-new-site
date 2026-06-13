@@ -13,11 +13,12 @@ export default function LanguageSwitcher() {
   }, []);
 
   const langs: { code: Lang; label: string; flag: string }[] = [
-    { code: "tr", label: "Türkçe", flag: "🇹🇷" },
-    { code: "en", label: "English", flag: "🇬🇧" },
+    { code: "tr", label: "Türkçe", flag: "https://flagcdn.com/w40/tr.png" },
+    { code: "en", label: "English", flag: "https://flagcdn.com/w40/gb.png" },
+    { code: "az", label: "Azerbaycan dili", flag: "https://flagcdn.com/w40/az.png" },
   ];
 
-  const current = langs.find((l) => l.code === lang)!;
+  const current = langs.find((l) => l.code === lang) || langs[0];
 
   return (
     <div ref={ref} className="relative">
@@ -30,13 +31,13 @@ export default function LanguageSwitcher() {
         className="flex h-10 items-center gap-2 rounded-full border px-3 text-sm font-medium transition-all hover:scale-105"
         style={{ borderColor: "var(--fun-stroke-1)", color: "var(--fun-text)" }}
       >
-        <span aria-hidden="true">{current.flag}</span>
+        <img src={current.flag} alt={current.label} className="h-4 w-6 rounded-sm object-cover" />
         <span className="uppercase">{current.code}</span>
       </button>
       {open && (
         <ul
           role="listbox"
-          className="absolute right-0 top-full z-50 mt-2 w-36 overflow-hidden rounded-2xl border shadow-xl animate-scale-in origin-top-right"
+          className="absolute right-0 top-full z-50 mt-2 w-48 overflow-hidden rounded-2xl border shadow-xl animate-scale-in origin-top-right"
           style={{ backgroundColor: "var(--fun-card)", borderColor: "var(--fun-stroke-1)" }}
         >
           {langs.map((l) => (
@@ -47,7 +48,7 @@ export default function LanguageSwitcher() {
                 className={`flex w-full items-center gap-3 px-4 py-2.5 text-sm transition-colors hover:bg-[var(--fun-surface)] ${l.code === lang ? "font-semibold" : ""}`}
                 style={{ color: "var(--fun-text)" }}
               >
-                <span aria-hidden="true">{l.flag}</span>
+                <img src={l.flag} alt={l.label} className="h-3 w-5 rounded-sm object-cover" />
                 <span>{l.label}</span>
               </button>
             </li>

@@ -3,6 +3,7 @@ import appCss from "../styles.css?url";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import IntroSplash from "../components/IntroSplash";
+import NexyAssistant from "../components/NexyAssistant";
 import { LanguageProvider } from "../lib/i18n";
 
 const THEME_INIT = `
@@ -94,6 +95,7 @@ function RootComponent() {
       <Header />
       <Outlet />
       <Footer />
+      <NexyAssistant />
     </LanguageProvider>
   );
 }

@@ -9,10 +9,12 @@ const Toaster = ({ ...props }: ToasterProps) => {
       toastOptions={{
         classNames: {
           toast:
-            "group toast group-[.toaster]:bg-background group-[.toaster]:text-foreground group-[.toaster]:border-border group-[.toaster]:shadow-lg",
-          description: "group-[.toast]:text-muted-foreground",
-          actionButton: "group-[.toast]:bg-primary group-[.toast]:text-primary-foreground",
-          cancelButton: "group-[.toast]:bg-muted group-[.toast]:text-muted-foreground",
+            "group toast group-[.toaster]:bg-[var(--fun-card)] group-[.toaster]:text-[var(--fun-text)] group-[.toaster]:border-[var(--fun-stroke-1)] group-[.toaster]:shadow-2xl group-[.toaster]:rounded-2xl group-[.toaster]:font-sans",
+          description: "group-[.toast]:text-[var(--fun-text-muted)]",
+          actionButton: "group-[.toast]:bg-[var(--fun-text)] group-[.toast]:text-[var(--color-background)]",
+          cancelButton: "group-[.toast]:bg-[var(--fun-stroke-1)] group-[.toast]:text-[var(--fun-text)]",
+          success: "group-[.toaster]:!bg-[var(--fun-card)] group-[.toaster]:!text-[var(--fun-text)] group-[.toaster]:!border-[var(--fun-stroke-1)]",
+          error: "group-[.toaster]:!bg-[var(--fun-card)] group-[.toaster]:!text-[var(--fun-text)] group-[.toaster]:!border-[var(--fun-stroke-1)]",
         },
       }}
       {...props}

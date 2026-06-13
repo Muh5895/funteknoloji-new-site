@@ -23,7 +23,6 @@ function Index() {
   return (
     <main className="space-y-0">
       <HeroSection />
-      <LogoMarquee />
       <WhatWeDoSection />
       <FeaturesSection />
       <HowItWorksSection />
@@ -328,12 +327,12 @@ function CaseStudySection() {
 /* ============ TESTIMONIALS ============ */
 function TestimonialsSection() {
   const testimonials = [
-    { name: "Darrell Steward", text: "Küçük bir işletme sahibi olarak, hizmetiniz nakit akışını yönetmede ve finansal stratejileri optimize etmede hayat kurtarıcı oldu. Beklentilerimi gerçekten aştı." },
-    { name: "Sarah Johnson", text: "Ses kopyalama özelliği kesinlikle inanılmaz! İçeriğim için saatler yerine dakikalar içinde profesyonel seslendirmeler oluşturabildim." },
-    { name: "Michael Chen", text: "Bu teknoloji podcast üretimimizde devrim yarattı. Kalite o kadar gerçekçi ki, dinleyicilerimiz orijinal kayıtlarımızdan farkı anlayamıyor." },
-    { name: "Emma Rodriguez", text: "Bir dil öğretmeni olarak bu araç, birden fazla dilde telaffuz örnekleri oluşturmak için paha biçilemez oldu. Öğrencilerim doğal sesli sesleri seviyor!" },
-    { name: "David Kim", text: "Ses üretiminin doğruluğu ve hızı akıllara durgunluk verici. Olağanüstü kalite standartlarını korurken ses üretim süremizi %80 azalttık." },
-    { name: "Lisa Thompson", text: "Bu platform sesli kitap oluşturma şeklimizi dönüştürdü. Ses sentezi o kadar doğal ve etkileyici ki, dinleyicilerimiz tüm deneyim boyunca tamamen bağlı kalıyor." },
+    { name: "Ahmet Yılmaz", text: "Küçük bir işletme sahibi olarak, hizmetiniz nakit akışını yönetmede ve finansal stratejileri optimize etmede hayat kurtarıcı oldu. Beklentilerimi gerçekten aştı." },
+    { name: "Ayşe Kaya", text: "Ses kopyalama özelliği kesinlikle inanılmaz! İçeriğim için saatler yerine dakikalar içinde profesyonel seslendirmeler oluşturabildim." },
+    { name: "Mehmet Demir", text: "Bu teknoloji podcast üretimimizde devrim yarattı. Kalite o kadar gerçekçi ki, dinleyicilerimiz orijinal kayıtlarımızdan farkı anlayamıyor." },
+    { name: "Zeynep Çelik", text: "Bir dil öğretmeni olarak bu araç, birden fazla dilde telaffuz örnekleri oluşturmak için paha biçilemez oldu. Öğrencilerim doğal sesli sesleri seviyor!" },
+    { name: "Caner Aydın", text: "Ses üretiminin doğruluğu ve hızı akıllara durgunluk verici. Olağanüstü kalite standartlarını korurken ses üretim süremizi %80 azalttık." },
+    { name: "Selin Öztürk", text: "Bu platform sesli kitap oluşturma şeklimizi dönüştürdü. Ses sentezi o kadar doğal ve etkileyici ki, dinleyicilerimiz tüm deneyim boyunca tamamen bağlı kalıyor." },
   ];
 
   const colors = ["from-[#F4F8E7] to-[#D485FF]", "from-[#E8F4FD] to-[#4A90E2]", "from-[#FFE8E8] to-[#FF6B6B]", "from-[#F0E6FF] to-[#8B5CF6]", "from-[#E6F7FF] to-[#1890FF]", "from-[#FFF7E6] to-[#FF8C00]"];

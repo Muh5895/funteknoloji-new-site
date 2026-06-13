@@ -222,6 +222,9 @@
   background-color: #6C5CE7;
   color: white;
 }
+.btn-fun-dark .arrow-btn-icon {
+  color: inherit;
+}
 
 .btn-fun-light {
   background-color: var(--fun-surface);
@@ -229,6 +232,12 @@
 }
 .btn-fun-light:hover {
   background-color: var(--fun-text);
+  color: var(--color-background);
+}
+.btn-fun-light .arrow-btn-icon {
+  color: var(--fun-text);
+}
+.btn-fun-light:hover .arrow-btn-icon {
   color: var(--color-background);
 }
 
