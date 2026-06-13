@@ -25,6 +25,11 @@ function FAQPage() {
       a: "Fun Teknoloji, 2025 yılında Muhammed Erbay tarafından vizyoner bir teknoloji girişimi olarak kurulmuştur."
     },
     {
+      category: "Genel",
+      q: "İsminiz neden Fun Teknoloji?",
+      a: "Çünkü teknolojinin sıkıcı ve karmaşık değil, hayatı kolaylaştıran ve 'eğlenceli' bir araç olması gerektiğine inanıyoruz."
+    },
+    {
       category: "Hizmetler",
       q: "Hangi hizmetleri sunuyorsunuz?",
       a: "Yazılım geliştirme, yapay zeka entegrasyonu, veri analitiği, siber güvenlik ve bulut çözümleri sunuyoruz."
@@ -35,6 +40,11 @@ function FAQPage() {
       a: "İhtiyaç analizi, prototipleme, geliştirme, test ve yayına alma aşamalarından oluşan şeffaf bir süreç izliyoruz."
     },
     {
+      category: "Hizmetler",
+      q: "Mobil uygulama mı yoksa web sitesi mi yaptırmalıyım?",
+      a: "Bu hedeflerinize bağlıdır. Ekibimiz ihtiyaçlarınızı analiz ederek size en doğru platformu önerecektir."
+    },
+    {
       category: "Teknik",
       q: "Hangi teknolojileri kullanıyorsunuz?",
       a: "React, Next.js, TypeScript, Python, PyTorch, Supabase ve AWS gibi modern teknoloji yığınlarını kullanıyoruz."
@@ -43,6 +53,11 @@ function FAQPage() {
       category: "Teknik",
       q: "API desteğiniz var mı?",
       a: "Evet, kurumsal çözümlerimiz için kapsamlı API desteği ve dokümantasyon sağlıyoruz."
+    },
+    {
+      category: "Teknik",
+      q: "Yapay zeka modellerini nasıl eğitiyorsunuz?",
+      a: "Kendi veri setlerimiz ve modern derin öğrenme framework'leri ile projenize özel modeller geliştiriyoruz."
     },
     {
       category: "Güvenlik",

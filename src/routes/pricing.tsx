@@ -33,14 +33,6 @@ function PricingPage() {
         </div>
       </section>
 
-      <section className="py-20 md:py-32">
-        <div className="main-container text-center">
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-             <a href="https://waitlist.funteknoloji.com" className="btn-fun btn-fun-dark h-16 px-10 text-lg">{t("pricing.waitlist")}</a>
-             <Link to="/contact" className="btn-fun btn-fun-light h-16 px-10 text-lg border-2">{t("pricing.contact")}</Link>
-          </div>
-        </div>
-      </section>
     </main>
   );
 }

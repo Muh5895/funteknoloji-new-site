@@ -1,8 +1,45 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import ArrowButton from "../components/ArrowButton";
 import { useLang } from "../lib/i18n";
 import CountUp from "../components/CountUp";
+
+function ScrollReveal({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+  const [isVisible, setIsVisible] = useState(false);
+  const domRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    const current = domRef.current;
+    if (current) {
+      observer.observe(current);
+    }
+
+    return () => {
+      if (current) {
+        observer.unobserve(current);
+      }
+    };
+  }, []);
+
+  return (
+    <div
+      ref={domRef}
+      className={`${className} transition-all duration-1000 ${
+        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
+      }`}
+    >
+      {children}
+    </div>
+  );
+}
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -26,14 +63,14 @@ function Index() {
   return (
     <main className="space-y-0">
       <HeroSection t={t} />
-      <StatsSection t={t} />
-      <WhatWeDoSection t={t} />
-      <FeaturesSection t={t} />
-      <HowItWorksSection t={t} />
-      <ServicesSection t={t} />
-      <TestimonialsSection t={t} />
-      <FAQSection t={t} />
-      <CTASection t={t} />
+      <ScrollReveal><StatsSection t={t} /></ScrollReveal>
+      <ScrollReveal><WhatWeDoSection t={t} /></ScrollReveal>
+      <ScrollReveal><FeaturesSection t={t} /></ScrollReveal>
+      <ScrollReveal><HowItWorksSection t={t} /></ScrollReveal>
+      <ScrollReveal><ServicesSection t={t} /></ScrollReveal>
+      <ScrollReveal><TestimonialsSection t={t} /></ScrollReveal>
+      <ScrollReveal><FAQSection t={t} /></ScrollReveal>
+      <ScrollReveal><CTASection t={t} /></ScrollReveal>
     </main>
   );
 }
@@ -57,16 +94,16 @@ function HeroSection({ t }: { t: (k: string) => string }) {
 
         <div className="main-container relative z-30 flex flex-col items-center justify-center min-h-[60vh] text-center">
           <div className="mb-12 lg:mb-24 w-full">
-            <span className="badge-fun badge-fun-gray mb-6 inline-block text-xs tracking-wider animate-in zoom-in duration-700 delay-300 fill-mode-both">{t("home.hero.badge")}</span>
-            <h1 className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-bold mb-8 tracking-tight animate-in fade-in slide-in-from-top-4 duration-1000 delay-500 fill-mode-both leading-[1.1]">
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#12161F] via-[#6C5CE7] to-[#864FFE] dark:from-white dark:via-white/90 dark:to-white/50">
+            <span className="badge-fun badge-fun-gray mb-6 inline-block text-xs tracking-wider animate-in fade-in zoom-in duration-700 delay-100 fill-mode-both">{t("home.hero.badge")}</span>
+            <h1 className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-bold mb-8 tracking-tight animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-300 fill-mode-both leading-[1.1]">
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#12161F] via-[#2A2E38] to-[#40444F] dark:from-white dark:via-white/90 dark:to-white/50">
                 {t("home.hero.title")}
               </span>
             </h1>
-            <p className="max-w-[950px] mx-auto mb-10 md:mb-16 text-xl md:text-2xl lg:text-3xl fun-text-muted leading-relaxed animate-in fade-in duration-1000 delay-700 fill-mode-both">
+            <p className="max-w-[950px] mx-auto mb-10 md:mb-16 text-xl md:text-2xl lg:text-3xl fun-text-muted leading-relaxed animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-500 fill-mode-both">
               {t("home.hero.desc")}
             </p>
-            <div className="flex md:flex-row flex-col gap-5 items-center justify-center animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-1000 fill-mode-both">
+            <div className="flex md:flex-row flex-col gap-5 items-center justify-center animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-700 fill-mode-both">
               <ArrowButton to="/services" variant="dark" className="w-full md:w-auto h-16 px-8 text-xl font-medium shadow-2xl shadow-indigo-500/20">{t("home.hero.explore")}</ArrowButton>
               <ArrowButton href="https://waitlist.funteknoloji.com" variant="light" className="w-full md:w-auto h-16 px-8 text-xl font-medium border-2">{t("home.hero.start")}</ArrowButton>
             </div>

@@ -9,6 +9,18 @@ function ChangelogPage() {
   const { t } = useLang();
   const changes = [
     {
+      version: "v1.3.0",
+      date: "15 Haziran 2026",
+      items: [
+        "Nexy yapay zeka asistanı gelişmiş yanıt sistemi ve genişletilmiş bilgi bankasıyla güncellendi.",
+        "Ana sayfa için Scroll-Reveal (aşağı kaydırdıkça yüklenme) animasyonları eklendi.",
+        "Hero bölümü giriş animasyonları daha akıcı hale getirildi.",
+        "Işık teması (Light Mode) için başlık renkleri daha profesyonel bir tona güncellendi.",
+        "Supabase veritabanı bağlantısı yeni yüksek performanslı sunucuya taşındı.",
+        "Site genelindeki performans ve yükleme hızı iyileştirmeleri yapıldı."
+      ]
+    },
+    {
       version: "v1.2.0",
       date: "14 Haziran 2026",
       items: [

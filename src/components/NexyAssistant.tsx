@@ -40,46 +40,78 @@ export default function NexyAssistant() {
     const text = input.toLowerCase();
     const responses = {
       pricing: [
-        "Fiyatlandırma politikalarımız üzerinde çalışıyoruz. En güncel paketler için Fiyatlandırma sayfamızı takip edebilirsiniz.",
-        "Şu an için tüm hizmetlerimiz için size özel teklif sunuyoruz, detaylar yakında sayfalarımızda olacak.",
-        "Paketlerimiz güncelleniyor, bekleme listesine katılarak avantajlardan haberdar olabilirsiniz."
+        "Fiyatlandırma politikalarımız üzerinde çalışıyoruz. En güncel paketler için Fiyatlandırma sayfamızı takip edebilirsiniz. Şu an için bekleme listemize katılmak en iyi seçenek!",
+        "Şu an için tüm hizmetlerimiz için size özel teklif sunuyoruz, detaylar yakında sayfalarımızda olacak. Genelde proje bazlı fiyatlandırma yapıyoruz.",
+        "Paketlerimiz güncelleniyor. Fun Teknoloji olarak her bütçeye uygun teknoloji çözümleri üretmeyi hedefliyoruz."
       ],
       services: [
-        "Yapay zeka entegrasyonu, özel yazılım geliştirme, mobil uygulama ve siber güvenlik alanlarında profesyonel çözümler sunuyoruz.",
-        "Dijital dönüşüm yolculuğunuzda size en modern teknoloji yığını ile eşlik ediyoruz.",
-        "İş süreçlerinizi otomatize edecek yapay zeka çözümlerimiz hakkında detaylı bilgi için Hizmetler sayfamıza bakabilirsiniz."
+        "Yapay zeka entegrasyonu, özel yazılım geliştirme, mobil uygulama ve siber güvenlik alanlarında profesyonel çözümler sunuyoruz. Hangi alanla ilgileniyorsunuz?",
+        "Dijital dönüşüm yolculuğunuzda size en modern teknoloji yığını ile eşlik ediyoruz. React, Next.js, AI modelleri ve daha fazlasını kullanıyoruz.",
+        "İş süreçlerinizi otomatize edecek yapay zeka çözümlerimiz hakkında detaylı bilgi için Hizmetler sayfamıza bakabilirsiniz. Verimliliğinizi %40'a kadar artırabiliriz."
       ],
       founder: [
         "Fun Teknoloji, Muhammed Erbay tarafından 2025 yılında vizyoner bir teknoloji şirketi olarak kurulmuştur.",
-        "Kurucumuz Muhammed Erbay, teknolojiyi herkes için erişilebilir ve faydalı kılma vizyonuyla bu yola çıktı.",
-        "2025'te Muhammed Erbay liderliğinde kurulan Fun Teknoloji, Türkiye'nin dijital geleceğine odaklanıyor."
+        "Kurucumuz Muhammed Erbay, teknolojiyi herkes için erişilebilir ve faydalı kılma vizyonuyla bu yola çıktı. Kendisi genç ve hırslı bir girişimcidir.",
+        "2025'te Muhammed Erbay liderliğinde kurulan Fun Teknoloji, Türkiye'nin dijital geleceğine odaklanıyor. Muhammed Bey bizzat projelerin mimarisini denetliyor."
       ],
       contact: [
-        "Bize iletişim sayfasındaki formdan veya support@funteknoloji.com adresinden ulaşabilirsiniz!",
-        "Sorularınız için her zaman buradayız, iletişim kısmından bize yazmaktan çekinmeyin.",
-        "Discord topluluğumuza katılarak da ekibimizle doğrudan iletişime geçebilirsiniz."
+        "Bize iletişim sayfasındaki formdan veya support@funteknoloji.com adresinden ulaşabilirsiniz! 7/24 destek veriyoruz.",
+        "Sorularınız için her zaman buradayız, iletişim kısmından bize yazmaktan çekinmeyin. Ayrıca Discord kanalımızda çok aktif bir topluluğumuz var.",
+        "Discord topluluğumuza katılarak da ekibimizle doğrudan iletişime geçebilirsiniz. Linki İletişim sayfasında bulabilirsiniz."
+      ],
+      about: [
+        "Fun Teknoloji, teknolojiyi 'eğlenceli' ve 'faydalı' kılmak için kuruldu. Yapay zeka ve yazılım bizim tutkumuz.",
+        "Misyonumuz, işletmeleri geleceğin teknolojileriyle bugünden tanıştırmak. Vizyonumuz ise global çapta bir teknoloji üssü olmak.",
+        "Hakkımızda sayfasında tüm tarihimizi ve değerlerimizi bulabilirsiniz. İnovasyon, kalite ve güvenilirlik en önemli ilkelerimizdir."
+      ],
+      careers: [
+        "Ekibimiz sürekli büyüyor! Kariyer fırsatları için bize özgeçmişinizi gönderebilir veya LinkedIn sayfamızı takip edebilirsiniz.",
+        "Yetenekli mühendisler, tasarımcılar ve yapay zeka meraklıları ile çalışmaktan her zaman mutluluk duyarız.",
+        "Şu an spesifik bir ilanımız olmasa da, yetenekli insanlara her zaman kapımız açık. Bize yazın!"
+      ],
+      tech: [
+        "Geliştirmelerimizde modern teknolojiler kullanıyoruz. React, TypeScript, TanStack, Tailwind ve çeşitli LLM modelleri vazgeçilmezimiz.",
+        "Sistemlerimizi yüksek performans ve ölçeklenebilirlik odaklı tasarlıyoruz. Cloud teknolojilerini en verimli şekilde kullanıyoruz.",
+        "Fun Teknoloji olarak sürekli AR-GE yapıyoruz. En yeni frameworkleri ve yapay zeka tekniklerini ilk biz uyguluyoruz."
+      ],
+      greeting: [
+        "Merhaba! Size nasıl yardımcı olabilirim? Bugün teknoloji dolu bir gün!",
+        "Selamlar! Ben Nexy, Fun Teknoloji'nin yapay zeka asistanıyım. Sizi dinliyorum.",
+        "Hoş geldiniz! Merak ettiğiniz bir şey mi var? Size Fun Teknoloji hakkında her şeyi anlatabilirim."
       ],
       default: [
         t("nexy.chat.response"),
         "Bu konuda size daha detaylı yardımcı olabilmemiz için lütfen iletişim formunu doldurun.",
-        "Harika bir soru! Fun Teknoloji dünyasını keşfetmeye devam edin.",
-        "Size nasıl daha iyi yardımcı olabilirim? Teknoloji çözümlerimiz hakkında konuşabiliriz."
+        "Harika bir soru! Ama bu konuda henüz tam bir bilgim yok. İsterseniz ekibimize sorabilirim?",
+        "Size nasıl daha iyi yardımcı olabilirim? Teknoloji çözümlerimiz, kurucumuz veya hizmetlerimiz hakkında konuşabiliriz."
       ]
     };
 
     const getRandom = (arr: string[]) => arr[Math.floor(Math.random() * arr.length)];
 
-    if (text.includes("fiyat") || text.includes("paket") || text.includes("ücret") || text.includes("price") || text.includes("qiymət")) {
+    if (text.includes("merhaba") || text.includes("selam") || text.includes("hi") || text.includes("hello")) {
+      return getRandom(responses.greeting);
+    }
+    if (text.includes("fiyat") || text.includes("paket") || text.includes("ücret") || text.includes("price") || text.includes("cost") || text.includes("qiymət")) {
       return getRandom(responses.pricing);
     }
-    if (text.includes("neler") || text.includes("hizmet") || text.includes("service") || text.includes("xidmət")) {
+    if (text.includes("neler") || text.includes("yap") || text.includes("hizmet") || text.includes("service") || text.includes("xidmət") || text.includes("işler")) {
       return getRandom(responses.services);
     }
-    if (text.includes("kim") || text.includes("kurucu") || text.includes("founder") || text.includes("muhammed")) {
+    if (text.includes("kim") || text.includes("kurucu") || text.includes("founder") || text.includes("muhammed") || text.includes("erbay")) {
       return getRandom(responses.founder);
     }
-    if (text.includes("iletişim") || text.includes("ulaş") || text.includes("contact") || text.includes("əlaqə")) {
+    if (text.includes("iletişim") || text.includes("ulaş") || text.includes("contact") || text.includes("əlaqə") || text.includes("mail") || text.includes("e-posta")) {
       return getRandom(responses.contact);
+    }
+    if (text.includes("hakkında") || text.includes("nedir") || text.includes("ne zaman") || text.includes("mission") || text.includes("vision") || text.includes("hakkınızda")) {
+      return getRandom(responses.about);
+    }
+    if (text.includes("iş") || text.includes("kariyer") || text.includes("career") || text.includes("çalış") || text.includes("başvuru")) {
+      return getRandom(responses.careers);
+    }
+    if (text.includes("teknoloji") || text.includes("tech") || text.includes("yazılım") || text.includes("program") || text.includes("kod")) {
+      return getRandom(responses.tech);
     }
     return getRandom(responses.default);
   };
