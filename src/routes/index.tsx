@@ -229,7 +229,7 @@ function HowItWorksSection({ t }: { t: (k: string) => string }) {
               <div className="absolute top-4 right-4">
                 <div className={`h-8 w-8 rounded-full bg-[var(--fun-purple)] flex items-center justify-center transition-all duration-500 ${hoveredIndex === i ? 'opacity-100 scale-100 rotate-0' : 'opacity-0 scale-50 -rotate-45'}`}>
                   <svg className="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
-                    <path className={`transition-all duration-700 delay-300 ${hoveredIndex === i ? 'stroke-dashoffset-0' : 'stroke-dashoffset-100'}`} strokeDasharray="100" strokeDashoffset="0" strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                    <path className={`transition-all duration-700 delay-300 ${hoveredIndex === i ? 'stroke-dashoffset-0 animate-in fade-in duration-500' : 'stroke-dashoffset-100'}`} strokeDasharray="24" strokeDashoffset={hoveredIndex === i ? 0 : 24} strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
               </div>
@@ -275,7 +275,7 @@ function ServicesSection({ t }: { t: (k: string) => string }) {
                     <p className="text-tagline-1 fun-text-muted">{service.desc}</p>
                   </div>
                   <Link to="/services" className="flex h-12 w-12 md:h-14 md:w-14 items-center justify-center rounded-full ring-8 ring-[var(--fun-card)] transition-all hover:bg-[#6C5CE7] group/btn" style={{ backgroundColor: 'var(--fun-text)' }}>
-                    <svg className="h-5 w-5 text-white group-hover/btn:scale-125 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <svg className="h-5 w-5 group-hover/btn:scale-125 transition-transform" style={{ color: 'var(--fun-surface)' }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
                     </svg>
                   </Link>

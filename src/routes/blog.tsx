@@ -31,6 +31,7 @@ function BlogPage() {
 
         if (error) throw error;
         if (data) {
+          // Filter out dummy/test data if needed, but here we just set the posts
           const formattedPosts = data.map((p: any) => ({
             id: p.id,
             title: p.title,

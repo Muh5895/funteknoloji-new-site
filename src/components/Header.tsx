@@ -147,12 +147,12 @@ function Dropdown({ id, label, open, onOpen, children }: { id: string; label: st
   const handleMouseLeave = () => {
     const id = window.setTimeout(() => {
       onOpen(null);
-    }, 150);
+    }, 300);
     setTimeoutId(id);
   };
 
   return (
-    <div className="relative" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} onClick={() => onOpen(open ? null : id)}>
+    <div className="relative" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
       <button type="button" aria-expanded={open} aria-haspopup="menu" className={`flex items-center gap-1 rounded-full px-4 py-2.5 text-sm transition-all ${open ? 'fun-text bg-[var(--fun-surface)]' : 'fun-text-muted hover:fun-text'}`}>
         {label}
         <svg className={`h-4 w-4 transition-transform ${open ? "rotate-180" : ""}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>

@@ -2,7 +2,6 @@ import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/r
 import appCss from "../styles.css?url";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import IntroSplash from "../components/IntroSplash";
 import NexyAssistant from "../components/NexyAssistant";
 import { LanguageProvider, useLang } from "../lib/i18n";
 import { Toaster } from "../components/ui/sonner";
@@ -95,12 +94,8 @@ function RootShell({ children }: { children: React.ReactNode }) {
 import { useLocation } from "@tanstack/react-router";
 
 function RootComponent() {
-  const location = useLocation();
-  const isHomePage = location.pathname === "/";
-
   return (
     <LanguageProvider>
-      {!isHomePage && <IntroSplash />}
       <Header />
       <Outlet />
       <NexyAssistant />
