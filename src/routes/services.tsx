@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import ArrowButton from "../components/ArrowButton";
+import { useLang } from "../lib/i18n";
 
 export const Route = createFileRoute("/services")({
   head: () => ({
@@ -19,15 +20,38 @@ export const Route = createFileRoute("/services")({
 });
 
 function ServicesPage() {
+  const { t } = useLang();
   const services = [
-    { title: "Yapay Zeka Çözümleri", desc: "Makine öğrenimi, doğal dil işleme ve bilgisayarlı görü teknolojileriyle iş süreçlerinizi akıllı hale getirin.", features: ["Makine Öğrenimi Modelleri", "Doğal Dil İşleme", "Bilgisayarlı Görü", "Tahmine Dayalı Analitik"] },
-    { title: "Web Geliştirme", desc: "Modern, hızlı ve ölçeklenebilir web uygulamaları tasarlayıp geliştiriyoruz.", features: ["Responsive Tasarım", "Progressive Web Apps", "E-Ticaret Çözümleri", "API Geliştirme"] },
-    { title: "Mobil Uygulama Geliştirme", desc: "iOS ve Android platformları için kullanıcı dostu, performanslı mobil uygulamalar.", features: ["Cross-Platform Geliştirme", "Native Uygulamalar", "UI/UX Tasarım", "App Store Optimizasyonu"] },
-    { title: "Bulut Çözümleri", desc: "İşletmenizin altyapısını buluta taşıyarak esneklik ve ölçeklenebilirlik sağlıyoruz.", features: ["Bulut Migrasyon", "DevOps Otomasyonu", "Sunucusuz Mimari", "Veri Yedekleme"] },
-    { title: "Veri Analitiği", desc: "Büyük veri setlerinden anlamlı içgörüler çıkararak iş kararlarınızı destekliyoruz.", features: ["İş Zekası Raporları", "Gerçek Zamanlı Analitik", "Veri Görselleştirme", "Öngörücü Modelleme"] },
-    { title: "Siber Güvenlik", desc: "İşletmenizin dijital varlıklarını korumak için kapsamlı güvenlik çözümleri.", features: ["Güvenlik Denetimleri", "Sızma Testleri", "Uyumluluk Danışmanlığı", "7/24 İzleme"] },
-    { title: "Dijital Pazarlama", desc: "Yapay zeka destekli pazarlama stratejileri ile markanızın görünürlüğünü artırıyoruz.", features: ["SEO Optimizasyonu", "Sosyal Medya Yönetimi", "İçerik Pazarlama", "Performans Pazarlama"] },
-    { title: "Danışmanlık & Eğitim", desc: "Dijital dönüşüm yolculuğunuzda stratejik rehberlik ve eğitim programları.", features: ["Dijital Strateji", "Teknoloji Danışmanlığı", "Kurumsal Eğitimler", "Workshop'lar"] },
+    {
+      title: t("home.services.item1.title"),
+      desc: t("home.services.item1.desc"),
+      features: [t("home.features.card1.title"), t("home.howitworks.step1.title"), t("home.howitworks.step2.title"), t("home.howitworks.step3.title")]
+    },
+    {
+      title: t("home.services.item3.title"),
+      desc: t("home.services.item3.desc"),
+      features: [t("home.features.card2.title"), "iOS & Android", "UI/UX Design", "Performance Optimization"]
+    },
+    {
+      title: t("home.services.item2.title"),
+      desc: t("home.services.item2.desc"),
+      features: ["Machine Learning", "NLP", "Computer Vision", "Automation"]
+    },
+    {
+      title: t("home.services.item4.title"),
+      desc: t("home.services.item4.desc"),
+      features: ["Cloud Migration", "DevOps", "Scalability", "Security"]
+    },
+    {
+      title: t("home.services.item5.title"),
+      desc: t("home.services.item5.desc"),
+      features: ["Big Data", "Business Intelligence", "Real-time Analytics", "Visualization"]
+    },
+    {
+      title: t("home.services.item6.title"),
+      desc: t("home.services.item6.desc"),
+      features: ["Security Audits", "Pentesting", "Compliance", "24/7 Monitoring"]
+    }
   ];
 
   return (
@@ -35,9 +59,9 @@ function ServicesPage() {
       <section className="pt-32 pb-16 px-4 lg:px-5">
         <div className="max-w-[1880px] mx-auto rounded-3xl xl:rounded-[32px] py-20 md:py-28 px-5" style={{ backgroundColor: 'var(--fun-surface)' }}>
           <div className="main-container text-center">
-            <span className="badge-fun badge-fun-white mb-4 inline-block">Hizmetlerimiz</span>
-            <h1 className="text-heading-3 md:text-heading-2 lg:text-heading-1 font-medium mb-4 fun-text">İşinizi büyütecek <br className="hidden md:block" /> profesyonel çözümler.</h1>
-            <p className="max-w-[700px] mx-auto text-tagline-1 fun-text-muted">Yapay zeka, yazılım geliştirme ve dijital dönüşüm alanlarında kapsamlı hizmetler sunuyoruz.</p>
+            <span className="badge-fun badge-fun-white mb-4 inline-block">{t("home.services.badge")}</span>
+            <h1 className="text-heading-3 md:text-heading-2 lg:text-heading-1 font-medium mb-4 fun-text">{t("home.services.title")}</h1>
+            <p className="max-w-[700px] mx-auto text-tagline-1 fun-text-muted">{t("home.services.desc")}</p>
           </div>
         </div>
       </section>
@@ -82,9 +106,9 @@ function ServicesPage() {
       <section className="px-4 lg:px-5 pb-16 md:pb-24">
         <div className="bg-[#12161F] max-w-[1880px] mx-auto rounded-3xl xl:rounded-[32px] py-20 px-5">
           <div className="main-container text-center">
-            <h2 className="text-heading-4 md:text-heading-3 font-medium text-white mb-4">Projeniz için doğru çözümü bulalım</h2>
-            <p className="text-tagline-1 text-white/60 max-w-[500px] mx-auto mb-8">Size özel bir teklif için hemen iletişime geçin.</p>
-            <ArrowButton to="/contact" variant="light">İletişime Geçin</ArrowButton>
+            <h2 className="text-heading-4 md:text-heading-3 font-medium text-white mb-4">{t("home.cta.title")}</h2>
+            <p className="text-tagline-1 text-white/60 max-w-[500px] mx-auto mb-8">{t("home.cta.desc")}</p>
+            <ArrowButton to="/contact" variant="light">{t("home.cta.button")}</ArrowButton>
           </div>
         </div>
       </section>
