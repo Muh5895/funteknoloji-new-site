@@ -1,43 +1,8 @@
+import ScrollReveal from "../components/ScrollReveal";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useLang } from "../lib/i18n";
 import { useEffect, useState, useRef } from "react";
-
-function ScrollReveal({ children, className = "" }: { children: React.ReactNode; className?: string }) {
-  const [isVisible, setIsVisible] = useState(false);
-  const domRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      });
-    }, { threshold: 0.1 });
-
-    const current = domRef.current;
-    if (current) {
-      observer.observe(current);
-    }
-
-    return () => {
-      if (current) {
-        observer.unobserve(current);
-      }
-    };
-  }, []);
-
-  return (
-    <div
-      ref={domRef}
-      className={`${className} transition-all duration-1000 ${
-        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
-      }`}
-    >
-      {children}
-    </div>
-  );
-}
+import { teamMembers } from "../constants/team";
 
 export const Route = createFileRoute("/team")({
   component: TeamPage,
@@ -46,14 +11,7 @@ export const Route = createFileRoute("/team")({
 function TeamPage() {
   const { t } = useLang();
 
-  const team = [
-    {
-      name: "Muhammed Erbay",
-      role: "Founder & CEO",
-      image: "https://framerusercontent.com/images/0ZbQRx8lUAVCEu2vriydHRwGC0.jpg?width=1080&height=1080",
-      bioKey: "team.member.muhammed.bio"
-    }
-  ];
+  const team = teamMembers;
 
   return (
     <main>

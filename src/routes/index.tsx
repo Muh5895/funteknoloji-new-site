@@ -1,45 +1,9 @@
+import ScrollReveal from "../components/ScrollReveal";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useEffect, useRef } from "react";
 import ArrowButton from "../components/ArrowButton";
 import { useLang } from "../lib/i18n";
 import CountUp from "../components/CountUp";
-
-function ScrollReveal({ children, className = "" }: { children: React.ReactNode; className?: string }) {
-  const [isVisible, setIsVisible] = useState(false);
-  const domRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      });
-    }, { threshold: 0.1 });
-
-    const current = domRef.current;
-    if (current) {
-      observer.observe(current);
-    }
-
-    return () => {
-      if (current) {
-        observer.unobserve(current);
-      }
-    };
-  }, []);
-
-  return (
-    <div
-      ref={domRef}
-      className={`${className} transition-all duration-1000 ${
-        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
-      }`}
-    >
-      {children}
-    </div>
-  );
-}
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -118,27 +82,12 @@ import { supabase } from "../lib/supabase";
 
 /* ============ STATS SECTION ============ */
 function StatsSection({ t }: { t: (k: string) => string }) {
-  const [userCount, setUserCount] = useState(0);
-
-  useEffect(() => {
-    async function fetchCount() {
-      if (!supabase) return;
-      const { count, error } = await supabase
-        .from('profiles')
-        .select('*', { count: 'exact', head: true });
-      if (!error && count !== null) {
-        setUserCount(count);
-      }
-    }
-    fetchCount();
-  }, []);
-
   return (
     <section className="py-20 border-y px-4 lg:px-0" style={{ borderColor: 'var(--fun-stroke-1)' }}>
       <div className="main-container">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
           <div>
-            <div className="text-4xl md:text-5xl font-bold fun-text mb-2"><CountUp end={userCount} /></div>
+            <div className="text-4xl md:text-5xl font-bold fun-text mb-2">10+</div>
             <div className="text-sm fun-text-muted uppercase tracking-wider">{t("home.stats.users") || "Kayıtlı Kullanıcı"}</div>
           </div>
           <div>

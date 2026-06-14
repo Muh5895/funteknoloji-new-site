@@ -1,44 +1,9 @@
+import ScrollReveal from "../components/ScrollReveal";
 import { createFileRoute } from "@tanstack/react-router";
 import ArrowButton from "../components/ArrowButton";
 import { useLang } from "../lib/i18n";
 import { useEffect, useState, useRef } from "react";
-
-function ScrollReveal({ children, className = "" }: { children: React.ReactNode; className?: string }) {
-  const [isVisible, setIsVisible] = useState(false);
-  const domRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      });
-    }, { threshold: 0.1 });
-
-    const current = domRef.current;
-    if (current) {
-      observer.observe(current);
-    }
-
-    return () => {
-      if (current) {
-        observer.unobserve(current);
-      }
-    };
-  }, []);
-
-  return (
-    <div
-      ref={domRef}
-      className={`${className} transition-all duration-1000 ${
-        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
-      }`}
-    >
-      {children}
-    </div>
-  );
-}
+import { teamMembers } from "../constants/team";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
@@ -100,7 +65,7 @@ function AboutPage() {
                   { num: "2025", label: t("about.stats.year") },
                   { num: "100+", label: t("about.stats.clients") },
                   { num: "50+", label: t("about.stats.projects") },
-                  { num: "1", label: t("about.stats.team") }
+                  { num: `${teamMembers.length}`, label: t("about.stats.team") }
                 ].map((s, i) => (
                   <div key={i} className="text-center">
                     <p className="text-heading-3 md:text-heading-2 font-medium fun-text">{s.num}</p>

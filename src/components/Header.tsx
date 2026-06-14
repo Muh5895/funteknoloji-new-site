@@ -1,27 +1,27 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import ThemeToggle from "./ThemeToggle";
 import LanguageSwitcher from "./LanguageSwitcher";
 import { useLang } from "../lib/i18n";
+import {
+  Info,
+  Users,
+  MessageSquareQuote,
+  Zap,
+  Briefcase,
+  Tag,
+  PenTool,
+  HelpCircle,
+  History,
+  Palette,
+  FileText,
+  Mail,
+  Map,
+  X
+} from "lucide-react";
 
 const LOGO_DARK = "https://framerusercontent.com/images/wYtLTUyXkZSH6e5ElqNpfbb4xT4.png?scale-down-to=512&width=1024&height=1024";
 const LOGO_LIGHT = "https://framerusercontent.com/images/cOsd9aFSLcyMQvEdo60L3fUo.png?width=1563&height=1563";
-
-const ICONS = {
-  about: "https://cdn-icons-png.flaticon.com/128/9187/9187604.png",
-  team: "https://cdn-icons-png.flaticon.com/128/476/476863.png",
-  reviews: "https://cdn-icons-png.flaticon.com/128/3128/3128313.png",
-  services: "https://cdn-icons-png.flaticon.com/128/2092/2092041.png",
-  projects: "https://cdn-icons-png.flaticon.com/128/1087/1087815.png",
-  pricing: "https://cdn-icons-png.flaticon.com/128/2845/2845722.png",
-  blog: "https://cdn-icons-png.flaticon.com/128/4922/4922073.png",
-  faq: "https://cdn-icons-png.flaticon.com/128/189/189665.png",
-  changelog: "https://cdn-icons-png.flaticon.com/128/10041/10041846.png",
-  brand_kit: "https://cdn-icons-png.flaticon.com/128/10473/10473617.png",
-  docs: "https://cdn-icons-png.flaticon.com/128/2991/2991106.png",
-  contact: "https://cdn-icons-png.flaticon.com/128/953/953831.png",
-  sitemap: "https://cdn-icons-png.flaticon.com/128/2329/2329112.png"
-};
 
 export default function Header() {
   const { t } = useLang();
@@ -29,6 +29,8 @@ export default function Header() {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [scrolled, setScrolled] = useState(false);
   const [isDark, setIsDark] = useState(false);
+  const [logoClicks, setLogoClicks] = useState(0);
+  const [showEasterEgg, setShowEasterEgg] = useState(false);
 
   useEffect(() => {
     const update = () => {
@@ -42,8 +44,44 @@ export default function Header() {
     return () => { window.removeEventListener("scroll", update); obs.disconnect(); };
   }, []);
 
+  const [logoTimer, setLogoTimer] = useState<number | null>(null);
+
+  const handleLogoClick = (e: React.MouseEvent) => {
+    // Increment clicks
+    const newCount = logoClicks + 1;
+
+    // Clear existing timer
+    if (logoTimer) window.clearTimeout(logoTimer);
+
+    if (newCount >= 10) {
+      setShowEasterEgg(true);
+      setLogoClicks(0);
+      setLogoTimer(null);
+    } else {
+      setLogoClicks(newCount);
+      // Reset count after 2 seconds of inactivity
+      const timer = window.setTimeout(() => setLogoClicks(0), 2000);
+      setLogoTimer(timer);
+    }
+  };
+
   return (
     <header className={`fixed top-3 left-1/2 z-50 w-full max-w-[1400px] -translate-x-1/2 px-4 transition-all duration-500 ${scrolled ? "top-2" : "top-4"}`}>
+      {showEasterEgg && (
+        <div className="fixed inset-0 z-[100] bg-black">
+          <button
+            onClick={() => setShowEasterEgg(false)}
+            className="absolute top-6 right-6 z-[110] p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors"
+          >
+            <X className="h-6 w-6" />
+          </button>
+          <iframe
+            src="https://fungame-livid.vercel.app/"
+            className="w-full h-full border-none"
+            title="Fun Game"
+          />
+        </div>
+      )}
       <div
         className="mx-auto flex items-center justify-between rounded-full px-5 py-3 shadow-2xl backdrop-blur-2xl border xl:px-7 xl:py-4 animate-fade-in"
         style={{
@@ -52,39 +90,45 @@ export default function Header() {
         }}
       >
         {/* Logo */}
-        <Link to="/" className="flex items-center gap-2.5 transition-transform hover:scale-[1.03]" aria-label="Fun Teknoloji – Ana sayfa">
-          <img
-            src={isDark ? LOGO_LIGHT : LOGO_DARK}
-            alt="Fun Teknoloji"
-            width={44}
-            height={44}
-            className="h-11 w-11 object-contain"
-          />
+        <div
+          onClick={handleLogoClick}
+          className="flex cursor-pointer items-center gap-2.5 transition-transform hover:scale-[1.03]"
+          aria-label="Fun Teknoloji – Ana sayfa"
+        >
+          <Link to="/">
+            <img
+              src={isDark ? "/assets/logos/Fun Teknoloji BGSİZ.png" : "/assets/logos/Fun Teknoloji Logo.png"}
+              alt="Fun Teknoloji"
+              width={44}
+              height={44}
+              className="h-11 w-11 object-contain"
+            />
+          </Link>
           <span className="hidden text-lg font-semibold sm:block fun-text">Fun Teknoloji</span>
-        </Link>
+        </div>
 
         {/* Desktop Nav */}
         <nav className="hidden items-center gap-0.5 xl:flex" aria-label="Ana navigasyon">
           <Dropdown id="company" label={t("nav.company")} open={openDropdown === "company"} onOpen={setOpenDropdown}>
-            <DropdownItem to="/about" title={t("nav.about")} desc={t("nav.about.desc")} icon={ICONS.about} />
-            <DropdownItem to="/team" title={t("nav.team")} desc={t("nav.team.desc")} icon={ICONS.team} />
-            <DropdownItem to="/reviews" title={t("nav.reviews")} desc={t("nav.reviews.desc")} icon={ICONS.reviews} />
+            <DropdownItem to="/about" title={t("nav.about")} desc={t("nav.about.desc")} icon={<Info className="h-4 w-4" />} />
+            <DropdownItem to="/team" title={t("nav.team")} desc={t("nav.team.desc")} icon={<Users className="h-4 w-4" />} />
+            <DropdownItem to="/reviews" title={t("nav.reviews")} desc={t("nav.reviews.desc")} icon={<MessageSquareQuote className="h-4 w-4" />} />
           </Dropdown>
 
           <Dropdown id="platform" label={t("nav.platform")} open={openDropdown === "platform"} onOpen={setOpenDropdown}>
-            <DropdownItem to="/services" title={t("nav.services")} desc={t("nav.services.desc")} icon={ICONS.services} />
-            <DropdownItem to="/projects" title={t("nav.projects")} desc={t("nav.projects.desc")} icon={ICONS.projects} />
-            <DropdownItem to="/pricing" title={t("nav.pricing")} desc={t("nav.pricing.desc")} icon={ICONS.pricing} />
+            <DropdownItem to="/services" title={t("nav.services")} desc={t("nav.services.desc")} icon={<Zap className="h-4 w-4" />} />
+            <DropdownItem to="/projects" title={t("nav.projects")} desc={t("nav.projects.desc")} icon={<Briefcase className="h-4 w-4" />} />
+            <DropdownItem to="/pricing" title={t("nav.pricing")} desc={t("nav.pricing.desc")} icon={<Tag className="h-4 w-4" />} />
           </Dropdown>
 
           <Dropdown id="resources" label={t("nav.resources")} open={openDropdown === "resources"} onOpen={setOpenDropdown}>
-            <DropdownItem to="/blog" title={t("nav.blog")} desc={t("nav.blog.desc")} icon={ICONS.blog} />
-            <DropdownItem to="/faq" title={t("nav.faq")} desc={t("nav.faq.desc")} icon={ICONS.faq} />
-            <DropdownItem to="/changelog" title={t("nav.changelog")} desc={t("nav.changelog.desc")} icon={ICONS.changelog} />
-            <DropdownItem to="/brand-kit" title={t("nav.brand_kit")} desc={t("nav.brand_kit.desc")} icon={ICONS.brand_kit} />
-            <DropdownItem to="/docs" title={t("nav.docs")} desc={t("nav.docs.desc")} icon={ICONS.docs} />
-            <DropdownItem to="/contact" title={t("nav.contact")} desc={t("nav.contact.desc")} icon={ICONS.contact} />
-            <DropdownItem to="/sitemap" title={t("nav.sitemap")} desc={t("nav.sitemap.desc")} icon={ICONS.sitemap} />
+            <DropdownItem to="/blog" title={t("nav.blog")} desc={t("nav.blog.desc")} icon={<PenTool className="h-4 w-4" />} />
+            <DropdownItem to="/faq" title={t("nav.faq")} desc={t("nav.faq.desc")} icon={<HelpCircle className="h-4 w-4" />} />
+            <DropdownItem to="/changelog" title={t("nav.changelog")} desc={t("nav.changelog.desc")} icon={<History className="h-4 w-4" />} />
+            <DropdownItem to="/brand-kit" title={t("nav.brand_kit")} desc={t("nav.brand_kit.desc")} icon={<Palette className="h-4 w-4" />} />
+            <DropdownItem to="/docs" title={t("nav.docs")} desc={t("nav.docs.desc")} icon={<FileText className="h-4 w-4" />} />
+            <DropdownItem to="/contact" title={t("nav.contact")} desc={t("nav.contact.desc")} icon={<Mail className="h-4 w-4" />} />
+            <DropdownItem to="/sitemap" title={t("nav.sitemap")} desc={t("nav.sitemap.desc")} icon={<Map className="h-4 w-4" />} />
           </Dropdown>
         </nav>
 
@@ -195,13 +239,15 @@ function Dropdown({ id, label, open, onOpen, children }: { id: string; label: st
   );
 }
 
-function DropdownItem({ to, href, title, desc, icon }: { to?: string; href?: string; title: string; desc: string; icon?: string }) {
+function DropdownItem({ to, href, title, desc, icon }: { to?: string; href?: string; title: string; desc: string; icon?: React.ReactNode }) {
   const className = "group relative flex items-start gap-3 rounded-xl p-3 transition-all hover:bg-[var(--fun-surface)]";
   const content = (
     <>
-      <div className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border transition-colors group-hover:bg-[var(--fun-text)] group-hover:text-[var(--color-background)] overflow-hidden" style={{ borderColor: "var(--fun-stroke-1)" }}>
+      <div className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border transition-colors group-hover:bg-fun-text group-hover:text-[var(--fun-card)] overflow-hidden" style={{ borderColor: "var(--fun-stroke-1)" }}>
         {icon ? (
-          <img src={icon} alt="" className="h-4 w-4 object-contain group-hover:invert transition-all" />
+          <div className="h-4 w-4 flex items-center justify-center">
+            {icon}
+          </div>
         ) : (
           <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
             <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />

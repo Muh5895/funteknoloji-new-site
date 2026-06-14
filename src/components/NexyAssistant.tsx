@@ -1,11 +1,21 @@
 import { useState, useEffect, useRef } from "react";
 import { useLang } from "../lib/i18n";
 import { toast } from "sonner";
+import {
+  X,
+  Copy,
+  Volume2,
+  Send,
+  ChevronRight,
+  ChevronLeft,
+  MinusCircle
+} from "lucide-react";
 
 export default function NexyAssistant() {
   const { t } = useLang();
   const [visible, setVisible] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [isMinimized, setIsMinimized] = useState(false);
   const [messageKey, setMessageKey] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const [chatMessages, setChatMessages] = useState<{ role: 'nexy' | 'user', text: string, displayedText?: string }[]>([]);
@@ -209,7 +219,9 @@ export default function NexyAssistant() {
                 <p className="text-[10px] fun-text-muted font-medium uppercase tracking-widest">Fun Teknoloji Asistanı</p>
               </div>
             </div>
-            <button onClick={() => setIsOpen(false)} className="h-8 w-8 rounded-full hover:bg-[var(--fun-stroke-1)] flex items-center justify-center fun-text transition-colors">✕</button>
+            <button onClick={() => setIsOpen(false)} className="h-8 w-8 rounded-full hover:bg-[var(--fun-stroke-1)] flex items-center justify-center fun-text transition-colors">
+              <X className="h-4 w-4" />
+            </button>
           </div>
           <div ref={scrollRef} className="flex-1 overflow-y-auto p-5 space-y-5 bg-dots scroll-smooth">
             {chatMessages.map((m, i) => (
@@ -219,10 +231,10 @@ export default function NexyAssistant() {
                   {m.role === 'nexy' && m.displayedText === m.text && (
                     <div className="absolute top-1/2 -right-12 -translate-y-1/2 flex flex-col gap-1 opacity-0 group-hover/msg:opacity-100 transition-opacity">
                       <button onClick={() => copyToClipboard(m.text)} className="h-5 w-5 flex items-center justify-center rounded bg-[var(--fun-card)] border border-[var(--fun-stroke-1)] fun-text hover:bg-[var(--fun-purple)] hover:text-white transition-colors" title="Kopyala">
-                        <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                        <Copy className="h-3 w-3" />
                       </button>
                       <button onClick={() => speak(m.text)} className="h-5 w-5 flex items-center justify-center rounded bg-[var(--fun-card)] border border-[var(--fun-stroke-1)] fun-text hover:bg-[var(--fun-purple)] hover:text-white transition-colors" title="Sesli Oku">
-                        <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" /></svg>
+                        <Volume2 className="h-3 w-3" />
                       </button>
                     </div>
                   )}
@@ -246,10 +258,8 @@ export default function NexyAssistant() {
                 placeholder="Mesajınızı yazın..."
                 className="w-full rounded-xl bg-[var(--fun-surface)] border border-[var(--fun-stroke-1)] py-3 pl-4 pr-12 text-sm outline-none focus:border-[var(--fun-purple)] transition-colors fun-text"
               />
-              <button type="submit" disabled={isTyping} className="absolute right-2 top-1/2 -translate-y-1/2 h-8 w-8 rounded-lg bg-[var(--fun-purple)] text-white flex items-center justify-center hover:opacity-90 transition-opacity disabled:opacity-50">
-                <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
-                </svg>
+              <button type="submit" disabled={isTyping} aria-label="Gönder" className="absolute right-2 top-1/2 -translate-y-1/2 h-8 w-8 rounded-lg bg-[var(--fun-purple)] text-white flex items-center justify-center hover:opacity-90 transition-opacity disabled:opacity-50">
+                <Send className="h-4 w-4" />
               </button>
             </div>
           </form>
@@ -257,18 +267,39 @@ export default function NexyAssistant() {
       )}
 
       {/* Mascot Trigger */}
-      <button
-        className="group relative cursor-pointer outline-none border-none bg-transparent p-0 transition-all active:scale-95"
-        onClick={toggleChat}
-        aria-label="Yardım al"
-      >
-        <img
-          src="/assets/yardım-button.png"
-          alt="Help"
-          className={`h-20 w-auto object-contain transition-all duration-500 relative z-10 ${isOpen ? 'rotate-12 scale-90 brightness-75' : 'hover:scale-110 drop-shadow-2xl'}`}
-        />
-        <div className="absolute inset-0 bg-[var(--fun-purple)] rounded-full blur-2xl opacity-20 group-hover:opacity-40 transition-opacity" />
-      </button>
+      <div className={`flex items-center gap-2 transition-all duration-500 ${isMinimized ? 'translate-x-[calc(100%-40px)]' : ''}`}>
+        {!isOpen && (
+          <button
+            onClick={() => setIsMinimized(!isMinimized)}
+            className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--fun-card)] border border-[var(--fun-stroke-1)] fun-text shadow-xl hover:bg-[var(--fun-surface)] transition-colors"
+          >
+            {isMinimized ? <ChevronLeft className="h-5 w-5" /> : <ChevronRight className="h-5 w-5" />}
+          </button>
+        )}
+
+        <button
+          className={`group relative cursor-pointer outline-none border-none bg-transparent p-0 transition-all active:scale-95 ${isMinimized ? 'opacity-50 pointer-events-none' : ''}`}
+          onClick={toggleChat}
+          aria-label="Yardım al"
+        >
+          <img
+            src="/assets/yardım-button.png"
+            alt="Help"
+            className={`h-28 w-auto object-contain transition-all duration-500 relative z-10 ${isOpen ? 'rotate-12 scale-90 brightness-75' : 'hover:scale-110 drop-shadow-2xl'}`}
+          />
+          <div className="absolute inset-0 bg-[var(--fun-purple)] rounded-full blur-3xl opacity-20 group-hover:opacity-40 transition-opacity" />
+
+          {!isOpen && !isMinimized && (
+            <button
+              onClick={(e) => { e.stopPropagation(); setIsMinimized(true); }}
+              className="absolute -top-2 -left-2 z-20 h-6 w-6 rounded-full bg-red-500 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-lg"
+              title="Gizle"
+            >
+              <MinusCircle className="h-4 w-4" />
+            </button>
+          )}
+        </button>
+      </div>
     </div>
   );
 }
