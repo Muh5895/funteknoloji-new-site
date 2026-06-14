@@ -57,9 +57,9 @@ function PostPage() {
 
   return (
     <main className="pt-32 pb-20 px-4 lg:px-5">
-      <article className="max-w-[900px] mx-auto">
+      <ScrollReveal className="max-w-[900px] mx-auto">
         <div className="mb-8 flex items-center justify-between">
-           <ArrowButton to="/blog" variant="light" className="!py-2 !px-4 !text-sm">← {t("nav.blog")}</ArrowButton>
+           <ArrowButton to="/blog" variant="light" direction="left" className="!py-2 !px-4 !text-sm">{t("nav.blog")}</ArrowButton>
            <div className="flex items-center gap-4">
              <LanguageSwitcher />
            </div>
@@ -92,7 +92,9 @@ function PostPage() {
         <div className="prose prose-xl dark:prose-invert max-w-none fun-text leading-relaxed whitespace-pre-wrap animate-in fade-in duration-700">
           {post.text || post.description}
         </div>
-      </article>
+      </ScrollReveal>
     </main>
   );
 }
+
+import ScrollReveal from "../components/ScrollReveal";

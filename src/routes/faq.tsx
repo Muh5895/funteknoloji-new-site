@@ -76,11 +76,13 @@ function FAQPage() {
   return (
     <main className="pt-32 pb-20 px-4 lg:px-5">
       <div className="max-w-[1000px] mx-auto">
-        <div className="text-center mb-16">
-          <span className="badge-fun badge-fun-gray mb-4 inline-block">S.S.S</span>
-          <h1 className="text-4xl md:text-5xl font-bold fun-text mb-4">Sıkça Sorulan Sorular</h1>
-          <p className="fun-text-muted text-lg">Hizmetlerimiz ve süreçlerimiz hakkında merak edilenler.</p>
-        </div>
+        <ScrollReveal>
+          <div className="text-center mb-16">
+            <span className="badge-fun badge-fun-gray mb-4 inline-block">S.S.S</span>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold fun-text mb-4">Sıkça Sorulan Sorular</h1>
+            <p className="fun-text-muted text-lg">Hizmetlerimiz ve süreçlerimiz hakkında merak edilenler.</p>
+          </div>
+        </ScrollReveal>
 
         <div className="flex flex-wrap justify-center gap-3 mb-12">
           {categories.map((cat) => (
@@ -96,7 +98,8 @@ function FAQPage() {
 
         <div className="space-y-4">
           {filteredFaqs.map((faq, i) => (
-            <div key={i} className="rounded-3xl bg-[var(--fun-card)] border overflow-hidden transition-all duration-300" style={{ borderColor: openIndex === i ? 'var(--fun-purple)' : 'var(--fun-stroke-1)' }}>
+            <ScrollReveal key={i}>
+              <div className="rounded-3xl bg-[var(--fun-card)] border overflow-hidden transition-all duration-300" style={{ borderColor: openIndex === i ? 'var(--fun-purple)' : 'var(--fun-stroke-1)' }}>
               <button
                 className="flex items-center justify-between py-6 px-8 w-full text-left"
                 onClick={() => setOpenIndex(openIndex === i ? null : i)}
@@ -108,13 +111,16 @@ function FAQPage() {
                   </svg>
                 </span>
               </button>
-              <div className={`overflow-hidden transition-all duration-500 ease-in-out ${openIndex === i ? 'max-h-[500px]' : 'max-h-0'}`}>
-                <div className="px-8 pb-8 text-lg fun-text-muted leading-relaxed">{faq.a}</div>
+                <div className={`overflow-hidden transition-all duration-500 ease-in-out ${openIndex === i ? 'max-h-[500px]' : 'max-h-0'}`}>
+                  <div className="px-8 pb-8 text-lg fun-text-muted leading-relaxed">{faq.a}</div>
+                </div>
               </div>
-            </div>
+            </ScrollReveal>
           ))}
         </div>
       </div>
     </main>
   );
 }
+
+import ScrollReveal from "../components/ScrollReveal";

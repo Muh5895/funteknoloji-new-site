@@ -75,22 +75,21 @@ export default function Header() {
         }}
       >
         {/* Logo */}
-        <div
+        <Link
+          to="/"
           onClick={handleLogoClick}
           className="flex cursor-pointer items-center gap-2.5 transition-transform hover:scale-[1.03]"
           aria-label="Fun Teknoloji – Ana sayfa"
         >
-          <Link to="/">
-            <img
-              src={isDark ? "/assets/logos/Fun Teknoloji BGSİZ.png" : "https://framerusercontent.com/images/wYtLTUyXkZSH6e5ElqNpfbb4xT4.png?scale-down-to=512&width=1024&height=1024"}
-              alt="Fun Teknoloji"
-              width={44}
-              height={44}
-              className="h-11 w-11 object-contain"
-            />
-          </Link>
+          <img
+            src={isDark ? "/assets/logos/Fun Teknoloji BGSİZ.png" : "https://framerusercontent.com/images/wYtLTUyXkZSH6e5ElqNpfbb4xT4.png?scale-down-to=512&width=1024&height=1024"}
+            alt="Fun Teknoloji"
+            width={44}
+            height={44}
+            className="h-11 w-11 object-contain"
+          />
           <span className="hidden text-lg font-semibold sm:block fun-text">Fun Teknoloji</span>
-        </div>
+        </Link>
 
         {/* Desktop Nav */}
         <nav className="hidden items-center gap-0.5 xl:flex" aria-label="Ana navigasyon">

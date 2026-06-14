@@ -113,13 +113,15 @@ function ContactPage() {
   return (
     <main>
       <section className="pt-32 pb-16 px-4 lg:px-5">
-        <div className="max-w-[1880px] mx-auto rounded-3xl xl:rounded-[32px] py-20 md:py-28 px-5" style={{ backgroundColor: 'var(--fun-surface)' }}>
-          <div className="main-container text-center">
-            <span className="badge-fun badge-fun-white mb-4 inline-block">{t("contact.title")}</span>
-            <h1 className="text-heading-3 md:text-heading-2 lg:text-heading-1 font-medium mb-4 fun-text">{t("contact.desc")}</h1>
-            <p className="max-w-[600px] mx-auto text-tagline-1 fun-text-muted">{t("contact.desc")}</p>
+        <ScrollReveal>
+          <div className="max-w-[1880px] mx-auto rounded-3xl xl:rounded-[32px] py-20 md:py-28 px-5" style={{ backgroundColor: 'var(--fun-surface)' }}>
+            <div className="main-container text-center">
+              <span className="badge-fun badge-fun-white mb-4 inline-block">{t("contact.title")}</span>
+              <h1 className="text-heading-2 md:text-heading-1 lg:text-heading-huge font-medium mb-4 fun-text">{t("contact.desc")}</h1>
+              <p className="max-w-[600px] mx-auto text-tagline-1 fun-text-muted">{t("contact.desc")}</p>
+            </div>
           </div>
-        </div>
+        </ScrollReveal>
       </section>
 
       <section className="py-16 md:py-24">
@@ -217,6 +219,8 @@ function ContactPage() {
     </main>
   );
 }
+
+import ScrollReveal from "../components/ScrollReveal";
 
 function ContactInfoItem({ icon, title, value, href }: { icon: string; title: string; value: string; href?: string }) {
   return (

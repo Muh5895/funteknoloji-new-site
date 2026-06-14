@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useLang } from "../lib/i18n";
 import ArrowButton from "../components/ArrowButton";
+import ScrollReveal from "../components/ScrollReveal";
 
 export const Route = createFileRoute("/brand-kit")({
   component: BrandKitPage,
@@ -32,7 +33,7 @@ function BrandKitPage() {
       title: "QuakeSafe Logo",
       desc: "QuakeSafe projemizin resmi logosu.",
       url: "/assets/logos/QuakeSafe Logo.png",
-      bg: "bg-white"
+      bg: "bg-black"
     },
     {
       title: "Nexy Asistan",
@@ -68,24 +69,30 @@ function BrandKitPage() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {logos.map((logo, i) => (
-            <div key={i} className="group rounded-[32px] border border-[var(--fun-stroke-1)] bg-[var(--fun-card)] overflow-hidden transition-all hover:shadow-xl">
-              <div className={`aspect-square flex items-center justify-center p-12 ${logo.bg}`}>
-                <img src={logo.url} alt={logo.title} className="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-500" />
+            <ScrollReveal key={i}>
+              <div className="group h-full rounded-[32px] border border-[var(--fun-stroke-1)] bg-[var(--fun-card)] overflow-hidden transition-all hover:shadow-xl flex flex-col">
+                <div className={`aspect-square flex items-center justify-center ${logo.title.includes("(Renkli)") ? 'p-0' : 'p-12'} ${logo.bg}`}>
+                  <img
+                    src={logo.url}
+                    alt={logo.title}
+                    className={`${logo.title.includes("(Renkli)") ? 'w-full h-full object-cover' : 'max-w-full max-h-full object-contain'} group-hover:scale-105 transition-transform duration-500`}
+                  />
+                </div>
+                <div className="p-8 flex-1 flex flex-col">
+                  <h3 className="text-xl font-bold fun-text mb-2">{logo.title}</h3>
+                  <p className="fun-text-muted text-sm mb-6 flex-1">{logo.desc}</p>
+                  <button
+                    onClick={() => handleDownload(logo.url, `${logo.title}.png`)}
+                    className="w-full btn-fun btn-fun-dark"
+                  >
+                    <span>PNG İndir</span>
+                    <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                    </svg>
+                  </button>
+                </div>
               </div>
-              <div className="p-8">
-                <h3 className="text-xl font-bold fun-text mb-2">{logo.title}</h3>
-                <p className="fun-text-muted text-sm mb-6">{logo.desc}</p>
-                <button
-                  onClick={() => handleDownload(logo.url, `${logo.title}.png`)}
-                  className="w-full btn-fun btn-fun-dark"
-                >
-                  <span>PNG İndir</span>
-                  <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                  </svg>
-                </button>
-              </div>
-            </div>
+            </ScrollReveal>
           ))}
         </div>
 

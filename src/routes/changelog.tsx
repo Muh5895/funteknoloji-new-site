@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useLang } from "../lib/i18n";
+import ScrollReveal from "../components/ScrollReveal";
 
 export const Route = createFileRoute("/changelog")({
   component: ChangelogPage,
@@ -7,77 +8,60 @@ export const Route = createFileRoute("/changelog")({
 
 function ChangelogPage() {
   const { t } = useLang();
-  const changes = [
+
+  const categories = [
     {
-      version: "v1.3.0",
-      date: "15 Haziran 2026",
-      items: [
-        "Nexy yapay zeka asistanı gelişmiş yanıt sistemi ve genişletilmiş bilgi bankasıyla güncellendi.",
-        "Ana sayfa için Scroll-Reveal (aşağı kaydırdıkça yüklenme) animasyonları eklendi.",
-        "Hero bölümü giriş animasyonları daha akıcı hale getirildi.",
-        "Işık teması (Light Mode) için başlık renkleri daha profesyonel bir tona güncellendi.",
-        "Supabase veritabanı bağlantısı yeni yüksek performanslı sunucuya taşındı.",
-        "Site genelindeki performans ve yükleme hızı iyileştirmeleri yapıldı."
-      ]
+      name: "Fun Teknoloji",
+      logo: "https://framerusercontent.com/images/wYtLTUyXkZSH6e5ElqNpfbb4xT4.png?scale-down-to=512&width=1024&height=1024",
+      desc: "Ana platform güncellemeleri ve kurumsal yenilikler."
     },
     {
-      version: "v1.2.0",
-      date: "14 Haziran 2026",
-      items: [
-        "Azerbaycan dili seçeneği 'Azerice' olarak güncellendi.",
-        "Marka Kiti sayfası yayına alındı.",
-        "Nexy asistanı için yanıt çeşitliliği artırıldı ve animasyonlar optimize edildi.",
-        "SSS sayfası kategorili yapıya geçirildi.",
-        "Blog ve İletişim sayfalarındaki Supabase bağlantı hataları giderildi."
-      ]
+      name: "Account",
+      logo: "https://framerusercontent.com/images/wYtLTUyXkZSH6e5ElqNpfbb4xT4.png?scale-down-to=512&width=1024&height=1024",
+      desc: "Kullanıcı hesapları ve profil yönetimi iyileştirmeleri."
     },
     {
-      version: "v1.1.0",
-      date: "10 Haziran 2026",
-      items: [
-        "Koyu mod kontrast ayarları iyileştirildi.",
-        "Ana sayfa özellikleri bölümüne yeni görseller eklendi.",
-        "Hız ve performans optimizasyonları yapıldı."
-      ]
+      name: "Developer",
+      logo: "https://framerusercontent.com/images/wYtLTUyXkZSH6e5ElqNpfbb4xT4.png?scale-down-to=512&width=1024&height=1024",
+      desc: "API ve geliştirici araçları güncellemeleri."
     },
     {
-      version: "v1.0.0",
-      date: "1 Haziran 2026",
-      items: [
-        "Fun Teknoloji platformu ilk kararlı sürümüyle yayında!",
-        "Yapay zeka destekli asistan Nexy entegre edildi.",
-        "6 dilde tam i18n desteği sağlandı."
-      ]
+      name: "QuakeSafe",
+      logo: "/assets/logos/QuakeSafe Logo.png",
+      desc: "QuakeSafe projesi özelindeki tüm yenilikler."
     }
   ];
 
   return (
     <main className="pt-32 pb-20 px-4 lg:px-5">
-      <div className="max-w-[800px] mx-auto">
-        <header className="mb-16 text-center">
-          <span className="badge-fun badge-fun-purple mb-4 inline-block">Güncellemeler</span>
-          <h1 className="text-4xl md:text-5xl font-bold fun-text mb-4">Değişiklik Günlüğü</h1>
-          <p className="fun-text-muted text-lg">Platformumuzdaki en son yenilikler ve iyileştirmeler.</p>
-        </header>
+      <div className="max-w-[1200px] mx-auto">
+        <ScrollReveal>
+          <header className="mb-20 text-center">
+            <span className="badge-fun badge-fun-purple mb-4 inline-block">Sistem</span>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold fun-text mb-4">Değişiklik Günlüğü</h1>
+            <p className="fun-text-muted text-lg max-w-[700px] mx-auto">Platformumuz ve projelerimizdeki kategorize edilmiş güncellemeler.</p>
+          </header>
+        </ScrollReveal>
 
-        <div className="space-y-12">
-          {changes.map((group, i) => (
-            <div key={i} className="relative pl-8 border-l border-[var(--fun-stroke-1)]">
-              <div className="absolute -left-[9px] top-0 h-4 w-4 rounded-full bg-[var(--fun-purple)] border-4 border-[var(--color-background)]" />
-              <div className="mb-4">
-                <span className="text-[var(--fun-purple)] font-bold text-xl">{group.version}</span>
-                <span className="mx-3 text-[var(--fun-stroke-2)]">•</span>
-                <span className="fun-text-muted text-sm">{group.date}</span>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {categories.map((cat, i) => (
+            <ScrollReveal key={i}>
+              <div className="group p-10 rounded-[40px] border border-[var(--fun-stroke-1)] bg-[var(--fun-card)] hover:border-[var(--fun-purple)] transition-all h-full">
+                <div className="flex items-center gap-6 mb-8">
+                   <div className="h-20 w-20 rounded-2xl bg-[var(--fun-surface)] p-4 flex items-center justify-center border border-[var(--fun-stroke-1)] group-hover:scale-110 transition-transform">
+                      <img src={cat.logo} alt={cat.name} className="max-w-full max-h-full object-contain" />
+                   </div>
+                   <div>
+                      <h2 className="text-2xl font-bold fun-text">{cat.name}</h2>
+                      <p className="text-sm fun-text-muted mt-1">Son Güncelleme: 15 Haziran 2026</p>
+                   </div>
+                </div>
+                <p className="fun-text text-lg leading-relaxed">{cat.desc}</p>
+                <div className="mt-10 pt-8 border-t border-[var(--fun-stroke-1)]">
+                   <button className="text-[var(--fun-purple)] font-bold text-sm uppercase tracking-widest hover:opacity-80 transition-opacity">Tüm Değişiklikleri Gör →</button>
+                </div>
               </div>
-              <ul className="space-y-3">
-                {group.items.map((item, j) => (
-                  <li key={j} className="flex items-start gap-3 fun-text">
-                    <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-[var(--fun-purple)] shrink-0" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
+            </ScrollReveal>
           ))}
         </div>
       </div>

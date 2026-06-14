@@ -27,13 +27,15 @@ function AboutPage() {
   return (
     <main>
       <section className="pt-32 pb-16 px-4 lg:px-5">
-        <div className="max-w-[1880px] mx-auto rounded-3xl xl:rounded-[32px] py-20 md:py-28 px-5 animate-in fade-in slide-in-from-bottom-8 duration-1000" style={{ backgroundColor: 'var(--fun-surface)' }}>
-          <div className="main-container text-center">
-            <span className="badge-fun badge-fun-white mb-4 inline-block">{t("about.badge")}</span>
-            <h1 className="text-heading-2 md:text-heading-1 lg:text-heading-huge font-medium mb-4 fun-text">{t("about.title")}</h1>
-            <p className="max-w-[700px] mx-auto text-tagline-1 fun-text-muted">{t("about.desc")}</p>
+        <ScrollReveal>
+          <div className="max-w-[1880px] mx-auto rounded-3xl xl:rounded-[32px] py-20 md:py-28 px-5" style={{ backgroundColor: 'var(--fun-surface)' }}>
+            <div className="main-container text-center">
+              <span className="badge-fun badge-fun-white mb-4 inline-block">{t("about.badge")}</span>
+              <h1 className="text-heading-2 md:text-heading-1 lg:text-heading-huge font-medium mb-4 fun-text">{t("about.title")}</h1>
+              <p className="max-w-[700px] mx-auto text-tagline-1 fun-text-muted">{t("about.desc")}</p>
+            </div>
           </div>
-        </div>
+        </ScrollReveal>
       </section>
 
       <ScrollReveal>
