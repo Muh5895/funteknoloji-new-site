@@ -3,8 +3,25 @@ import { useState, useEffect } from "react";
 import ThemeToggle from "./ThemeToggle";
 import LanguageSwitcher from "./LanguageSwitcher";
 import { useLang } from "../lib/i18n";
-import logoDark from "../assets/logo-dark.png.asset.json";
-import logoLight from "../assets/logo-light.png.asset.json";
+
+const LOGO_DARK = "https://framerusercontent.com/images/wYtLTUyXkZSH6e5ElqNpfbb4xT4.png?scale-down-to=512&width=1024&height=1024";
+const LOGO_LIGHT = "https://framerusercontent.com/images/cOsd9aFSLcyMQvEdo60L3fUo.png?width=1563&height=1563";
+
+const ICONS = {
+  about: "https://cdn-icons-png.flaticon.com/128/9187/9187604.png",
+  team: "https://cdn-icons-png.flaticon.com/128/476/476863.png",
+  reviews: "https://cdn-icons-png.flaticon.com/128/3128/3128313.png",
+  services: "https://cdn-icons-png.flaticon.com/128/2092/2092041.png",
+  projects: "https://cdn-icons-png.flaticon.com/128/1087/1087815.png",
+  pricing: "https://cdn-icons-png.flaticon.com/128/2845/2845722.png",
+  blog: "https://cdn-icons-png.flaticon.com/128/4922/4922073.png",
+  faq: "https://cdn-icons-png.flaticon.com/128/189/189665.png",
+  changelog: "https://cdn-icons-png.flaticon.com/128/10041/10041846.png",
+  brand_kit: "https://cdn-icons-png.flaticon.com/128/10473/10473617.png",
+  docs: "https://cdn-icons-png.flaticon.com/128/2991/2991106.png",
+  contact: "https://cdn-icons-png.flaticon.com/128/953/953831.png",
+  sitemap: "https://cdn-icons-png.flaticon.com/128/2329/2329112.png"
+};
 
 export default function Header() {
   const { t } = useLang();
@@ -37,7 +54,7 @@ export default function Header() {
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2.5 transition-transform hover:scale-[1.03]" aria-label="Fun Teknoloji – Ana sayfa">
           <img
-            src={isDark ? logoLight.url : logoDark.url}
+            src={isDark ? LOGO_LIGHT : LOGO_DARK}
             alt="Fun Teknoloji"
             width={44}
             height={44}
@@ -49,38 +66,35 @@ export default function Header() {
         {/* Desktop Nav */}
         <nav className="hidden items-center gap-0.5 xl:flex" aria-label="Ana navigasyon">
           <Dropdown id="company" label={t("nav.company")} open={openDropdown === "company"} onOpen={setOpenDropdown}>
-            <DropdownItem to="/about" title={t("nav.about")} desc="Bizi daha yakından tanıyın." />
-            <DropdownItem to="/team" title={t("nav.team")} desc="Dinamik ekibimizi keşfedin." />
-            <DropdownItem href="#" title={t("nav.career")} desc="Ekibimize katılın." />
+            <DropdownItem to="/about" title={t("nav.about")} desc={t("nav.about.desc")} icon={ICONS.about} />
+            <DropdownItem to="/team" title={t("nav.team")} desc={t("nav.team.desc")} icon={ICONS.team} />
+            <DropdownItem to="/reviews" title={t("nav.reviews")} desc={t("nav.reviews.desc")} icon={ICONS.reviews} />
           </Dropdown>
 
           <Dropdown id="platform" label={t("nav.platform")} open={openDropdown === "platform"} onOpen={setOpenDropdown}>
-            <DropdownItem to="/services" title={t("nav.services")} desc="Tüm hizmetlerimiz." />
-            <DropdownItem to="/pricing" title={t("nav.pricing")} desc="Fiyat planlarımız." />
-            <DropdownItem href="#" title="Güvenlik" desc="Güvenlik standartlarımız." />
+            <DropdownItem to="/services" title={t("nav.services")} desc={t("nav.services.desc")} icon={ICONS.services} />
+            <DropdownItem to="/projects" title={t("nav.projects")} desc={t("nav.projects.desc")} icon={ICONS.projects} />
+            <DropdownItem to="/pricing" title={t("nav.pricing")} desc={t("nav.pricing.desc")} icon={ICONS.pricing} />
           </Dropdown>
 
           <Dropdown id="resources" label={t("nav.resources")} open={openDropdown === "resources"} onOpen={setOpenDropdown}>
-            <DropdownItem to="/blog" title={t("nav.blog")} desc="En son yazılarımız." />
-            <DropdownItem href="#" title={t("nav.faq")} desc="Sık sorulan sorular." />
-            <DropdownItem to="/contact" title={t("nav.contact")} desc="Bizimle iletişime geçin." />
+            <DropdownItem to="/blog" title={t("nav.blog")} desc={t("nav.blog.desc")} icon={ICONS.blog} />
+            <DropdownItem to="/faq" title={t("nav.faq")} desc={t("nav.faq.desc")} icon={ICONS.faq} />
+            <DropdownItem to="/changelog" title={t("nav.changelog")} desc={t("nav.changelog.desc")} icon={ICONS.changelog} />
+            <DropdownItem to="/brand-kit" title={t("nav.brand_kit")} desc={t("nav.brand_kit.desc")} icon={ICONS.brand_kit} />
+            <DropdownItem to="/docs" title={t("nav.docs")} desc={t("nav.docs.desc")} icon={ICONS.docs} />
+            <DropdownItem to="/contact" title={t("nav.contact")} desc={t("nav.contact.desc")} icon={ICONS.contact} />
+            <DropdownItem to="/sitemap" title={t("nav.sitemap")} desc={t("nav.sitemap.desc")} icon={ICONS.sitemap} />
           </Dropdown>
-
-          <Link to="/pricing" className="rounded-full px-4 py-2.5 text-sm fun-text-muted transition-all hover:fun-text hover:scale-105">
-            {t("nav.pricing")}
-          </Link>
-          <Link to="/sitemap" className="rounded-full px-4 py-2.5 text-sm fun-text-muted transition-all hover:fun-text hover:scale-105">
-            {t("nav.sitemap")}
-          </Link>
         </nav>
 
         {/* Desktop CTA */}
         <div className="hidden items-center gap-2 xl:flex">
           <LanguageSwitcher />
           <ThemeToggle />
-          <Link to="/contact" className="btn-fun btn-fun-dark !py-2.5 !px-5 !text-sm">
-            {t("nav.cta")}
-          </Link>
+          <a href="https://waitlist.funteknoloji.com" className="btn-fun btn-fun-dark !py-2.5 !px-5 !text-sm">
+            {t("nav.waitlist")}
+          </a>
         </div>
 
         {/* Mobile buttons */}
@@ -108,20 +122,31 @@ export default function Header() {
       {/* Mobile Menu */}
       {mobileOpen && (
         <div
-          className="mt-2 rounded-3xl border p-5 shadow-2xl xl:hidden animate-scale-in origin-top"
+          className="mt-2 rounded-3xl border p-5 shadow-2xl xl:hidden animate-scale-in origin-top overflow-y-auto max-h-[80vh]"
           style={{ backgroundColor: "var(--fun-card)", borderColor: "var(--fun-stroke-1)" }}
         >
-          <nav className="space-y-1" aria-label="Mobil navigasyon">
-            <Link to="/about" className="block rounded-xl px-4 py-3 fun-text-muted transition-colors hover:bg-[var(--fun-surface)] hover:fun-text" onClick={() => setMobileOpen(false)}>{t("nav.about")}</Link>
-            <Link to="/team" className="block rounded-xl px-4 py-3 fun-text-muted transition-colors hover:bg-[var(--fun-surface)] hover:fun-text" onClick={() => setMobileOpen(false)}>{t("nav.team")}</Link>
-            <Link to="/services" className="block rounded-xl px-4 py-3 fun-text-muted transition-colors hover:bg-[var(--fun-surface)] hover:fun-text" onClick={() => setMobileOpen(false)}>{t("nav.services")}</Link>
-            <Link to="/pricing" className="block rounded-xl px-4 py-3 fun-text-muted transition-colors hover:bg-[var(--fun-surface)] hover:fun-text" onClick={() => setMobileOpen(false)}>{t("nav.pricing")}</Link>
-            <Link to="/blog" className="block rounded-xl px-4 py-3 fun-text-muted transition-colors hover:bg-[var(--fun-surface)] hover:fun-text" onClick={() => setMobileOpen(false)}>{t("nav.blog")}</Link>
-            <Link to="/contact" className="block rounded-xl px-4 py-3 fun-text-muted transition-colors hover:bg-[var(--fun-surface)] hover:fun-text" onClick={() => setMobileOpen(false)}>{t("nav.contact")}</Link>
-            <Link to="/sitemap" className="block rounded-xl px-4 py-3 fun-text-muted transition-colors hover:bg-[var(--fun-surface)] hover:fun-text" onClick={() => setMobileOpen(false)}>{t("nav.sitemap")}</Link>
+          <nav className="space-y-2" aria-label="Mobil navigasyon">
+            <MobileAccordion label={t("nav.company")}>
+              <Link to="/about" className="block rounded-xl px-4 py-3 fun-text-muted hover:bg-[var(--fun-surface)]" onClick={() => setMobileOpen(false)}>{t("nav.about")}</Link>
+              <Link to="/team" className="block rounded-xl px-4 py-3 fun-text-muted hover:bg-[var(--fun-surface)]" onClick={() => setMobileOpen(false)}>{t("nav.team")}</Link>
+              <Link to="/reviews" className="block rounded-xl px-4 py-3 fun-text-muted hover:bg-[var(--fun-surface)]" onClick={() => setMobileOpen(false)}>{t("nav.reviews")}</Link>
+            </MobileAccordion>
+
+            <MobileAccordion label={t("nav.platform")}>
+              <Link to="/services" className="block rounded-xl px-4 py-3 fun-text-muted hover:bg-[var(--fun-surface)]" onClick={() => setMobileOpen(false)}>{t("nav.services")}</Link>
+              <Link to="/pricing" className="block rounded-xl px-4 py-3 fun-text-muted hover:bg-[var(--fun-surface)]" onClick={() => setMobileOpen(false)}>{t("nav.pricing")}</Link>
+            </MobileAccordion>
+
+            <MobileAccordion label={t("nav.resources")}>
+              <Link to="/blog" className="block rounded-xl px-4 py-3 fun-text-muted hover:bg-[var(--fun-surface)]" onClick={() => setMobileOpen(false)}>{t("nav.blog")}</Link>
+              <Link to="/changelog" className="block rounded-xl px-4 py-3 fun-text-muted hover:bg-[var(--fun-surface)]" onClick={() => setMobileOpen(false)}>{t("nav.changelog")}</Link>
+              <Link to="/brand-kit" className="block rounded-xl px-4 py-3 fun-text-muted hover:bg-[var(--fun-surface)]" onClick={() => setMobileOpen(false)}>{t("nav.brand_kit")}</Link>
+              <Link to="/contact" className="block rounded-xl px-4 py-3 fun-text-muted hover:bg-[var(--fun-surface)]" onClick={() => setMobileOpen(false)}>{t("nav.contact")}</Link>
+              <Link to="/sitemap" className="block rounded-xl px-4 py-3 fun-text-muted hover:bg-[var(--fun-surface)]" onClick={() => setMobileOpen(false)}>{t("nav.sitemap")}</Link>
+            </MobileAccordion>
           </nav>
           <div className="mt-4 flex flex-col gap-2">
-            <Link to="/contact" className="btn-fun btn-fun-dark w-full text-center" onClick={() => setMobileOpen(false)}>{t("nav.cta")}</Link>
+            <a href="https://waitlist.funteknoloji.com" className="btn-fun btn-fun-dark w-full text-center" onClick={() => setMobileOpen(false)}>{t("nav.waitlist")}</a>
           </div>
         </div>
       )}
@@ -130,35 +155,58 @@ export default function Header() {
 }
 
 function Dropdown({ id, label, open, onOpen, children }: { id: string; label: string; open: boolean; onOpen: (id: string | null) => void; children: React.ReactNode }) {
+  const [timeoutId, setTimeoutId] = useState<number | null>(null);
+
+  const handleMouseEnter = () => {
+    if (timeoutId) {
+      window.clearTimeout(timeoutId);
+      setTimeoutId(null);
+    }
+    onOpen(id);
+  };
+
+  const handleMouseLeave = () => {
+    const id = window.setTimeout(() => {
+      onOpen(null);
+    }, 300);
+    setTimeoutId(id);
+  };
+
   return (
-    <div className="relative" onMouseEnter={() => onOpen(id)} onMouseLeave={() => onOpen(null)}>
-      <button type="button" aria-expanded={open} aria-haspopup="menu" className="flex items-center gap-1 rounded-full px-4 py-2.5 text-sm fun-text-muted transition-all hover:fun-text">
+    <div className="relative" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+      <button type="button" aria-expanded={open} aria-haspopup="menu" className={`flex items-center gap-1 rounded-full px-4 py-2.5 text-sm transition-all ${open ? 'fun-text bg-[var(--fun-surface)]' : 'fun-text-muted hover:fun-text'}`}>
         {label}
         <svg className={`h-4 w-4 transition-transform ${open ? "rotate-180" : ""}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
           <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
         </svg>
       </button>
       {open && (
-        <div
-          role="menu"
-          className="absolute left-1/2 top-full z-50 mt-2 w-[320px] -translate-x-1/2 rounded-2xl border p-3 shadow-2xl animate-fade-in origin-top"
-          style={{ backgroundColor: "var(--fun-card)", borderColor: "var(--fun-stroke-1)" }}
-        >
-          {children}
+        <div className="absolute left-1/2 top-full z-50 -translate-x-1/2 pt-4">
+          <div
+            role="menu"
+            className="w-[320px] rounded-2xl border p-3 shadow-2xl animate-in fade-in zoom-in-95 duration-200 origin-top"
+            style={{ backgroundColor: "var(--fun-card)", borderColor: "var(--fun-stroke-1)" }}
+          >
+            {children}
+          </div>
         </div>
       )}
     </div>
   );
 }
 
-function DropdownItem({ to, href, title, desc }: { to?: string; href?: string; title: string; desc: string }) {
+function DropdownItem({ to, href, title, desc, icon }: { to?: string; href?: string; title: string; desc: string; icon?: string }) {
   const className = "group relative flex items-start gap-3 rounded-xl p-3 transition-all hover:bg-[var(--fun-surface)]";
   const content = (
     <>
-      <div className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border transition-colors group-hover:bg-[var(--fun-text)] group-hover:text-[var(--color-background)]" style={{ borderColor: "var(--fun-stroke-1)" }}>
-        <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-          <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
-        </svg>
+      <div className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border transition-colors group-hover:bg-[var(--fun-text)] group-hover:text-[var(--color-background)] overflow-hidden" style={{ borderColor: "var(--fun-stroke-1)" }}>
+        {icon ? (
+          <img src={icon} alt="" className="h-4 w-4 object-contain group-hover:invert transition-all" />
+        ) : (
+          <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+          </svg>
+        )}
       </div>
       <div>
         <p className="text-sm font-medium fun-text">{title}</p>
@@ -168,4 +216,24 @@ function DropdownItem({ to, href, title, desc }: { to?: string; href?: string; t
   );
   if (to) return <Link to={to} className={className}>{content}</Link>;
   return <a href={href || "#"} className={className}>{content}</a>;
+}
+
+function MobileAccordion({ label, children }: { label: string; children: React.ReactNode }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="border-b last:border-0" style={{ borderColor: 'var(--fun-stroke-1)' }}>
+      <button
+        onClick={() => setOpen(!open)}
+        className="flex w-full items-center justify-between py-4 px-4 text-sm font-semibold fun-text"
+      >
+        {label}
+        <svg className={`h-4 w-4 transition-transform duration-300 ${open ? "rotate-180" : ""}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+        </svg>
+      </button>
+      <div className={`overflow-hidden transition-all duration-300 ${open ? "max-h-[1000px] pb-4" : "max-h-0"}`}>
+        <div className="pl-4 space-y-1">{children}</div>
+      </div>
+    </div>
+  );
 }
