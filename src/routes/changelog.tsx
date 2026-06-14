@@ -12,53 +12,67 @@ function ChangelogPage() {
   const categories = [
     {
       name: "Fun Teknoloji",
-      logo: "https://framerusercontent.com/images/wYtLTUyXkZSH6e5ElqNpfbb4xT4.png?scale-down-to=512&width=1024&height=1024",
+      logo: "/assets/logos/Fun Teknoloji BGSİZ.png",
+      darkLogo: "/assets/logos/Fun Teknoloji BGSİZ.png",
       desc: "Ana platform güncellemeleri ve kurumsal yenilikler."
     },
     {
       name: "Account",
-      logo: "https://framerusercontent.com/images/wYtLTUyXkZSH6e5ElqNpfbb4xT4.png?scale-down-to=512&width=1024&height=1024",
+      logo: "/assets/logos/Fun Teknoloji BGSİZ.png",
+      darkLogo: "/assets/logos/Fun Teknoloji BGSİZ.png",
       desc: "Kullanıcı hesapları ve profil yönetimi iyileştirmeleri."
     },
     {
       name: "Developer",
-      logo: "https://framerusercontent.com/images/wYtLTUyXkZSH6e5ElqNpfbb4xT4.png?scale-down-to=512&width=1024&height=1024",
+      logo: "/assets/logos/Fun Teknoloji BGSİZ.png",
+      darkLogo: "/assets/logos/Fun Teknoloji BGSİZ.png",
       desc: "API ve geliştirici araçları güncellemeleri."
     },
     {
       name: "QuakeSafe",
       logo: "/assets/logos/QuakeSafe Logo.png",
+      darkLogo: "/assets/logos/QuakeSafe Logo.png",
       desc: "QuakeSafe projesi özelindeki tüm yenilikler."
     }
   ];
 
   return (
     <main className="pt-32 pb-20 px-4 lg:px-5">
-      <div className="max-w-[1200px] mx-auto">
+      <div className="max-w-[1000px] mx-auto">
         <ScrollReveal>
           <header className="mb-20 text-center">
             <span className="badge-fun badge-fun-purple mb-4 inline-block">Sistem</span>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold fun-text mb-4">Değişiklik Günlüğü</h1>
+            <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold fun-text mb-4">Değişiklik Günlüğü</h1>
             <p className="fun-text-muted text-lg max-w-[700px] mx-auto">Platformumuz ve projelerimizdeki kategorize edilmiş güncellemeler.</p>
           </header>
         </ScrollReveal>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="flex flex-col gap-6">
           {categories.map((cat, i) => (
             <ScrollReveal key={i}>
-              <div className="group p-10 rounded-[40px] border border-[var(--fun-stroke-1)] bg-[var(--fun-card)] hover:border-[var(--fun-purple)] transition-all h-full">
-                <div className="flex items-center gap-6 mb-8">
-                   <div className="h-20 w-20 rounded-2xl bg-[var(--fun-surface)] p-4 flex items-center justify-center border border-[var(--fun-stroke-1)] group-hover:scale-110 transition-transform">
-                      <img src={cat.logo} alt={cat.name} className="max-w-full max-h-full object-contain" />
-                   </div>
-                   <div>
-                      <h2 className="text-2xl font-bold fun-text">{cat.name}</h2>
-                      <p className="text-sm fun-text-muted mt-1">Son Güncelleme: 15 Haziran 2026</p>
-                   </div>
+              <div className="group p-8 md:p-12 rounded-[40px] border border-[var(--fun-stroke-1)] bg-[var(--fun-card)] hover:border-[var(--fun-purple)] transition-all flex flex-col md:flex-row items-start md:items-center gap-8">
+                <div className="h-24 w-24 md:h-32 md:w-32 rounded-3xl bg-[var(--fun-surface)] p-6 flex items-center justify-center border border-[var(--fun-stroke-1)] group-hover:scale-110 transition-transform shrink-0">
+                   <img
+                    src={cat.logo}
+                    alt={cat.name}
+                    className="max-w-full max-h-full object-contain dark:invert"
+                   />
                 </div>
-                <p className="fun-text text-lg leading-relaxed">{cat.desc}</p>
-                <div className="mt-10 pt-8 border-t border-[var(--fun-stroke-1)]">
-                   <button className="text-[var(--fun-purple)] font-bold text-sm uppercase tracking-widest hover:opacity-80 transition-opacity">Tüm Değişiklikleri Gör →</button>
+                <div className="flex-1">
+                  <div className="flex flex-wrap items-center gap-4 mb-4">
+                     <h2 className="text-2xl md:text-3xl font-bold fun-text">{cat.name}</h2>
+                     <span className="text-xs font-bold uppercase tracking-widest bg-[var(--fun-surface)] px-3 py-1 rounded-full fun-text-muted border border-[var(--fun-stroke-1)]">v2.4.0</span>
+                  </div>
+                  <p className="fun-text text-lg leading-relaxed mb-6">{cat.desc}</p>
+                  <div className="flex items-center gap-6">
+                     <p className="text-sm font-medium fun-text-muted">Son Güncelleme: 15 Haziran 2026</p>
+                     <button className="text-[var(--fun-purple)] font-bold text-sm uppercase tracking-widest hover:opacity-80 transition-opacity flex items-center gap-2">
+                       <span>İncele</span>
+                       <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                         <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                       </svg>
+                     </button>
+                  </div>
                 </div>
               </div>
             </ScrollReveal>

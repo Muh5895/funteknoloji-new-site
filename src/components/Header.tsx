@@ -17,7 +17,8 @@ import {
   FileText,
   Mail,
   Map,
-  X
+  X,
+  ShieldAlert
 } from "lucide-react";
 
 const LOGO_DARK = "https://framerusercontent.com/images/wYtLTUyXkZSH6e5ElqNpfbb4xT4.png?scale-down-to=512&width=1024&height=1024";
@@ -44,24 +45,18 @@ export default function Header() {
     return () => { window.removeEventListener("scroll", update); obs.disconnect(); };
   }, []);
 
-  const [logoTimer, setLogoTimer] = useState<number | null>(null);
+  useEffect(() => {
+    const timer = window.setTimeout(() => setLogoClicks(0), 2000);
+    return () => window.clearTimeout(timer);
+  }, [logoClicks]);
 
   const handleLogoClick = (e: React.MouseEvent) => {
-    // Increment clicks
     const newCount = logoClicks + 1;
-
-    // Clear existing timer
-    if (logoTimer) window.clearTimeout(logoTimer);
-
     if (newCount >= 10) {
       setLogoClicks(0);
-      setLogoTimer(null);
       navigate({ to: "/game" });
     } else {
       setLogoClicks(newCount);
-      // Reset count after 2 seconds of inactivity
-      const timer = window.setTimeout(() => setLogoClicks(0), 2000);
-      setLogoTimer(timer);
     }
   };
 
@@ -102,6 +97,7 @@ export default function Header() {
           <Dropdown id="platform" label={t("nav.platform")} open={openDropdown === "platform"} onOpen={setOpenDropdown}>
             <DropdownItem to="/services" title={t("nav.services")} desc={t("nav.services.desc")} icon={<Zap className="h-4 w-4" />} />
             <DropdownItem to="/projects" title={t("nav.projects")} desc={t("nav.projects.desc")} icon={<Briefcase className="h-4 w-4" />} />
+            <DropdownItem to="/quakesafe" title="QuakeSafe" desc="Afet güvenliği teknolojisi" icon={<ShieldAlert className="h-4 w-4" />} />
             <DropdownItem to="/pricing" title={t("nav.pricing")} desc={t("nav.pricing.desc")} icon={<Tag className="h-4 w-4" />} />
           </Dropdown>
 
@@ -162,6 +158,7 @@ export default function Header() {
 
             <MobileAccordion label={t("nav.platform")}>
               <Link to="/services" className="block rounded-xl px-4 py-3 fun-text-muted hover:bg-[var(--fun-surface)]" onClick={() => setMobileOpen(false)}>{t("nav.services")}</Link>
+              <Link to="/quakesafe" className="block rounded-xl px-4 py-3 fun-text-muted hover:bg-[var(--fun-surface)]" onClick={() => setMobileOpen(false)}>QuakeSafe</Link>
               <Link to="/pricing" className="block rounded-xl px-4 py-3 fun-text-muted hover:bg-[var(--fun-surface)]" onClick={() => setMobileOpen(false)}>{t("nav.pricing")}</Link>
             </MobileAccordion>
 

@@ -59,13 +59,15 @@ function BrandKitPage() {
   return (
     <main className="pt-32 pb-20 px-4 lg:px-5">
       <div className="max-w-[1200px] mx-auto">
-        <header className="mb-16 text-center">
-          <span className="badge-fun badge-fun-purple mb-4 inline-block">Kurumsal</span>
-          <h1 className="text-4xl md:text-5xl font-bold fun-text mb-4">Marka Kiti</h1>
-          <p className="fun-text-muted text-lg max-w-[700px] mx-auto">
-            Fun Teknoloji logolarını ve görsel materyallerini buradan indirebilir, kullanım kılavuzuna göz atabilirsiniz.
-          </p>
-        </header>
+        <ScrollReveal>
+          <header className="mb-16 text-center">
+            <span className="badge-fun badge-fun-purple mb-4 inline-block">Kurumsal</span>
+            <h1 className="text-4xl md:text-5xl font-bold fun-text mb-4">Marka Kiti</h1>
+            <p className="fun-text-muted text-lg max-w-[700px] mx-auto">
+              Fun Teknoloji logolarını ve görsel materyallerini buradan indirebilir, kullanım kılavuzuna göz atabilirsiniz.
+            </p>
+          </header>
+        </ScrollReveal>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {logos.map((logo, i) => (

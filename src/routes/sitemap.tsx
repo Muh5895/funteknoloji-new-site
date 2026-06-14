@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useLang } from "../lib/i18n";
+import ScrollReveal from "../components/ScrollReveal";
 
 export const Route = createFileRoute("/sitemap")({
   head: () => ({
@@ -31,6 +32,7 @@ function SitemapPage() {
       links: [
         { to: "/services", label: t("nav.services"), desc: t("nav.services.desc") },
         { to: "/projects", label: t("nav.projects"), desc: t("nav.projects.desc") },
+        { to: "/quakesafe", label: "QuakeSafe", desc: "Afet güvenliği teknolojisi" },
         { to: "/pricing", label: t("nav.pricing"), desc: t("nav.pricing.desc") },
       ],
     },
@@ -51,14 +53,17 @@ function SitemapPage() {
     <main className="pt-32 pb-24">
       <section className="px-4 lg:px-5">
         <div className="main-container">
-          <div className="text-center mb-14">
-            <span className="badge-fun badge-fun-gray mb-4 inline-block">{t("nav.sitemap")}</span>
-            <h1 className="text-heading-3 md:text-heading-2 font-medium fun-text mb-3">{t("nav.sitemap")}</h1>
-            <p className="text-tagline-1 fun-text-muted max-w-[600px] mx-auto">{t("nav.sitemap.desc")}</p>
-          </div>
+          <ScrollReveal>
+            <div className="text-center mb-14">
+              <span className="badge-fun badge-fun-gray mb-4 inline-block">{t("nav.sitemap")}</span>
+              <h1 className="text-heading-3 md:text-heading-2 font-medium fun-text mb-3">{t("nav.sitemap")}</h1>
+              <p className="text-tagline-1 fun-text-muted max-w-[600px] mx-auto">{t("nav.sitemap.desc")}</p>
+            </div>
+          </ScrollReveal>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {sections.map((sec) => (
-              <div key={sec.title} className="rounded-3xl border p-6 md:p-8" style={{ backgroundColor: "var(--fun-card)", borderColor: "var(--fun-stroke-1)" }}>
+              <ScrollReveal key={sec.title}>
+                <div className="rounded-3xl border p-6 md:p-8 h-full" style={{ backgroundColor: "var(--fun-card)", borderColor: "var(--fun-stroke-1)" }}>
                 <h2 className="text-heading-6 font-medium fun-text mb-4">{sec.title}</h2>
                 <ul className="space-y-3">
                   {sec.links.map((l) => (
@@ -74,6 +79,7 @@ function SitemapPage() {
                   ))}
                 </ul>
               </div>
+            </ScrollReveal>
             ))}
           </div>
         </div>

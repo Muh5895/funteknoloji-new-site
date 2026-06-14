@@ -4,6 +4,17 @@ import { useState, useEffect, useRef } from "react";
 import ArrowButton from "../components/ArrowButton";
 import { useLang } from "../lib/i18n";
 import CountUp from "../components/CountUp";
+import {
+  Cpu,
+  Smartphone,
+  ShieldCheck,
+  Zap,
+  Globe,
+  Code2,
+  Database,
+  Search,
+  HeartHandshake
+} from "lucide-react";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -149,45 +160,58 @@ function FeaturesSection({ t }: { t: (k: string) => string }) {
               </div>
               <div className="absolute -right-20 -top-20 w-[120%] h-[120%] rounded-full opacity-20 blur-[100px] group-hover:opacity-40 transition-opacity duration-1000" style={{ background: 'radial-gradient(circle, var(--fun-purple), transparent)' }} />
               <div className="absolute inset-0 flex items-center justify-center p-10 pb-40">
-                <div className="relative w-full h-full rounded-2xl overflow-hidden border border-[var(--fun-stroke-1)] bg-[var(--fun-surface)] shadow-2xl flex items-center justify-center">
-                  <div className="h-24 w-24 rounded-3xl bg-[var(--fun-purple)] animate-pulse flex items-center justify-center">
-                    <svg className="h-12 w-12 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                    </svg>
+                <div className="relative w-full h-full rounded-2xl overflow-hidden border border-[var(--fun-stroke-1)] bg-[var(--fun-surface)] shadow-2xl flex items-center justify-center group/ai">
+                  <div className="absolute inset-0 bg-gradient-to-br from-[var(--fun-purple)]/5 to-transparent animate-pulse" />
+                  <div className="h-32 w-32 rounded-full bg-[var(--fun-purple)]/10 flex items-center justify-center relative">
+                    <div className="absolute inset-0 rounded-full border border-[var(--fun-purple)]/30 animate-[ping_3s_infinite]" />
+                    <Cpu className="h-16 w-16 text-[var(--fun-purple)] group-hover/ai:scale-110 transition-transform duration-500" />
+                  </div>
+                  <div className="absolute bottom-10 left-1/2 -translate-x-1/2 w-[80%] space-y-2">
+                    <div className="h-2 w-full bg-[var(--fun-stroke-1)] rounded-full overflow-hidden">
+                      <div className="h-full bg-[var(--fun-purple)] w-2/3 animate-[shimmer_2s_infinite]" />
+                    </div>
+                    <div className="h-2 w-1/2 bg-[var(--fun-stroke-1)] rounded-full overflow-hidden">
+                      <div className="h-full bg-[var(--fun-purple)] w-1/2 animate-[shimmer_2s_infinite_delay-150]" />
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
 
             <div className="space-y-8">
-              <div className="rounded-[20px] p-6 md:p-8" style={{ backgroundColor: 'var(--fun-card)' }}>
-              <div className="rounded-2xl py-8 mb-6 flex items-center justify-center min-h-[200px] overflow-hidden" style={{ backgroundColor: 'var(--fun-surface)' }}>
-                <div className="flex -space-x-4 px-4 overflow-x-auto no-scrollbar">
-                    {[1,2,3,4].map(i => (
-                    <div key={i} className="h-14 w-32 shrink-0 rounded-full flex items-center gap-2 px-2 shadow-sm" style={{ backgroundColor: 'var(--fun-card)', borderColor: 'var(--fun-stroke-1)', borderWidth: 1 }}>
-                        <div className="h-10 w-10 rounded-full" style={{ background: 'linear-gradient(135deg, var(--fun-green), var(--fun-stroke-1))' }} />
-                        <div className="space-y-1">
-                          <div className="h-2 w-12 rounded" style={{ backgroundColor: 'var(--fun-stroke-1)' }} />
-                          <div className="h-1.5 w-8 rounded" style={{ backgroundColor: 'var(--fun-stroke-2)' }} />
-                        </div>
+              <div className="rounded-[20px] p-6 md:p-8 overflow-hidden relative group/mobile" style={{ backgroundColor: 'var(--fun-card)' }}>
+                <div className="absolute top-0 right-0 p-4 opacity-10 group-hover/mobile:opacity-20 transition-opacity">
+                  <Smartphone className="h-32 w-32 rotate-12" />
+                </div>
+                <div className="rounded-2xl py-8 mb-6 flex items-center justify-center min-h-[200px] overflow-hidden relative" style={{ backgroundColor: 'var(--fun-surface)' }}>
+                  <div className="relative z-10 flex gap-4 items-center">
+                    <div className="h-48 w-24 rounded-[32px] bg-[var(--fun-card)] border-4 border-[var(--fun-stroke-1)] p-2 relative">
+                      <div className="h-1 w-8 bg-[var(--fun-stroke-1)] rounded-full mx-auto mb-2" />
+                      <div className="space-y-2 mt-4">
+                        <div className="h-2 w-full bg-[var(--fun-purple)]/20 rounded" />
+                        <div className="h-2 w-2/3 bg-[var(--fun-purple)]/20 rounded" />
+                        <div className="h-16 w-full bg-[var(--fun-purple)]/10 rounded-xl" />
                       </div>
-                    ))}
+                      <div className="absolute bottom-2 left-1/2 -translate-x-1/2 h-6 w-6 rounded-full border-2 border-[var(--fun-stroke-1)]" />
+                    </div>
+                    <div className="h-40 w-20 rounded-[28px] bg-[var(--fun-card)] border-2 border-[var(--fun-stroke-1)] opacity-50 p-2 scale-90 translate-y-4">
+                       <div className="h-1 w-6 bg-[var(--fun-stroke-1)] rounded-full mx-auto mb-2" />
+                    </div>
                   </div>
                 </div>
-                <h3 className="text-heading-6 md:text-heading-5 font-medium mb-1 fun-text">{t("home.features.card2.title")}</h3>
-                <p className="text-tagline-1 fun-text-muted max-w-[450px]">{t("home.features.card2.desc")}</p>
+                <h3 className="text-heading-6 md:text-heading-5 font-medium mb-1 fun-text relative z-10">{t("home.features.card2.title")}</h3>
+                <p className="text-tagline-1 fun-text-muted max-w-[450px] relative z-10">{t("home.features.card2.desc")}</p>
               </div>
 
-              <div className="rounded-[20px] p-6 md:p-8" style={{ backgroundColor: 'var(--fun-card)' }}>
-                <div className="flex items-center justify-center -space-x-8 mb-6">
-                  {[12, 0, -12].map((rotate, i) => (
-                    <div key={i} className={`w-[160px] h-[200px] rounded-xl ${i === 1 ? 'z-10' : 'shadow-lg'}`} style={{ transform: `rotate(${rotate}deg)`, background: i === 1 ? 'linear-gradient(135deg, #12161F, #2A2E38)' : `linear-gradient(135deg, var(--fun-surface), var(--fun-card))` }}>
-                      <div className="p-4 space-y-2">
-                        <div className={`h-3 w-20 rounded ${i === 1 ? 'bg-white/20' : ''}`} style={i !== 1 ? { backgroundColor: 'var(--fun-stroke-1)' } : {}} />
-                        <div className={`h-2 w-16 rounded ${i === 1 ? 'bg-white/10' : ''}`} style={i !== 1 ? { backgroundColor: 'var(--fun-stroke-2)' } : {}} />
-                      </div>
+              <div className="rounded-[20px] p-6 md:p-8 group/secure" style={{ backgroundColor: 'var(--fun-card)' }}>
+                <div className="flex items-center justify-center min-h-[200px] mb-6">
+                  <div className="relative">
+                    <div className="absolute inset-0 bg-[var(--fun-purple)] blur-2xl opacity-20 group-hover/secure:opacity-40 transition-opacity" />
+                    <ShieldCheck className="h-32 w-32 text-[var(--fun-purple)] relative z-10" />
+                    <div className="absolute -top-4 -right-4 h-10 w-10 bg-green-500 rounded-full border-4 border-[var(--fun-card)] flex items-center justify-center animate-bounce">
+                      <Zap className="h-4 w-4 text-white" fill="currentColor" />
                     </div>
-                  ))}
+                  </div>
                 </div>
                 <h3 className="text-heading-6 md:text-heading-5 font-medium mb-1 fun-text">{t("home.features.card3.title")}</h3>
                 <p className="text-tagline-1 fun-text-muted max-w-[450px]">{t("home.features.card3.desc")}</p>
@@ -260,12 +284,12 @@ function HowItWorksSection({ t }: { t: (k: string) => string }) {
 /* ============ SERVICES ============ */
 function ServicesSection({ t }: { t: (k: string) => string }) {
   const services = [
-    { title: t("home.services.item1.title"), desc: t("home.services.item1.desc") },
-    { title: t("home.services.item2.title"), desc: t("home.services.item2.desc") },
-    { title: t("home.services.item3.title"), desc: t("home.services.item3.desc") },
-    { title: t("home.services.item4.title"), desc: t("home.services.item4.desc") },
-    { title: t("home.services.item5.title"), desc: t("home.services.item5.desc") },
-    { title: t("home.services.item6.title"), desc: t("home.services.item6.desc") },
+    { title: t("home.services.item1.title"), desc: t("home.services.item1.desc"), icon: <Cpu className="h-8 w-8" /> },
+    { title: t("home.services.item2.title"), desc: t("home.services.item2.desc"), icon: <Code2 className="h-8 w-8" /> },
+    { title: t("home.services.item3.title"), desc: t("home.services.item3.desc"), icon: <Smartphone className="h-8 w-8" /> },
+    { title: t("home.services.item4.title"), desc: t("home.services.item4.desc"), icon: <Database className="h-8 w-8" /> },
+    { title: t("home.services.item5.title"), desc: t("home.services.item5.desc"), icon: <Search className="h-8 w-8" /> },
+    { title: t("home.services.item6.title"), desc: t("home.services.item6.desc"), icon: <HeartHandshake className="h-8 w-8" /> },
   ];
 
   return (
@@ -295,10 +319,15 @@ function ServicesSection({ t }: { t: (k: string) => string }) {
                 <div className={`${i === 0 ? 'md:col-span-8' : ''} rounded-xl overflow-hidden min-h-[240px] md:min-h-[300px] group-hover:scale-[1.02] transition-transform duration-500 flex items-center justify-center relative`} style={{ background: 'linear-gradient(135deg, var(--fun-stroke-2), var(--fun-surface))' }}>
                   <div className="absolute inset-0 bg-gradient-to-br from-[#6C5CE7]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   <div className="text-center p-8 relative z-10">
-                    <div className="mx-auto h-16 w-16 rounded-2xl flex items-center justify-center mb-3 group-hover:bg-[#6C5CE7] transition-colors duration-500" style={{ backgroundColor: 'var(--fun-card)' }}>
-                      <span className="text-2xl font-bold fun-text-muted group-hover:text-white transition-colors">{i + 1}</span>
+                    <div className="mx-auto h-20 w-20 rounded-3xl flex items-center justify-center mb-4 group-hover:bg-[#6C5CE7] group-hover:text-white group-hover:rotate-12 transition-all duration-500 shadow-lg text-[var(--fun-purple)]" style={{ backgroundColor: 'var(--fun-card)' }}>
+                       {service.icon}
                     </div>
-                    <p className="text-sm fun-text-muted font-medium">{service.title}</p>
+                    <p className="text-sm fun-text font-bold tracking-widest uppercase">{service.title}</p>
+                    <div className="mt-4 flex justify-center gap-1 opacity-50">
+                       <div className="h-1 w-4 bg-[var(--fun-purple)] rounded-full" />
+                       <div className="h-1 w-1 bg-[var(--fun-purple)] rounded-full" />
+                       <div className="h-1 w-1 bg-[var(--fun-purple)] rounded-full" />
+                    </div>
                   </div>
                 </div>
               </div>

@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { useLang } from "../lib/i18n";
+import ScrollReveal from "../components/ScrollReveal";
 
 export const Route = createFileRoute("/faq")({
   component: FAQPage,
@@ -122,5 +123,3 @@ function FAQPage() {
     </main>
   );
 }
-
-import ScrollReveal from "../components/ScrollReveal";

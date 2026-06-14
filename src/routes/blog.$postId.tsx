@@ -5,6 +5,7 @@ import { supabase } from "../lib/supabase";
 import { useLang } from "../lib/i18n";
 import ArrowButton from "../components/ArrowButton";
 import LanguageSwitcher from "../components/LanguageSwitcher";
+import ScrollReveal from "../components/ScrollReveal";
 
 export const Route = createFileRoute("/blog/$postId")({
   component: PostPage,
@@ -26,12 +27,18 @@ function PostPage() {
       try {
         const { data, error } = await supabase
           .from('blog')
-          .select('title, description, text, image_url, author, created_at, tag')
+          .select('*')
           .eq('id', postId)
           .single();
 
         if (!error && data) {
-          setPost(data);
+          const formatted = {
+            ...data,
+            title: data.title || data.heading,
+            text: data.text || data.content || data.description,
+            tag: data.tag || data.category
+          };
+          setPost(formatted);
         }
       } catch (err) {
         console.error("Fetch post error:", err);
@@ -96,5 +103,3 @@ function PostPage() {
     </main>
   );
 }
-
-import ScrollReveal from "../components/ScrollReveal";

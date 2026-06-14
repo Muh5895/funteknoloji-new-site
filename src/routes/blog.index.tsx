@@ -46,10 +46,10 @@ function BlogPage() {
         if (data) {
           const formattedPosts = data.map((p: any) => ({
             id: p.id,
-            title: p.title,
-            description: p.description || p.content || "",
+            title: p.title || p.heading || "İsimsiz Yazı",
+            description: p.description || p.summary || p.text?.substring(0, 150) || p.content?.substring(0, 150) || "",
             image_url: p.image_url || p.image || "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b",
-            tag: p.tag || "Teknoloji",
+            tag: p.tag || p.category || "Teknoloji",
             created_at: p.created_at
           }));
           setPosts(formattedPosts);

@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { supabase } from "../lib/supabase";
 import { toast } from "sonner";
 import { useLang } from "../lib/i18n";
+import ScrollReveal from "../components/ScrollReveal";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -220,7 +221,6 @@ function ContactPage() {
   );
 }
 
-import ScrollReveal from "../components/ScrollReveal";
 
 function ContactInfoItem({ icon, title, value, href }: { icon: string; title: string; value: string; href?: string }) {
   return (

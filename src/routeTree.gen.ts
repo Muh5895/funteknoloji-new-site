@@ -15,6 +15,7 @@ import { Route as SitemapRouteImport } from './routes/sitemap'
 import { Route as ServicesRouteImport } from './routes/services'
 import { Route as ServicePolicyRouteImport } from './routes/service-policy'
 import { Route as ReviewsRouteImport } from './routes/reviews'
+import { Route as QuakesafeRouteImport } from './routes/quakesafe'
 import { Route as ProjectsRouteImport } from './routes/projects'
 import { Route as PrivacyPolicyRouteImport } from './routes/privacy-policy'
 import { Route as PricingRouteImport } from './routes/pricing'
@@ -58,6 +59,11 @@ const ServicePolicyRoute = ServicePolicyRouteImport.update({
 const ReviewsRoute = ReviewsRouteImport.update({
   id: '/reviews',
   path: '/reviews',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const QuakesafeRoute = QuakesafeRouteImport.update({
+  id: '/quakesafe',
+  path: '/quakesafe',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProjectsRoute = ProjectsRouteImport.update({
@@ -144,6 +150,7 @@ export interface FileRoutesByFullPath {
   '/pricing': typeof PricingRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/projects': typeof ProjectsRoute
+  '/quakesafe': typeof QuakesafeRoute
   '/reviews': typeof ReviewsRoute
   '/service-policy': typeof ServicePolicyRoute
   '/services': typeof ServicesRoute
@@ -165,6 +172,7 @@ export interface FileRoutesByTo {
   '/pricing': typeof PricingRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/projects': typeof ProjectsRoute
+  '/quakesafe': typeof QuakesafeRoute
   '/reviews': typeof ReviewsRoute
   '/service-policy': typeof ServicePolicyRoute
   '/services': typeof ServicesRoute
@@ -188,6 +196,7 @@ export interface FileRoutesById {
   '/pricing': typeof PricingRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/projects': typeof ProjectsRoute
+  '/quakesafe': typeof QuakesafeRoute
   '/reviews': typeof ReviewsRoute
   '/service-policy': typeof ServicePolicyRoute
   '/services': typeof ServicesRoute
@@ -212,6 +221,7 @@ export interface FileRouteTypes {
     | '/pricing'
     | '/privacy-policy'
     | '/projects'
+    | '/quakesafe'
     | '/reviews'
     | '/service-policy'
     | '/services'
@@ -233,6 +243,7 @@ export interface FileRouteTypes {
     | '/pricing'
     | '/privacy-policy'
     | '/projects'
+    | '/quakesafe'
     | '/reviews'
     | '/service-policy'
     | '/services'
@@ -255,6 +266,7 @@ export interface FileRouteTypes {
     | '/pricing'
     | '/privacy-policy'
     | '/projects'
+    | '/quakesafe'
     | '/reviews'
     | '/service-policy'
     | '/services'
@@ -278,6 +290,7 @@ export interface RootRouteChildren {
   PricingRoute: typeof PricingRoute
   PrivacyPolicyRoute: typeof PrivacyPolicyRoute
   ProjectsRoute: typeof ProjectsRoute
+  QuakesafeRoute: typeof QuakesafeRoute
   ReviewsRoute: typeof ReviewsRoute
   ServicePolicyRoute: typeof ServicePolicyRoute
   ServicesRoute: typeof ServicesRoute
@@ -328,6 +341,13 @@ declare module '@tanstack/react-router' {
       path: '/reviews'
       fullPath: '/reviews'
       preLoaderRoute: typeof ReviewsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/quakesafe': {
+      id: '/quakesafe'
+      path: '/quakesafe'
+      fullPath: '/quakesafe'
+      preLoaderRoute: typeof QuakesafeRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/projects': {
@@ -456,6 +476,7 @@ const rootRouteChildren: RootRouteChildren = {
   PricingRoute: PricingRoute,
   PrivacyPolicyRoute: PrivacyPolicyRoute,
   ProjectsRoute: ProjectsRoute,
+  QuakesafeRoute: QuakesafeRoute,
   ReviewsRoute: ReviewsRoute,
   ServicePolicyRoute: ServicePolicyRoute,
   ServicesRoute: ServicesRoute,

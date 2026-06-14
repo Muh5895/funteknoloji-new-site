@@ -52,22 +52,32 @@ export default function NexyAssistant() {
     return () => clearTimeout(timer);
   }, []);
 
+  const typingIntervalRef = useRef<number | null>(null);
+
   const typeMessage = (fullText: string, msgIndex: number) => {
+    if (typingIntervalRef.current) clearInterval(typingIntervalRef.current);
+
     let currentText = "";
     let charIndex = 0;
     const speed = 30; // ms per character
 
-    const interval = setInterval(() => {
+    typingIntervalRef.current = window.setInterval(() => {
       if (charIndex < fullText.length) {
         currentText += fullText[charIndex];
         setChatMessages(prev => prev.map((m, i) => i === msgIndex ? { ...m, displayedText: currentText } : m));
         charIndex++;
       } else {
-        clearInterval(interval);
+        if (typingIntervalRef.current) clearInterval(typingIntervalRef.current);
         setIsTyping(false);
       }
     }, speed);
   };
+
+  useEffect(() => {
+    return () => {
+      if (typingIntervalRef.current) clearInterval(typingIntervalRef.current);
+    };
+  }, []);
 
   const toggleChat = () => {
     setIsOpen(!isOpen);
@@ -268,21 +278,19 @@ export default function NexyAssistant() {
 
       {/* Mascot Trigger */}
       <div className={`flex items-center gap-2 transition-all duration-500 ${isMinimized ? 'translate-x-[calc(100%-40px)]' : ''}`}>
-        {!isOpen && (
-          <button
-            onClick={() => setIsMinimized(!isMinimized)}
-            className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--fun-card)] border border-[var(--fun-stroke-1)] fun-text shadow-xl hover:bg-[var(--fun-surface)] transition-colors"
-          >
-            {isMinimized ? <ChevronLeft className="h-5 w-5" /> : <ChevronRight className="h-5 w-5" />}
-          </button>
-        )}
+        <button
+          onClick={() => setIsMinimized(!isMinimized)}
+          className={`flex h-10 w-10 items-center justify-center rounded-full bg-[var(--fun-card)] border border-[var(--fun-stroke-1)] fun-text shadow-xl hover:bg-[var(--fun-surface)] transition-all duration-300 ${isOpen ? 'opacity-0 w-0 h-0 overflow-hidden pointer-events-none -mr-2' : 'opacity-100 w-10 h-10'}`}
+        >
+          {isMinimized ? <ChevronLeft className="h-5 w-5" /> : <ChevronRight className="h-5 w-5" />}
+        </button>
 
         <button
           className={`group relative cursor-pointer outline-none border-none bg-transparent p-0 transition-all active:scale-95 ${isMinimized ? 'opacity-50 pointer-events-none' : ''}`}
           onClick={toggleChat}
           aria-label="Yardım al"
         >
-          <div className={`relative z-10 flex items-center gap-3 px-6 py-4 rounded-full transition-all duration-500 ${isOpen ? 'rotate-12 scale-95 brightness-75 bg-[var(--fun-purple)] text-white' : 'bg-[var(--fun-surface)] border-2 border-[var(--fun-purple)] fun-text hover:scale-105 shadow-xl'}`}>
+          <div className={`relative z-10 flex items-center gap-3 px-6 py-4 rounded-full transition-all duration-500 ${isOpen ? 'bg-[var(--fun-purple)] text-white shadow-inner' : 'bg-[var(--fun-surface)] border-2 border-[var(--fun-purple)] fun-text hover:scale-105 shadow-xl'}`}>
             <MessageCircleQuestion className={`h-7 w-7 ${isOpen ? 'text-white' : 'text-[var(--fun-purple)]'}`} />
             <span className="font-bold text-lg whitespace-nowrap">Yardım</span>
           </div>
