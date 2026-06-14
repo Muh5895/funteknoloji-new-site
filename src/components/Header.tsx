@@ -30,7 +30,7 @@ export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [isDark, setIsDark] = useState(false);
   const [logoClicks, setLogoClicks] = useState(0);
-  const [showEasterEgg, setShowEasterEgg] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const update = () => {
@@ -54,9 +54,9 @@ export default function Header() {
     if (logoTimer) window.clearTimeout(logoTimer);
 
     if (newCount >= 10) {
-      setShowEasterEgg(true);
       setLogoClicks(0);
       setLogoTimer(null);
+      navigate({ to: "/game" });
     } else {
       setLogoClicks(newCount);
       // Reset count after 2 seconds of inactivity
@@ -67,21 +67,6 @@ export default function Header() {
 
   return (
     <header className={`fixed top-3 left-1/2 z-50 w-full max-w-[1400px] -translate-x-1/2 px-4 transition-all duration-500 ${scrolled ? "top-2" : "top-4"}`}>
-      {showEasterEgg && (
-        <div className="fixed inset-0 z-[100] bg-black">
-          <button
-            onClick={() => setShowEasterEgg(false)}
-            className="absolute top-6 right-6 z-[110] p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors"
-          >
-            <X className="h-6 w-6" />
-          </button>
-          <iframe
-            src="https://fungame-livid.vercel.app/"
-            className="w-full h-full border-none"
-            title="Fun Game"
-          />
-        </div>
-      )}
       <div
         className="mx-auto flex items-center justify-between rounded-full px-5 py-3 shadow-2xl backdrop-blur-2xl border xl:px-7 xl:py-4 animate-fade-in"
         style={{
@@ -97,7 +82,7 @@ export default function Header() {
         >
           <Link to="/">
             <img
-              src={isDark ? "/assets/logos/Fun Teknoloji BGSİZ.png" : "/assets/logos/Fun Teknoloji Logo.png"}
+              src={isDark ? "/assets/logos/Fun Teknoloji BGSİZ.png" : "https://framerusercontent.com/images/wYtLTUyXkZSH6e5ElqNpfbb4xT4.png?scale-down-to=512&width=1024&height=1024"}
               alt="Fun Teknoloji"
               width={44}
               height={44}

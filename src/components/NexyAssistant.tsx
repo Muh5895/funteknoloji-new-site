@@ -8,7 +8,7 @@ import {
   Send,
   ChevronRight,
   ChevronLeft,
-  MinusCircle
+  MessageCircleQuestion
 } from "lucide-react";
 
 export default function NexyAssistant() {
@@ -282,22 +282,11 @@ export default function NexyAssistant() {
           onClick={toggleChat}
           aria-label="Yardım al"
         >
-          <img
-            src="/assets/yardım-button.png"
-            alt="Help"
-            className={`h-28 w-auto object-contain transition-all duration-500 relative z-10 ${isOpen ? 'rotate-12 scale-90 brightness-75' : 'hover:scale-110 drop-shadow-2xl'}`}
-          />
-          <div className="absolute inset-0 bg-[var(--fun-purple)] rounded-full blur-3xl opacity-20 group-hover:opacity-40 transition-opacity" />
-
-          {!isOpen && !isMinimized && (
-            <button
-              onClick={(e) => { e.stopPropagation(); setIsMinimized(true); }}
-              className="absolute -top-2 -left-2 z-20 h-6 w-6 rounded-full bg-red-500 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-lg"
-              title="Gizle"
-            >
-              <MinusCircle className="h-4 w-4" />
-            </button>
-          )}
+          <div className={`relative z-10 flex items-center gap-3 px-6 py-4 rounded-full transition-all duration-500 ${isOpen ? 'rotate-12 scale-95 brightness-75 bg-[var(--fun-purple)] text-white' : 'bg-[var(--fun-surface)] border-2 border-[var(--fun-purple)] fun-text hover:scale-105 shadow-xl'}`}>
+            <MessageCircleQuestion className={`h-7 w-7 ${isOpen ? 'text-white' : 'text-[var(--fun-purple)]'}`} />
+            <span className="font-bold text-lg whitespace-nowrap">Yardım</span>
+          </div>
+          <div className="absolute inset-0 bg-[var(--fun-purple)] rounded-full blur-3xl opacity-10 group-hover:opacity-30 transition-opacity" />
         </button>
       </div>
     </div>

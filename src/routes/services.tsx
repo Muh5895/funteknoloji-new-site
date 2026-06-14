@@ -62,7 +62,7 @@ function ServicesPage() {
         <div className="max-w-[1880px] mx-auto rounded-3xl xl:rounded-[32px] py-20 md:py-28 px-5 animate-in fade-in slide-in-from-bottom-8 duration-1000" style={{ backgroundColor: 'var(--fun-surface)' }}>
           <div className="main-container text-center">
             <span className="badge-fun badge-fun-white mb-4 inline-block">{t("home.services.badge")}</span>
-            <h1 className="text-heading-3 md:text-heading-2 lg:text-heading-1 font-medium mb-4 fun-text">{t("home.services.title")}</h1>
+            <h1 className="text-heading-2 md:text-heading-1 lg:text-heading-huge font-medium mb-4 fun-text">{t("home.services.title")}</h1>
             <p className="max-w-[700px] mx-auto text-tagline-1 fun-text-muted">{t("home.services.desc")}</p>
           </div>
         </div>
@@ -109,7 +109,7 @@ function ServicesPage() {
         <div className="bg-[#12161F] max-w-[1880px] mx-auto rounded-3xl xl:rounded-[32px] py-20 px-5 relative overflow-hidden group">
           <div className="absolute inset-0 bg-gradient-to-br from-[#6C5CE7]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
           <div className="main-container text-center relative z-10">
-            <h2 className="text-heading-4 md:text-heading-3 font-medium text-white mb-4">{t("home.cta.title")}</h2>
+            <h2 className="text-heading-3 md:text-heading-2 font-medium text-white mb-4">{t("home.cta.title")}</h2>
             <p className="text-tagline-1 text-white/60 max-w-[500px] mx-auto mb-8">{t("home.cta.desc")}</p>
             <ArrowButton to="/contact" variant="light">{t("home.cta.button")}</ArrowButton>
           </div>

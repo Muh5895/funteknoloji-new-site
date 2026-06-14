@@ -132,7 +132,7 @@ function FeaturesSection({ t }: { t: (k: string) => string }) {
         <div className="main-container">
           <div className="mb-12 space-y-4 text-center lg:mx-auto lg:max-w-[740px]">
             <span className="badge-fun badge-fun-white">{t("home.features.badge")}</span>
-            <h2 className="text-heading-4 md:text-heading-3 font-medium fun-text">
+            <h2 className="text-heading-3 md:text-heading-2 font-medium fun-text">
               {t("home.features.title")}
             </h2>
             <p className="text-tagline-1 fun-text-muted">
@@ -213,7 +213,7 @@ function HowItWorksSection({ t }: { t: (k: string) => string }) {
       <div className="main-container">
         <div className="mb-12 text-center lg:mx-auto lg:max-w-[730px]">
           <span className="badge-fun badge-fun-gray mb-4 inline-block">{t("home.howitworks.badge")}</span>
-          <h2 className="text-heading-4 md:text-heading-3 font-medium mb-3 fun-text">{t("home.howitworks.title")}</h2>
+          <h2 className="text-heading-3 md:text-heading-2 font-medium mb-3 fun-text">{t("home.howitworks.title")}</h2>
           <p className="text-tagline-1 fun-text-muted">{t("home.howitworks.desc")}</p>
         </div>
 
@@ -273,7 +273,7 @@ function ServicesSection({ t }: { t: (k: string) => string }) {
       <div className="main-container">
         <div className="mb-12 text-center lg:max-w-[850px] lg:mx-auto">
           <span className="badge-fun badge-fun-gray mb-5 inline-block">{t("home.services.badge")}</span>
-          <h2 className="text-heading-4 md:text-heading-3 font-medium mb-3 fun-text">{t("home.services.title")}</h2>
+          <h2 className="text-heading-3 md:text-heading-2 font-medium mb-3 fun-text">{t("home.services.title")}</h2>
           <p className="text-tagline-1 fun-text-muted lg:max-w-[530px] lg:mx-auto">{t("home.services.desc")}</p>
         </div>
 
@@ -328,7 +328,7 @@ function TestimonialsSection({ t }: { t: (k: string) => string }) {
       <div className="main-container">
         <div className="text-center mb-14">
           <span className="badge-fun badge-fun-green mb-4 inline-block">{t("home.testimonials.badge")}</span>
-          <h2 className="text-heading-4 md:text-heading-3 font-medium xl:max-w-[906px] xl:mx-auto fun-text">
+          <h2 className="text-heading-3 md:text-heading-2 font-medium xl:max-w-[906px] xl:mx-auto fun-text">
             {t("home.testimonials.title")}
           </h2>
         </div>
@@ -383,7 +383,7 @@ function FAQSection({ t }: { t: (k: string) => string }) {
         <div className="main-container">
           <div className="text-center space-y-4 max-w-[720px] mx-auto mb-14">
             <span className="badge-fun badge-fun-white uppercase">{t("home.faq.badge")}</span>
-            <h2 className="text-heading-4 md:text-heading-3 font-medium fun-text">{t("home.faq.title")}</h2>
+            <h2 className="text-heading-3 md:text-heading-2 font-medium fun-text">{t("home.faq.title")}</h2>
             <p className="text-tagline-1 fun-text-muted">{t("home.faq.desc")}</p>
           </div>
 
@@ -422,7 +422,7 @@ function CTASection({ t }: { t: (k: string) => string }) {
       <div className="bg-[#12161F] max-w-[1880px] mx-auto rounded-3xl xl:rounded-[32px] py-20 md:py-28 px-5 relative overflow-hidden group">
         <div className="absolute inset-0 bg-gradient-to-br from-[#6C5CE7]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
         <div className="main-container text-center relative z-10">
-          <h2 className="text-heading-4 md:text-heading-3 lg:text-heading-2 font-medium text-white mb-4">
+          <h2 className="text-heading-3 md:text-heading-2 lg:text-heading-2 font-medium text-white mb-4">
             {t("home.cta.title")}
           </h2>
           <p className="text-tagline-1 text-white/60 max-w-[600px] mx-auto mb-10">
