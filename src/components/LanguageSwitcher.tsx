@@ -15,9 +15,12 @@ export default function LanguageSwitcher() {
   const langs: { code: Lang; label: string; flag: string }[] = [
     { code: "tr", label: "Türkçe", flag: "🇹🇷" },
     { code: "en", label: "English", flag: "🇬🇧" },
+    { code: "de", label: "Deutsch", flag: "🇩🇪" },
+    { code: "fr", label: "Français", flag: "🇫🇷" },
+    { code: "es", label: "Español", flag: "🇪🇸" },
   ];
 
-  const current = langs.find((l) => l.code === lang)!;
+  const current = langs.find((l) => l.code === lang) || langs[0];
 
   return (
     <div ref={ref} className="relative">
@@ -34,25 +37,25 @@ export default function LanguageSwitcher() {
         <span className="uppercase">{current.code}</span>
       </button>
       {open && (
-        <ul
-          role="listbox"
-          className="absolute right-0 top-full z-50 mt-2 w-36 overflow-hidden rounded-2xl border shadow-xl animate-scale-in origin-top-right"
+        <div
+          className="absolute right-0 top-full z-50 mt-2 w-[300px] overflow-hidden rounded-2xl border shadow-2xl animate-scale-in origin-top-right p-3"
           style={{ backgroundColor: "var(--fun-card)", borderColor: "var(--fun-stroke-1)" }}
         >
-          {langs.map((l) => (
-            <li key={l.code} role="option" aria-selected={l.code === lang}>
+          <div className="grid grid-cols-2 gap-2">
+            {langs.map((l) => (
               <button
+                key={l.code}
                 type="button"
                 onClick={() => { setLang(l.code); setOpen(false); }}
-                className={`flex w-full items-center gap-3 px-4 py-2.5 text-sm transition-colors hover:bg-[var(--fun-surface)] ${l.code === lang ? "font-semibold" : ""}`}
+                className={`flex items-center gap-2 px-3 py-2 text-sm rounded-xl transition-colors hover:bg-[var(--fun-surface)] ${l.code === lang ? "bg-[var(--fun-surface)] font-semibold" : ""}`}
                 style={{ color: "var(--fun-text)" }}
               >
-                <span aria-hidden="true">{l.flag}</span>
-                <span>{l.label}</span>
+                <span aria-hidden="true" className="text-base">{l.flag}</span>
+                <span className="truncate">{l.label}</span>
               </button>
-            </li>
-          ))}
-        </ul>
+            ))}
+          </div>
+        </div>
       )}
     </div>
   );

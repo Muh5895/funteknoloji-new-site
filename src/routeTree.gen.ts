@@ -14,10 +14,12 @@ import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as SitemapRouteImport } from './routes/sitemap'
 import { Route as ServicesRouteImport } from './routes/services'
 import { Route as PricingRouteImport } from './routes/pricing'
+import { Route as HelpRouteImport } from './routes/help'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as BlogRouteImport } from './routes/blog'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as BlogIdRouteImport } from './routes/blog.$id'
 
 const TeamRoute = TeamRouteImport.update({
   id: '/team',
@@ -44,6 +46,11 @@ const PricingRoute = PricingRouteImport.update({
   path: '/pricing',
   getParentRoute: () => rootRouteImport,
 } as any)
+const HelpRoute = HelpRouteImport.update({
+  id: '/help',
+  path: '/help',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
@@ -64,40 +71,51 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BlogIdRoute = BlogIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => BlogRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/blog': typeof BlogRoute
+  '/blog': typeof BlogRouteWithChildren
   '/contact': typeof ContactRoute
+  '/help': typeof HelpRoute
   '/pricing': typeof PricingRoute
   '/services': typeof ServicesRoute
   '/sitemap': typeof SitemapRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/team': typeof TeamRoute
+  '/blog/$id': typeof BlogIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/blog': typeof BlogRoute
+  '/blog': typeof BlogRouteWithChildren
   '/contact': typeof ContactRoute
+  '/help': typeof HelpRoute
   '/pricing': typeof PricingRoute
   '/services': typeof ServicesRoute
   '/sitemap': typeof SitemapRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/team': typeof TeamRoute
+  '/blog/$id': typeof BlogIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/blog': typeof BlogRoute
+  '/blog': typeof BlogRouteWithChildren
   '/contact': typeof ContactRoute
+  '/help': typeof HelpRoute
   '/pricing': typeof PricingRoute
   '/services': typeof ServicesRoute
   '/sitemap': typeof SitemapRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/team': typeof TeamRoute
+  '/blog/$id': typeof BlogIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -106,40 +124,47 @@ export interface FileRouteTypes {
     | '/about'
     | '/blog'
     | '/contact'
+    | '/help'
     | '/pricing'
     | '/services'
     | '/sitemap'
     | '/sitemap.xml'
     | '/team'
+    | '/blog/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about'
     | '/blog'
     | '/contact'
+    | '/help'
     | '/pricing'
     | '/services'
     | '/sitemap'
     | '/sitemap.xml'
     | '/team'
+    | '/blog/$id'
   id:
     | '__root__'
     | '/'
     | '/about'
     | '/blog'
     | '/contact'
+    | '/help'
     | '/pricing'
     | '/services'
     | '/sitemap'
     | '/sitemap.xml'
     | '/team'
+    | '/blog/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
-  BlogRoute: typeof BlogRoute
+  BlogRoute: typeof BlogRouteWithChildren
   ContactRoute: typeof ContactRoute
+  HelpRoute: typeof HelpRoute
   PricingRoute: typeof PricingRoute
   ServicesRoute: typeof ServicesRoute
   SitemapRoute: typeof SitemapRoute
@@ -184,6 +209,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PricingRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/help': {
+      id: '/help'
+      path: '/help'
+      fullPath: '/help'
+      preLoaderRoute: typeof HelpRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/contact': {
       id: '/contact'
       path: '/contact'
@@ -212,14 +244,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/blog/$id': {
+      id: '/blog/$id'
+      path: '/$id'
+      fullPath: '/blog/$id'
+      preLoaderRoute: typeof BlogIdRouteImport
+      parentRoute: typeof BlogRoute
+    }
   }
 }
+
+interface BlogRouteChildren {
+  BlogIdRoute: typeof BlogIdRoute
+}
+
+const BlogRouteChildren: BlogRouteChildren = {
+  BlogIdRoute: BlogIdRoute,
+}
+
+const BlogRouteWithChildren = BlogRoute._addFileChildren(BlogRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
-  BlogRoute: BlogRoute,
+  BlogRoute: BlogRouteWithChildren,
   ContactRoute: ContactRoute,
+  HelpRoute: HelpRoute,
   PricingRoute: PricingRoute,
   ServicesRoute: ServicesRoute,
   SitemapRoute: SitemapRoute,
@@ -229,3 +279,12 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { createStart } from '@tanstack/react-start'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+  }
+}

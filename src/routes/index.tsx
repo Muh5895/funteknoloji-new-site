@@ -1,6 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ArrowButton from "../components/ArrowButton";
+import { useLang } from "../lib/i18n";
+import { getTestimonialsFn, getFaqsFn } from "../lib/supabase-server";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -327,14 +329,38 @@ function CaseStudySection() {
 
 /* ============ TESTIMONIALS ============ */
 function TestimonialsSection() {
-  const testimonials = [
-    { name: "Darrell Steward", text: "Küçük bir işletme sahibi olarak, hizmetiniz nakit akışını yönetmede ve finansal stratejileri optimize etmede hayat kurtarıcı oldu. Beklentilerimi gerçekten aştı." },
-    { name: "Sarah Johnson", text: "Ses kopyalama özelliği kesinlikle inanılmaz! İçeriğim için saatler yerine dakikalar içinde profesyonel seslendirmeler oluşturabildim." },
-    { name: "Michael Chen", text: "Bu teknoloji podcast üretimimizde devrim yarattı. Kalite o kadar gerçekçi ki, dinleyicilerimiz orijinal kayıtlarımızdan farkı anlayamıyor." },
-    { name: "Emma Rodriguez", text: "Bir dil öğretmeni olarak bu araç, birden fazla dilde telaffuz örnekleri oluşturmak için paha biçilemez oldu. Öğrencilerim doğal sesli sesleri seviyor!" },
-    { name: "David Kim", text: "Ses üretiminin doğruluğu ve hızı akıllara durgunluk verici. Olağanüstü kalite standartlarını korurken ses üretim süremizi %80 azalttık." },
-    { name: "Lisa Thompson", text: "Bu platform sesli kitap oluşturma şeklimizi dönüştürdü. Ses sentezi o kadar doğal ve etkileyici ki, dinleyicilerimiz tüm deneyim boyunca tamamen bağlı kalıyor." },
-  ];
+  const { t } = useLang();
+  const [testimonials, setTestimonials] = useState<any[]>([]);
+
+  useEffect(() => {
+    const fetchTestimonials = async () => {
+        try {
+            const data = await getTestimonialsFn();
+            if (data && data.length > 0) {
+                setTestimonials(data);
+            } else {
+                setTestimonials([
+                    { name: t("home.testimonials.t1.name"), text: t("home.testimonials.t1.text") },
+                    { name: t("home.testimonials.t2.name"), text: t("home.testimonials.t2.text") },
+                    { name: t("home.testimonials.t3.name"), text: t("home.testimonials.t3.text") },
+                    { name: t("home.testimonials.t4.name"), text: t("home.testimonials.t4.text") },
+                    { name: t("home.testimonials.t5.name"), text: t("home.testimonials.t5.text") },
+                    { name: t("home.testimonials.t6.name"), text: t("home.testimonials.t6.text") },
+                ]);
+            }
+        } catch (err) {
+            setTestimonials([
+                { name: t("home.testimonials.t1.name"), text: t("home.testimonials.t1.text") },
+                { name: t("home.testimonials.t2.name"), text: t("home.testimonials.t2.text") },
+                { name: t("home.testimonials.t3.name"), text: t("home.testimonials.t3.text") },
+                { name: t("home.testimonials.t4.name"), text: t("home.testimonials.t4.text") },
+                { name: t("home.testimonials.t5.name"), text: t("home.testimonials.t5.text") },
+                { name: t("home.testimonials.t6.name"), text: t("home.testimonials.t6.text") },
+            ]);
+        }
+    };
+    fetchTestimonials();
+  }, [t]);
 
   const colors = ["from-[#F4F8E7] to-[#D485FF]", "from-[#E8F4FD] to-[#4A90E2]", "from-[#FFE8E8] to-[#FF6B6B]", "from-[#F0E6FF] to-[#8B5CF6]", "from-[#E6F7FF] to-[#1890FF]", "from-[#FFF7E6] to-[#FF8C00]"];
 
@@ -342,9 +368,9 @@ function TestimonialsSection() {
     <section className="py-16 md:py-24">
       <div className="main-container">
         <div className="text-center mb-14">
-          <span className="badge-fun badge-fun-green mb-4 inline-block">Yorumlar</span>
+          <span className="badge-fun badge-fun-green mb-4 inline-block">{t("nav.services")}</span>
           <h2 className="text-heading-4 md:text-heading-3 font-medium xl:max-w-[906px] xl:mx-auto fun-text">
-            Kullanıcı hikayeleri: İnsanların neden Fun Teknoloji'yi sevdiğini keşfedin!
+            {t("home.testimonials.title")}
           </h2>
         </div>
 
@@ -380,25 +406,50 @@ function TestimonialsSection() {
 
 /* ============ FAQ ============ */
 function FAQSection() {
+  const { t } = useLang();
   const [openIndex, setOpenIndex] = useState<number | null>(0);
-  const faqs = [
-    { q: "Fun Teknoloji nedir?", a: "Fun Teknoloji, yapay zeka ve modern teknolojileri kullanarak işletmelere ve bireylere değer katan yenilikçi çözümler sunan bir teknoloji şirketidir." },
-    { q: "Fun Teknoloji'yi kullanmak için ne yapmam gerekiyor?", a: "Platformumuza kayıt olarak hemen kullanmaya başlayabilirsiniz. Detaylı bilgi için iletişim sayfamızdan bize ulaşabilirsiniz." },
-    { q: "Fun Teknoloji hangi hizmetleri sunacak?", a: "Yapay zeka çözümleri, web ve mobil uygulama geliştirme, bulut altyapı, veri analitiği, siber güvenlik ve dijital pazarlama hizmetleri sunmaktayız." },
-    { q: "Verilerim güvende mi?", a: "Evet, gelişmiş şifreleme ve güvenlik protokolleri ile tüm verileriniz en yüksek güvenlik standartlarında korunmaktadır." },
-    { q: "Platform ücretsiz mi?", a: "Temel özellikler ücretsizdir. Gelişmiş özellikler için uygun fiyatlı planlarımızı inceleyebilirsiniz." },
-    { q: "Hangi cihazlardan erişebilirim?", a: "Web tarayıcısı olan tüm cihazlardan (bilgisayar, tablet, telefon) platformumuza erişebilirsiniz." },
-    { q: "Nasıl iletişime geçebilirim?", a: "İletişim sayfamızdaki formu doldurarak, e-posta veya sosyal medya hesaplarımız üzerinden bize ulaşabilirsiniz." },
-  ];
+  const [faqs, setFaqs] = useState<any[]>([]);
+
+  useEffect(() => {
+    const fetchFaqs = async () => {
+        try {
+            const data = await getFaqsFn();
+            if (data && data.length > 0) {
+                setFaqs(data.map(item => ({ q: item.question || item.q, a: item.answer || item.a })));
+            } else {
+                setFaqs([
+                    { q: t("home.faq.q1"), a: t("home.faq.a1") },
+                    { q: t("home.faq.q2"), a: t("home.faq.a2") },
+                    { q: t("home.faq.q3"), a: t("home.faq.a3") },
+                    { q: t("home.faq.q4"), a: t("home.faq.a4") },
+                    { q: t("home.faq.q5"), a: t("home.faq.a5") },
+                    { q: t("home.faq.q6"), a: t("home.faq.a6") },
+                    { q: t("home.faq.q7"), a: t("home.faq.a7") },
+                ]);
+            }
+        } catch (err) {
+            setFaqs([
+                { q: t("home.faq.q1"), a: t("home.faq.a1") },
+                { q: t("home.faq.q2"), a: t("home.faq.a2") },
+                { q: t("home.faq.q3"), a: t("home.faq.a3") },
+                { q: t("home.faq.q4"), a: t("home.faq.a4") },
+                { q: t("home.faq.q5"), a: t("home.faq.a5") },
+                { q: t("home.faq.q6"), a: t("home.faq.a6") },
+                { q: t("home.faq.q7"), a: t("home.faq.a7") },
+            ]);
+        }
+    };
+    fetchFaqs();
+  }, [t]);
 
   return (
     <section className="px-4 lg:px-5">
       <div className="max-w-[1880px] mx-auto py-20 md:py-28 rounded-2xl md:rounded-[32px]" style={{ backgroundColor: 'var(--fun-surface)' }}>
         <div className="main-container">
           <div className="text-center space-y-4 max-w-[720px] mx-auto mb-14">
-            <span className="badge-fun badge-fun-white uppercase">SSS</span>
-            <h2 className="text-heading-4 md:text-heading-3 font-medium fun-text">Sıkça Sorulan Sorular</h2>
-            <p className="text-tagline-1 fun-text-muted">Sorularınız mı var? Yardımcı olmak için buradayız!</p>
+            <span className="badge-fun badge-fun-white uppercase">{t("nav.faq")}</span>
+            <h2 className="text-heading-4 md:text-heading-3 font-medium fun-text">{t("home.faq.title")}</h2>
+            <p className="text-tagline-1 fun-text-muted">{t("home.faq.subtitle")}</p>
           </div>
 
           <div className="max-w-[770px] mx-auto space-y-4">
