@@ -24,14 +24,28 @@ export default function IntroSplash() {
 
   const finish = () => {
     setFading(true);
-    setTimeout(() => setShow(false), 600);
+    setTimeout(() => {
+        setShow(false);
+        document.body.style.overflow = "";
+    }, 600);
   };
 
   useEffect(() => {
     if (!show) return;
     const v = videoRef.current;
     if (!v) return;
-    v.play().catch(() => finish());
+
+    const playVideo = async () => {
+        try {
+            await v.play();
+        } catch (err) {
+            console.error("Video play failed:", err);
+            finish();
+        }
+    };
+
+    playVideo();
+
     // safety: max 10s
     const t = setTimeout(finish, 10000);
     return () => clearTimeout(t);
@@ -55,17 +69,13 @@ export default function IntroSplash() {
         disableRemotePlayback
         controlsList="nodownload noremoteplayback nofullscreen noplaybackrate"
         onEnded={finish}
-        onError={finish}
+        onError={(e) => {
+            console.error("Video error:", e);
+            finish();
+        }}
         onContextMenu={(e) => e.preventDefault()}
         className="h-full w-full object-cover pointer-events-none select-none"
       />
-      <button
-        onClick={finish}
-        aria-label="Tanıtım videosunu atla"
-        className="absolute bottom-6 right-6 rounded-full bg-white/10 px-5 py-2 text-sm text-white backdrop-blur-md transition hover:bg-white/20"
-      >
-        Atla →
-      </button>
     </div>
   );
 }
