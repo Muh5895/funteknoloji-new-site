@@ -46,7 +46,7 @@ function ChangelogPage() {
         <ScrollReveal>
           <header className="mb-20 text-center">
             <span className="badge-fun badge-fun-purple mb-4 inline-block">{t("nav.changelog")}</span>
-            <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold fun-text mb-4 uppercase">{t("nav.changelog")}</h1>
+            <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold fun-text mb-4 capitalize">{t("nav.changelog")}</h1>
             <p className="fun-text-muted text-lg max-w-[700px] mx-auto">{t("nav.changelog.desc")}</p>
           </header>
         </ScrollReveal>

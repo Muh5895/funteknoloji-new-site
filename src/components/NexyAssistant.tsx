@@ -46,12 +46,15 @@ export default function NexyAssistant() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setVisible(true);
-      if (!isOpen) {
-        setMessageKey(t("nexy.msg1"));
-      }
     }, 2000);
     return () => clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    if (!isOpen && visible) {
+      setMessageKey(t("nexy.msg1"));
+    }
+  }, [lang, isOpen, visible, t]);
 
   const typingIntervalRef = useRef<number | null>(null);
 

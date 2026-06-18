@@ -198,7 +198,9 @@ function Dropdown({ id, label, open, onOpen, children }: { id: string; label: st
         <div className="absolute left-1/2 top-full z-50 -translate-x-1/2 pt-4">
           <div
             role="menu"
-            className="w-[320px] rounded-2xl border p-3 shadow-2xl animate-in fade-in zoom-in-95 duration-200 origin-top"
+            className={`gap-2 rounded-2xl border p-3 shadow-2xl animate-in fade-in zoom-in-95 duration-200 origin-top ${
+              (children as any[]).length > 3 ? "grid grid-cols-2 w-[600px]" : "flex flex-col w-[320px]"
+            }`}
             style={{ backgroundColor: "var(--fun-card)", borderColor: "var(--fun-stroke-1)" }}
           >
             {children}
