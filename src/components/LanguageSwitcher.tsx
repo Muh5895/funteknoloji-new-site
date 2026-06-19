@@ -37,33 +37,32 @@ export default function LanguageSwitcher() {
         aria-label={t("lang.label")}
         aria-haspopup="listbox"
         aria-expanded={open}
-        className="flex h-10 items-center gap-2 rounded-full border px-2.5 text-sm font-medium transition-all hover:bg-[var(--fun-surface)]"
+        className="flex h-10 items-center gap-2 rounded-full border px-3 text-sm font-medium transition-all hover:bg-[var(--fun-surface)]"
         style={{ borderColor: "var(--fun-stroke-1)", color: "var(--fun-text)" }}
       >
         <div className="w-5 h-5 rounded-full overflow-hidden border border-[var(--fun-stroke-1)] flex items-center justify-center bg-muted">
           <img src={current.flagUrl} alt="" className="h-full w-full object-cover shrink-0" />
         </div>
-        <span className="uppercase font-bold tracking-tight">{current.code}</span>
+        <span className="font-bold tracking-tight">{current.label}</span>
       </button>
       {open && (
         <div
-          className="absolute right-0 top-full z-50 mt-2 w-[400px] overflow-hidden rounded-2xl border shadow-xl animate-scale-in origin-top-right p-2"
+          className="absolute right-0 top-full z-50 mt-2 w-[280px] sm:w-[500px] overflow-hidden rounded-2xl border shadow-2xl animate-scale-in origin-top-right p-2 backdrop-blur-xl"
           style={{ backgroundColor: "var(--fun-card)", borderColor: "var(--fun-stroke-1)" }}
         >
-          <div className="grid grid-cols-3 gap-1">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-1">
             {langs.map((l) => (
               <button
                 key={l.code}
                 type="button"
                 onClick={() => { setLang(l.code); setOpen(false); }}
-                className={`flex flex-col items-center justify-center gap-1.5 p-2 rounded-xl transition-all hover:bg-[var(--fun-surface)] ${l.code === lang ? "bg-[var(--fun-surface)] border border-[var(--fun-purple)]/20" : ""}`}
+                className={`flex items-center gap-3 p-3 rounded-xl transition-all hover:bg-[var(--fun-surface)] ${l.code === lang ? "bg-[var(--fun-purple)]/5 border border-[var(--fun-purple)]/20" : ""}`}
                 style={{ color: "var(--fun-text)" }}
               >
-                <div className="w-8 h-8 rounded-full overflow-hidden border border-[var(--fun-stroke-1)] flex items-center justify-center bg-muted shadow-sm">
+                <div className="w-6 h-6 rounded-full overflow-hidden border border-[var(--fun-stroke-1)] flex items-center justify-center bg-muted shadow-sm">
                   <img src={l.flagUrl} alt="" className="h-full w-full object-cover" />
                 </div>
-                <span className={`text-[10px] uppercase font-bold tracking-wider ${l.code === lang ? "text-[var(--fun-purple)]" : "opacity-60"}`}>{l.code}</span>
-                <span className="text-[11px] truncate w-full text-center">{l.label}</span>
+                <span className={`text-sm font-medium ${l.code === lang ? "text-[var(--fun-purple)] font-bold" : "opacity-80"}`}>{l.label}</span>
               </button>
             ))}
           </div>

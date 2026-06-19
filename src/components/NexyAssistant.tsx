@@ -13,7 +13,7 @@ import {
 
 export default function NexyAssistant() {
   const { t, lang } = useLang();
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
   const [showPopup, setShowPopup] = useState(true);
