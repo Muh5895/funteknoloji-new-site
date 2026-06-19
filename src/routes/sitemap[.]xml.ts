@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import type {} from "@tanstack/react-start";
 
-const BASE_URL = "https://build-dream-flow-91.lovable.app";
+const BASE_URL = "https://funteknoloji.com";
 
 const entries = [
   { path: "/", changefreq: "weekly", priority: "1.0" },
@@ -9,7 +9,10 @@ const entries = [
   { path: "/services", changefreq: "monthly", priority: "0.9" },
   { path: "/pricing", changefreq: "monthly", priority: "0.8" },
   { path: "/team", changefreq: "monthly", priority: "0.6" },
+  { path: "/reviews", changefreq: "monthly", priority: "0.7" },
   { path: "/blog", changefreq: "weekly", priority: "0.7" },
+  { path: "/changelog", changefreq: "monthly", priority: "0.5" },
+  { path: "/brand-kit", changefreq: "monthly", priority: "0.5" },
   { path: "/contact", changefreq: "yearly", priority: "0.7" },
   { path: "/sitemap", changefreq: "monthly", priority: "0.3" },
 ];
