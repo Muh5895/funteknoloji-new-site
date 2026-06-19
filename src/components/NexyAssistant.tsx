@@ -16,45 +16,14 @@ export default function NexyAssistant() {
   const [visible, setVisible] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
-  const [messageKey, setMessageKey] = useState("");
+  const [showPopup, setShowPopup] = useState(true);
   const [isTyping, setIsTyping] = useState(false);
   const [isThinking, setIsThinking] = useState(false);
   const [chatMessages, setChatMessages] = useState<{ role: 'nexy' | 'user', text: string, displayedText?: string }[]>([]);
   const [userInput, setUserInput] = useState("");
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const saved = localStorage.getItem("nexy_chat");
-    if (saved) {
-      try {
-        const parsed = JSON.parse(saved);
-        // Ensure displayedText matches text for historical messages
-        setChatMessages(parsed.map((m: any) => ({ ...m, displayedText: m.text })));
-      } catch (e) {}
-    }
-  }, []);
 
-  useEffect(() => {
-    if (chatMessages.length > 0) {
-      localStorage.setItem("nexy_chat", JSON.stringify(chatMessages.map(({ role, text }) => ({ role, text }))));
-    }
-    if (scrollRef.current) {
-      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
-    }
-  }, [chatMessages]);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setVisible(true);
-    }, 2000);
-    return () => clearTimeout(timer);
-  }, []);
-
-  useEffect(() => {
-    if (!isOpen && visible) {
-      setMessageKey(t("nexy.msg1"));
-    }
-  }, [lang, isOpen, visible, t]);
 
   const typingIntervalRef = useRef<number | null>(null);
 
@@ -85,7 +54,7 @@ export default function NexyAssistant() {
 
   const toggleChat = () => {
     setIsOpen(!isOpen);
-    setMessageKey("");
+    setShowPopup(false);
     if (!isOpen && chatMessages.length === 0) {
       const initialText = t("nexy.msg1");
       setChatMessages([{ role: 'nexy', text: initialText, displayedText: "" }]);
@@ -228,9 +197,9 @@ export default function NexyAssistant() {
   return (
     <div className="fixed bottom-6 right-6 z-[100] flex flex-col items-end gap-4 animate-in slide-in-from-right-10 duration-500">
       {/* Pop-up message when closed */}
-      {!isOpen && !isMinimized && (
+      {!isOpen && !isMinimized && showPopup && (
         <div className="relative max-w-[250px] rounded-2xl bg-[var(--fun-card)] border border-[var(--fun-stroke-1)] p-4 shadow-2xl">
-          <button onClick={() => setMessageKey("")} className="absolute -top-2 -right-2 h-6 w-6 rounded-full bg-[var(--fun-surface)] border border-[var(--fun-stroke-1)] flex items-center justify-center text-xs fun-text hover:bg-[var(--fun-stroke-1)] transition-colors">✕</button>
+          <button onClick={() => setShowPopup(false)} className="absolute -top-2 -right-2 h-6 w-6 rounded-full bg-[var(--fun-surface)] border border-[var(--fun-stroke-1)] flex items-center justify-center text-xs fun-text hover:bg-[var(--fun-stroke-1)] transition-colors">✕</button>
           <p className="text-sm fun-text leading-relaxed">{t("help.popup")}</p>
           <div className="absolute -bottom-2 right-6 h-4 w-4 rotate-45 bg-[var(--fun-card)] border-r border-b border-[var(--fun-stroke-1)]" />
         </div>

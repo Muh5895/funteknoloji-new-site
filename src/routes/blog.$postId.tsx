@@ -52,7 +52,7 @@ function PostPage() {
     else setContentLoading(true);
 
     try {
-      const data = await getBlogPost({ data: postId });
+      const data = await getBlogPost(postId);
 
       if (data) {
         let title = data[`title_${lang}`] || data.title || data.heading;
@@ -60,8 +60,8 @@ function PostPage() {
 
         // Real-time Translation Fallback
         if (lang !== 'tr' && !data[`title_${lang}`] && !data[`text_${lang}`]) {
-            title = await translateText({ data: { text: data.title || data.heading, targetLang: lang } });
-            text = await translateText({ data: { text: data.text || data.content || data.description, targetLang: lang } });
+            title = await translateText({ text: data.title || data.heading, targetLang: lang });
+            text = await translateText({ text: data.text || data.content || data.description, targetLang: lang });
         }
 
         const formatted = {

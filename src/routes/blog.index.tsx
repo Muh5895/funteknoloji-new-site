@@ -36,8 +36,8 @@ function BlogPage() {
             let description = p[`description_${lang}`] || p.description || p.summary || p.text?.substring(0, 150) || p.content?.substring(0, 150) || "";
 
             if (lang !== 'tr' && !p[`title_${lang}`]) {
-              title = await translateText({ data: { text: title, targetLang: lang } });
-              description = await translateText({ data: { text: description, targetLang: lang } });
+              title = await translateText({ text: title, targetLang: lang });
+              description = await translateText({ text: description, targetLang: lang });
             }
 
             return {

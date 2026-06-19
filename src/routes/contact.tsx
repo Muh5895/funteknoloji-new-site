@@ -94,7 +94,7 @@ function ContactPage() {
 
     setLoading(true);
     try {
-      await submitContactForm({ data: formData });
+      await submitContactForm(formData);
       toast.success(t("contact.form.success").replace(" ✅", ""));
       setFormData({ name: "", email: "", subject: "", message: "" });
       setShowCaptcha(false);
