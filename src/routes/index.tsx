@@ -1,79 +1,89 @@
+import ScrollReveal from "../components/ScrollReveal";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import ArrowButton from "../components/ArrowButton";
 import { useLang } from "../lib/i18n";
-import { getTestimonialsFn, getFaqsFn } from "../lib/supabase-server";
+import CountUp from "../components/CountUp";
+import {
+  Cpu,
+  Smartphone,
+  ShieldCheck,
+  Zap,
+  Globe,
+  Code2,
+  Database,
+  Search,
+  HeartHandshake
+} from "lucide-react";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Fun Teknoloji – Geleceği Bugün Keşfedin" },
-      { name: "description", content: "Yapay zeka, yazılım geliştirme ve akıllı sistemler alanında öncü çözümlerle işinizi dijital dönüşümün merkezine taşıyoruz." },
-      { property: "og:title", content: "Fun Teknoloji – Geleceği Bugün Keşfedin" },
-      { property: "og:description", content: "Yapay zeka, yazılım geliştirme ve akıllı sistemler alanında öncü çözümlerle işinizi dijital dönüşümün merkezine taşıyoruz." },
-      { property: "og:url", content: "https://build-dream-flow-91.lovable.app/" },
+      { title: "Fun Teknoloji" },
+      { name: "description", content: "AI & Software Solutions" },
+      { property: "og:title", content: "Fun Teknoloji" },
+      { property: "og:description", content: "AI & Software Solutions" },
+      { property: "og:url", content: "https://funteknoloji.com/" },
       { property: "og:type", content: "website" },
-      { name: "twitter:title", content: "Fun Teknoloji – Geleceği Bugün Keşfedin" },
-      { name: "twitter:description", content: "Yapay zeka, yazılım geliştirme ve akıllı sistemler alanında öncü çözümlerle işinizi dijital dönüşümün merkezine taşıyoruz." },
+      { name: "twitter:title", content: "Fun Teknoloji" },
+      { name: "twitter:description", content: "AI & Software Solutions" },
     ],
-    links: [{ rel: "canonical", href: "https://build-dream-flow-91.lovable.app/" }],
+    links: [{ rel: "canonical", href: "https://funteknoloji.com/" }],
   }),
   component: Index,
 });
 
 function Index() {
+  const { t } = useLang();
   return (
     <main className="space-y-0">
-      <HeroSection />
-      <LogoMarquee />
-      <WhatWeDoSection />
-      <FeaturesSection />
-      <HowItWorksSection />
-      <ServicesSection />
-      <CaseStudySection />
-      <TestimonialsSection />
-      <FAQSection />
-      <CTASection />
+      <HeroSection t={t} />
+      <ScrollReveal><StatsSection t={t} /></ScrollReveal>
+      <ScrollReveal><WhatWeDoSection t={t} /></ScrollReveal>
+      <ScrollReveal><FeaturesSection t={t} /></ScrollReveal>
+      <ScrollReveal><HowItWorksSection t={t} /></ScrollReveal>
+      <ScrollReveal><ServicesSection t={t} /></ScrollReveal>
+      <ScrollReveal><TestimonialsSection t={t} /></ScrollReveal>
+      <ScrollReveal><FAQSection t={t} /></ScrollReveal>
+      <ScrollReveal><CTASection t={t} /></ScrollReveal>
     </main>
   );
 }
 
 /* ============ HERO ============ */
-function HeroSection() {
+function HeroSection({ t }: { t: (k: string) => string }) {
   return (
     <section className="pt-28 px-4 lg:px-5">
-      <div className="max-w-[1880px] mx-auto relative pt-20 md:pt-32 border overflow-hidden rounded-3xl xl:rounded-[32px]" style={{ backgroundColor: 'var(--fun-surface)', borderColor: 'var(--fun-stroke-1)' }}>
+      <div className="max-w-[1880px] mx-auto relative pt-20 md:pt-32 border overflow-hidden rounded-3xl xl:rounded-[32px] animate-in fade-in slide-in-from-bottom-8 duration-1000" style={{ backgroundColor: 'var(--fun-surface)', borderColor: 'var(--fun-stroke-1)' }}>
+        {/* Background Gradient */}
+        <div className="absolute inset-0 z-0 opacity-50 dark:opacity-40 pointer-events-none flex items-center justify-center">
+          <div className="absolute top-[-10%] left-[-10%] w-[60%] h-[60%] rounded-full blur-[60px] md:blur-[140px] bg-[radial-gradient(circle,rgba(108,92,231,0.4)_0%,transparent_70%)] animate-pulse duration-[4000ms]" />
+          <div className="absolute bottom-[-10%] right-[-10%] w-[60%] h-[60%] rounded-full blur-[60px] md:blur-[140px] bg-[radial-gradient(circle,rgba(134,79,254,0.4)_0%,transparent_70%)] animate-pulse duration-[6000ms]" />
+          {/* Mobile specific glow - more vivid */}
+          <div className="absolute md:hidden inset-0 bg-[radial-gradient(circle_at_50%_30%,rgba(108,92,231,0.25)_0%,transparent_60%)]" />
+          <div className="absolute md:hidden inset-0 bg-gradient-to-b from-[var(--fun-purple)]/10 via-transparent to-transparent" />
+        </div>
+
         <div className="hidden md:block absolute w-full h-full top-0 left-0 z-10">
           <div className="absolute left-[7%] 2xl:left-[16%] w-px h-full top-0" style={{ backgroundColor: 'var(--fun-stroke-1)' }} />
           <div className="absolute right-[7%] 2xl:right-[16%] w-px h-full top-0" style={{ backgroundColor: 'var(--fun-stroke-1)' }} />
           <div className="absolute w-full h-px top-[43%]" style={{ backgroundColor: 'var(--fun-stroke-1)' }} />
         </div>
 
-        <div className="main-container relative z-30">
-          <div className="text-center mb-12 lg:mb-24">
-            <span className="badge-fun badge-fun-gray mb-4 inline-block text-xs tracking-wider">Türkiye'nin Yenilikçi Teknoloji Şirketi</span>
-            <h1 className="text-heading-3 md:text-heading-2 lg:text-heading-1 font-medium mb-4 fun-text">
-              Geleceğin Teknolojileri <br className="hidden md:block" />
-              Bugün Bizimle
+        <div className="main-container relative z-30 flex flex-col items-center justify-center min-h-[60vh] text-center">
+          <div className="mb-12 lg:mb-24 w-full">
+            <span className="badge-fun badge-fun-gray mb-6 inline-block text-xs tracking-wider animate-in fade-in zoom-in duration-700 delay-100 fill-mode-both">{t("home.hero.badge")}</span>
+            <h1 className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-bold mb-8 tracking-tight animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-300 fill-mode-both leading-[1.1]">
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#12161F] via-[#2A2E38] to-[#40444F] dark:from-white dark:via-white/90 dark:to-white/50">
+                {t("home.hero.title")}
+              </span>
             </h1>
-            <p className="max-w-[750px] mx-auto mb-8 md:mb-14 text-tagline-1 fun-text-muted">
-              Yapay zeka, yazılım geliştirme ve akıllı sistemler alanında öncü çözümlerle işinizi
-              dijital dönüşümün merkezine taşıyoruz.
+            <p className="max-w-[950px] mx-auto mb-10 md:mb-16 text-xl md:text-2xl lg:text-3xl fun-text-muted leading-relaxed animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-500 fill-mode-both">
+              {t("home.hero.desc")}
             </p>
-            <div className="flex md:flex-row flex-col gap-3 items-center justify-center">
-              <ArrowButton to="/services" variant="dark">Keşfet</ArrowButton>
-              <ArrowButton to="/contact" variant="light">Başlayın</ArrowButton>
-            </div>
-          </div>
-
-          <div className="max-w-[1016px] mx-auto -mb-1">
-            <div className="rounded-t-2xl aspect-[16/10] flex items-center justify-center" style={{ background: 'linear-gradient(to bottom, var(--fun-stroke-2), var(--fun-surface))' }}>
-              <div className="text-center">
-                <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-2xl shadow-lg" style={{ backgroundColor: 'var(--fun-card)' }}>
-                  <span className="text-3xl font-bold fun-text">F</span>
-                </div>
-                <p className="text-sm fun-text-muted">Fun Teknoloji Platform</p>
-              </div>
+            <div className="flex md:flex-row flex-col gap-5 items-center justify-center animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-700 fill-mode-both">
+              <ArrowButton to="/services" variant="dark" className="w-full md:w-auto h-16 px-8 text-xl font-medium shadow-2xl shadow-indigo-500/20">{t("home.hero.explore")}</ArrowButton>
+              <ArrowButton href="https://waitlist.funteknoloji.com" variant="light" className="w-full md:w-auto h-16 px-8 text-xl font-medium border-2">{t("home.hero.start")}</ArrowButton>
             </div>
           </div>
         </div>
@@ -82,23 +92,28 @@ function HeroSection() {
   );
 }
 
-/* ============ LOGO MARQUEE ============ */
-function LogoMarquee() {
-  const logos = ["TechCorp", "InnovateLab", "DataFlow", "CloudNine", "SmartSys"];
+/* ============ STATS SECTION ============ */
+function StatsSection({ t }: { t: (k: string) => string }) {
   return (
-    <section className="py-10 overflow-hidden">
-      <div className="relative">
-        <div className="absolute left-0 top-0 h-full w-[15%] z-10" style={{ background: 'linear-gradient(to right, var(--color-background), transparent)' }} />
-        <div className="absolute right-0 top-0 h-full w-[15%] z-10" style={{ background: 'linear-gradient(to left, var(--color-background), transparent)' }} />
-        <div className="flex animate-marquee items-center gap-16 py-6">
-          {[...logos, ...logos].map((logo, i) => (
-            <div key={i} className="min-w-[180px] flex items-center justify-center">
-              <div className="flex items-center gap-2 opacity-40">
-                <div className="h-8 w-8 rounded-lg" style={{ backgroundColor: 'var(--fun-stroke-1)' }} />
-                <span className="text-lg font-semibold fun-text-muted">{logo}</span>
-              </div>
-            </div>
-          ))}
+    <section className="py-20 border-y px-4 lg:px-0" style={{ borderColor: 'var(--fun-stroke-1)' }}>
+      <div className="main-container">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+          <div>
+            <div className="text-4xl md:text-5xl font-bold fun-text mb-2">10+</div>
+            <div className="text-sm fun-text-muted uppercase tracking-wider">{t("home.stats.users")}</div>
+          </div>
+          <div>
+            <div className="text-4xl md:text-5xl font-bold fun-text mb-2"><CountUp end={150} />+</div>
+            <div className="text-sm fun-text-muted uppercase tracking-wider">{t("home.stats.projects")}</div>
+          </div>
+          <div>
+            <div className="text-4xl md:text-5xl font-bold fun-text mb-2"><CountUp end={1} /></div>
+            <div className="text-sm fun-text-muted uppercase tracking-wider">{t("home.stats.team")}</div>
+          </div>
+          <div>
+            <div className="text-4xl md:text-5xl font-bold fun-text mb-2"><CountUp end={24} />/7</div>
+            <div className="text-sm fun-text-muted uppercase tracking-wider">{t("home.stats.support")}</div>
+          </div>
         </div>
       </div>
     </section>
@@ -106,13 +121,13 @@ function LogoMarquee() {
 }
 
 /* ============ WHAT WE DO ============ */
-function WhatWeDoSection() {
+function WhatWeDoSection({ t }: { t: (k: string) => string }) {
   return (
     <section className="px-4 lg:px-5">
       <div className="bg-[#12161F] max-w-[1880px] rounded-3xl xl:rounded-[32px] px-5 mx-auto">
         <div className="max-w-[1400px] mx-auto py-20 lg:py-32 xl:py-40">
           <h2 className="text-center text-white font-light text-heading-4 sm:text-heading-3 md:text-heading-2 lg:text-heading-1 leading-[1.3]">
-            İşletmelerin etkileşimi artırmak, dönüşümleri yükseltmek ve büyümede yeni zirvelere ulaşmak için yapay zeka destekli pazarlama çözümlerinden yararlanmalarına yardımcı oluyoruz.
+            {t("home.whatwedo.text")}
           </h2>
         </div>
       </div>
@@ -121,63 +136,65 @@ function WhatWeDoSection() {
 }
 
 /* ============ FEATURES ============ */
-function FeaturesSection() {
+function FeaturesSection({ t }: { t: (k: string) => string }) {
+
   return (
     <section className="px-4 lg:px-5 mt-10">
       <div className="mx-auto max-w-[1880px] rounded-3xl py-20 lg:py-32" style={{ backgroundColor: 'var(--fun-surface)' }}>
         <div className="main-container">
           <div className="mb-12 space-y-4 text-center lg:mx-auto lg:max-w-[740px]">
-            <span className="badge-fun badge-fun-white">Özellikler</span>
-            <h2 className="text-heading-4 md:text-heading-3 font-medium fun-text">
-              Güçlü Özelliklerle Daha Akıllıca Çalışın
+            <span className="badge-fun badge-fun-white">{t("home.features.badge")}</span>
+            <h2 className="text-heading-3 md:text-heading-2 font-medium fun-text">
+              {t("home.features.title")}
             </h2>
             <p className="text-tagline-1 fun-text-muted">
-              Fun Teknoloji ile işlerinizi daha hızlı, güvenli ve verimli yönetin. Modern çözümlerimiz her platformda sorunsuz çalışır.
+              {t("home.features.desc")}
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="relative min-h-[450px] md:min-h-[600px] overflow-hidden rounded-[20px] p-8 lg:p-10" style={{ backgroundColor: 'var(--fun-card)' }}>
-              <div className="absolute bottom-0 left-0 z-10 h-[300px] w-full" style={{ background: `linear-gradient(to top, var(--fun-card), transparent)` }} />
-              <div className="absolute bottom-8 left-8 z-20 max-w-[450px]">
-                <h3 className="text-heading-5 font-medium mb-2 fun-text">Geleceğe Hazır Çözümler</h3>
-                <p className="text-tagline-1 fun-text-muted">İşlerinizi hızlandıran ve verimliliği artıran yapay zeka ve otomasyon teknolojileri.</p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="rounded-[32px] p-8 md:p-10 relative overflow-hidden group border border-[var(--fun-stroke-1)] hover:border-[var(--fun-purple)] transition-all duration-500" style={{ backgroundColor: 'var(--fun-card)' }}>
+              <div className="absolute top-0 right-0 p-10 opacity-5 group-hover:opacity-10 group-hover:scale-110 transition-all duration-700">
+                <Cpu className="h-40 w-40" />
               </div>
-              <div className="absolute right-0 top-10 w-[80%] h-[60%] rounded-2xl" style={{ background: 'linear-gradient(135deg, var(--fun-green), var(--fun-surface))' }} />
+              <div className="h-16 w-16 rounded-2xl bg-[var(--fun-purple)]/10 flex items-center justify-center text-[var(--fun-purple)] mb-8 group-hover:bg-[var(--fun-purple)] group-hover:text-white transition-colors duration-500">
+                <Cpu className="h-8 w-8" />
+              </div>
+              <h3 className="text-2xl font-bold mb-4 fun-text">{t("home.features.card1.title")}</h3>
+              <p className="fun-text-muted leading-relaxed mb-6">{t("home.features.card1.desc")}</p>
+              <div className="flex gap-2">
+                <span className="px-3 py-1 rounded-full bg-[var(--fun-surface)] border border-[var(--fun-stroke-1)] text-xs fun-text">Neural Networks</span>
+                <span className="px-3 py-1 rounded-full bg-[var(--fun-surface)] border border-[var(--fun-stroke-1)] text-xs fun-text">LLM</span>
+              </div>
             </div>
 
-            <div className="space-y-8">
-              <div className="rounded-[20px] p-6 md:p-8" style={{ backgroundColor: 'var(--fun-card)' }}>
-                <div className="rounded-2xl py-8 mb-6 flex items-center justify-center min-h-[200px]" style={{ backgroundColor: 'var(--fun-surface)' }}>
-                  <div className="flex -space-x-4">
-                    {[1,2,3,4].map(i => (
-                      <div key={i} className="h-14 w-32 rounded-full flex items-center gap-2 px-2 shadow-sm" style={{ backgroundColor: 'var(--fun-card)', borderColor: 'var(--fun-stroke-1)', borderWidth: 1 }}>
-                        <div className="h-10 w-10 rounded-full" style={{ background: 'linear-gradient(135deg, var(--fun-green), var(--fun-stroke-1))' }} />
-                        <div className="space-y-1">
-                          <div className="h-2 w-12 rounded" style={{ backgroundColor: 'var(--fun-stroke-1)' }} />
-                          <div className="h-1.5 w-8 rounded" style={{ backgroundColor: 'var(--fun-stroke-2)' }} />
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-                <h3 className="text-heading-6 md:text-heading-5 font-medium mb-1 fun-text">Web'den Mobil'e Sorunsuz Deneyim</h3>
-                <p className="text-tagline-1 fun-text-muted max-w-[450px]">Modern web ve mobil uygulamalarla her cihazda kusursuz performans.</p>
+            <div className="rounded-[32px] p-8 md:p-10 relative overflow-hidden group border border-[var(--fun-stroke-1)] hover:border-[var(--fun-purple)] transition-all duration-500" style={{ backgroundColor: 'var(--fun-card)' }}>
+              <div className="absolute top-0 right-0 p-10 opacity-5 group-hover:opacity-10 group-hover:scale-110 transition-all duration-700">
+                <Globe className="h-40 w-40" />
               </div>
+              <div className="h-16 w-16 rounded-2xl bg-[var(--fun-purple)]/10 flex items-center justify-center text-[var(--fun-purple)] mb-8 group-hover:bg-[var(--fun-purple)] group-hover:text-white transition-colors duration-500">
+                <Globe className="h-8 w-8" />
+              </div>
+              <h3 className="text-2xl font-bold mb-4 fun-text">{t("home.features.card2.title")}</h3>
+              <p className="fun-text-muted leading-relaxed mb-6">{t("home.features.card2.desc")}</p>
+              <div className="flex gap-2">
+                <span className="px-3 py-1 rounded-full bg-[var(--fun-surface)] border border-[var(--fun-stroke-1)] text-xs fun-text">Global CDN</span>
+                <span className="px-3 py-1 rounded-full bg-[var(--fun-surface)] border border-[var(--fun-stroke-1)] text-xs fun-text">Autoscale</span>
+              </div>
+            </div>
 
-              <div className="rounded-[20px] p-6 md:p-8" style={{ backgroundColor: 'var(--fun-card)' }}>
-                <div className="flex items-center justify-center -space-x-8 mb-6">
-                  {[12, 0, -12].map((rotate, i) => (
-                    <div key={i} className={`w-[160px] h-[200px] rounded-xl ${i === 1 ? 'z-10' : 'shadow-lg'}`} style={{ transform: `rotate(${rotate}deg)`, background: i === 1 ? 'linear-gradient(135deg, #12161F, #2A2E38)' : `linear-gradient(135deg, var(--fun-surface), var(--fun-card))` }}>
-                      <div className="p-4 space-y-2">
-                        <div className={`h-3 w-20 rounded ${i === 1 ? 'bg-white/20' : ''}`} style={i !== 1 ? { backgroundColor: 'var(--fun-stroke-1)' } : {}} />
-                        <div className={`h-2 w-16 rounded ${i === 1 ? 'bg-white/10' : ''}`} style={i !== 1 ? { backgroundColor: 'var(--fun-stroke-2)' } : {}} />
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                <h3 className="text-heading-6 md:text-heading-5 font-medium mb-1 fun-text">Verileriniz Bizimle Güvende</h3>
-                <p className="text-tagline-1 fun-text-muted max-w-[450px]">Gelişmiş güvenlik önlemleriyle tüm iş süreçlerinizi güvenle yönetin.</p>
+            <div className="rounded-[32px] p-8 md:p-10 relative overflow-hidden group border border-[var(--fun-stroke-1)] hover:border-[var(--fun-purple)] transition-all duration-500" style={{ backgroundColor: 'var(--fun-card)' }}>
+              <div className="absolute top-0 right-0 p-10 opacity-5 group-hover:opacity-10 group-hover:scale-110 transition-all duration-700">
+                <ShieldCheck className="h-40 w-40" />
+              </div>
+              <div className="h-16 w-16 rounded-2xl bg-[var(--fun-purple)]/10 flex items-center justify-center text-[var(--fun-purple)] mb-8 group-hover:bg-[var(--fun-purple)] group-hover:text-white transition-colors duration-500">
+                <ShieldCheck className="h-8 w-8" />
+              </div>
+              <h3 className="text-2xl font-bold mb-4 fun-text">{t("home.features.card3.title")}</h3>
+              <p className="fun-text-muted leading-relaxed mb-6">{t("home.features.card3.desc")}</p>
+              <div className="flex gap-2">
+                <span className="px-3 py-1 rounded-full bg-[var(--fun-surface)] border border-[var(--fun-stroke-1)] text-xs fun-text">AES-256</span>
+                <span className="px-3 py-1 rounded-full bg-[var(--fun-surface)] border border-[var(--fun-stroke-1)] text-xs fun-text">SSL</span>
               </div>
             </div>
           </div>
@@ -188,39 +205,56 @@ function FeaturesSection() {
 }
 
 /* ============ HOW IT WORKS ============ */
-function HowItWorksSection() {
+function HowItWorksSection({ t }: { t: (k: string) => string }) {
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const steps = [
-    { title: "Çoklu ses seçenekleri.", desc: "Markanızın tarzına uygun çok çeşitli erkek ve kadın sesleri arasından seçim yapın.", bg: "var(--fun-green)" },
-    { title: "Gerçekçi ve net ses", desc: "Hedef kitleniz için otantik ve ilgi çekici hissettiren gerçekçi konuşmalar sunun.", bg: "var(--fun-surface)" },
-    { title: "Hızlı ve kolay dönüşüm.", desc: "Metninizi saniyeler içinde sese dönüştürün — teknik beceri gerekmez.", bg: "var(--fun-green)" },
+    { title: t("home.howitworks.step1.title"), desc: t("home.howitworks.step1.desc"), bg: "var(--fun-green)" },
+    { title: t("home.howitworks.step2.title"), desc: t("home.howitworks.step2.desc"), bg: "var(--fun-surface)" },
+    { title: t("home.howitworks.step3.title"), desc: t("home.howitworks.step3.desc"), bg: "var(--fun-green)" },
   ];
   return (
-    <section className="py-20 md:py-32">
+    <section className="py-20 md:py-32 px-4 lg:px-0 overflow-hidden">
       <div className="main-container">
         <div className="mb-12 text-center lg:mx-auto lg:max-w-[730px]">
-          <span className="badge-fun badge-fun-gray mb-4 inline-block">Nasıl Çalışır</span>
-          <h2 className="text-heading-4 md:text-heading-3 font-medium mb-3 fun-text">Fun Teknoloji ile Yapay Zeka Sesi Oluşturun</h2>
-          <p className="text-tagline-1 fun-text-muted">Güçlü yapay zeka ses teknolojisi ile metni anında doğal, insan benzeri seslere dönüştürün.</p>
+          <span className="badge-fun badge-fun-gray mb-4 inline-block">{t("home.howitworks.badge")}</span>
+          <h2 className="text-heading-3 md:text-heading-2 font-medium mb-3 fun-text">{t("home.howitworks.title")}</h2>
+          <p className="text-tagline-1 fun-text-muted">{t("home.howitworks.desc")}</p>
         </div>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-8 relative">
           {steps.map((step, i) => (
-            <div key={i} className="flex w-full max-w-[408px] flex-col justify-between rounded-[20px] p-10 min-h-[320px]" style={{ backgroundColor: step.bg }}>
+            <div
+              key={i}
+              onMouseEnter={() => setHoveredIndex(i)}
+              onMouseLeave={() => setHoveredIndex(null)}
+              className="group flex w-full max-w-[408px] flex-col justify-between rounded-[20px] p-10 min-h-[320px] hover:scale-105 transition-all duration-500 relative"
+              style={{ backgroundColor: step.bg }}
+            >
               <div className="text-center">
-                <div className="mx-auto h-16 w-16 rounded-2xl flex items-center justify-center mb-4" style={{ backgroundColor: 'var(--fun-card)' }}>
-                  <span className="text-2xl font-bold fun-text-muted">{i + 1}</span>
+                <div className="mx-auto h-16 w-16 rounded-2xl flex items-center justify-center mb-4 group-hover:bg-[#6C5CE7] transition-colors duration-500 relative overflow-hidden" style={{ backgroundColor: 'var(--fun-card)' }}>
+                  <span className="text-2xl font-bold fun-text-muted group-hover:text-white transition-colors relative z-10">{i + 1}</span>
+                  <div className="absolute inset-0 bg-[#6C5CE7] translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
                 </div>
               </div>
               <div className="text-center space-y-2">
                 <h3 className="text-heading-6 md:text-heading-5 font-medium fun-text">{step.title}</h3>
                 <p className="text-tagline-1 fun-text-muted">{step.desc}</p>
               </div>
+
+              {/* Tick animation overlay on hover */}
+              <div className="absolute top-4 right-4">
+                <div className={`h-8 w-8 rounded-full bg-[var(--fun-purple)] flex items-center justify-center transition-all duration-500 ${hoveredIndex === i ? 'opacity-100 scale-100 rotate-0' : 'opacity-0 scale-50 -rotate-45'}`}>
+                  <svg className="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                    <path className={`transition-all duration-700 delay-300 ${hoveredIndex === i ? 'stroke-dashoffset-0 animate-in fade-in duration-500' : 'stroke-dashoffset-100'}`} strokeDasharray="24" strokeDashoffset={hoveredIndex === i ? 0 : 24} strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+              </div>
             </div>
           ))}
         </div>
 
         <div className="mt-14 text-center">
-          <ArrowButton to="/pricing" variant="dark">Ses Oluştur</ArrowButton>
+          <ArrowButton to="/services" variant="dark">{t("home.hero.explore")}</ArrowButton>
         </div>
       </div>
     </section>
@@ -228,23 +262,23 @@ function HowItWorksSection() {
 }
 
 /* ============ SERVICES ============ */
-function ServicesSection() {
+function ServicesSection({ t }: { t: (k: string) => string }) {
   const services = [
-    { title: "Kusursuz Görüntü Stili Transferi", desc: "Görüntülerinizi gündüzden geceye veya yazdan kışa, herhangi bir stile zahmetsizce dönüştürün." },
-    { title: "Otomatik Arka Plan Değiştirme", desc: "Ürün çekimleri ve portreler için mükemmel, profesyonel sonuçlar için fotoğraflardaki arka planları anında değiştirin." },
-    { title: "Yüksek Çözünürlüklü Ölçeklendirme", desc: "Daha keskin, daha net ve daha ayrıntılı sonuçlar için görüntülerinizi yapay zeka destekli ölçeklendirme ile geliştirin." },
-    { title: "Akıllı Nesne Kaldırma", desc: "İstenmeyen nesneleri, filigranları veya kusurları görüntülerden doğal bir şekilde kaldırın." },
-    { title: "Toplu Görüntü İşleme", desc: "Düzenlemeleri ve iyileştirmeleri aynı anda birden fazla görüntüye uygulayarak zaman kazanın." },
-    { title: "Yaratıcı Filtreler ve Efektler", desc: "Görüntülerinize benzersiz ve profesyonel bir dokunuş kazandırmak için yaratıcı filtreler uygulayın." },
+    { title: t("home.services.item1.title"), desc: t("home.services.item1.desc"), icon: <Cpu className="h-8 w-8" /> },
+    { title: t("home.services.item2.title"), desc: t("home.services.item2.desc"), icon: <Code2 className="h-8 w-8" /> },
+    { title: t("home.services.item3.title"), desc: t("home.services.item3.desc"), icon: <Smartphone className="h-8 w-8" /> },
+    { title: t("home.services.item4.title"), desc: t("home.services.item4.desc"), icon: <Database className="h-8 w-8" /> },
+    { title: t("home.services.item5.title"), desc: t("home.services.item5.desc"), icon: <Search className="h-8 w-8" /> },
+    { title: t("home.services.item6.title"), desc: t("home.services.item6.desc"), icon: <HeartHandshake className="h-8 w-8" /> },
   ];
 
   return (
-    <section className="py-14 md:py-24 overflow-hidden">
+    <section className="py-14 md:py-24 overflow-hidden px-4 lg:px-0">
       <div className="main-container">
-        <div className="mb-12 text-center lg:max-w-[730px] lg:mx-auto">
-          <span className="badge-fun badge-fun-gray mb-5 inline-block">Hizmetlerimiz</span>
-          <h2 className="text-heading-4 md:text-heading-3 font-medium mb-3 fun-text">Dünya genelindeki lider şirketler Fun Teknoloji'ye güveniyor.</h2>
-          <p className="text-tagline-1 fun-text-muted lg:max-w-[530px] lg:mx-auto">İşinizi büyütmek ve dijital dünyada öne çıkmak için sunduğumuz profesyonel çözümleri keşfedin.</p>
+        <div className="mb-12 text-center lg:max-w-[850px] lg:mx-auto">
+          <span className="badge-fun badge-fun-gray mb-5 inline-block">{t("home.services.badge")}</span>
+          <h2 className="text-heading-3 md:text-heading-2 font-medium mb-3 fun-text">{t("home.services.title")}</h2>
+          <p className="text-tagline-1 fun-text-muted lg:max-w-[530px] lg:mx-auto">{t("home.services.desc")}</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -256,71 +290,29 @@ function ServicesSection() {
                     <h3 className="text-heading-5 md:text-heading-4 font-medium fun-text">{service.title}</h3>
                     <p className="text-tagline-1 fun-text-muted">{service.desc}</p>
                   </div>
-                  <Link to="/services" className="flex h-12 w-12 md:h-14 md:w-14 items-center justify-center rounded-full ring-8 ring-[var(--fun-card)] transition-all hover:bg-[#6C5CE7]" style={{ backgroundColor: 'var(--fun-text)' }}>
-                    <svg className="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
+                  <Link to="/services" className="flex h-12 w-12 md:h-14 md:w-14 items-center justify-center rounded-full ring-8 ring-[var(--fun-card)] transition-all hover:bg-[var(--fun-purple)]" style={{ backgroundColor: 'var(--fun-text)' }}>
+                    <svg className="h-5 w-5" style={{ color: 'var(--fun-surface)' }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
                     </svg>
                   </Link>
                 </aside>
-                <div className={`${i === 0 ? 'md:col-span-8' : ''} rounded-xl overflow-hidden min-h-[240px] md:min-h-[300px] group-hover:scale-[1.02] transition-transform duration-500 flex items-center justify-center`} style={{ background: 'linear-gradient(135deg, var(--fun-stroke-2), var(--fun-surface))' }}>
-                  <div className="text-center p-8">
-                    <div className="mx-auto h-16 w-16 rounded-2xl flex items-center justify-center mb-3" style={{ backgroundColor: 'var(--fun-card)' }}>
-                      <span className="text-2xl font-bold fun-text-muted">{i + 1}</span>
+                <div className={`${i === 0 ? 'md:col-span-8' : ''} rounded-xl overflow-hidden min-h-[240px] md:min-h-[300px] transition-transform duration-500 flex items-center justify-center relative`} style={{ background: 'linear-gradient(135deg, var(--fun-stroke-2), var(--fun-surface))' }}>
+                  <div className="absolute inset-0 bg-gradient-to-br from-[#6C5CE7]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  <div className="text-center p-8 relative z-10">
+                    <div className="mx-auto h-20 w-20 rounded-3xl flex items-center justify-center mb-4 transition-all duration-500 shadow-lg text-[var(--fun-purple)]" style={{ backgroundColor: 'var(--fun-card)' }}>
+                       {service.icon}
                     </div>
-                    <p className="text-sm fun-text-muted">{service.title}</p>
+                    <p className="text-sm fun-text font-bold tracking-widest uppercase">{service.title}</p>
+                    <div className="mt-4 flex justify-center gap-1 opacity-50">
+                       <div className="h-1 w-4 bg-[var(--fun-purple)] rounded-full" />
+                       <div className="h-1 w-1 bg-[var(--fun-purple)] rounded-full" />
+                       <div className="h-1 w-1 bg-[var(--fun-purple)] rounded-full" />
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ============ CASE STUDY ============ */
-function CaseStudySection() {
-  const cases = [
-    { title: "Sağlık hizmetlerinde yapay zeka destekli hasta bakımı.", desc: "Sağlık hizmeti sağlayıcılarını akıllı, ölçeklenebilir çözümlerle güçlendiriyoruz." },
-    { title: "Daha iyi içgörüler için perakende analitiği", desc: "Alışveriş yapanların davranışlarını anlayın ve veri odaklı kararlar alın." },
-    { title: "Lojistikte akıllı rota optimizasyonu", desc: "Verimliliği artırmak için rotaları ve teslimat süreçlerini otomatikleştirin." },
-  ];
-
-  return (
-    <section className="py-16 lg:py-28">
-      <div className="main-container">
-        <div className="text-center mb-12 lg:mb-16">
-          <h2 className="text-heading-4 md:text-heading-3 font-medium mb-3 fun-text">Platformumuzun gücünü deneyimleyin.</h2>
-          <p className="max-w-[680px] mx-auto text-tagline-1 fun-text-muted">Platformumuz, zahmetsiz navigasyon sağlayan temiz, kullanıcı dostu bir arayüzle hazırlanmıştır.</p>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-14">
-          {cases.map((cs, i) => (
-            <div key={i} className={`${i === 0 ? 'lg:col-span-2' : ''}`}>
-              <div className="space-y-6">
-                <div className={`relative w-full ${i === 0 ? 'h-[300px] lg:h-[600px]' : 'h-[300px] lg:h-[500px]'} rounded-[20px] overflow-hidden group cursor-pointer`} style={{ backgroundColor: 'var(--fun-surface)' }}>
-                  <div className="absolute inset-0 bg-gradient-to-br from-transparent to-black/20 group-hover:to-black/40 transition-all duration-500" />
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="h-24 w-24 rounded-3xl backdrop-blur-sm flex items-center justify-center" style={{ backgroundColor: 'var(--fun-card)', opacity: 0.8 }}>
-                      <span className="text-4xl font-bold fun-text-muted">{i + 1}</span>
-                    </div>
-                  </div>
-                  <div className="opacity-0 group-hover:opacity-100 transition-all duration-500 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                    <ArrowButton href="#" variant="green">Detayları görüntüle</ArrowButton>
-                  </div>
-                </div>
-                <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4 md:justify-between">
-                  <h3 className="text-heading-6 sm:text-heading-5 font-medium fun-text">{cs.title}</h3>
-                  <p className="max-w-[257px] text-tagline-1 fun-text-muted text-left md:text-right">{cs.desc}</p>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <div className="mt-14 text-center">
-          <ArrowButton href="#" variant="dark">Tüm projeleri gör</ArrowButton>
         </div>
       </div>
     </section>
@@ -328,48 +320,24 @@ function CaseStudySection() {
 }
 
 /* ============ TESTIMONIALS ============ */
-function TestimonialsSection() {
-  const { t } = useLang();
-  const [testimonials, setTestimonials] = useState<any[]>([]);
-
-  useEffect(() => {
-    const fetchTestimonials = async () => {
-        try {
-            const data = await getTestimonialsFn();
-            if (data && data.length > 0) {
-                setTestimonials(data);
-            } else {
-                setTestimonials([
-                    { name: t("home.testimonials.t1.name"), text: t("home.testimonials.t1.text") },
-                    { name: t("home.testimonials.t2.name"), text: t("home.testimonials.t2.text") },
-                    { name: t("home.testimonials.t3.name"), text: t("home.testimonials.t3.text") },
-                    { name: t("home.testimonials.t4.name"), text: t("home.testimonials.t4.text") },
-                    { name: t("home.testimonials.t5.name"), text: t("home.testimonials.t5.text") },
-                    { name: t("home.testimonials.t6.name"), text: t("home.testimonials.t6.text") },
-                ]);
-            }
-        } catch (err) {
-            setTestimonials([
-                { name: t("home.testimonials.t1.name"), text: t("home.testimonials.t1.text") },
-                { name: t("home.testimonials.t2.name"), text: t("home.testimonials.t2.text") },
-                { name: t("home.testimonials.t3.name"), text: t("home.testimonials.t3.text") },
-                { name: t("home.testimonials.t4.name"), text: t("home.testimonials.t4.text") },
-                { name: t("home.testimonials.t5.name"), text: t("home.testimonials.t5.text") },
-                { name: t("home.testimonials.t6.name"), text: t("home.testimonials.t6.text") },
-            ]);
-        }
-    };
-    fetchTestimonials();
-  }, [t]);
+function TestimonialsSection({ t }: { t: (k: string) => string }) {
+  const testimonials = [
+    { name: t("home.testimonials.t1.name"), text: t("home.testimonials.t1.text") },
+    { name: t("home.testimonials.t2.name"), text: t("home.testimonials.t2.text") },
+    { name: t("home.testimonials.t3.name"), text: t("home.testimonials.t3.text") },
+    { name: t("home.testimonials.t4.name"), text: t("home.testimonials.t4.text") },
+    { name: t("home.testimonials.t5.name"), text: t("home.testimonials.t5.text") },
+    { name: t("home.testimonials.t6.name"), text: t("home.testimonials.t6.text") },
+  ];
 
   const colors = ["from-[#F4F8E7] to-[#D485FF]", "from-[#E8F4FD] to-[#4A90E2]", "from-[#FFE8E8] to-[#FF6B6B]", "from-[#F0E6FF] to-[#8B5CF6]", "from-[#E6F7FF] to-[#1890FF]", "from-[#FFF7E6] to-[#FF8C00]"];
 
   return (
-    <section className="py-16 md:py-24">
+    <section className="py-16 md:py-24 px-4 lg:px-0">
       <div className="main-container">
         <div className="text-center mb-14">
-          <span className="badge-fun badge-fun-green mb-4 inline-block">{t("nav.services")}</span>
-          <h2 className="text-heading-4 md:text-heading-3 font-medium xl:max-w-[906px] xl:mx-auto fun-text">
+          <span className="badge-fun badge-fun-green mb-4 inline-block">{t("home.testimonials.badge")}</span>
+          <h2 className="text-heading-3 md:text-heading-2 font-medium xl:max-w-[906px] xl:mx-auto fun-text">
             {t("home.testimonials.title")}
           </h2>
         </div>
@@ -391,8 +359,9 @@ function TestimonialsSection() {
               </div>
               <p className="pb-6 text-tagline-1 fun-text" style={{ opacity: 0.8 }}>{t.text}</p>
               <div className="flex items-center gap-3">
-                <div className={`h-11 w-11 rounded-full bg-gradient-to-br ${colors[i]} flex items-center justify-center`}>
-                  <span className="text-sm font-bold text-white">{t.name[0]}</span>
+                <div className={`h-11 w-11 rounded-full bg-gradient-to-br ${colors[i]} flex items-center justify-center relative overflow-hidden group-hover:scale-110 transition-transform`}>
+                  <div className="absolute inset-0 bg-white/20 animate-pulse" />
+                  <span className="text-sm font-bold text-white relative z-10">{t.name[0]}</span>
                 </div>
                 <h3 className="text-sm sm:text-base font-semibold fun-text">{t.name}</h3>
               </div>
@@ -405,51 +374,26 @@ function TestimonialsSection() {
 }
 
 /* ============ FAQ ============ */
-function FAQSection() {
-  const { t } = useLang();
+function FAQSection({ t }: { t: (k: string) => string }) {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
-  const [faqs, setFaqs] = useState<any[]>([]);
-
-  useEffect(() => {
-    const fetchFaqs = async () => {
-        try {
-            const data = await getFaqsFn();
-            if (data && data.length > 0) {
-                setFaqs(data.map(item => ({ q: item.question || item.q, a: item.answer || item.a })));
-            } else {
-                setFaqs([
-                    { q: t("home.faq.q1"), a: t("home.faq.a1") },
-                    { q: t("home.faq.q2"), a: t("home.faq.a2") },
-                    { q: t("home.faq.q3"), a: t("home.faq.a3") },
-                    { q: t("home.faq.q4"), a: t("home.faq.a4") },
-                    { q: t("home.faq.q5"), a: t("home.faq.a5") },
-                    { q: t("home.faq.q6"), a: t("home.faq.a6") },
-                    { q: t("home.faq.q7"), a: t("home.faq.a7") },
-                ]);
-            }
-        } catch (err) {
-            setFaqs([
-                { q: t("home.faq.q1"), a: t("home.faq.a1") },
-                { q: t("home.faq.q2"), a: t("home.faq.a2") },
-                { q: t("home.faq.q3"), a: t("home.faq.a3") },
-                { q: t("home.faq.q4"), a: t("home.faq.a4") },
-                { q: t("home.faq.q5"), a: t("home.faq.a5") },
-                { q: t("home.faq.q6"), a: t("home.faq.a6") },
-                { q: t("home.faq.q7"), a: t("home.faq.a7") },
-            ]);
-        }
-    };
-    fetchFaqs();
-  }, [t]);
+  const faqs = [
+    { q: t("home.faq.q1"), a: t("home.faq.a1") },
+    { q: t("home.faq.q2"), a: t("home.faq.a2") },
+    { q: t("home.faq.q3"), a: t("home.faq.a3") },
+    { q: t("home.faq.q4"), a: t("home.faq.a4") },
+    { q: t("home.faq.q5"), a: t("home.faq.a5") },
+    { q: t("home.faq.q6"), a: t("home.faq.a6") },
+    { q: t("home.faq.q7"), a: t("home.faq.a7") },
+  ];
 
   return (
     <section className="px-4 lg:px-5">
       <div className="max-w-[1880px] mx-auto py-20 md:py-28 rounded-2xl md:rounded-[32px]" style={{ backgroundColor: 'var(--fun-surface)' }}>
         <div className="main-container">
           <div className="text-center space-y-4 max-w-[720px] mx-auto mb-14">
-            <span className="badge-fun badge-fun-white uppercase">{t("nav.faq")}</span>
-            <h2 className="text-heading-4 md:text-heading-3 font-medium fun-text">{t("home.faq.title")}</h2>
-            <p className="text-tagline-1 fun-text-muted">{t("home.faq.subtitle")}</p>
+            <span className="badge-fun badge-fun-white uppercase">{t("home.faq.badge")}</span>
+            <h2 className="text-heading-3 md:text-heading-2 font-medium fun-text">{t("home.faq.title")}</h2>
+            <p className="text-tagline-1 fun-text-muted">{t("home.faq.desc")}</p>
           </div>
 
           <div className="max-w-[770px] mx-auto space-y-4">
@@ -481,25 +425,26 @@ function FAQSection() {
 }
 
 /* ============ CTA ============ */
-function CTASection() {
+function CTASection({ t }: { t: (k: string) => string }) {
   return (
     <section className="px-4 lg:px-5 py-16 md:py-24">
-      <div className="bg-[#12161F] max-w-[1880px] mx-auto rounded-3xl xl:rounded-[32px] py-20 md:py-28 px-5">
-        <div className="main-container text-center">
-          <h2 className="text-heading-4 md:text-heading-3 lg:text-heading-2 font-medium text-white mb-4">
-            Bugün kullanmaya başlayın.
+      <div className="bg-[#12161F] max-w-[1880px] mx-auto rounded-3xl xl:rounded-[32px] py-20 md:py-28 px-5 relative overflow-hidden group">
+        <div className="absolute inset-0 bg-gradient-to-br from-[#6C5CE7]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
+        <div className="main-container text-center relative z-10">
+          <h2 className="text-heading-3 md:text-heading-2 lg:text-heading-2 font-medium text-white mb-4">
+            {t("home.cta.title")}
           </h2>
           <p className="text-tagline-1 text-white/60 max-w-[600px] mx-auto mb-10">
-            Herhangi bir sorunuz veya yardıma ihtiyacınız olursa destek ekibimizle iletişime geçin.
+            {t("home.cta.desc")}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 items-center justify-center">
-            <ArrowButton to="/contact" variant="light">İletişime Geçin</ArrowButton>
-            <a href="#" className="btn-fun bg-white/10 text-white hover:bg-white/20 transition-all">
-              <span>Daha Fazla Bilgi</span>
+            <ArrowButton to="/contact" variant="light">{t("home.cta.button")}</ArrowButton>
+            <Link to="/about" className="btn-fun bg-white/10 text-white hover:bg-white/20 transition-all flex items-center gap-2">
+              <span>{t("home.cta.more")}</span>
               <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75" />
               </svg>
-            </a>
+            </Link>
           </div>
         </div>
       </div>
