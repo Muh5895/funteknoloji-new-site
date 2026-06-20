@@ -22,6 +22,7 @@ export default function NexyAssistant() {
   const [showPopup, setShowPopup] = useState(true);
   const [isTyping, setIsTyping] = useState(false);
   const [isThinking, setIsThinking] = useState(false);
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [chatMessages, setChatMessages] = useState<{ role: 'nexy' | 'user', text: string, displayedText?: string }[]>([]);
   const [userInput, setUserInput] = useState("");
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -88,9 +89,19 @@ export default function NexyAssistant() {
   };
 
   const getNexyBrainResponse = async (input: string) => {
+    const prompt = `System: Sen Fun Teknoloji şirketinin yapay zeka asistanı Nexy'sin.
+    Bilgi Bankası: ${KNOWLEDGE_BASE}
+    Dil: Kullanıcının dilinde (${lang}) cevap ver.
+    Tarz: Profesyonel, yardımsever ve samimi ol.
+    Önemli: Eğer kullanıcı bir sayfaya gitmek isterse cevabının sonuna [REDIRECT:/sayfa] ekle.
+    Kısa ve öz cevaplar ver.
+    User: ${input}`;
+
     try {
-      const response = await askNexy({ input, lang });
-      return response;
+      const response = await fetch(`/api/nexy/${encodeURIComponent(prompt)}?model=openai&cache=false`);
+      if (!response.ok) throw new Error();
+      const text = await response.text();
+      return text;
     } catch (err) {
       return t("nexy.resp.default.0");
     }
@@ -106,6 +117,9 @@ export default function NexyAssistant() {
     setUserInput("");
     setIsTyping(true);
     setIsThinking(true);
+
+    const isCompanyQuery = ["fun teknoloji", "muhammed", "erbay", "hizmet", "neler", "şirket", "about", "services", "kurucu"].some(k => savedInput.toLowerCase().includes(k));
+    if (isCompanyQuery) setIsAnalyzing(true);
 
     let response = await getNexyBrainResponse(savedInput);
 
@@ -129,6 +143,7 @@ export default function NexyAssistant() {
     const nexyMsgIndex = newMsgs.length;
     setChatMessages([...newMsgs, { role: 'nexy', text: response, displayedText: "" }]);
     setIsThinking(false);
+    setIsAnalyzing(false);
     setIsTyping(true);
     typeMessage(response, nexyMsgIndex);
   };
@@ -204,9 +219,9 @@ export default function NexyAssistant() {
                   <div className={`relative group/msg max-w-[85%] p-4 rounded-2xl text-[15px] ${m.role === 'user' ? 'bg-[var(--fun-purple)] text-white rounded-tr-none shadow-lg' : 'bg-[var(--fun-surface)] fun-text rounded-tl-none border border-[var(--fun-stroke-1)] shadow-sm'}`}>
                     {formatText(m.displayedText || "")}
                     {m.role === 'nexy' && m.displayedText === m.text && (
-                      <div className="absolute top-1/2 -right-12 -translate-y-1/2 flex flex-col gap-1 opacity-0 group-hover/msg:opacity-100 lg:opacity-0 lg:group-hover/msg:opacity-100 transition-opacity">
-                        <button onClick={() => copyToClipboard(m.text)} className="h-5 w-5 flex items-center justify-center rounded bg-[var(--fun-card)] border border-[var(--fun-stroke-1)] fun-text hover:bg-[var(--fun-purple)] hover:text-white transition-colors" title={t("nexy.copy_tooltip")}><Copy className="h-3 w-3" /></button>
-                        <button onClick={() => speak(m.text)} className="h-5 w-5 flex items-center justify-center rounded bg-[var(--fun-card)] border border-[var(--fun-stroke-1)] fun-text hover:bg-[var(--fun-purple)] hover:text-white transition-colors" title={t("nexy.read_tooltip")}><Volume2 className="h-3 w-3" /></button>
+                      <div className="absolute top-1/2 -right-12 -translate-y-1/2 flex flex-col gap-1 opacity-100 lg:opacity-0 lg:group-hover/msg:opacity-100 transition-opacity">
+                        <button onClick={() => copyToClipboard(m.text)} className="h-7 w-7 sm:h-5 sm:w-5 flex items-center justify-center rounded bg-[var(--fun-card)] border border-[var(--fun-stroke-1)] fun-text hover:bg-[var(--fun-purple)] hover:text-white transition-colors shadow-sm" title={t("nexy.copy_tooltip")}><Copy className="h-4 w-4 sm:h-3 sm:w-3" /></button>
+                        <button onClick={() => speak(m.text)} className="h-7 w-7 sm:h-5 sm:w-5 flex items-center justify-center rounded bg-[var(--fun-card)] border border-[var(--fun-stroke-1)] fun-text hover:bg-[var(--fun-purple)] hover:text-white transition-colors shadow-sm" title={t("nexy.read_tooltip")}><Volume2 className="h-4 w-4 sm:h-3 sm:w-3" /></button>
                       </div>
                     )}
                   </div>
@@ -214,9 +229,9 @@ export default function NexyAssistant() {
               );
             })}
             {isThinking && (
-              <div className="flex justify-start">
-                <div className="bg-[var(--fun-surface)] fun-text p-4 rounded-2xl rounded-tl-none border border-[var(--fun-stroke-1)] shadow-sm">
-                  <TypingIndicator />
+              <div className="flex justify-start animate-in fade-in slide-in-from-left-2 duration-300">
+                <div className="bg-[var(--fun-surface)] fun-text p-5 rounded-2xl rounded-tl-none border border-[var(--fun-stroke-1)] shadow-sm w-full max-w-[280px]">
+                  <TypingIndicator isAnalyzing={isAnalyzing} />
                 </div>
               </div>
             )}
@@ -245,31 +260,46 @@ export default function NexyAssistant() {
   );
 }
 
-function TypingIndicator() {
+function TypingIndicator({ isAnalyzing }: { isAnalyzing?: boolean }) {
   const { lang } = useLang();
   const [step, setStep] = useState(0);
-  const states = lang === 'tr'
-    ? ["Düşünüyor...", "Veriler inceleniyor...", "Cevap hazırlanıyor..."]
-    : ["Thinking...", "Analyzing data...", "Preparing response..."];
+
+  const trStates = isAnalyzing
+    ? ["Fun Teknoloji verileri inceleniyor...", "Bilgi bankası taranıyor...", "Cevap oluşturuluyor..."]
+    : ["Düşünüyor...", "Hazırlanıyor...", "Yazıyor..."];
+
+  const enStates = isAnalyzing
+    ? ["Analyzing Fun Technology data...", "Scanning knowledge base...", "Generating response..."]
+    : ["Thinking...", "Preparing...", "Writing..."];
+
+  const states = lang === 'tr' ? trStates : enStates;
 
   useEffect(() => {
-    const itv = setInterval(() => setStep(s => (s + 1) % states.length), 2000);
+    const itv = setInterval(() => setStep(s => (s + 1) % states.length), 1800);
     return () => clearInterval(itv);
   }, [states.length]);
 
   return (
-    <div className="flex flex-col gap-2 min-w-[140px]">
-      <div className="flex gap-1.5 items-center">
-        <div className="h-2 w-2 rounded-full bg-[var(--fun-purple)] animate-bounce shadow-[0_0_8px_var(--fun-purple)]" />
-        <div className="h-2 w-2 rounded-full bg-[var(--fun-purple)] animate-bounce [animation-delay:0.2s] shadow-[0_0_8px_var(--fun-purple)]" />
-        <div className="h-2 w-2 rounded-full bg-[var(--fun-purple)] animate-bounce [animation-delay:0.4s] shadow-[0_0_8px_var(--fun-purple)]" />
+    <div className="space-y-4">
+      <div className="flex items-center gap-3">
+        <div className="flex gap-1">
+          <div className="h-1.5 w-1.5 rounded-full bg-[var(--fun-purple)] animate-bounce" />
+          <div className="h-1.5 w-1.5 rounded-full bg-[var(--fun-purple)] animate-bounce [animation-delay:0.2s]" />
+          <div className="h-1.5 w-1.5 rounded-full bg-[var(--fun-purple)] animate-bounce [animation-delay:0.4s]" />
+        </div>
+        <span className="text-[10px] font-bold uppercase tracking-widest text-[var(--fun-purple)] animate-pulse">{states[step]}</span>
       </div>
-      <p className="text-[11px] font-bold uppercase tracking-wider animate-pulse opacity-70">
-        {states[step]}
-      </p>
-      <div className="space-y-1.5">
-        <div className="h-2 w-full bg-[var(--fun-stroke-1)] rounded-full animate-pulse" />
-        <div className="h-2 w-5/6 bg-[var(--fun-stroke-1)] rounded-full animate-pulse [animation-delay:0.2s]" />
+
+      <div className="space-y-2">
+        <div className="h-2 w-full bg-[var(--fun-stroke-1)] rounded-full relative overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[var(--fun-purple)]/20 to-transparent -translate-x-full animate-skeleton-shimmer" />
+        </div>
+        <div className="h-2 w-[85%] bg-[var(--fun-stroke-1)] rounded-full relative overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[var(--fun-purple)]/20 to-transparent -translate-x-full animate-skeleton-shimmer [animation-delay:0.2s]" />
+        </div>
+        <div className="h-2 w-[60%] bg-[var(--fun-stroke-1)] rounded-full relative overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[var(--fun-purple)]/20 to-transparent -translate-x-full animate-skeleton-shimmer [animation-delay:0.4s]" />
+        </div>
       </div>
     </div>
   );
