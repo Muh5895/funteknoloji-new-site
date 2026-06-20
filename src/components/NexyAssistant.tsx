@@ -22,7 +22,6 @@ export default function NexyAssistant() {
   const [showPopup, setShowPopup] = useState(true);
   const [isTyping, setIsTyping] = useState(false);
   const [isThinking, setIsThinking] = useState(false);
-  const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [chatMessages, setChatMessages] = useState<{ role: 'nexy' | 'user', text: string, displayedText?: string }[]>([]);
   const [userInput, setUserInput] = useState("");
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -118,9 +117,6 @@ export default function NexyAssistant() {
     setIsTyping(true);
     setIsThinking(true);
 
-    const isCompanyQuery = ["fun teknoloji", "muhammed", "erbay", "hizmet", "neler", "şirket", "about", "services", "kurucu"].some(k => savedInput.toLowerCase().includes(k));
-    if (isCompanyQuery) setIsAnalyzing(true);
-
     let response = await getNexyBrainResponse(savedInput);
 
     // Check for REDIRECT command
@@ -143,7 +139,6 @@ export default function NexyAssistant() {
     const nexyMsgIndex = newMsgs.length;
     setChatMessages([...newMsgs, { role: 'nexy', text: response, displayedText: "" }]);
     setIsThinking(false);
-    setIsAnalyzing(false);
     setIsTyping(true);
     typeMessage(response, nexyMsgIndex);
   };
@@ -230,8 +225,8 @@ export default function NexyAssistant() {
             })}
             {isThinking && (
               <div className="flex justify-start animate-in fade-in slide-in-from-left-2 duration-300">
-                <div className="bg-[var(--fun-surface)] fun-text p-5 rounded-2xl rounded-tl-none border border-[var(--fun-stroke-1)] shadow-sm w-full max-w-[280px]">
-                  <TypingIndicator isAnalyzing={isAnalyzing} />
+                <div className="bg-[var(--fun-surface)] fun-text p-4 rounded-2xl rounded-tl-none border border-[var(--fun-stroke-1)] shadow-sm">
+                  <TypingIndicator />
                 </div>
               </div>
             )}
@@ -260,47 +255,12 @@ export default function NexyAssistant() {
   );
 }
 
-function TypingIndicator({ isAnalyzing }: { isAnalyzing?: boolean }) {
-  const { lang } = useLang();
-  const [step, setStep] = useState(0);
-
-  const trStates = isAnalyzing
-    ? ["Fun Teknoloji verileri inceleniyor...", "Bilgi bankası taranıyor...", "Cevap oluşturuluyor..."]
-    : ["Düşünüyor...", "Hazırlanıyor...", "Yazıyor..."];
-
-  const enStates = isAnalyzing
-    ? ["Analyzing Fun Technology data...", "Scanning knowledge base...", "Generating response..."]
-    : ["Thinking...", "Preparing...", "Writing..."];
-
-  const states = lang === 'tr' ? trStates : enStates;
-
-  useEffect(() => {
-    const itv = setInterval(() => setStep(s => (s + 1) % states.length), 1800);
-    return () => clearInterval(itv);
-  }, [states.length]);
-
+function TypingIndicator() {
   return (
-    <div className="space-y-4">
-      <div className="flex items-center gap-3">
-        <div className="flex gap-1">
-          <div className="h-1.5 w-1.5 rounded-full bg-[var(--fun-purple)] animate-bounce" />
-          <div className="h-1.5 w-1.5 rounded-full bg-[var(--fun-purple)] animate-bounce [animation-delay:0.2s]" />
-          <div className="h-1.5 w-1.5 rounded-full bg-[var(--fun-purple)] animate-bounce [animation-delay:0.4s]" />
-        </div>
-        <span className="text-[10px] font-bold uppercase tracking-widest text-[var(--fun-purple)] animate-pulse">{states[step]}</span>
-      </div>
-
-      <div className="space-y-2">
-        <div className="h-2 w-full bg-[var(--fun-stroke-1)] rounded-full relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[var(--fun-purple)]/20 to-transparent -translate-x-full animate-skeleton-shimmer" />
-        </div>
-        <div className="h-2 w-[85%] bg-[var(--fun-stroke-1)] rounded-full relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[var(--fun-purple)]/20 to-transparent -translate-x-full animate-skeleton-shimmer [animation-delay:0.2s]" />
-        </div>
-        <div className="h-2 w-[60%] bg-[var(--fun-stroke-1)] rounded-full relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[var(--fun-purple)]/20 to-transparent -translate-x-full animate-skeleton-shimmer [animation-delay:0.4s]" />
-        </div>
-      </div>
+    <div className="flex gap-1.5 py-1 items-center">
+      <div className="h-2 w-2 rounded-full bg-[var(--fun-purple)] animate-[pulse_1s_infinite] shadow-[0_0_8px_var(--fun-purple)]" />
+      <div className="h-2 w-2 rounded-full bg-[var(--fun-purple)] animate-[pulse_1s_infinite] [animation-delay:0.2s] shadow-[0_0_8px_var(--fun-purple)]" />
+      <div className="h-2 w-2 rounded-full bg-[var(--fun-purple)] animate-[pulse_1s_infinite] [animation-delay:0.4s] shadow-[0_0_8px_var(--fun-purple)]" />
     </div>
   );
 }
