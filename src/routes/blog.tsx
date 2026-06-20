@@ -1,6 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { getBlogPosts } from "../lib/engine";
 
 export const Route = createFileRoute("/blog")({
+  loader: () => getBlogPosts(),
   head: () => ({
     meta: [
       { title: "Blog – Fun Teknoloji" },
@@ -18,14 +20,7 @@ export const Route = createFileRoute("/blog")({
 });
 
 function BlogPage() {
-  const posts = [
-    { title: "Yapay Zeka 2025'te İş Dünyasını Nasıl Dönüştürüyor?", desc: "Yapay zekanın iş süreçlerindeki etkisi ve gelecek trendleri hakkında kapsamlı bir analiz.", date: "15 Nisan 2025", tag: "Yapay Zeka" },
-    { title: "Modern Web Geliştirme Trendleri", desc: "React, Next.js ve modern frontend teknolojileriyle hızlı ve ölçeklenebilir web uygulamaları.", date: "10 Nisan 2025", tag: "Web Geliştirme" },
-    { title: "Siber Güvenlikte Yapay Zeka Kullanımı", desc: "Yapay zeka destekli güvenlik çözümleri ile tehditleri proaktif olarak tespit edin.", date: "5 Nisan 2025", tag: "Güvenlik" },
-    { title: "QuakeSafe: Afet Anında Bilgiye Hızlı Erişim", desc: "QuakeSafe uygulaması, deprem ve acil durumlarda kritik bilgilere internet olmasa bile ulaşmanızı sağlar.", date: "1 Nisan 2025", tag: "Ürünler" },
-    { title: "Bulut Bilişimde Maliyet Optimizasyonu", desc: "Bulut altyapı maliyetlerinizi optimize etmek için pratik stratejiler ve en iyi uygulamalar.", date: "25 Mart 2025", tag: "Bulut" },
-    { title: "Mobil Uygulama Geliştirmede En İyi Pratikler", desc: "Cross-platform geliştirme, performans optimizasyonu ve kullanıcı deneyimi ipuçları.", date: "20 Mart 2025", tag: "Mobil" },
-  ];
+  const posts = Route.useLoaderData();
 
   const tagColors: Record<string, string> = {
     "Yapay Zeka": "bg-[#864FFE]/10 text-[#864FFE]",
@@ -51,20 +46,26 @@ function BlogPage() {
       <section className="py-16 md:py-24">
         <div className="main-container">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {posts.map((post, i) => (
+            {posts?.map((post: any, i: number) => (
               <article key={i} className="rounded-3xl border overflow-hidden transition-all hover:shadow-lg" style={{ backgroundColor: 'var(--fun-card)', borderColor: 'var(--fun-stroke-1)' }}>
-                <div className="h-[200px] flex items-center justify-center" style={{ backgroundColor: 'var(--fun-surface)' }}>
-                  <div className="h-16 w-16 rounded-2xl flex items-center justify-center" style={{ backgroundColor: 'var(--fun-card)' }}>
-                    <span className="text-2xl font-bold fun-text-muted">{i + 1}</span>
+                {post.image_url ? (
+                  <div className="h-[200px] overflow-hidden">
+                    <img src={post.image_url} alt={post.title} className="w-full h-full object-cover" />
                   </div>
-                </div>
+                ) : (
+                  <div className="h-[200px] flex items-center justify-center" style={{ backgroundColor: 'var(--fun-surface)' }}>
+                    <div className="h-16 w-16 rounded-2xl flex items-center justify-center" style={{ backgroundColor: 'var(--fun-card)' }}>
+                      <span className="text-2xl font-bold fun-text-muted">{i + 1}</span>
+                    </div>
+                  </div>
+                )}
                 <div className="p-6 md:p-8">
                   <div className="flex items-center gap-3 mb-4">
-                    <span className={`text-xs font-medium px-3 py-1 rounded-full ${tagColors[post.tag] || ''}`}>{post.tag}</span>
-                    <span className="text-xs fun-text-muted">{post.date}</span>
+                    <span className={`text-xs font-medium px-3 py-1 rounded-full ${tagColors[post.author] || 'bg-[#864FFE]/10 text-[#864FFE]'}`}>{post.author || 'Teknoloji'}</span>
+                    <span className="text-xs fun-text-muted">{new Date(post.created_at).toLocaleDateString('tr-TR')}</span>
                   </div>
                   <h3 className="text-heading-6 font-medium mb-2 fun-text">{post.title}</h3>
-                  <p className="text-tagline-1 fun-text-muted mb-4">{post.desc}</p>
+                  <p className="text-tagline-1 fun-text-muted mb-4 line-clamp-2">{post.description}</p>
                   <span className="text-sm font-medium fun-text inline-flex items-center gap-1 cursor-pointer hover:text-[#864FFE] transition-colors">
                     Devamını oku
                     <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>

@@ -4,6 +4,7 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import IntroSplash from "../components/IntroSplash";
 import { LanguageProvider } from "../lib/i18n";
+import { Toaster } from "../components/ui/sonner";
 
 const THEME_INIT = `
 (function(){try{var s=localStorage.getItem('theme');var d=s?s==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;if(d)document.documentElement.classList.add('dark');var l=localStorage.getItem('lang');if(l==='en'||l==='tr')document.documentElement.lang=l;}catch(e){}})();
@@ -94,6 +95,7 @@ function RootComponent() {
       <Header />
       <Outlet />
       <Footer />
+      <Toaster />
     </LanguageProvider>
   );
 }

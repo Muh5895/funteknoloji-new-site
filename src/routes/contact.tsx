@@ -1,5 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
+import { submitContactForm } from "../lib/engine";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -20,11 +22,20 @@ export const Route = createFileRoute("/contact")({
 
 function ContactPage() {
   const [formData, setFormData] = useState({ name: "", email: "", subject: "", message: "" });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    alert("Mesajınız gönderildi! En kısa sürede size dönüş yapacağız.");
-    setFormData({ name: "", email: "", subject: "", message: "" });
+    setIsSubmitting(true);
+    try {
+      await submitContactForm(formData);
+      toast.success("Mesajınız başarıyla iletildi!");
+      setFormData({ name: "", email: "", subject: "", message: "" });
+    } catch (error) {
+      toast.error("Mesaj gönderilirken bir hata oluştu.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -64,11 +75,13 @@ function ContactPage() {
                     <label htmlFor="contact-message" className="block text-sm font-medium fun-text mb-2">Mesaj</label>
                     <textarea id="contact-message" name="message" value={formData.message} onChange={e => setFormData(p => ({ ...p, message: e.target.value }))} rows={6} className="w-full rounded-xl px-4 py-3 text-sm outline-none resize-none transition-colors" style={{ backgroundColor: 'var(--fun-surface)', borderColor: 'var(--fun-stroke-1)', borderWidth: 1, color: 'var(--fun-text)' }} placeholder="Mesajınızı yazın..." required />
                   </div>
-                  <button type="submit" className="btn-fun btn-fun-dark w-full sm:w-auto">
-                    Gönder
-                    <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
-                    </svg>
+                  <button type="submit" disabled={isSubmitting} className="btn-fun btn-fun-dark w-full sm:w-auto disabled:opacity-50">
+                    {isSubmitting ? "Gönderiliyor..." : "Gönder"}
+                    {!isSubmitting && (
+                      <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
+                      </svg>
+                    )}
                   </button>
                 </form>
               </div>
