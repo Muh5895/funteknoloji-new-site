@@ -1,0 +1,20 @@
+{
+  "rewrites": [
+    {
+      "source": "/rest/v1/(.*)",
+      "destination": "https://eiecuiberhqmyvvlrakn.supabase.co/rest/v1/$1"
+    },
+    {
+      "source": "/auth/v1/(.*)",
+      "destination": "https://eiecuiberhqmyvvlrakn.supabase.co/auth/v1/$1"
+    },
+    {
+      "source": "/api/nexy/(.*)",
+      "destination": "/403"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/"
+    }
+  ]
+}

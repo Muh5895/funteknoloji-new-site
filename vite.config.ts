@@ -6,4 +6,23 @@
 // You can pass additional config via defineConfig({ vite: { ... } }) if needed.
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 
-export default defineConfig();
+export default defineConfig({
+  vite: {
+    envPrefix: ["VITE_", "SUPABASE_"],
+    server: {
+      proxy: {
+        '/rest/v1': {
+          target: 'https://eiecuiberhqmyvvlrakn.supabase.co',
+          changeOrigin: true,
+        },
+        '/auth/v1': {
+          target: 'https://eiecuiberhqmyvvlrakn.supabase.co',
+          changeOrigin: true,
+        }
+      }
+    }
+  },
+  nitro: {
+    preset: "vercel",
+  },
+});

@@ -13,11 +13,24 @@ import { Route as TeamRouteImport } from './routes/team'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as SitemapRouteImport } from './routes/sitemap'
 import { Route as ServicesRouteImport } from './routes/services'
+import { Route as ServicePolicyRouteImport } from './routes/service-policy'
+import { Route as ReviewsRouteImport } from './routes/reviews'
+import { Route as QuakesafeRouteImport } from './routes/quakesafe'
+import { Route as ProjectsRouteImport } from './routes/projects'
+import { Route as PrivacyPolicyRouteImport } from './routes/privacy-policy'
 import { Route as PricingRouteImport } from './routes/pricing'
+import { Route as NexyRouteImport } from './routes/nexy'
+import { Route as HelpRouteImport } from './routes/help'
+import { Route as FaqRouteImport } from './routes/faq'
+import { Route as DocsRouteImport } from './routes/docs'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as ChangelogRouteImport } from './routes/changelog'
+import { Route as BrandKitRouteImport } from './routes/brand-kit'
 import { Route as BlogRouteImport } from './routes/blog'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as BlogIndexRouteImport } from './routes/blog.index'
+import { Route as BlogPostIdRouteImport } from './routes/blog.$postId'
 
 const TeamRoute = TeamRouteImport.update({
   id: '/team',
@@ -39,14 +52,69 @@ const ServicesRoute = ServicesRouteImport.update({
   path: '/services',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ServicePolicyRoute = ServicePolicyRouteImport.update({
+  id: '/service-policy',
+  path: '/service-policy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReviewsRoute = ReviewsRouteImport.update({
+  id: '/reviews',
+  path: '/reviews',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const QuakesafeRoute = QuakesafeRouteImport.update({
+  id: '/quakesafe',
+  path: '/quakesafe',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProjectsRoute = ProjectsRouteImport.update({
+  id: '/projects',
+  path: '/projects',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyPolicyRoute = PrivacyPolicyRouteImport.update({
+  id: '/privacy-policy',
+  path: '/privacy-policy',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PricingRoute = PricingRouteImport.update({
   id: '/pricing',
   path: '/pricing',
   getParentRoute: () => rootRouteImport,
 } as any)
+const NexyRoute = NexyRouteImport.update({
+  id: '/nexy',
+  path: '/nexy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HelpRoute = HelpRouteImport.update({
+  id: '/help',
+  path: '/help',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FaqRoute = FaqRouteImport.update({
+  id: '/faq',
+  path: '/faq',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DocsRoute = DocsRouteImport.update({
+  id: '/docs',
+  path: '/docs',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ChangelogRoute = ChangelogRouteImport.update({
+  id: '/changelog',
+  path: '/changelog',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BrandKitRoute = BrandKitRouteImport.update({
+  id: '/brand-kit',
+  path: '/brand-kit',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BlogRoute = BlogRouteImport.update({
@@ -64,40 +132,88 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BlogIndexRoute = BlogIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => BlogRoute,
+} as any)
+const BlogPostIdRoute = BlogPostIdRouteImport.update({
+  id: '/$postId',
+  path: '/$postId',
+  getParentRoute: () => BlogRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/blog': typeof BlogRoute
+  '/blog': typeof BlogRouteWithChildren
+  '/brand-kit': typeof BrandKitRoute
+  '/changelog': typeof ChangelogRoute
   '/contact': typeof ContactRoute
+  '/docs': typeof DocsRoute
+  '/faq': typeof FaqRoute
+  '/help': typeof HelpRoute
+  '/nexy': typeof NexyRoute
   '/pricing': typeof PricingRoute
+  '/privacy-policy': typeof PrivacyPolicyRoute
+  '/projects': typeof ProjectsRoute
+  '/quakesafe': typeof QuakesafeRoute
+  '/reviews': typeof ReviewsRoute
+  '/service-policy': typeof ServicePolicyRoute
   '/services': typeof ServicesRoute
   '/sitemap': typeof SitemapRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/team': typeof TeamRoute
+  '/blog/$postId': typeof BlogPostIdRoute
+  '/blog/': typeof BlogIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/blog': typeof BlogRoute
+  '/brand-kit': typeof BrandKitRoute
+  '/changelog': typeof ChangelogRoute
   '/contact': typeof ContactRoute
+  '/docs': typeof DocsRoute
+  '/faq': typeof FaqRoute
+  '/help': typeof HelpRoute
+  '/nexy': typeof NexyRoute
   '/pricing': typeof PricingRoute
+  '/privacy-policy': typeof PrivacyPolicyRoute
+  '/projects': typeof ProjectsRoute
+  '/quakesafe': typeof QuakesafeRoute
+  '/reviews': typeof ReviewsRoute
+  '/service-policy': typeof ServicePolicyRoute
   '/services': typeof ServicesRoute
   '/sitemap': typeof SitemapRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/team': typeof TeamRoute
+  '/blog/$postId': typeof BlogPostIdRoute
+  '/blog': typeof BlogIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/blog': typeof BlogRoute
+  '/blog': typeof BlogRouteWithChildren
+  '/brand-kit': typeof BrandKitRoute
+  '/changelog': typeof ChangelogRoute
   '/contact': typeof ContactRoute
+  '/docs': typeof DocsRoute
+  '/faq': typeof FaqRoute
+  '/help': typeof HelpRoute
+  '/nexy': typeof NexyRoute
   '/pricing': typeof PricingRoute
+  '/privacy-policy': typeof PrivacyPolicyRoute
+  '/projects': typeof ProjectsRoute
+  '/quakesafe': typeof QuakesafeRoute
+  '/reviews': typeof ReviewsRoute
+  '/service-policy': typeof ServicePolicyRoute
   '/services': typeof ServicesRoute
   '/sitemap': typeof SitemapRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/team': typeof TeamRoute
+  '/blog/$postId': typeof BlogPostIdRoute
+  '/blog/': typeof BlogIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -105,42 +221,91 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/blog'
+    | '/brand-kit'
+    | '/changelog'
     | '/contact'
+    | '/docs'
+    | '/faq'
+    | '/help'
+    | '/nexy'
     | '/pricing'
+    | '/privacy-policy'
+    | '/projects'
+    | '/quakesafe'
+    | '/reviews'
+    | '/service-policy'
     | '/services'
     | '/sitemap'
     | '/sitemap.xml'
     | '/team'
+    | '/blog/$postId'
+    | '/blog/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about'
-    | '/blog'
+    | '/brand-kit'
+    | '/changelog'
     | '/contact'
+    | '/docs'
+    | '/faq'
+    | '/help'
+    | '/nexy'
     | '/pricing'
+    | '/privacy-policy'
+    | '/projects'
+    | '/quakesafe'
+    | '/reviews'
+    | '/service-policy'
     | '/services'
     | '/sitemap'
     | '/sitemap.xml'
     | '/team'
+    | '/blog/$postId'
+    | '/blog'
   id:
     | '__root__'
     | '/'
     | '/about'
     | '/blog'
+    | '/brand-kit'
+    | '/changelog'
     | '/contact'
+    | '/docs'
+    | '/faq'
+    | '/help'
+    | '/nexy'
     | '/pricing'
+    | '/privacy-policy'
+    | '/projects'
+    | '/quakesafe'
+    | '/reviews'
+    | '/service-policy'
     | '/services'
     | '/sitemap'
     | '/sitemap.xml'
     | '/team'
+    | '/blog/$postId'
+    | '/blog/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
-  BlogRoute: typeof BlogRoute
+  BlogRoute: typeof BlogRouteWithChildren
+  BrandKitRoute: typeof BrandKitRoute
+  ChangelogRoute: typeof ChangelogRoute
   ContactRoute: typeof ContactRoute
+  DocsRoute: typeof DocsRoute
+  FaqRoute: typeof FaqRoute
+  HelpRoute: typeof HelpRoute
+  NexyRoute: typeof NexyRoute
   PricingRoute: typeof PricingRoute
+  PrivacyPolicyRoute: typeof PrivacyPolicyRoute
+  ProjectsRoute: typeof ProjectsRoute
+  QuakesafeRoute: typeof QuakesafeRoute
+  ReviewsRoute: typeof ReviewsRoute
+  ServicePolicyRoute: typeof ServicePolicyRoute
   ServicesRoute: typeof ServicesRoute
   SitemapRoute: typeof SitemapRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
@@ -177,6 +342,41 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ServicesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/service-policy': {
+      id: '/service-policy'
+      path: '/service-policy'
+      fullPath: '/service-policy'
+      preLoaderRoute: typeof ServicePolicyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reviews': {
+      id: '/reviews'
+      path: '/reviews'
+      fullPath: '/reviews'
+      preLoaderRoute: typeof ReviewsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/quakesafe': {
+      id: '/quakesafe'
+      path: '/quakesafe'
+      fullPath: '/quakesafe'
+      preLoaderRoute: typeof QuakesafeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/projects': {
+      id: '/projects'
+      path: '/projects'
+      fullPath: '/projects'
+      preLoaderRoute: typeof ProjectsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy-policy': {
+      id: '/privacy-policy'
+      path: '/privacy-policy'
+      fullPath: '/privacy-policy'
+      preLoaderRoute: typeof PrivacyPolicyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/pricing': {
       id: '/pricing'
       path: '/pricing'
@@ -184,11 +384,53 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PricingRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/nexy': {
+      id: '/nexy'
+      path: '/nexy'
+      fullPath: '/nexy'
+      preLoaderRoute: typeof NexyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/help': {
+      id: '/help'
+      path: '/help'
+      fullPath: '/help'
+      preLoaderRoute: typeof HelpRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/faq': {
+      id: '/faq'
+      path: '/faq'
+      fullPath: '/faq'
+      preLoaderRoute: typeof FaqRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/docs': {
+      id: '/docs'
+      path: '/docs'
+      fullPath: '/docs'
+      preLoaderRoute: typeof DocsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/contact': {
       id: '/contact'
       path: '/contact'
       fullPath: '/contact'
       preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/changelog': {
+      id: '/changelog'
+      path: '/changelog'
+      fullPath: '/changelog'
+      preLoaderRoute: typeof ChangelogRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/brand-kit': {
+      id: '/brand-kit'
+      path: '/brand-kit'
+      fullPath: '/brand-kit'
+      preLoaderRoute: typeof BrandKitRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/blog': {
@@ -212,15 +454,52 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/blog/': {
+      id: '/blog/'
+      path: '/'
+      fullPath: '/blog/'
+      preLoaderRoute: typeof BlogIndexRouteImport
+      parentRoute: typeof BlogRoute
+    }
+    '/blog/$postId': {
+      id: '/blog/$postId'
+      path: '/$postId'
+      fullPath: '/blog/$postId'
+      preLoaderRoute: typeof BlogPostIdRouteImport
+      parentRoute: typeof BlogRoute
+    }
   }
 }
+
+interface BlogRouteChildren {
+  BlogPostIdRoute: typeof BlogPostIdRoute
+  BlogIndexRoute: typeof BlogIndexRoute
+}
+
+const BlogRouteChildren: BlogRouteChildren = {
+  BlogPostIdRoute: BlogPostIdRoute,
+  BlogIndexRoute: BlogIndexRoute,
+}
+
+const BlogRouteWithChildren = BlogRoute._addFileChildren(BlogRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
-  BlogRoute: BlogRoute,
+  BlogRoute: BlogRouteWithChildren,
+  BrandKitRoute: BrandKitRoute,
+  ChangelogRoute: ChangelogRoute,
   ContactRoute: ContactRoute,
+  DocsRoute: DocsRoute,
+  FaqRoute: FaqRoute,
+  HelpRoute: HelpRoute,
+  NexyRoute: NexyRoute,
   PricingRoute: PricingRoute,
+  PrivacyPolicyRoute: PrivacyPolicyRoute,
+  ProjectsRoute: ProjectsRoute,
+  QuakesafeRoute: QuakesafeRoute,
+  ReviewsRoute: ReviewsRoute,
+  ServicePolicyRoute: ServicePolicyRoute,
   ServicesRoute: ServicesRoute,
   SitemapRoute: SitemapRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
@@ -229,3 +508,12 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { createStart } from '@tanstack/react-start'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+  }
+}
