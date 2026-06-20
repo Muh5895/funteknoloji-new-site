@@ -1,4 +1,6 @@
+import { createServerFn } from "@tanstack/react-start";
 import { supabase } from "./supabase";
+import { KNOWLEDGE_BASE } from "./knowledge";
 
 /**
  * PRODUCTION DATA ENGINE
@@ -20,7 +22,7 @@ export const getBlogPosts = createServerFn("GET", async () => {
   } catch (err) {
     return [];
   }
-};
+});
 
 export const getBlogPost = createServerFn("GET", async (title: string) => {
   try {
@@ -38,7 +40,7 @@ export const getBlogPost = createServerFn("GET", async (title: string) => {
   } catch (err) {
     return null;
   }
-};
+});
 
 export const submitContactForm = createServerFn("POST", async (payload: { name: string, email: string, subject: string, message: string }) => {
   try {
@@ -78,19 +80,17 @@ export const submitContactForm = createServerFn("POST", async (payload: { name: 
     if (error.message === "ALREADY_SENT") throw error;
     throw new Error("INTERNAL_DB_ERROR");
   }
-};
+});
 
 export const getTestimonials = createServerFn("GET", async () => {
   const { data } = await supabase.from("testimonials").select("*");
   return data || [];
-};
+});
 
 export const getFaqs = createServerFn("GET", async () => {
   const { data } = await supabase.from("faqs").select("*");
   return data || [];
-};
-
-import { KNOWLEDGE_BASE } from "./knowledge";
+});
 
 export const askNexy = createServerFn("POST", async (payload: { input: string, lang: string }) => {
   const { input, lang } = payload;
