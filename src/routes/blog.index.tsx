@@ -11,11 +11,11 @@ export const Route = createFileRoute("/blog/")({
 });
 
 interface BlogPost {
-  id: string;
   title: string;
   description: string;
+  text: string;
   image_url: string;
-  tag: string;
+  author: string;
   created_at: string;
 }
 
@@ -32,21 +32,19 @@ function BlogPage() {
 
         if (data) {
           const formattedPosts = await Promise.all(data.map(async (p: any) => {
-            let title = p[`title_${lang}`] || p.title || p.heading || t("blog.index.untitled");
-            let description = p[`description_${lang}`] || p.description || p.summary || p.text?.substring(0, 150) || p.content?.substring(0, 150) || "";
+            let title = p.title || t("blog.index.untitled");
+            let description = p.description || p.text?.substring(0, 150) || "";
 
-            if (lang !== 'tr' && !p[`title_${lang}`]) {
+            if (lang !== 'tr') {
               title = await translateText({ text: title, targetLang: lang });
               description = await translateText({ text: description, targetLang: lang });
             }
 
             return {
-              id: p.id,
+              ...p,
               title,
               description,
-              image_url: p.image_url || p.image || "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b",
-              tag: p.tag || p.category || t("blog.index.category_default"),
-              created_at: p.created_at
+              image_url: p.image_url || "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b",
             };
           }));
           setPosts(formattedPosts);
@@ -58,7 +56,7 @@ function BlogPage() {
       }
     }
     fetchPosts();
-  }, []);
+  }, [lang, t]);
 
   const filteredPosts = useMemo(() => {
     if (!searchQuery.trim()) return posts;
@@ -120,8 +118,8 @@ function BlogPage() {
           ) : filteredPosts.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {filteredPosts.map((post) => (
-                <ScrollReveal key={post.id}>
-                  <Link to={`/blog/${post.id}`} className="group block">
+                <ScrollReveal key={post.title}>
+                  <Link to={`/blog/${encodeURIComponent(post.title)}`} className="group block">
                     <div className="aspect-video rounded-2xl overflow-hidden mb-4 bg-[var(--fun-surface)]">
                       <img src={post.image_url} alt={post.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                     </div>
