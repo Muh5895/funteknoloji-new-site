@@ -5,7 +5,7 @@ import { supabase } from "./supabase";
  * Domain: funteknoloji.com
  */
 
-export const getBlogPosts = async () => {
+export const getBlogPosts = createServerFn("GET", async () => {
   try {
     const { data, error } = await supabase
       .from("blog")
@@ -22,7 +22,7 @@ export const getBlogPosts = async () => {
   }
 };
 
-export const getBlogPost = async (title: string) => {
+export const getBlogPost = createServerFn("GET", async (title: string) => {
   try {
     const { data, error } = await supabase
       .from("blog")
@@ -40,7 +40,7 @@ export const getBlogPost = async (title: string) => {
   }
 };
 
-export const submitContactForm = async (payload: { name: string, email: string, subject: string, message: string }) => {
+export const submitContactForm = createServerFn("POST", async (payload: { name: string, email: string, subject: string, message: string }) => {
   try {
     // Check for existing entries with same subject and message from the same email
     const { data: existing, error: checkError } = await supabase
@@ -80,12 +80,35 @@ export const submitContactForm = async (payload: { name: string, email: string, 
   }
 };
 
-export const getTestimonials = async () => {
+export const getTestimonials = createServerFn("GET", async () => {
   const { data } = await supabase.from("testimonials").select("*");
   return data || [];
 };
 
-export const getFaqs = async () => {
+export const getFaqs = createServerFn("GET", async () => {
   const { data } = await supabase.from("faqs").select("*");
   return data || [];
 };
+
+import { KNOWLEDGE_BASE } from "./knowledge";
+
+export const askNexy = createServerFn("POST", async (payload: { input: string, lang: string }) => {
+  const { input, lang } = payload;
+
+  const prompt = `System: Sen Fun Teknoloji şirketinin yapay zeka asistanı Nexy'sin.
+    Bilgi Bankası: ${KNOWLEDGE_BASE}
+    Dil: Kullanıcının dilinde (${lang}) cevap ver.
+    Tarz: Profesyonel, yardımsever ve samimi ol.
+    Önemli: Eğer kullanıcı bir sayfaya gitmek isterse cevabının sonuna [REDIRECT:/sayfa] ekle.
+    Kısa ve öz cevaplar ver.
+    User: ${input}`;
+
+  try {
+    const response = await fetch(`https://text.pollinations.ai/${encodeURIComponent(prompt)}?model=openai&cache=false`);
+    if (!response.ok) throw new Error("AI_ERROR");
+    const text = await response.text();
+    return text;
+  } catch (err) {
+    throw new Error("AI_OFFLINE");
+  }
+});

@@ -18,11 +18,6 @@ export default defineConfig({
         '/auth/v1': {
           target: 'https://eiecuiberhqmyvvlrakn.supabase.co',
           changeOrigin: true,
-        },
-        '/api/nexy': {
-          target: 'https://text.pollinations.ai',
-          changeOrigin: true,
-          rewrite: (path) => path.replace(/^\/api\/nexy/, '')
         }
       }
     }

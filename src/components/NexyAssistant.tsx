@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useLang } from "../lib/i18n";
 import { useNavigate } from "@tanstack/react-router";
-import { KNOWLEDGE_BASE } from "../lib/knowledge";
+import { askNexy } from "../lib/engine";
 import { toast } from "sonner";
 import {
   X,
@@ -88,22 +88,10 @@ export default function NexyAssistant() {
   };
 
   const getNexyBrainResponse = async (input: string) => {
-    const prompt = `System: Sen Fun Teknoloji şirketinin yapay zeka asistanı Nexy'sin.
-    Bilgi Bankası: ${KNOWLEDGE_BASE}
-    Dil: Kullanıcının dilinde (${lang}) cevap ver.
-    Tarz: Profesyonel, yardımsever ve samimi ol.
-    Önemli: Eğer kullanıcı bir sayfaya gitmek isterse cevabının sonuna [REDIRECT:/sayfa] ekle.
-    Kısa ve öz cevaplar ver.
-    User: ${input}`;
-
     try {
-      const response = await fetch(`/api/nexy/${encodeURIComponent(prompt)}?model=openai&cache=false`);
-
-      if (!response.ok) throw new Error();
-      const text = await response.text();
-      return text;
+      const response = await askNexy({ input, lang });
+      return response;
     } catch (err) {
-      // Fallback to static responses if AI fails
       return t("nexy.resp.default.0");
     }
   };
@@ -126,10 +114,16 @@ export default function NexyAssistant() {
     if (redirectMatch) {
       const path = redirectMatch[1];
       response = response.replace(/\[REDIRECT:.+\]/, '').trim();
+
+      // Add a follow-up message about redirecting
+      const redirectMsg = t("nexy.redirect_msg") || "Tamamdır, seni hemen yönlendiriyorum...";
+
       setTimeout(() => {
-        navigate({ to: path as any });
-        toast.info(t("nexy.redirecting") || "Yönlendiriliyorsunuz...");
-      }, 2000);
+        setChatMessages(prev => [...prev, { role: 'nexy', text: redirectMsg, displayedText: redirectMsg }]);
+        setTimeout(() => {
+          navigate({ to: path as any });
+        }, 1500);
+      }, 500);
     }
 
     const nexyMsgIndex = newMsgs.length;
@@ -161,6 +155,24 @@ export default function NexyAssistant() {
 
   if (!visible) return null;
 
+  const formatText = (text: string) => {
+    // Bold: **text**
+    let parts = text.split(/(\*\*.*?\*\*)/g);
+    return parts.map((part, i) => {
+      if (part.startsWith('**') && part.endsWith('**')) {
+        return <strong key={i} className="font-extrabold">{part.slice(2, -2)}</strong>;
+      }
+      // Italic: *text*
+      let italicParts = part.split(/(\*.*?\*)/g);
+      return italicParts.map((iPart, j) => {
+        if (iPart.startsWith('*') && iPart.endsWith('*')) {
+          return <em key={`${i}-${j}`} className="italic opacity-90">{iPart.slice(1, -1)}</em>;
+        }
+        return iPart;
+      });
+    });
+  };
+
   return (
     <div className="fixed bottom-6 right-6 z-[100] flex flex-col items-end gap-4 animate-in slide-in-from-right-10 duration-500">
       {!isOpen && !isMinimized && showPopup && (
@@ -190,9 +202,9 @@ export default function NexyAssistant() {
               return (
                 <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                   <div className={`relative group/msg max-w-[85%] p-4 rounded-2xl text-[15px] ${m.role === 'user' ? 'bg-[var(--fun-purple)] text-white rounded-tr-none shadow-lg' : 'bg-[var(--fun-surface)] fun-text rounded-tl-none border border-[var(--fun-stroke-1)] shadow-sm'}`}>
-                    {m.displayedText}
+                    {formatText(m.displayedText || "")}
                     {m.role === 'nexy' && m.displayedText === m.text && (
-                      <div className="absolute top-1/2 -right-12 -translate-y-1/2 flex flex-col gap-1 opacity-0 group-hover/msg:opacity-100 transition-opacity">
+                      <div className="absolute top-1/2 -right-12 -translate-y-1/2 flex flex-col gap-1 opacity-0 group-hover/msg:opacity-100 lg:opacity-0 lg:group-hover/msg:opacity-100 transition-opacity">
                         <button onClick={() => copyToClipboard(m.text)} className="h-5 w-5 flex items-center justify-center rounded bg-[var(--fun-card)] border border-[var(--fun-stroke-1)] fun-text hover:bg-[var(--fun-purple)] hover:text-white transition-colors" title={t("nexy.copy_tooltip")}><Copy className="h-3 w-3" /></button>
                         <button onClick={() => speak(m.text)} className="h-5 w-5 flex items-center justify-center rounded bg-[var(--fun-card)] border border-[var(--fun-stroke-1)] fun-text hover:bg-[var(--fun-purple)] hover:text-white transition-colors" title={t("nexy.read_tooltip")}><Volume2 className="h-3 w-3" /></button>
                       </div>
@@ -234,11 +246,31 @@ export default function NexyAssistant() {
 }
 
 function TypingIndicator() {
+  const { lang } = useLang();
+  const [step, setStep] = useState(0);
+  const states = lang === 'tr'
+    ? ["Düşünüyor...", "Veriler inceleniyor...", "Cevap hazırlanıyor..."]
+    : ["Thinking...", "Analyzing data...", "Preparing response..."];
+
+  useEffect(() => {
+    const itv = setInterval(() => setStep(s => (s + 1) % states.length), 2000);
+    return () => clearInterval(itv);
+  }, [states.length]);
+
   return (
-    <div className="flex gap-1 py-1">
-      <div className="h-1.5 w-1.5 rounded-full bg-[var(--fun-purple)] animate-bounce" />
-      <div className="h-1.5 w-1.5 rounded-full bg-[var(--fun-purple)] animate-bounce [animation-delay:0.2s]" />
-      <div className="h-1.5 w-1.5 rounded-full bg-[var(--fun-purple)] animate-bounce [animation-delay:0.4s]" />
+    <div className="flex flex-col gap-2 min-w-[140px]">
+      <div className="flex gap-1.5 items-center">
+        <div className="h-2 w-2 rounded-full bg-[var(--fun-purple)] animate-bounce shadow-[0_0_8px_var(--fun-purple)]" />
+        <div className="h-2 w-2 rounded-full bg-[var(--fun-purple)] animate-bounce [animation-delay:0.2s] shadow-[0_0_8px_var(--fun-purple)]" />
+        <div className="h-2 w-2 rounded-full bg-[var(--fun-purple)] animate-bounce [animation-delay:0.4s] shadow-[0_0_8px_var(--fun-purple)]" />
+      </div>
+      <p className="text-[11px] font-bold uppercase tracking-wider animate-pulse opacity-70">
+        {states[step]}
+      </p>
+      <div className="space-y-1.5">
+        <div className="h-2 w-full bg-[var(--fun-stroke-1)] rounded-full animate-pulse" />
+        <div className="h-2 w-5/6 bg-[var(--fun-stroke-1)] rounded-full animate-pulse [animation-delay:0.2s]" />
+      </div>
     </div>
   );
 }
