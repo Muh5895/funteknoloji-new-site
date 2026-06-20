@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
-import { submitContactForm } from "../lib/supabase-server";
+import { submitContactForm } from "../lib/database-core";
 import { toast } from "sonner";
 import { useLang } from "../lib/i18n";
 import ScrollReveal from "../components/ScrollReveal";
