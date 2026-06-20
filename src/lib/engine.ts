@@ -1,4 +1,3 @@
-import { createServerFn } from "@tanstack/react-start";
 import { supabase } from "./supabase";
 
 /**
@@ -6,7 +5,7 @@ import { supabase } from "./supabase";
  * Domain: funteknoloji.com
  */
 
-export const getBlogPosts = createServerFn("GET", async () => {
+export const getBlogPosts = async () => {
   try {
     const { data, error } = await supabase
       .from("blog")
@@ -21,9 +20,9 @@ export const getBlogPosts = createServerFn("GET", async () => {
   } catch (err) {
     return [];
   }
-});
+};
 
-export const getBlogPost = createServerFn("GET", async (title: string) => {
+export const getBlogPost = async (title: string) => {
   try {
     const { data, error } = await supabase
       .from("blog")
@@ -39,17 +38,9 @@ export const getBlogPost = createServerFn("GET", async (title: string) => {
   } catch (err) {
     return null;
   }
-});
+};
 
-export const submitContactForm = createServerFn("POST", async (payload: { name: string, email: string, subject: string, message: string }) => {
-  const now = Date.now();
-  if (!(global as any)._submit_cache) (global as any)._submit_cache = new Map();
-  const _cache = (global as any)._submit_cache;
-
-  const last = _cache.get(payload.email) || 0;
-  if (now - last < 30000) throw new Error("RATE_LIMIT");
-  _cache.set(payload.email, now);
-
+export const submitContactForm = async (payload: { name: string, email: string, subject: string, message: string }) => {
   try {
     const { error } = await supabase
       .from("contact")
@@ -69,14 +60,14 @@ export const submitContactForm = createServerFn("POST", async (payload: { name: 
   } catch (error) {
     throw new Error("INTERNAL_DB_ERROR");
   }
-});
+};
 
-export const getTestimonials = createServerFn("GET", async () => {
+export const getTestimonials = async () => {
   const { data } = await supabase.from("testimonials").select("*");
   return data || [];
-});
+};
 
-export const getFaqs = createServerFn("GET", async () => {
+export const getFaqs = async () => {
   const { data } = await supabase.from("faqs").select("*");
   return data || [];
-});
+};

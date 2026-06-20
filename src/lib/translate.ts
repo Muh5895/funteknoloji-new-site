@@ -1,6 +1,4 @@
-import { createServerFn } from "@tanstack/react-start";
-
-export const translateText = createServerFn("GET", async (payload: { text: string, targetLang: string }): Promise<string> => {
+export const translateText = async (payload: { text: string, targetLang: string }): Promise<string> => {
   const { text, targetLang } = payload;
   if (!text || targetLang === 'tr') return text;
 
@@ -19,4 +17,4 @@ export const translateText = createServerFn("GET", async (payload: { text: strin
     console.error('Translation error:', error);
     return text;
   }
-});
+};
