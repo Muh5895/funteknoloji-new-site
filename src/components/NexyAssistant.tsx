@@ -84,52 +84,54 @@ export default function NexyAssistant() {
     }
   };
 
-  const getNexyBrainResponse = (input: string) => {
-    const text = input.toLowerCase();
+  const getNexyBrainResponse = async (input: string) => {
+    const systemPrompt = `Sen Fun Teknoloji şirketinin yapay zeka asistanı Nexy'sin.
+    Şirket Hakkında: Fun Teknoloji, yapay zeka, özel yazılım geliştirme ve dijital dönüşüm alanlarında uzmanlaşmış bir teknoloji şirketidir.
+    Kurucu: Muhammed Erbay.
+    Hizmetler: Web/Mobil Yazılım, Yapay Zeka Entegrasyonu, Dijital Dönüşüm Danışmanlığı.
+    Dil: Kullanıcının dilinde (${lang}) cevap ver.
+    Tarz: Profesyonel, yardımsever ve samimi ol.
+    Kısa ve öz cevaplar ver.`;
 
-    const responses: Record<string, string[]> = {
-      pricing: [t("nexy.resp.pricing.0"), t("nexy.resp.pricing.1"), t("nexy.resp.pricing.2")],
-      services: [t("nexy.resp.services.0"), t("nexy.resp.services.1"), t("nexy.resp.services.2")],
-      founder: [t("nexy.resp.founder.0"), t("nexy.resp.founder.1"), t("nexy.resp.founder.2")],
-      contact: [t("nexy.resp.contact.0"), t("nexy.resp.contact.1"), t("nexy.resp.contact.2")],
-      about: [t("nexy.resp.about.0"), t("nexy.resp.about.1"), t("nexy.resp.about.2")],
-      careers: [t("nexy.resp.careers.0"), t("nexy.resp.careers.1"), t("nexy.resp.careers.2")],
-      tech: [t("nexy.resp.tech.0"), t("nexy.resp.tech.1"), t("nexy.resp.tech.2")],
-      greeting: [t("nexy.resp.greeting.0"), t("nexy.resp.greeting.1"), t("nexy.resp.greeting.2")],
-      default: [t("nexy.resp.default.0"), t("nexy.resp.default.1"), t("nexy.resp.default.2"), t("nexy.resp.default.3")]
-    };
+    try {
+      const response = await fetch('/api/nexy/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          messages: [
+            { role: 'system', content: systemPrompt },
+            { role: 'user', content: input }
+          ],
+          model: 'openai'
+        })
+      });
 
-    const getRandom = (arr: string[]) => arr[Math.floor(Math.random() * arr.length)];
-    const matches = (keywords: string[]) => keywords.some(k => text.includes(k.toLowerCase()));
-
-    if (matches(["merhaba", "selam", "hi", "hello", "hallo", "salut", "hola", "ciao", "olá", "こんにちは", "你好", "привет", "مرحبا"])) return getRandom(responses.greeting);
-    if (matches(["fiyat", "paket", "ücret", "price", "cost", "qiymət", "preis", "prix", "precio", "prezzo", "preço", "価格", "价格", "цена", "سعر"])) return getRandom(responses.pricing);
-    if (matches(["neler", "yap", "hizmet", "service", "xidmət", "işler", "dienst", "servicio", "servizio", "serviço", "サービス", "服务", "услуги", "خدمة"])) return getRandom(responses.services);
-    if (matches(["kim", "kurucu", "founder", "muhammed", "erbay", "gründer", "fondateur", "fundador", "fondatore", "創設者", "创始人", "основатель", "مؤسس"])) return getRandom(responses.founder);
-    if (matches(["iletişim", "ulaş", "contact", "əlaqə", "mail", "e-posta", "kontakt", "contacto", "contatto", "contato", "連絡", "联系", "контакт", "اتصال"])) return getRandom(responses.contact);
-    if (text.includes("hakkında") || text.includes("nedir") || text.includes("ne zaman") || matches(["about", "über", "propos", "sobre", "su", "について", "关于", "о нас", "حول"])) return getRandom(responses.about);
-    if (matches(["iş", "kariyer", "career", "çalış", "başvuru", "karriere", "carrière", "carrera", "carriera", "carreira", "キャリア", "职业", "карьера", "وظائف"])) return getRandom(responses.careers);
-    if (matches(["teknoloji", "tech", "yazılım", "program", "kod", "software", "code", "logiciel", "software", "software", "ソフトウェア", "软件", "технологии", "تكنولوجيا"])) return getRandom(responses.tech);
-    return getRandom(responses.default);
+      if (!response.ok) throw new Error();
+      const text = await response.text();
+      return text;
+    } catch (err) {
+      // Fallback to static responses if AI fails
+      return t("nexy.resp.default.0");
+    }
   };
 
-  const handleSend = (e: React.FormEvent) => {
+  const handleSend = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!userInput.trim() || isTyping) return;
     const userMsg = { role: 'user' as const, text: userInput, displayedText: userInput };
     const newMsgs = [...chatMessages, userMsg];
     setChatMessages(newMsgs);
+    const savedInput = userInput;
     setUserInput("");
     setIsTyping(true);
     setIsThinking(true);
-    setTimeout(() => {
-      const response = getNexyBrainResponse(userInput);
-      const nexyMsgIndex = newMsgs.length;
-      setChatMessages([...newMsgs, { role: 'nexy', text: response, displayedText: "" }]);
-      setIsThinking(false);
-      setIsTyping(true);
-      typeMessage(response, nexyMsgIndex);
-    }, 1200);
+
+    const response = await getNexyBrainResponse(savedInput);
+    const nexyMsgIndex = newMsgs.length;
+    setChatMessages([...newMsgs, { role: 'nexy', text: response, displayedText: "" }]);
+    setIsThinking(false);
+    setIsTyping(true);
+    typeMessage(response, nexyMsgIndex);
   };
 
   const copyToClipboard = (text: string) => {

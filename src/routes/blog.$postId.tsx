@@ -33,7 +33,8 @@ const LANG_LABELS: Record<string, string> = {
 };
 
 function PostPage() {
-  const { postId } = Route.useParams();
+  const { postId: rawPostId } = Route.useParams();
+  const postId = rawPostId.replaceAll('-', ' ');
   const { lang, setLang, t } = useLang();
   const [post, setPost] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -139,10 +140,17 @@ function PostPage() {
 
       utterance.onboundary = (event) => {
         if (event.name === 'word') {
+            // For mobile compatibility, ensure we use charIndex correctly
+            const index = event.charIndex;
             requestAnimationFrame(() => {
-                setHighlightIdx(event.charIndex);
+                setHighlightIdx(index);
             });
         }
+      };
+
+      // Fallback for some mobile browsers that don't trigger onboundary reliably
+      utterance.onstart = () => {
+         setIsReading(true);
       };
 
       utterance.onend = () => {
@@ -229,10 +237,18 @@ function PostPage() {
             {/* Dropdown Menu */}
             {menuOpen && (
               <div className="absolute right-0 top-full mt-2 w-56 rounded-2xl border border-[var(--fun-stroke-1)] bg-[var(--fun-card)] shadow-2xl z-50 p-2 animate-in slide-in-from-top-2 duration-200">
-                <button onClick={handleCopy} className="w-full flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-[var(--fun-surface)] transition-colors fun-text text-sm">
+                <button
+                  disabled={contentLoading}
+                  onClick={handleCopy}
+                  className="w-full flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-[var(--fun-surface)] transition-colors fun-text text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                >
                   <Copy className="h-4 w-4" /> {t("blog.post.copy_text")}
                 </button>
-                <button onClick={handleReadAloud} className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-[var(--fun-surface)] transition-colors text-sm ${isReading ? 'text-red-500' : 'fun-text'}`}>
+                <button
+                  disabled={contentLoading}
+                  onClick={handleReadAloud}
+                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-[var(--fun-surface)] transition-colors text-sm disabled:opacity-50 disabled:cursor-not-allowed ${isReading ? 'text-red-500' : 'fun-text'}`}
+                >
                   {isReading ? <VolumeX className="h-4 w-4" /> : <Volume2 className="h-4 w-4" />}
                   {isReading ? t("blog.post.stop_reading") : t("blog.post.read_aloud")}
                 </button>
@@ -252,8 +268,7 @@ function PostPage() {
             {/* Language Selection Sub-menu */}
             {langMenuOpen && (
               <div className="absolute right-0 top-full mt-2 w-64 max-h-[400px] overflow-y-auto rounded-2xl border border-[var(--fun-stroke-1)] bg-[var(--fun-card)] shadow-2xl z-50 p-2 animate-in zoom-in-95 duration-200 custom-scrollbar">
-                <div className="sticky top-0 bg-[var(--fun-card)] z-10 flex items-center justify-between px-3 py-2 border-b border-[var(--fun-stroke-1)] mb-1">
-                  <span className="text-[10px] font-bold uppercase tracking-widest fun-text-muted">{t("blog.post.select_language")}</span>
+                <div className="sticky top-0 bg-[var(--fun-card)] z-10 flex items-center justify-end px-3 py-2 border-b border-[var(--fun-stroke-1)] mb-1">
                   <button onClick={() => setLangMenuOpen(false)} className="hover:text-red-500"><X className="h-3 w-3" /></button>
                 </div>
                 {Object.entries(LANG_LABELS).map(([code, label]) => (

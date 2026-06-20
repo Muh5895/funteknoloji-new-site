@@ -119,7 +119,7 @@ function BlogPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {filteredPosts.map((post) => (
                 <ScrollReveal key={post.title}>
-                  <Link to={`/blog/${encodeURIComponent(post.title)}`} className="group block">
+                  <Link to={`/blog/${post.title.replaceAll(' ', '-')}`} className="group block">
                     <div className="aspect-video rounded-2xl overflow-hidden mb-4 bg-[var(--fun-surface)]">
                       <img src={post.image_url} alt={post.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                     </div>

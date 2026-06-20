@@ -47,10 +47,10 @@ export default function LanguageSwitcher() {
       </button>
       {open && (
         <div
-          className="absolute right-0 top-full z-50 mt-2 w-[280px] sm:w-[500px] overflow-hidden rounded-2xl border shadow-2xl animate-scale-in origin-top-right p-2 backdrop-blur-xl"
+          className="absolute right-[-20px] sm:right-0 top-full z-50 mt-2 w-[calc(100vw-32px)] sm:w-[500px] max-w-[500px] overflow-hidden rounded-2xl border shadow-2xl animate-scale-in origin-top-right p-2 backdrop-blur-xl"
           style={{ backgroundColor: "var(--fun-card)", borderColor: "var(--fun-stroke-1)" }}
         >
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-1">
+          <div className="grid grid-cols-2 sm:grid-cols-2 gap-1">
             {langs.map((l) => (
               <button
                 key={l.code}
