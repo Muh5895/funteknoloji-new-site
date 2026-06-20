@@ -1,19 +1,14 @@
 import { createServerFn } from "@tanstack/react-start";
-import { createClient } from "@supabase/supabase-js";
+import { supabase } from "./supabase";
 
 /**
  * PRODUCTION DATA ENGINE
  * Domain: funteknoloji.com
  */
 
-const _v1 = "https://eiecuiberhqmyvvlrakn.supabase.co";
-const _v2 = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVpZWN1aWJlcmhxbXl2dmxyYWtuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEyNjEzNDcsImV4cCI6MjA4NjgzNzM0N30.fq7MTsxB86XfZzfkRXS9avf7XK-kAsDAqms6WI84qbM";
-
-const _client = createClient(_v1, _v2);
-
 export const getBlogPosts = createServerFn("GET", async () => {
   try {
-    const { data, error } = await _client
+    const { data, error } = await supabase
       .from("blog")
       .select("title, description, text, image_url, author, created_at")
       .order("created_at", { ascending: false });
@@ -30,7 +25,7 @@ export const getBlogPosts = createServerFn("GET", async () => {
 
 export const getBlogPost = createServerFn("GET", async (title: string) => {
   try {
-    const { data, error } = await _client
+    const { data, error } = await supabase
       .from("blog")
       .select("*")
       .eq("title", title)
@@ -56,7 +51,7 @@ export const submitContactForm = createServerFn("POST", async (payload: { name: 
   _cache.set(payload.email, now);
 
   try {
-    const { error } = await _client
+    const { error } = await supabase
       .from("contact")
       .insert([{
         name: payload.name,
@@ -77,11 +72,11 @@ export const submitContactForm = createServerFn("POST", async (payload: { name: 
 });
 
 export const getTestimonials = createServerFn("GET", async () => {
-  const { data } = await _client.from("testimonials").select("*");
+  const { data } = await supabase.from("testimonials").select("*");
   return data || [];
 });
 
 export const getFaqs = createServerFn("GET", async () => {
-  const { data } = await _client.from("faqs").select("*");
+  const { data } = await supabase.from("faqs").select("*");
   return data || [];
 });

@@ -95,7 +95,7 @@ function ContactPage() {
     setLoading(true);
     try {
       await submitContactForm(formData);
-      toast.success(t("contact.form.success").replace(" ✅", ""), { description: "Your message has been delivered to the database.", duration: 4000 });
+      toast.success(t("contact.form.success").replace(" ✅", ""), { duration: 4000 });
       setFormData({ name: "", email: "", subject: "", message: "" });
       setShowCaptcha(false);
       setLastSubmit(Date.now());
