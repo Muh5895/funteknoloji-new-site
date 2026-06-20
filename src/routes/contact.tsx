@@ -102,6 +102,8 @@ function ContactPage() {
     } catch (err: any) {
       if (err.message === "RATE_LIMIT") {
         toast.error(t("contact.form.rate_limit"));
+      } else if (err.message === "ALREADY_SENT") {
+        toast.error(t("contact.form.already_sent"));
       } else {
         toast.error(t("contact.form.error"));
       }

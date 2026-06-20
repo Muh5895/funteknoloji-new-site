@@ -1,3 +1,4 @@
+import { createServerFn } from "@tanstack/react-start";
 import { supabase } from "./supabase";
 
 /**
@@ -5,7 +6,7 @@ import { supabase } from "./supabase";
  * Domain: funteknoloji.com
  */
 
-export const getBlogPosts = async () => {
+export const getBlogPosts = createServerFn("GET", async () => {
   try {
     const { data, error } = await supabase
       .from("blog")
@@ -20,9 +21,9 @@ export const getBlogPosts = async () => {
   } catch (err) {
     return [];
   }
-};
+});
 
-export const getBlogPost = async (title: string) => {
+export const getBlogPost = createServerFn("GET", async (title: string) => {
   try {
     const { data, error } = await supabase
       .from("blog")
@@ -38,10 +39,27 @@ export const getBlogPost = async (title: string) => {
   } catch (err) {
     return null;
   }
-};
+});
 
-export const submitContactForm = async (payload: { name: string, email: string, subject: string, message: string }) => {
+export const submitContactForm = createServerFn("POST", async (payload: { name: string, email: string, subject: string, message: string }) => {
   try {
+    // Check for existing entries with same subject and message from the same email
+    const { data: existing, error: checkError } = await supabase
+      .from("contact")
+      .select("id")
+      .eq("email", payload.email)
+      .eq("subject", payload.subject)
+      .eq("message", payload.message)
+      .limit(1);
+
+    if (checkError) {
+      console.error("DB_CHECK_ERR:", checkError);
+    }
+
+    if (existing && existing.length > 0) {
+      throw new Error("ALREADY_SENT");
+    }
+
     const { error } = await supabase
       .from("contact")
       .insert([{
@@ -57,17 +75,18 @@ export const submitContactForm = async (payload: { name: string, email: string, 
       throw error;
     }
     return { success: true };
-  } catch (error) {
+  } catch (error: any) {
+    if (error.message === "ALREADY_SENT") throw error;
     throw new Error("INTERNAL_DB_ERROR");
   }
-};
+});
 
-export const getTestimonials = async () => {
+export const getTestimonials = createServerFn("GET", async () => {
   const { data } = await supabase.from("testimonials").select("*");
   return data || [];
-};
+});
 
-export const getFaqs = async () => {
+export const getFaqs = createServerFn("GET", async () => {
   const { data } = await supabase.from("faqs").select("*");
   return data || [];
-};
+});
