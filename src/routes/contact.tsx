@@ -95,7 +95,7 @@ function ContactPage() {
     setLoading(true);
     try {
       await submitContactForm(formData);
-      toast.success(t("contact.form.success").replace(" ✅", ""));
+      toast.success(t("contact.form.success").replace(" ✅", ""), { description: "Mesajınız başarıyla veritabanına iletildi." });
       setFormData({ name: "", email: "", subject: "", message: "" });
       setShowCaptcha(false);
       setLastSubmit(Date.now());

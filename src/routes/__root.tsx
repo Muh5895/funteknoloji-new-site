@@ -105,7 +105,26 @@ function RootComponent() {
       <Outlet />
       <NexyAssistant />
       <Footer />
-      <Toaster position="top-center" richColors />
+      <Toaster
+        position="top-center"
+        richColors
+        closeButton
+        expand={false}
+        toastOptions={{
+          style: {
+            background: 'var(--fun-card)',
+            color: 'var(--fun-text)',
+            border: '1px solid var(--fun-stroke-1)',
+            borderRadius: '20px',
+            padding: '16px',
+            fontSize: '14px',
+            fontWeight: '500',
+            boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+            backdropFilter: 'blur(10px)',
+          },
+          className: 'fun-toast',
+        }}
+      />
     </LanguageProvider>
   );
 }
