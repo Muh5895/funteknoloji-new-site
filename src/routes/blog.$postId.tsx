@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState, useCallback, useRef } from "react";
-import { getBlogPost } from "../lib/database-core";
+import { getBlogPost } from "../lib/db";
 import { translateText } from "../lib/translate";
 import { useLang, type Lang } from "../lib/i18n";
 import ArrowButton from "../components/ArrowButton";

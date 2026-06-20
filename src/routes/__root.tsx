@@ -111,43 +111,43 @@ function RootComponent() {
         closeButton
         toastOptions={{
           style: {
-            background: 'rgba(255, 255, 255, 0.95)',
+            background: 'var(--fun-card)',
             border: '1px solid var(--fun-stroke-1)',
-            borderRadius: '24px',
-            boxShadow: '0 20px 40px -15px rgba(0, 0, 0, 0.2)',
-            padding: '16px 20px',
-            color: '#12161F',
+            borderRadius: '16px',
+            boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+            padding: '12px 16px',
+            color: 'var(--fun-text)',
             fontSize: '14px',
-            fontWeight: '600',
-            backdropFilter: 'blur(10px)',
+            fontWeight: '500',
+            backdropFilter: 'blur(12px)',
           },
-          className: 'fun-toast-premium',
+          className: 'heroui-toast-styled',
           success: {
              style: {
-               background: '#F0FDF4',
-               borderColor: '#BBF7D0',
-               color: '#166534',
+               background: 'rgba(20, 163, 72, 0.05)',
+               borderColor: 'rgba(20, 163, 72, 0.2)',
+               color: '#14a348',
              }
           },
           error: {
              style: {
-               background: '#FEF2F2',
-               borderColor: '#FECACA',
-               color: '#991B1B',
+               background: 'rgba(239, 68, 68, 0.05)',
+               borderColor: 'rgba(239, 68, 68, 0.2)',
+               color: '#ef4444',
              }
           },
           warning: {
              style: {
-               background: '#FFFBEB',
-               borderColor: '#FEF3C7',
-               color: '#92400E',
+               background: 'rgba(245, 158, 11, 0.05)',
+               borderColor: 'rgba(245, 158, 11, 0.2)',
+               color: '#f59e0b',
              }
           },
           info: {
              style: {
-               background: '#EFF6FF',
-               borderColor: '#BFDBFE',
-               color: '#1E40AF',
+               background: 'rgba(59, 130, 246, 0.05)',
+               borderColor: 'rgba(59, 130, 246, 0.2)',
+               color: '#3b82f6',
              }
           }
         }}

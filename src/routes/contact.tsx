@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
-import { submitContactForm } from "../lib/database-core";
+import { submitContactForm } from "../lib/db";
 import { toast } from "sonner";
 import { useLang } from "../lib/i18n";
 import ScrollReveal from "../components/ScrollReveal";
@@ -95,7 +95,7 @@ function ContactPage() {
     setLoading(true);
     try {
       await submitContactForm(formData);
-      toast.success(t("contact.form.success").replace(" ✅", ""), { description: "Mesajınız başarıyla veritabanına iletildi." });
+      toast.success(t("contact.form.success").replace(" ✅", ""), { description: "Your message has been delivered to the database.", duration: 4000 });
       setFormData({ name: "", email: "", subject: "", message: "" });
       setShowCaptcha(false);
       setLastSubmit(Date.now());

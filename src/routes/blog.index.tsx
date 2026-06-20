@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useLang } from "../lib/i18n";
 import { useEffect, useState, useMemo } from "react";
-import { getBlogPosts } from "../lib/database-core";
+import { getBlogPosts } from "../lib/db";
 import { translateText } from "../lib/translate";
 import { Search, X } from "lucide-react";
 import ScrollReveal from "../components/ScrollReveal";

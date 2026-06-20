@@ -1,18 +1,15 @@
 import { createServerFn } from "@tanstack/react-start";
 import { createClient } from "@supabase/supabase-js";
 
-// Database configuration - masked from client
-// These credentials are only used server-side
-const DB_CONFIG = {
-  url: "https://eiecuiberhqmyvvlrakn.supabase.co",
-  key: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVpZWN1aWJlcmhxbXl2dmxyYWtuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEyNjEzNDcsImV4cCI6MjA4NjgzNzM0N30.fq7MTsxB86XfZzfkRXS9avf7XK-kAsDAqms6WI84qbM"
-};
+// Database configuration
+// Masked for production as funteknoloji.com
+const DB_URL = "https://eiecuiberhqmyvvlrakn.supabase.co";
+const DB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVpZWN1aWJlcmhxbXl2dmxyYWtuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEyNjEzNDcsImV4cCI6MjA4NjgzNzM0N30.fq7MTsxB86XfZzfkRXS9avf7XK-kAsDAqms6WI84qbM";
 
-const db = createClient(DB_CONFIG.url, DB_CONFIG.key);
+const db = createClient(DB_URL, DB_KEY);
 
 /**
- * Fetches all blog posts from the database.
- * This function runs strictly on the server.
+ * Server-only database fetcher for blog posts.
  */
 export const getBlogPosts = createServerFn("GET", async () => {
   try {
@@ -24,14 +21,13 @@ export const getBlogPosts = createServerFn("GET", async () => {
     if (error) throw error;
     return data || [];
   } catch (error) {
-    console.error("Fetch Posts Error:", error);
+    console.error("DB Fetch Error (Posts):", error);
     return [];
   }
 });
 
 /**
- * Fetches a single blog post by ID.
- * This function runs strictly on the server.
+ * Server-only database fetcher for a single blog post.
  */
 export const getBlogPost = createServerFn("GET", async (id: string) => {
   try {
@@ -44,13 +40,13 @@ export const getBlogPost = createServerFn("GET", async (id: string) => {
     if (error) throw error;
     return data;
   } catch (error) {
-    console.error(`Fetch Post (${id}) Error:`, error);
+    console.error(`DB Fetch Error (Post ${id}):`, error);
     return null;
   }
 });
 
 /**
- * Fetches testimonials.
+ * Fetches testimonials from the database.
  */
 export const getTestimonials = createServerFn("GET", async () => {
   try {
@@ -58,13 +54,13 @@ export const getTestimonials = createServerFn("GET", async () => {
     if (error) throw error;
     return data || [];
   } catch (error) {
-    console.error("Fetch Testimonials Error:", error);
+    console.error("DB Fetch Error (Testimonials):", error);
     return [];
   }
 });
 
 /**
- * Fetches FAQs.
+ * Fetches FAQs from the database.
  */
 export const getFaqs = createServerFn("GET", async () => {
   try {
@@ -72,14 +68,13 @@ export const getFaqs = createServerFn("GET", async () => {
     if (error) throw error;
     return data || [];
   } catch (error) {
-    console.error("Fetch FAQs Error:", error);
+    console.error("DB Fetch Error (FAQs):", error);
     return [];
   }
 });
 
 /**
- * Submits the contact form data to the database.
- * Includes basic server-side rate limiting.
+ * Submits contact form data.
  */
 const rateLimitMap = new Map<string, number>();
 
@@ -101,7 +96,7 @@ export const submitContactForm = createServerFn("POST", async (formData: { name:
     if (error) throw error;
     return { success: true };
   } catch (error) {
-    console.error("Submit Contact Error:", error);
-    throw new Error("DB_ERROR");
+    console.error("DB Submission Error (Contact):", error);
+    throw new Error("DATABASE_ERROR");
   }
 });
