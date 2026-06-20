@@ -97,7 +97,7 @@ export default function NexyAssistant() {
     User: ${input}`;
 
     try {
-      const response = await fetch(\`/api/nexy/\${encodeURIComponent(prompt)}?model=openai&cache=false\`);
+      const response = await fetch(`/api/nexy/${encodeURIComponent(prompt)}?model=openai&cache=false`);
 
       if (!response.ok) throw new Error();
       const text = await response.text();
