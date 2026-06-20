@@ -142,9 +142,12 @@ function PostPage() {
         if (event.name === 'word') {
             // For mobile compatibility, ensure we use charIndex correctly
             const index = event.charIndex;
-            requestAnimationFrame(() => {
-                setHighlightIdx(index);
-            });
+            // Use a small timeout to ensure state update syncs with speech
+            setTimeout(() => {
+              requestAnimationFrame(() => {
+                  setHighlightIdx(index);
+              });
+            }, 10);
         }
       };
 

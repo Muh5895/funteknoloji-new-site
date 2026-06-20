@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useLang } from "../lib/i18n";
+import { useNavigate } from "@tanstack/react-router";
+import { KNOWLEDGE_BASE } from "../lib/knowledge";
 import { toast } from "sonner";
 import {
   X,
@@ -13,6 +15,7 @@ import {
 
 export default function NexyAssistant() {
   const { t, lang } = useLang();
+  const navigate = useNavigate();
   const [visible, setVisible] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
@@ -85,26 +88,16 @@ export default function NexyAssistant() {
   };
 
   const getNexyBrainResponse = async (input: string) => {
-    const systemPrompt = `Sen Fun Teknoloji şirketinin yapay zeka asistanı Nexy'sin.
-    Şirket Hakkında: Fun Teknoloji, yapay zeka, özel yazılım geliştirme ve dijital dönüşüm alanlarında uzmanlaşmış bir teknoloji şirketidir.
-    Kurucu: Muhammed Erbay.
-    Hizmetler: Web/Mobil Yazılım, Yapay Zeka Entegrasyonu, Dijital Dönüşüm Danışmanlığı.
+    const prompt = `System: Sen Fun Teknoloji şirketinin yapay zeka asistanı Nexy'sin.
+    Bilgi Bankası: ${KNOWLEDGE_BASE}
     Dil: Kullanıcının dilinde (${lang}) cevap ver.
     Tarz: Profesyonel, yardımsever ve samimi ol.
-    Kısa ve öz cevaplar ver.`;
+    Önemli: Eğer kullanıcı bir sayfaya gitmek isterse cevabının sonuna [REDIRECT:/sayfa] ekle.
+    Kısa ve öz cevaplar ver.
+    User: ${input}`;
 
     try {
-      const response = await fetch('/api/nexy/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          messages: [
-            { role: 'system', content: systemPrompt },
-            { role: 'user', content: input }
-          ],
-          model: 'openai'
-        })
-      });
+      const response = await fetch(\`/api/nexy/\${encodeURIComponent(prompt)}?model=openai&cache=false\`);
 
       if (!response.ok) throw new Error();
       const text = await response.text();
@@ -126,7 +119,19 @@ export default function NexyAssistant() {
     setIsTyping(true);
     setIsThinking(true);
 
-    const response = await getNexyBrainResponse(savedInput);
+    let response = await getNexyBrainResponse(savedInput);
+
+    // Check for REDIRECT command
+    const redirectMatch = response.match(/\[REDIRECT:(.+)\]/);
+    if (redirectMatch) {
+      const path = redirectMatch[1];
+      response = response.replace(/\[REDIRECT:.+\]/, '').trim();
+      setTimeout(() => {
+        navigate({ to: path as any });
+        toast.info(t("nexy.redirecting") || "Yönlendiriliyorsunuz...");
+      }, 2000);
+    }
+
     const nexyMsgIndex = newMsgs.length;
     setChatMessages([...newMsgs, { role: 'nexy', text: response, displayedText: "" }]);
     setIsThinking(false);
@@ -182,12 +187,11 @@ export default function NexyAssistant() {
           </div>
           <div ref={scrollRef} className="flex-1 overflow-y-auto p-5 space-y-5 bg-dots scroll-smooth">
             {chatMessages.map((m, i) => {
-              const isCurrentlyThinking = isThinking && i === chatMessages.length - 1 && m.role === 'nexy';
               return (
                 <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                   <div className={`relative group/msg max-w-[85%] p-4 rounded-2xl text-[15px] ${m.role === 'user' ? 'bg-[var(--fun-purple)] text-white rounded-tr-none shadow-lg' : 'bg-[var(--fun-surface)] fun-text rounded-tl-none border border-[var(--fun-stroke-1)] shadow-sm'}`}>
-                    {isCurrentlyThinking ? <TypingIndicator /> : m.displayedText}
-                    {m.role === 'nexy' && m.displayedText === m.text && !isCurrentlyThinking && (
+                    {m.displayedText}
+                    {m.role === 'nexy' && m.displayedText === m.text && (
                       <div className="absolute top-1/2 -right-12 -translate-y-1/2 flex flex-col gap-1 opacity-0 group-hover/msg:opacity-100 transition-opacity">
                         <button onClick={() => copyToClipboard(m.text)} className="h-5 w-5 flex items-center justify-center rounded bg-[var(--fun-card)] border border-[var(--fun-stroke-1)] fun-text hover:bg-[var(--fun-purple)] hover:text-white transition-colors" title={t("nexy.copy_tooltip")}><Copy className="h-3 w-3" /></button>
                         <button onClick={() => speak(m.text)} className="h-5 w-5 flex items-center justify-center rounded bg-[var(--fun-card)] border border-[var(--fun-stroke-1)] fun-text hover:bg-[var(--fun-purple)] hover:text-white transition-colors" title={t("nexy.read_tooltip")}><Volume2 className="h-3 w-3" /></button>
@@ -197,6 +201,13 @@ export default function NexyAssistant() {
                 </div>
               );
             })}
+            {isThinking && (
+              <div className="flex justify-start">
+                <div className="bg-[var(--fun-surface)] fun-text p-4 rounded-2xl rounded-tl-none border border-[var(--fun-stroke-1)] shadow-sm">
+                  <TypingIndicator />
+                </div>
+              </div>
+            )}
           </div>
           <form onSubmit={handleSend} className="p-4 border-t" style={{ borderColor: 'var(--fun-stroke-1)' }}>
             <div className="relative">

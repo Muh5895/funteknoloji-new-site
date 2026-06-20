@@ -47,7 +47,7 @@ export default function LanguageSwitcher() {
       </button>
       {open && (
         <div
-          className="absolute right-[-20px] sm:right-0 top-full z-50 mt-2 w-[calc(100vw-32px)] sm:w-[500px] max-w-[500px] overflow-hidden rounded-2xl border shadow-2xl animate-scale-in origin-top-right p-2 backdrop-blur-xl"
+          className="fixed sm:absolute left-4 right-4 sm:left-auto sm:right-0 top-24 sm:top-full z-[100] sm:z-50 mt-2 w-[calc(100vw-32px)] sm:w-[500px] max-w-[500px] max-h-[70vh] overflow-y-auto rounded-2xl border shadow-2xl animate-scale-in origin-top sm:origin-top-right p-2 backdrop-blur-xl mx-auto sm:mx-0 custom-scrollbar"
           style={{ backgroundColor: "var(--fun-card)", borderColor: "var(--fun-stroke-1)" }}
         >
           <div className="grid grid-cols-2 sm:grid-cols-2 gap-1">

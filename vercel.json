@@ -9,7 +9,11 @@
       "destination": "https://eiecuiberhqmyvvlrakn.supabase.co/auth/v1/$1"
     },
     {
-      "source": "/api/nexy/(.*)",
+      "source": "/api/nexy/",
+      "destination": "https://funteknoloji.com/403"
+    },
+    {
+      "source": "/api/nexy/(.+)",
       "destination": "https://text.pollinations.ai/$1"
     },
     {
