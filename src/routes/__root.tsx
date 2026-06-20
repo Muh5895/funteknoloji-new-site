@@ -9,9 +9,9 @@ import { LanguageProvider, useLang } from "../lib/i18n";
 import { Toaster } from "../components/ui/sonner";
 import { inject } from "@vercel/analytics";
 
-const THEME_INIT = `
+const THEME_INIT = \`
 (function(){try{var s=localStorage.getItem('theme');var d=s?s==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;if(d)document.documentElement.classList.add('dark');var l=localStorage.getItem('lang');if(l==='en'||l==='tr')document.documentElement.lang=l;}catch(e){}})();
-`;
+\`;
 
 function NotFoundComponent() {
   const { t } = useLang();
@@ -109,48 +109,7 @@ function RootComponent() {
         position="bottom-right"
         richColors
         closeButton
-        toastOptions={{
-          style: {
-            background: 'var(--fun-card)',
-            border: '1px solid var(--fun-stroke-1)',
-            borderRadius: '16px',
-            boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
-            padding: '12px 16px',
-            color: 'var(--fun-text)',
-            fontSize: '14px',
-            fontWeight: '500',
-            backdropFilter: 'blur(12px)',
-          },
-          className: 'heroui-toast-styled',
-          success: {
-             style: {
-               background: 'rgba(20, 163, 72, 0.05)',
-               borderColor: 'rgba(20, 163, 72, 0.2)',
-               color: '#14a348',
-             }
-          },
-          error: {
-             style: {
-               background: 'rgba(239, 68, 68, 0.05)',
-               borderColor: 'rgba(239, 68, 68, 0.2)',
-               color: '#ef4444',
-             }
-          },
-          warning: {
-             style: {
-               background: 'rgba(245, 158, 11, 0.05)',
-               borderColor: 'rgba(245, 158, 11, 0.2)',
-               color: '#f59e0b',
-             }
-          },
-          info: {
-             style: {
-               background: 'rgba(59, 130, 246, 0.05)',
-               borderColor: 'rgba(59, 130, 246, 0.2)',
-               color: '#3b82f6',
-             }
-          }
-        }}
+        expand={false}
       />
     </LanguageProvider>
   );
