@@ -9,6 +9,18 @@ import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 export default defineConfig({
   vite: {
     envPrefix: ["VITE_", "SUPABASE_"],
+    server: {
+      proxy: {
+        '/rest/v1': {
+          target: 'https://eiecuiberhqmyvvlrakn.supabase.co',
+          changeOrigin: true,
+        },
+        '/auth/v1': {
+          target: 'https://eiecuiberhqmyvvlrakn.supabase.co',
+          changeOrigin: true,
+        }
+      }
+    }
   },
   nitro: {
     preset: "vercel",
