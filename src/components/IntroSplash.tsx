@@ -25,8 +25,8 @@ export default function IntroSplash() {
   const finish = () => {
     setFading(true);
     setTimeout(() => {
-        setShow(false);
-        document.body.style.overflow = "";
+      setShow(false);
+      document.body.style.overflow = "";
     }, 600);
   };
 
@@ -36,12 +36,12 @@ export default function IntroSplash() {
     if (!v) return;
 
     const playVideo = async () => {
-        try {
-            await v.play();
-        } catch (err) {
-            console.error("Video play failed:", err);
-            finish();
-        }
+      try {
+        await v.play();
+      } catch (err) {
+        console.error("Video play failed:", err);
+        finish();
+      }
     };
 
     playVideo();
@@ -70,8 +70,8 @@ export default function IntroSplash() {
         controlsList="nodownload noremoteplayback nofullscreen noplaybackrate"
         onEnded={finish}
         onError={(e) => {
-            console.error("Video error:", e);
-            finish();
+          console.error("Video error:", e);
+          finish();
         }}
         onContextMenu={(e) => e.preventDefault()}
         className="h-full w-full object-cover pointer-events-none select-none"

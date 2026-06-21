@@ -30,6 +30,7 @@ import { Route as BlogRouteImport } from './routes/blog'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as BlogIndexRouteImport } from './routes/blog.index'
+import { Route as ChangelogSlugRouteImport } from './routes/changelog.$slug'
 import { Route as BlogPostIdRouteImport } from './routes/blog.$postId'
 
 const TeamRoute = TeamRouteImport.update({
@@ -137,6 +138,11 @@ const BlogIndexRoute = BlogIndexRouteImport.update({
   path: '/',
   getParentRoute: () => BlogRoute,
 } as any)
+const ChangelogSlugRoute = ChangelogSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => ChangelogRoute,
+} as any)
 const BlogPostIdRoute = BlogPostIdRouteImport.update({
   id: '/$postId',
   path: '/$postId',
@@ -148,7 +154,7 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/blog': typeof BlogRouteWithChildren
   '/brand-kit': typeof BrandKitRoute
-  '/changelog': typeof ChangelogRoute
+  '/changelog': typeof ChangelogRouteWithChildren
   '/contact': typeof ContactRoute
   '/docs': typeof DocsRoute
   '/faq': typeof FaqRoute
@@ -165,13 +171,14 @@ export interface FileRoutesByFullPath {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/team': typeof TeamRoute
   '/blog/$postId': typeof BlogPostIdRoute
+  '/changelog/$slug': typeof ChangelogSlugRoute
   '/blog/': typeof BlogIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/brand-kit': typeof BrandKitRoute
-  '/changelog': typeof ChangelogRoute
+  '/changelog': typeof ChangelogRouteWithChildren
   '/contact': typeof ContactRoute
   '/docs': typeof DocsRoute
   '/faq': typeof FaqRoute
@@ -188,6 +195,7 @@ export interface FileRoutesByTo {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/team': typeof TeamRoute
   '/blog/$postId': typeof BlogPostIdRoute
+  '/changelog/$slug': typeof ChangelogSlugRoute
   '/blog': typeof BlogIndexRoute
 }
 export interface FileRoutesById {
@@ -196,7 +204,7 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/blog': typeof BlogRouteWithChildren
   '/brand-kit': typeof BrandKitRoute
-  '/changelog': typeof ChangelogRoute
+  '/changelog': typeof ChangelogRouteWithChildren
   '/contact': typeof ContactRoute
   '/docs': typeof DocsRoute
   '/faq': typeof FaqRoute
@@ -213,6 +221,7 @@ export interface FileRoutesById {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/team': typeof TeamRoute
   '/blog/$postId': typeof BlogPostIdRoute
+  '/changelog/$slug': typeof ChangelogSlugRoute
   '/blog/': typeof BlogIndexRoute
 }
 export interface FileRouteTypes {
@@ -239,6 +248,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/team'
     | '/blog/$postId'
+    | '/changelog/$slug'
     | '/blog/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -262,6 +272,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/team'
     | '/blog/$postId'
+    | '/changelog/$slug'
     | '/blog'
   id:
     | '__root__'
@@ -286,6 +297,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/team'
     | '/blog/$postId'
+    | '/changelog/$slug'
     | '/blog/'
   fileRoutesById: FileRoutesById
 }
@@ -294,7 +306,7 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   BlogRoute: typeof BlogRouteWithChildren
   BrandKitRoute: typeof BrandKitRoute
-  ChangelogRoute: typeof ChangelogRoute
+  ChangelogRoute: typeof ChangelogRouteWithChildren
   ContactRoute: typeof ContactRoute
   DocsRoute: typeof DocsRoute
   FaqRoute: typeof FaqRoute
@@ -461,6 +473,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BlogIndexRouteImport
       parentRoute: typeof BlogRoute
     }
+    '/changelog/$slug': {
+      id: '/changelog/$slug'
+      path: '/$slug'
+      fullPath: '/changelog/$slug'
+      preLoaderRoute: typeof ChangelogSlugRouteImport
+      parentRoute: typeof ChangelogRoute
+    }
     '/blog/$postId': {
       id: '/blog/$postId'
       path: '/$postId'
@@ -483,12 +502,24 @@ const BlogRouteChildren: BlogRouteChildren = {
 
 const BlogRouteWithChildren = BlogRoute._addFileChildren(BlogRouteChildren)
 
+interface ChangelogRouteChildren {
+  ChangelogSlugRoute: typeof ChangelogSlugRoute
+}
+
+const ChangelogRouteChildren: ChangelogRouteChildren = {
+  ChangelogSlugRoute: ChangelogSlugRoute,
+}
+
+const ChangelogRouteWithChildren = ChangelogRoute._addFileChildren(
+  ChangelogRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   BlogRoute: BlogRouteWithChildren,
   BrandKitRoute: BrandKitRoute,
-  ChangelogRoute: ChangelogRoute,
+  ChangelogRoute: ChangelogRouteWithChildren,
   ContactRoute: ContactRoute,
   DocsRoute: DocsRoute,
   FaqRoute: FaqRoute,

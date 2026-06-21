@@ -16,13 +16,18 @@ const THEME_INIT = `
 function NotFoundComponent() {
   const { t } = useLang();
   return (
-    <div className="flex min-h-dvh items-center justify-center px-4" style={{ backgroundColor: "var(--color-background)" }}>
+    <div
+      className="flex min-h-dvh items-center justify-center px-4"
+      style={{ backgroundColor: "var(--color-background)" }}
+    >
       <div className="max-w-md text-center">
         <h1 className="text-7xl font-bold fun-text">{t("404.title")}</h1>
         <h2 className="mt-4 text-xl font-semibold fun-text">{t("404.subtitle")}</h2>
         <p className="mt-2 text-sm fun-text-muted">{t("404.desc")}</p>
         <div className="mt-6">
-          <Link to="/" className="btn-fun btn-fun-dark">{t("404.home")}</Link>
+          <Link to="/" className="btn-fun btn-fun-dark">
+            {t("404.home")}
+          </Link>
         </div>
       </div>
     </div>
@@ -48,12 +53,23 @@ export const Route = createRootRoute({
       { name: "twitter:description", content: "AI & Software Solutions" },
     ],
     links: [
-      { rel: "icon", href: "/assets/logos/Fun Teknoloji Siyah Logo.png", media: "(prefers-color-scheme: light)" },
-      { rel: "icon", href: "/assets/logos/Fun Teknoloji BGSİZ.png", media: "(prefers-color-scheme: dark)" },
+      {
+        rel: "icon",
+        href: "/assets/logos/Fun Teknoloji Siyah Logo.png",
+        media: "(prefers-color-scheme: light)",
+      },
+      {
+        rel: "icon",
+        href: "/assets/logos/Fun Teknoloji BGSİZ.png",
+        media: "(prefers-color-scheme: dark)",
+      },
       { rel: "stylesheet", href: appCss },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100..900;1,100..900&display=swap" },
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100..900;1,100..900&display=swap",
+      },
     ],
     scripts: [
       {
@@ -105,12 +121,7 @@ function RootComponent() {
       <Outlet />
       <NexyAssistant />
       <Footer />
-      <Toaster
-        position="bottom-right"
-        richColors
-        closeButton
-        expand={false}
-      />
+      <Toaster position="bottom-right" richColors closeButton expand={false} />
     </LanguageProvider>
   );
 }

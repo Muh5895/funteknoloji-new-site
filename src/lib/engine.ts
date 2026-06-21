@@ -26,11 +26,7 @@ export const getBlogPosts = createServerFn("GET", async () => {
 
 export const getBlogPost = createServerFn("GET", async (title: string) => {
   try {
-    const { data, error } = await supabase
-      .from("blog")
-      .select("*")
-      .eq("title", title)
-      .single();
+    const { data, error } = await supabase.from("blog").select("*").eq("title", title).single();
 
     if (error) {
       console.error("DB_SINGLE_ERR:", error);
@@ -42,45 +38,48 @@ export const getBlogPost = createServerFn("GET", async (title: string) => {
   }
 });
 
-export const submitContactForm = createServerFn("POST", async (payload: { name: string, email: string, subject: string, message: string }) => {
-  try {
-    // Check for existing entries with same subject and message from the same email
-    const { data: existing, error: checkError } = await supabase
-      .from("contact")
-      .select("id")
-      .eq("email", payload.email)
-      .eq("subject", payload.subject)
-      .eq("message", payload.message)
-      .limit(1);
+export const submitContactForm = createServerFn(
+  "POST",
+  async (payload: { name: string; email: string; subject: string; message: string }) => {
+    try {
+      // Check for existing entries with same subject and message from the same email
+      const { data: existing, error: checkError } = await supabase
+        .from("contact")
+        .select("id")
+        .eq("email", payload.email)
+        .eq("subject", payload.subject)
+        .eq("message", payload.message)
+        .limit(1);
 
-    if (checkError) {
-      console.error("DB_CHECK_ERR:", checkError);
+      if (checkError) {
+        console.error("DB_CHECK_ERR:", checkError);
+      }
+
+      if (existing && existing.length > 0) {
+        throw new Error("ALREADY_SENT");
+      }
+
+      const { error } = await supabase.from("contact").insert([
+        {
+          name: payload.name,
+          email: payload.email,
+          subject: payload.subject,
+          message: payload.message,
+          status: "new",
+        },
+      ]);
+
+      if (error) {
+        console.error("DB_SUBMIT_ERR:", error);
+        throw error;
+      }
+      return { success: true };
+    } catch (error: any) {
+      if (error.message === "ALREADY_SENT") throw error;
+      throw new Error("INTERNAL_DB_ERROR");
     }
-
-    if (existing && existing.length > 0) {
-      throw new Error("ALREADY_SENT");
-    }
-
-    const { error } = await supabase
-      .from("contact")
-      .insert([{
-        name: payload.name,
-        email: payload.email,
-        subject: payload.subject,
-        message: payload.message,
-        status: "new"
-      }]);
-
-    if (error) {
-      console.error("DB_SUBMIT_ERR:", error);
-      throw error;
-    }
-    return { success: true };
-  } catch (error: any) {
-    if (error.message === "ALREADY_SENT") throw error;
-    throw new Error("INTERNAL_DB_ERROR");
-  }
-});
+  },
+);
 
 export const getTestimonials = createServerFn("GET", async () => {
   const { data } = await supabase.from("testimonials").select("*");
@@ -92,7 +91,7 @@ export const getFaqs = createServerFn("GET", async () => {
   return data || [];
 });
 
-export const askNexy = createServerFn("POST", async (payload: { input: string, lang: string }) => {
+export const askNexy = createServerFn("POST", async (payload: { input: string; lang: string }) => {
   const { input, lang } = payload;
 
   const prompt = `System: Sen Fun Teknoloji şirketinin yapay zeka asistanı Nexy'sin.
@@ -104,7 +103,9 @@ export const askNexy = createServerFn("POST", async (payload: { input: string, l
     User: ${input}`;
 
   try {
-    const response = await fetch(`https://text.pollinations.ai/${encodeURIComponent(prompt)}?model=openai&cache=false`);
+    const response = await fetch(
+      `https://text.pollinations.ai/${encodeURIComponent(prompt)}?model=openai&cache=false`,
+    );
     if (!response.ok) throw new Error("AI_ERROR");
     const text = await response.text();
     return text;

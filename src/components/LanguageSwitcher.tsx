@@ -7,7 +7,9 @@ export default function LanguageSwitcher() {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const h = (e: MouseEvent) => { if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false); };
+    const h = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+    };
     document.addEventListener("mousedown", h);
     return () => document.removeEventListener("mousedown", h);
   }, []);
@@ -55,14 +57,21 @@ export default function LanguageSwitcher() {
               <button
                 key={l.code}
                 type="button"
-                onClick={() => { setLang(l.code); setOpen(false); }}
+                onClick={() => {
+                  setLang(l.code);
+                  setOpen(false);
+                }}
                 className={`flex items-center gap-3 p-3 rounded-xl transition-all hover:bg-[var(--fun-surface)] ${l.code === lang ? "bg-[var(--fun-purple)]/5 border border-[var(--fun-purple)]/20" : ""}`}
                 style={{ color: "var(--fun-text)" }}
               >
                 <div className="w-6 h-6 rounded-full overflow-hidden border border-[var(--fun-stroke-1)] flex items-center justify-center bg-muted shadow-sm">
                   <img src={l.flagUrl} alt="" className="h-full w-full object-cover" />
                 </div>
-                <span className={`text-sm font-medium ${l.code === lang ? "text-[var(--fun-purple)] font-bold" : "opacity-80"}`}>{l.label}</span>
+                <span
+                  className={`text-sm font-medium ${l.code === lang ? "text-[var(--fun-purple)] font-bold" : "opacity-80"}`}
+                >
+                  {l.label}
+                </span>
               </button>
             ))}
           </div>

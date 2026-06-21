@@ -99,19 +99,19 @@
   --sidebar-ring: oklch(0.704 0.04 256.788);
 
   /* Fun Teknoloji palette */
-  --fun-secondary: #12161F;
-  --fun-accent: #F8F9FA;
-  --fun-bg-2: #F3F5F8;
-  --fun-bg-3: #F7F8FA;
-  --fun-bg-12: #F3F5F8;
-  --fun-green: #D4F5E9;
-  --fun-stroke-1: #E8EBF0;
-  --fun-stroke-2: #DDE1E8;
-  --fun-stroke-3: #E8EBF0;
-  --fun-purple: #864FFE;
-  --fun-surface: #F3F5F8;
+  --fun-secondary: #12161f;
+  --fun-accent: #f8f9fa;
+  --fun-bg-2: #f3f5f8;
+  --fun-bg-3: #f7f8fa;
+  --fun-bg-12: #f3f5f8;
+  --fun-green: #d4f5e9;
+  --fun-stroke-1: #e8ebf0;
+  --fun-stroke-2: #dde1e8;
+  --fun-stroke-3: #e8ebf0;
+  --fun-purple: #864ffe;
+  --fun-surface: #f3f5f8;
   --fun-card: #ffffff;
-  --fun-text: #12161F;
+  --fun-text: #12161f;
   --fun-text-muted: rgba(18, 22, 31, 0.6);
 }
 
@@ -120,7 +120,7 @@
   color: var(--fun-text) !important;
   border: 1px solid var(--fun-stroke-1) !important;
   border-radius: 16px !important;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.1) !important;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1) !important;
 }
 
 [data-sonner-toast][data-type="success"] {
@@ -173,19 +173,19 @@
   --sidebar-ring: oklch(0.551 0.027 264.364);
 
   /* Pure black dark theme */
-  --fun-secondary: #F3F5F8;
+  --fun-secondary: #f3f5f8;
   --fun-accent: #050505;
   --fun-bg-2: #050505;
-  --fun-bg-3: #0A0A0A;
+  --fun-bg-3: #0a0a0a;
   --fun-bg-12: #050505;
-  --fun-green: #0F2A20;
-  --fun-stroke-1: #1F1F1F;
+  --fun-green: #0f2a20;
+  --fun-stroke-1: #1f1f1f;
   --fun-stroke-2: #262626;
-  --fun-stroke-3: #1F1F1F;
-  --fun-purple: #864FFE;
+  --fun-stroke-3: #1f1f1f;
+  --fun-purple: #864ffe;
   --fun-surface: #050505;
-  --fun-card: #0D0D0D;
-  --fun-text: #F3F5F8;
+  --fun-card: #0d0d0d;
+  --fun-text: #f3f5f8;
   --fun-text-muted: rgba(243, 245, 248, 0.65);
 }
 
@@ -197,30 +197,74 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
-    font-family: 'Inter Tight', sans-serif;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    font-family: "Inter Tight", sans-serif;
+    transition:
+      background-color 0.3s ease,
+      color 0.3s ease;
   }
 }
 
 /* ============ Fun Teknoloji Typography ============ */
-.text-heading-huge { font-size: 110px; line-height: 1; }
-.text-heading-1 { font-size: 96px; line-height: 1.05; }
-.text-heading-2 { font-size: 72px; line-height: 1.1; }
-.text-heading-3 { font-size: 60px; line-height: 1.15; }
-.text-heading-4 { font-size: 48px; line-height: 1.2; }
-.text-heading-5 { font-size: 36px; line-height: 1.25; }
-.text-heading-6 { font-size: 28px; line-height: 1.3; }
-.text-tagline-1 { font-size: 18px; line-height: 1.6; }
-.text-tagline-2 { font-size: 16px; line-height: 1.6; }
-.text-tagline-3 { font-size: 14px; line-height: 1.6; }
+.text-heading-huge {
+  font-size: 110px;
+  line-height: 1;
+}
+.text-heading-1 {
+  font-size: 96px;
+  line-height: 1.05;
+}
+.text-heading-2 {
+  font-size: 72px;
+  line-height: 1.1;
+}
+.text-heading-3 {
+  font-size: 60px;
+  line-height: 1.15;
+}
+.text-heading-4 {
+  font-size: 48px;
+  line-height: 1.2;
+}
+.text-heading-5 {
+  font-size: 36px;
+  line-height: 1.25;
+}
+.text-heading-6 {
+  font-size: 28px;
+  line-height: 1.3;
+}
+.text-tagline-1 {
+  font-size: 18px;
+  line-height: 1.6;
+}
+.text-tagline-2 {
+  font-size: 16px;
+  line-height: 1.6;
+}
+.text-tagline-3 {
+  font-size: 14px;
+  line-height: 1.6;
+}
 
 @media (max-width: 768px) {
-  .text-heading-huge { font-size: 48px; }
-  .text-heading-1 { font-size: 42px; }
-  .text-heading-2 { font-size: 36px; }
-  .text-heading-3 { font-size: 32px; }
-  .text-heading-4 { font-size: 28px; }
-  .text-heading-5 { font-size: 24px; }
+  .text-heading-huge {
+    font-size: 48px;
+  }
+  .text-heading-1 {
+    font-size: 42px;
+  }
+  .text-heading-2 {
+    font-size: 36px;
+  }
+  .text-heading-3 {
+    font-size: 32px;
+  }
+  .text-heading-4 {
+    font-size: 28px;
+  }
+  .text-heading-5 {
+    font-size: 24px;
+  }
 }
 
 /* ============ Fun Teknoloji Buttons ============ */
@@ -244,7 +288,7 @@
   color: var(--color-background);
 }
 .btn-fun-dark:hover {
-  background-color: #6C5CE7;
+  background-color: #6c5ce7;
   color: white;
 }
 
@@ -262,7 +306,7 @@
   color: var(--fun-text);
 }
 .btn-fun-green:hover {
-  background-color: #6C5CE7;
+  background-color: #6c5ce7;
   color: white;
 }
 
@@ -299,48 +343,153 @@
 
 /* ============ Marquee ============ */
 @keyframes marquee {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
 }
-.animate-marquee { animation: marquee 30s linear infinite; }
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+}
 
 /* ============ Pop / Fade / Scale Animations ============ */
 @keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 @keyframes scaleIn {
-  from { opacity: 0; transform: scale(0.92); }
-  to { opacity: 1; transform: scale(1); }
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 @keyframes popIn {
-  0% { opacity: 0; transform: scale(0.7) translateY(20px); }
-  60% { opacity: 1; transform: scale(1.03) translateY(-4px); }
-  100% { opacity: 1; transform: scale(1) translateY(0); }
+  0% {
+    opacity: 0;
+    transform: scale(0.7) translateY(20px);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.03) translateY(-4px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
 }
 @keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
 }
-.animate-fade-in { animation: fadeInUp 0.6s ease-out both; }
-.animate-scale-in { animation: scaleIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) both; }
-.animate-pop-in { animation: popIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.animate-fade-in {
+  animation: fadeInUp 0.6s ease-out both;
+}
+.animate-scale-in {
+  animation: scaleIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.animate-pop-in {
+  animation: popIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
 
 /* Accordion */
-.accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
-.accordion-item.active .accordion-content { max-height: 500px; }
-.accordion-item.active .accordion-arrow { transform: rotate(180deg); }
-.accordion-arrow { transition: transform 0.3s ease; }
-.arrow-btn-icon { transition: transform 0.4s ease; }
+.accordion-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+}
+.accordion-item.active .accordion-content {
+  max-height: 500px;
+}
+.accordion-item.active .accordion-arrow {
+  transform: rotate(180deg);
+}
+.accordion-arrow {
+  transition: transform 0.3s ease;
+}
+.arrow-btn-icon {
+  transition: transform 0.4s ease;
+}
 
 /* Disable text selection on intro */
-video::-webkit-media-controls { display: none !important; }
-video::-webkit-media-controls-enclosure { display: none !important; }
+video::-webkit-media-controls {
+  display: none !important;
+}
+video::-webkit-media-controls-enclosure {
+  display: none !important;
+}
 
 /* ============ Semantic Color Helpers ============ */
-.fun-bg { background-color: var(--color-background); }
-.fun-surface { background-color: var(--fun-surface); }
-.fun-card-bg { background-color: var(--fun-card); }
-.fun-text { color: var(--fun-text); }
-.fun-text-muted { color: var(--fun-text-muted); }
-.fun-border { border-color: var(--fun-stroke-1); }
+.fun-bg {
+  background-color: var(--color-background);
+}
+.fun-surface {
+  background-color: var(--fun-surface);
+}
+.fun-card-bg {
+  background-color: var(--fun-card);
+}
+.fun-text {
+  color: var(--fun-text);
+}
+.fun-text-muted {
+  color: var(--fun-text-muted);
+}
+.fun-border {
+  border-color: var(--fun-stroke-1);
+}
+
+.markdown-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+  font-size: 0.9rem;
+}
+
+.markdown-content th,
+.markdown-content td {
+  border: 1px solid var(--fun-stroke-1);
+  padding: 0.75rem;
+  text-align: left;
+}
+
+.markdown-content th {
+  background-color: var(--fun-surface);
+  font-weight: bold;
+}
+
+.markdown-content tr:nth-child(even) {
+  background-color: var(--fun-surface);
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--fun-stroke-1);
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: var(--fun-purple);
+}
