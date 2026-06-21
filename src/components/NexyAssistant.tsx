@@ -88,12 +88,17 @@ export default function NexyAssistant() {
   };
 
   const getNexyBrainResponse = async (input: string) => {
+    const history = chatMessages.slice(-6).map(m => `${m.role === 'nexy' ? 'Assistant' : 'User'}: ${m.text}`).join('\n');
     const prompt = `System: Sen Fun Teknoloji şirketinin yapay zeka asistanı Nexy'sin.
     Bilgi Bankası: ${KNOWLEDGE_BASE}
     Dil: Kullanıcının dilinde (${lang}) cevap ver.
     Tarz: Profesyonel, yardımsever ve samimi ol.
-    Önemli: Eğer kullanıcı bir sayfaya gitmek isterse cevabının sonuna [REDIRECT:/sayfa] ekle.
+    Önemli: Eğer kullanıcı bir sayfaya gitmek isterse cevabının sonuna [REDIRECT:/sayfa] ekle ve BU REDIRECT'ten önce mutlaka kullanıcıya o sayfaya yönlendirdiğini kendi cümlenle söyle (Örn: Seni fiyatlandırma sayfamıza yönlendiriyorum).
     Kısa ve öz cevaplar ver.
+
+    Önceki Konuşmalar:
+    ${history}
+
     User: ${input}`;
 
     try {
@@ -125,15 +130,9 @@ export default function NexyAssistant() {
       const path = redirectMatch[1];
       response = response.replace(/\[REDIRECT:.+\]/, '').trim();
 
-      // Add a follow-up message about redirecting
-      const redirectMsg = t("nexy.redirect_msg") || "Tamamdır, seni hemen yönlendiriyorum...";
-
       setTimeout(() => {
-        setChatMessages(prev => [...prev, { role: 'nexy', text: redirectMsg, displayedText: redirectMsg }]);
-        setTimeout(() => {
-          navigate({ to: path as any });
-        }, 1500);
-      }, 500);
+        navigate({ to: path as any });
+      }, 2500);
     }
 
     const nexyMsgIndex = newMsgs.length;
