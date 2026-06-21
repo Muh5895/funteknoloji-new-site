@@ -10,6 +10,8 @@ import {
   Send,
   ChevronRight,
   ChevronLeft,
+  Mic,
+  Search as SearchIcon,
   MessageCircleQuestion
 } from "lucide-react";
 
@@ -24,6 +26,9 @@ export default function NexyAssistant() {
   const [isThinking, setIsThinking] = useState(false);
   const [chatMessages, setChatMessages] = useState<{ role: 'nexy' | 'user', text: string, displayedText?: string }[]>([]);
   const [userInput, setUserInput] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [showSearch, setShowSearch] = useState(false);
+  const [isListening, setIsListening] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -114,6 +119,11 @@ export default function NexyAssistant() {
   const handleSend = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!userInput.trim() || isTyping) return;
+
+    if (!navigator.onLine) {
+      toast.error(t("error.offline") || "İnternet bağlantınız yok.");
+      return;
+    }
     const userMsg = { role: 'user' as const, text: userInput, displayedText: userInput };
     const newMsgs = [...chatMessages, userMsg];
     setChatMessages(newMsgs);
@@ -140,6 +150,27 @@ export default function NexyAssistant() {
     setIsThinking(false);
     setIsTyping(true);
     typeMessage(response, nexyMsgIndex);
+  };
+
+  const startListening = () => {
+    if (!('webkitSpeechRecognition' in window)) {
+      toast.error("Tarayıcınız ses tanımayı desteklemiyor.");
+      return;
+    }
+
+    const recognition = new (window as any).webkitSpeechRecognition();
+    recognition.lang = lang === 'tr' ? 'tr-TR' : 'en-US';
+    recognition.continuous = false;
+    recognition.interimResults = false;
+
+    recognition.onstart = () => setIsListening(true);
+    recognition.onend = () => setIsListening(false);
+    recognition.onresult = (event: any) => {
+      const transcript = event.results[0][0].transcript;
+      setUserInput(prev => prev + (prev ? " " : "") + transcript);
+    };
+
+    recognition.start();
   };
 
   const copyToClipboard = (text: string) => {
@@ -182,8 +213,12 @@ export default function NexyAssistant() {
     });
   };
 
+  const filteredMessages = chatMessages.filter(m =>
+    m.text.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
-    <div className="fixed bottom-6 right-6 z-[100] flex flex-col items-end gap-4 animate-in slide-in-from-right-10 duration-500">
+    <div className={`fixed bottom-6 right-6 z-[100] flex flex-col items-end gap-4 animate-in slide-in-from-right-10 duration-500 transition-transform ${isThinking ? '-translate-y-4' : 'translate-y-0'}`}>
       {!isOpen && !isMinimized && showPopup && (
         <div className="relative max-w-[250px] rounded-2xl bg-[var(--fun-card)] border border-[var(--fun-stroke-1)] p-4 shadow-2xl backdrop-blur-md">
           <button onClick={() => setShowPopup(false)} className="absolute -top-2 -right-2 h-6 w-6 rounded-full bg-[var(--fun-surface)] border border-[var(--fun-stroke-1)] flex items-center justify-center text-xs fun-text hover:bg-[var(--fun-stroke-1)] transition-colors shadow-lg">✕</button>
@@ -201,13 +236,27 @@ export default function NexyAssistant() {
                   <p className="font-bold fun-text">Nexy</p>
                   <button onClick={() => toast.warning(t("nexy.beta_warning"))} className="bg-[var(--fun-purple)] text-white text-[9px] font-bold px-1.5 py-0.5 rounded uppercase tracking-tighter hover:scale-105 transition-transform">{t("nexy.beta_tag")}</button>
                 </div>
-                <p className="text-[10px] fun-text-muted font-medium uppercase tracking-widest">{t("nexy.assistant_title")}</p>
               </div>
             </div>
-            <button onClick={() => setIsOpen(false)} className="h-8 w-8 rounded-full hover:bg-[var(--fun-stroke-1)] flex items-center justify-center fun-text transition-colors"><X className="h-4 w-4" /></button>
+            <div className="flex items-center gap-1">
+              <button onClick={() => setShowSearch(!showSearch)} className="h-8 w-8 rounded-full hover:bg-[var(--fun-stroke-1)] flex items-center justify-center fun-text transition-colors"><SearchIcon className="h-4 w-4" /></button>
+              <button onClick={() => setIsOpen(false)} className="h-8 w-8 rounded-full hover:bg-[var(--fun-stroke-1)] flex items-center justify-center fun-text transition-colors"><X className="h-4 w-4" /></button>
+            </div>
           </div>
+          {showSearch && (
+            <div className="px-5 py-3 border-b border-[var(--fun-stroke-1)] bg-[var(--fun-surface)] animate-in slide-in-from-top-2">
+              <input
+                autoFocus
+                type="text"
+                value={searchQuery}
+                onChange={e => setSearchQuery(e.target.value)}
+                placeholder={lang === 'tr' ? "Mesajlarda ara..." : "Search messages..."}
+                className="w-full bg-transparent text-xs fun-text outline-none"
+              />
+            </div>
+          )}
           <div ref={scrollRef} className="flex-1 overflow-y-auto p-5 space-y-5 bg-dots scroll-smooth">
-            {chatMessages.map((m, i) => {
+            {(searchQuery ? filteredMessages : chatMessages).map((m, i) => {
               return (
                 <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                   <div className={`relative group/msg max-w-[85%] p-4 rounded-2xl text-[15px] ${m.role === 'user' ? 'bg-[var(--fun-purple)] text-white rounded-tr-none shadow-lg' : 'bg-[var(--fun-surface)] fun-text rounded-tl-none border border-[var(--fun-stroke-1)] shadow-sm'}`}>
@@ -230,11 +279,15 @@ export default function NexyAssistant() {
               </div>
             )}
           </div>
-          <form onSubmit={handleSend} className="p-4 border-t" style={{ borderColor: 'var(--fun-stroke-1)' }}>
+          <form onSubmit={handleSend} className="p-4 border-t space-y-2" style={{ borderColor: 'var(--fun-stroke-1)' }}>
             <div className="relative">
-              <input type="text" value={userInput} onChange={(e) => setUserInput(e.target.value)} placeholder={t("nexy.placeholder")} className="w-full rounded-2xl bg-[var(--fun-surface)] border border-[var(--fun-stroke-1)] py-3 pl-4 pr-12 text-sm outline-none focus:border-[var(--fun-purple)] transition-colors fun-text" />
+              <input type="text" value={userInput} onChange={(e) => setUserInput(e.target.value)} placeholder={t("nexy.placeholder")} className="w-full rounded-2xl bg-[var(--fun-surface)] border border-[var(--fun-stroke-1)] py-3 pl-10 pr-12 text-sm outline-none focus:border-[var(--fun-purple)] transition-colors fun-text" />
+              <button type="button" onClick={startListening} className={`absolute left-2 top-1/2 -translate-y-1/2 h-7 w-7 rounded-full flex items-center justify-center transition-colors ${isListening ? 'bg-red-500 text-white animate-pulse' : 'fun-text-muted hover:bg-[var(--fun-stroke-1)]'}`}>
+                <Mic className="h-4 w-4" />
+              </button>
               <button type="submit" disabled={isTyping} aria-label={t("nexy.aria_send")} className="absolute right-2 top-1/2 -translate-y-1/2 h-9 w-9 rounded-xl bg-[var(--fun-purple)] text-white flex items-center justify-center hover:opacity-90 transition-opacity disabled:opacity-50"><Send className="h-4 w-4" /></button>
             </div>
+            <p className="text-[10px] text-center fun-text-muted opacity-60 px-2">{t("nexy.disclaimer")}</p>
           </form>
         </div>
       )}

@@ -18,6 +18,9 @@ import {
 } from "lucide-react";
 
 export const Route = createFileRoute("/quakesafe")({
+  head: ({ t }: { t: (k: string) => string }) => ({
+    meta: [{ title: t("title.quakesafe") }],
+  }),
   component: QuakeSafePage,
 });
 
@@ -91,9 +94,9 @@ function QuakeSafePage() {
     <main>
       <section className="pt-32 pb-20 px-4 lg:px-5">
         <ScrollReveal>
-          <div className="max-w-[1880px] mx-auto rounded-[40px] overflow-hidden relative min-h-[600px] flex items-center bg-[#0F172A] border border-white/10">
-            <div className="main-container relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center py-20 lg:py-32">
-               <div className="space-y-6 md:space-y-8 text-center lg:text-left">
+          <div className="max-w-[1880px] mx-auto rounded-[40px] overflow-hidden relative min-h-[600px] flex items-center bg-black border border-white/10">
+            <div className="main-container relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-20 items-center py-24 lg:py-40">
+               <div className="space-y-8 md:space-y-10 text-center lg:text-left">
                   <div className="flex items-center justify-center lg:justify-start gap-4">
                     <img src="/assets/logos/quakesafe_seffaf.png" alt="QuakeSafe" className="h-16 w-16 md:h-20 md:w-20 object-contain" />
                     <span className="text-3xl md:text-4xl font-bold text-white tracking-tighter">QuakeSafe</span>

@@ -5,11 +5,11 @@ import { useLang } from "../lib/i18n";
 import { useEffect, useState, useRef } from "react";
 
 export const Route = createFileRoute("/services")({
-  head: () => ({
+  head: ({ t }: { t: (k: string) => string }) => ({
     meta: [
-      { title: "Services – Fun Teknoloji" },
+      { title: t("title.services") },
       { name: "description", content: "AI & Software Solutions" },
-      { property: "og:title", content: "Services – Fun Teknoloji" },
+      { property: "og:title", content: t("title.services") },
       { property: "og:description", content: "AI & Software Solutions" },
       { property: "og:url", content: "https://funteknoloji.com/services" },
       { property: "og:type", content: "website" },

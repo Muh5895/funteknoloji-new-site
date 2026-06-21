@@ -6,11 +6,11 @@ import { useLang } from "../lib/i18n";
 import ScrollReveal from "../components/ScrollReveal";
 
 export const Route = createFileRoute("/contact")({
-  head: () => ({
+  head: ({ t }: { t: (k: string) => string }) => ({
     meta: [
-      { title: "Contact – Fun Teknoloji" },
+      { title: t("title.contact") },
       { name: "description", content: "AI & Software Solutions" },
-      { property: "og:title", content: "Contact – Fun Teknoloji" },
+      { property: "og:title", content: t("title.contact") },
       { property: "og:description", content: "AI & Software Solutions" },
       { property: "og:url", content: "https://funteknoloji.com/contact" },
       { property: "og:type", content: "website" },

@@ -6,11 +6,11 @@ import { useEffect, useState, useRef } from "react";
 import { teamMembers } from "../constants/team";
 
 export const Route = createFileRoute("/about")({
-  head: () => ({
+  head: ({ t }: { t: (k: string) => string }) => ({
     meta: [
-      { title: "About – Fun Teknoloji" },
+      { title: t("title.about") },
       { name: "description", content: "AI & Software Solutions" },
-      { property: "og:title", content: "About – Fun Teknoloji" },
+      { property: "og:title", content: t("title.about") },
       { property: "og:description", content: "AI & Software Solutions" },
       { property: "og:url", content: "https://funteknoloji.com/about" },
       { property: "og:type", content: "website" },
