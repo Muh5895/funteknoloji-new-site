@@ -3,9 +3,9 @@ import { useLang } from "../lib/i18n";
 import ScrollReveal from "../components/ScrollReveal";
 
 export const Route = createFileRoute("/pricing")({
-  head: ({ t }: { t: (k: string) => string }) => ({
+  head: () => ({
     meta: [
-      { title: t("title.pricing") },
+      { title: "Fiyatlandırma - Fun Teknoloji" },
       { name: "description", content: "AI & Software Solutions" },
     ],
   }),

@@ -17,11 +17,11 @@ import {
 } from "lucide-react";
 
 export const Route = createFileRoute("/")({
-  head: ({ t }: { t: (k: string) => string }) => ({
+  head: () => ({
     meta: [
-      { title: t("title.home") },
+      { title: "Fun Teknoloji - Geleceğin Teknolojileri" },
       { name: "description", content: "AI & Software Solutions" },
-      { property: "og:title", content: t("title.home") },
+      { property: "og:title", content: "Fun Teknoloji - Geleceğin Teknolojileri" },
       { property: "og:description", content: "AI & Software Solutions" },
       { property: "og:url", content: "https://funteknoloji.com/" },
       { property: "og:type", content: "website" },

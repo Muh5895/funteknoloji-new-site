@@ -7,8 +7,8 @@ import { Search, X } from "lucide-react";
 import ScrollReveal from "../components/ScrollReveal";
 
 export const Route = createFileRoute("/blog/")({
-  head: ({ t }: { t: (k: string) => string }) => ({
-    meta: [{ title: t("title.blog") }],
+  head: () => ({
+    meta: [{ title: "Blog - Fun Teknoloji" }],
   }),
   component: BlogPage,
 });

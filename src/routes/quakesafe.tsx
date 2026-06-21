@@ -18,8 +18,8 @@ import {
 } from "lucide-react";
 
 export const Route = createFileRoute("/quakesafe")({
-  head: ({ t }: { t: (k: string) => string }) => ({
-    meta: [{ title: t("title.quakesafe") }],
+  head: () => ({
+    meta: [{ title: "QuakeSafe - Deprem Güvenliği" }],
   }),
   component: QuakeSafePage,
 });

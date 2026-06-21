@@ -4,8 +4,8 @@ import ScrollReveal from "../components/ScrollReveal";
 import ArrowButton from "../components/ArrowButton";
 
 export const Route = createFileRoute("/projects")({
-  head: ({ t }: { t: (k: string) => string }) => ({
-    meta: [{ title: t("title.projects") }],
+  head: () => ({
+    meta: [{ title: "Projelerimiz - Fun Teknoloji" }],
   }),
   component: ProjectsPage,
 });

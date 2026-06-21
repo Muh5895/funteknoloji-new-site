@@ -3,11 +3,11 @@ import { useLang } from "../lib/i18n";
 import ScrollReveal from "../components/ScrollReveal";
 
 export const Route = createFileRoute("/sitemap")({
-  head: ({ t }) => ({
+  head: () => ({
     meta: [
-      { title: `${t("sitemap.title")} – Fun Teknoloji` },
-      { name: "description", content: t("sitemap.desc") },
-      { property: "og:title", content: `${t("sitemap.title")} – Fun Teknoloji` },
+      { title: "Site Haritası – Fun Teknoloji" },
+      { name: "description", content: "Fun Teknoloji web sitesindeki tüm sayfalara genel bakış." },
+      { property: "og:title", content: "Site Haritası – Fun Teknoloji" },
       { property: "og:url", content: "https://funteknoloji.com/sitemap" },
     ],
     links: [{ rel: "canonical", href: "https://funteknoloji.com/sitemap" }],

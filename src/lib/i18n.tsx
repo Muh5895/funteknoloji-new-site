@@ -5675,10 +5675,34 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (typeof document !== "undefined") {
       document.documentElement.lang = lang;
-      const pageTitle = t("meta.title");
-      if (pageTitle && pageTitle !== "meta.title") {
-        document.title = pageTitle;
-      }
+
+      // Update document title based on current path
+      const updateTitle = () => {
+        const path = window.location.pathname;
+        let titleKey = "meta.title";
+
+        if (path === "/") titleKey = "title.home";
+        else if (path.startsWith("/about")) titleKey = "title.about";
+        else if (path.startsWith("/services")) titleKey = "title.services";
+        else if (path.startsWith("/blog")) titleKey = "title.blog";
+        else if (path.startsWith("/contact")) titleKey = "title.contact";
+        else if (path.startsWith("/pricing")) titleKey = "title.pricing";
+        else if (path.startsWith("/projects")) titleKey = "title.projects";
+        else if (path.startsWith("/quakesafe")) titleKey = "title.quakesafe";
+        else if (path.startsWith("/faq")) titleKey = "faq.title";
+        else if (path.startsWith("/help")) titleKey = "help.title";
+
+        const localizedTitle = t(titleKey);
+        if (localizedTitle && localizedTitle !== titleKey) {
+          document.title = localizedTitle;
+        }
+      };
+
+      updateTitle();
+
+      // Also update when path changes
+      window.addEventListener("popstate", updateTitle);
+      return () => window.removeEventListener("popstate", updateTitle);
     }
   }, [lang]);
 
