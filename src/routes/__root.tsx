@@ -121,7 +121,14 @@ function RootComponent() {
       <Outlet />
       <NexyAssistant />
       <Footer />
-      <Toaster position="bottom-right" richColors closeButton expand={false} />
+      <Toaster
+        position="bottom-right"
+        richColors
+        closeButton
+        expand={false}
+        visibleToasts={1}
+        duration={4000}
+      />
     </LanguageProvider>
   );
 }

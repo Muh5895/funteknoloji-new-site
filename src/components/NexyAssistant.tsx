@@ -94,11 +94,6 @@ export default function NexyAssistant() {
     }, speed);
   };
 
-  const getChatBubbleHeight = () => {
-    if (isThinking) return "h-[120px]";
-    return "h-auto";
-  };
-
   const stopTyping = () => {
     if (typingIntervalRef.current) clearInterval(typingIntervalRef.current);
     setIsTyping(false);
@@ -129,31 +124,43 @@ export default function NexyAssistant() {
   const getNexyBrainResponse = async (input: string) => {
     const history = chatMessages
       .slice(-6)
-      .map((m) => `${m.role === "nexy" ? "Assistant" : "User"}: ${m.text}`)
-      .join("\n");
-    const prompt = `System: Sen Fun Teknoloji şirketinin yapay zeka asistanı Nexy'sin.
+      .map((m) => ({
+        role: m.role === "nexy" ? "assistant" : "user",
+        content: m.text,
+      }));
+
+    const systemPrompt = `Sen Fun Teknoloji şirketinin yapay zeka asistanı Nexy'sin.
     Bilgi Bankası: ${KNOWLEDGE_BASE}
     Dil: Kullanıcının dilinde (${lang}) cevap ver.
     Tarz: Profesyonel, yardımsever ve samimi ol.
     Önemli: Eğer kullanıcı bir sayfaya gitmek isterse cevabının sonuna [REDIRECT:/sayfa] ekle ve BU REDIRECT'ten önce mutlaka kullanıcıya o sayfaya yönlendirdiğini kendi cümlenle söyle (Örn: Seni fiyatlandırma sayfamıza yönlendiriyorum).
     Markdown Desteği: Tablo, kalın yazı, liste gibi markdown özelliklerini kullanabilirsin.
-    Kısa ve öz cevaplar ver.
+    Kısa ve öz cevaplar ver.`;
 
-    Önceki Konuşmalar:
-    ${history}
-
-    User: ${input}`;
+    const messages = [
+      { role: "system", content: systemPrompt },
+      ...history,
+      { role: "user", content: input },
+    ];
 
     try {
-      const response = await fetch(
-        `https://text.pollinations.ai/${encodeURIComponent(prompt)}?model=openai&cache=false`,
-      );
-      if (!response.ok) throw new Error();
+      const response = await fetch("https://text.pollinations.ai/", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          messages,
+          model: "openai",
+          stream: false,
+          cache: false,
+        }),
+      });
+
+      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
       const text = await response.text();
       return text;
     } catch (err) {
       console.error("Nexy API Error:", err);
-      return t("nexy.resp.default.0");
+      return t("nexy.resp.default.0") || "Üzgünüm, şu an cevap veremiyorum.";
     }
   };
 
@@ -315,9 +322,6 @@ export default function NexyAssistant() {
           >
             <X className="h-4 w-4" />
           </button>
-          <div className="h-20 w-20 rounded-2xl bg-[var(--fun-surface)] border border-[var(--fun-stroke-1)] flex items-center justify-center p-3 shadow-inner">
-            <img src="/nexy.png" alt="Nexy" className="h-full w-full object-contain animate-float" />
-          </div>
           <p className="text-sm fun-text leading-relaxed font-semibold">
             {t("help.popup")}
           </p>
@@ -337,7 +341,7 @@ export default function NexyAssistant() {
                 <img
                   src="/nexy.png"
                   alt="Nexy"
-                  className="h-14 w-14 object-contain transition-transform hover:scale-110"
+                  className="h-16 w-16 object-contain transition-transform hover:scale-110"
                 />
               </div>
               <div>
@@ -416,37 +420,25 @@ export default function NexyAssistant() {
                     <div className="flex items-center gap-3 px-1">
                       <button
                         onClick={() => copyToClipboard(m.text, i)}
-                        className={`flex items-center gap-2 px-3 py-2 rounded-xl border border-[var(--fun-stroke-1)] text-[12px] font-semibold transition-all ${m.copied ? "bg-green-500 text-white border-green-500 shadow-lg shadow-green-500/20" : "bg-[var(--fun-surface)] fun-text hover:bg-[var(--fun-purple)] hover:text-white"}`}
+                        className={`flex items-center justify-center h-10 w-10 rounded-xl border border-[var(--fun-stroke-1)] transition-all ${m.copied ? "bg-green-500 text-white border-green-500 shadow-lg shadow-green-500/20" : "bg-[var(--fun-surface)] fun-text hover:bg-[var(--fun-purple)] hover:text-white"}`}
+                        title={lang === "tr" ? "Kopyala" : "Copy"}
                       >
                         {m.copied ? (
-                          <Check className="h-4 w-4" />
+                          <Check className="h-5 w-5" />
                         ) : (
-                          <Copy className="h-4 w-4" />
+                          <Copy className="h-5 w-5" />
                         )}
-                        {m.copied
-                          ? lang === "tr"
-                            ? "Kopyalandı"
-                            : "Copied"
-                          : lang === "tr"
-                            ? "Kopyala"
-                            : "Copy"}
                       </button>
                       <button
                         onClick={() => speak(m.text)}
-                        className={`flex items-center gap-2 px-3 py-2 rounded-xl border border-[var(--fun-stroke-1)] text-[12px] font-semibold transition-all bg-[var(--fun-surface)] fun-text hover:bg-[var(--fun-purple)] hover:text-white`}
+                        className={`flex items-center justify-center h-10 w-10 rounded-xl border border-[var(--fun-stroke-1)] transition-all bg-[var(--fun-surface)] fun-text hover:bg-[var(--fun-purple)] hover:text-white`}
+                        title={isSpeaking ? (lang === "tr" ? "Durdur" : "Stop") : (lang === "tr" ? "Dinle" : "Listen")}
                       >
                         {isSpeaking ? (
-                          <VolumeX className="h-4 w-4" />
+                          <VolumeX className="h-5 w-5" />
                         ) : (
-                          <Volume2 className="h-4 w-4" />
+                          <Volume2 className="h-5 w-5" />
                         )}
-                        {isSpeaking
-                          ? lang === "tr"
-                            ? "Durdur"
-                            : "Stop"
-                          : lang === "tr"
-                            ? "Dinle"
-                            : "Listen"}
                       </button>
                     </div>
                   )}
@@ -456,8 +448,8 @@ export default function NexyAssistant() {
             {isThinking && (
               <div className="flex justify-start animate-in fade-in slide-in-from-left-2 duration-300">
                 <div
-                  className="bg-[var(--fun-surface)] fun-text p-10 rounded-2xl rounded-tl-none border border-[var(--fun-stroke-1)] shadow-sm flex items-center justify-center transition-all duration-300"
-                  style={{ minHeight: "120px" }}
+                  className="bg-[var(--fun-surface)] fun-text p-6 rounded-2xl rounded-tl-none border border-[var(--fun-stroke-1)] shadow-sm flex items-center justify-center transition-all duration-300"
+                  style={{ minHeight: "80px" }}
                 >
                   <TypingIndicator />
                 </div>
@@ -484,30 +476,34 @@ export default function NexyAssistant() {
                   target.style.height = `${target.scrollHeight}px`;
                 }}
               />
-              <button
-                type="button"
-                onClick={startListening}
-                className={`absolute left-2.5 bottom-2.5 h-8 w-8 rounded-xl flex items-center justify-center transition-all ${isListening ? "bg-red-500 text-white shadow-lg shadow-red-500/20 pulse-animation" : "fun-text-muted hover:bg-[var(--fun-stroke-1)] hover:text-[var(--fun-purple)]"}`}
-              >
-                <Mic className="h-4 w-4" />
-              </button>
-              {isTyping || isThinking ? (
+              <div className="absolute left-2 bottom-2">
                 <button
-                  onClick={stopTyping}
-                  className="absolute right-2.5 bottom-2 h-9 w-9 rounded-xl bg-red-500 text-white flex items-center justify-center hover:opacity-90 transition-all shadow-lg shadow-red-500/20 transform active:scale-95"
-                  title={lang === "tr" ? "Durdur" : "Stop"}
+                  type="button"
+                  onClick={startListening}
+                  className={`h-9 w-9 rounded-xl flex items-center justify-center transition-all ${isListening ? "bg-red-500 text-white shadow-lg shadow-red-500/20 pulse-animation" : "fun-text-muted hover:bg-[var(--fun-stroke-1)] hover:text-[var(--fun-purple)]"}`}
                 >
-                  <Square className="h-4 w-4 fill-current" />
+                  <Mic className="h-4 w-4" />
                 </button>
-              ) : (
-                <button
-                  onClick={() => handleSend()}
-                  disabled={!userInput.trim()}
-                  className="absolute right-2.5 bottom-2 h-9 w-9 rounded-xl bg-[var(--fun-purple)] text-white flex items-center justify-center hover:opacity-90 transition-all disabled:opacity-30 disabled:grayscale transform active:scale-95 shadow-lg shadow-[var(--fun-purple)]/20"
-                >
-                  <Send className="h-4 w-4" />
-                </button>
-              )}
+              </div>
+              <div className="absolute right-2 bottom-2">
+                {isTyping || isThinking ? (
+                  <button
+                    onClick={stopTyping}
+                    className="h-9 w-9 rounded-xl bg-red-500 text-white flex items-center justify-center hover:opacity-90 transition-all shadow-lg shadow-red-500/20 transform active:scale-95"
+                    title={lang === "tr" ? "Durdur" : "Stop"}
+                  >
+                    <Square className="h-4 w-4 fill-current" />
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => handleSend()}
+                    disabled={!userInput.trim()}
+                    className="h-9 w-9 rounded-xl bg-[var(--fun-purple)] text-white flex items-center justify-center hover:opacity-90 transition-all disabled:opacity-30 disabled:grayscale transform active:scale-95 shadow-lg shadow-[var(--fun-purple)]/20"
+                  >
+                    <Send className="h-4 w-4" />
+                  </button>
+                )}
+              </div>
             </div>
             <p className="text-[10px] text-center fun-text-muted opacity-50 mt-3 font-medium">
               {t("nexy.disclaimer")}

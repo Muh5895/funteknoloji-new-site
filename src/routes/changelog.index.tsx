@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useLang } from "../lib/i18n";
 import ScrollReveal from "../components/ScrollReveal";
 
-export const Route = createFileRoute("/changelog")({
+export const Route = createFileRoute("/changelog/")({
   component: ChangelogPage,
 });
 

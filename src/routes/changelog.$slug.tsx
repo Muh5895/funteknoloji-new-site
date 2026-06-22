@@ -8,7 +8,8 @@ export const Route = createFileRoute("/changelog/$slug")({
 });
 
 function ChangelogDetailLayout() {
-  const { slug } = useParams({ from: "/changelog/$slug" });
+  const params = useParams({ strict: false });
+  const slug = params.slug;
   const { t, lang } = useLang();
 
   // Mock data for changelog entries based on slug
