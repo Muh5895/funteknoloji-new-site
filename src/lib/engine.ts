@@ -24,11 +24,7 @@ export const getBlogPosts = async () => {
 
 export const getBlogPost = async (title: string) => {
   try {
-    const { data, error } = await supabase
-      .from("blog")
-      .select("*")
-      .eq("title", title)
-      .single();
+    const { data, error } = await supabase.from("blog").select("*").eq("title", title).single();
 
     if (error) {
       console.error("DB_SINGLE_ERR:", error);
@@ -40,7 +36,12 @@ export const getBlogPost = async (title: string) => {
   }
 };
 
-export const submitContactForm = async (payload: { name: string, email: string, subject: string, message: string }) => {
+export const submitContactForm = async (payload: {
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+}) => {
   try {
     // Check for existing entries with same subject and message from the same email
     const { data: existing, error: checkError } = await supabase
@@ -59,15 +60,15 @@ export const submitContactForm = async (payload: { name: string, email: string, 
       throw new Error("ALREADY_SENT");
     }
 
-    const { error } = await supabase
-      .from("contact")
-      .insert([{
+    const { error } = await supabase.from("contact").insert([
+      {
         name: payload.name,
         email: payload.email,
         subject: payload.subject,
         message: payload.message,
-        status: "new"
-      }]);
+        status: "new",
+      },
+    ]);
 
     if (error) {
       console.error("DB_SUBMIT_ERR:", error);

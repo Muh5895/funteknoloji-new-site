@@ -11,21 +11,21 @@ export default defineConfig({
     envPrefix: ["VITE_", "SUPABASE_"],
     server: {
       proxy: {
-        '/rest/v1': {
-          target: 'https://eiecuiberhqmyvvlrakn.supabase.co',
+        "/rest/v1": {
+          target: "https://eiecuiberhqmyvvlrakn.supabase.co",
           changeOrigin: true,
         },
-        '/auth/v1': {
-          target: 'https://eiecuiberhqmyvvlrakn.supabase.co',
+        "/auth/v1": {
+          target: "https://eiecuiberhqmyvvlrakn.supabase.co",
           changeOrigin: true,
         },
-        '/api/nexy': {
-          target: 'https://text.pollinations.ai',
+        "/api/nexy": {
+          target: "https://text.pollinations.ai",
           changeOrigin: true,
-          rewrite: (path) => path.replace(/^\/api\/nexy/, '')
-        }
-      }
-    }
+          rewrite: (path) => path.replace(/^\/api\/nexy/, ""),
+        },
+      },
+    },
   },
   nitro: {
     preset: "vercel",

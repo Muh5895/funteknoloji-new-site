@@ -1,6 +1,18 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 
-export type Lang = "tr" | "en" | "de" | "fr" | "es" | "az" | "ru" | "ar" | "it" | "pt" | "ja" | "zh";
+export type Lang =
+  | "tr"
+  | "en"
+  | "de"
+  | "fr"
+  | "es"
+  | "az"
+  | "ru"
+  | "ar"
+  | "it"
+  | "pt"
+  | "ja"
+  | "zh";
 
 type Dict = Record<string, string>;
 
@@ -15,7 +27,8 @@ const tr: Dict = {
   "about.cta.title": "Birlikte çalışalım",
   "about.desc": "Fun Teknoloji, 2025 yılında Muhammed Erbay tarafından kurulmuştur.",
   "about.mission.badge": "Misyonumuz",
-  "about.mission.desc": "Her ölçekteki işletmenin yapay zeka ve ileri teknoloji çözümlerinden yararlanmasını sağlayarak, dijital dünyada rekabet avantajı elde etmelerine yardımcı olmak.",
+  "about.mission.desc":
+    "Her ölçekteki işletmenin yapay zeka ve ileri teknoloji çözümlerinden yararlanmasını sağlayarak, dijital dünyada rekabet avantajı elde etmelerine yardımcı olmak.",
   "about.mission.title": "İşletmeleri teknolojiyle güçlendirmek",
   "about.stats.clients": "Mutlu Müşteri",
   "about.stats.projects": "Tamamlanan Proje",
@@ -38,7 +51,8 @@ const tr: Dict = {
   "about.values.badge": "Değerlerimiz",
   "about.values.title": "Bizi Biz Yapan İlkeler",
   "about.vision.badge": "Vizyonumuz",
-  "about.vision.desc": "Türkiye'nin dijital geleceğine katkıda bulunmak için çalışmaya devam ediyoruz.",
+  "about.vision.desc":
+    "Türkiye'nin dijital geleceğine katkıda bulunmak için çalışmaya devam ediyoruz.",
   "about.vision.title": "Geleceği bugünden tasarlamak",
   "blog.badge": "Blog",
   "blog.desc": "En son teknoloji haberleri, içgörüler ve rehberler.",
@@ -63,7 +77,8 @@ const tr: Dict = {
   "blog.title": "Teknoloji Dünyasından",
   "brand_kit.badge": "Kurumsal",
   "brand_kit.colors.title": "Renk Paletimiz",
-  "brand_kit.desc": "Fun Teknoloji logolarını ve görsel materyallerini buradan indirebilir, kullanım kılavuzuna göz atabilirsiniz.",
+  "brand_kit.desc":
+    "Fun Teknoloji logolarını ve görsel materyallerini buradan indirebilir, kullanım kılavuzuna göz atabilirsiniz.",
   "brand_kit.download_png": "PNG İndir",
   "brand_kit.logos.fun_black.desc": "Açık renkli zeminlerde kullanım için siyah versiyon.",
   "brand_kit.logos.fun_black.title": "Fun Teknoloji Siyah Logo",
@@ -78,7 +93,8 @@ const tr: Dict = {
   "brand_kit.title": "Marka Kiti",
   "changelog.badge": "Güncellemeler",
   "changelog.coming_soon": "Çok Yakında",
-  "changelog.desc": "Fun Teknoloji platformundaki en son yenilikleri ve iyileştirmeleri takip edin.",
+  "changelog.desc":
+    "Fun Teknoloji platformundaki en son yenilikleri ve iyileştirmeleri takip edin.",
   "changelog.details_soon": "Bu bölümün detayları yakında paylaşılacaktır.",
   "changelog.item1.desc": "Ana platform güncellemeleri ve kurumsal yenilikler.",
   "changelog.item1.title": "Versiyon 2.0 Yayında",
@@ -99,7 +115,8 @@ const tr: Dict = {
   "contact.captcha.title": "Güvenlik Doğrulaması",
   "contact.captcha.verify": "Doğrula",
   "contact.community.button": "Discord'a Katıl",
-  "contact.community.desc": "Teknoloji topluluğumuza katılın ve ekibimizle doğrudan iletişim kurun.",
+  "contact.community.desc":
+    "Teknoloji topluluğumuza katılın ve ekibimizle doğrudan iletişim kurun.",
   "contact.community.title": "Topluluğumuza Katılın",
   "contact.desc": "Sorularınız için buradayız.",
   "contact.form.email": "E-posta",
@@ -122,7 +139,8 @@ const tr: Dict = {
   "docs.sidebar.getting_started": "Başlangıç",
   "docs.sidebar.intro": "Giriş",
   "docs.sidebar.setup": "Hızlı Kurulum",
-  "docs.soon.desc": "Platformumuz ve hizmetlerimiz için detaylı kullanım kılavuzları hazırlanmaktadır. En kısa sürede burada olacağız.",
+  "docs.soon.desc":
+    "Platformumuz ve hizmetlerimiz için detaylı kullanım kılavuzları hazırlanmaktadır. En kısa sürede burada olacağız.",
   "docs.soon.title": "Çok Yakında",
   "docs.title": "Dokümantasyon",
   "error.home": "Ana Sayfa",
@@ -135,84 +153,113 @@ const tr: Dict = {
   "faq.cat.services": "Hizmetler",
   "faq.cat.technical": "Teknik",
   "faq.desc": "Hizmetlerimiz ve süreçlerimiz hakkında merak edilenler.",
-  "faq.q1.a": "Fun Teknoloji, yapay zeka, özel yazılım geliştirme ve dijital dönüşüm alanlarında uzmanlaşmış bir teknoloji şirketidir.",
+  "faq.q1.a":
+    "Fun Teknoloji, yapay zeka, özel yazılım geliştirme ve dijital dönüşüm alanlarında uzmanlaşmış bir teknoloji şirketidir.",
   "faq.q1.q": "Fun Teknoloji nedir?",
-  "faq.q10.a": "Evet, tüm verileriniz endüstri standardı şifreleme yöntemleri ve güvenli bulut altyapısı ile korunmaktadır.",
+  "faq.q10.a":
+    "Evet, tüm verileriniz endüstri standardı şifreleme yöntemleri ve güvenli bulut altyapısı ile korunmaktadır.",
   "faq.q10.q": "Verilerim güvende mi?",
-  "faq.q11.a": "Kullanıcı verilerinin gizliliği bizim için en öncelikli konudur. Detaylı bilgi için Gizlilik Politikası sayfamıza bakabilirsiniz.",
+  "faq.q11.a":
+    "Kullanıcı verilerinin gizliliği bizim için en öncelikli konudur. Detaylı bilgi için Gizlilik Politikası sayfamıza bakabilirsiniz.",
   "faq.q11.q": "Gizlilik politikanız nedir?",
-  "faq.q2.a": "Fun Teknoloji, 2025 yılında Muhammed Erbay tarafından vizyoner bir teknoloji girişimi olarak kurulmuştur.",
+  "faq.q2.a":
+    "Fun Teknoloji, 2025 yılında Muhammed Erbay tarafından vizyoner bir teknoloji girişimi olarak kurulmuştur.",
   "faq.q2.q": "Fun Teknoloji ne zaman kuruldu?",
-  "faq.q3.a": "Çünkü teknolojinin sıkıcı ve karmaşık değil, hayatı kolaylaştıran ve 'eğlenceli' bir araç olması gerektiğine inanıyoruz.",
+  "faq.q3.a":
+    "Çünkü teknolojinin sıkıcı ve karmaşık değil, hayatı kolaylaştıran ve 'eğlenceli' bir araç olması gerektiğine inanıyoruz.",
   "faq.q3.q": "İsminiz neden Fun Teknoloji?",
-  "faq.q4.a": "Yazılım geliştirme, yapay zeka entegrasyonu, veri analitiği, siber güvenlik ve bulut çözümleri sunuyoruz.",
+  "faq.q4.a":
+    "Yazılım geliştirme, yapay zeka entegrasyonu, veri analitiği, siber güvenlik ve bulut çözümleri sunuyoruz.",
   "faq.q4.q": "Hangi hizmetleri sunuyorsunuz?",
-  "faq.q5.a": "İhtiyaç analizi, prototipleme, geliştirme, test ve yayına alma aşamalarından oluşan şeffaf bir süreç izliyoruz.",
+  "faq.q5.a":
+    "İhtiyaç analizi, prototipleme, geliştirme, test ve yayına alma aşamalarından oluşan şeffaf bir süreç izliyoruz.",
   "faq.q5.q": "Özel yazılım süreci nasıl işliyor?",
-  "faq.q6.a": "Bu hedeflerinize bağlıdır. Ekibimiz ihtiyaçlarınızı analiz ederek size en doğru platformu önerecektir.",
+  "faq.q6.a":
+    "Bu hedeflerinize bağlıdır. Ekibimiz ihtiyaçlarınızı analiz ederek size en doğru platformu önerecektir.",
   "faq.q6.q": "Mobil uygulama mı yoksa web sitesi mi yaptırmalıyım?",
-  "faq.q7.a": "React, Next.js, TypeScript, Python, PyTorch, Database ve AWS gibi modern teknoloji yığınlarını kullanıyoruz.",
+  "faq.q7.a":
+    "React, Next.js, TypeScript, Python, PyTorch, Database ve AWS gibi modern teknoloji yığınlarını kullanıyoruz.",
   "faq.q7.q": "Hangi teknolojileri kullanıyorsunuz?",
   "faq.q8.a": "Evet, kurumsal çözümlerimiz için kapsamlı API desteği ve dokümantasyon sağlıyoruz.",
   "faq.q8.q": "API desteğiniz var mı?",
-  "faq.q9.a": "Kendi veri setlerimiz ve modern derin öğrenme framework'leri ile projenize özel modeller geliştiriyoruz.",
+  "faq.q9.a":
+    "Kendi veri setlerimiz ve modern derin öğrenme framework'leri ile projenize özel modeller geliştiriyoruz.",
   "faq.q9.q": "Yapay zeka modellerini nasıl eğitiyorsunuz?",
   "faq.title": "Sıkça Sorulan Sorular",
   "footer.description": "Geleceğin teknolojilerini bugünden inşa ediyoruz.",
   "footer.rights": "Tüm hakları saklıdır.",
   "footer.status": "Sistem Durumu",
   "home.cta.button": "İletişime Geçin",
-  "home.cta.desc": "Herhangi bir sorunuz veya yardıma ihtiyacınız olursa destek ekibimizle iletişime geçin.",
+  "home.cta.desc":
+    "Herhangi bir sorunuz veya yardıma ihtiyacınız olursa destek ekibimizle iletişime geçin.",
   "home.cta.more": "Daha Fazlasını Keşfet",
   "home.cta.title": "Bugün kullanmaya başlayın.",
   "home.faq.q1": "Fun Teknoloji nedir?",
-  "home.faq.a1": "Fun Teknoloji, yapay zeka, özel yazılım geliştirme ve dijital dönüşüm alanlarında uzmanlaşmış bir teknoloji şirketidir.",
+  "home.faq.a1":
+    "Fun Teknoloji, yapay zeka, özel yazılım geliştirme ve dijital dönüşüm alanlarında uzmanlaşmış bir teknoloji şirketidir.",
   "home.faq.q2": "Teknik destek veriyor musunuz?",
   "home.faq.a2": "Evet, projeleriniz için 7/24 teknik destek ve bakım hizmeti sunuyoruz.",
-  "home.faq.a3": "Projenin kapsamına göre değişmekle birlikte, küçük projeleri 2-4 hafta, kapsamlı projeleri ise 2-4 ay içinde tamamlıyoruz.",
-  "home.faq.a4": "Fiyatlandırma, projenizin karmaşıklığına ve ihtiyaç duyulan özelliklere göre özel olarak belirlenir.",
-  "home.faq.a5": "Evet, yapay zeka modellerini mevcut sistemlerinize entegre etme konusunda uzmanız.",
-  "home.faq.a6": "Elbette! Proje fikirlerinizi bizimle paylaşabilir, ücretsiz danışmanlık alabilirsiniz.",
-  "home.faq.a7": "Evet, hem iOS hem de Android platformları için modern mobil uygulamalar geliştiriyoruz.",
+  "home.faq.a3":
+    "Projenin kapsamına göre değişmekle birlikte, küçük projeleri 2-4 hafta, kapsamlı projeleri ise 2-4 ay içinde tamamlıyoruz.",
+  "home.faq.a4":
+    "Fiyatlandırma, projenizin karmaşıklığına ve ihtiyaç duyulan özelliklere göre özel olarak belirlenir.",
+  "home.faq.a5":
+    "Evet, yapay zeka modellerini mevcut sistemlerinize entegre etme konusunda uzmanız.",
+  "home.faq.a6":
+    "Elbette! Proje fikirlerinizi bizimle paylaşabilir, ücretsiz danışmanlık alabilirsiniz.",
+  "home.faq.a7":
+    "Evet, hem iOS hem de Android platformları için modern mobil uygulamalar geliştiriyoruz.",
   "home.faq.badge": "SSS",
   "home.faq.desc": "Merak ettiğiniz her şey burada.",
   "home.faq.title": "Sıkça Sorulan Sorular",
   "home.features.badge": "Özellikler",
-  "home.features.card1.desc": "En son LLM ve derin öğrenme modellerini kullanarak işinizi otomatize ediyoruz.",
+  "home.features.card1.desc":
+    "En son LLM ve derin öğrenme modellerini kullanarak işinizi otomatize ediyoruz.",
   "home.features.card1.title": "Gelişmiş Yapay Zeka",
-  "home.features.card2.desc": "Dünya genelinde düşük gecikme süresiyle çalışan ölçeklenebilir sistemler.",
+  "home.features.card2.desc":
+    "Dünya genelinde düşük gecikme süresiyle çalışan ölçeklenebilir sistemler.",
   "home.features.card2.title": "Küresel Altyapı",
-  "home.features.card3.desc": "AES-256 şifreleme ve gelişmiş güvenlik protokolleri ile verileriniz güvende.",
+  "home.features.card3.desc":
+    "AES-256 şifreleme ve gelişmiş güvenlik protokolleri ile verileriniz güvende.",
   "home.features.card3.title": "Tam Güvenlik",
   "home.features.desc": "İşinizi bir üst seviyeye taşıyacak en modern teknolojileri sunuyoruz.",
   "home.features.title": "Neden Bizi Seçmelisiniz?",
   "home.hero.badge": "Türkiye'nin Yenilikçi Teknoloji Şirketi",
-  "home.hero.desc": "Yapay zeka, yazılım geliştirme ve akıllı sistemler alanında öncü çözümlerle işinizi dijital dönüşümün merkezine taşıyoruz.",
+  "home.hero.desc":
+    "Yapay zeka, yazılım geliştirme ve akıllı sistemler alanında öncü çözümlerle işinizi dijital dönüşümün merkezine taşıyoruz.",
   "home.hero.explore": "Hizmetleri Keşfet",
   "home.hero.start": "Bekleme Listesine Katıl",
   "home.hero.title": "Geleceğin Teknolojileri Bugün Bizimle",
   "home.howitworks.badge": "Süreç",
   "home.howitworks.desc": "Projenizi nasıl hayata geçirdiğimizi adım adım keşfedin.",
-  "home.howitworks.step1.desc": "İhtiyaçlarınızı analiz ediyor ve en uygun teknoloji yığınını belirliyoruz.",
+  "home.howitworks.step1.desc":
+    "İhtiyaçlarınızı analiz ediyor ve en uygun teknoloji yığınını belirliyoruz.",
   "home.howitworks.step1.title": "Analiz ve Planlama",
-  "home.howitworks.step2.desc": "Modern tasarım ilkeleriyle kullanıcı dostu arayüzler ve güçlü backend yapıları kuruyoruz.",
+  "home.howitworks.step2.desc":
+    "Modern tasarım ilkeleriyle kullanıcı dostu arayüzler ve güçlü backend yapıları kuruyoruz.",
   "home.howitworks.step2.title": "Geliştirme ve Test",
-  "home.howitworks.step3.desc": "Projenizi yayına alıyor ve kesintisiz destek sunmaya devam ediyoruz.",
+  "home.howitworks.step3.desc":
+    "Projenizi yayına alıyor ve kesintisiz destek sunmaya devam ediyoruz.",
   "home.howitworks.step3.title": "Lansman ve Destek",
   "home.howitworks.title": "Nasıl Çalışıyoruz?",
   "home.services.badge": "Hizmetlerimiz",
-  "home.services.desc": "İşinizi büyütmek ve dijital dünyada öne çıkmak için sunduğumuz profesyonel çözümlerle tanışın.",
-  "home.services.item1.desc": "İşletmenize özel eğitilmiş yapay zeka modelleri ve otomasyon sistemleri.",
+  "home.services.desc":
+    "İşinizi büyütmek ve dijital dünyada öne çıkmak için sunduğumuz profesyonel çözümlerle tanışın.",
+  "home.services.item1.desc":
+    "İşletmenize özel eğitilmiş yapay zeka modelleri ve otomasyon sistemleri.",
   "home.services.item1.title": "Yapay Zeka Çözümleri",
   "home.services.item2.desc": "Modern frameworkler ile ölçeklenebilir ve güvenli web uygulamaları.",
   "home.services.item2.title": "Web Geliştirme",
-  "home.services.item3.desc": "iOS ve Android için yüksek performanslı yerel ve hibrit mobil uygulamalar.",
+  "home.services.item3.desc":
+    "iOS ve Android için yüksek performanslı yerel ve hibrit mobil uygulamalar.",
   "home.services.item3.title": "Mobil Uygulama",
   "home.services.item4.desc": "Bulut altyapı yönetimi ve veritabanı optimizasyon hizmetleri.",
   "home.services.item4.title": "Bulut ve Veri",
-  "home.services.item5.desc": "Sistemlerinizin güvenliğini sağlıyor ve zafiyet analizleri yapıyoruz.",
+  "home.services.item5.desc":
+    "Sistemlerinizin güvenliğini sağlıyor ve zafiyet analizleri yapıyoruz.",
   "home.services.item5.title": "Siber Güvenlik",
-  "home.services.item6.desc": "Dijital dönüşüm yolculuğunuzda profesyonel rehberlik ve danışmanlık.",
+  "home.services.item6.desc":
+    "Dijital dönüşüm yolculuğunuzda profesyonel rehberlik ve danışmanlık.",
   "home.services.item6.title": "Teknik Danışmanlık",
   "home.services.title": "İhtiyaçlarınıza Özel Teknoloji Çözümleri",
   "home.stats.projects": "Tamamlanan Proje",
@@ -221,19 +268,26 @@ const tr: Dict = {
   "home.stats.users": "Aktif Kullanıcı",
   "home.testimonials.badge": "Yorumlar",
   "home.testimonials.t1.name": "Ahmet Yılmaz",
-  "home.testimonials.t1.text": "Fun Teknoloji ile çalışmak iş süreçlerimizi tamamen değiştirdi. Yapay zeka çözümleri sayesinde verimliliğimiz arttı.",
+  "home.testimonials.t1.text":
+    "Fun Teknoloji ile çalışmak iş süreçlerimizi tamamen değiştirdi. Yapay zeka çözümleri sayesinde verimliliğimiz arttı.",
   "home.testimonials.t2.name": "Zeynep Kaya",
-  "home.testimonials.t2.text": "Muhammed Bey ve ekibi çok profesyonel. Mobil uygulamamızı tam zamanında ve kusursuz teslim ettiler.",
+  "home.testimonials.t2.text":
+    "Muhammed Bey ve ekibi çok profesyonel. Mobil uygulamamızı tam zamanında ve kusursuz teslim ettiler.",
   "home.testimonials.t3.name": "Murat Demir",
-  "home.testimonials.t3.text": "Teknik destek konusunda hiç sorun yaşamadık. Her zaman çözüm odaklı yaklaşıyorlar.",
+  "home.testimonials.t3.text":
+    "Teknik destek konusunda hiç sorun yaşamadık. Her zaman çözüm odaklı yaklaşıyorlar.",
   "home.testimonials.t4.name": "Elif Şahin",
-  "home.testimonials.t4.text": "Web sitemiz artık çok daha hızlı ve güvenli. Teşekkürler Fun Teknoloji!",
+  "home.testimonials.t4.text":
+    "Web sitemiz artık çok daha hızlı ve güvenli. Teşekkürler Fun Teknoloji!",
   "home.testimonials.t5.name": "Caner Özkan",
-  "home.testimonials.t5.text": "Yenilikçi yaklaşımları ve vizyoner bakış açılarıyla projemize değer kattılar.",
+  "home.testimonials.t5.text":
+    "Yenilikçi yaklaşımları ve vizyoner bakış açılarıyla projemize değer kattılar.",
   "home.testimonials.t6.name": "Selin Aydın",
-  "home.testimonials.t6.text": "Karmaşık sistemlerimizi basitleştiren harika bir iş çıkardılar. Kesinlikle tavsiye ediyorum.",
+  "home.testimonials.t6.text":
+    "Karmaşık sistemlerimizi basitleştiren harika bir iş çıkardılar. Kesinlikle tavsiye ediyorum.",
   "home.testimonials.title": "Müşterilerimizin Başarı Hikayeleri",
-  "home.whatwedo.text": "Fun Teknoloji olarak, işletmenizi geleceğe hazırlamak için yapay zeka destekli yenilikçi yazılım çözümleri geliştiriyoruz.",
+  "home.whatwedo.text":
+    "Fun Teknoloji olarak, işletmenizi geleceğe hazırlamak için yapay zeka destekli yenilikçi yazılım çözümleri geliştiriyoruz.",
   "inline.contact.message_error": "Lütfen geçerli bir mesaj metni girin.",
   "inline.contact.subject_error": "Lütfen anlamlı bir konu başlığı girin.",
   "lang.label": "Dil Seçin",
@@ -323,9 +377,12 @@ const tr: Dict = {
   "policy.contact.desc": "Herhangi bir sorunuz varsa bizimle iletişime geçebilirsiniz:",
   "policy.contact.title": "İletişim",
   "policy.last_updated": "Son Güncelleme Tarihi: 19/03/2026",
-  "policy.privacy.contact_desc": "Gizlilik Politikamız veya kişisel verilerinizin işlenmesi hakkında herhangi bir sorunuz varsa bizimle iletişime geçebilirsiniz:",
-  "policy.privacy.intro": "Gizlilik Politikamız, kişisel bilgilerinizi nasıl topladığımızı, kullandığımızı ve koruduğumuzu açıklamaktadır. Gizliliğiniz ve güvenliğiniz önceliğimizdir.",
-  "policy.privacy.s1.desc": "Web sitemizi ziyaret ettiğinizde, hesap oluşturduğunuzda veya hizmetlerimizle etkileşime geçtiğinizde sizden bazı kişisel bilgiler toplayabiliriz. Bu bilgiler şunları içerebilir:",
+  "policy.privacy.contact_desc":
+    "Gizlilik Politikamız veya kişisel verilerinizin işlenmesi hakkında herhangi bir sorunuz varsa bizimle iletişime geçebilirsiniz:",
+  "policy.privacy.intro":
+    "Gizlilik Politikamız, kişisel bilgilerinizi nasıl topladığımızı, kullandığımızı ve koruduğumuzu açıklamaktadır. Gizliliğiniz ve güvenliğiniz önceliğimizdir.",
+  "policy.privacy.s1.desc":
+    "Web sitemizi ziyaret ettiğinizde, hesap oluşturduğunuzda veya hizmetlerimizle etkileşime geçtiğinizde sizden bazı kişisel bilgiler toplayabiliriz. Bu bilgiler şunları içerebilir:",
   "policy.privacy.s1.item1": "Ad ve soyad",
   "policy.privacy.s1.item2": "E-posta adresi",
   "policy.privacy.s1.item3": "İletişim bilgileri",
@@ -338,34 +395,47 @@ const tr: Dict = {
   "policy.privacy.s2.item4": "Kampanya ve yenilikler hakkında iletişim kurmak",
   "policy.privacy.s2.item5": "Site trafiğini analiz ederek hizmetlerimizi iyileştirmek",
   "policy.privacy.s2.title": "Bilgilerinizi Nasıl Kullanıyoruz",
-  "policy.privacy.s3.desc": "Kişisel verilerinizin güvenliğini ciddiye alıyoruz. Yetkisiz erişim, değiştirme, ifşa veya yok etmeye karşı korumak için endüstri standartlarında güvenlik önlemleri uyguluyoruz. Ancak, internet üzerinden veri iletiminin veya elektronik depolamanın %100 güvenli olmadığını unutmayın.",
+  "policy.privacy.s3.desc":
+    "Kişisel verilerinizin güvenliğini ciddiye alıyoruz. Yetkisiz erişim, değiştirme, ifşa veya yok etmeye karşı korumak için endüstri standartlarında güvenlik önlemleri uyguluyoruz. Ancak, internet üzerinden veri iletiminin veya elektronik depolamanın %100 güvenli olmadığını unutmayın.",
   "policy.privacy.s3.title": "Veri Güvenliği",
-  "policy.privacy.s4.desc": "Kişisel verileriniz: Açık izniniz olmadan satılmaz veya ticari amaçla paylaşılmaz. Yasal zorunluluklar gerektirdiğinde veya hizmet sağlayıcılarla gizlilik şartına bağlı kalmaları koşuluyla paylaşılabilir.",
+  "policy.privacy.s4.desc":
+    "Kişisel verileriniz: Açık izniniz olmadan satılmaz veya ticari amaçla paylaşılmaz. Yasal zorunluluklar gerektirdiğinde veya hizmet sağlayıcılarla gizlilik şartına bağlı kalmaları koşuluyla paylaşılabilir.",
   "policy.privacy.s4.title": "Üçüncü Taraflarla Paylaşım",
-  "policy.privacy.s5.desc": "Web sitemiz, kullanıcı deneyimini geliştirmek için çerezler kullanabilir. Çerezler sayesinde siteyi nasıl kullandığınıza dair bilgiler toplanır. Tarayıcı ayarlarınızı değiştirerek çerezleri reddedebilir veya uyarı alabilirsiniz.",
+  "policy.privacy.s5.desc":
+    "Web sitemiz, kullanıcı deneyimini geliştirmek için çerezler kullanabilir. Çerezler sayesinde siteyi nasıl kullandığınıza dair bilgiler toplanır. Tarayıcı ayarlarınızı değiştirerek çerezleri reddedebilir veya uyarı alabilirsiniz.",
   "policy.privacy.s5.title": "Çerezler",
-  "policy.privacy.s6.desc": "Bu Gizlilik Politikası zaman zaman güncellenebilir. Yapılan değişiklikler bu sayfada yayınlanır ve yürürlük tarihi güncellenir. Güncellemeleri takip etmek için bu sayfayı düzenli olarak kontrol etmenizi öneririz.",
+  "policy.privacy.s6.desc":
+    "Bu Gizlilik Politikası zaman zaman güncellenebilir. Yapılan değişiklikler bu sayfada yayınlanır ve yürürlük tarihi güncellenir. Güncellemeleri takip etmek için bu sayfayı düzenli olarak kontrol etmenizi öneririz.",
   "policy.privacy.s6.title": "Değişiklikler",
-  "policy.service.intro": "Fun Teknoloji platformunu kullanarak, hizmetlerimizi güvenli, yasal ve etik kurallar çerçevesinde kullanmayı kabul etmiş olursunuz. İşte temel kullanım şartları:",
-  "policy.service.s1.desc": "Platformu kullanabilmek için doğru ve güncel bilgilerle bir hesap oluşturmanız gereklidir. Hesap bilgilerinizin gizliliğinden siz sorumlusunuz.",
+  "policy.service.intro":
+    "Fun Teknoloji platformunu kullanarak, hizmetlerimizi güvenli, yasal ve etik kurallar çerçevesinde kullanmayı kabul etmiş olursunuz. İşte temel kullanım şartları:",
+  "policy.service.s1.desc":
+    "Platformu kullanabilmek için doğru ve güncel bilgilerle bir hesap oluşturmanız gereklidir. Hesap bilgilerinizin gizliliğinden siz sorumlusunuz.",
   "policy.service.s1.title": "Hesap Kullanımı",
-  "policy.service.s2.desc": "Platform üzerinde paylaştığınız içerik ve gerçekleştirdiğiniz işlemler, yürürlükteki tüm yasalar ve düzenlemelerle uyumlu olmalıdır.",
+  "policy.service.s2.desc":
+    "Platform üzerinde paylaştığınız içerik ve gerçekleştirdiğiniz işlemler, yürürlükteki tüm yasalar ve düzenlemelerle uyumlu olmalıdır.",
   "policy.service.s2.title": "Yasal Uygunluk",
-  "policy.service.s3.desc": "Fun Teknoloji, verilerinizi korumak için gelişmiş güvenlik önlemleri uygular. Hesap güvenliğiniz için şifrelerinizi gizli tutmanız gerekir.",
+  "policy.service.s3.desc":
+    "Fun Teknoloji, verilerinizi korumak için gelişmiş güvenlik önlemleri uygular. Hesap güvenliğiniz için şifrelerinizi gizli tutmanız gerekir.",
   "policy.service.s3.title": "Güvenlik ve Gizlilik",
-  "policy.service.s4.desc": "Fun Teknoloji, platformdaki içerik ve üçüncü taraf bağlantılar için sınırlı sorumluluk kabul eder. Kullanıcılar, platformu kendi sorumlulukları çerçevesinde kullanır.",
+  "policy.service.s4.desc":
+    "Fun Teknoloji, platformdaki içerik ve üçüncü taraf bağlantılar için sınırlı sorumluluk kabul eder. Kullanıcılar, platformu kendi sorumlulukları çerçevesinde kullanır.",
   "policy.service.s4.title": "Sorumluluk Reddi",
-  "policy.service.s5.desc": "Fun Teknoloji, platformun işlevselliğini geliştirmek amacıyla içerik, özellik veya kullanım koşullarında değişiklik yapma hakkını saklı tutar.",
+  "policy.service.s5.desc":
+    "Fun Teknoloji, platformun işlevselliğini geliştirmek amacıyla içerik, özellik veya kullanım koşullarında değişiklik yapma hakkını saklı tutar.",
   "policy.service.s5.title": "Hizmet Değişiklikleri",
-  "policy.service.s6.desc": "Kullanım şartlarının ihlali durumunda, platform hesapları geçici veya kalıcı olarak kısıtlayabilir veya kapatabilir.",
+  "policy.service.s6.desc":
+    "Kullanım şartlarının ihlali durumunda, platform hesapları geçici veya kalıcı olarak kısıtlayabilir veya kapatabilir.",
   "policy.service.s6.title": "Yaptırımlar",
   "pricing.badge": "Fiyatlandırma",
   "pricing.desc": "Şu an sistemlerimizi daha verimli ve ekonomik hale getirmek için çalışıyoruz.",
   "pricing.title": "Yeni Paketlerimiz Yakında Burada",
   "projects.hero.desc": "Yenilikçi teknolojilerle geliştirdiğimiz çözüm odaklı projelerimiz.",
   "projects.hero.title": "Geleceği İnşa Ediyoruz",
-  "projects.nexy.desc": "Fun Teknoloji'nin yapay zeka tabanlı dijital asistanı. İşletmeler ve kullanıcılar için akıllı rehber.",
-  "projects.quakesafe.desc": "Afet güvenliği teknolojisinde yeni bir dönem. Deprem anında ve sonrasında hayat kurtaran akıllı sistemler.",
+  "projects.nexy.desc":
+    "Fun Teknoloji'nin yapay zeka tabanlı dijital asistanı. İşletmeler ve kullanıcılar için akıllı rehber.",
+  "projects.quakesafe.desc":
+    "Afet güvenliği teknolojisinde yeni bir dönem. Deprem anında ve sonrasında hayat kurtaran akıllı sistemler.",
   "projects.soon.desc": "Heyecan verici yeni projelerimiz üzerinde çalışmaya devam ediyoruz.",
   "projects.soon.title": "Daha Fazlası Yakında",
   "projects.view": "Projeyi İncele",
@@ -384,7 +454,8 @@ const tr: Dict = {
   "quakesafe.features.2.title": "Konum Takibi",
   "quakesafe.features.3.desc": "En yakın toplanma merkezlerine ve güvenli bölgelere anında rota.",
   "quakesafe.features.3.title": "Güvenli Alanlar",
-  "quakesafe.features.4.desc": "Tüm aile üyelerini tek bir ağda toplayın ve durumlarını takip edin.",
+  "quakesafe.features.4.desc":
+    "Tüm aile üyelerini tek bir ağda toplayın ve durumlarını takip edin.",
   "quakesafe.features.4.title": "Aile Grupları",
   "quakesafe.features.5.desc": "İnternet kesildiğinde bile kritik rehberlere ve haritalara erişin.",
   "quakesafe.features.5.title": "Çevrimdışı Mod",
@@ -396,23 +467,31 @@ const tr: Dict = {
   "quakesafe.features.8.title": "Bulut Yedekleme",
   "quakesafe.features.9.desc": "Enkaz altındakiler için tek tuşla yetkililere konum bildirme.",
   "quakesafe.features.9.title": "Hızlı Bildirim",
-  "quakesafe.features.desc": "Afet öncesi, sırası ve sonrasında ihtiyacınız olan tüm araçlar tek bir platformda.",
+  "quakesafe.features.desc":
+    "Afet öncesi, sırası ve sonrasında ihtiyacınız olan tüm araçlar tek bir platformda.",
   "quakesafe.features.title": "Kapsamlı Koruma Ağı",
-  "quakesafe.hero.desc": "Yapay zeka ve sensör ağları ile deprem güvenliğinde devrim. Saniyelerin bile kritik olduğu o anlarda en büyük destekçiniz.",
+  "quakesafe.hero.desc":
+    "Yapay zeka ve sensör ağları ile deprem güvenliğinde devrim. Saniyelerin bile kritik olduğu o anlarda en büyük destekçiniz.",
   "quakesafe.hero.title": "Depremden Korkmayın, QuakeSafe ile Güvende Kalın",
   "reviews.desc": "Fun Teknoloji ile dönüşüm yaşayan iş ortaklarımızın hikayelerini keşfedin.",
   "reviews.r1.name": "Ahmet Yılmaz",
-  "reviews.r1.text": "Küçük bir işletme sahibi olarak, sunduğunuz yazılım çözümleri operasyonel verimliliğimizi artırmada hayat kurtarıcı oldu. Beklentilerimi gerçekten aştı.",
+  "reviews.r1.text":
+    "Küçük bir işletme sahibi olarak, sunduğunuz yazılım çözümleri operasyonel verimliliğimizi artırmada hayat kurtarıcı oldu. Beklentilerimi gerçekten aştı.",
   "reviews.r2.name": "Zeynep Kaya",
-  "reviews.r2.text": "Yapay zeka entegrasyonu kesinlikle inanılmaz! İş süreçlerimizi otomatize ederek büyük zaman tasarrufu sağladık.",
+  "reviews.r2.text":
+    "Yapay zeka entegrasyonu kesinlikle inanılmaz! İş süreçlerimizi otomatize ederek büyük zaman tasarrufu sağladık.",
   "reviews.r3.name": "Murat Demir",
-  "reviews.r3.text": "Bu teknoloji veri analitiği süreçlerimizde devrim yarattı. İçgörüler o kadar derin ki, kararlarımızı artık çok daha güvenle alıyoruz.",
+  "reviews.r3.text":
+    "Bu teknoloji veri analitiği süreçlerimizde devrim yarattı. İçgörüler o kadar derin ki, kararlarımızı artık çok daha güvenle alıyoruz.",
   "reviews.r4.name": "Elif Şahin",
-  "reviews.r4.text": "Bir proje yöneticisi olarak bu araç, ekipler arası koordinasyonu sağlamak için paha biçilemez oldu. Kullanıcı dostu arayüzü harika!",
+  "reviews.r4.text":
+    "Bir proje yöneticisi olarak bu araç, ekipler arası koordinasyonu sağlamak için paha biçilemez oldu. Kullanıcı dostu arayüzü harika!",
   "reviews.r5.name": "Caner Özkan",
-  "reviews.r5.text": "Geliştirme süreçlerinin hızı ve kalitesi akıllara durgunluk verici. Olağanüstü kalite standartlarını korurken projelerimizi vaktinde teslim alabildik.",
+  "reviews.r5.text":
+    "Geliştirme süreçlerinin hızı ve kalitesi akıllara durgunluk verici. Olağanüstü kalite standartlarını korurken projelerimizi vaktinde teslim alabildik.",
   "reviews.r6.name": "Selin Aydın",
-  "reviews.r6.text": "Bu platform dijital varlığımızı yönetme şeklimizi dönüştürdü. Teknoloji o kadar modern ve etkileyici ki, tüm ekibimiz hayran kaldı.",
+  "reviews.r6.text":
+    "Bu platform dijital varlığımızı yönetme şeklimizi dönüştürdü. Teknoloji o kadar modern ve etkileyici ki, tüm ekibimiz hayran kaldı.",
   "reviews.title": "Müşterilerimiz Ne Diyor?",
   "reviews.verified": "Doğrulanmış Müşteri",
   "sitemap.desc": "Fun Teknoloji web sitesindeki tüm sayfalara genel bakış.",
@@ -440,40 +519,68 @@ const tr: Dict = {
   "sitemap.title": "Site Haritası",
   "team.badge": "Ekibimiz",
   "team.desc": "Fun Teknoloji'nin arkasındaki yetenekli isimlerle tanışın.",
-  "team.join.desc": "Geleceği bizimle birlikte inşa etmek ister misiniz? Başvurularınızı bekliyoruz.",
+  "team.join.desc":
+    "Geleceği bizimle birlikte inşa etmek ister misiniz? Başvurularınızı bekliyoruz.",
   "team.join.title": "Ekibimize Katılın",
-  "team.member.muhammed.bio": "Fun Teknoloji'nin kurucusu olan Muhammed Erbay, teknolojiyi herkes için erişilebilir ve faydalı kılma vizyonuyla şirkete liderlik etmektedir.",
+  "team.member.muhammed.bio":
+    "Fun Teknoloji'nin kurucusu olan Muhammed Erbay, teknolojiyi herkes için erişilebilir ve faydalı kılma vizyonuyla şirkete liderlik etmektedir.",
   "team.title": "Başarımızın Arkasındaki Güç",
   "theme.dark": "Koyu Temaya Geç",
   "theme.light": "Açık Temaya Geç",
-  "nexy.resp.pricing.0": "Fiyatlandırma politikalarımız üzerinde çalışıyoruz. En güncel paketler için Fiyatlandırma sayfamızı takip edebilirsiniz. Şu an için bekleme listemize katılmak en iyi seçenek!",
-  "nexy.resp.pricing.1": "Şu an için tüm hizmetlerimiz için size özel teklif sunuyoruz, detaylar yakında sayfalarımızda olacak. Genelde proje bazlı fiyatlandırma yapıyoruz.",
-  "nexy.resp.pricing.2": "Paketlerimiz güncelleniyor. Fun Teknoloji olarak her bütçeye uygun teknoloji çözümleri üretmeyi hedefliyoruz.",
-  "nexy.resp.services.0": "Yapay zeka entegrasyonu, özel yazılım geliştirme, mobil uygulama ve siber güvenlik alanlarında profesyonel çözümler sunuyoruz. Hangi alanla ilgileniyorsunuz?",
-  "nexy.resp.services.1": "Dijital dönüşüm yolculuğunuzda size en modern teknoloji yığını ile eşlik ediyoruz. React, Next.js, AI modelleri ve daha fazlasını kullanıyoruz.",
-  "nexy.resp.services.2": "İş süreçlerinizi otomatize edecek yapay zeka çözümlerimiz hakkında detaylı bilgi için Hizmetler sayfamıza bakabilirsiniz. Verimliliğinizi %40'a kadar artırabiliriz.",
-  "nexy.resp.founder.0": "Fun Teknoloji, Muhammed Erbay tarafından 2025 yılında vizyoner bir teknoloji şirketi olarak kurulmuştur.",
-  "nexy.resp.founder.1": "Kurucumuz Muhammed Erbay, teknolojiyi herkes için erişilebilir ve faydalı kılma vizyonuyla bu yola çıktı. Kendisi genç ve hırslı bir girişimcidir.",
-  "nexy.resp.founder.2": "2025'te Muhammed Erbay liderliğinde kurulan Fun Teknoloji, Türkiye'nin dijital geleceğine odaklanıyor. Muhammed Bey bizzat projelerin mimarisini denetliyor.",
-  "nexy.resp.contact.0": "Bize iletişim sayfasındaki formdan veya support@funteknoloji.com adresinden ulaşabilirsiniz! 7/24 destek veriyoruz.",
-  "nexy.resp.contact.1": "Sorularınız için her zaman buradayız, iletişim kısmından bize yazmaktan çekinmeyin. Ayrıca Discord kanalımızda çok aktif bir topluluğumuz var.",
-  "nexy.resp.contact.2": "Discord topluluğumuza katılarak da ekibimizle doğrudan iletişime geçebilirsiniz. Linki İletişim sayfasında bulabilirsiniz.",
-  "nexy.resp.about.0": "Fun Teknoloji, teknolojiyi 'eğlenceli' ve 'faydalı' kılmak için kuruldu. Yapay zeka ve yazılım bizim tutkumuz.",
-  "nexy.resp.about.1": "Misyonumuz, işletmeleri geleceğin teknolojileriyle bugünden tanıştırmak. Vizyonumuz ise global çapta bir teknoloji üssü olmak.",
-  "nexy.resp.about.2": "Hakkımızda sayfasında tüm tarihimizi ve değerlerimizi bulabilirsiniz. İnovasyon, kalite ve güvenilirlik en önemli ilkelerimizdir.",
-  "nexy.resp.careers.0": "Ekibimiz sürekli büyüyor! Kariyer fırsatları için bize özgeçmişinizi gönderebilir veya LinkedIn sayfamızı takip edebilirsiniz.",
-  "nexy.resp.careers.1": "Yetenekli mühendisler, tasarımcılar ve yapay zeka meraklıları ile çalışmaktan her zaman mutluluk duyarız.",
-  "nexy.resp.careers.2": "Şu an spesifik bir ilanımız olmasa da, yetenekli insanlara her zaman kapımız açık. Bize yazın!",
-  "nexy.resp.tech.0": "Geliştirmelerimizde modern teknolojiler kullanıyoruz. React, TypeScript, TanStack, Tailwind ve çeşitli LLM modelleri vazgeçilmezimiz.",
-  "nexy.resp.tech.1": "Sistemlerimizi yüksek performans ve ölçeklenebilirlik odaklı tasarlıyoruz. Cloud teknolojilerini en verimli şekilde kullanıyoruz.",
-  "nexy.resp.tech.2": "Fun Teknoloji olarak sürekli AR-GE yapıyoruz. En yeni frameworkleri ve yapay zeka tekniklerini ilk biz uyguluyoruz.",
+  "nexy.resp.pricing.0":
+    "Fiyatlandırma politikalarımız üzerinde çalışıyoruz. En güncel paketler için Fiyatlandırma sayfamızı takip edebilirsiniz. Şu an için bekleme listemize katılmak en iyi seçenek!",
+  "nexy.resp.pricing.1":
+    "Şu an için tüm hizmetlerimiz için size özel teklif sunuyoruz, detaylar yakında sayfalarımızda olacak. Genelde proje bazlı fiyatlandırma yapıyoruz.",
+  "nexy.resp.pricing.2":
+    "Paketlerimiz güncelleniyor. Fun Teknoloji olarak her bütçeye uygun teknoloji çözümleri üretmeyi hedefliyoruz.",
+  "nexy.resp.services.0":
+    "Yapay zeka entegrasyonu, özel yazılım geliştirme, mobil uygulama ve siber güvenlik alanlarında profesyonel çözümler sunuyoruz. Hangi alanla ilgileniyorsunuz?",
+  "nexy.resp.services.1":
+    "Dijital dönüşüm yolculuğunuzda size en modern teknoloji yığını ile eşlik ediyoruz. React, Next.js, AI modelleri ve daha fazlasını kullanıyoruz.",
+  "nexy.resp.services.2":
+    "İş süreçlerinizi otomatize edecek yapay zeka çözümlerimiz hakkında detaylı bilgi için Hizmetler sayfamıza bakabilirsiniz. Verimliliğinizi %40'a kadar artırabiliriz.",
+  "nexy.resp.founder.0":
+    "Fun Teknoloji, Muhammed Erbay tarafından 2025 yılında vizyoner bir teknoloji şirketi olarak kurulmuştur.",
+  "nexy.resp.founder.1":
+    "Kurucumuz Muhammed Erbay, teknolojiyi herkes için erişilebilir ve faydalı kılma vizyonuyla bu yola çıktı. Kendisi genç ve hırslı bir girişimcidir.",
+  "nexy.resp.founder.2":
+    "2025'te Muhammed Erbay liderliğinde kurulan Fun Teknoloji, Türkiye'nin dijital geleceğine odaklanıyor. Muhammed Bey bizzat projelerin mimarisini denetliyor.",
+  "nexy.resp.contact.0":
+    "Bize iletişim sayfasındaki formdan veya support@funteknoloji.com adresinden ulaşabilirsiniz! 7/24 destek veriyoruz.",
+  "nexy.resp.contact.1":
+    "Sorularınız için her zaman buradayız, iletişim kısmından bize yazmaktan çekinmeyin. Ayrıca Discord kanalımızda çok aktif bir topluluğumuz var.",
+  "nexy.resp.contact.2":
+    "Discord topluluğumuza katılarak da ekibimizle doğrudan iletişime geçebilirsiniz. Linki İletişim sayfasında bulabilirsiniz.",
+  "nexy.resp.about.0":
+    "Fun Teknoloji, teknolojiyi 'eğlenceli' ve 'faydalı' kılmak için kuruldu. Yapay zeka ve yazılım bizim tutkumuz.",
+  "nexy.resp.about.1":
+    "Misyonumuz, işletmeleri geleceğin teknolojileriyle bugünden tanıştırmak. Vizyonumuz ise global çapta bir teknoloji üssü olmak.",
+  "nexy.resp.about.2":
+    "Hakkımızda sayfasında tüm tarihimizi ve değerlerimizi bulabilirsiniz. İnovasyon, kalite ve güvenilirlik en önemli ilkelerimizdir.",
+  "nexy.resp.careers.0":
+    "Ekibimiz sürekli büyüyor! Kariyer fırsatları için bize özgeçmişinizi gönderebilir veya LinkedIn sayfamızı takip edebilirsiniz.",
+  "nexy.resp.careers.1":
+    "Yetenekli mühendisler, tasarımcılar ve yapay zeka meraklıları ile çalışmaktan her zaman mutluluk duyarız.",
+  "nexy.resp.careers.2":
+    "Şu an spesifik bir ilanımız olmasa da, yetenekli insanlara her zaman kapımız açık. Bize yazın!",
+  "nexy.resp.tech.0":
+    "Geliştirmelerimizde modern teknolojiler kullanıyoruz. React, TypeScript, TanStack, Tailwind ve çeşitli LLM modelleri vazgeçilmezimiz.",
+  "nexy.resp.tech.1":
+    "Sistemlerimizi yüksek performans ve ölçeklenebilirlik odaklı tasarlıyoruz. Cloud teknolojilerini en verimli şekilde kullanıyoruz.",
+  "nexy.resp.tech.2":
+    "Fun Teknoloji olarak sürekli AR-GE yapıyoruz. En yeni frameworkleri ve yapay zeka tekniklerini ilk biz uyguluyoruz.",
   "nexy.resp.greeting.0": "Merhaba! Size nasıl yardımcı olabilirim? Bugün teknoloji dolu bir gün!",
-  "nexy.resp.greeting.1": "Selamlar! Ben Nexy, Fun Teknoloji'nin yapay zeka asistanıyım. Sizi dinliyorum.",
-  "nexy.resp.greeting.2": "Hoş geldiniz! Merak ettiğiniz bir şey mi var? Size Fun Teknoloji hakkında her şeyi anlatabilirim.",
+  "nexy.resp.greeting.1":
+    "Selamlar! Ben Nexy, Fun Teknoloji'nin yapay zeka asistanıyım. Sizi dinliyorum.",
+  "nexy.resp.greeting.2":
+    "Hoş geldiniz! Merak ettiğiniz bir şey mi var? Size Fun Teknoloji hakkında her şeyi anlatabilirim.",
   "nexy.resp.default.0": "Mesajınız için teşekkürler. Size nasıl yardımcı olabilirim?",
-  "nexy.resp.default.1": "Bu konuda size daha detaylı yardımcı olabilmemiz için lütfen iletişim formunu doldurun.",
-  "nexy.resp.default.2": "Harika bir soru! Ama bu konuda henüz tam bir bilgim yok. İsterseniz ekibimize sorabilirim?",
-  "nexy.resp.default.3": "Size nasıl daha iyi yardımcı olabilirim? Teknoloji çözümlerimiz, kurucumuz veya hizmetlerimiz hakkında konuşabiliriz.",
+  "nexy.resp.default.1":
+    "Bu konuda size daha detaylı yardımcı olabilmemiz için lütfen iletişim formunu doldurun.",
+  "nexy.resp.default.2":
+    "Harika bir soru! Ama bu konuda henüz tam bir bilgim yok. İsterseniz ekibimize sorabilirim?",
+  "nexy.resp.default.3":
+    "Size nasıl daha iyi yardımcı olabilirim? Teknoloji çözümlerimiz, kurucumuz veya hizmetlerimiz hakkında konuşabiliriz.",
   "home.faq.q3": "Projeler ne kadar sürede tamamlanıyor?",
   "home.faq.q4": "Fiyatlandırma nasıl yapılıyor?",
   "home.faq.q5": "Yapay zeka sistemlerimize entegre edilebilir mi?",
@@ -492,7 +599,8 @@ const en: Dict = {
   "about.cta.title": "Let's work together",
   "about.desc": "Fun Teknoloji was founded in 2025 by Muhammed Erbay.",
   "about.mission.badge": "Our mission",
-  "about.mission.desc": "To help businesses of all sizes gain competitive advantage in the digital world by enabling them to benefit from artificial intelligence and advanced technology solutions.",
+  "about.mission.desc":
+    "To help businesses of all sizes gain competitive advantage in the digital world by enabling them to benefit from artificial intelligence and advanced technology solutions.",
   "about.mission.title": "Empowering businesses with technology",
   "about.stats.clients": "Happy Customer",
   "about.stats.projects": "Completed Project",
@@ -510,7 +618,8 @@ const en: Dict = {
   "about.values.4.title": "Quality",
   "about.values.5.desc": "We find simple and effective solutions to complex problems.",
   "about.values.5.title": "Simplicity",
-  "about.values.6.desc": "We believe that there is no end to development, we are constantly learning.",
+  "about.values.6.desc":
+    "We believe that there is no end to development, we are constantly learning.",
   "about.values.6.title": "Continuous Improvement",
   "about.values.badge": "Our values",
   "about.values.title": "Principles That Make Us Who We Are",
@@ -536,13 +645,15 @@ const en: Dict = {
   "blog.post.read_aloud": "Read Out Loud",
   "blog.post.reading_started": "Reading aloud has begun.",
   "blog.post.select_language": "SELECT LANGUAGE",
-  "blog.post.stay_updated": "Don't miss the developments in the world of artificial intelligence and software.",
+  "blog.post.stay_updated":
+    "Don't miss the developments in the world of artificial intelligence and software.",
   "blog.post.stop_reading": "Stop Reading",
   "blog.post.translation_warning": "The Text Might Be Translated Incorrectly",
   "blog.title": "From the World of Technology",
   "brand_kit.badge": "Corporate",
   "brand_kit.colors.title": "Our Color Palette",
-  "brand_kit.desc": "You can download Fun Teknoloji logos and visual materials here and take a look at the usage guide.",
+  "brand_kit.desc":
+    "You can download Fun Teknoloji logos and visual materials here and take a look at the usage guide.",
   "brand_kit.download_png": "Download PNG",
   "brand_kit.logos.fun_black.desc": "Black version for use on light-colored backgrounds.",
   "brand_kit.logos.fun_black.title": "Fun Technology Black Logo",
@@ -557,7 +668,8 @@ const en: Dict = {
   "brand_kit.title": "Brand Kit",
   "changelog.badge": "Updates",
   "changelog.coming_soon": "Very soon",
-  "changelog.desc": "Follow the latest innovations and improvements on the Fun Technology platform.",
+  "changelog.desc":
+    "Follow the latest innovations and improvements on the Fun Technology platform.",
   "changelog.details_soon": "Details of this section will be shared soon.",
   "changelog.item1.desc": "Major platform updates and enterprise innovations.",
   "changelog.item1.title": "Version 2.0 is Released",
@@ -602,7 +714,8 @@ const en: Dict = {
   "docs.sidebar.getting_started": "Beginning",
   "docs.sidebar.intro": "Entrance",
   "docs.sidebar.setup": "Quick Setup",
-  "docs.soon.desc": "Detailed user guides are being prepared for our platform and services. We will be here as soon as possible.",
+  "docs.soon.desc":
+    "Detailed user guides are being prepared for our platform and services. We will be here as soon as possible.",
   "docs.soon.title": "Very soon",
   "docs.title": "Documentation",
   "error.home": "Home Page",
@@ -615,27 +728,38 @@ const en: Dict = {
   "faq.cat.services": "Services",
   "faq.cat.technical": "Technical",
   "faq.desc": "Questions about our services and processes.",
-  "faq.q1.a": "Fun Technology is a technology company specializing in artificial intelligence, custom software development and digital transformation.",
+  "faq.q1.a":
+    "Fun Technology is a technology company specializing in artificial intelligence, custom software development and digital transformation.",
   "faq.q1.q": "What is Fun Technology?",
-  "faq.q10.a": "Yes, all your data is protected by industry standard encryption methods and secure cloud infrastructure.",
+  "faq.q10.a":
+    "Yes, all your data is protected by industry standard encryption methods and secure cloud infrastructure.",
   "faq.q10.q": "Is my data safe?",
-  "faq.q11.a": "Privacy of user data is our top priority. For detailed information, you can see our Privacy Policy page.",
+  "faq.q11.a":
+    "Privacy of user data is our top priority. For detailed information, you can see our Privacy Policy page.",
   "faq.q11.q": "What is your privacy policy?",
-  "faq.q2.a": "Fun Technology was founded in 2025 by Muhammed Erbay as a visionary technology initiative.",
+  "faq.q2.a":
+    "Fun Technology was founded in 2025 by Muhammed Erbay as a visionary technology initiative.",
   "faq.q2.q": "When was Fun Teknoloji founded?",
-  "faq.q3.a": "Because we believe that technology should not be boring and complicated, but a tool that makes life easier and 'fun'.",
+  "faq.q3.a":
+    "Because we believe that technology should not be boring and complicated, but a tool that makes life easier and 'fun'.",
   "faq.q3.q": "Why is your name Fun Teknoloji?",
-  "faq.q4.a": "We offer software development, artificial intelligence integration, data analytics, cybersecurity and cloud solutions.",
+  "faq.q4.a":
+    "We offer software development, artificial intelligence integration, data analytics, cybersecurity and cloud solutions.",
   "faq.q4.q": "What services do you offer?",
-  "faq.q5.a": "We follow a transparent process consisting of requirements analysis, prototyping, development, testing and publishing stages.",
+  "faq.q5.a":
+    "We follow a transparent process consisting of requirements analysis, prototyping, development, testing and publishing stages.",
   "faq.q5.q": "How does the custom software process work?",
-  "faq.q6.a": "This depends on your goals. Our team will analyze your needs and recommend you the most suitable platform.",
+  "faq.q6.a":
+    "This depends on your goals. Our team will analyze your needs and recommend you the most suitable platform.",
   "faq.q6.q": "Should I have a mobile application or website built?",
-  "faq.q7.a": "We use modern technology stacks such as React, Next.js, TypeScript, Python, PyTorch, Database and AWS.",
+  "faq.q7.a":
+    "We use modern technology stacks such as React, Next.js, TypeScript, Python, PyTorch, Database and AWS.",
   "faq.q7.q": "What technologies do you use?",
-  "faq.q8.a": "Yes, we provide comprehensive API support and documentation for our enterprise solutions.",
+  "faq.q8.a":
+    "Yes, we provide comprehensive API support and documentation for our enterprise solutions.",
   "faq.q8.q": "Do you have API support?",
-  "faq.q9.a": "We develop models specific to your project with our own data sets and modern deep learning frameworks.",
+  "faq.q9.a":
+    "We develop models specific to your project with our own data sets and modern deep learning frameworks.",
   "faq.q9.q": "How do you train AI models?",
   "faq.title": "Frequently Asked Questions",
   "footer.description": "We are building the technologies of the future today.",
@@ -646,11 +770,14 @@ const en: Dict = {
   "home.cta.more": "Discover More",
   "home.cta.title": "Get started today.",
   "home.faq.q1": "What is Fun Technology?",
-  "home.faq.a1": "Fun Technology is a technology company specializing in artificial intelligence, custom software development and digital transformation.",
+  "home.faq.a1":
+    "Fun Technology is a technology company specializing in artificial intelligence, custom software development and digital transformation.",
   "home.faq.q2": "Do you provide technical support?",
   "home.faq.a2": "Yes, we offer 24/7 technical support and maintenance services for your projects.",
-  "home.faq.a3": "Although it varies depending on the scope of the project, we complete small projects within 2-4 weeks and comprehensive projects within 2-4 months.",
-  "home.faq.a4": "Pricing is specifically determined by the complexity of your project and the features needed.",
+  "home.faq.a3":
+    "Although it varies depending on the scope of the project, we complete small projects within 2-4 weeks and comprehensive projects within 2-4 months.",
+  "home.faq.a4":
+    "Pricing is specifically determined by the complexity of your project and the features needed.",
   "home.faq.a5": "Yes, we specialize in integrating AI models into your existing systems.",
   "home.faq.a6": "Certainly! You can share your project ideas with us and get free consultancy.",
   "home.faq.a7": "Yes, we develop modern mobile applications for both iOS and Android platforms.",
@@ -658,41 +785,53 @@ const en: Dict = {
   "home.faq.desc": "Everything you wonder is here.",
   "home.faq.title": "Frequently Asked Questions",
   "home.features.badge": "Features",
-  "home.features.card1.desc": "We automate your work using the latest LLM and deep learning models.",
+  "home.features.card1.desc":
+    "We automate your work using the latest LLM and deep learning models.",
   "home.features.card1.title": "Advanced Artificial Intelligence",
   "home.features.card2.desc": "Scalable systems that operate with low latency around the world.",
   "home.features.card2.title": "Global Infrastructure",
-  "home.features.card3.desc": "Your data is safe with AES-256 encryption and advanced security protocols.",
+  "home.features.card3.desc":
+    "Your data is safe with AES-256 encryption and advanced security protocols.",
   "home.features.card3.title": "Full Security",
-  "home.features.desc": "We offer the most modern technologies that will take your business to the next level.",
+  "home.features.desc":
+    "We offer the most modern technologies that will take your business to the next level.",
   "home.features.title": "Why Should You Choose Us?",
   "home.hero.badge": "Türkiye's Innovative Technology Company",
-  "home.hero.desc": "We move your business to the center of digital transformation with pioneering solutions in the field of artificial intelligence, software development and smart systems.",
+  "home.hero.desc":
+    "We move your business to the center of digital transformation with pioneering solutions in the field of artificial intelligence, software development and smart systems.",
   "home.hero.explore": "Discover Services",
   "home.hero.start": "Join the Waitlist",
   "home.hero.title": "Technologies of the Future Are With Us Today",
   "home.howitworks.badge": "Period",
   "home.howitworks.desc": "Discover step by step how we bring your project to life.",
-  "home.howitworks.step1.desc": "We analyze your needs and determine the most suitable technology stack.",
+  "home.howitworks.step1.desc":
+    "We analyze your needs and determine the most suitable technology stack.",
   "home.howitworks.step1.title": "Analysis and Planning",
-  "home.howitworks.step2.desc": "We establish user-friendly interfaces and strong backend structures with modern design principles.",
+  "home.howitworks.step2.desc":
+    "We establish user-friendly interfaces and strong backend structures with modern design principles.",
   "home.howitworks.step2.title": "Development and Testing",
-  "home.howitworks.step3.desc": "We publish your project and continue to provide uninterrupted support.",
+  "home.howitworks.step3.desc":
+    "We publish your project and continue to provide uninterrupted support.",
   "home.howitworks.step3.title": "Launch and Support",
   "home.howitworks.title": "How Do We Work?",
   "home.services.badge": "Our services",
-  "home.services.desc": "Meet the professional solutions we offer to grow your business and stand out in the digital world.",
-  "home.services.item1.desc": "Artificial intelligence models and automation systems trained specifically for your business.",
+  "home.services.desc":
+    "Meet the professional solutions we offer to grow your business and stand out in the digital world.",
+  "home.services.item1.desc":
+    "Artificial intelligence models and automation systems trained specifically for your business.",
   "home.services.item1.title": "Artificial Intelligence Solutions",
   "home.services.item2.desc": "Scalable and secure web applications with modern frameworks.",
   "home.services.item2.title": "Web Development",
-  "home.services.item3.desc": "High-performance native and hybrid mobile applications for iOS and Android.",
+  "home.services.item3.desc":
+    "High-performance native and hybrid mobile applications for iOS and Android.",
   "home.services.item3.title": "Mobile Application",
   "home.services.item4.desc": "Cloud infrastructure management and database optimization services.",
   "home.services.item4.title": "Cloud and Data",
-  "home.services.item5.desc": "We ensure the security of your systems and conduct vulnerability analyses.",
+  "home.services.item5.desc":
+    "We ensure the security of your systems and conduct vulnerability analyses.",
   "home.services.item5.title": "Cyber ​​Security",
-  "home.services.item6.desc": "Professional guidance and consultancy on your digital transformation journey.",
+  "home.services.item6.desc":
+    "Professional guidance and consultancy on your digital transformation journey.",
   "home.services.item6.title": "Technical Consultancy",
   "home.services.title": "Technology Solutions Specific to Your Needs",
   "home.stats.projects": "Completed Project",
@@ -701,19 +840,26 @@ const en: Dict = {
   "home.stats.users": "Active User",
   "home.testimonials.badge": "Comments",
   "home.testimonials.t1.name": "Ahmet Yilmaz",
-  "home.testimonials.t1.text": "Working with Fun Technology has completely changed our business processes. Thanks to artificial intelligence solutions, our efficiency has increased.",
+  "home.testimonials.t1.text":
+    "Working with Fun Technology has completely changed our business processes. Thanks to artificial intelligence solutions, our efficiency has increased.",
   "home.testimonials.t2.name": "Zeynep Kaya",
-  "home.testimonials.t2.text": "Mr. Muhammed and his team are very professional. They delivered our mobile application on time and flawlessly.",
+  "home.testimonials.t2.text":
+    "Mr. Muhammed and his team are very professional. They delivered our mobile application on time and flawlessly.",
   "home.testimonials.t3.name": "Murat Demir",
-  "home.testimonials.t3.text": "We had no problems with technical support. They always have a solution-oriented approach.",
+  "home.testimonials.t3.text":
+    "We had no problems with technical support. They always have a solution-oriented approach.",
   "home.testimonials.t4.name": "Elif Sahin",
-  "home.testimonials.t4.text": "Our website is now much faster and more secure. Thank you Fun Technology!",
+  "home.testimonials.t4.text":
+    "Our website is now much faster and more secure. Thank you Fun Technology!",
   "home.testimonials.t5.name": "Caner Ozkan",
-  "home.testimonials.t5.text": "They added value to our project with their innovative approaches and visionary perspectives.",
+  "home.testimonials.t5.text":
+    "They added value to our project with their innovative approaches and visionary perspectives.",
   "home.testimonials.t6.name": "Selin Aydin",
-  "home.testimonials.t6.text": "They have done a great job simplifying our complex systems. I definitely recommend it.",
+  "home.testimonials.t6.text":
+    "They have done a great job simplifying our complex systems. I definitely recommend it.",
   "home.testimonials.title": "Success Stories of Our Customers",
-  "home.whatwedo.text": "As Fun Technology, we develop innovative software solutions supported by artificial intelligence to prepare your business for the future.",
+  "home.whatwedo.text":
+    "As Fun Technology, we develop innovative software solutions supported by artificial intelligence to prepare your business for the future.",
   "inline.contact.message_error": "Please enter a valid message text.",
   "inline.contact.subject_error": "Please enter a meaningful subject title.",
   "lang.label": "Select Language",
@@ -760,7 +906,8 @@ const en: Dict = {
   "nexy.assistant_title": "Fun Technology Assistant",
   "nexy.beta_tag": "Beta",
   "nexy.beta_warning": "Wrong Answer May Have Consequences During Development Phase",
-  "nexy.capabilities.1.desc": "It understands your questions and provides you with the most accurate information within seconds.",
+  "nexy.capabilities.1.desc":
+    "It understands your questions and provides you with the most accurate information within seconds.",
   "nexy.capabilities.1.title": "Advanced Intelligence",
   "nexy.capabilities.2.desc": "It provides uninterrupted support 24/7, with no waiting time.",
   "nexy.capabilities.2.title": "Quick Response",
@@ -773,7 +920,8 @@ const en: Dict = {
   "nexy.capabilities.6.desc": "Establishes human-like, fluent and meaningful dialogues.",
   "nexy.capabilities.6.title": "Natural Speech",
   "nexy.capabilities.badge": "Abilities",
-  "nexy.capabilities.desc": "Equipped with artificial intelligence technology, Nexy is always with you.",
+  "nexy.capabilities.desc":
+    "Equipped with artificial intelligence technology, Nexy is always with you.",
   "nexy.capabilities.title": "What Can Nexy Do?",
   "nexy.chat.response": "Thanks for your message. How can I help you?",
   "nexy.copy_tooltip": "Copy",
@@ -782,7 +930,8 @@ const en: Dict = {
   "help.title": "Help Center",
   "help.popup": "How can we help you?",
   "nexy.hero.badge": "Fun Technology AI Assistant",
-  "nexy.hero.desc": "Your artificial intelligence-based digital assistant that makes your job easier.",
+  "nexy.hero.desc":
+    "Your artificial intelligence-based digital assistant that makes your job easier.",
   "nexy.hero.title": "Meet Nexy",
   "nexy.msg1": "Hello! I'm Nexy, Fun Technology assistant. How can I help you?",
   "nexy.placeholder": "Type your message...",
@@ -803,9 +952,12 @@ const en: Dict = {
   "policy.contact.desc": "If you have any questions you can contact us:",
   "policy.contact.title": "Communication",
   "policy.last_updated": "Last Update Date: 19/03/2026",
-  "policy.privacy.contact_desc": "If you have any questions about our Privacy Policy or the processing of your personal data, you can contact us:",
-  "policy.privacy.intro": "Our Privacy Policy explains how we collect, use and protect your personal information. Your privacy and security is our priority.",
-  "policy.privacy.s1.desc": "We may collect certain personal information from you when you visit our website, create an account, or interact with our services. This information may include:",
+  "policy.privacy.contact_desc":
+    "If you have any questions about our Privacy Policy or the processing of your personal data, you can contact us:",
+  "policy.privacy.intro":
+    "Our Privacy Policy explains how we collect, use and protect your personal information. Your privacy and security is our priority.",
+  "policy.privacy.s1.desc":
+    "We may collect certain personal information from you when you visit our website, create an account, or interact with our services. This information may include:",
   "policy.privacy.s1.item1": "Name and surname",
   "policy.privacy.s1.item2": "Email address",
   "policy.privacy.s1.item3": "Contact information",
@@ -818,34 +970,47 @@ const en: Dict = {
   "policy.privacy.s2.item4": "Communicating about campaigns and innovations",
   "policy.privacy.s2.item5": "To improve our services by analyzing site traffic",
   "policy.privacy.s2.title": "How We Use Your Information",
-  "policy.privacy.s3.desc": "We take the security of your personal data seriously. We implement industry-standard security measures to protect against unauthorized access, alteration, disclosure or destruction. However, remember that data transmission over the Internet or electronic storage is not 100% secure.",
+  "policy.privacy.s3.desc":
+    "We take the security of your personal data seriously. We implement industry-standard security measures to protect against unauthorized access, alteration, disclosure or destruction. However, remember that data transmission over the Internet or electronic storage is not 100% secure.",
   "policy.privacy.s3.title": "Data Security",
-  "policy.privacy.s4.desc": "Your personal data: Will not be sold or shared for commercial purposes without your express permission. It may be shared with service providers when required by legal obligations or provided that they adhere to confidentiality.",
+  "policy.privacy.s4.desc":
+    "Your personal data: Will not be sold or shared for commercial purposes without your express permission. It may be shared with service providers when required by legal obligations or provided that they adhere to confidentiality.",
   "policy.privacy.s4.title": "Sharing with Third Parties",
-  "policy.privacy.s5.desc": "Our website may use cookies to improve user experience. Thanks to cookies, information about how you use the site is collected. You can reject cookies or receive warnings by changing your browser settings.",
+  "policy.privacy.s5.desc":
+    "Our website may use cookies to improve user experience. Thanks to cookies, information about how you use the site is collected. You can reject cookies or receive warnings by changing your browser settings.",
   "policy.privacy.s5.title": "Cookies",
-  "policy.privacy.s6.desc": "This Privacy Policy may be updated from time to time. Any changes made are published on this page and the effective date is updated. We recommend that you check this page regularly for updates.",
+  "policy.privacy.s6.desc":
+    "This Privacy Policy may be updated from time to time. Any changes made are published on this page and the effective date is updated. We recommend that you check this page regularly for updates.",
   "policy.privacy.s6.title": "Changes",
-  "policy.service.intro": "By using the Fun Technology platform, you agree to use our services within the framework of safe, legal and ethical rules. Here are the basic terms of use:",
-  "policy.service.s1.desc": "In order to use the platform, you must create an account with accurate and up-to-date information. You are responsible for the confidentiality of your account information.",
+  "policy.service.intro":
+    "By using the Fun Technology platform, you agree to use our services within the framework of safe, legal and ethical rules. Here are the basic terms of use:",
+  "policy.service.s1.desc":
+    "In order to use the platform, you must create an account with accurate and up-to-date information. You are responsible for the confidentiality of your account information.",
   "policy.service.s1.title": "Account Usage",
-  "policy.service.s2.desc": "The content you share and the transactions you take on the Platform must comply with all applicable laws and regulations.",
+  "policy.service.s2.desc":
+    "The content you share and the transactions you take on the Platform must comply with all applicable laws and regulations.",
   "policy.service.s2.title": "Legal Compliance",
-  "policy.service.s3.desc": "Fun Technology implements advanced security measures to protect your data. For your account security, you must keep your passwords secret.",
+  "policy.service.s3.desc":
+    "Fun Technology implements advanced security measures to protect your data. For your account security, you must keep your passwords secret.",
   "policy.service.s3.title": "Security and Privacy",
-  "policy.service.s4.desc": "Fun Teknoloji accepts limited liability for the content and third-party links on the platform. Users use the platform at their own responsibilities.",
+  "policy.service.s4.desc":
+    "Fun Teknoloji accepts limited liability for the content and third-party links on the platform. Users use the platform at their own responsibilities.",
   "policy.service.s4.title": "Disclaimer",
-  "policy.service.s5.desc": "Fun Teknoloji reserves the right to make changes to the content, features or terms of use in order to improve the functionality of the platform.",
+  "policy.service.s5.desc":
+    "Fun Teknoloji reserves the right to make changes to the content, features or terms of use in order to improve the functionality of the platform.",
   "policy.service.s5.title": "Service Changes",
-  "policy.service.s6.desc": "In case of violation of terms of use, the platform may restrict or close accounts temporarily or permanently.",
+  "policy.service.s6.desc":
+    "In case of violation of terms of use, the platform may restrict or close accounts temporarily or permanently.",
   "policy.service.s6.title": "Sanctions",
   "pricing.badge": "Pricing",
   "pricing.desc": "We are currently working to make our systems more efficient and economical.",
   "pricing.title": "Our New Packages Are Here Soon",
   "projects.hero.desc": "Our solution-oriented projects developed with innovative technologies.",
   "projects.hero.title": "We are building the future",
-  "projects.nexy.desc": "Fun Technology's artificial intelligence-based digital assistant. Smart guide for businesses and users.",
-  "projects.quakesafe.desc": "A new era in disaster safety technology. Smart systems that save lives during and after an earthquake.",
+  "projects.nexy.desc":
+    "Fun Technology's artificial intelligence-based digital assistant. Smart guide for businesses and users.",
+  "projects.quakesafe.desc":
+    "A new era in disaster safety technology. Smart systems that save lives during and after an earthquake.",
   "projects.soon.desc": "We continue to work on our exciting new projects.",
   "projects.soon.title": "More Coming Soon",
   "projects.view": "Review the Project",
@@ -858,7 +1023,8 @@ const en: Dict = {
   "quakesafe.features.10.title": "Health Tracking",
   "quakesafe.features.11.desc": "Review historical earthquake data and risks in your area.",
   "quakesafe.features.11.title": "Past Analysis",
-  "quakesafe.features.12.desc": "A platform that brings together those in need and those who can help.",
+  "quakesafe.features.12.desc":
+    "A platform that brings together those in need and those who can help.",
   "quakesafe.features.12.title": "Solidarity Network",
   "quakesafe.features.2.desc": "See real-time where your loved ones are during a disaster.",
   "quakesafe.features.2.title": "Location Tracking",
@@ -868,31 +1034,42 @@ const en: Dict = {
   "quakesafe.features.4.title": "Family Groups",
   "quakesafe.features.5.desc": "Access critical guides and maps even when the internet goes out.",
   "quakesafe.features.5.title": "Offline Mode",
-  "quakesafe.features.6.desc": "Damage risk prediction and area security analysis with artificial intelligence.",
+  "quakesafe.features.6.desc":
+    "Damage risk prediction and area security analysis with artificial intelligence.",
   "quakesafe.features.6.title": "AI Analysis",
   "quakesafe.features.7.desc": "Ability to communicate between devices when base stations go down.",
   "quakesafe.features.7.title": "Mesh Network",
   "quakesafe.features.8.desc": "Keep your important documents and health data safe.",
   "quakesafe.features.8.title": "Cloud Backup",
-  "quakesafe.features.9.desc": "Reporting the location of those under rubble to the authorities with a single click.",
+  "quakesafe.features.9.desc":
+    "Reporting the location of those under rubble to the authorities with a single click.",
   "quakesafe.features.9.title": "Quick Notification",
-  "quakesafe.features.desc": "All the tools you need before, during and after a disaster are on a single platform.",
+  "quakesafe.features.desc":
+    "All the tools you need before, during and after a disaster are on a single platform.",
   "quakesafe.features.title": "Comprehensive Protection Network",
-  "quakesafe.hero.desc": "Revolution in earthquake safety with artificial intelligence and sensor networks. Your biggest supporter in those moments when even seconds are critical.",
+  "quakesafe.hero.desc":
+    "Revolution in earthquake safety with artificial intelligence and sensor networks. Your biggest supporter in those moments when even seconds are critical.",
   "quakesafe.hero.title": "Don't be afraid of earthquakes, stay safe with QuakeSafe",
-  "reviews.desc": "Discover the stories of our business partners who transformed with Fun Technology.",
+  "reviews.desc":
+    "Discover the stories of our business partners who transformed with Fun Technology.",
   "reviews.r1.name": "Ahmet Yilmaz",
-  "reviews.r1.text": "As a small business owner, the software solutions you offer have been a lifesaver in improving our operational efficiency. It truly exceeded my expectations.",
+  "reviews.r1.text":
+    "As a small business owner, the software solutions you offer have been a lifesaver in improving our operational efficiency. It truly exceeded my expectations.",
   "reviews.r2.name": "Zeynep Kaya",
-  "reviews.r2.text": "AI integration is absolutely incredible! We saved a lot of time by automating our business processes.",
+  "reviews.r2.text":
+    "AI integration is absolutely incredible! We saved a lot of time by automating our business processes.",
   "reviews.r3.name": "Murat Demir",
-  "reviews.r3.text": "This technology has revolutionized our data analytics processes. The insights are so deep that we now make our decisions with much more confidence.",
+  "reviews.r3.text":
+    "This technology has revolutionized our data analytics processes. The insights are so deep that we now make our decisions with much more confidence.",
   "reviews.r4.name": "Elif Sahin",
-  "reviews.r4.text": "As a project manager, this tool has been invaluable for ensuring cross-team coordination. The user-friendly interface is great!",
+  "reviews.r4.text":
+    "As a project manager, this tool has been invaluable for ensuring cross-team coordination. The user-friendly interface is great!",
   "reviews.r5.name": "Caner Özkan",
-  "reviews.r5.text": "The speed and quality of their development process is mind-blowing. We were able to receive our projects on time while maintaining exceptional quality standards.",
+  "reviews.r5.text":
+    "The speed and quality of their development process is mind-blowing. We were able to receive our projects on time while maintaining exceptional quality standards.",
   "reviews.r6.name": "Selin Aydin",
-  "reviews.r6.text": "This platform has transformed the way we manage our digital presence. The technology is so modern and impressive that our entire team was amazed.",
+  "reviews.r6.text":
+    "This platform has transformed the way we manage our digital presence. The technology is so modern and impressive that our entire team was amazed.",
   "reviews.title": "What Do Our Customers Say?",
   "reviews.verified": "Verified Customer",
   "sitemap.desc": "Overview of all pages on the Fun Teknoloji website.",
@@ -920,40 +1097,67 @@ const en: Dict = {
   "sitemap.title": "Site Map",
   "team.badge": "Our team",
   "team.desc": "Meet the talented names behind Fun Technology.",
-  "team.join.desc": "Would you like to build the future with us? We are waiting for your applications.",
+  "team.join.desc":
+    "Would you like to build the future with us? We are waiting for your applications.",
   "team.join.title": "Join Our Team",
-  "team.member.muhammed.bio": "Muhammed Erbay, the founder of Fun Technology, leads the company with the vision of making technology accessible and useful for everyone.",
+  "team.member.muhammed.bio":
+    "Muhammed Erbay, the founder of Fun Technology, leads the company with the vision of making technology accessible and useful for everyone.",
   "team.title": "The Power Behind Our Success",
   "theme.dark": "Switch to Dark Theme",
   "theme.light": "Switch to Open Theme",
-  "nexy.resp.pricing.0": "We are working on our pricing policies. You can follow our Pricing page for the most up-to-date packages. For now, joining our waitlist is the best option!",
-  "nexy.resp.pricing.1": "Currently, we offer special quotes for all our services; details will be on our pages soon. We generally do project-based pricing.",
-  "nexy.resp.pricing.2": "Our packages are being updated. As Fun Technology, we aim to produce technology solutions suitable for every budget.",
-  "nexy.resp.services.0": "We offer professional solutions in AI integration, custom software development, mobile applications, and cybersecurity. Which area are you interested in?",
-  "nexy.resp.services.1": "We accompany you on your digital transformation journey with the most modern technology stack. We use React, Next.js, AI models, and more.",
-  "nexy.resp.services.2": "For detailed information about our AI solutions that will automate your business processes, you can check our Services page. We can increase your efficiency by up to 40%.",
-  "nexy.resp.founder.0": "Fun Technology was founded in 2025 by Muhammed Erbay as a visionary technology company.",
-  "nexy.resp.founder.1": "Our founder Muhammed Erbay started this journey with the vision of making technology accessible and useful for everyone. He is a young and ambitious entrepreneur.",
-  "nexy.resp.founder.2": "Founded in 2025 under the leadership of Muhammed Erbay, Fun Technology focuses on the digital future. Mr. Muhammed personally oversees the architecture of the projects.",
-  "nexy.resp.contact.0": "You can reach us through the form on the contact page or at support@funteknoloji.com! We provide 24/7 support.",
-  "nexy.resp.contact.1": "We are always here for your questions; feel free to write to us from the contact section. We also have a very active community on our Discord channel.",
-  "nexy.resp.contact.2": "By joining our Discord community, you can communicate directly with our team. You can find the link on the Contact page.",
-  "nexy.resp.about.0": "Fun Technology was founded to make technology 'fun' and 'useful'. AI and software are our passions.",
-  "nexy.resp.about.1": "Our mission is to introduce businesses to the technologies of the future today. Our vision is to become a global technology hub.",
-  "nexy.resp.about.2": "You can find our entire history and values on the About Us page. Innovation, quality, and reliability are our most important principles.",
-  "nexy.resp.careers.0": "Our team is constantly growing! For career opportunities, you can send us your CV or follow our LinkedIn page.",
-  "nexy.resp.careers.1": "We are happy to work with talented engineers, designers, and AI enthusiasts.",
-  "nexy.resp.careers.2": "Although we don't have a specific job posting right now, our door is always open to talented people. Write to us!",
-  "nexy.resp.tech.0": "We use modern technologies in our developments. React, TypeScript, TanStack, Tailwind, and various LLM models are our essentials.",
-  "nexy.resp.tech.1": "We design our systems with a focus on high performance and scalability. We use cloud technologies in the most efficient way.",
-  "nexy.resp.tech.2": "As Fun Technology, we constantly do R&D. We are the first to apply the newest frameworks and AI techniques.",
+  "nexy.resp.pricing.0":
+    "We are working on our pricing policies. You can follow our Pricing page for the most up-to-date packages. For now, joining our waitlist is the best option!",
+  "nexy.resp.pricing.1":
+    "Currently, we offer special quotes for all our services; details will be on our pages soon. We generally do project-based pricing.",
+  "nexy.resp.pricing.2":
+    "Our packages are being updated. As Fun Technology, we aim to produce technology solutions suitable for every budget.",
+  "nexy.resp.services.0":
+    "We offer professional solutions in AI integration, custom software development, mobile applications, and cybersecurity. Which area are you interested in?",
+  "nexy.resp.services.1":
+    "We accompany you on your digital transformation journey with the most modern technology stack. We use React, Next.js, AI models, and more.",
+  "nexy.resp.services.2":
+    "For detailed information about our AI solutions that will automate your business processes, you can check our Services page. We can increase your efficiency by up to 40%.",
+  "nexy.resp.founder.0":
+    "Fun Technology was founded in 2025 by Muhammed Erbay as a visionary technology company.",
+  "nexy.resp.founder.1":
+    "Our founder Muhammed Erbay started this journey with the vision of making technology accessible and useful for everyone. He is a young and ambitious entrepreneur.",
+  "nexy.resp.founder.2":
+    "Founded in 2025 under the leadership of Muhammed Erbay, Fun Technology focuses on the digital future. Mr. Muhammed personally oversees the architecture of the projects.",
+  "nexy.resp.contact.0":
+    "You can reach us through the form on the contact page or at support@funteknoloji.com! We provide 24/7 support.",
+  "nexy.resp.contact.1":
+    "We are always here for your questions; feel free to write to us from the contact section. We also have a very active community on our Discord channel.",
+  "nexy.resp.contact.2":
+    "By joining our Discord community, you can communicate directly with our team. You can find the link on the Contact page.",
+  "nexy.resp.about.0":
+    "Fun Technology was founded to make technology 'fun' and 'useful'. AI and software are our passions.",
+  "nexy.resp.about.1":
+    "Our mission is to introduce businesses to the technologies of the future today. Our vision is to become a global technology hub.",
+  "nexy.resp.about.2":
+    "You can find our entire history and values on the About Us page. Innovation, quality, and reliability are our most important principles.",
+  "nexy.resp.careers.0":
+    "Our team is constantly growing! For career opportunities, you can send us your CV or follow our LinkedIn page.",
+  "nexy.resp.careers.1":
+    "We are happy to work with talented engineers, designers, and AI enthusiasts.",
+  "nexy.resp.careers.2":
+    "Although we don't have a specific job posting right now, our door is always open to talented people. Write to us!",
+  "nexy.resp.tech.0":
+    "We use modern technologies in our developments. React, TypeScript, TanStack, Tailwind, and various LLM models are our essentials.",
+  "nexy.resp.tech.1":
+    "We design our systems with a focus on high performance and scalability. We use cloud technologies in the most efficient way.",
+  "nexy.resp.tech.2":
+    "As Fun Technology, we constantly do R&D. We are the first to apply the newest frameworks and AI techniques.",
   "nexy.resp.greeting.0": "Hello! How can I help you? It's a technology-filled day!",
   "nexy.resp.greeting.1": "Greetings! I'm Nexy, the AI assistant of Fun Technology. I'm listening.",
-  "nexy.resp.greeting.2": "Welcome! Is there something you're curious about? I can tell you everything about Fun Technology.",
+  "nexy.resp.greeting.2":
+    "Welcome! Is there something you're curious about? I can tell you everything about Fun Technology.",
   "nexy.resp.default.0": "Thanks for your message. How can I help you?",
-  "nexy.resp.default.1": "Please fill out the contact form so we can help you in more detail regarding this matter.",
-  "nexy.resp.default.2": "Great question! But I don't have full information on this yet. Would you like me to ask our team?",
-  "nexy.resp.default.3": "How can I help you better? We can talk about our technology solutions, our founder, or our services.",
+  "nexy.resp.default.1":
+    "Please fill out the contact form so we can help you in more detail regarding this matter.",
+  "nexy.resp.default.2":
+    "Great question! But I don't have full information on this yet. Would you like me to ask our team?",
+  "nexy.resp.default.3":
+    "How can I help you better? We can talk about our technology solutions, our founder, or our services.",
   "home.faq.q3": "How long does it take to complete projects?",
   "home.faq.q4": "How is pricing done?",
   "home.faq.q5": "Can AI be integrated into our systems?",
@@ -972,7 +1176,8 @@ const de: Dict = {
   "about.cta.title": "Lassen Sie uns zusammenarbeiten",
   "about.desc": "Fun Teknoloji wurde 2025 von Muhammed Erbay gegründet.",
   "about.mission.badge": "Unsere Mission",
-  "about.mission.desc": "Wir möchten Unternehmen jeder Größe dabei helfen, Wettbewerbsvorteile in der digitalen Welt zu erlangen, indem wir ihnen ermöglichen, von künstlicher Intelligenz und fortschrittlichen Technologielösungen zu profitieren.",
+  "about.mission.desc":
+    "Wir möchten Unternehmen jeder Größe dabei helfen, Wettbewerbsvorteile in der digitalen Welt zu erlangen, indem wir ihnen ermöglichen, von künstlicher Intelligenz und fortschrittlichen Technologielösungen zu profitieren.",
   "about.mission.title": "Unternehmen mit Technologie stärken",
   "about.stats.clients": "Glücklicher Kunde",
   "about.stats.projects": "Abgeschlossenes Projekt",
@@ -982,11 +1187,13 @@ const de: Dict = {
   "about.title": "Wir gestalten die Zukunft gemeinsam mit Technologie.",
   "about.values.1.desc": "Bei allem, was wir tun, legen wir Wert auf Ehrlichkeit und Transparenz.",
   "about.values.1.title": "Zuverlässigkeit",
-  "about.values.2.desc": "Wir verfolgen die neuesten Technologien und produzieren zukunftsweisende Lösungen.",
+  "about.values.2.desc":
+    "Wir verfolgen die neuesten Technologien und produzieren zukunftsweisende Lösungen.",
   "about.values.2.title": "Innovation",
   "about.values.3.desc": "Wir sehen den Erfolg unserer Kunden als unseren eigenen Erfolg.",
   "about.values.3.title": "Kundenorientierung",
-  "about.values.4.desc": "Wir produzieren nicht nur funktionale, sondern auch ästhetische und hochwertige Arbeiten.",
+  "about.values.4.desc":
+    "Wir produzieren nicht nur funktionale, sondern auch ästhetische und hochwertige Arbeiten.",
   "about.values.4.title": "Qualität",
   "about.values.5.desc": "Wir finden einfache und effektive Lösungen für komplexe Probleme.",
   "about.values.5.title": "Einfachheit",
@@ -1012,13 +1219,15 @@ const de: Dict = {
   "blog.post.read_aloud": "Laut vorlesen",
   "blog.post.reading_started": "Das Vorlesen hat begonnen.",
   "blog.post.select_language": "SPRACHE WÄHLEN",
-  "blog.post.stay_updated": "Verpassen Sie nicht die Entwicklungen in der Welt der künstlichen Intelligenz und Software.",
+  "blog.post.stay_updated":
+    "Verpassen Sie nicht die Entwicklungen in der Welt der künstlichen Intelligenz und Software.",
   "blog.post.stop_reading": "Hören Sie auf zu lesen",
   "blog.post.translation_warning": "Der Text ist möglicherweise falsch übersetzt",
   "blog.title": "Aus der Welt der Technik",
   "brand_kit.badge": "Corporate",
   "brand_kit.colors.title": "Our Color Palette",
-  "brand_kit.desc": "You can download Fun Teknoloji logos and visual materials here and take a look at the usage guide.",
+  "brand_kit.desc":
+    "You can download Fun Teknoloji logos and visual materials here and take a look at the usage guide.",
   "brand_kit.download_png": "Download PNG",
   "brand_kit.logos.fun_black.desc": "Black version for use on light-colored backgrounds.",
   "brand_kit.logos.fun_black.title": "Fun Technology Black Logo",
@@ -1033,7 +1242,8 @@ const de: Dict = {
   "brand_kit.title": "Brand Kit",
   "changelog.badge": "Aktualisierungen",
   "changelog.coming_soon": "Sehr bald",
-  "changelog.desc": "Verfolgen Sie die neuesten Innovationen und Verbesserungen auf der Fun Technology-Plattform.",
+  "changelog.desc":
+    "Verfolgen Sie die neuesten Innovationen und Verbesserungen auf der Fun Technology-Plattform.",
   "changelog.details_soon": "Einzelheiten zu diesem Abschnitt werden in Kürze bekannt gegeben.",
   "changelog.item1.desc": "Wichtige Plattformaktualisierungen und Unternehmensinnovationen.",
   "changelog.item1.title": "Version 2.0 ist veröffentlicht",
@@ -1049,12 +1259,14 @@ const de: Dict = {
   "changelog.last_update": "Letzte Aktualisierung: 15. Juni 2026",
   "changelog.title": "Änderungsprotokoll",
   "contact.captcha.cancel": "Stornieren",
-  "contact.captcha.desc": "Bitte führen Sie den folgenden Vorgang aus, um sicherzustellen, dass Sie kein Roboter sind.",
+  "contact.captcha.desc":
+    "Bitte führen Sie den folgenden Vorgang aus, um sicherzustellen, dass Sie kein Roboter sind.",
   "contact.captcha.error": "Falsche Antwort, bitte versuchen Sie es erneut.",
   "contact.captcha.title": "Sicherheitsüberprüfung",
   "contact.captcha.verify": "verifizieren",
   "contact.community.button": "Treten Sie Discord bei",
-  "contact.community.desc": "Treten Sie unserer Tech-Community bei und kommunizieren Sie direkt mit unserem Team.",
+  "contact.community.desc":
+    "Treten Sie unserer Tech-Community bei und kommunizieren Sie direkt mit unserem Team.",
   "contact.community.title": "Treten Sie unserer Community bei",
   "contact.desc": "Wir sind für Ihre Fragen da.",
   "contact.form.email": "E-Mail",
@@ -1077,7 +1289,8 @@ const de: Dict = {
   "docs.sidebar.getting_started": "Anfang",
   "docs.sidebar.intro": "Eingang",
   "docs.sidebar.setup": "Schnelle Einrichtung",
-  "docs.soon.desc": "Detaillierte Benutzerhandbücher für unsere Plattform und Dienste werden derzeit erstellt. Wir werden so schnell wie möglich hier sein.",
+  "docs.soon.desc":
+    "Detaillierte Benutzerhandbücher für unsere Plattform und Dienste werden derzeit erstellt. Wir werden so schnell wie möglich hier sein.",
   "docs.soon.title": "Sehr bald",
   "docs.title": "Dokumentation",
   "error.home": "Startseite",
@@ -1090,97 +1303,137 @@ const de: Dict = {
   "faq.cat.services": "Dienstleistungen",
   "faq.cat.technical": "Technisch",
   "faq.desc": "Fragen zu unseren Leistungen und Prozessen.",
-  "faq.q1.a": "Fun Technology ist ein Technologieunternehmen, das sich auf künstliche Intelligenz, kundenspezifische Softwareentwicklung und digitale Transformation spezialisiert hat.",
+  "faq.q1.a":
+    "Fun Technology ist ein Technologieunternehmen, das sich auf künstliche Intelligenz, kundenspezifische Softwareentwicklung und digitale Transformation spezialisiert hat.",
   "faq.q1.q": "Was ist Fun-Technologie?",
-  "faq.q10.a": "Ja, alle Ihre Daten werden durch branchenübliche Verschlüsselungsmethoden und eine sichere Cloud-Infrastruktur geschützt.",
+  "faq.q10.a":
+    "Ja, alle Ihre Daten werden durch branchenübliche Verschlüsselungsmethoden und eine sichere Cloud-Infrastruktur geschützt.",
   "faq.q10.q": "Sind meine Daten sicher?",
-  "faq.q11.a": "Der Schutz der Benutzerdaten hat für uns oberste Priorität. Detaillierte Informationen finden Sie auf unserer Datenschutzseite.",
+  "faq.q11.a":
+    "Der Schutz der Benutzerdaten hat für uns oberste Priorität. Detaillierte Informationen finden Sie auf unserer Datenschutzseite.",
   "faq.q11.q": "Wie lauten Ihre Datenschutzbestimmungen?",
-  "faq.q2.a": "Fun Technology wurde 2025 von Muhammed Erbay als visionäre Technologieinitiative gegründet.",
+  "faq.q2.a":
+    "Fun Technology wurde 2025 von Muhammed Erbay als visionäre Technologieinitiative gegründet.",
   "faq.q2.q": "Wann wurde Fun Teknoloji gegründet?",
-  "faq.q3.a": "Weil wir glauben, dass Technologie nicht langweilig und kompliziert sein sollte, sondern ein Werkzeug, das das Leben einfacher und „spaßiger“ macht.",
+  "faq.q3.a":
+    "Weil wir glauben, dass Technologie nicht langweilig und kompliziert sein sollte, sondern ein Werkzeug, das das Leben einfacher und „spaßiger“ macht.",
   "faq.q3.q": "Warum ist Ihr Name Fun Teknoloji?",
-  "faq.q4.a": "Wir bieten Softwareentwicklung, Integration künstlicher Intelligenz, Datenanalyse, Cybersicherheit und Cloud-Lösungen.",
+  "faq.q4.a":
+    "Wir bieten Softwareentwicklung, Integration künstlicher Intelligenz, Datenanalyse, Cybersicherheit und Cloud-Lösungen.",
   "faq.q4.q": "Welche Dienstleistungen bieten Sie an?",
-  "faq.q5.a": "Wir folgen einem transparenten Prozess, der aus den Phasen Anforderungsanalyse, Prototyping, Entwicklung, Test und Veröffentlichung besteht.",
+  "faq.q5.a":
+    "Wir folgen einem transparenten Prozess, der aus den Phasen Anforderungsanalyse, Prototyping, Entwicklung, Test und Veröffentlichung besteht.",
   "faq.q5.q": "Wie funktioniert der Individualsoftware-Prozess?",
-  "faq.q6.a": "Das hängt von Ihren Zielen ab. Unser Team analysiert Ihre Bedürfnisse und empfiehlt Ihnen die am besten geeignete Plattform.",
+  "faq.q6.a":
+    "Das hängt von Ihren Zielen ab. Unser Team analysiert Ihre Bedürfnisse und empfiehlt Ihnen die am besten geeignete Plattform.",
   "faq.q6.q": "Sollte ich eine mobile Anwendung oder Website erstellen lassen?",
-  "faq.q7.a": "Wir nutzen moderne Technologie-Stacks wie React, Next.js, TypeScript, Python, PyTorch, Database und AWS.",
+  "faq.q7.a":
+    "Wir nutzen moderne Technologie-Stacks wie React, Next.js, TypeScript, Python, PyTorch, Database und AWS.",
   "faq.q7.q": "Welche Technologien nutzen Sie?",
-  "faq.q8.a": "Ja, wir bieten umfassenden API-Support und Dokumentation für unsere Unternehmenslösungen.",
+  "faq.q8.a":
+    "Ja, wir bieten umfassenden API-Support und Dokumentation für unsere Unternehmenslösungen.",
   "faq.q8.q": "Haben Sie API-Unterstützung?",
-  "faq.q9.a": "Wir entwickeln projektspezifische Modelle mit eigenen Datensätzen und modernen Deep-Learning-Frameworks.",
+  "faq.q9.a":
+    "Wir entwickeln projektspezifische Modelle mit eigenen Datensätzen und modernen Deep-Learning-Frameworks.",
   "faq.q9.q": "Wie trainiert man KI-Modelle?",
   "faq.title": "Häufig gestellte Fragen",
   "footer.description": "Wir bauen schon heute die Technologien der Zukunft.",
   "footer.rights": "Alle Rechte vorbehalten.",
   "footer.status": "Systemstatus",
   "home.cta.button": "Kontaktieren Sie uns",
-  "home.cta.desc": "Wenn Sie Fragen haben oder Hilfe benötigen, wenden Sie sich an unser Support-Team.",
+  "home.cta.desc":
+    "Wenn Sie Fragen haben oder Hilfe benötigen, wenden Sie sich an unser Support-Team.",
   "home.cta.more": "Entdecken Sie mehr",
   "home.cta.title": "Beginnen Sie noch heute.",
-  "home.faq.a1": "Fun Technology ist ein Technologieunternehmen, das sich auf künstliche Intelligenz, kundenspezifische Softwareentwicklung und digitale Transformation spezialisiert hat.",
-  "home.faq.a2": "Ja, wir bieten rund um die Uhr technischen Support und Wartungsdienste für Ihre Projekte.",
-  "home.faq.a3": "Obwohl es je nach Projektumfang unterschiedlich ist, schließen wir kleine Projekte innerhalb von 2-4 Wochen und umfassende Projekte innerhalb von 2-4 Monaten ab.",
-  "home.faq.a4": "Die Preisgestaltung richtet sich speziell nach der Komplexität Ihres Projekts und den benötigten Funktionen.",
-  "home.faq.a5": "Ja, wir sind auf die Integration von KI-Modellen in Ihre bestehenden Systeme spezialisiert.",
-  "home.faq.a6": "Sicherlich! Sie können Ihre Projektideen mit uns teilen und sich kostenlos beraten lassen.",
-  "home.faq.a7": "Ja, wir entwickeln moderne mobile Anwendungen sowohl für iOS- als auch für Android-Plattformen.",
+  "home.faq.a1":
+    "Fun Technology ist ein Technologieunternehmen, das sich auf künstliche Intelligenz, kundenspezifische Softwareentwicklung und digitale Transformation spezialisiert hat.",
+  "home.faq.a2":
+    "Ja, wir bieten rund um die Uhr technischen Support und Wartungsdienste für Ihre Projekte.",
+  "home.faq.a3":
+    "Obwohl es je nach Projektumfang unterschiedlich ist, schließen wir kleine Projekte innerhalb von 2-4 Wochen und umfassende Projekte innerhalb von 2-4 Monaten ab.",
+  "home.faq.a4":
+    "Die Preisgestaltung richtet sich speziell nach der Komplexität Ihres Projekts und den benötigten Funktionen.",
+  "home.faq.a5":
+    "Ja, wir sind auf die Integration von KI-Modellen in Ihre bestehenden Systeme spezialisiert.",
+  "home.faq.a6":
+    "Sicherlich! Sie können Ihre Projektideen mit uns teilen und sich kostenlos beraten lassen.",
+  "home.faq.a7":
+    "Ja, wir entwickeln moderne mobile Anwendungen sowohl für iOS- als auch für Android-Plattformen.",
   "home.faq.badge": "FAQ",
   "home.faq.desc": "Alles, was Sie sich wundern, finden Sie hier.",
   "home.faq.title": "Häufig gestellte Fragen",
   "home.features.badge": "Merkmale",
-  "home.features.card1.desc": "Wir automatisieren Ihre Arbeit mit den neuesten LLM- und Deep-Learning-Modellen.",
+  "home.features.card1.desc":
+    "Wir automatisieren Ihre Arbeit mit den neuesten LLM- und Deep-Learning-Modellen.",
   "home.features.card1.title": "Fortschrittliche künstliche Intelligenz",
   "home.features.card2.desc": "Skalierbare Systeme, die weltweit mit geringer Latenz arbeiten.",
   "home.features.card2.title": "Globale Infrastruktur",
-  "home.features.card3.desc": "Ihre Daten sind dank AES-256-Verschlüsselung und erweiterten Sicherheitsprotokollen sicher.",
+  "home.features.card3.desc":
+    "Ihre Daten sind dank AES-256-Verschlüsselung und erweiterten Sicherheitsprotokollen sicher.",
   "home.features.card3.title": "Volle Sicherheit",
-  "home.features.desc": "Wir bieten modernste Technologien, die Ihr Unternehmen auf die nächste Stufe heben.",
+  "home.features.desc":
+    "Wir bieten modernste Technologien, die Ihr Unternehmen auf die nächste Stufe heben.",
   "home.features.title": "Warum sollten Sie sich für uns entscheiden?",
   "home.hero.badge": "Türkiyes innovatives Technologieunternehmen",
-  "home.hero.desc": "Mit zukunftsweisenden Lösungen im Bereich Künstliche Intelligenz, Softwareentwicklung und Smart Systems rücken wir Ihr Unternehmen ins Zentrum der digitalen Transformation.",
+  "home.hero.desc":
+    "Mit zukunftsweisenden Lösungen im Bereich Künstliche Intelligenz, Softwareentwicklung und Smart Systems rücken wir Ihr Unternehmen ins Zentrum der digitalen Transformation.",
   "home.hero.explore": "Entdecken Sie Dienstleistungen",
   "home.hero.start": "Treten Sie der Warteliste bei",
   "home.hero.title": "Technologien der Zukunft begleiten uns schon heute",
   "home.howitworks.badge": "Zeitraum",
-  "home.howitworks.desc": "Entdecken Sie Schritt für Schritt, wie wir Ihr Projekt zum Leben erwecken.",
-  "home.howitworks.step1.desc": "Wir analysieren Ihre Bedürfnisse und ermitteln den am besten geeigneten Technologie-Stack.",
+  "home.howitworks.desc":
+    "Entdecken Sie Schritt für Schritt, wie wir Ihr Projekt zum Leben erwecken.",
+  "home.howitworks.step1.desc":
+    "Wir analysieren Ihre Bedürfnisse und ermitteln den am besten geeigneten Technologie-Stack.",
   "home.howitworks.step1.title": "Analyse und Planung",
-  "home.howitworks.step2.desc": "Wir etablieren benutzerfreundliche Oberflächen und starke Backend-Strukturen mit modernen Designprinzipien.",
+  "home.howitworks.step2.desc":
+    "Wir etablieren benutzerfreundliche Oberflächen und starke Backend-Strukturen mit modernen Designprinzipien.",
   "home.howitworks.step2.title": "Entwicklung und Tests",
-  "home.howitworks.step3.desc": "Wir veröffentlichen Ihr Projekt und leisten weiterhin kontinuierlichen Support.",
+  "home.howitworks.step3.desc":
+    "Wir veröffentlichen Ihr Projekt und leisten weiterhin kontinuierlichen Support.",
   "home.howitworks.step3.title": "Einführung und Support",
   "home.howitworks.title": "Wie arbeiten wir?",
   "home.services.badge": "Unsere Leistungen",
-  "home.services.desc": "Lernen Sie die professionellen Lösungen kennen, die wir anbieten, um Ihr Unternehmen auszubauen und sich in der digitalen Welt hervorzuheben.",
-  "home.services.item1.desc": "Speziell für Ihr Unternehmen geschulte Modelle und Automatisierungssysteme der künstlichen Intelligenz.",
+  "home.services.desc":
+    "Lernen Sie die professionellen Lösungen kennen, die wir anbieten, um Ihr Unternehmen auszubauen und sich in der digitalen Welt hervorzuheben.",
+  "home.services.item1.desc":
+    "Speziell für Ihr Unternehmen geschulte Modelle und Automatisierungssysteme der künstlichen Intelligenz.",
   "home.services.item1.title": "Lösungen für künstliche Intelligenz",
   "home.services.item2.desc": "Skalierbare und sichere Webanwendungen mit modernen Frameworks.",
   "home.services.item2.title": "Webentwicklung",
-  "home.services.item3.desc": "Leistungsstarke native und hybride mobile Anwendungen für iOS und Android.",
+  "home.services.item3.desc":
+    "Leistungsstarke native und hybride mobile Anwendungen für iOS und Android.",
   "home.services.item3.title": "Mobile Anwendung",
   "home.services.item4.desc": "Cloud-Infrastrukturmanagement- und Datenbankoptimierungsdienste.",
   "home.services.item4.title": "Cloud und Daten",
-  "home.services.item5.desc": "Wir sorgen für die Sicherheit Ihrer Systeme und führen Schwachstellenanalysen durch.",
+  "home.services.item5.desc":
+    "Wir sorgen für die Sicherheit Ihrer Systeme und führen Schwachstellenanalysen durch.",
   "home.services.item5.title": "Cybersicherheit",
-  "home.services.item6.desc": "Professionelle Begleitung und Beratung auf Ihrem Weg zur digitalen Transformation.",
+  "home.services.item6.desc":
+    "Professionelle Begleitung und Beratung auf Ihrem Weg zur digitalen Transformation.",
   "home.services.item6.title": "Technische Beratung",
-  "home.services.title": "Technologielösungen, die speziell auf Ihre Bedürfnisse zugeschnitten sind",
+  "home.services.title":
+    "Technologielösungen, die speziell auf Ihre Bedürfnisse zugeschnitten sind",
   "home.stats.projects": "Abgeschlossenes Projekt",
   "home.stats.support": "Ununterbrochener Support",
   "home.stats.team": "Fachpersonal",
   "home.stats.users": "Aktiver Benutzer",
   "home.testimonials.badge": "Kommentare",
-  "home.testimonials.t1.text": "Die Zusammenarbeit mit Fun Technology hat unsere Geschäftsprozesse völlig verändert. Dank Lösungen der künstlichen Intelligenz ist unsere Effizienz gestiegen.",
-  "home.testimonials.t2.text": "Herr Muhammed und sein Team sind sehr professionell. Sie haben unsere mobile Anwendung pünktlich und fehlerfrei geliefert.",
-  "home.testimonials.t3.text": "Wir hatten keine Probleme mit dem technischen Support. Sie haben stets einen lösungsorientierten Ansatz.",
-  "home.testimonials.t4.text": "Unsere Website ist jetzt viel schneller und sicherer. Vielen Dank, Fun Technology!",
-  "home.testimonials.t5.text": "Sie haben mit ihren innovativen Ansätzen und visionären Perspektiven einen Mehrwert für unser Projekt geschaffen.",
-  "home.testimonials.t6.text": "Sie haben großartige Arbeit bei der Vereinfachung unserer komplexen Systeme geleistet. Ich kann es auf jeden Fall empfehlen.",
+  "home.testimonials.t1.text":
+    "Die Zusammenarbeit mit Fun Technology hat unsere Geschäftsprozesse völlig verändert. Dank Lösungen der künstlichen Intelligenz ist unsere Effizienz gestiegen.",
+  "home.testimonials.t2.text":
+    "Herr Muhammed und sein Team sind sehr professionell. Sie haben unsere mobile Anwendung pünktlich und fehlerfrei geliefert.",
+  "home.testimonials.t3.text":
+    "Wir hatten keine Probleme mit dem technischen Support. Sie haben stets einen lösungsorientierten Ansatz.",
+  "home.testimonials.t4.text":
+    "Unsere Website ist jetzt viel schneller und sicherer. Vielen Dank, Fun Technology!",
+  "home.testimonials.t5.text":
+    "Sie haben mit ihren innovativen Ansätzen und visionären Perspektiven einen Mehrwert für unser Projekt geschaffen.",
+  "home.testimonials.t6.text":
+    "Sie haben großartige Arbeit bei der Vereinfachung unserer komplexen Systeme geleistet. Ich kann es auf jeden Fall empfehlen.",
   "home.testimonials.title": "Erfolgsgeschichten unserer Kunden",
-  "home.whatwedo.text": "Als Fun Technology entwickeln wir innovative Softwarelösungen mit Unterstützung künstlicher Intelligenz, um Ihr Unternehmen fit für die Zukunft zu machen.",
+  "home.whatwedo.text":
+    "Als Fun Technology entwickeln wir innovative Softwarelösungen mit Unterstützung künstlicher Intelligenz, um Ihr Unternehmen fit für die Zukunft zu machen.",
   "inline.contact.message_error": "Bitte geben Sie einen gültigen Nachrichtentext ein.",
   "inline.contact.subject_error": "Bitte geben Sie einen aussagekräftigen Betrefftitel ein.",
   "lang.label": "Wählen Sie Sprache aus",
@@ -1225,15 +1478,20 @@ const de: Dict = {
   "nexy.assistant_title": "Fun Technology Assistant",
   "nexy.beta_tag": "Beta",
   "nexy.beta_warning": "Eine falsche Antwort kann während der Entwicklungsphase Konsequenzen haben",
-  "nexy.capabilities.1.desc": "Es versteht Ihre Fragen und liefert Ihnen innerhalb von Sekunden die genauesten Informationen.",
+  "nexy.capabilities.1.desc":
+    "Es versteht Ihre Fragen und liefert Ihnen innerhalb von Sekunden die genauesten Informationen.",
   "nexy.capabilities.1.title": "Erweiterte Intelligenz",
-  "nexy.capabilities.2.desc": "Es bietet ununterbrochenen Support rund um die Uhr und ohne Wartezeit.",
+  "nexy.capabilities.2.desc":
+    "Es bietet ununterbrochenen Support rund um die Uhr und ohne Wartezeit.",
   "nexy.capabilities.2.title": "Schnelle Antwort",
-  "nexy.capabilities.3.desc": "Es kann in jeder Sprache mit Ihnen kommunizieren, die Sie benötigen.",
+  "nexy.capabilities.3.desc":
+    "Es kann in jeder Sprache mit Ihnen kommunizieren, die Sie benötigen.",
   "nexy.capabilities.3.title": "Mehrsprachiger Support",
-  "nexy.capabilities.4.desc": "Ihre Gespräche bleiben vertraulich und Ihre Daten werden niemals weitergegeben.",
+  "nexy.capabilities.4.desc":
+    "Ihre Gespräche bleiben vertraulich und Ihre Daten werden niemals weitergegeben.",
   "nexy.capabilities.4.title": "Sichere Interaktion",
-  "nexy.capabilities.5.desc": "Es führt intelligente Suchvorgänge in Ihren Dokumenten und Daten durch.",
+  "nexy.capabilities.5.desc":
+    "Es führt intelligente Suchvorgänge in Ihren Dokumenten und Daten durch.",
   "nexy.capabilities.5.title": "Intelligente Suche",
   "nexy.capabilities.6.desc": "Stellt menschenähnliche, flüssige und bedeutungsvolle Dialoge her.",
   "nexy.capabilities.6.title": "Natürliche Sprache",
@@ -1245,108 +1503,150 @@ const de: Dict = {
   "nexy.demo.query": "Können Sie Auskunft über Ihre Leistungen geben?",
   "nexy.help_button": "Hilfe",
   "nexy.hero.badge": "Lustiger Technologie-KI-Assistent",
-  "nexy.hero.desc": "Ihr auf künstlicher Intelligenz basierender digitaler Assistent, der Ihnen die Arbeit erleichtert.",
+  "nexy.hero.desc":
+    "Ihr auf künstlicher Intelligenz basierender digitaler Assistent, der Ihnen die Arbeit erleichtert.",
   "nexy.hero.title": "Treffen Sie Nexy",
   "nexy.msg1": "Hallo! Ich bin Nexy, Fun Technology-Assistentin. Wie kann ich dir helfen?",
   "nexy.placeholder": "Type your message...",
   "nexy.read_tooltip": "Read Aloud",
   "nexy.status.active": "Aktive Unterstützung",
   "nexy.toast.copy": "Nachricht kopiert!",
-  "nexy.why.desc": "Nexy ist nicht nur ein Chatbot. Es ist das digitale Gesicht Ihres Unternehmens.",
+  "nexy.why.desc":
+    "Nexy ist nicht nur ein Chatbot. Es ist das digitale Gesicht Ihres Unternehmens.",
   "nexy.why.title": "Kontaktformular der Zukunft",
   "policy.contact.desc": "Wenn Sie Fragen haben, können Sie uns kontaktieren:",
   "policy.contact.title": "Kommunikation",
   "policy.last_updated": "Datum der letzten Aktualisierung: 19.03.2026",
-  "policy.privacy.contact_desc": "Wenn Sie Fragen zu unserer Datenschutzerklärung oder der Verarbeitung Ihrer personenbezogenen Daten haben, können Sie uns kontaktieren:",
-  "policy.privacy.intro": "In unserer Datenschutzrichtlinie wird erläutert, wie wir Ihre personenbezogenen Daten erfassen, verwenden und schützen. Ihre Privatsphäre und Sicherheit haben für uns Priorität.",
-  "policy.privacy.s1.desc": "Wir erfassen möglicherweise bestimmte personenbezogene Daten von Ihnen, wenn Sie unsere Website besuchen, ein Konto erstellen oder mit unseren Diensten interagieren. Zu diesen Informationen können gehören:",
+  "policy.privacy.contact_desc":
+    "Wenn Sie Fragen zu unserer Datenschutzerklärung oder der Verarbeitung Ihrer personenbezogenen Daten haben, können Sie uns kontaktieren:",
+  "policy.privacy.intro":
+    "In unserer Datenschutzrichtlinie wird erläutert, wie wir Ihre personenbezogenen Daten erfassen, verwenden und schützen. Ihre Privatsphäre und Sicherheit haben für uns Priorität.",
+  "policy.privacy.s1.desc":
+    "Wir erfassen möglicherweise bestimmte personenbezogene Daten von Ihnen, wenn Sie unsere Website besuchen, ein Konto erstellen oder mit unseren Diensten interagieren. Zu diesen Informationen können gehören:",
   "policy.privacy.s1.item1": "Vor- und Nachname",
   "policy.privacy.s1.item2": "E-Mail-Adresse",
   "policy.privacy.s1.item3": "Kontaktinformationen",
   "policy.privacy.s1.item4": "Weitere von Ihnen freiwillig gemachte Angaben",
   "policy.privacy.s1.title": "Informationen, die wir sammeln",
-  "policy.privacy.s2.desc": "Wir können die von uns erfassten Informationen für die folgenden Zwecke verwenden:",
+  "policy.privacy.s2.desc":
+    "Wir können die von uns erfassten Informationen für die folgenden Zwecke verwenden:",
   "policy.privacy.s2.item1": "Zur Bereitstellung und Verbesserung unserer Dienstleistungen",
   "policy.privacy.s2.item2": "Personalisieren Sie die Benutzererfahrung",
   "policy.privacy.s2.item3": "Um Informationen über Ihr Konto bereitzustellen",
   "policy.privacy.s2.item4": "Kommunikation über Kampagnen und Innovationen",
   "policy.privacy.s2.item5": "Um unsere Dienste durch Analyse des Website-Verkehrs zu verbessern",
   "policy.privacy.s2.title": "Wie wir Ihre Informationen verwenden",
-  "policy.privacy.s3.desc": "Wir nehmen die Sicherheit Ihrer persönlichen Daten ernst. Wir implementieren branchenübliche Sicherheitsmaßnahmen zum Schutz vor unbefugtem Zugriff, Änderung, Offenlegung oder Zerstörung. Bedenken Sie jedoch, dass die Datenübertragung über das Internet oder die elektronische Speicherung nicht hundertprozentig sicher ist.",
+  "policy.privacy.s3.desc":
+    "Wir nehmen die Sicherheit Ihrer persönlichen Daten ernst. Wir implementieren branchenübliche Sicherheitsmaßnahmen zum Schutz vor unbefugtem Zugriff, Änderung, Offenlegung oder Zerstörung. Bedenken Sie jedoch, dass die Datenübertragung über das Internet oder die elektronische Speicherung nicht hundertprozentig sicher ist.",
   "policy.privacy.s3.title": "Datensicherheit",
-  "policy.privacy.s4.desc": "Ihre persönlichen Daten: Ohne Ihre ausdrückliche Zustimmung werden sie weder verkauft noch für kommerzielle Zwecke weitergegeben. Sie können an Dienstanbieter weitergegeben werden, wenn dies aufgrund gesetzlicher Verpflichtungen erforderlich ist oder diese sich an die Vertraulichkeit halten.",
+  "policy.privacy.s4.desc":
+    "Ihre persönlichen Daten: Ohne Ihre ausdrückliche Zustimmung werden sie weder verkauft noch für kommerzielle Zwecke weitergegeben. Sie können an Dienstanbieter weitergegeben werden, wenn dies aufgrund gesetzlicher Verpflichtungen erforderlich ist oder diese sich an die Vertraulichkeit halten.",
   "policy.privacy.s4.title": "Weitergabe an Dritte",
-  "policy.privacy.s5.desc": "Unsere Website verwendet möglicherweise Cookies, um die Benutzererfahrung zu verbessern. Mithilfe von Cookies werden Informationen darüber gesammelt, wie Sie die Website nutzen. Sie können Cookies ablehnen oder Warnungen erhalten, indem Sie Ihre Browsereinstellungen ändern.",
+  "policy.privacy.s5.desc":
+    "Unsere Website verwendet möglicherweise Cookies, um die Benutzererfahrung zu verbessern. Mithilfe von Cookies werden Informationen darüber gesammelt, wie Sie die Website nutzen. Sie können Cookies ablehnen oder Warnungen erhalten, indem Sie Ihre Browsereinstellungen ändern.",
   "policy.privacy.s5.title": "Kekse",
-  "policy.privacy.s6.desc": "Diese Datenschutzrichtlinie kann von Zeit zu Zeit aktualisiert werden. Alle vorgenommenen Änderungen werden auf dieser Seite veröffentlicht und das Datum des Inkrafttretens wird aktualisiert. Wir empfehlen Ihnen, diese Seite regelmäßig auf Aktualisierungen zu überprüfen.",
+  "policy.privacy.s6.desc":
+    "Diese Datenschutzrichtlinie kann von Zeit zu Zeit aktualisiert werden. Alle vorgenommenen Änderungen werden auf dieser Seite veröffentlicht und das Datum des Inkrafttretens wird aktualisiert. Wir empfehlen Ihnen, diese Seite regelmäßig auf Aktualisierungen zu überprüfen.",
   "policy.privacy.s6.title": "Änderungen",
-  "policy.service.intro": "Durch die Nutzung der Fun Technology-Plattform erklären Sie sich damit einverstanden, unsere Dienste im Rahmen sicherer, rechtlicher und ethischer Regeln zu nutzen. Hier sind die grundlegenden Nutzungsbedingungen:",
-  "policy.service.s1.desc": "Um die Plattform nutzen zu können, müssen Sie ein Konto mit korrekten und aktuellen Informationen erstellen. Sie sind für die Vertraulichkeit Ihrer Kontoinformationen verantwortlich.",
+  "policy.service.intro":
+    "Durch die Nutzung der Fun Technology-Plattform erklären Sie sich damit einverstanden, unsere Dienste im Rahmen sicherer, rechtlicher und ethischer Regeln zu nutzen. Hier sind die grundlegenden Nutzungsbedingungen:",
+  "policy.service.s1.desc":
+    "Um die Plattform nutzen zu können, müssen Sie ein Konto mit korrekten und aktuellen Informationen erstellen. Sie sind für die Vertraulichkeit Ihrer Kontoinformationen verantwortlich.",
   "policy.service.s1.title": "Kontonutzung",
-  "policy.service.s2.desc": "Die von Ihnen geteilten Inhalte und die von Ihnen auf der Plattform durchgeführten Transaktionen müssen allen geltenden Gesetzen und Vorschriften entsprechen.",
+  "policy.service.s2.desc":
+    "Die von Ihnen geteilten Inhalte und die von Ihnen auf der Plattform durchgeführten Transaktionen müssen allen geltenden Gesetzen und Vorschriften entsprechen.",
   "policy.service.s2.title": "Einhaltung gesetzlicher Vorschriften",
-  "policy.service.s3.desc": "Fun Technology implementiert fortschrittliche Sicherheitsmaßnahmen, um Ihre Daten zu schützen. Zur Sicherheit Ihres Kontos müssen Sie Ihre Passwörter geheim halten.",
+  "policy.service.s3.desc":
+    "Fun Technology implementiert fortschrittliche Sicherheitsmaßnahmen, um Ihre Daten zu schützen. Zur Sicherheit Ihres Kontos müssen Sie Ihre Passwörter geheim halten.",
   "policy.service.s3.title": "Sicherheit und Datenschutz",
-  "policy.service.s4.desc": "Fun Teknoloji übernimmt eine beschränkte Haftung für die Inhalte und Links Dritter auf der Plattform. Die Nutzung der Plattform erfolgt auf eigene Verantwortung des Nutzers.",
+  "policy.service.s4.desc":
+    "Fun Teknoloji übernimmt eine beschränkte Haftung für die Inhalte und Links Dritter auf der Plattform. Die Nutzung der Plattform erfolgt auf eigene Verantwortung des Nutzers.",
   "policy.service.s4.title": "Haftungsausschluss",
-  "policy.service.s5.desc": "Fun Teknoloji behält sich das Recht vor, Änderungen an Inhalten, Funktionen oder Nutzungsbedingungen vorzunehmen, um die Funktionalität der Plattform zu verbessern.",
+  "policy.service.s5.desc":
+    "Fun Teknoloji behält sich das Recht vor, Änderungen an Inhalten, Funktionen oder Nutzungsbedingungen vorzunehmen, um die Funktionalität der Plattform zu verbessern.",
   "policy.service.s5.title": "Serviceänderungen",
-  "policy.service.s6.desc": "Bei Verstößen gegen die Nutzungsbedingungen kann die Plattform Konten vorübergehend oder dauerhaft einschränken oder schließen.",
+  "policy.service.s6.desc":
+    "Bei Verstößen gegen die Nutzungsbedingungen kann die Plattform Konten vorübergehend oder dauerhaft einschränken oder schließen.",
   "policy.service.s6.title": "Sanktionen",
   "pricing.badge": "Preise",
-  "pricing.desc": "Wir arbeiten derzeit daran, unsere Systeme effizienter und wirtschaftlicher zu machen.",
+  "pricing.desc":
+    "Wir arbeiten derzeit daran, unsere Systeme effizienter und wirtschaftlicher zu machen.",
   "pricing.title": "Unsere neuen Pakete sind bald da",
-  "projects.hero.desc": "Unsere lösungsorientierten Projekte werden mit innovativen Technologien entwickelt.",
+  "projects.hero.desc":
+    "Unsere lösungsorientierten Projekte werden mit innovativen Technologien entwickelt.",
   "projects.hero.title": "Wir bauen die Zukunft",
-  "projects.nexy.desc": "Der auf künstlicher Intelligenz basierende digitale Assistent von Fun Technology. Intelligenter Leitfaden für Unternehmen und Benutzer.",
-  "projects.quakesafe.desc": "Eine neue Ära in der Katastrophenschutztechnologie. Intelligente Systeme, die während und nach einem Erdbeben Leben retten.",
+  "projects.nexy.desc":
+    "Der auf künstlicher Intelligenz basierende digitale Assistent von Fun Technology. Intelligenter Leitfaden für Unternehmen und Benutzer.",
+  "projects.quakesafe.desc":
+    "Eine neue Ära in der Katastrophenschutztechnologie. Intelligente Systeme, die während und nach einem Erdbeben Leben retten.",
   "projects.soon.desc": "Wir arbeiten weiterhin an unseren spannenden neuen Projekten.",
   "projects.soon.title": "Mehr folgen in Kürze",
   "projects.view": "Überprüfen Sie das Projekt",
   "quakesafe.cta.button": "Erhalten Sie Early Access",
-  "quakesafe.cta.desc": "Technologie soll das Leben nicht nur einfacher machen, sondern auch schützen.",
+  "quakesafe.cta.desc":
+    "Technologie soll das Leben nicht nur einfacher machen, sondern auch schützen.",
   "quakesafe.cta.title": "Wir bauen eine sicherere Zukunft",
-  "quakesafe.features.1.desc": "Erhalten Sie kritische Warnungen Sekunden bevor die Erdbebenwellen eintreffen.",
+  "quakesafe.features.1.desc":
+    "Erhalten Sie kritische Warnungen Sekunden bevor die Erdbebenwellen eintreffen.",
   "quakesafe.features.1.title": "Sofortige Benachrichtigungen",
-  "quakesafe.features.10.desc": "Teilen Sie im Notfall Ihren Gesundheitszustand und Ihre Blutgruppe mit.",
+  "quakesafe.features.10.desc":
+    "Teilen Sie im Notfall Ihren Gesundheitszustand und Ihre Blutgruppe mit.",
   "quakesafe.features.10.title": "Gesundheitsverfolgung",
-  "quakesafe.features.11.desc": "Überprüfen Sie historische Erdbebendaten und Risiken in Ihrer Region.",
+  "quakesafe.features.11.desc":
+    "Überprüfen Sie historische Erdbebendaten und Risiken in Ihrer Region.",
   "quakesafe.features.11.title": "Vergangene Analyse",
   "quakesafe.features.12.desc": "Eine Plattform, die Bedürftige und Helfende zusammenbringt.",
   "quakesafe.features.12.title": "Solidaritätsnetzwerk",
-  "quakesafe.features.2.desc": "Sehen Sie in Echtzeit, wo sich Ihre Lieben während einer Katastrophe befinden.",
+  "quakesafe.features.2.desc":
+    "Sehen Sie in Echtzeit, wo sich Ihre Lieben während einer Katastrophe befinden.",
   "quakesafe.features.2.title": "Standortverfolgung",
-  "quakesafe.features.3.desc": "Sofortige Route zu den nächstgelegenen Sammelstellen und sicheren Bereichen.",
+  "quakesafe.features.3.desc":
+    "Sofortige Route zu den nächstgelegenen Sammelstellen und sicheren Bereichen.",
   "quakesafe.features.3.title": "Sichere Bereiche",
-  "quakesafe.features.4.desc": "Bringen Sie alle Familienmitglieder in ein Netzwerk und verfolgen Sie ihren Status.",
+  "quakesafe.features.4.desc":
+    "Bringen Sie alle Familienmitglieder in ein Netzwerk und verfolgen Sie ihren Status.",
   "quakesafe.features.4.title": "Familiengruppen",
-  "quakesafe.features.5.desc": "Greifen Sie auch dann auf wichtige Reiseführer und Karten zu, wenn das Internet ausfällt.",
+  "quakesafe.features.5.desc":
+    "Greifen Sie auch dann auf wichtige Reiseführer und Karten zu, wenn das Internet ausfällt.",
   "quakesafe.features.5.title": "Offline-Modus",
-  "quakesafe.features.6.desc": "Schadensrisikovorhersage und Bereichssicherheitsanalyse mit künstlicher Intelligenz.",
+  "quakesafe.features.6.desc":
+    "Schadensrisikovorhersage und Bereichssicherheitsanalyse mit künstlicher Intelligenz.",
   "quakesafe.features.6.title": "KI-Analyse",
-  "quakesafe.features.7.desc": "Möglichkeit zur Kommunikation zwischen Geräten, wenn Basisstationen ausfallen.",
+  "quakesafe.features.7.desc":
+    "Möglichkeit zur Kommunikation zwischen Geräten, wenn Basisstationen ausfallen.",
   "quakesafe.features.7.title": "Mesh-Netzwerk",
-  "quakesafe.features.8.desc": "Bewahren Sie Ihre wichtigen Dokumente und Gesundheitsdaten sicher auf.",
+  "quakesafe.features.8.desc":
+    "Bewahren Sie Ihre wichtigen Dokumente und Gesundheitsdaten sicher auf.",
   "quakesafe.features.8.title": "Cloud-Backup",
-  "quakesafe.features.9.desc": "Melden Sie den Behörden mit einem einzigen Klick den Standort der unter Trümmern liegenden Personen.",
+  "quakesafe.features.9.desc":
+    "Melden Sie den Behörden mit einem einzigen Klick den Standort der unter Trümmern liegenden Personen.",
   "quakesafe.features.9.title": "Schnelle Benachrichtigung",
-  "quakesafe.features.desc": "Alle Tools, die Sie vor, während und nach einer Katastrophe benötigen, befinden sich auf einer einzigen Plattform.",
+  "quakesafe.features.desc":
+    "Alle Tools, die Sie vor, während und nach einer Katastrophe benötigen, befinden sich auf einer einzigen Plattform.",
   "quakesafe.features.title": "Umfassendes Schutznetzwerk",
-  "quakesafe.hero.desc": "Revolution in der Erdbebensicherheit mit künstlicher Intelligenz und Sensornetzwerken. Ihr größter Unterstützer in den Momenten, in denen es auf Sekunden ankommt.",
+  "quakesafe.hero.desc":
+    "Revolution in der Erdbebensicherheit mit künstlicher Intelligenz und Sensornetzwerken. Ihr größter Unterstützer in den Momenten, in denen es auf Sekunden ankommt.",
   "quakesafe.hero.title": "Haben Sie keine Angst vor Erdbeben, bleiben Sie mit QuakeSafe sicher",
-  "reviews.desc": "Entdecken Sie die Geschichten unserer Geschäftspartner, die sich mit Fun Technology verändert haben.",
+  "reviews.desc":
+    "Entdecken Sie die Geschichten unserer Geschäftspartner, die sich mit Fun Technology verändert haben.",
   "reviews.r1.name": "Ahmet Yilmaz",
-  "reviews.r1.text": "Als Inhaber eines Kleinunternehmens waren die von Ihnen angebotenen Softwarelösungen ein Lebensretter bei der Verbesserung unserer betrieblichen Effizienz. Es hat meine Erwartungen wirklich übertroffen.",
+  "reviews.r1.text":
+    "Als Inhaber eines Kleinunternehmens waren die von Ihnen angebotenen Softwarelösungen ein Lebensretter bei der Verbesserung unserer betrieblichen Effizienz. Es hat meine Erwartungen wirklich übertroffen.",
   "reviews.r2.name": "Zeynep Kaya",
-  "reviews.r2.text": "Die KI-Integration ist absolut unglaublich! Durch die Automatisierung unserer Geschäftsprozesse haben wir viel Zeit gespart.",
+  "reviews.r2.text":
+    "Die KI-Integration ist absolut unglaublich! Durch die Automatisierung unserer Geschäftsprozesse haben wir viel Zeit gespart.",
   "reviews.r3.name": "Murat Demir",
-  "reviews.r3.text": "Diese Technologie hat unsere Datenanalyseprozesse revolutioniert. Die Erkenntnisse sind so tiefgreifend, dass wir unsere Entscheidungen jetzt viel sicherer treffen.",
+  "reviews.r3.text":
+    "Diese Technologie hat unsere Datenanalyseprozesse revolutioniert. Die Erkenntnisse sind so tiefgreifend, dass wir unsere Entscheidungen jetzt viel sicherer treffen.",
   "reviews.r4.name": "Elif Sahin",
-  "reviews.r4.text": "Als Projektmanager war dieses Tool für die teamübergreifende Koordination von unschätzbarem Wert. Die benutzerfreundliche Oberfläche ist großartig!",
+  "reviews.r4.text":
+    "Als Projektmanager war dieses Tool für die teamübergreifende Koordination von unschätzbarem Wert. Die benutzerfreundliche Oberfläche ist großartig!",
   "reviews.r5.name": "Caner Özkan",
-  "reviews.r5.text": "Die Geschwindigkeit und Qualität ihres Entwicklungsprozesses ist überwältigend. Wir konnten unsere Projekte pünktlich erhalten und gleichzeitig außergewöhnliche Qualitätsstandards einhalten.",
+  "reviews.r5.text":
+    "Die Geschwindigkeit und Qualität ihres Entwicklungsprozesses ist überwältigend. Wir konnten unsere Projekte pünktlich erhalten und gleichzeitig außergewöhnliche Qualitätsstandards einhalten.",
   "reviews.r6.name": "Selin Aydin",
-  "reviews.r6.text": "Diese Plattform hat die Art und Weise, wie wir unsere digitale Präsenz verwalten, verändert. Die Technik ist so modern und beeindruckend, dass unser gesamtes Team begeistert war.",
+  "reviews.r6.text":
+    "Diese Plattform hat die Art und Weise, wie wir unsere digitale Präsenz verwalten, verändert. Die Technik ist so modern und beeindruckend, dass unser gesamtes Team begeistert war.",
   "reviews.title": "Was sagen unsere Kunden?",
   "reviews.verified": "Verifizierter Kunde",
   "sitemap.desc": "Übersicht aller Seiten der Fun Teknoloji-Website.",
@@ -1357,7 +1657,8 @@ const de: Dict = {
   "team.desc": "Lernen Sie die talentierten Namen hinter Fun Technology kennen.",
   "team.join.desc": "Möchten Sie mit uns die Zukunft gestalten? Wir warten auf Ihre Bewerbungen.",
   "team.join.title": "Treten Sie unserem Team bei",
-  "team.member.muhammed.bio": "Muhammed Erbay, der Gründer von Fun Technology, leitet das Unternehmen mit der Vision, Technologie für jedermann zugänglich und nützlich zu machen.",
+  "team.member.muhammed.bio":
+    "Muhammed Erbay, der Gründer von Fun Technology, leitet das Unternehmen mit der Vision, Technologie für jedermann zugänglich und nützlich zu machen.",
   "team.title": "Die Kraft hinter unserem Erfolg",
   "theme.dark": "Wechseln Sie zum dunklen Thema",
   "theme.light": "Wechseln Sie zu Open Theme",
@@ -1373,34 +1674,60 @@ const de: Dict = {
   "home.testimonials.t6.name": "Selin Aydin",
   "blog.index.untitled": "Unbenannter Beitrag",
   "blog.index.category_default": "Technologie",
-  "nexy.resp.pricing.0": "Fiyatlandırma politikalarımız üzerinde çalışıyoruz. En güncel paketler için Fiyatlandırma sayfamızı takip edebilirsiniz. Şu an için bekleme listemize katılmak en iyi seçenek!",
-  "nexy.resp.pricing.1": "Şu an için tüm hizmetlerimiz için size özel teklif sunuyoruz, detaylar yakında sayfalarımızda olacak. Genelde proje bazlı fiyatlandırma yapıyoruz.",
-  "nexy.resp.pricing.2": "Paketlerimiz güncelleniyor. Fun Teknoloji olarak her bütçeye uygun teknoloji çözümleri üretmeyi hedefliyoruz.",
-  "nexy.resp.services.0": "Yapay zeka entegrasyonu, özel yazılım geliştirme, mobil uygulama ve siber güvenlik alanlarında profesyonel çözümler sunuyoruz. Hangi alanla ilgileniyorsunuz?",
-  "nexy.resp.services.1": "Dijital dönüşüm yolculuğunuzda size en modern teknoloji yığını ile eşlik ediyoruz. React, Next.js, AI modelleri ve daha fazlasını kullanıyoruz.",
-  "nexy.resp.services.2": "İş süreçlerinizi otomatize edecek yapay zeka çözümlerimiz hakkında detaylı bilgi için Hizmetler sayfamıza bakabilirsiniz. Verimliliğinizi %40'a kadar artırabiliriz.",
-  "nexy.resp.founder.0": "Fun Teknoloji, Muhammed Erbay tarafından 2025 yılında vizyoner bir teknoloji şirketi olarak kurulmuştur.",
-  "nexy.resp.founder.1": "Kurucumuz Muhammed Erbay, teknolojiyi herkes için erişilebilir ve faydalı kılma vizyonuyla bu yola çıktı. Kendisi genç ve hırslı bir girişimcidir.",
-  "nexy.resp.founder.2": "2025'te Muhammed Erbay liderliğinde kurulan Fun Teknoloji, Türkiye'nin dijital geleceğine odaklanıyor. Muhammed Bey bizzat projelerin mimarisini denetliyor.",
-  "nexy.resp.contact.0": "Bize iletişim sayfasındaki formdan veya support@funteknoloji.com adresinden ulaşabilirsiniz! 7/24 destek veriyoruz.",
-  "nexy.resp.contact.1": "Sorularınız için her zaman buradayız, iletişim kısmından bize yazmaktan çekinmeyin. Ayrıca Discord kanalımızda çok aktif bir topluluğumuz var.",
-  "nexy.resp.contact.2": "Discord topluluğumuza katılarak da ekibimizle doğrudan iletişime geçebilirsiniz. Linki İletişim sayfasında bulabilirsiniz.",
-  "nexy.resp.about.0": "Fun Teknoloji, teknolojiyi 'eğlenceli' ve 'faydalı' kılmak için kuruldu. Yapay zeka ve yazılım bizim tutkumuz.",
-  "nexy.resp.about.1": "Misyonumuz, işletmeleri geleceğin teknolojileriyle bugünden tanıştırmak. Vizyonumuz ise global çapta bir teknoloji üssü olmak.",
-  "nexy.resp.about.2": "Hakkımızda sayfasında tüm tarihimizi ve değerlerimizi bulabilirsiniz. İnovasyon, kalite ve güvenilirlik en önemli ilkelerimizdir.",
-  "nexy.resp.careers.0": "Ekibimiz sürekli büyüyor! Kariyer fırsatları için bize özgeçmişinizi gönderebilir veya LinkedIn sayfamızı takip edebilirsiniz.",
-  "nexy.resp.careers.1": "Yetenekli mühendisler, tasarımcılar ve yapay zeka meraklıları ile çalışmaktan her zaman mutluluk duyarız.",
-  "nexy.resp.careers.2": "Şu an spesifik bir ilanımız olmasa da, yetenekli insanlara her zaman kapımız açık. Bize yazın!",
-  "nexy.resp.tech.0": "Geliştirmelerimizde modern teknolojiler kullanıyoruz. React, TypeScript, TanStack, Tailwind ve çeşitli LLM modelleri vazgeçilmezimiz.",
-  "nexy.resp.tech.1": "Sistemlerimizi yüksek performans ve ölçeklenebilirlik odaklı tasarlıyoruz. Cloud teknolojilerini en verimli şekilde kullanıyoruz.",
-  "nexy.resp.tech.2": "Fun Teknoloji olarak sürekli AR-GE yapıyoruz. En yeni frameworkleri ve yapay zeka tekniklerini ilk biz uyguluyoruz.",
+  "nexy.resp.pricing.0":
+    "Fiyatlandırma politikalarımız üzerinde çalışıyoruz. En güncel paketler için Fiyatlandırma sayfamızı takip edebilirsiniz. Şu an için bekleme listemize katılmak en iyi seçenek!",
+  "nexy.resp.pricing.1":
+    "Şu an için tüm hizmetlerimiz için size özel teklif sunuyoruz, detaylar yakında sayfalarımızda olacak. Genelde proje bazlı fiyatlandırma yapıyoruz.",
+  "nexy.resp.pricing.2":
+    "Paketlerimiz güncelleniyor. Fun Teknoloji olarak her bütçeye uygun teknoloji çözümleri üretmeyi hedefliyoruz.",
+  "nexy.resp.services.0":
+    "Yapay zeka entegrasyonu, özel yazılım geliştirme, mobil uygulama ve siber güvenlik alanlarında profesyonel çözümler sunuyoruz. Hangi alanla ilgileniyorsunuz?",
+  "nexy.resp.services.1":
+    "Dijital dönüşüm yolculuğunuzda size en modern teknoloji yığını ile eşlik ediyoruz. React, Next.js, AI modelleri ve daha fazlasını kullanıyoruz.",
+  "nexy.resp.services.2":
+    "İş süreçlerinizi otomatize edecek yapay zeka çözümlerimiz hakkında detaylı bilgi için Hizmetler sayfamıza bakabilirsiniz. Verimliliğinizi %40'a kadar artırabiliriz.",
+  "nexy.resp.founder.0":
+    "Fun Teknoloji, Muhammed Erbay tarafından 2025 yılında vizyoner bir teknoloji şirketi olarak kurulmuştur.",
+  "nexy.resp.founder.1":
+    "Kurucumuz Muhammed Erbay, teknolojiyi herkes için erişilebilir ve faydalı kılma vizyonuyla bu yola çıktı. Kendisi genç ve hırslı bir girişimcidir.",
+  "nexy.resp.founder.2":
+    "2025'te Muhammed Erbay liderliğinde kurulan Fun Teknoloji, Türkiye'nin dijital geleceğine odaklanıyor. Muhammed Bey bizzat projelerin mimarisini denetliyor.",
+  "nexy.resp.contact.0":
+    "Bize iletişim sayfasındaki formdan veya support@funteknoloji.com adresinden ulaşabilirsiniz! 7/24 destek veriyoruz.",
+  "nexy.resp.contact.1":
+    "Sorularınız için her zaman buradayız, iletişim kısmından bize yazmaktan çekinmeyin. Ayrıca Discord kanalımızda çok aktif bir topluluğumuz var.",
+  "nexy.resp.contact.2":
+    "Discord topluluğumuza katılarak da ekibimizle doğrudan iletişime geçebilirsiniz. Linki İletişim sayfasında bulabilirsiniz.",
+  "nexy.resp.about.0":
+    "Fun Teknoloji, teknolojiyi 'eğlenceli' ve 'faydalı' kılmak için kuruldu. Yapay zeka ve yazılım bizim tutkumuz.",
+  "nexy.resp.about.1":
+    "Misyonumuz, işletmeleri geleceğin teknolojileriyle bugünden tanıştırmak. Vizyonumuz ise global çapta bir teknoloji üssü olmak.",
+  "nexy.resp.about.2":
+    "Hakkımızda sayfasında tüm tarihimizi ve değerlerimizi bulabilirsiniz. İnovasyon, kalite ve güvenilirlik en önemli ilkelerimizdir.",
+  "nexy.resp.careers.0":
+    "Ekibimiz sürekli büyüyor! Kariyer fırsatları için bize özgeçmişinizi gönderebilir veya LinkedIn sayfamızı takip edebilirsiniz.",
+  "nexy.resp.careers.1":
+    "Yetenekli mühendisler, tasarımcılar ve yapay zeka meraklıları ile çalışmaktan her zaman mutluluk duyarız.",
+  "nexy.resp.careers.2":
+    "Şu an spesifik bir ilanımız olmasa da, yetenekli insanlara her zaman kapımız açık. Bize yazın!",
+  "nexy.resp.tech.0":
+    "Geliştirmelerimizde modern teknolojiler kullanıyoruz. React, TypeScript, TanStack, Tailwind ve çeşitli LLM modelleri vazgeçilmezimiz.",
+  "nexy.resp.tech.1":
+    "Sistemlerimizi yüksek performans ve ölçeklenebilirlik odaklı tasarlıyoruz. Cloud teknolojilerini en verimli şekilde kullanıyoruz.",
+  "nexy.resp.tech.2":
+    "Fun Teknoloji olarak sürekli AR-GE yapıyoruz. En yeni frameworkleri ve yapay zeka tekniklerini ilk biz uyguluyoruz.",
   "nexy.resp.greeting.0": "Merhaba! Size nasıl yardımcı olabilirim? Bugün teknoloji dolu bir gün!",
-  "nexy.resp.greeting.1": "Selamlar! Ben Nexy, Fun Teknoloji'nin yapay zeka asistanıyım. Sizi dinliyorum.",
-  "nexy.resp.greeting.2": "Hoş geldiniz! Merak ettiğiniz bir şey mi var? Size Fun Teknoloji hakkında her şeyi anlatabilirim.",
+  "nexy.resp.greeting.1":
+    "Selamlar! Ben Nexy, Fun Teknoloji'nin yapay zeka asistanıyım. Sizi dinliyorum.",
+  "nexy.resp.greeting.2":
+    "Hoş geldiniz! Merak ettiğiniz bir şey mi var? Size Fun Teknoloji hakkında her şeyi anlatabilirim.",
   "nexy.resp.default.0": "Mesajınız için teşekkürler. Size nasıl yardımcı olabilirim?",
-  "nexy.resp.default.1": "Bu konuda size daha detaylı yardımcı olabilmemiz için lütfen iletişim formunu doldurun.",
-  "nexy.resp.default.2": "Harika bir soru! Ama bu konuda henüz tam bir bilgim yok. İsterseniz ekibimize sorabilirim?",
-  "nexy.resp.default.3": "Size nasıl daha iyi yardımcı olabilirim? Teknoloji çözümlerimiz, kurucumuz veya hizmetlerimiz hakkında konuşabiliriz.",
+  "nexy.resp.default.1":
+    "Bu konuda size daha detaylı yardımcı olabilmemiz için lütfen iletişim formunu doldurun.",
+  "nexy.resp.default.2":
+    "Harika bir soru! Ama bu konuda henüz tam bir bilgim yok. İsterseniz ekibimize sorabilirim?",
+  "nexy.resp.default.3":
+    "Size nasıl daha iyi yardımcı olabilirim? Teknoloji çözümlerimiz, kurucumuz veya hizmetlerimiz hakkında konuşabiliriz.",
   "service.feature.automation": "Otomasyon",
   "service.feature.big_data": "Büyük Veri",
   "service.feature.bi": "İş Zekası",
@@ -1440,7 +1767,8 @@ const fr: Dict = {
   "about.cta.title": "Travaillons ensemble",
   "about.desc": "Fun Teknoloji a été fondée en 2025 par Muhammed Erbay.",
   "about.mission.badge": "Notre mission",
-  "about.mission.desc": "Aider les entreprises de toutes tailles à acquérir un avantage concurrentiel dans le monde numérique en leur permettant de bénéficier de l’intelligence artificielle et de solutions technologiques avancées.",
+  "about.mission.desc":
+    "Aider les entreprises de toutes tailles à acquérir un avantage concurrentiel dans le monde numérique en leur permettant de bénéficier de l’intelligence artificielle et de solutions technologiques avancées.",
   "about.mission.title": "Donner aux entreprises les moyens technologiques",
   "about.stats.clients": "Client satisfait",
   "about.stats.projects": "Projet terminé",
@@ -1448,22 +1776,28 @@ const fr: Dict = {
   "about.stats.title": "La technologie amusante en chiffres",
   "about.stats.year": "Année d'établissement",
   "about.title": "Nous construisons l’avenir avec la technologie.",
-  "about.values.1.desc": "Nous basons l’honnêteté et la transparence dans tout ce que nous faisons.",
+  "about.values.1.desc":
+    "Nous basons l’honnêteté et la transparence dans tout ce que nous faisons.",
   "about.values.1.title": "Fiabilité",
-  "about.values.2.desc": "Nous suivons les dernières technologies et produisons des solutions pionnières.",
+  "about.values.2.desc":
+    "Nous suivons les dernières technologies et produisons des solutions pionnières.",
   "about.values.2.title": "innovation",
   "about.values.3.desc": "Nous considérons le succès de nos clients comme notre propre succès.",
   "about.values.3.title": "Orientation client",
-  "about.values.4.desc": "Nous réalisons des travaux non seulement fonctionnels, mais aussi esthétiques et de qualité.",
+  "about.values.4.desc":
+    "Nous réalisons des travaux non seulement fonctionnels, mais aussi esthétiques et de qualité.",
   "about.values.4.title": "Qualité",
-  "about.values.5.desc": "Nous trouvons des solutions simples et efficaces à des problèmes complexes.",
+  "about.values.5.desc":
+    "Nous trouvons des solutions simples et efficaces à des problèmes complexes.",
   "about.values.5.title": "Simplicité",
-  "about.values.6.desc": "Nous pensons qu'il n'y a pas de fin au développement, nous apprenons constamment.",
+  "about.values.6.desc":
+    "Nous pensons qu'il n'y a pas de fin au développement, nous apprenons constamment.",
   "about.values.6.title": "Amélioration continue",
   "about.values.badge": "Nos valeurs",
   "about.values.title": "Principes qui font de nous ce que nous sommes",
   "about.vision.badge": "Notre vision",
-  "about.vision.desc": "Nous continuons à travailler pour contribuer à l'avenir numérique de la Turquie.",
+  "about.vision.desc":
+    "Nous continuons à travailler pour contribuer à l'avenir numérique de la Turquie.",
   "about.vision.title": "Concevoir l'avenir dès aujourd'hui",
   "blog.badge": "Blogue",
   "blog.desc": "Les dernières nouvelles technologiques, informations et guides.",
@@ -1480,13 +1814,15 @@ const fr: Dict = {
   "blog.post.read_aloud": "Lire à haute voix",
   "blog.post.reading_started": "La lecture à haute voix a commencé.",
   "blog.post.select_language": "CHOISIR LA LANGUE",
-  "blog.post.stay_updated": "Ne manquez pas les évolutions dans le monde de l’intelligence artificielle et des logiciels.",
+  "blog.post.stay_updated":
+    "Ne manquez pas les évolutions dans le monde de l’intelligence artificielle et des logiciels.",
   "blog.post.stop_reading": "Arrêter de lire",
   "blog.post.translation_warning": "Le texte pourrait être mal traduit",
   "blog.title": "Du monde de la technologie",
   "brand_kit.badge": "Corporate",
   "brand_kit.colors.title": "Our Color Palette",
-  "brand_kit.desc": "You can download Fun Teknoloji logos and visual materials here and take a look at the usage guide.",
+  "brand_kit.desc":
+    "You can download Fun Teknoloji logos and visual materials here and take a look at the usage guide.",
   "brand_kit.download_png": "Download PNG",
   "brand_kit.logos.fun_black.desc": "Black version for use on light-colored backgrounds.",
   "brand_kit.logos.fun_black.title": "Fun Technology Black Logo",
@@ -1501,7 +1837,8 @@ const fr: Dict = {
   "brand_kit.title": "Brand Kit",
   "changelog.badge": "Mises à jour",
   "changelog.coming_soon": "Très bientôt",
-  "changelog.desc": "Suivez les dernières innovations et améliorations sur la plateforme Fun Technology.",
+  "changelog.desc":
+    "Suivez les dernières innovations et améliorations sur la plateforme Fun Technology.",
   "changelog.details_soon": "Les détails de cette section seront bientôt partagés.",
   "changelog.item1.desc": "Mises à jour majeures de la plateforme et innovations d'entreprise.",
   "changelog.item1.title": "La version 2.0 est publiée",
@@ -1517,12 +1854,14 @@ const fr: Dict = {
   "changelog.last_update": "Dernière mise à jour : 15 juin 2026",
   "changelog.title": "Journal des modifications",
   "contact.captcha.cancel": "Annuler",
-  "contact.captcha.desc": "Veuillez suivre le processus ci-dessous pour vérifier que vous n'êtes pas un robot.",
+  "contact.captcha.desc":
+    "Veuillez suivre le processus ci-dessous pour vérifier que vous n'êtes pas un robot.",
   "contact.captcha.error": "Réponse incorrecte, veuillez réessayer.",
   "contact.captcha.title": "Vérification de sécurité",
   "contact.captcha.verify": "vérifier",
   "contact.community.button": "Rejoignez Discorde",
-  "contact.community.desc": "Rejoignez notre communauté technologique et communiquez directement avec notre équipe.",
+  "contact.community.desc":
+    "Rejoignez notre communauté technologique et communiquez directement avec notre équipe.",
   "contact.community.title": "Rejoignez notre communauté",
   "contact.desc": "Nous sommes là pour vos questions.",
   "contact.form.email": "E-mail",
@@ -1545,7 +1884,8 @@ const fr: Dict = {
   "docs.sidebar.getting_started": "Début",
   "docs.sidebar.intro": "Entrée",
   "docs.sidebar.setup": "Configuration rapide",
-  "docs.soon.desc": "Des guides d'utilisation détaillés sont en cours de préparation pour notre plateforme et nos services. Nous serons là dès que possible.",
+  "docs.soon.desc":
+    "Des guides d'utilisation détaillés sont en cours de préparation pour notre plateforme et nos services. Nous serons là dès que possible.",
   "docs.soon.title": "Très bientôt",
   "docs.title": "Documentation",
   "error.home": "Page d'accueil",
@@ -1558,82 +1898,116 @@ const fr: Dict = {
   "faq.cat.services": "Services",
   "faq.cat.technical": "Technique",
   "faq.desc": "Questions sur nos services et processus.",
-  "faq.q1.a": "Fun Technology est une entreprise technologique spécialisée dans l'intelligence artificielle, le développement de logiciels personnalisés et la transformation numérique.",
+  "faq.q1.a":
+    "Fun Technology est une entreprise technologique spécialisée dans l'intelligence artificielle, le développement de logiciels personnalisés et la transformation numérique.",
   "faq.q1.q": "Qu’est-ce que la technologie ludique ?",
-  "faq.q10.a": "Oui, toutes vos données sont protégées par des méthodes de cryptage conformes aux normes de l'industrie et une infrastructure cloud sécurisée.",
+  "faq.q10.a":
+    "Oui, toutes vos données sont protégées par des méthodes de cryptage conformes aux normes de l'industrie et une infrastructure cloud sécurisée.",
   "faq.q10.q": "Mes données sont-elles en sécurité ?",
-  "faq.q11.a": "La confidentialité des données des utilisateurs est notre priorité absolue. Pour des informations détaillées, vous pouvez consulter notre page Politique de confidentialité.",
+  "faq.q11.a":
+    "La confidentialité des données des utilisateurs est notre priorité absolue. Pour des informations détaillées, vous pouvez consulter notre page Politique de confidentialité.",
   "faq.q11.q": "Quelle est votre politique de confidentialité ?",
-  "faq.q2.a": "Fun Technology a été fondée en 2025 par Muhammed Erbay en tant qu'initiative technologique visionnaire.",
+  "faq.q2.a":
+    "Fun Technology a été fondée en 2025 par Muhammed Erbay en tant qu'initiative technologique visionnaire.",
   "faq.q2.q": "Quand Fun Teknoloji a-t-il été fondé ?",
-  "faq.q3.a": "Parce que nous pensons que la technologie ne doit pas être ennuyeuse et compliquée, mais plutôt un outil qui rend la vie plus facile et « amusante ».",
+  "faq.q3.a":
+    "Parce que nous pensons que la technologie ne doit pas être ennuyeuse et compliquée, mais plutôt un outil qui rend la vie plus facile et « amusante ».",
   "faq.q3.q": "Pourquoi votre nom est-il Fun Teknoloji ?",
-  "faq.q4.a": "Nous proposons des solutions de développement de logiciels, d'intégration d'intelligence artificielle, d'analyse de données, de cybersécurité et de cloud.",
+  "faq.q4.a":
+    "Nous proposons des solutions de développement de logiciels, d'intégration d'intelligence artificielle, d'analyse de données, de cybersécurité et de cloud.",
   "faq.q4.q": "Quels services proposez-vous ?",
-  "faq.q5.a": "Nous suivons un processus transparent composé d’étapes d’analyse des besoins, de prototypage, de développement, de test et de publication.",
+  "faq.q5.a":
+    "Nous suivons un processus transparent composé d’étapes d’analyse des besoins, de prototypage, de développement, de test et de publication.",
   "faq.q5.q": "Comment fonctionne le processus de logiciel personnalisé ?",
-  "faq.q6.a": "Cela dépend de vos objectifs. Notre équipe analysera vos besoins et vous recommandera la plateforme la plus adaptée.",
+  "faq.q6.a":
+    "Cela dépend de vos objectifs. Notre équipe analysera vos besoins et vous recommandera la plateforme la plus adaptée.",
   "faq.q6.q": "Dois-je créer une application mobile ou un site Web ?",
-  "faq.q7.a": "Nous utilisons des piles technologiques modernes telles que React, Next.js, TypeScript, Python, PyTorch, Database et AWS.",
+  "faq.q7.a":
+    "Nous utilisons des piles technologiques modernes telles que React, Next.js, TypeScript, Python, PyTorch, Database et AWS.",
   "faq.q7.q": "Quelles technologies utilisez-vous ?",
-  "faq.q8.a": "Oui, nous fournissons un support API complet et une documentation pour nos solutions d'entreprise.",
+  "faq.q8.a":
+    "Oui, nous fournissons un support API complet et une documentation pour nos solutions d'entreprise.",
   "faq.q8.q": "Avez-vous un support API ?",
-  "faq.q9.a": "Nous développons des modèles spécifiques à votre projet avec nos propres ensembles de données et des cadres modernes d'apprentissage en profondeur.",
+  "faq.q9.a":
+    "Nous développons des modèles spécifiques à votre projet avec nos propres ensembles de données et des cadres modernes d'apprentissage en profondeur.",
   "faq.q9.q": "Comment former des modèles d’IA ?",
   "faq.title": "Foire aux questions",
   "footer.description": "Nous construisons aujourd’hui les technologies du futur.",
   "footer.rights": "Tous droits réservés.",
   "footer.status": "État du système",
   "home.cta.button": "Contactez-nous",
-  "home.cta.desc": "Si vous avez des questions ou avez besoin d'aide, contactez notre équipe d'assistance.",
+  "home.cta.desc":
+    "Si vous avez des questions ou avez besoin d'aide, contactez notre équipe d'assistance.",
   "home.cta.more": "En savoir plus",
   "home.cta.title": "Commencez dès aujourd'hui.",
-  "home.faq.a1": "Fun Technology est une entreprise technologique spécialisée dans l'intelligence artificielle, le développement de logiciels personnalisés et la transformation numérique.",
-  "home.faq.a2": "Oui, nous proposons des services d'assistance technique et de maintenance 24h/24 et 7j/7 pour vos projets.",
-  "home.faq.a3": "Bien que cela varie en fonction de la portée du projet, nous réalisons de petits projets en 2 à 4 semaines et des projets complets en 2 à 4 mois.",
-  "home.faq.a4": "Le prix est spécifiquement déterminé par la complexité de votre projet et les fonctionnalités nécessaires.",
-  "home.faq.a5": "Oui, nous sommes spécialisés dans l’intégration de modèles d’IA dans vos systèmes existants.",
-  "home.faq.a6": "Certainement ! Vous pouvez partager vos idées de projets avec nous et bénéficier de conseils gratuits.",
-  "home.faq.a7": "Oui, nous développons des applications mobiles modernes pour les plateformes iOS and Android.",
+  "home.faq.a1":
+    "Fun Technology est une entreprise technologique spécialisée dans l'intelligence artificielle, le développement de logiciels personnalisés et la transformation numérique.",
+  "home.faq.a2":
+    "Oui, nous proposons des services d'assistance technique et de maintenance 24h/24 et 7j/7 pour vos projets.",
+  "home.faq.a3":
+    "Bien que cela varie en fonction de la portée du projet, nous réalisons de petits projets en 2 à 4 semaines et des projets complets en 2 à 4 mois.",
+  "home.faq.a4":
+    "Le prix est spécifiquement déterminé par la complexité de votre projet et les fonctionnalités nécessaires.",
+  "home.faq.a5":
+    "Oui, nous sommes spécialisés dans l’intégration de modèles d’IA dans vos systèmes existants.",
+  "home.faq.a6":
+    "Certainement ! Vous pouvez partager vos idées de projets avec nous et bénéficier de conseils gratuits.",
+  "home.faq.a7":
+    "Oui, nous développons des applications mobiles modernes pour les plateformes iOS and Android.",
   "home.faq.badge": "FAQ",
   "home.faq.desc": "Tout ce que vous vous demandez est ici.",
   "home.faq.title": "Foire aux questions",
   "home.features.badge": "Caractéristiques",
-  "home.features.card1.desc": "Nous automatisons votre travail à l'aide des derniers modèles de LLM et d'apprentissage profond.",
+  "home.features.card1.desc":
+    "Nous automatisons votre travail à l'aide des derniers modèles de LLM et d'apprentissage profond.",
   "home.features.card1.title": "Intelligence artificielle avancée",
-  "home.features.card2.desc": "Des systèmes évolutifs qui fonctionnent avec une faible latence dans le monde entier.",
+  "home.features.card2.desc":
+    "Des systèmes évolutifs qui fonctionnent avec une faible latence dans le monde entier.",
   "home.features.card2.title": "Infrastructure mondiale",
-  "home.features.card3.desc": "Vos données sont en sécurité grâce au cryptage AES-256 et aux protocoles de sécurité avancés.",
+  "home.features.card3.desc":
+    "Vos données sont en sécurité grâce au cryptage AES-256 et aux protocoles de sécurité avancés.",
   "home.features.card3.title": "Sécurité totale",
-  "home.features.desc": "Nous proposons les technologies les plus modernes qui feront passer votre entreprise au niveau supérieur.",
+  "home.features.desc":
+    "Nous proposons les technologies les plus modernes qui feront passer votre entreprise au niveau supérieur.",
   "home.features.title": "Pourquoi devriez-vous nous choisir ?",
   "home.hero.badge": "Entreprise de technologie innovante de Turquie",
-  "home.hero.desc": "Nous plaçons votre entreprise au centre de la transformation numérique avec des solutions pionnières dans le domaine de l'intelligence artificielle, du développement de logiciels et des systèmes intelligents.",
+  "home.hero.desc":
+    "Nous plaçons votre entreprise au centre de la transformation numérique avec des solutions pionnières dans le domaine de l'intelligence artificielle, du développement de logiciels et des systèmes intelligents.",
   "home.hero.explore": "Découvrez les services",
   "home.hero.start": "Rejoignez la liste d'attente",
   "home.hero.title": "Les technologies du futur sont avec nous aujourd’hui",
   "home.howitworks.badge": "Période",
   "home.howitworks.desc": "Découvrez étape par étape comment nous donnons vie à votre projet.",
-  "home.howitworks.step1.desc": "Nous analysons vos besoins et déterminons la pile technologique la plus adaptée.",
+  "home.howitworks.step1.desc":
+    "Nous analysons vos besoins et déterminons la pile technologique la plus adaptée.",
   "home.howitworks.step1.title": "Analyse et planification",
-  "home.howitworks.step2.desc": "Nous établissons des interfaces conviviales et des structures backend solides avec des principes de conception modernes.",
+  "home.howitworks.step2.desc":
+    "Nous établissons des interfaces conviviales et des structures backend solides avec des principes de conception modernes.",
   "home.howitworks.step2.title": "Développement et tests",
-  "home.howitworks.step3.desc": "Nous publions votre projet et continuons à vous fournir un support ininterrompu.",
+  "home.howitworks.step3.desc":
+    "Nous publions votre projet et continuons à vous fournir un support ininterrompu.",
   "home.howitworks.step3.title": "Lancement et support",
   "home.howitworks.title": "Comment travaillons-nous ?",
   "home.services.badge": "Nos prestations",
-  "home.services.desc": "Découvrez les solutions professionnelles que nous proposons pour développer votre entreprise et vous démarquer dans le monde numérique.",
-  "home.services.item1.desc": "Modèles d'intelligence artificielle et systèmes d'automatisation formés spécifiquement pour votre entreprise.",
+  "home.services.desc":
+    "Découvrez les solutions professionnelles que nous proposons pour développer votre entreprise et vous démarquer dans le monde numérique.",
+  "home.services.item1.desc":
+    "Modèles d'intelligence artificielle et systèmes d'automatisation formés spécifiquement pour votre entreprise.",
   "home.services.item1.title": "Solutions d'intelligence artificielle",
-  "home.services.item2.desc": "Applications Web évolutives et sécurisées avec des frameworks modernes.",
+  "home.services.item2.desc":
+    "Applications Web évolutives et sécurisées avec des frameworks modernes.",
   "home.services.item2.title": "Développement Web",
-  "home.services.item3.desc": "Applications mobiles natives et hybrides hautes performances pour iOS et Android.",
+  "home.services.item3.desc":
+    "Applications mobiles natives et hybrides hautes performances pour iOS et Android.",
   "home.services.item3.title": "Application mobile",
-  "home.services.item4.desc": "Services de gestion d’infrastructure cloud et d’optimisation de bases de données.",
+  "home.services.item4.desc":
+    "Services de gestion d’infrastructure cloud et d’optimisation de bases de données.",
   "home.services.item4.title": "Nuage et données",
-  "home.services.item5.desc": "Nous assurons la sécurité de vos systèmes et effectuons des analyses de vulnérabilité.",
+  "home.services.item5.desc":
+    "Nous assurons la sécurité de vos systèmes et effectuons des analyses de vulnérabilité.",
   "home.services.item5.title": "Cybersécurité",
-  "home.services.item6.desc": "Conseils et conseils professionnels sur votre parcours de transformation numérique.",
+  "home.services.item6.desc":
+    "Conseils et conseils professionnels sur votre parcours de transformation numérique.",
   "home.services.item6.title": "Conseil technique",
   "home.services.title": "Solutions technologiques spécifiques à vos besoins",
   "home.stats.projects": "Projet terminé",
@@ -1641,14 +2015,21 @@ const fr: Dict = {
   "home.stats.team": "Personnel expert",
   "home.stats.users": "Utilisateur actif",
   "home.testimonials.badge": "Commentaires",
-  "home.testimonials.t1.text": "Travailler avec Fun Technology a complètement changé nos processus commerciaux. Grâce aux solutions d’intelligence artificielle, notre efficacité a augmenté.",
-  "home.testimonials.t2.text": "M. Muhammed et son équipe sont très professionnels. Ils ont livré notre application mobile dans les délais et sans problème.",
-  "home.testimonials.t3.text": "Nous n'avons eu aucun problème avec le support technique. Ils ont toujours une approche orientée solutions.",
-  "home.testimonials.t4.text": "Notre site Web est désormais beaucoup plus rapide et sécurisé. Merci FunTechnologie !",
-  "home.testimonials.t5.text": "Ils ont ajouté de la valeur à notre projet grâce à leurs approches innovantes et leurs perspectives visionnaires.",
-  "home.testimonials.t6.text": "Ils ont fait un excellent travail en simplifiant nos systèmes complexes. Je le recommande vraiment.",
+  "home.testimonials.t1.text":
+    "Travailler avec Fun Technology a complètement changé nos processus commerciaux. Grâce aux solutions d’intelligence artificielle, notre efficacité a augmenté.",
+  "home.testimonials.t2.text":
+    "M. Muhammed et son équipe sont très professionnels. Ils ont livré notre application mobile dans les délais et sans problème.",
+  "home.testimonials.t3.text":
+    "Nous n'avons eu aucun problème avec le support technique. Ils ont toujours une approche orientée solutions.",
+  "home.testimonials.t4.text":
+    "Notre site Web est désormais beaucoup plus rapide et sécurisé. Merci FunTechnologie !",
+  "home.testimonials.t5.text":
+    "Ils ont ajouté de la valeur à notre projet grâce à leurs approches innovantes et leurs perspectives visionnaires.",
+  "home.testimonials.t6.text":
+    "Ils ont fait un excellent travail en simplifiant nos systèmes complexes. Je le recommande vraiment.",
   "home.testimonials.title": "Histoires de réussite de nos clients",
-  "home.whatwedo.text": "En tant que Fun Technology, nous développons des solutions logicielles innovantes soutenues par l’intelligence artificielle pour préparer votre entreprise à l’avenir.",
+  "home.whatwedo.text":
+    "En tant que Fun Technology, nous développons des solutions logicielles innovantes soutenues par l’intelligence artificielle pour préparer votre entreprise à l’avenir.",
   "inline.contact.message_error": "Veuillez saisir un texte de message valide.",
   "inline.contact.subject_error": "Veuillez saisir un titre de sujet significatif.",
   "lang.label": "Sélectionnez la langue",
@@ -1692,28 +2073,36 @@ const fr: Dict = {
   "nexy.aria_send": "Send",
   "nexy.assistant_title": "Fun Technology Assistant",
   "nexy.beta_tag": "Beta",
-  "nexy.beta_warning": "Une mauvaise réponse peut avoir des conséquences pendant la phase de développement",
-  "nexy.capabilities.1.desc": "Il comprend vos questions et vous fournit les informations les plus précises en quelques secondes.",
+  "nexy.beta_warning":
+    "Une mauvaise réponse peut avoir des conséquences pendant la phase de développement",
+  "nexy.capabilities.1.desc":
+    "Il comprend vos questions et vous fournit les informations les plus précises en quelques secondes.",
   "nexy.capabilities.1.title": "Intelligence avancée",
-  "nexy.capabilities.2.desc": "Il fournit une assistance ininterrompue 24h/24 et 7j/7, sans temps d'attente.",
+  "nexy.capabilities.2.desc":
+    "Il fournit une assistance ininterrompue 24h/24 et 7j/7, sans temps d'attente.",
   "nexy.capabilities.2.title": "Réponse rapide",
-  "nexy.capabilities.3.desc": "Il peut communiquer avec vous dans n'importe quelle langue dont vous avez besoin.",
+  "nexy.capabilities.3.desc":
+    "Il peut communiquer avec vous dans n'importe quelle langue dont vous avez besoin.",
   "nexy.capabilities.3.title": "Prise en charge multilingue",
-  "nexy.capabilities.4.desc": "Vos conversations restent privées et vos données ne sont jamais partagées.",
+  "nexy.capabilities.4.desc":
+    "Vos conversations restent privées et vos données ne sont jamais partagées.",
   "nexy.capabilities.4.title": "Interaction sécurisée",
-  "nexy.capabilities.5.desc": "Il effectue des recherches intelligentes parmi vos documents et données.",
+  "nexy.capabilities.5.desc":
+    "Il effectue des recherches intelligentes parmi vos documents et données.",
   "nexy.capabilities.5.title": "Recherche intelligente",
   "nexy.capabilities.6.desc": "Établit des dialogues humains, fluides et significatifs.",
   "nexy.capabilities.6.title": "Discours naturel",
   "nexy.capabilities.badge": "Capacités",
-  "nexy.capabilities.desc": "Equipé de la technologie d'intelligence artificielle, Nexy est toujours avec vous.",
+  "nexy.capabilities.desc":
+    "Equipé de la technologie d'intelligence artificielle, Nexy est toujours avec vous.",
   "nexy.capabilities.title": "Que peut faire Nexy ?",
   "nexy.chat.response": "Merci pour votre message. Comment puis-je t'aider?",
   "nexy.copy_tooltip": "Copy",
   "nexy.demo.query": "Pouvez-vous donner des informations sur vos services?",
   "nexy.help_button": "Aide",
   "nexy.hero.badge": "Assistant IA technologique amusant",
-  "nexy.hero.desc": "Votre assistant numérique basé sur l'intelligence artificielle qui facilite votre travail.",
+  "nexy.hero.desc":
+    "Votre assistant numérique basé sur l'intelligence artificielle qui facilite votre travail.",
   "nexy.hero.title": "Rencontrez Nexy",
   "nexy.msg1": "Bonjour! Je m'appelle Nexy, assistante Fun Technology. Comment puis-je t'aider?",
   "nexy.placeholder": "Type your message...",
@@ -1725,96 +2114,138 @@ const fr: Dict = {
   "policy.contact.desc": "Si vous avez des questions, vous pouvez nous contacter :",
   "policy.contact.title": "Communication",
   "policy.last_updated": "Date de dernière mise à jour : 19/03/2026",
-  "policy.privacy.contact_desc": "Si vous avez des questions concernant notre politique de confidentialité ou le traitement de vos données personnelles, vous pouvez nous contacter :",
-  "policy.privacy.intro": "Notre politique de confidentialité explique comment nous collectons, utilisons et protégeons vos informations personnelles. Votre confidentialité et votre sécurité sont notre priorité.",
-  "policy.privacy.s1.desc": "Nous pouvons collecter certaines informations personnelles vous concernant lorsque vous visitez notre site Web, créez un compte ou interagissez avec nos services. Ces informations peuvent inclure :",
+  "policy.privacy.contact_desc":
+    "Si vous avez des questions concernant notre politique de confidentialité ou le traitement de vos données personnelles, vous pouvez nous contacter :",
+  "policy.privacy.intro":
+    "Notre politique de confidentialité explique comment nous collectons, utilisons et protégeons vos informations personnelles. Votre confidentialité et votre sécurité sont notre priorité.",
+  "policy.privacy.s1.desc":
+    "Nous pouvons collecter certaines informations personnelles vous concernant lorsque vous visitez notre site Web, créez un compte ou interagissez avec nos services. Ces informations peuvent inclure :",
   "policy.privacy.s1.item1": "Nom et prénom",
   "policy.privacy.s1.item2": "Adresse email",
   "policy.privacy.s1.item3": "Coordonnées",
   "policy.privacy.s1.item4": "Autres informations fournies volontairement par vous",
   "policy.privacy.s1.title": "Informations que nous collectons",
-  "policy.privacy.s2.desc": "Nous pouvons utiliser les informations que nous collectons aux fins suivantes :",
+  "policy.privacy.s2.desc":
+    "Nous pouvons utiliser les informations que nous collectons aux fins suivantes :",
   "policy.privacy.s2.item1": "Pour fournir et améliorer nos services",
   "policy.privacy.s2.item2": "Personnaliser l'expérience utilisateur",
   "policy.privacy.s2.item3": "Pour fournir des informations sur votre compte",
   "policy.privacy.s2.item4": "Communiquer sur les campagnes et les innovations",
   "policy.privacy.s2.item5": "Pour améliorer nos services en analysant le trafic du site",
   "policy.privacy.s2.title": "Comment nous utilisons vos informations",
-  "policy.privacy.s3.desc": "Nous prenons la sécurité de vos données personnelles au sérieux. Nous mettons en œuvre des mesures de sécurité conformes aux normes de l’industrie pour nous protéger contre tout accès, modification, divulgation ou destruction non autorisés. Cependant, n’oubliez pas que la transmission de données sur Internet ou le stockage électronique n’est pas sécurisé à 100 %.",
+  "policy.privacy.s3.desc":
+    "Nous prenons la sécurité de vos données personnelles au sérieux. Nous mettons en œuvre des mesures de sécurité conformes aux normes de l’industrie pour nous protéger contre tout accès, modification, divulgation ou destruction non autorisés. Cependant, n’oubliez pas que la transmission de données sur Internet ou le stockage électronique n’est pas sécurisé à 100 %.",
   "policy.privacy.s3.title": "Sécurité des données",
-  "policy.privacy.s4.desc": "Vos données personnelles : Ne seront pas vendues ou partagées à des fins commerciales sans votre autorisation expresse. Elles pourront être partagées avec les prestataires lorsque les obligations légales l’exigent ou à condition qu’ils respectent la confidentialité.",
+  "policy.privacy.s4.desc":
+    "Vos données personnelles : Ne seront pas vendues ou partagées à des fins commerciales sans votre autorisation expresse. Elles pourront être partagées avec les prestataires lorsque les obligations légales l’exigent ou à condition qu’ils respectent la confidentialité.",
   "policy.privacy.s4.title": "Partage avec des tiers",
-  "policy.privacy.s5.desc": "Notre site Web peut utiliser des cookies pour améliorer l'expérience utilisateur. Grâce aux cookies, des informations sur la façon dont vous utilisez le site sont collectées. Vous pouvez refuser les cookies ou recevoir des avertissements en modifiant les paramètres de votre navigateur.",
+  "policy.privacy.s5.desc":
+    "Notre site Web peut utiliser des cookies pour améliorer l'expérience utilisateur. Grâce aux cookies, des informations sur la façon dont vous utilisez le site sont collectées. Vous pouvez refuser les cookies ou recevoir des avertissements en modifiant les paramètres de votre navigateur.",
   "policy.privacy.s5.title": "Cookies",
-  "policy.privacy.s6.desc": "Cette politique de confidentialité peut être mise à jour de temps à autre. Toutes les modifications apportées sont publiées sur cette page et la date d'entrée en vigueur est mise à jour. Nous vous recommandons de consulter régulièrement cette page pour les mises à jour.",
+  "policy.privacy.s6.desc":
+    "Cette politique de confidentialité peut être mise à jour de temps à autre. Toutes les modifications apportées sont publiées sur cette page et la date d'entrée en vigueur est mise à jour. Nous vous recommandons de consulter régulièrement cette page pour les mises à jour.",
   "policy.privacy.s6.title": "Changements",
-  "policy.service.intro": "En utilisant la plateforme Fun Technology, vous acceptez d'utiliser nos services dans le cadre de règles sûres, légales et éthiques. Voici les conditions d’utilisation de base :",
-  "policy.service.s1.desc": "Pour utiliser la plateforme, vous devez créer un compte avec des informations précises et à jour. Vous êtes responsable de la confidentialité des informations de votre compte.",
+  "policy.service.intro":
+    "En utilisant la plateforme Fun Technology, vous acceptez d'utiliser nos services dans le cadre de règles sûres, légales et éthiques. Voici les conditions d’utilisation de base :",
+  "policy.service.s1.desc":
+    "Pour utiliser la plateforme, vous devez créer un compte avec des informations précises et à jour. Vous êtes responsable de la confidentialité des informations de votre compte.",
   "policy.service.s1.title": "Utilisation du compte",
-  "policy.service.s2.desc": "Le contenu que vous partagez et les transactions que vous effectuez sur la Plateforme doivent être conformes à toutes les lois et réglementations applicables.",
+  "policy.service.s2.desc":
+    "Le contenu que vous partagez et les transactions que vous effectuez sur la Plateforme doivent être conformes à toutes les lois et réglementations applicables.",
   "policy.service.s2.title": "Conformité juridique",
-  "policy.service.s3.desc": "Fun Technology met en œuvre des mesures de sécurité avancées pour protéger vos données. Pour la sécurité de votre compte, vous devez garder vos mots de passe secrets.",
+  "policy.service.s3.desc":
+    "Fun Technology met en œuvre des mesures de sécurité avancées pour protéger vos données. Pour la sécurité de votre compte, vous devez garder vos mots de passe secrets.",
   "policy.service.s3.title": "Sécurité et confidentialité",
-  "policy.service.s4.desc": "Fun Teknoloji accepte une responsabilité limitée pour le contenu et les liens tiers sur la plateforme. Les utilisateurs utilisent la plateforme sous leur propre responsabilité.",
+  "policy.service.s4.desc":
+    "Fun Teknoloji accepte une responsabilité limitée pour le contenu et les liens tiers sur la plateforme. Les utilisateurs utilisent la plateforme sous leur propre responsabilité.",
   "policy.service.s4.title": "Clause de non-responsabilité",
-  "policy.service.s5.desc": "Fun Teknoloji se réserve le droit d'apporter des modifications au contenu, aux fonctionnalités ou aux conditions d'utilisation afin d'améliorer les fonctionnalités de la plateforme.",
+  "policy.service.s5.desc":
+    "Fun Teknoloji se réserve le droit d'apporter des modifications au contenu, aux fonctionnalités ou aux conditions d'utilisation afin d'améliorer les fonctionnalités de la plateforme.",
   "policy.service.s5.title": "Modifications des services",
-  "policy.service.s6.desc": "En cas de violation des conditions d'utilisation, la plateforme peut restreindre ou fermer des comptes temporairement ou définitivement.",
+  "policy.service.s6.desc":
+    "En cas de violation des conditions d'utilisation, la plateforme peut restreindre ou fermer des comptes temporairement ou définitivement.",
   "policy.service.s6.title": "Sanctions",
   "pricing.badge": "Tarifs",
-  "pricing.desc": "Nous travaillons actuellement à rendre nos systèmes plus efficaces et économiques.",
+  "pricing.desc":
+    "Nous travaillons actuellement à rendre nos systèmes plus efficaces et économiques.",
   "pricing.title": "Nos nouveaux forfaits sont bientôt là",
-  "projects.hero.desc": "Nos projets orientés solutions développés avec des technologies innovantes.",
+  "projects.hero.desc":
+    "Nos projets orientés solutions développés avec des technologies innovantes.",
   "projects.hero.title": "Nous construisons l'avenir",
-  "projects.nexy.desc": "L'assistant numérique basé sur l'intelligence artificielle de Fun Technology. Guide intelligent pour les entreprises et les utilisateurs.",
-  "projects.quakesafe.desc": "Une nouvelle ère dans la technologie de sécurité en cas de catastrophe. Des systèmes intelligents qui sauvent des vies pendant et après un tremblement de terre.",
+  "projects.nexy.desc":
+    "L'assistant numérique basé sur l'intelligence artificielle de Fun Technology. Guide intelligent pour les entreprises et les utilisateurs.",
+  "projects.quakesafe.desc":
+    "Une nouvelle ère dans la technologie de sécurité en cas de catastrophe. Des systèmes intelligents qui sauvent des vies pendant et après un tremblement de terre.",
   "projects.soon.desc": "Nous continuons à travailler sur nos nouveaux projets passionnants.",
   "projects.soon.title": "Plus à venir bientôt",
   "projects.view": "Revoir le projet",
   "quakesafe.cta.button": "Obtenez un accès anticipé",
-  "quakesafe.cta.desc": "La technologie ne sert pas seulement à rendre la vie plus facile, elle sert aussi à la protéger.",
+  "quakesafe.cta.desc":
+    "La technologie ne sert pas seulement à rendre la vie plus facile, elle sert aussi à la protéger.",
   "quakesafe.cta.title": "Nous construisons un avenir plus sûr",
-  "quakesafe.features.1.desc": "Recevez des alertes critiques quelques secondes avant que les vagues de tremblement de terre n'atteignent.",
+  "quakesafe.features.1.desc":
+    "Recevez des alertes critiques quelques secondes avant que les vagues de tremblement de terre n'atteignent.",
   "quakesafe.features.1.title": "Alertes instantanées",
-  "quakesafe.features.10.desc": "Partagez votre état de santé et votre groupe sanguin en cas d'urgence.",
+  "quakesafe.features.10.desc":
+    "Partagez votre état de santé et votre groupe sanguin en cas d'urgence.",
   "quakesafe.features.10.title": "Suivi de la santé",
-  "quakesafe.features.11.desc": "Consultez les données historiques sur les tremblements de terre et les risques dans votre région.",
+  "quakesafe.features.11.desc":
+    "Consultez les données historiques sur les tremblements de terre et les risques dans votre région.",
   "quakesafe.features.11.title": "Analyse passée",
-  "quakesafe.features.12.desc": "Une plateforme qui rassemble ceux qui en ont besoin et ceux qui peuvent aider.",
+  "quakesafe.features.12.desc":
+    "Une plateforme qui rassemble ceux qui en ont besoin et ceux qui peuvent aider.",
   "quakesafe.features.12.title": "Réseau de solidarité",
-  "quakesafe.features.2.desc": "Voyez en temps réel où se trouvent vos proches lors d’une catastrophe.",
+  "quakesafe.features.2.desc":
+    "Voyez en temps réel où se trouvent vos proches lors d’une catastrophe.",
   "quakesafe.features.2.title": "Suivi de localisation",
-  "quakesafe.features.3.desc": "Itinéraire instantané vers les centres de rassemblement et les zones sûres les plus proches.",
+  "quakesafe.features.3.desc":
+    "Itinéraire instantané vers les centres de rassemblement et les zones sûres les plus proches.",
   "quakesafe.features.3.title": "Zones sûres",
-  "quakesafe.features.4.desc": "Rassemblez tous les membres de la famille dans un seul réseau et suivez leur statut.",
+  "quakesafe.features.4.desc":
+    "Rassemblez tous les membres de la famille dans un seul réseau et suivez leur statut.",
   "quakesafe.features.4.title": "Groupes familiaux",
-  "quakesafe.features.5.desc": "Accédez à des guides et des cartes critiques même lorsque Internet est coupé.",
+  "quakesafe.features.5.desc":
+    "Accédez à des guides et des cartes critiques même lorsque Internet est coupé.",
   "quakesafe.features.5.title": "Mode hors ligne",
-  "quakesafe.features.6.desc": "Prédiction des risques de dommages et analyse de la sécurité des zones avec l’intelligence artificielle.",
+  "quakesafe.features.6.desc":
+    "Prédiction des risques de dommages et analyse de la sécurité des zones avec l’intelligence artificielle.",
   "quakesafe.features.6.title": "Analyse de l'IA",
-  "quakesafe.features.7.desc": "Possibilité de communiquer entre les appareils lorsque les stations de base tombent en panne.",
+  "quakesafe.features.7.desc":
+    "Possibilité de communiquer entre les appareils lorsque les stations de base tombent en panne.",
   "quakesafe.features.7.title": "Réseau maillé",
-  "quakesafe.features.8.desc": "Gardez vos documents importants et vos données de santé en sécurité.",
+  "quakesafe.features.8.desc":
+    "Gardez vos documents importants et vos données de santé en sécurité.",
   "quakesafe.features.8.title": "Sauvegarde dans le cloud",
-  "quakesafe.features.9.desc": "Signaler la localisation des personnes sous les décombres aux autorités en un seul clic.",
+  "quakesafe.features.9.desc":
+    "Signaler la localisation des personnes sous les décombres aux autorités en un seul clic.",
   "quakesafe.features.9.title": "Notification rapide",
-  "quakesafe.features.desc": "Tous les outils dont vous avez besoin avant, pendant et après une catastrophe se trouvent sur une seule plateforme.",
+  "quakesafe.features.desc":
+    "Tous les outils dont vous avez besoin avant, pendant et après une catastrophe se trouvent sur une seule plateforme.",
   "quakesafe.features.title": "Réseau de protection complet",
-  "quakesafe.hero.desc": "Révolution dans la sécurité sismique grâce à l’intelligence artificielle et aux réseaux de capteurs. Votre plus grand supporter dans ces moments où même les secondes comptent.",
-  "quakesafe.hero.title": "N'ayez pas peur des tremblements de terre, restez en sécurité avec QuakeSafe",
-  "reviews.desc": "Découvrez les histoires de nos partenaires commerciaux qui se sont transformés avec Fun Technology.",
+  "quakesafe.hero.desc":
+    "Révolution dans la sécurité sismique grâce à l’intelligence artificielle et aux réseaux de capteurs. Votre plus grand supporter dans ces moments où même les secondes comptent.",
+  "quakesafe.hero.title":
+    "N'ayez pas peur des tremblements de terre, restez en sécurité avec QuakeSafe",
+  "reviews.desc":
+    "Découvrez les histoires de nos partenaires commerciaux qui se sont transformés avec Fun Technology.",
   "reviews.r1.name": "Ahmet Yilmaz",
-  "reviews.r1.text": "En tant que propriétaire de petite entreprise, les solutions logicielles que vous proposez nous ont sauvé la vie pour améliorer notre efficacité opérationnelle. Cela a vraiment dépassé mes attentes.",
+  "reviews.r1.text":
+    "En tant que propriétaire de petite entreprise, les solutions logicielles que vous proposez nous ont sauvé la vie pour améliorer notre efficacité opérationnelle. Cela a vraiment dépassé mes attentes.",
   "reviews.r2.name": "Zeynep Kaya",
-  "reviews.r2.text": "L'intégration de l'IA est absolument incroyable ! Nous avons gagné beaucoup de temps en automatisant nos processus métier.",
+  "reviews.r2.text":
+    "L'intégration de l'IA est absolument incroyable ! Nous avons gagné beaucoup de temps en automatisant nos processus métier.",
   "reviews.r3.name": "Murat Demir",
-  "reviews.r3.text": "Cette technologie a révolutionné nos processus d'analyse de données. Les connaissances sont si profondes que nous prenons désormais nos décisions avec beaucoup plus de confiance.",
+  "reviews.r3.text":
+    "Cette technologie a révolutionné nos processus d'analyse de données. Les connaissances sont si profondes que nous prenons désormais nos décisions avec beaucoup plus de confiance.",
   "reviews.r4.name": "Elif Sahin",
-  "reviews.r4.text": "En tant que chef de projet, cet outil s'est avéré inestimable pour assurer la coordination entre les équipes. L'interface conviviale est géniale !",
+  "reviews.r4.text":
+    "En tant que chef de projet, cet outil s'est avéré inestimable pour assurer la coordination entre les équipes. L'interface conviviale est géniale !",
   "reviews.r5.name": "Caner Özkan",
-  "reviews.r5.text": "La rapidité et la qualité de leur processus de développement sont époustouflantes. Nous avons pu recevoir nos projets à temps tout en maintenant des standards de qualité exceptionnels.",
+  "reviews.r5.text":
+    "La rapidité et la qualité de leur processus de développement sont époustouflantes. Nous avons pu recevoir nos projets à temps tout en maintenant des standards de qualité exceptionnels.",
   "reviews.r6.name": "Selin Aydin",
-  "reviews.r6.text": "Cette plateforme a transformé la façon dont nous gérons notre présence numérique. La technologie est si moderne et impressionnante que toute notre équipe a été émerveillée.",
+  "reviews.r6.text":
+    "Cette plateforme a transformé la façon dont nous gérons notre présence numérique. La technologie est si moderne et impressionnante que toute notre équipe a été émerveillée.",
   "reviews.title": "Que disent nos clients ?",
   "reviews.verified": "Client vérifié",
   "sitemap.desc": "Aperçu de toutes les pages du site Fun Teknoloji.",
@@ -1823,9 +2254,11 @@ const fr: Dict = {
   "sitemap.title": "Plan du site",
   "team.badge": "Notre équipe",
   "team.desc": "Rencontrez les noms talentueux derrière Fun Technology.",
-  "team.join.desc": "Vous souhaitez construire l’avenir avec nous ? Nous attendons vos candidatures.",
+  "team.join.desc":
+    "Vous souhaitez construire l’avenir avec nous ? Nous attendons vos candidatures.",
   "team.join.title": "Rejoignez notre équipe",
-  "team.member.muhammed.bio": "Muhammed Erbay, le fondateur de Fun Technology, dirige l'entreprise avec la vision de rendre la technologie accessible et utile à tous.",
+  "team.member.muhammed.bio":
+    "Muhammed Erbay, le fondateur de Fun Technology, dirige l'entreprise avec la vision de rendre la technologie accessible et utile à tous.",
   "team.title": "La puissance derrière notre succès",
   "theme.dark": "Passer au thème sombre",
   "theme.light": "Passer au thème ouvert",
@@ -1841,34 +2274,60 @@ const fr: Dict = {
   "home.testimonials.t6.name": "Selin Aydin",
   "blog.index.untitled": "Article sans titre",
   "blog.index.category_default": "Technologie",
-  "nexy.resp.pricing.0": "Fiyatlandırma politikalarımız üzerinde çalışıyoruz. En güncel paketler için Fiyatlandırma sayfamızı takip edebilirsiniz. Şu an için bekleme listemize katılmak en iyi seçenek!",
-  "nexy.resp.pricing.1": "Şu an için tüm hizmetlerimiz için size özel teklif sunuyoruz, detaylar yakında sayfalarımızda olacak. Genelde proje bazlı fiyatlandırma yapıyoruz.",
-  "nexy.resp.pricing.2": "Paketlerimiz güncelleniyor. Fun Teknoloji olarak her bütçeye uygun teknoloji çözümleri üretmeyi hedefliyoruz.",
-  "nexy.resp.services.0": "Yapay zeka entegrasyonu, özel yazılım geliştirme, mobil uygulama ve siber güvenlik alanlarında profesyonel çözümler sunuyoruz. Hangi alanla ilgileniyorsunuz?",
-  "nexy.resp.services.1": "Dijital dönüşüm yolculuğunuzda size en modern teknoloji yığını ile eşlik ediyoruz. React, Next.js, AI modelleri ve daha fazlasını kullanıyoruz.",
-  "nexy.resp.services.2": "İş süreçlerinizi otomatize edecek yapay zeka çözümlerimiz hakkında detaylı bilgi için Hizmetler sayfamıza bakabilirsiniz. Verimliliğinizi %40'a kadar artırabiliriz.",
-  "nexy.resp.founder.0": "Fun Teknoloji, Muhammed Erbay tarafından 2025 yılında vizyoner bir teknoloji şirketi olarak kurulmuştur.",
-  "nexy.resp.founder.1": "Kurucumuz Muhammed Erbay, teknolojiyi herkes için erişilebilir ve faydalı kılma vizyonuyla bu yola çıktı. Kendisi genç ve hırslı bir girişimcidir.",
-  "nexy.resp.founder.2": "2025'te Muhammed Erbay liderliğinde kurulan Fun Teknoloji, Türkiye'nin dijital geleceğine odaklanıyor. Muhammed Bey bizzat projelerin mimarisini denetliyor.",
-  "nexy.resp.contact.0": "Bize iletişim sayfasındaki formdan veya support@funteknoloji.com adresinden ulaşabilirsiniz! 7/24 destek veriyoruz.",
-  "nexy.resp.contact.1": "Sorularınız için her zaman buradayız, iletişim kısmından bize yazmaktan çekinmeyin. Ayrıca Discord kanalımızda çok aktif bir topluluğumuz var.",
-  "nexy.resp.contact.2": "Discord topluluğumuza katılarak da ekibimizle doğrudan iletişime geçebilirsiniz. Linki İletişim sayfasında bulabilirsiniz.",
-  "nexy.resp.about.0": "Fun Teknoloji, teknolojiyi 'eğlenceli' ve 'faydalı' kılmak için kuruldu. Yapay zeka ve yazılım bizim tutkumuz.",
-  "nexy.resp.about.1": "Misyonumuz, işletmeleri geleceğin teknolojileriyle bugünden tanıştırmak. Vizyonumuz ise global çapta bir teknoloji üssü olmak.",
-  "nexy.resp.about.2": "Hakkımızda sayfasında tüm tarihimizi ve değerlerimizi bulabilirsiniz. İnovasyon, kalite ve güvenilirlik en önemli ilkelerimizdir.",
-  "nexy.resp.careers.0": "Ekibimiz sürekli büyüyor! Kariyer fırsatları için bize özgeçmişinizi gönderebilir veya LinkedIn sayfamızı takip edebilirsiniz.",
-  "nexy.resp.careers.1": "Yetenekli mühendisler, tasarımcılar ve yapay zeka meraklıları ile çalışmaktan her zaman mutluluk duyarız.",
-  "nexy.resp.careers.2": "Şu an spesifik bir ilanımız olmasa da, yetenekli insanlara her zaman kapımız açık. Bize yazın!",
-  "nexy.resp.tech.0": "Geliştirmelerimizde modern teknolojiler kullanıyoruz. React, TypeScript, TanStack, Tailwind ve çeşitli LLM modelleri vazgeçilmezimiz.",
-  "nexy.resp.tech.1": "Sistemlerimizi yüksek performans ve ölçeklenebilirlik odaklı tasarlıyoruz. Cloud teknolojilerini en verimli şekilde kullanıyoruz.",
-  "nexy.resp.tech.2": "Fun Teknoloji olarak sürekli AR-GE yapıyoruz. En yeni frameworkleri ve yapay zeka tekniklerini ilk biz uyguluyoruz.",
+  "nexy.resp.pricing.0":
+    "Fiyatlandırma politikalarımız üzerinde çalışıyoruz. En güncel paketler için Fiyatlandırma sayfamızı takip edebilirsiniz. Şu an için bekleme listemize katılmak en iyi seçenek!",
+  "nexy.resp.pricing.1":
+    "Şu an için tüm hizmetlerimiz için size özel teklif sunuyoruz, detaylar yakında sayfalarımızda olacak. Genelde proje bazlı fiyatlandırma yapıyoruz.",
+  "nexy.resp.pricing.2":
+    "Paketlerimiz güncelleniyor. Fun Teknoloji olarak her bütçeye uygun teknoloji çözümleri üretmeyi hedefliyoruz.",
+  "nexy.resp.services.0":
+    "Yapay zeka entegrasyonu, özel yazılım geliştirme, mobil uygulama ve siber güvenlik alanlarında profesyonel çözümler sunuyoruz. Hangi alanla ilgileniyorsunuz?",
+  "nexy.resp.services.1":
+    "Dijital dönüşüm yolculuğunuzda size en modern teknoloji yığını ile eşlik ediyoruz. React, Next.js, AI modelleri ve daha fazlasını kullanıyoruz.",
+  "nexy.resp.services.2":
+    "İş süreçlerinizi otomatize edecek yapay zeka çözümlerimiz hakkında detaylı bilgi için Hizmetler sayfamıza bakabilirsiniz. Verimliliğinizi %40'a kadar artırabiliriz.",
+  "nexy.resp.founder.0":
+    "Fun Teknoloji, Muhammed Erbay tarafından 2025 yılında vizyoner bir teknoloji şirketi olarak kurulmuştur.",
+  "nexy.resp.founder.1":
+    "Kurucumuz Muhammed Erbay, teknolojiyi herkes için erişilebilir ve faydalı kılma vizyonuyla bu yola çıktı. Kendisi genç ve hırslı bir girişimcidir.",
+  "nexy.resp.founder.2":
+    "2025'te Muhammed Erbay liderliğinde kurulan Fun Teknoloji, Türkiye'nin dijital geleceğine odaklanıyor. Muhammed Bey bizzat projelerin mimarisini denetliyor.",
+  "nexy.resp.contact.0":
+    "Bize iletişim sayfasındaki formdan veya support@funteknoloji.com adresinden ulaşabilirsiniz! 7/24 destek veriyoruz.",
+  "nexy.resp.contact.1":
+    "Sorularınız için her zaman buradayız, iletişim kısmından bize yazmaktan çekinmeyin. Ayrıca Discord kanalımızda çok aktif bir topluluğumuz var.",
+  "nexy.resp.contact.2":
+    "Discord topluluğumuza katılarak da ekibimizle doğrudan iletişime geçebilirsiniz. Linki İletişim sayfasında bulabilirsiniz.",
+  "nexy.resp.about.0":
+    "Fun Teknoloji, teknolojiyi 'eğlenceli' ve 'faydalı' kılmak için kuruldu. Yapay zeka ve yazılım bizim tutkumuz.",
+  "nexy.resp.about.1":
+    "Misyonumuz, işletmeleri geleceğin teknolojileriyle bugünden tanıştırmak. Vizyonumuz ise global çapta bir teknoloji üssü olmak.",
+  "nexy.resp.about.2":
+    "Hakkımızda sayfasında tüm tarihimizi ve değerlerimizi bulabilirsiniz. İnovasyon, kalite ve güvenilirlik en önemli ilkelerimizdir.",
+  "nexy.resp.careers.0":
+    "Ekibimiz sürekli büyüyor! Kariyer fırsatları için bize özgeçmişinizi gönderebilir veya LinkedIn sayfamızı takip edebilirsiniz.",
+  "nexy.resp.careers.1":
+    "Yetenekli mühendisler, tasarımcılar ve yapay zeka meraklıları ile çalışmaktan her zaman mutluluk duyarız.",
+  "nexy.resp.careers.2":
+    "Şu an spesifik bir ilanımız olmasa da, yetenekli insanlara her zaman kapımız açık. Bize yazın!",
+  "nexy.resp.tech.0":
+    "Geliştirmelerimizde modern teknolojiler kullanıyoruz. React, TypeScript, TanStack, Tailwind ve çeşitli LLM modelleri vazgeçilmezimiz.",
+  "nexy.resp.tech.1":
+    "Sistemlerimizi yüksek performans ve ölçeklenebilirlik odaklı tasarlıyoruz. Cloud teknolojilerini en verimli şekilde kullanıyoruz.",
+  "nexy.resp.tech.2":
+    "Fun Teknoloji olarak sürekli AR-GE yapıyoruz. En yeni frameworkleri ve yapay zeka tekniklerini ilk biz uyguluyoruz.",
   "nexy.resp.greeting.0": "Merhaba! Size nasıl yardımcı olabilirim? Bugün teknoloji dolu bir gün!",
-  "nexy.resp.greeting.1": "Selamlar! Ben Nexy, Fun Teknoloji'nin yapay zeka asistanıyım. Sizi dinliyorum.",
-  "nexy.resp.greeting.2": "Hoş geldiniz! Merak ettiğiniz bir şey mi var? Size Fun Teknoloji hakkında her şeyi anlatabilirim.",
+  "nexy.resp.greeting.1":
+    "Selamlar! Ben Nexy, Fun Teknoloji'nin yapay zeka asistanıyım. Sizi dinliyorum.",
+  "nexy.resp.greeting.2":
+    "Hoş geldiniz! Merak ettiğiniz bir şey mi var? Size Fun Teknoloji hakkında her şeyi anlatabilirim.",
   "nexy.resp.default.0": "Mesajınız için teşekkürler. Size nasıl yardımcı olabilirim?",
-  "nexy.resp.default.1": "Bu konuda size daha detaylı yardımcı olabilmemiz için lütfen iletişim formunu doldurun.",
-  "nexy.resp.default.2": "Harika bir soru! Ama bu konuda henüz tam bir bilgim yok. İsterseniz ekibimize sorabilirim?",
-  "nexy.resp.default.3": "Size nasıl daha iyi yardımcı olabilirim? Teknoloji çözümlerimiz, kurucumuz veya hizmetlerimiz hakkında konuşabiliriz.",
+  "nexy.resp.default.1":
+    "Bu konuda size daha detaylı yardımcı olabilmemiz için lütfen iletişim formunu doldurun.",
+  "nexy.resp.default.2":
+    "Harika bir soru! Ama bu konuda henüz tam bir bilgim yok. İsterseniz ekibimize sorabilirim?",
+  "nexy.resp.default.3":
+    "Size nasıl daha iyi yardımcı olabilirim? Teknoloji çözümlerimiz, kurucumuz veya hizmetlerimiz hakkında konuşabiliriz.",
   "service.feature.automation": "Otomasyon",
   "service.feature.big_data": "Büyük Veri",
   "service.feature.bi": "İş Zekası",
@@ -1908,7 +2367,8 @@ const es: Dict = {
   "about.cta.title": "trabajemos juntos",
   "about.desc": "Fun Teknoloji fue fundada en 2025 por Muhammed Erbay.",
   "about.mission.badge": "Nuestra misión",
-  "about.mission.desc": "Ayudar a empresas de todos los tamaños a obtener una ventaja competitiva en el mundo digital permitiéndoles beneficiarse de la inteligencia artificial y las soluciones tecnológicas avanzadas.",
+  "about.mission.desc":
+    "Ayudar a empresas de todos los tamaños a obtener una ventaja competitiva en el mundo digital permitiéndoles beneficiarse de la inteligencia artificial y las soluciones tecnológicas avanzadas.",
   "about.mission.title": "Empoderando a las empresas con tecnología",
   "about.stats.clients": "Cliente feliz",
   "about.stats.projects": "Proyecto completado",
@@ -1922,11 +2382,13 @@ const es: Dict = {
   "about.values.2.title": "innovación",
   "about.values.3.desc": "Vemos el éxito de nuestros clientes como nuestro propio éxito.",
   "about.values.3.title": "Enfoque en el cliente",
-  "about.values.4.desc": "Producimos no sólo trabajos funcionales, sino también estéticos y de calidad.",
+  "about.values.4.desc":
+    "Producimos no sólo trabajos funcionales, sino también estéticos y de calidad.",
   "about.values.4.title": "Calidad",
   "about.values.5.desc": "Encontramos soluciones simples y efectivas a problemas complejos.",
   "about.values.5.title": "Sencillez",
-  "about.values.6.desc": "Creemos que el desarrollo no tiene fin, estamos en constante aprendizaje.",
+  "about.values.6.desc":
+    "Creemos que el desarrollo no tiene fin, estamos en constante aprendizaje.",
   "about.values.6.title": "Mejora continua",
   "about.values.badge": "Nuestros valores",
   "about.values.title": "Principios que nos hacen quienes somos",
@@ -1948,13 +2410,15 @@ const es: Dict = {
   "blog.post.read_aloud": "Leer en voz alta",
   "blog.post.reading_started": "La lectura en voz alta ha comenzado.",
   "blog.post.select_language": "SELECCIONAR IDIOMA",
-  "blog.post.stay_updated": "No te pierdas las novedades en el mundo de la inteligencia artificial y el software.",
+  "blog.post.stay_updated":
+    "No te pierdas las novedades en el mundo de la inteligencia artificial y el software.",
   "blog.post.stop_reading": "dejar de leer",
   "blog.post.translation_warning": "El texto podría estar traducido incorrectamente",
   "blog.title": "Del mundo de la tecnología",
   "brand_kit.badge": "Corporate",
   "brand_kit.colors.title": "Our Color Palette",
-  "brand_kit.desc": "You can download Fun Teknoloji logos and visual materials here and take a look at the usage guide.",
+  "brand_kit.desc":
+    "You can download Fun Teknoloji logos and visual materials here and take a look at the usage guide.",
   "brand_kit.download_png": "Download PNG",
   "brand_kit.logos.fun_black.desc": "Black version for use on light-colored backgrounds.",
   "brand_kit.logos.fun_black.title": "Fun Technology Black Logo",
@@ -1990,7 +2454,8 @@ const es: Dict = {
   "contact.captcha.title": "Verificación de seguridad",
   "contact.captcha.verify": "verificar",
   "contact.community.button": "Únete a la discordia",
-  "contact.community.desc": "Únase a nuestra comunidad tecnológica y comuníquese directamente con nuestro equipo.",
+  "contact.community.desc":
+    "Únase a nuestra comunidad tecnológica y comuníquese directamente con nuestro equipo.",
   "contact.community.title": "Únase a nuestra comunidad",
   "contact.desc": "Estamos aquí para tus preguntas.",
   "contact.form.email": "Correo electrónico",
@@ -2013,7 +2478,8 @@ const es: Dict = {
   "docs.sidebar.getting_started": "Comienzo",
   "docs.sidebar.intro": "Entrada",
   "docs.sidebar.setup": "Configuración rápida",
-  "docs.soon.desc": "Se están preparando guías de usuario detalladas para nuestra plataforma y servicios. Estaremos aquí lo antes posible.",
+  "docs.soon.desc":
+    "Se están preparando guías de usuario detalladas para nuestra plataforma y servicios. Estaremos aquí lo antes posible.",
   "docs.soon.title": "Muy pronto",
   "docs.title": "Documentación",
   "error.home": "Página de inicio",
@@ -2026,82 +2492,112 @@ const es: Dict = {
   "faq.cat.services": "Servicios",
   "faq.cat.technical": "Técnico",
   "faq.desc": "Preguntas sobre nuestros servicios y procesos.",
-  "faq.q1.a": "Fun Technology es una empresa tecnológica especializada en inteligencia artificial, desarrollo de software a medida y transformación digital.",
+  "faq.q1.a":
+    "Fun Technology es una empresa tecnológica especializada en inteligencia artificial, desarrollo de software a medida y transformación digital.",
   "faq.q1.q": "¿Qué es la tecnología divertida?",
-  "faq.q10.a": "Sí, todos sus datos están protegidos por métodos de cifrado estándar de la industria y una infraestructura segura en la nube.",
+  "faq.q10.a":
+    "Sí, todos sus datos están protegidos por métodos de cifrado estándar de la industria y una infraestructura segura en la nube.",
   "faq.q10.q": "¿Están mis datos seguros?",
-  "faq.q11.a": "La privacidad de los datos del usuario es nuestra principal prioridad. Para obtener información detallada, puede consultar nuestra página de Política de Privacidad.",
+  "faq.q11.a":
+    "La privacidad de los datos del usuario es nuestra principal prioridad. Para obtener información detallada, puede consultar nuestra página de Política de Privacidad.",
   "faq.q11.q": "¿Cuál es su política de privacidad?",
-  "faq.q2.a": "Fun Technology fue fundada en 2025 por Muhammed Erbay como una iniciativa tecnológica visionaria.",
+  "faq.q2.a":
+    "Fun Technology fue fundada en 2025 por Muhammed Erbay como una iniciativa tecnológica visionaria.",
   "faq.q2.q": "¿Cuándo se fundó Fun Teknoloji?",
-  "faq.q3.a": "Porque creemos que la tecnología no debe ser aburrida y complicada, sino una herramienta que haga la vida más fácil y 'divertida'.",
+  "faq.q3.a":
+    "Porque creemos que la tecnología no debe ser aburrida y complicada, sino una herramienta que haga la vida más fácil y 'divertida'.",
   "faq.q3.q": "¿Por qué te llamas Fun Teknoloji?",
-  "faq.q4.a": "Ofrecemos desarrollo de software, integración de inteligencia artificial, análisis de datos, ciberseguridad y soluciones en la nube.",
+  "faq.q4.a":
+    "Ofrecemos desarrollo de software, integración de inteligencia artificial, análisis de datos, ciberseguridad y soluciones en la nube.",
   "faq.q4.q": "¿Qué servicios ofrece?",
-  "faq.q5.a": "Seguimos un proceso transparente que consta de etapas de análisis de requisitos, creación de prototipos, desarrollo, pruebas y publicación.",
+  "faq.q5.a":
+    "Seguimos un proceso transparente que consta de etapas de análisis de requisitos, creación de prototipos, desarrollo, pruebas y publicación.",
   "faq.q5.q": "¿Cómo funciona el proceso de software personalizado?",
-  "faq.q6.a": "Esto depende de tus objetivos. Nuestro equipo analizará tus necesidades y te recomendará la plataforma más adecuada.",
+  "faq.q6.a":
+    "Esto depende de tus objetivos. Nuestro equipo analizará tus necesidades y te recomendará la plataforma más adecuada.",
   "faq.q6.q": "¿Debería crear una aplicación móvil o un sitio web?",
-  "faq.q7.a": "Utilizamos pilas de tecnología moderna como React, Next.js, TypeScript, Python, PyTorch, Database y AWS.",
+  "faq.q7.a":
+    "Utilizamos pilas de tecnología moderna como React, Next.js, TypeScript, Python, PyTorch, Database y AWS.",
   "faq.q7.q": "¿Qué tecnologías utilizas?",
-  "faq.q8.a": "Sí, proporcionamos documentación y soporte API integral para nuestras soluciones empresariales.",
+  "faq.q8.a":
+    "Sí, proporcionamos documentación y soporte API integral para nuestras soluciones empresariales.",
   "faq.q8.q": "¿Tiene soporte API?",
-  "faq.q9.a": "Desarrollamos modelos específicos para su proyecto con nuestros propios conjuntos de datos y marcos modernos de aprendizaje profundo.",
+  "faq.q9.a":
+    "Desarrollamos modelos específicos para su proyecto con nuestros propios conjuntos de datos y marcos modernos de aprendizaje profundo.",
   "faq.q9.q": "¿Cómo se entrenan modelos de IA?",
   "faq.title": "Preguntas frecuentes",
   "footer.description": "Estamos construyendo las tecnologías del futuro hoy.",
   "footer.rights": "Reservados todos los derechos.",
   "footer.status": "Estado del sistema",
   "home.cta.button": "Contáctenos",
-  "home.cta.desc": "Si tiene alguna pregunta o necesita ayuda, comuníquese con nuestro equipo de soporte.",
+  "home.cta.desc":
+    "Si tiene alguna pregunta o necesita ayuda, comuníquese con nuestro equipo de soporte.",
   "home.cta.more": "Descubre más",
   "home.cta.title": "Comience hoy.",
-  "home.faq.a1": "Fun Technology es una empresa de tecnología especializada en inteligencia artificial, desarrollo de software personalizado y transformación digital.",
+  "home.faq.a1":
+    "Fun Technology es una empresa de tecnología especializada en inteligencia artificial, desarrollo de software personalizado y transformación digital.",
   "home.faq.a2": "Sí, ofrecemos soporte técnico y mantenimiento 24/7 para sus proyectos.",
-  "home.faq.a3": "Aunque varía según el alcance del proyecto, completamos proyectos pequeños en 2-4 semanas y proyectos integrales en 2-4 meses.",
-  "home.faq.a4": "El precio se determina específicamente por la complejidad de su proyecto y las características necesarias.",
+  "home.faq.a3":
+    "Aunque varía según el alcance del proyecto, completamos proyectos pequeños en 2-4 semanas y proyectos integrales en 2-4 meses.",
+  "home.faq.a4":
+    "El precio se determina específicamente por la complejidad de su proyecto y las características necesarias.",
   "home.faq.a5": "Sí, nos especializamos en integrar modelos de IA en sus sistemas existentes.",
-  "home.faq.a6": "¡Ciertamente! Puede compartir sus ideas de proyectos con nosotros y obtener consultoría gratuita.",
-  "home.faq.a7": "Sí, desarrollamos aplicaciones móviles modernas para plataformas iOS and Android.",
+  "home.faq.a6":
+    "¡Ciertamente! Puede compartir sus ideas de proyectos con nosotros y obtener consultoría gratuita.",
+  "home.faq.a7":
+    "Sí, desarrollamos aplicaciones móviles modernas para plataformas iOS and Android.",
   "home.faq.badge": "Preguntas frecuentes",
   "home.faq.desc": "Todo lo que te preguntas está aquí.",
   "home.faq.title": "Preguntas frecuentes",
   "home.features.badge": "Características",
-  "home.features.card1.desc": "Automatizamos su trabajo utilizando los últimos LLM y modelos de aprendizaje profundo.",
+  "home.features.card1.desc":
+    "Automatizamos su trabajo utilizando los últimos LLM y modelos de aprendizaje profundo.",
   "home.features.card1.title": "Inteligencia artificial avanzada",
   "home.features.card2.desc": "Sistemas escalables que operan con baja latencia en todo el mundo.",
   "home.features.card2.title": "Infraestructura global",
-  "home.features.card3.desc": "Sus datos están seguros con cifrado AES-256 y protocolos de seguridad avanzados.",
+  "home.features.card3.desc":
+    "Sus datos están seguros con cifrado AES-256 y protocolos de seguridad avanzados.",
   "home.features.card3.title": "Seguridad total",
-  "home.features.desc": "Ofrecemos las tecnologías más modernas que llevarán su negocio al siguiente nivel.",
+  "home.features.desc":
+    "Ofrecemos las tecnologías más modernas que llevarán su negocio al siguiente nivel.",
   "home.features.title": "¿Por qué debería elegirnos?",
   "home.hero.badge": "La empresa de tecnología innovadora de Türkiye",
-  "home.hero.desc": "Trasladamos tu negocio al centro de la transformación digital con soluciones pioneras en el campo de la inteligencia artificial, el desarrollo de software y los sistemas inteligentes.",
+  "home.hero.desc":
+    "Trasladamos tu negocio al centro de la transformación digital con soluciones pioneras en el campo de la inteligencia artificial, el desarrollo de software y los sistemas inteligentes.",
   "home.hero.explore": "Descubra los servicios",
   "home.hero.start": "Únase a la lista de espera",
   "home.hero.title": "Las tecnologías del futuro están con nosotros hoy",
   "home.howitworks.badge": "Período",
   "home.howitworks.desc": "Descubre paso a paso cómo damos vida a tu proyecto.",
-  "home.howitworks.step1.desc": "Analizamos sus necesidades y determinamos el stack tecnológico más adecuado.",
+  "home.howitworks.step1.desc":
+    "Analizamos sus necesidades y determinamos el stack tecnológico más adecuado.",
   "home.howitworks.step1.title": "Análisis y Planificación",
-  "home.howitworks.step2.desc": "Establecemos interfaces fáciles de usar y estructuras de backend sólidas con principios de diseño modernos.",
+  "home.howitworks.step2.desc":
+    "Establecemos interfaces fáciles de usar y estructuras de backend sólidas con principios de diseño modernos.",
   "home.howitworks.step2.title": "Desarrollo y pruebas",
-  "home.howitworks.step3.desc": "Publicamos tu proyecto y seguimos brindándote soporte ininterrumpido.",
+  "home.howitworks.step3.desc":
+    "Publicamos tu proyecto y seguimos brindándote soporte ininterrumpido.",
   "home.howitworks.step3.title": "Lanzamiento y soporte",
   "home.howitworks.title": "¿Cómo trabajamos?",
   "home.services.badge": "Nuestros servicios",
-  "home.services.desc": "Conoce las soluciones profesionales que ofrecemos para hacer crecer tu negocio y destacar en el mundo digital.",
-  "home.services.item1.desc": "Modelos de inteligencia artificial y sistemas de automatización entrenados específicamente para tu negocio.",
+  "home.services.desc":
+    "Conoce las soluciones profesionales que ofrecemos para hacer crecer tu negocio y destacar en el mundo digital.",
+  "home.services.item1.desc":
+    "Modelos de inteligencia artificial y sistemas de automatización entrenados específicamente para tu negocio.",
   "home.services.item1.title": "Soluciones de inteligencia artificial",
   "home.services.item2.desc": "Aplicaciones web escalables y seguras con frameworks modernos.",
   "home.services.item2.title": "Desarrollo Web",
-  "home.services.item3.desc": "Aplicaciones móviles híbridas y nativas de alto rendimiento para iOS y Android.",
+  "home.services.item3.desc":
+    "Aplicaciones móviles híbridas y nativas de alto rendimiento para iOS y Android.",
   "home.services.item3.title": "Aplicación móvil",
-  "home.services.item4.desc": "Servicios de gestión de infraestructura en la nube y optimización de bases de datos.",
+  "home.services.item4.desc":
+    "Servicios de gestión de infraestructura en la nube y optimización de bases de datos.",
   "home.services.item4.title": "Nube y datos",
-  "home.services.item5.desc": "Garantizamos la seguridad de sus sistemas y realizamos análisis de vulnerabilidad.",
+  "home.services.item5.desc":
+    "Garantizamos la seguridad de sus sistemas y realizamos análisis de vulnerabilidad.",
   "home.services.item5.title": "Ciberseguridad",
-  "home.services.item6.desc": "Orientación y consultoría profesional en su viaje de transformación digital.",
+  "home.services.item6.desc":
+    "Orientación y consultoría profesional en su viaje de transformación digital.",
   "home.services.item6.title": "Consultoría Técnica",
   "home.services.title": "Soluciones tecnológicas específicas para sus necesidades",
   "home.stats.projects": "Proyecto completado",
@@ -2109,14 +2605,21 @@ const es: Dict = {
   "home.stats.team": "Personal experto",
   "home.stats.users": "Usuario activo",
   "home.testimonials.badge": "Comentarios",
-  "home.testimonials.t1.text": "Trabajar con Fun Technology ha cambiado por completo nuestros procesos comerciales. Gracias a las soluciones de inteligencia artificial, nuestra eficiencia ha aumentado.",
-  "home.testimonials.t2.text": "El Sr. Muhammed y su equipo son muy profesionales. Entregaron nuestra aplicación móvil a tiempo y sin problemas.",
-  "home.testimonials.t3.text": "No tuvimos problemas con el soporte técnico. Siempre tienen un enfoque orientado a soluciones.",
-  "home.testimonials.t4.text": "Nuestro sitio web ahora es mucho más rápido y seguro. ¡Gracias Tecnología Divertida!",
-  "home.testimonials.t5.text": "Agregaron valor a nuestro proyecto con sus enfoques innovadores y perspectivas visionarias.",
-  "home.testimonials.t6.text": "Han hecho un gran trabajo simplificando nuestros complejos sistemas. Definitivamente lo recomiendo.",
+  "home.testimonials.t1.text":
+    "Trabajar con Fun Technology ha cambiado por completo nuestros procesos comerciales. Gracias a las soluciones de inteligencia artificial, nuestra eficiencia ha aumentado.",
+  "home.testimonials.t2.text":
+    "El Sr. Muhammed y su equipo son muy profesionales. Entregaron nuestra aplicación móvil a tiempo y sin problemas.",
+  "home.testimonials.t3.text":
+    "No tuvimos problemas con el soporte técnico. Siempre tienen un enfoque orientado a soluciones.",
+  "home.testimonials.t4.text":
+    "Nuestro sitio web ahora es mucho más rápido y seguro. ¡Gracias Tecnología Divertida!",
+  "home.testimonials.t5.text":
+    "Agregaron valor a nuestro proyecto con sus enfoques innovadores y perspectivas visionarias.",
+  "home.testimonials.t6.text":
+    "Han hecho un gran trabajo simplificando nuestros complejos sistemas. Definitivamente lo recomiendo.",
   "home.testimonials.title": "Historias de éxito de nuestros clientes",
-  "home.whatwedo.text": "Como Fun Technology, desarrollamos soluciones de software innovadoras respaldadas por inteligencia artificial para preparar su negocio para el futuro.",
+  "home.whatwedo.text":
+    "Como Fun Technology, desarrollamos soluciones de software innovadoras respaldadas por inteligencia artificial para preparar su negocio para el futuro.",
   "inline.contact.message_error": "Por favor ingrese un texto de mensaje válido.",
   "inline.contact.subject_error": "Por favor ingrese un título de tema significativo.",
   "lang.label": "Seleccionar idioma",
@@ -2160,28 +2663,34 @@ const es: Dict = {
   "nexy.aria_send": "Send",
   "nexy.assistant_title": "Fun Technology Assistant",
   "nexy.beta_tag": "Beta",
-  "nexy.beta_warning": "Una respuesta incorrecta puede tener consecuencias durante la fase de desarrollo",
-  "nexy.capabilities.1.desc": "Entiende sus preguntas y le proporciona la información más precisa en segundos.",
+  "nexy.beta_warning":
+    "Una respuesta incorrecta puede tener consecuencias durante la fase de desarrollo",
+  "nexy.capabilities.1.desc":
+    "Entiende sus preguntas y le proporciona la información más precisa en segundos.",
   "nexy.capabilities.1.title": "Inteligencia avanzada",
-  "nexy.capabilities.2.desc": "Proporciona soporte ininterrumpido las 24 horas del día, los 7 días de la semana, sin tiempo de espera.",
+  "nexy.capabilities.2.desc":
+    "Proporciona soporte ininterrumpido las 24 horas del día, los 7 días de la semana, sin tiempo de espera.",
   "nexy.capabilities.2.title": "Respuesta rápida",
   "nexy.capabilities.3.desc": "Puede comunicarse con usted en cualquier idioma que necesite.",
   "nexy.capabilities.3.title": "Soporte multilingüe",
-  "nexy.capabilities.4.desc": "Tus conversaciones se mantienen privadas y tus datos nunca se comparten.",
+  "nexy.capabilities.4.desc":
+    "Tus conversaciones se mantienen privadas y tus datos nunca se comparten.",
   "nexy.capabilities.4.title": "Interacción segura",
   "nexy.capabilities.5.desc": "Realiza búsquedas inteligentes entre tus documentos y datos.",
   "nexy.capabilities.5.title": "Búsqueda inteligente",
   "nexy.capabilities.6.desc": "Establece diálogos humanos, fluidos y significativos.",
   "nexy.capabilities.6.title": "discurso natural",
   "nexy.capabilities.badge": "Talento",
-  "nexy.capabilities.desc": "Equipado con tecnología de inteligencia artificial, Nexy está siempre contigo.",
+  "nexy.capabilities.desc":
+    "Equipado con tecnología de inteligencia artificial, Nexy está siempre contigo.",
   "nexy.capabilities.title": "¿Qué puede hacer Nexy?",
   "nexy.chat.response": "Gracias por tu mensaje. ¿Le puedo ayudar en algo?",
   "nexy.copy_tooltip": "Copy",
   "nexy.demo.query": "¿Puede darnos información sobre sus servicios?",
   "nexy.help_button": "Ayuda",
   "nexy.hero.badge": "Asistente de IA de tecnología divertida",
-  "nexy.hero.desc": "Tu asistente digital basado en inteligencia artificial que te facilita el trabajo.",
+  "nexy.hero.desc":
+    "Tu asistente digital basado en inteligencia artificial que te facilita el trabajo.",
   "nexy.hero.title": "Conoce a Nexy",
   "nexy.msg1": "¡Hola! Soy Nexy, asistente de Fun Technology. ¿Le puedo ayudar en algo?",
   "nexy.placeholder": "Type your message...",
@@ -2193,96 +2702,135 @@ const es: Dict = {
   "policy.contact.desc": "Si tienes alguna duda puedes contactar con nosotros:",
   "policy.contact.title": "Comunicación",
   "policy.last_updated": "Fecha de última actualización: 19/03/2026",
-  "policy.privacy.contact_desc": "Si tienes alguna duda sobre nuestra Política de Privacidad o el tratamiento de tus datos personales, puedes contactar con nosotros:",
-  "policy.privacy.intro": "Nuestra Política de Privacidad explica cómo recopilamos, utilizamos y protegemos su información personal. Su privacidad y seguridad es nuestra prioridad.",
-  "policy.privacy.s1.desc": "Podemos recopilar cierta información personal sobre usted cuando visita nuestro sitio web, crea una cuenta o interactúa con nuestros servicios. Esta información puede incluir:",
+  "policy.privacy.contact_desc":
+    "Si tienes alguna duda sobre nuestra Política de Privacidad o el tratamiento de tus datos personales, puedes contactar con nosotros:",
+  "policy.privacy.intro":
+    "Nuestra Política de Privacidad explica cómo recopilamos, utilizamos y protegemos su información personal. Su privacidad y seguridad es nuestra prioridad.",
+  "policy.privacy.s1.desc":
+    "Podemos recopilar cierta información personal sobre usted cuando visita nuestro sitio web, crea una cuenta o interactúa con nuestros servicios. Esta información puede incluir:",
   "policy.privacy.s1.item1": "Nombre y apellido",
   "policy.privacy.s1.item2": "Dirección de correo electrónico",
   "policy.privacy.s1.item3": "Información del contacto",
   "policy.privacy.s1.item4": "Otra información proporcionada voluntariamente por usted",
   "policy.privacy.s1.title": "Información que recopilamos",
-  "policy.privacy.s2.desc": "Podemos utilizar la información que recopilamos para los siguientes fines:",
+  "policy.privacy.s2.desc":
+    "Podemos utilizar la información que recopilamos para los siguientes fines:",
   "policy.privacy.s2.item1": "Para proporcionar y mejorar nuestros servicios.",
   "policy.privacy.s2.item2": "Personaliza la experiencia del usuario",
   "policy.privacy.s2.item3": "Para proporcionar información sobre su cuenta",
   "policy.privacy.s2.item4": "Comunicar sobre campañas e innovaciones.",
   "policy.privacy.s2.item5": "Mejorar nuestros servicios analizando el tráfico del sitio.",
   "policy.privacy.s2.title": "Cómo utilizamos su información",
-  "policy.privacy.s3.desc": "Nos tomamos en serio la seguridad de sus datos personales. Implementamos medidas de seguridad estándar de la industria para proteger contra el acceso no autorizado, la alteración, la divulgación o la destrucción. Sin embargo, recuerde que la transmisión de datos a través de Internet o el almacenamiento electrónico no es 100% segura.",
+  "policy.privacy.s3.desc":
+    "Nos tomamos en serio la seguridad de sus datos personales. Implementamos medidas de seguridad estándar de la industria para proteger contra el acceso no autorizado, la alteración, la divulgación o la destrucción. Sin embargo, recuerde que la transmisión de datos a través de Internet o el almacenamiento electrónico no es 100% segura.",
   "policy.privacy.s3.title": "Seguridad de datos",
-  "policy.privacy.s4.desc": "Tus datos personales: No serán vendidos ni compartidos con fines comerciales sin tu permiso expreso. Podrá ser compartida con proveedores de servicios cuando así lo requieran obligaciones legales o siempre que respeten la confidencialidad.",
+  "policy.privacy.s4.desc":
+    "Tus datos personales: No serán vendidos ni compartidos con fines comerciales sin tu permiso expreso. Podrá ser compartida con proveedores de servicios cuando así lo requieran obligaciones legales o siempre que respeten la confidencialidad.",
   "policy.privacy.s4.title": "Compartir con terceros",
-  "policy.privacy.s5.desc": "Nuestro sitio web puede utilizar cookies para mejorar la experiencia del usuario. Gracias a las cookies, se recopila información sobre cómo utiliza el sitio. Puede rechazar las cookies o recibir avisos cambiando la configuración de su navegador.",
+  "policy.privacy.s5.desc":
+    "Nuestro sitio web puede utilizar cookies para mejorar la experiencia del usuario. Gracias a las cookies, se recopila información sobre cómo utiliza el sitio. Puede rechazar las cookies o recibir avisos cambiando la configuración de su navegador.",
   "policy.privacy.s5.title": "Galletas",
-  "policy.privacy.s6.desc": "Esta Política de Privacidad puede actualizarse periódicamente. Cualquier cambio realizado se publica en esta página y se actualiza la fecha de vigencia. Le recomendamos que consulte esta página periódicamente para obtener actualizaciones.",
+  "policy.privacy.s6.desc":
+    "Esta Política de Privacidad puede actualizarse periódicamente. Cualquier cambio realizado se publica en esta página y se actualiza la fecha de vigencia. Le recomendamos que consulte esta página periódicamente para obtener actualizaciones.",
   "policy.privacy.s6.title": "Cambios",
-  "policy.service.intro": "Al utilizar la plataforma Fun Technology, usted acepta utilizar nuestros servicios dentro del marco de reglas seguras, legales y éticas. Estos son los términos básicos de uso:",
-  "policy.service.s1.desc": "Para poder utilizar la plataforma, debe crear una cuenta con información precisa y actualizada. Usted es responsable de la confidencialidad de la información de su cuenta.",
+  "policy.service.intro":
+    "Al utilizar la plataforma Fun Technology, usted acepta utilizar nuestros servicios dentro del marco de reglas seguras, legales y éticas. Estos son los términos básicos de uso:",
+  "policy.service.s1.desc":
+    "Para poder utilizar la plataforma, debe crear una cuenta con información precisa y actualizada. Usted es responsable de la confidencialidad de la información de su cuenta.",
   "policy.service.s1.title": "Uso de la cuenta",
-  "policy.service.s2.desc": "El contenido que comparte y las transacciones que realiza en la Plataforma deben cumplir con todas las leyes y regulaciones aplicables.",
+  "policy.service.s2.desc":
+    "El contenido que comparte y las transacciones que realiza en la Plataforma deben cumplir con todas las leyes y regulaciones aplicables.",
   "policy.service.s2.title": "Cumplimiento legal",
-  "policy.service.s3.desc": "Fun Technology implementa medidas de seguridad avanzadas para proteger sus datos. Para la seguridad de su cuenta, debe mantener sus contraseñas en secreto.",
+  "policy.service.s3.desc":
+    "Fun Technology implementa medidas de seguridad avanzadas para proteger sus datos. Para la seguridad de su cuenta, debe mantener sus contraseñas en secreto.",
   "policy.service.s3.title": "Seguridad y privacidad",
-  "policy.service.s4.desc": "Fun Teknoloji acepta responsabilidad limitada por el contenido y los enlaces de terceros de la plataforma. Los usuarios utilizan la plataforma bajo su propia responsabilidad.",
+  "policy.service.s4.desc":
+    "Fun Teknoloji acepta responsabilidad limitada por el contenido y los enlaces de terceros de la plataforma. Los usuarios utilizan la plataforma bajo su propia responsabilidad.",
   "policy.service.s4.title": "Descargo de responsabilidad",
-  "policy.service.s5.desc": "Fun Teknoloji se reserva el derecho de realizar cambios en el contenido, las características o los términos de uso para mejorar la funcionalidad de la plataforma.",
+  "policy.service.s5.desc":
+    "Fun Teknoloji se reserva el derecho de realizar cambios en el contenido, las características o los términos de uso para mejorar la funcionalidad de la plataforma.",
   "policy.service.s5.title": "Cambios de servicio",
-  "policy.service.s6.desc": "En caso de violación de los términos de uso, la plataforma podrá restringir o cerrar cuentas de forma temporal o permanente.",
+  "policy.service.s6.desc":
+    "En caso de violación de los términos de uso, la plataforma podrá restringir o cerrar cuentas de forma temporal o permanente.",
   "policy.service.s6.title": "Sanciones",
   "pricing.badge": "Precios",
-  "pricing.desc": "Actualmente estamos trabajando para hacer nuestros sistemas más eficientes y económicos.",
+  "pricing.desc":
+    "Actualmente estamos trabajando para hacer nuestros sistemas más eficientes y económicos.",
   "pricing.title": "Nuestros nuevos paquetes estarán aquí pronto",
-  "projects.hero.desc": "Nuestros proyectos orientados a soluciones desarrollados con tecnologías innovadoras.",
+  "projects.hero.desc":
+    "Nuestros proyectos orientados a soluciones desarrollados con tecnologías innovadoras.",
   "projects.hero.title": "Estamos construyendo el futuro",
-  "projects.nexy.desc": "El asistente digital basado en inteligencia artificial de Fun Technology. Guía inteligente para empresas y usuarios.",
-  "projects.quakesafe.desc": "Una nueva era en la tecnología de seguridad ante desastres. Sistemas inteligentes que salvan vidas durante y después de un terremoto.",
+  "projects.nexy.desc":
+    "El asistente digital basado en inteligencia artificial de Fun Technology. Guía inteligente para empresas y usuarios.",
+  "projects.quakesafe.desc":
+    "Una nueva era en la tecnología de seguridad ante desastres. Sistemas inteligentes que salvan vidas durante y después de un terremoto.",
   "projects.soon.desc": "Seguimos trabajando en nuestros nuevos e interesantes proyectos.",
   "projects.soon.title": "Más próximamente",
   "projects.view": "Revisar el proyecto",
   "quakesafe.cta.button": "Obtenga acceso temprano",
-  "quakesafe.cta.desc": "La tecnología no es sólo para hacer la vida más fácil, sino para protegerla.",
+  "quakesafe.cta.desc":
+    "La tecnología no es sólo para hacer la vida más fácil, sino para protegerla.",
   "quakesafe.cta.title": "Estamos construyendo un futuro más seguro",
-  "quakesafe.features.1.desc": "Reciba alertas críticas segundos antes de que lleguen las ondas sísmicas.",
+  "quakesafe.features.1.desc":
+    "Reciba alertas críticas segundos antes de que lleguen las ondas sísmicas.",
   "quakesafe.features.1.title": "Alertas instantáneas",
-  "quakesafe.features.10.desc": "Comparta su estado de salud y tipo de sangre en caso de emergencia.",
+  "quakesafe.features.10.desc":
+    "Comparta su estado de salud y tipo de sangre en caso de emergencia.",
   "quakesafe.features.10.title": "Seguimiento de salud",
-  "quakesafe.features.11.desc": "Revise los datos históricos de terremotos y los riesgos en su área.",
+  "quakesafe.features.11.desc":
+    "Revise los datos históricos de terremotos y los riesgos en su área.",
   "quakesafe.features.11.title": "Análisis pasado",
-  "quakesafe.features.12.desc": "Una plataforma que reúne a quienes lo necesitan y a quienes pueden ayudar.",
+  "quakesafe.features.12.desc":
+    "Una plataforma que reúne a quienes lo necesitan y a quienes pueden ayudar.",
   "quakesafe.features.12.title": "Red de Solidaridad",
-  "quakesafe.features.2.desc": "Vea en tiempo real dónde están sus seres queridos durante un desastre.",
+  "quakesafe.features.2.desc":
+    "Vea en tiempo real dónde están sus seres queridos durante un desastre.",
   "quakesafe.features.2.title": "Seguimiento de ubicación",
-  "quakesafe.features.3.desc": "Ruta instantánea a los centros de reunión más cercanos y zonas seguras.",
+  "quakesafe.features.3.desc":
+    "Ruta instantánea a los centros de reunión más cercanos y zonas seguras.",
   "quakesafe.features.3.title": "Áreas seguras",
-  "quakesafe.features.4.desc": "Reúna a todos los miembros de la familia en una red y realice un seguimiento de su estado.",
+  "quakesafe.features.4.desc":
+    "Reúna a todos los miembros de la familia en una red y realice un seguimiento de su estado.",
   "quakesafe.features.4.title": "Grupos familiares",
   "quakesafe.features.5.desc": "Acceda a guías y mapas críticos incluso cuando no haya Internet.",
   "quakesafe.features.5.title": "Modo sin conexión",
-  "quakesafe.features.6.desc": "Predicción de riesgos de daños y análisis de seguridad del área con inteligencia artificial.",
+  "quakesafe.features.6.desc":
+    "Predicción de riesgos de daños y análisis de seguridad del área con inteligencia artificial.",
   "quakesafe.features.6.title": "Análisis de IA",
-  "quakesafe.features.7.desc": "Capacidad de comunicarse entre dispositivos cuando las estaciones base fallan.",
+  "quakesafe.features.7.desc":
+    "Capacidad de comunicarse entre dispositivos cuando las estaciones base fallan.",
   "quakesafe.features.7.title": "Red de malla",
   "quakesafe.features.8.desc": "Mantenga seguros sus documentos importantes y sus datos de salud.",
   "quakesafe.features.8.title": "Copia de seguridad en la nube",
-  "quakesafe.features.9.desc": "Informar a las autoridades la ubicación de quienes están bajo los escombros con un solo clic.",
+  "quakesafe.features.9.desc":
+    "Informar a las autoridades la ubicación de quienes están bajo los escombros con un solo clic.",
   "quakesafe.features.9.title": "Notificación rápida",
-  "quakesafe.features.desc": "Todas las herramientas que necesita antes, durante y después de un desastre están en una única plataforma.",
+  "quakesafe.features.desc":
+    "Todas las herramientas que necesita antes, durante y después de un desastre están en una única plataforma.",
   "quakesafe.features.title": "Red de Protección Integral",
-  "quakesafe.hero.desc": "Revolución en seguridad ante terremotos con inteligencia artificial y redes de sensores. Tu mayor apoyo en esos momentos en los que incluso los segundos son críticos.",
+  "quakesafe.hero.desc":
+    "Revolución en seguridad ante terremotos con inteligencia artificial y redes de sensores. Tu mayor apoyo en esos momentos en los que incluso los segundos son críticos.",
   "quakesafe.hero.title": "No tengas miedo a los terremotos, mantente a salvo con QuakeSafe",
-  "reviews.desc": "Descubra las historias de nuestros socios comerciales que se transformaron con Fun Technology.",
+  "reviews.desc":
+    "Descubra las historias de nuestros socios comerciales que se transformaron con Fun Technology.",
   "reviews.r1.name": "Ahmet Yilmaz",
-  "reviews.r1.text": "Como propietario de una pequeña empresa, las soluciones de software que ofrece han sido un salvavidas para mejorar nuestra eficiencia operativa. Realmente superó mis expectativas.",
+  "reviews.r1.text":
+    "Como propietario de una pequeña empresa, las soluciones de software que ofrece han sido un salvavidas para mejorar nuestra eficiencia operativa. Realmente superó mis expectativas.",
   "reviews.r2.name": "Zeynep Kaya",
-  "reviews.r2.text": "¡La integración de IA es absolutamente increíble! Ahorramos mucho tiempo al automatizar nuestros procesos comerciales.",
+  "reviews.r2.text":
+    "¡La integración de IA es absolutamente increíble! Ahorramos mucho tiempo al automatizar nuestros procesos comerciales.",
   "reviews.r3.name": "Murat Demir",
-  "reviews.r3.text": "Esta tecnología ha revolucionado nuestros procesos de análisis de datos. Los conocimientos son tan profundos que ahora tomamos nuestras decisiones con mucha más confianza.",
+  "reviews.r3.text":
+    "Esta tecnología ha revolucionado nuestros procesos de análisis de datos. Los conocimientos son tan profundos que ahora tomamos nuestras decisiones con mucha más confianza.",
   "reviews.r4.name": "Elif Sahin",
-  "reviews.r4.text": "Como director de proyectos, esta herramienta ha sido invaluable para garantizar la coordinación entre equipos. ¡La interfaz fácil de usar es genial!",
+  "reviews.r4.text":
+    "Como director de proyectos, esta herramienta ha sido invaluable para garantizar la coordinación entre equipos. ¡La interfaz fácil de usar es genial!",
   "reviews.r5.name": "Caner Özkan",
-  "reviews.r5.text": "La velocidad y calidad de su proceso de desarrollo es alucinante. Pudimos recibir nuestros proyectos a tiempo manteniendo estándares de calidad excepcionales.",
+  "reviews.r5.text":
+    "La velocidad y calidad de su proceso de desarrollo es alucinante. Pudimos recibir nuestros proyectos a tiempo manteniendo estándares de calidad excepcionales.",
   "reviews.r6.name": "Selin Aydin",
-  "reviews.r6.text": "Esta plataforma ha transformado la forma en que gestionamos nuestra presencia digital. La tecnología es tan moderna e impresionante que todo nuestro equipo quedó asombrado.",
+  "reviews.r6.text":
+    "Esta plataforma ha transformado la forma en que gestionamos nuestra presencia digital. La tecnología es tan moderna e impresionante que todo nuestro equipo quedó asombrado.",
   "reviews.title": "¿Qué dicen nuestros clientes?",
   "reviews.verified": "Cliente verificado",
   "sitemap.desc": "Descripción general de todas las páginas del sitio web de Fun Teknoloji.",
@@ -2293,7 +2841,8 @@ const es: Dict = {
   "team.desc": "Conozca los nombres talentosos detrás de Fun Technology.",
   "team.join.desc": "¿Quieres construir el futuro con nosotros? Estamos esperando sus solicitudes.",
   "team.join.title": "Únase a nuestro equipo",
-  "team.member.muhammed.bio": "Muhammed Erbay, fundador de Fun Technology, dirige la empresa con la visión de hacer que la tecnología sea accesible y útil para todos.",
+  "team.member.muhammed.bio":
+    "Muhammed Erbay, fundador de Fun Technology, dirige la empresa con la visión de hacer que la tecnología sea accesible y útil para todos.",
   "team.title": "El poder detrás de nuestro éxito",
   "theme.dark": "Cambiar al tema oscuro",
   "theme.light": "Cambiar a tema abierto",
@@ -2309,34 +2858,60 @@ const es: Dict = {
   "home.testimonials.t6.name": "Selin Aydin",
   "blog.index.untitled": "Publicación sin título",
   "blog.index.category_default": "Tecnología",
-  "nexy.resp.pricing.0": "Fiyatlandırma politikalarımız üzerinde çalışıyoruz. En güncel paketler için Fiyatlandırma sayfamızı takip edebilirsiniz. Şu an için bekleme listemize katılmak en iyi seçenek!",
-  "nexy.resp.pricing.1": "Şu an için tüm hizmetlerimiz için size özel teklif sunuyoruz, detaylar yakında sayfalarımızda olacak. Genelde proje bazlı fiyatlandırma yapıyoruz.",
-  "nexy.resp.pricing.2": "Paketlerimiz güncelleniyor. Fun Teknoloji olarak her bütçeye uygun teknoloji çözümleri üretmeyi hedefliyoruz.",
-  "nexy.resp.services.0": "Yapay zeka entegrasyonu, özel yazılım geliştirme, mobil uygulama ve siber güvenlik alanlarında profesyonel çözümler sunuyoruz. Hangi alanla ilgileniyorsunuz?",
-  "nexy.resp.services.1": "Dijital dönüşüm yolculuğunuzda size en modern teknoloji yığını ile eşlik ediyoruz. React, Next.js, AI modelleri ve daha fazlasını kullanıyoruz.",
-  "nexy.resp.services.2": "İş süreçlerinizi otomatize edecek yapay zeka çözümlerimiz hakkında detaylı bilgi için Hizmetler sayfamıza bakabilirsiniz. Verimliliğinizi %40'a kadar artırabiliriz.",
-  "nexy.resp.founder.0": "Fun Teknoloji, Muhammed Erbay tarafından 2025 yılında vizyoner bir teknoloji şirketi olarak kurulmuştur.",
-  "nexy.resp.founder.1": "Kurucumuz Muhammed Erbay, teknolojiyi herkes için erişilebilir ve faydalı kılma vizyonuyla bu yola çıktı. Kendisi genç ve hırslı bir girişimcidir.",
-  "nexy.resp.founder.2": "2025'te Muhammed Erbay liderliğinde kurulan Fun Teknoloji, Türkiye'nin dijital geleceğine odaklanıyor. Muhammed Bey bizzat projelerin mimarisini denetliyor.",
-  "nexy.resp.contact.0": "Bize iletişim sayfasındaki formdan veya support@funteknoloji.com adresinden ulaşabilirsiniz! 7/24 destek veriyoruz.",
-  "nexy.resp.contact.1": "Sorularınız için her zaman buradayız, iletişim kısmından bize yazmaktan çekinmeyin. Ayrıca Discord kanalımızda çok aktif bir topluluğumuz var.",
-  "nexy.resp.contact.2": "Discord topluluğumuza katılarak da ekibimizle doğrudan iletişime geçebilirsiniz. Linki İletişim sayfasında bulabilirsiniz.",
-  "nexy.resp.about.0": "Fun Teknoloji, teknolojiyi 'eğlenceli' ve 'faydalı' kılmak için kuruldu. Yapay zeka ve yazılım bizim tutkumuz.",
-  "nexy.resp.about.1": "Misyonumuz, işletmeleri geleceğin teknolojileriyle bugünden tanıştırmak. Vizyonumuz ise global çapta bir teknoloji üssü olmak.",
-  "nexy.resp.about.2": "Hakkımızda sayfasında tüm tarihimizi ve değerlerimizi bulabilirsiniz. İnovasyon, kalite ve güvenilirlik en önemli ilkelerimizdir.",
-  "nexy.resp.careers.0": "Ekibimiz sürekli büyüyor! Kariyer fırsatları için bize özgeçmişinizi gönderebilir veya LinkedIn sayfamızı takip edebilirsiniz.",
-  "nexy.resp.careers.1": "Yetenekli mühendisler, tasarımcılar ve yapay zeka meraklıları ile çalışmaktan her zaman mutluluk duyarız.",
-  "nexy.resp.careers.2": "Şu an spesifik bir ilanımız olmasa da, yetenekli insanlara her zaman kapımız açık. Bize yazın!",
-  "nexy.resp.tech.0": "Geliştirmelerimizde modern teknolojiler kullanıyoruz. React, TypeScript, TanStack, Tailwind ve çeşitli LLM modelleri vazgeçilmezimiz.",
-  "nexy.resp.tech.1": "Sistemlerimizi yüksek performans ve ölçeklenebilirlik odaklı tasarlıyoruz. Cloud teknolojilerini en verimli şekilde kullanıyoruz.",
-  "nexy.resp.tech.2": "Fun Teknoloji olarak sürekli AR-GE yapıyoruz. En yeni frameworkleri ve yapay zeka tekniklerini ilk biz uyguluyoruz.",
+  "nexy.resp.pricing.0":
+    "Fiyatlandırma politikalarımız üzerinde çalışıyoruz. En güncel paketler için Fiyatlandırma sayfamızı takip edebilirsiniz. Şu an için bekleme listemize katılmak en iyi seçenek!",
+  "nexy.resp.pricing.1":
+    "Şu an için tüm hizmetlerimiz için size özel teklif sunuyoruz, detaylar yakında sayfalarımızda olacak. Genelde proje bazlı fiyatlandırma yapıyoruz.",
+  "nexy.resp.pricing.2":
+    "Paketlerimiz güncelleniyor. Fun Teknoloji olarak her bütçeye uygun teknoloji çözümleri üretmeyi hedefliyoruz.",
+  "nexy.resp.services.0":
+    "Yapay zeka entegrasyonu, özel yazılım geliştirme, mobil uygulama ve siber güvenlik alanlarında profesyonel çözümler sunuyoruz. Hangi alanla ilgileniyorsunuz?",
+  "nexy.resp.services.1":
+    "Dijital dönüşüm yolculuğunuzda size en modern teknoloji yığını ile eşlik ediyoruz. React, Next.js, AI modelleri ve daha fazlasını kullanıyoruz.",
+  "nexy.resp.services.2":
+    "İş süreçlerinizi otomatize edecek yapay zeka çözümlerimiz hakkında detaylı bilgi için Hizmetler sayfamıza bakabilirsiniz. Verimliliğinizi %40'a kadar artırabiliriz.",
+  "nexy.resp.founder.0":
+    "Fun Teknoloji, Muhammed Erbay tarafından 2025 yılında vizyoner bir teknoloji şirketi olarak kurulmuştur.",
+  "nexy.resp.founder.1":
+    "Kurucumuz Muhammed Erbay, teknolojiyi herkes için erişilebilir ve faydalı kılma vizyonuyla bu yola çıktı. Kendisi genç ve hırslı bir girişimcidir.",
+  "nexy.resp.founder.2":
+    "2025'te Muhammed Erbay liderliğinde kurulan Fun Teknoloji, Türkiye'nin dijital geleceğine odaklanıyor. Muhammed Bey bizzat projelerin mimarisini denetliyor.",
+  "nexy.resp.contact.0":
+    "Bize iletişim sayfasındaki formdan veya support@funteknoloji.com adresinden ulaşabilirsiniz! 7/24 destek veriyoruz.",
+  "nexy.resp.contact.1":
+    "Sorularınız için her zaman buradayız, iletişim kısmından bize yazmaktan çekinmeyin. Ayrıca Discord kanalımızda çok aktif bir topluluğumuz var.",
+  "nexy.resp.contact.2":
+    "Discord topluluğumuza katılarak da ekibimizle doğrudan iletişime geçebilirsiniz. Linki İletişim sayfasında bulabilirsiniz.",
+  "nexy.resp.about.0":
+    "Fun Teknoloji, teknolojiyi 'eğlenceli' ve 'faydalı' kılmak için kuruldu. Yapay zeka ve yazılım bizim tutkumuz.",
+  "nexy.resp.about.1":
+    "Misyonumuz, işletmeleri geleceğin teknolojileriyle bugünden tanıştırmak. Vizyonumuz ise global çapta bir teknoloji üssü olmak.",
+  "nexy.resp.about.2":
+    "Hakkımızda sayfasında tüm tarihimizi ve değerlerimizi bulabilirsiniz. İnovasyon, kalite ve güvenilirlik en önemli ilkelerimizdir.",
+  "nexy.resp.careers.0":
+    "Ekibimiz sürekli büyüyor! Kariyer fırsatları için bize özgeçmişinizi gönderebilir veya LinkedIn sayfamızı takip edebilirsiniz.",
+  "nexy.resp.careers.1":
+    "Yetenekli mühendisler, tasarımcılar ve yapay zeka meraklıları ile çalışmaktan her zaman mutluluk duyarız.",
+  "nexy.resp.careers.2":
+    "Şu an spesifik bir ilanımız olmasa da, yetenekli insanlara her zaman kapımız açık. Bize yazın!",
+  "nexy.resp.tech.0":
+    "Geliştirmelerimizde modern teknolojiler kullanıyoruz. React, TypeScript, TanStack, Tailwind ve çeşitli LLM modelleri vazgeçilmezimiz.",
+  "nexy.resp.tech.1":
+    "Sistemlerimizi yüksek performans ve ölçeklenebilirlik odaklı tasarlıyoruz. Cloud teknolojilerini en verimli şekilde kullanıyoruz.",
+  "nexy.resp.tech.2":
+    "Fun Teknoloji olarak sürekli AR-GE yapıyoruz. En yeni frameworkleri ve yapay zeka tekniklerini ilk biz uyguluyoruz.",
   "nexy.resp.greeting.0": "Merhaba! Size nasıl yardımcı olabilirim? Bugün teknoloji dolu bir gün!",
-  "nexy.resp.greeting.1": "Selamlar! Ben Nexy, Fun Teknoloji'nin yapay zeka asistanıyım. Sizi dinliyorum.",
-  "nexy.resp.greeting.2": "Hoş geldiniz! Merak ettiğiniz bir şey mi var? Size Fun Teknoloji hakkında her şeyi anlatabilirim.",
+  "nexy.resp.greeting.1":
+    "Selamlar! Ben Nexy, Fun Teknoloji'nin yapay zeka asistanıyım. Sizi dinliyorum.",
+  "nexy.resp.greeting.2":
+    "Hoş geldiniz! Merak ettiğiniz bir şey mi var? Size Fun Teknoloji hakkında her şeyi anlatabilirim.",
   "nexy.resp.default.0": "Mesajınız için teşekkürler. Size nasıl yardımcı olabilirim?",
-  "nexy.resp.default.1": "Bu konuda size daha detaylı yardımcı olabilmemiz için lütfen iletişim formunu doldurun.",
-  "nexy.resp.default.2": "Harika bir soru! Ama bu konuda henüz tam bir bilgim yok. İsterseniz ekibimize sorabilirim?",
-  "nexy.resp.default.3": "Size nasıl daha iyi yardımcı olabilirim? Teknoloji çözümlerimiz, kurucumuz veya hizmetlerimiz hakkında konuşabiliriz.",
+  "nexy.resp.default.1":
+    "Bu konuda size daha detaylı yardımcı olabilmemiz için lütfen iletişim formunu doldurun.",
+  "nexy.resp.default.2":
+    "Harika bir soru! Ama bu konuda henüz tam bir bilgim yok. İsterseniz ekibimize sorabilirim?",
+  "nexy.resp.default.3":
+    "Size nasıl daha iyi yardımcı olabilirim? Teknoloji çözümlerimiz, kurucumuz veya hizmetlerimiz hakkında konuşabiliriz.",
   "service.feature.automation": "Otomasyon",
   "service.feature.big_data": "Büyük Veri",
   "service.feature.bi": "İş Zekası",
@@ -2376,7 +2951,8 @@ const az: Dict = {
   "about.cta.title": "Gəlin birlikdə işləyək",
   "about.desc": "Fun Teknoloji 2025-ci ildə Muhammed Erbay tərəfindən təsis edilib.",
   "about.mission.badge": "Bizim missiyamız",
-  "about.mission.desc": "Hər ölçüdə olan müəssisələrə süni intellekt və qabaqcıl texnologiya həllərindən faydalanmaq imkanı verməklə rəqəmsal dünyada rəqabət üstünlüyü əldə etməyə kömək etmək.",
+  "about.mission.desc":
+    "Hər ölçüdə olan müəssisələrə süni intellekt və qabaqcıl texnologiya həllərindən faydalanmaq imkanı verməklə rəqəmsal dünyada rəqabət üstünlüyü əldə etməyə kömək etmək.",
   "about.mission.title": "Biznesləri texnologiya ilə gücləndirmək",
   "about.stats.clients": "Xoşbəxt Müştəri",
   "about.stats.projects": "Tamamlanmış Layihə",
@@ -2390,7 +2966,8 @@ const az: Dict = {
   "about.values.2.title": "yenilik",
   "about.values.3.desc": "Müştərilərimizin uğurlarını öz uğurumuz kimi görürük.",
   "about.values.3.title": "Müştəri Fokus",
-  "about.values.4.desc": "Biz təkcə funksional deyil, həm də estetik və keyfiyyətli iş istehsal edirik.",
+  "about.values.4.desc":
+    "Biz təkcə funksional deyil, həm də estetik və keyfiyyətli iş istehsal edirik.",
   "about.values.4.title": "Keyfiyyət",
   "about.values.5.desc": "Biz mürəkkəb problemlərə sadə və effektiv həllər tapırıq.",
   "about.values.5.title": "Sadəlik",
@@ -2399,7 +2976,8 @@ const az: Dict = {
   "about.values.badge": "Bizim dəyərlərimiz",
   "about.values.title": "Bizi Biz Edən Prinsiplər",
   "about.vision.badge": "Vizyonumuz",
-  "about.vision.desc": "Türkiyənin rəqəmsal gələcəyinə töhfə vermək üçün çalışmalarımız davam edir.",
+  "about.vision.desc":
+    "Türkiyənin rəqəmsal gələcəyinə töhfə vermək üçün çalışmalarımız davam edir.",
   "about.vision.title": "Gələcəyi bu gündən dizayn etmək",
   "blog.badge": "Bloq",
   "blog.desc": "Ən son texnoloji xəbərlər, anlayışlar və təlimatlar.",
@@ -2416,13 +2994,15 @@ const az: Dict = {
   "blog.post.read_aloud": "Ucadan Oxu",
   "blog.post.reading_started": "Ucadan oxumağa başladı.",
   "blog.post.select_language": "DİL SEÇİN",
-  "blog.post.stay_updated": "Süni intellekt və proqram təminatı dünyasındakı inkişafları qaçırmayın.",
+  "blog.post.stay_updated":
+    "Süni intellekt və proqram təminatı dünyasındakı inkişafları qaçırmayın.",
   "blog.post.stop_reading": "Oxumağı dayandırın",
   "blog.post.translation_warning": "Mətn Səhv Tərcümə Ola bilər",
   "blog.title": "Texnologiya Dünyasından",
   "brand_kit.badge": "Corporate",
   "brand_kit.colors.title": "Our Color Palette",
-  "brand_kit.desc": "You can download Fun Teknoloji logos and visual materials here and take a look at the usage guide.",
+  "brand_kit.desc":
+    "You can download Fun Teknoloji logos and visual materials here and take a look at the usage guide.",
   "brand_kit.download_png": "Download PNG",
   "brand_kit.logos.fun_black.desc": "Black version for use on light-colored backgrounds.",
   "brand_kit.logos.fun_black.title": "Fun Technology Black Logo",
@@ -2437,7 +3017,8 @@ const az: Dict = {
   "brand_kit.title": "Brand Kit",
   "changelog.badge": "Yeniləmələr",
   "changelog.coming_soon": "Çox tezliklə",
-  "changelog.desc": "Fun Technology platformasında ən son yenilikləri və təkmilləşdirmələri izləyin.",
+  "changelog.desc":
+    "Fun Technology platformasında ən son yenilikləri və təkmilləşdirmələri izləyin.",
   "changelog.details_soon": "Bu bölmənin təfərrüatları tezliklə paylaşılacaq.",
   "changelog.item1.desc": "Əsas platforma yeniləmələri və müəssisə yenilikləri.",
   "changelog.item1.title": "Versiya 2.0 buraxıldı",
@@ -2482,7 +3063,8 @@ const az: Dict = {
   "docs.sidebar.getting_started": "Başlanğıc",
   "docs.sidebar.intro": "Giriş",
   "docs.sidebar.setup": "Tez Quraşdırma",
-  "docs.soon.desc": "Platformamız və xidmətlərimiz üçün ətraflı istifadəçi təlimatları hazırlanır. Biz ən qısa zamanda burada olacağıq.",
+  "docs.soon.desc":
+    "Platformamız və xidmətlərimiz üçün ətraflı istifadəçi təlimatları hazırlanır. Biz ən qısa zamanda burada olacağıq.",
   "docs.soon.title": "Çox tezliklə",
   "docs.title": "Sənədləşdirmə",
   "error.home": "Əsas Səhifə",
@@ -2495,80 +3077,108 @@ const az: Dict = {
   "faq.cat.services": "Xidmətlər",
   "faq.cat.technical": "Texniki",
   "faq.desc": "Xidmətlərimiz və proseslərimiz haqqında suallar.",
-  "faq.q1.a": "Fun Technology süni intellekt, xüsusi proqram təminatının hazırlanması və rəqəmsal transformasiya sahəsində ixtisaslaşmış texnologiya şirkətidir.",
+  "faq.q1.a":
+    "Fun Technology süni intellekt, xüsusi proqram təminatının hazırlanması və rəqəmsal transformasiya sahəsində ixtisaslaşmış texnologiya şirkətidir.",
   "faq.q1.q": "Əyləncə Texnologiyası nədir?",
-  "faq.q10.a": "Bəli, bütün məlumatlarınız sənaye standartı şifrələmə üsulları və təhlükəsiz bulud infrastrukturu ilə qorunur.",
+  "faq.q10.a":
+    "Bəli, bütün məlumatlarınız sənaye standartı şifrələmə üsulları və təhlükəsiz bulud infrastrukturu ilə qorunur.",
   "faq.q10.q": "Məlumatlarım təhlükəsizdirmi?",
-  "faq.q11.a": "İstifadəçi məlumatlarının məxfiliyi bizim əsas prioritetimizdir. Ətraflı məlumat üçün Məxfilik Siyasəti səhifəmizə baxa bilərsiniz.",
+  "faq.q11.a":
+    "İstifadəçi məlumatlarının məxfiliyi bizim əsas prioritetimizdir. Ətraflı məlumat üçün Məxfilik Siyasəti səhifəmizə baxa bilərsiniz.",
   "faq.q11.q": "Məxfilik siyasətiniz nədir?",
-  "faq.q2.a": "Fun Technology 2025-ci ildə Muhammed Erbay tərəfindən uzaqgörən texnologiya təşəbbüsü olaraq təsis edilib.",
+  "faq.q2.a":
+    "Fun Technology 2025-ci ildə Muhammed Erbay tərəfindən uzaqgörən texnologiya təşəbbüsü olaraq təsis edilib.",
   "faq.q2.q": "Fun Teknoloji nə vaxt yaradılıb?",
-  "faq.q3.a": "Çünki biz hesab edirik ki, texnologiya darıxdırıcı və mürəkkəb deyil, həyatı asanlaşdıran və “əyləncəli” bir vasitə olmalıdır.",
+  "faq.q3.a":
+    "Çünki biz hesab edirik ki, texnologiya darıxdırıcı və mürəkkəb deyil, həyatı asanlaşdıran və “əyləncəli” bir vasitə olmalıdır.",
   "faq.q3.q": "Adınız niyə Fun Teknolojidir?",
-  "faq.q4.a": "Biz proqram təminatının inkişafı, süni intellekt inteqrasiyası, məlumat analitikası, kibertəhlükəsizlik və bulud həlləri təklif edirik.",
+  "faq.q4.a":
+    "Biz proqram təminatının inkişafı, süni intellekt inteqrasiyası, məlumat analitikası, kibertəhlükəsizlik və bulud həlləri təklif edirik.",
   "faq.q4.q": "Hansı xidmətləri təklif edirsiniz?",
-  "faq.q5.a": "Biz tələblərin təhlili, prototipləşdirmə, inkişaf, sınaq və nəşr mərhələlərindən ibarət şəffaf bir prosesi izləyirik.",
+  "faq.q5.a":
+    "Biz tələblərin təhlili, prototipləşdirmə, inkişaf, sınaq və nəşr mərhələlərindən ibarət şəffaf bir prosesi izləyirik.",
   "faq.q5.q": "Fərdi proqram təminatı prosesi necə işləyir?",
-  "faq.q6.a": "Bu, məqsədlərinizdən asılıdır. Komandamız ehtiyaclarınızı təhlil edəcək və sizə ən uyğun platformanı tövsiyə edəcək.",
+  "faq.q6.a":
+    "Bu, məqsədlərinizdən asılıdır. Komandamız ehtiyaclarınızı təhlil edəcək və sizə ən uyğun platformanı tövsiyə edəcək.",
   "faq.q6.q": "Mənim mobil tətbiqim və ya veb saytım olmalıdır?",
-  "faq.q7.a": "Biz React, Next.js, TypeScript, Python, PyTorch, Database və AWS kimi müasir texnologiya yığınlarından istifadə edirik.",
+  "faq.q7.a":
+    "Biz React, Next.js, TypeScript, Python, PyTorch, Database və AWS kimi müasir texnologiya yığınlarından istifadə edirik.",
   "faq.q7.q": "Hansı texnologiyalardan istifadə edirsiniz?",
-  "faq.q8.a": "Bəli, biz müəssisə həllərimiz üçün hərtərəfli API dəstəyi və sənədləri təqdim edirik.",
+  "faq.q8.a":
+    "Bəli, biz müəssisə həllərimiz üçün hərtərəfli API dəstəyi və sənədləri təqdim edirik.",
   "faq.q8.q": "API dəstəyiniz varmı?",
-  "faq.q9.a": "Biz öz məlumat dəstlərimiz və müasir dərin öyrənmə çərçivələrimizlə layihəniz üçün xüsusi modellər hazırlayırıq.",
+  "faq.q9.a":
+    "Biz öz məlumat dəstlərimiz və müasir dərin öyrənmə çərçivələrimizlə layihəniz üçün xüsusi modellər hazırlayırıq.",
   "faq.q9.q": "AI modellərini necə öyrədirsiniz?",
   "faq.title": "Tez-tez verilən suallar",
   "footer.description": "Biz bu gün gələcəyin texnologiyalarını qururuq.",
   "footer.rights": "Bütün hüquqlar qorunur.",
   "footer.status": "Sistem Vəziyyəti",
   "home.cta.button": "Bizimlə əlaqə saxlayın",
-  "home.cta.desc": "Hər hansı bir sualınız varsa və ya köməyə ehtiyacınız varsa, dəstək komandamızla əlaqə saxlayın.",
+  "home.cta.desc":
+    "Hər hansı bir sualınız varsa və ya köməyə ehtiyacınız varsa, dəstək komandamızla əlaqə saxlayın.",
   "home.cta.more": "Daha çox kəşf edin",
   "home.cta.title": "Bu gün başlayın.",
-  "home.faq.a1": "Fun Teknoloji, süni intellekt, xüsusi proqram təminatının hazırlanması və rəqəmsal transformasiya sahələrində ixtisaslaşmış bir texnologiya şirkətidir.",
+  "home.faq.a1":
+    "Fun Teknoloji, süni intellekt, xüsusi proqram təminatının hazırlanması və rəqəmsal transformasiya sahələrində ixtisaslaşmış bir texnologiya şirkətidir.",
   "home.faq.a2": "Bəli, layihələriniz üçün 7/24 texniki dəstək və texniki xidmət təklif edirik.",
-  "home.faq.a3": "Layihənin əhatə dairəsindən asılı olaraq dəyişsə də, kiçik layihələri 2-4 həftə, geniş layihələri isə 2-4 ay ərzində tamamlayırıq.",
-  "home.faq.a4": "Qiymətlər layihənizin mürəkkəbliyinə və lazım olan xüsusiyyətlərə görə xüsusi olaraq müəyyən edilir.",
-  "home.faq.a5": "Bəli, süni intellekt modellərini mövcud sistemlərinizə inteqrasiya etmək sahəsində mütəxəssisik.",
+  "home.faq.a3":
+    "Layihənin əhatə dairəsindən asılı olaraq dəyişsə də, kiçik layihələri 2-4 həftə, geniş layihələri isə 2-4 ay ərzində tamamlayırıq.",
+  "home.faq.a4":
+    "Qiymətlər layihənizin mürəkkəbliyinə və lazım olan xüsusiyyətlərə görə xüsusi olaraq müəyyən edilir.",
+  "home.faq.a5":
+    "Bəli, süni intellekt modellərini mövcud sistemlərinizə inteqrasiya etmək sahəsində mütəxəssisik.",
   "home.faq.a6": "Əlbəttə! Layihə ideyalarınızı bizimlə bölüşə və pulsuz məsləhət ala bilərsiniz.",
-  "home.faq.a7": "Bəli, həm iOS, həm də Android platformaları üçün müasir mobil proqramlar hazırlayırıq.",
+  "home.faq.a7":
+    "Bəli, həm iOS, həm də Android platformaları üçün müasir mobil proqramlar hazırlayırıq.",
   "home.faq.badge": "Tez-tez verilən suallar",
   "home.faq.desc": "Sizi maraqlandıran hər şey buradadır.",
   "home.faq.title": "Tez-tez verilən suallar",
   "home.features.badge": "Xüsusiyyətlər",
-  "home.features.card1.desc": "Ən son LLM və dərin öyrənmə modellərindən istifadə edərək işinizi avtomatlaşdırırıq.",
+  "home.features.card1.desc":
+    "Ən son LLM və dərin öyrənmə modellərindən istifadə edərək işinizi avtomatlaşdırırıq.",
   "home.features.card1.title": "Qabaqcıl Süni İntellekt",
   "home.features.card2.desc": "Bütün dünyada aşağı gecikmə ilə işləyən miqyaslana bilən sistemlər.",
   "home.features.card2.title": "Qlobal İnfrastruktur",
-  "home.features.card3.desc": "Məlumatlarınız AES-256 şifrələməsi və qabaqcıl təhlükəsizlik protokolları ilə təhlükəsizdir.",
+  "home.features.card3.desc":
+    "Məlumatlarınız AES-256 şifrələməsi və qabaqcıl təhlükəsizlik protokolları ilə təhlükəsizdir.",
   "home.features.card3.title": "Tam Təhlükəsizlik",
-  "home.features.desc": "Biz biznesinizi növbəti səviyyəyə qaldıracaq ən müasir texnologiyalar təklif edirik.",
+  "home.features.desc":
+    "Biz biznesinizi növbəti səviyyəyə qaldıracaq ən müasir texnologiyalar təklif edirik.",
   "home.features.title": "Niyə Bizi Seçməlisən?",
   "home.hero.badge": "Türkiyənin İnnovativ Texnologiya Şirkəti",
-  "home.hero.desc": "Biz süni intellekt, proqram təminatının inkişafı və smart sistemlər sahəsində qabaqcıl həllərlə biznesinizi rəqəmsal transformasiya mərkəzinə daşıyırıq.",
+  "home.hero.desc":
+    "Biz süni intellekt, proqram təminatının inkişafı və smart sistemlər sahəsində qabaqcıl həllərlə biznesinizi rəqəmsal transformasiya mərkəzinə daşıyırıq.",
   "home.hero.explore": "Xidmətləri kəşf edin",
   "home.hero.start": "Gözləmə siyahısına qoşulun",
   "home.hero.title": "Gələcəyin Texnologiyaları Bu Gün Bizimlədir",
   "home.howitworks.badge": "Dövr",
   "home.howitworks.desc": "Layihənizi necə həyata keçirdiyimizi addım-addım kəşf edin.",
-  "home.howitworks.step1.desc": "Biz sizin ehtiyaclarınızı təhlil edirik və ən uyğun texnologiya yığınını müəyyənləşdiririk.",
+  "home.howitworks.step1.desc":
+    "Biz sizin ehtiyaclarınızı təhlil edirik və ən uyğun texnologiya yığınını müəyyənləşdiririk.",
   "home.howitworks.step1.title": "Təhlil və Planlaşdırma",
-  "home.howitworks.step2.desc": "Biz müasir dizayn prinsipləri ilə istifadəçi dostu interfeyslər və güclü backend strukturları yaradırıq.",
+  "home.howitworks.step2.desc":
+    "Biz müasir dizayn prinsipləri ilə istifadəçi dostu interfeyslər və güclü backend strukturları yaradırıq.",
   "home.howitworks.step2.title": "İnkişaf və sınaq",
   "home.howitworks.step3.desc": "Layihənizi dərc edirik və fasiləsiz dəstək verməyə davam edirik.",
   "home.howitworks.step3.title": "Başla və dəstək",
   "home.howitworks.title": "Necə İşləyirik?",
   "home.services.badge": "Xidmətlərimiz",
-  "home.services.desc": "Biznesinizi inkişaf etdirmək və rəqəmsal dünyada fərqlənmək üçün təklif etdiyimiz peşəkar həllərlə tanış olun.",
-  "home.services.item1.desc": "Biznesiniz üçün xüsusi olaraq hazırlanmış süni intellekt modelləri və avtomatlaşdırma sistemləri.",
+  "home.services.desc":
+    "Biznesinizi inkişaf etdirmək və rəqəmsal dünyada fərqlənmək üçün təklif etdiyimiz peşəkar həllərlə tanış olun.",
+  "home.services.item1.desc":
+    "Biznesiniz üçün xüsusi olaraq hazırlanmış süni intellekt modelləri və avtomatlaşdırma sistemləri.",
   "home.services.item1.title": "Süni İntellekt Həlləri",
   "home.services.item2.desc": "Müasir çərçivələrlə genişlənən və təhlükəsiz veb proqramlar.",
   "home.services.item2.title": "Veb İnkişafı",
-  "home.services.item3.desc": "iOS və Android üçün yüksək performanslı yerli və hibrid mobil proqramlar.",
+  "home.services.item3.desc":
+    "iOS və Android üçün yüksək performanslı yerli və hibrid mobil proqramlar.",
   "home.services.item3.title": "Mobil Tətbiq",
-  "home.services.item4.desc": "Bulud infrastrukturunun idarə edilməsi və verilənlər bazasının optimallaşdırılması xidmətləri.",
+  "home.services.item4.desc":
+    "Bulud infrastrukturunun idarə edilməsi və verilənlər bazasının optimallaşdırılması xidmətləri.",
   "home.services.item4.title": "Bulud və Məlumat",
-  "home.services.item5.desc": "Biz sistemlərinizin təhlükəsizliyini təmin edirik və zəiflik təhlilləri aparırıq.",
+  "home.services.item5.desc":
+    "Biz sistemlərinizin təhlükəsizliyini təmin edirik və zəiflik təhlilləri aparırıq.",
   "home.services.item5.title": "Kiber Təhlükəsizlik",
   "home.services.item6.desc": "Rəqəmsal çevrilmə səyahətinizdə peşəkar rəhbərlik və məsləhət.",
   "home.services.item6.title": "Texniki Məsləhətçilik",
@@ -2578,14 +3188,21 @@ const az: Dict = {
   "home.stats.team": "Ekspert Heyəti",
   "home.stats.users": "Aktiv İstifadəçi",
   "home.testimonials.badge": "Şərhlər",
-  "home.testimonials.t1.text": "Fun Technology ilə işləmək biznes proseslərimizi tamamilə dəyişdi. Süni intellekt həlləri sayəsində səmərəliliyimiz artdı.",
-  "home.testimonials.t2.text": "Məhəmməd bəy və komandası çox peşəkardır. Mobil tətbiqimizi vaxtında və qüsursuz çatdırdılar.",
-  "home.testimonials.t3.text": "Texniki dəstəkdə heç bir problemimiz yox idi. Onlar həmişə həll yönümlü bir yanaşmaya sahibdirlər.",
-  "home.testimonials.t4.text": "Veb saytımız artıq daha sürətli və daha təhlükəsizdir. Təşəkkür edirəm Fun Technology!",
-  "home.testimonials.t5.text": "Onlar öz innovativ yanaşmaları və uzaqgörən perspektivləri ilə layihəmizə dəyər qatdılar.",
-  "home.testimonials.t6.text": "Onlar bizim mürəkkəb sistemlərimizi sadələşdirmək üçün böyük iş görmüşlər. Mən mütləq tövsiyə edirəm.",
+  "home.testimonials.t1.text":
+    "Fun Technology ilə işləmək biznes proseslərimizi tamamilə dəyişdi. Süni intellekt həlləri sayəsində səmərəliliyimiz artdı.",
+  "home.testimonials.t2.text":
+    "Məhəmməd bəy və komandası çox peşəkardır. Mobil tətbiqimizi vaxtında və qüsursuz çatdırdılar.",
+  "home.testimonials.t3.text":
+    "Texniki dəstəkdə heç bir problemimiz yox idi. Onlar həmişə həll yönümlü bir yanaşmaya sahibdirlər.",
+  "home.testimonials.t4.text":
+    "Veb saytımız artıq daha sürətli və daha təhlükəsizdir. Təşəkkür edirəm Fun Technology!",
+  "home.testimonials.t5.text":
+    "Onlar öz innovativ yanaşmaları və uzaqgörən perspektivləri ilə layihəmizə dəyər qatdılar.",
+  "home.testimonials.t6.text":
+    "Onlar bizim mürəkkəb sistemlərimizi sadələşdirmək üçün böyük iş görmüşlər. Mən mütləq tövsiyə edirəm.",
   "home.testimonials.title": "Müştərilərimizin Uğur Hekayələri",
-  "home.whatwedo.text": "Fun Technology olaraq biznesinizi gələcəyə hazırlamaq üçün süni intellekt tərəfindən dəstəklənən innovativ proqram həlləri hazırlayırıq.",
+  "home.whatwedo.text":
+    "Fun Technology olaraq biznesinizi gələcəyə hazırlamaq üçün süni intellekt tərəfindən dəstəklənən innovativ proqram həlləri hazırlayırıq.",
   "inline.contact.message_error": "Etibarlı mesaj mətni daxil edin.",
   "inline.contact.subject_error": "Lütfən, mənalı mövzu başlığı daxil edin.",
   "lang.label": "Dil seçin",
@@ -2630,20 +3247,24 @@ const az: Dict = {
   "nexy.assistant_title": "Fun Technology Assistant",
   "nexy.beta_tag": "Beta",
   "nexy.beta_warning": "Səhv Cavab İnkişaf Fazasında Nəticələr Ola bilər",
-  "nexy.capabilities.1.desc": "Suallarınızı anlayır və saniyələr ərzində sizə ən dəqiq məlumatı verir.",
+  "nexy.capabilities.1.desc":
+    "Suallarınızı anlayır və saniyələr ərzində sizə ən dəqiq məlumatı verir.",
   "nexy.capabilities.1.title": "Qabaqcıl Kəşfiyyat",
   "nexy.capabilities.2.desc": "Heç bir gözləmə vaxtı olmadan 24/7 fasiləsiz dəstək verir.",
   "nexy.capabilities.2.title": "Tez cavab",
   "nexy.capabilities.3.desc": "İstənilən dildə sizinlə əlaqə saxlaya bilər.",
   "nexy.capabilities.3.title": "Çoxdilli Dəstək",
-  "nexy.capabilities.4.desc": "Söhbətləriniz gizli saxlanılır və məlumatlarınız heç vaxt paylaşılmır.",
+  "nexy.capabilities.4.desc":
+    "Söhbətləriniz gizli saxlanılır və məlumatlarınız heç vaxt paylaşılmır.",
   "nexy.capabilities.4.title": "Təhlükəsiz qarşılıqlı əlaqə",
-  "nexy.capabilities.5.desc": "Sənədləriniz və məlumatlarınız arasında ağıllı axtarışlar həyata keçirir.",
+  "nexy.capabilities.5.desc":
+    "Sənədləriniz və məlumatlarınız arasında ağıllı axtarışlar həyata keçirir.",
   "nexy.capabilities.5.title": "Ağıllı Axtarış",
   "nexy.capabilities.6.desc": "İnsana bənzər, səlis və mənalı dialoqlar qurur.",
   "nexy.capabilities.6.title": "Təbii Nitq",
   "nexy.capabilities.badge": "Qabiliyyətlər",
-  "nexy.capabilities.desc": "Süni intellekt texnologiyası ilə təchiz olunmuş Nexy hər zaman sizinlədir.",
+  "nexy.capabilities.desc":
+    "Süni intellekt texnologiyası ilə təchiz olunmuş Nexy hər zaman sizinlədir.",
   "nexy.capabilities.title": "Nexy nə edə bilər?",
   "nexy.chat.response": "Mesajınız üçün təşəkkür edirik. Mən sizə necə kömək edə bilərəm?",
   "nexy.copy_tooltip": "Copy",
@@ -2662,9 +3283,12 @@ const az: Dict = {
   "policy.contact.desc": "Hər hansı bir sualınız olarsa, bizimlə əlaqə saxlaya bilərsiniz:",
   "policy.contact.title": "Ünsiyyət",
   "policy.last_updated": "Son Yeniləmə Tarixi: 19/03/2026",
-  "policy.privacy.contact_desc": "Məxfilik Siyasətimiz və ya şəxsi məlumatlarınızın emalı ilə bağlı hər hansı sualınız varsa, bizimlə əlaqə saxlaya bilərsiniz:",
-  "policy.privacy.intro": "Məxfilik Siyasətimiz şəxsi məlumatlarınızı necə topladığımızı, istifadə etdiyimizi və qoruduğumuzu izah edir. Məxfiliyiniz və təhlükəsizliyiniz bizim prioritetimizdir.",
-  "policy.privacy.s1.desc": "Veb saytımıza daxil olduğunuz, hesab yaratdığınız və ya xidmətlərimizlə qarşılıqlı əlaqədə olduğunuz zaman sizdən müəyyən şəxsi məlumat toplaya bilərik. Bu məlumat daxil ola bilər:",
+  "policy.privacy.contact_desc":
+    "Məxfilik Siyasətimiz və ya şəxsi məlumatlarınızın emalı ilə bağlı hər hansı sualınız varsa, bizimlə əlaqə saxlaya bilərsiniz:",
+  "policy.privacy.intro":
+    "Məxfilik Siyasətimiz şəxsi məlumatlarınızı necə topladığımızı, istifadə etdiyimizi və qoruduğumuzu izah edir. Məxfiliyiniz və təhlükəsizliyiniz bizim prioritetimizdir.",
+  "policy.privacy.s1.desc":
+    "Veb saytımıza daxil olduğunuz, hesab yaratdığınız və ya xidmətlərimizlə qarşılıqlı əlaqədə olduğunuz zaman sizdən müəyyən şəxsi məlumat toplaya bilərik. Bu məlumat daxil ola bilər:",
   "policy.privacy.s1.item1": "Ad və soyad",
   "policy.privacy.s1.item2": "E-poçt ünvanı",
   "policy.privacy.s1.item3": "Əlaqə məlumatı",
@@ -2677,81 +3301,113 @@ const az: Dict = {
   "policy.privacy.s2.item4": "Kampaniyalar və yeniliklər haqqında ünsiyyət",
   "policy.privacy.s2.item5": "Sayt trafikini təhlil edərək xidmətlərimizi təkmilləşdirmək",
   "policy.privacy.s2.title": "Məlumatlarınızdan Necə İstifadə edirik",
-  "policy.privacy.s3.desc": "Biz sizin şəxsi məlumatlarınızın təhlükəsizliyinə ciddi yanaşırıq. Biz icazəsiz giriş, dəyişdirmə, açıqlama və ya məhv edilmədən qorumaq üçün sənaye standartlarına uyğun təhlükəsizlik tədbirləri həyata keçiririk. Bununla belə, internet və ya elektron yaddaş üzərindən məlumat ötürülməsinin 100% təhlükəsiz olmadığını unutmayın.",
+  "policy.privacy.s3.desc":
+    "Biz sizin şəxsi məlumatlarınızın təhlükəsizliyinə ciddi yanaşırıq. Biz icazəsiz giriş, dəyişdirmə, açıqlama və ya məhv edilmədən qorumaq üçün sənaye standartlarına uyğun təhlükəsizlik tədbirləri həyata keçiririk. Bununla belə, internet və ya elektron yaddaş üzərindən məlumat ötürülməsinin 100% təhlükəsiz olmadığını unutmayın.",
   "policy.privacy.s3.title": "Məlumat Təhlükəsizliyi",
-  "policy.privacy.s4.desc": "Şəxsi məlumatlarınız: Sizin açıq icazəniz olmadan kommersiya məqsədləri üçün satılmayacaq və paylaşılmayacaq. Qanuni öhdəliklər tələb etdikdə və ya məxfiliyə riayət etmək şərti ilə xidmət təminatçıları ilə paylaşıla bilər.",
+  "policy.privacy.s4.desc":
+    "Şəxsi məlumatlarınız: Sizin açıq icazəniz olmadan kommersiya məqsədləri üçün satılmayacaq və paylaşılmayacaq. Qanuni öhdəliklər tələb etdikdə və ya məxfiliyə riayət etmək şərti ilə xidmət təminatçıları ilə paylaşıla bilər.",
   "policy.privacy.s4.title": "Üçüncü tərəflərlə paylaşma",
-  "policy.privacy.s5.desc": "Veb saytımız istifadəçi təcrübəsini yaxşılaşdırmaq üçün kukilərdən istifadə edə bilər. Kukilər sayəsində saytdan necə istifadə etdiyiniz barədə məlumat toplanır. Siz brauzerinizin parametrlərini dəyişdirməklə kukiləri rədd edə və ya xəbərdarlıq ala bilərsiniz.",
+  "policy.privacy.s5.desc":
+    "Veb saytımız istifadəçi təcrübəsini yaxşılaşdırmaq üçün kukilərdən istifadə edə bilər. Kukilər sayəsində saytdan necə istifadə etdiyiniz barədə məlumat toplanır. Siz brauzerinizin parametrlərini dəyişdirməklə kukiləri rədd edə və ya xəbərdarlıq ala bilərsiniz.",
   "policy.privacy.s5.title": "Kukilər",
-  "policy.privacy.s6.desc": "Bu Məxfilik Siyasəti vaxtaşırı yenilənə bilər. Edilən hər hansı dəyişiklik bu səhifədə dərc olunur və qüvvəyə minmə tarixi yenilənir. Yeniliklər üçün bu səhifəni mütəmadi olaraq yoxlamağı tövsiyə edirik.",
+  "policy.privacy.s6.desc":
+    "Bu Məxfilik Siyasəti vaxtaşırı yenilənə bilər. Edilən hər hansı dəyişiklik bu səhifədə dərc olunur və qüvvəyə minmə tarixi yenilənir. Yeniliklər üçün bu səhifəni mütəmadi olaraq yoxlamağı tövsiyə edirik.",
   "policy.privacy.s6.title": "Dəyişikliklər",
-  "policy.service.intro": "Fun Technology platformasından istifadə etməklə siz xidmətlərimizdən təhlükəsiz, hüquqi və etik qaydalar çərçivəsində istifadə etməyə razılaşırsınız. Əsas istifadə şərtləri bunlardır:",
-  "policy.service.s1.desc": "Platformadan istifadə etmək üçün dəqiq və aktual məlumatlarla hesab yaratmalısınız. Hesab məlumatlarınızın məxfiliyinə görə məsuliyyət daşıyırsınız.",
+  "policy.service.intro":
+    "Fun Technology platformasından istifadə etməklə siz xidmətlərimizdən təhlükəsiz, hüquqi və etik qaydalar çərçivəsində istifadə etməyə razılaşırsınız. Əsas istifadə şərtləri bunlardır:",
+  "policy.service.s1.desc":
+    "Platformadan istifadə etmək üçün dəqiq və aktual məlumatlarla hesab yaratmalısınız. Hesab məlumatlarınızın məxfiliyinə görə məsuliyyət daşıyırsınız.",
   "policy.service.s1.title": "Hesab İstifadəsi",
-  "policy.service.s2.desc": "Paylaşdığınız məzmun və Platformada apardığınız əməliyyatlar bütün qüvvədə olan qanun və qaydalara uyğun olmalıdır.",
+  "policy.service.s2.desc":
+    "Paylaşdığınız məzmun və Platformada apardığınız əməliyyatlar bütün qüvvədə olan qanun və qaydalara uyğun olmalıdır.",
   "policy.service.s2.title": "Hüquqi Uyğunluq",
-  "policy.service.s3.desc": "Fun Technology məlumatlarınızı qorumaq üçün qabaqcıl təhlükəsizlik tədbirləri həyata keçirir. Hesabınızın təhlükəsizliyi üçün parollarınızı gizli saxlamalısınız.",
+  "policy.service.s3.desc":
+    "Fun Technology məlumatlarınızı qorumaq üçün qabaqcıl təhlükəsizlik tədbirləri həyata keçirir. Hesabınızın təhlükəsizliyi üçün parollarınızı gizli saxlamalısınız.",
   "policy.service.s3.title": "Təhlükəsizlik və Məxfilik",
-  "policy.service.s4.desc": "Fun Teknoloji platformadakı məzmuna və üçüncü tərəf linklərinə görə məhdud məsuliyyət daşıyır. İstifadəçilər platformadan öz məsuliyyətlərinə uyğun istifadə edirlər.",
+  "policy.service.s4.desc":
+    "Fun Teknoloji platformadakı məzmuna və üçüncü tərəf linklərinə görə məhdud məsuliyyət daşıyır. İstifadəçilər platformadan öz məsuliyyətlərinə uyğun istifadə edirlər.",
   "policy.service.s4.title": "İmtina",
-  "policy.service.s5.desc": "Fun Teknoloji platformanın funksionallığını təkmilləşdirmək üçün məzmuna, xüsusiyyətlərə və ya istifadə şərtlərinə dəyişiklik etmək hüququnu özündə saxlayır.",
+  "policy.service.s5.desc":
+    "Fun Teknoloji platformanın funksionallığını təkmilləşdirmək üçün məzmuna, xüsusiyyətlərə və ya istifadə şərtlərinə dəyişiklik etmək hüququnu özündə saxlayır.",
   "policy.service.s5.title": "Xidmət Dəyişiklikləri",
-  "policy.service.s6.desc": "İstifadə şərtlərinin pozulması halında, platforma hesabları müvəqqəti və ya daimi olaraq məhdudlaşdıra və ya bağlaya bilər.",
+  "policy.service.s6.desc":
+    "İstifadə şərtlərinin pozulması halında, platforma hesabları müvəqqəti və ya daimi olaraq məhdudlaşdıra və ya bağlaya bilər.",
   "policy.service.s6.title": "Sanksiyalar",
   "pricing.badge": "Qiymətləndirmə",
   "pricing.desc": "Hazırda sistemlərimizi daha səmərəli və qənaətcil etmək üçün çalışırıq.",
   "pricing.title": "Yeni Paketlərimiz Tezliklə",
   "projects.hero.desc": "Həll yönümlü layihələrimiz innovativ texnologiyalarla hazırlanmışdır.",
   "projects.hero.title": "Biz gələcəyi qururuq",
-  "projects.nexy.desc": "Fun Technology-nin süni intellektə əsaslanan rəqəmsal köməkçisi. Biznes və istifadəçilər üçün ağıllı bələdçi.",
-  "projects.quakesafe.desc": "Fəlakət təhlükəsizliyi texnologiyasında yeni dövr. Zəlzələ zamanı və sonra insanların həyatını xilas edən ağıllı sistemlər.",
+  "projects.nexy.desc":
+    "Fun Technology-nin süni intellektə əsaslanan rəqəmsal köməkçisi. Biznes və istifadəçilər üçün ağıllı bələdçi.",
+  "projects.quakesafe.desc":
+    "Fəlakət təhlükəsizliyi texnologiyasında yeni dövr. Zəlzələ zamanı və sonra insanların həyatını xilas edən ağıllı sistemlər.",
   "projects.soon.desc": "Maraqlı yeni layihələrimiz üzərində işləməyə davam edirik.",
   "projects.soon.title": "Ətraflı Tezliklə",
   "projects.view": "Layihəni nəzərdən keçirin",
   "quakesafe.cta.button": "Erkən Giriş əldə edin",
   "quakesafe.cta.desc": "Texnologiya sadəcə həyatı asanlaşdırmaq deyil, onu qorumaqdır.",
   "quakesafe.cta.title": "Biz Daha Təhlükəsiz Gələcək Qururuq",
-  "quakesafe.features.1.desc": "Zəlzələ dalğaları çatmazdan bir neçə saniyə əvvəl kritik xəbərdarlıqlar alın.",
+  "quakesafe.features.1.desc":
+    "Zəlzələ dalğaları çatmazdan bir neçə saniyə əvvəl kritik xəbərdarlıqlar alın.",
   "quakesafe.features.1.title": "Ani Xəbərdarlıqlar",
-  "quakesafe.features.10.desc": "Fövqəladə hallarda sağlamlıq vəziyyətinizi və qan qrupunu paylaşın.",
+  "quakesafe.features.10.desc":
+    "Fövqəladə hallarda sağlamlıq vəziyyətinizi və qan qrupunu paylaşın.",
   "quakesafe.features.10.title": "Sağlamlığın İzlənməsi",
-  "quakesafe.features.11.desc": "Ərazinizdəki tarixi zəlzələ məlumatlarını və riskləri nəzərdən keçirin.",
+  "quakesafe.features.11.desc":
+    "Ərazinizdəki tarixi zəlzələ məlumatlarını və riskləri nəzərdən keçirin.",
   "quakesafe.features.11.title": "Keçmiş təhlil",
-  "quakesafe.features.12.desc": "Ehtiyacı olanları və kömək edə bilənləri bir araya gətirən platforma.",
+  "quakesafe.features.12.desc":
+    "Ehtiyacı olanları və kömək edə bilənləri bir araya gətirən platforma.",
   "quakesafe.features.12.title": "Həmrəylik Şəbəkəsi",
   "quakesafe.features.2.desc": "Fəlakət zamanı yaxınlarınızın harada olduqlarına real vaxt baxın.",
   "quakesafe.features.2.title": "Məkan İzləmə",
-  "quakesafe.features.3.desc": "Ən yaxın toplaşma mərkəzlərinə və təhlükəsiz ərazilərə ani marşrut.",
+  "quakesafe.features.3.desc":
+    "Ən yaxın toplaşma mərkəzlərinə və təhlükəsiz ərazilərə ani marşrut.",
   "quakesafe.features.3.title": "Təhlükəsiz ərazilər",
-  "quakesafe.features.4.desc": "Bütün ailə üzvlərini bir şəbəkəyə gətirin və onların statusunu izləyin.",
+  "quakesafe.features.4.desc":
+    "Bütün ailə üzvlərini bir şəbəkəyə gətirin və onların statusunu izləyin.",
   "quakesafe.features.4.title": "Ailə Qrupları",
-  "quakesafe.features.5.desc": "Hətta internet kəsildikdə belə kritik bələdçilərə və xəritələrə daxil olun.",
+  "quakesafe.features.5.desc":
+    "Hətta internet kəsildikdə belə kritik bələdçilərə və xəritələrə daxil olun.",
   "quakesafe.features.5.title": "Oflayn rejim",
-  "quakesafe.features.6.desc": "Süni intellektlə zərər riskinin proqnozlaşdırılması və ərazinin təhlükəsizliyinin təhlili.",
+  "quakesafe.features.6.desc":
+    "Süni intellektlə zərər riskinin proqnozlaşdırılması və ərazinin təhlükəsizliyinin təhlili.",
   "quakesafe.features.6.title": "AI təhlili",
-  "quakesafe.features.7.desc": "Baza stansiyaları sıradan çıxdıqda cihazlar arasında əlaqə qurmaq imkanı.",
+  "quakesafe.features.7.desc":
+    "Baza stansiyaları sıradan çıxdıqda cihazlar arasında əlaqə qurmaq imkanı.",
   "quakesafe.features.7.title": "Mesh şəbəkəsi",
-  "quakesafe.features.8.desc": "Vacib sənədlərinizi və sağlamlıq məlumatlarınızı təhlükəsiz saxlayın.",
+  "quakesafe.features.8.desc":
+    "Vacib sənədlərinizi və sağlamlıq məlumatlarınızı təhlükəsiz saxlayın.",
   "quakesafe.features.8.title": "Bulud Yedəkləmə",
-  "quakesafe.features.9.desc": "Dağıntılar altında olanların yerini bir kliklə səlahiyyətlilərə bildirmək.",
+  "quakesafe.features.9.desc":
+    "Dağıntılar altında olanların yerini bir kliklə səlahiyyətlilərə bildirmək.",
   "quakesafe.features.9.title": "Sürətli bildiriş",
-  "quakesafe.features.desc": "Fəlakətdən əvvəl, zamanı və sonra sizə lazım olan bütün alətlər bir platformadadır.",
+  "quakesafe.features.desc":
+    "Fəlakətdən əvvəl, zamanı və sonra sizə lazım olan bütün alətlər bir platformadadır.",
   "quakesafe.features.title": "Kompleks Mühafizə Şəbəkəsi",
-  "quakesafe.hero.desc": "Süni intellekt və sensor şəbəkələri ilə zəlzələ təhlükəsizliyində inqilab. Hətta saniyələrin kritik olduğu anlarda ən böyük dəstəkçiniz.",
+  "quakesafe.hero.desc":
+    "Süni intellekt və sensor şəbəkələri ilə zəlzələ təhlükəsizliyində inqilab. Hətta saniyələrin kritik olduğu anlarda ən böyük dəstəkçiniz.",
   "quakesafe.hero.title": "Zəlzələlərdən qorxmayın, QuakeSafe ilə təhlükəsiz qalın",
   "reviews.desc": "Fun Technology ilə çevrilmiş biznes tərəfdaşlarımızın hekayələrini kəşf edin.",
   "reviews.r1.name": "Ahmet Yılmaz",
-  "reviews.r1.text": "Kiçik biznes sahibi olaraq, təklif etdiyiniz proqram həlləri əməliyyat səmərəliliyimizi artırmaqda xilasedici olmuşdur. Bu, həqiqətən gözləntilərimi aşdı.",
+  "reviews.r1.text":
+    "Kiçik biznes sahibi olaraq, təklif etdiyiniz proqram həlləri əməliyyat səmərəliliyimizi artırmaqda xilasedici olmuşdur. Bu, həqiqətən gözləntilərimi aşdı.",
   "reviews.r2.name": "Zeynep Kaya",
-  "reviews.r2.text": "AI inteqrasiyası tamamilə inanılmazdır! Biznes proseslərimizi avtomatlaşdırmaqla çox vaxta qənaət etdik.",
+  "reviews.r2.text":
+    "AI inteqrasiyası tamamilə inanılmazdır! Biznes proseslərimizi avtomatlaşdırmaqla çox vaxta qənaət etdik.",
   "reviews.r3.name": "Murat Demir",
-  "reviews.r3.text": "Bu texnologiya data analitik proseslərimizdə inqilab etdi. Anlayışlar o qədər dərindir ki, biz indi qərarlarımızı daha çox inamla veririk.",
+  "reviews.r3.text":
+    "Bu texnologiya data analitik proseslərimizdə inqilab etdi. Anlayışlar o qədər dərindir ki, biz indi qərarlarımızı daha çox inamla veririk.",
   "reviews.r4.name": "Elif Şahin",
-  "reviews.r4.text": "Layihə meneceri kimi bu alət komandalararası koordinasiyanı təmin etmək üçün əvəzsiz olmuşdur. İstifadəçi dostu interfeysi əladır!",
+  "reviews.r4.text":
+    "Layihə meneceri kimi bu alət komandalararası koordinasiyanı təmin etmək üçün əvəzsiz olmuşdur. İstifadəçi dostu interfeysi əladır!",
   "reviews.r5.name": "Caner Özkan",
-  "reviews.r5.text": "Onların inkişaf prosesinin sürəti və keyfiyyəti heyrətləndiricidir. Biz müstəsna keyfiyyət standartlarını qoruyaraq layihələrimizi vaxtında ala bildik.",
+  "reviews.r5.text":
+    "Onların inkişaf prosesinin sürəti və keyfiyyəti heyrətləndiricidir. Biz müstəsna keyfiyyət standartlarını qoruyaraq layihələrimizi vaxtında ala bildik.",
   "reviews.r6.name": "Selin Aydın",
-  "reviews.r6.text": "Bu platforma bizim rəqəmsal varlığımızı idarə etmə tərzimizi dəyişdi. Texnologiya o qədər müasir və təsir edicidir ki, bütün komandamız heyran qaldı.",
+  "reviews.r6.text":
+    "Bu platforma bizim rəqəmsal varlığımızı idarə etmə tərzimizi dəyişdi. Texnologiya o qədər müasir və təsir edicidir ki, bütün komandamız heyran qaldı.",
   "reviews.title": "Müştərilərimiz Nə Deyirlər?",
   "reviews.verified": "Doğrulanmış Müştəri",
   "sitemap.desc": "Fun Teknoloji saytındakı bütün səhifələrə baxış.",
@@ -2762,7 +3418,8 @@ const az: Dict = {
   "team.desc": "Fun Technology arxasında istedadlı adlarla tanış olun.",
   "team.join.desc": "Gələcəyi bizimlə qurmaq istərdinizmi? Müraciətlərinizi gözləyirik.",
   "team.join.title": "Komandamıza Qoşulun",
-  "team.member.muhammed.bio": "Fun Technology-nin qurucusu Muhammed Erbay texnologiyanı hər kəs üçün əlçatan və faydalı etmək vizyonu ilə şirkətə rəhbərlik edir.",
+  "team.member.muhammed.bio":
+    "Fun Technology-nin qurucusu Muhammed Erbay texnologiyanı hər kəs üçün əlçatan və faydalı etmək vizyonu ilə şirkətə rəhbərlik edir.",
   "team.title": "Uğurlarımızın Arxasındakı Güc",
   "theme.dark": "Qaranlıq mövzuya keçin",
   "theme.light": "Açıq Mövzuya keçin",
@@ -2778,34 +3435,60 @@ const az: Dict = {
   "home.testimonials.t6.name": "Selin Aydın",
   "blog.index.untitled": "Adsız Yazı",
   "blog.index.category_default": "Texnologiya",
-  "nexy.resp.pricing.0": "Fiyatlandırma politikalarımız üzerinde çalışıyoruz. En güncel paketler için Fiyatlandırma sayfamızı takip edebilirsiniz. Şu an için bekleme listemize katılmak en iyi seçenek!",
-  "nexy.resp.pricing.1": "Şu an için tüm hizmetlerimiz için size özel teklif sunuyoruz, detaylar yakında sayfalarımızda olacak. Genelde proje bazlı fiyatlandırma yapıyoruz.",
-  "nexy.resp.pricing.2": "Paketlerimiz güncelleniyor. Fun Teknoloji olarak her bütçeye uygun teknoloji çözümleri üretmeyi hedefliyoruz.",
-  "nexy.resp.services.0": "Yapay zeka entegrasyonu, özel yazılım geliştirme, mobil uygulama ve siber güvenlik alanlarında profesyonel çözümler sunuyoruz. Hangi alanla ilgileniyorsunuz?",
-  "nexy.resp.services.1": "Dijital dönüşüm yolculuğunuzda size en modern teknoloji yığını ile eşlik ediyoruz. React, Next.js, AI modelleri ve daha fazlasını kullanıyoruz.",
-  "nexy.resp.services.2": "İş süreçlerinizi otomatize edecek yapay zeka çözümlerimiz hakkında detaylı bilgi için Hizmetler sayfamıza bakabilirsiniz. Verimliliğinizi %40'a kadar artırabiliriz.",
-  "nexy.resp.founder.0": "Fun Teknoloji, Muhammed Erbay tarafından 2025 yılında vizyoner bir teknoloji şirketi olarak kurulmuştur.",
-  "nexy.resp.founder.1": "Kurucumuz Muhammed Erbay, teknolojiyi herkes için erişilebilir ve faydalı kılma vizyonuyla bu yola çıktı. Kendisi genç ve hırslı bir girişimcidir.",
-  "nexy.resp.founder.2": "2025'te Muhammed Erbay liderliğinde kurulan Fun Teknoloji, Türkiye'nin dijital geleceğine odaklanıyor. Muhammed Bey bizzat projelerin mimarisini denetliyor.",
-  "nexy.resp.contact.0": "Bize iletişim sayfasındaki formdan veya support@funteknoloji.com adresinden ulaşabilirsiniz! 7/24 destek veriyoruz.",
-  "nexy.resp.contact.1": "Sorularınız için her zaman buradayız, iletişim kısmından bize yazmaktan çekinmeyin. Ayrıca Discord kanalımızda çok aktif bir topluluğumuz var.",
-  "nexy.resp.contact.2": "Discord topluluğumuza katılarak da ekibimizle doğrudan iletişime geçebilirsiniz. Linki İletişim sayfasında bulabilirsiniz.",
-  "nexy.resp.about.0": "Fun Teknoloji, teknolojiyi 'eğlenceli' ve 'faydalı' kılmak için kuruldu. Yapay zeka ve yazılım bizim tutkumuz.",
-  "nexy.resp.about.1": "Misyonumuz, işletmeleri geleceğin teknolojileriyle bugünden tanıştırmak. Vizyonumuz ise global çapta bir teknoloji üssü olmak.",
-  "nexy.resp.about.2": "Hakkımızda sayfasında tüm tarihimizi ve değerlerimizi bulabilirsiniz. İnovasyon, kalite ve güvenilirlik en önemli ilkelerimizdir.",
-  "nexy.resp.careers.0": "Ekibimiz sürekli büyüyor! Kariyer fırsatları için bize özgeçmişinizi gönderebilir veya LinkedIn sayfamızı takip edebilirsiniz.",
-  "nexy.resp.careers.1": "Yetenekli mühendisler, tasarımcılar ve yapay zeka meraklıları ile çalışmaktan her zaman mutluluk duyarız.",
-  "nexy.resp.careers.2": "Şu an spesifik bir ilanımız olmasa da, yetenekli insanlara her zaman kapımız açık. Bize yazın!",
-  "nexy.resp.tech.0": "Geliştirmelerimizde modern teknolojiler kullanıyoruz. React, TypeScript, TanStack, Tailwind ve çeşitli LLM modelleri vazgeçilmezimiz.",
-  "nexy.resp.tech.1": "Sistemlerimizi yüksek performans ve ölçeklenebilirlik odaklı tasarlıyoruz. Cloud teknolojilerini en verimli şekilde kullanıyoruz.",
-  "nexy.resp.tech.2": "Fun Teknoloji olarak sürekli AR-GE yapıyoruz. En yeni frameworkleri ve yapay zeka tekniklerini ilk biz uyguluyoruz.",
+  "nexy.resp.pricing.0":
+    "Fiyatlandırma politikalarımız üzerinde çalışıyoruz. En güncel paketler için Fiyatlandırma sayfamızı takip edebilirsiniz. Şu an için bekleme listemize katılmak en iyi seçenek!",
+  "nexy.resp.pricing.1":
+    "Şu an için tüm hizmetlerimiz için size özel teklif sunuyoruz, detaylar yakında sayfalarımızda olacak. Genelde proje bazlı fiyatlandırma yapıyoruz.",
+  "nexy.resp.pricing.2":
+    "Paketlerimiz güncelleniyor. Fun Teknoloji olarak her bütçeye uygun teknoloji çözümleri üretmeyi hedefliyoruz.",
+  "nexy.resp.services.0":
+    "Yapay zeka entegrasyonu, özel yazılım geliştirme, mobil uygulama ve siber güvenlik alanlarında profesyonel çözümler sunuyoruz. Hangi alanla ilgileniyorsunuz?",
+  "nexy.resp.services.1":
+    "Dijital dönüşüm yolculuğunuzda size en modern teknoloji yığını ile eşlik ediyoruz. React, Next.js, AI modelleri ve daha fazlasını kullanıyoruz.",
+  "nexy.resp.services.2":
+    "İş süreçlerinizi otomatize edecek yapay zeka çözümlerimiz hakkında detaylı bilgi için Hizmetler sayfamıza bakabilirsiniz. Verimliliğinizi %40'a kadar artırabiliriz.",
+  "nexy.resp.founder.0":
+    "Fun Teknoloji, Muhammed Erbay tarafından 2025 yılında vizyoner bir teknoloji şirketi olarak kurulmuştur.",
+  "nexy.resp.founder.1":
+    "Kurucumuz Muhammed Erbay, teknolojiyi herkes için erişilebilir ve faydalı kılma vizyonuyla bu yola çıktı. Kendisi genç ve hırslı bir girişimcidir.",
+  "nexy.resp.founder.2":
+    "2025'te Muhammed Erbay liderliğinde kurulan Fun Teknoloji, Türkiye'nin dijital geleceğine odaklanıyor. Muhammed Bey bizzat projelerin mimarisini denetliyor.",
+  "nexy.resp.contact.0":
+    "Bize iletişim sayfasındaki formdan veya support@funteknoloji.com adresinden ulaşabilirsiniz! 7/24 destek veriyoruz.",
+  "nexy.resp.contact.1":
+    "Sorularınız için her zaman buradayız, iletişim kısmından bize yazmaktan çekinmeyin. Ayrıca Discord kanalımızda çok aktif bir topluluğumuz var.",
+  "nexy.resp.contact.2":
+    "Discord topluluğumuza katılarak da ekibimizle doğrudan iletişime geçebilirsiniz. Linki İletişim sayfasında bulabilirsiniz.",
+  "nexy.resp.about.0":
+    "Fun Teknoloji, teknolojiyi 'eğlenceli' ve 'faydalı' kılmak için kuruldu. Yapay zeka ve yazılım bizim tutkumuz.",
+  "nexy.resp.about.1":
+    "Misyonumuz, işletmeleri geleceğin teknolojileriyle bugünden tanıştırmak. Vizyonumuz ise global çapta bir teknoloji üssü olmak.",
+  "nexy.resp.about.2":
+    "Hakkımızda sayfasında tüm tarihimizi ve değerlerimizi bulabilirsiniz. İnovasyon, kalite ve güvenilirlik en önemli ilkelerimizdir.",
+  "nexy.resp.careers.0":
+    "Ekibimiz sürekli büyüyor! Kariyer fırsatları için bize özgeçmişinizi gönderebilir veya LinkedIn sayfamızı takip edebilirsiniz.",
+  "nexy.resp.careers.1":
+    "Yetenekli mühendisler, tasarımcılar ve yapay zeka meraklıları ile çalışmaktan her zaman mutluluk duyarız.",
+  "nexy.resp.careers.2":
+    "Şu an spesifik bir ilanımız olmasa da, yetenekli insanlara her zaman kapımız açık. Bize yazın!",
+  "nexy.resp.tech.0":
+    "Geliştirmelerimizde modern teknolojiler kullanıyoruz. React, TypeScript, TanStack, Tailwind ve çeşitli LLM modelleri vazgeçilmezimiz.",
+  "nexy.resp.tech.1":
+    "Sistemlerimizi yüksek performans ve ölçeklenebilirlik odaklı tasarlıyoruz. Cloud teknolojilerini en verimli şekilde kullanıyoruz.",
+  "nexy.resp.tech.2":
+    "Fun Teknoloji olarak sürekli AR-GE yapıyoruz. En yeni frameworkleri ve yapay zeka tekniklerini ilk biz uyguluyoruz.",
   "nexy.resp.greeting.0": "Merhaba! Size nasıl yardımcı olabilirim? Bugün teknoloji dolu bir gün!",
-  "nexy.resp.greeting.1": "Selamlar! Ben Nexy, Fun Teknoloji'nin yapay zeka asistanıyım. Sizi dinliyorum.",
-  "nexy.resp.greeting.2": "Hoş geldiniz! Merak ettiğiniz bir şey mi var? Size Fun Teknoloji hakkında her şeyi anlatabilirim.",
+  "nexy.resp.greeting.1":
+    "Selamlar! Ben Nexy, Fun Teknoloji'nin yapay zeka asistanıyım. Sizi dinliyorum.",
+  "nexy.resp.greeting.2":
+    "Hoş geldiniz! Merak ettiğiniz bir şey mi var? Size Fun Teknoloji hakkında her şeyi anlatabilirim.",
   "nexy.resp.default.0": "Mesajınız için teşekkürler. Size nasıl yardımcı olabilirim?",
-  "nexy.resp.default.1": "Bu konuda size daha detaylı yardımcı olabilmemiz için lütfen iletişim formunu doldurun.",
-  "nexy.resp.default.2": "Harika bir soru! Ama bu konuda henüz tam bir bilgim yok. İsterseniz ekibimize sorabilirim?",
-  "nexy.resp.default.3": "Size nasıl daha iyi yardımcı olabilirim? Teknoloji çözümlerimiz, kurucumuz veya hizmetlerimiz hakkında konuşabiliriz.",
+  "nexy.resp.default.1":
+    "Bu konuda size daha detaylı yardımcı olabilmemiz için lütfen iletişim formunu doldurun.",
+  "nexy.resp.default.2":
+    "Harika bir soru! Ama bu konuda henüz tam bir bilgim yok. İsterseniz ekibimize sorabilirim?",
+  "nexy.resp.default.3":
+    "Size nasıl daha iyi yardımcı olabilirim? Teknoloji çözümlerimiz, kurucumuz veya hizmetlerimiz hakkında konuşabiliriz.",
   "service.feature.automation": "Otomasyon",
   "service.feature.big_data": "Büyük Veri",
   "service.feature.bi": "İş Zekası",
@@ -2845,7 +3528,8 @@ const ru: Dict = {
   "about.cta.title": "Давайте работать вместе",
   "about.desc": "Fun Teknoloji была основана в 2025 году Мухаммедом Эрбаем.",
   "about.mission.badge": "Наша миссия",
-  "about.mission.desc": "Помочь предприятиям любого размера получить конкурентное преимущество в цифровом мире, предоставив им возможность воспользоваться преимуществами искусственного интеллекта и передовых технологических решений.",
+  "about.mission.desc":
+    "Помочь предприятиям любого размера получить конкурентное преимущество в цифровом мире, предоставив им возможность воспользоваться преимуществами искусственного интеллекта и передовых технологических решений.",
   "about.mission.title": "Расширение возможностей бизнеса с помощью технологий",
   "about.stats.clients": "Счастливый клиент",
   "about.stats.projects": "Завершенный проект",
@@ -2859,7 +3543,8 @@ const ru: Dict = {
   "about.values.2.title": "инновации",
   "about.values.3.desc": "Мы рассматриваем успех наших клиентов как наш собственный успех.",
   "about.values.3.title": "Ориентация на клиента",
-  "about.values.4.desc": "Мы производим не только функциональную, но и эстетичную и качественную работу.",
+  "about.values.4.desc":
+    "Мы производим не только функциональную, но и эстетичную и качественную работу.",
   "about.values.4.title": "Качество",
   "about.values.5.desc": "Мы находим простые и эффективные решения сложных проблем.",
   "about.values.5.title": "Простота",
@@ -2885,13 +3570,15 @@ const ru: Dict = {
   "blog.post.read_aloud": "Читать вслух",
   "blog.post.reading_started": "Началось чтение вслух.",
   "blog.post.select_language": "ВЫБЕРИТЕ ЯЗЫК",
-  "blog.post.stay_updated": "Не пропустите события в мире искусственного интеллекта и программного обеспечения.",
+  "blog.post.stay_updated":
+    "Не пропустите события в мире искусственного интеллекта и программного обеспечения.",
   "blog.post.stop_reading": "Хватит читать",
   "blog.post.translation_warning": "Текст может быть переведен неправильно",
   "blog.title": "Из мира технологий",
   "brand_kit.badge": "Corporate",
   "brand_kit.colors.title": "Our Color Palette",
-  "brand_kit.desc": "You can download Fun Teknoloji logos and visual materials here and take a look at the usage guide.",
+  "brand_kit.desc":
+    "You can download Fun Teknoloji logos and visual materials here and take a look at the usage guide.",
   "brand_kit.download_png": "Download PNG",
   "brand_kit.logos.fun_black.desc": "Black version for use on light-colored backgrounds.",
   "brand_kit.logos.fun_black.title": "Fun Technology Black Logo",
@@ -2907,7 +3594,8 @@ const ru: Dict = {
   "changelog.badge": "Обновления",
   "changelog.coming_soon": "Очень скоро",
   "changelog.desc": "Следите за последними инновациями и улучшениями на платформе Fun Technology.",
-  "changelog.details_soon": "Подробная информация об этом разделе будет опубликована в ближайшее время.",
+  "changelog.details_soon":
+    "Подробная информация об этом разделе будет опубликована в ближайшее время.",
   "changelog.item1.desc": "Основные обновления платформы и корпоративные инновации.",
   "changelog.item1.title": "Выпущена версия 2.0",
   "changelog.item2.desc": "Улучшения в управлении учетными записями пользователей и профилями.",
@@ -2927,7 +3615,8 @@ const ru: Dict = {
   "contact.captcha.title": "Проверка безопасности",
   "contact.captcha.verify": "проверять",
   "contact.community.button": "Присоединяйтесь к Discord",
-  "contact.community.desc": "Присоединяйтесь к нашему техническому сообществу и общайтесь напрямую с нашей командой.",
+  "contact.community.desc":
+    "Присоединяйтесь к нашему техническому сообществу и общайтесь напрямую с нашей командой.",
   "contact.community.title": "Присоединяйтесь к нашему сообществу",
   "contact.desc": "Мы здесь для ваших вопросов.",
   "contact.form.email": "Электронная почта",
@@ -2950,7 +3639,8 @@ const ru: Dict = {
   "docs.sidebar.getting_started": "Начало",
   "docs.sidebar.intro": "Вход",
   "docs.sidebar.setup": "Быстрая настройка",
-  "docs.soon.desc": "Для нашей платформы и сервисов готовятся подробные руководства пользователя. Мы будем здесь как можно скорее.",
+  "docs.soon.desc":
+    "Для нашей платформы и сервисов готовятся подробные руководства пользователя. Мы будем здесь как можно скорее.",
   "docs.soon.title": "Очень скоро",
   "docs.title": "Документация",
   "error.home": "Домашняя страница",
@@ -2963,82 +3653,115 @@ const ru: Dict = {
   "faq.cat.services": "Услуги",
   "faq.cat.technical": "Технический",
   "faq.desc": "Вопросы о наших услугах и процессах.",
-  "faq.q1.a": "Fun Technology — технологическая компания, специализирующаяся на искусственном интеллекте, разработке специального программного обеспечения и цифровой трансформации.",
+  "faq.q1.a":
+    "Fun Technology — технологическая компания, специализирующаяся на искусственном интеллекте, разработке специального программного обеспечения и цифровой трансформации.",
   "faq.q1.q": "Что такое веселая технология?",
-  "faq.q10.a": "Да, все ваши данные защищены стандартными методами шифрования и безопасной облачной инфраструктурой.",
+  "faq.q10.a":
+    "Да, все ваши данные защищены стандартными методами шифрования и безопасной облачной инфраструктурой.",
   "faq.q10.q": "Мои данные в безопасности?",
-  "faq.q11.a": "Конфиденциальность пользовательских данных является нашим главным приоритетом. Для получения подробной информации вы можете посетить нашу страницу Политики конфиденциальности.",
+  "faq.q11.a":
+    "Конфиденциальность пользовательских данных является нашим главным приоритетом. Для получения подробной информации вы можете посетить нашу страницу Политики конфиденциальности.",
   "faq.q11.q": "Какова ваша политика конфиденциальности?",
-  "faq.q2.a": "Fun Technology была основана в 2025 году Мухаммедом Эрбаем как дальновидная технологическая инициатива.",
+  "faq.q2.a":
+    "Fun Technology была основана в 2025 году Мухаммедом Эрбаем как дальновидная технологическая инициатива.",
   "faq.q2.q": "Когда была основана компания Fun Teknoloji?",
-  "faq.q3.a": "Потому что мы считаем, что технология должна быть не скучной и сложной, а инструментом, который делает жизнь проще и «веселее».",
+  "faq.q3.a":
+    "Потому что мы считаем, что технология должна быть не скучной и сложной, а инструментом, который делает жизнь проще и «веселее».",
   "faq.q3.q": "Почему тебя зовут Fun Teknoloji?",
-  "faq.q4.a": "Мы предлагаем разработку программного обеспечения, интеграцию искусственного интеллекта, анализ данных, кибербезопасность и облачные решения.",
+  "faq.q4.a":
+    "Мы предлагаем разработку программного обеспечения, интеграцию искусственного интеллекта, анализ данных, кибербезопасность и облачные решения.",
   "faq.q4.q": "Какие услуги вы предлагаете?",
-  "faq.q5.a": "Мы следуем прозрачному процессу, состоящему из этапов анализа требований, прототипирования, разработки, тестирования и публикации.",
+  "faq.q5.a":
+    "Мы следуем прозрачному процессу, состоящему из этапов анализа требований, прототипирования, разработки, тестирования и публикации.",
   "faq.q5.q": "Как работает процесс разработки индивидуального программного обеспечения?",
-  "faq.q6.a": "Это зависит от ваших целей. Наша команда проанализирует ваши потребности и порекомендует вам наиболее подходящую платформу.",
+  "faq.q6.a":
+    "Это зависит от ваших целей. Наша команда проанализирует ваши потребности и порекомендует вам наиболее подходящую платформу.",
   "faq.q6.q": "Стоит ли мне создать мобильное приложение или веб-сайт?",
-  "faq.q7.a": "Мы используем современные стеки технологий, такие как React, Next.js, TypeScript, Python, PyTorch, Database и AWS.",
+  "faq.q7.a":
+    "Мы используем современные стеки технологий, такие как React, Next.js, TypeScript, Python, PyTorch, Database и AWS.",
   "faq.q7.q": "Какие технологии вы используете?",
-  "faq.q8.a": "Да, мы предоставляем комплексную поддержку API и документацию для наших корпоративных решений.",
+  "faq.q8.a":
+    "Да, мы предоставляем комплексную поддержку API и документацию для наших корпоративных решений.",
   "faq.q8.q": "Есть ли у вас поддержка API?",
-  "faq.q9.a": "Мы разрабатываем модели, специфичные для вашего проекта, с использованием наших собственных наборов данных и современных сред глубокого обучения.",
+  "faq.q9.a":
+    "Мы разрабатываем модели, специфичные для вашего проекта, с использованием наших собственных наборов данных и современных сред глубокого обучения.",
   "faq.q9.q": "Как вы тренируете модели ИИ?",
   "faq.title": "Часто задаваемые вопросы",
   "footer.description": "Мы создаем технологии будущего уже сегодня.",
   "footer.rights": "Все права защищены.",
   "footer.status": "Статус системы",
   "home.cta.button": "Связаться с нами",
-  "home.cta.desc": "Если у вас есть какие-либо вопросы или вам нужна помощь, свяжитесь с нашей службой поддержки.",
+  "home.cta.desc":
+    "Если у вас есть какие-либо вопросы или вам нужна помощь, свяжитесь с нашей службой поддержки.",
   "home.cta.more": "Узнайте больше",
   "home.cta.title": "Начните сегодня.",
-  "home.faq.a1": "Fun Technology — это технологическая компания, специализирующаяся на искусственном интеллекте, разработке программного обеспечения на заказ и цифровой трансформации.",
-  "home.faq.a2": "Да, мы предлагаем круглосуточную техническую поддержку и обслуживание ваших проектов.",
-  "home.faq.a3": "Хотя сроки зависят от масштаба проекта, мы завершаем небольшие проекты за 2–4 недели, а комплексные — за 2–4 месяца.",
-  "home.faq.a4": "Цена определяется индивидуально в зависимости от сложности вашего проекта и необходимых функций.",
+  "home.faq.a1":
+    "Fun Technology — это технологическая компания, специализирующаяся на искусственном интеллекте, разработке программного обеспечения на заказ и цифровой трансформации.",
+  "home.faq.a2":
+    "Да, мы предлагаем круглосуточную техническую поддержку и обслуживание ваших проектов.",
+  "home.faq.a3":
+    "Хотя сроки зависят от масштаба проекта, мы завершаем небольшие проекты за 2–4 недели, а комплексные — за 2–4 месяца.",
+  "home.faq.a4":
+    "Цена определяется индивидуально в зависимости от сложности вашего проекта и необходимых функций.",
   "home.faq.a5": "Да, мы специализируемся на интеграции моделей ИИ в ваши существующие системы.",
-  "home.faq.a6": "Конечно! Вы можете поделиться с нами своими идеями и получить бесплатную консультацию.",
-  "home.faq.a7": "Да, мы разрабатываем современные мобильные приложения для платформ iOS and Android.",
+  "home.faq.a6":
+    "Конечно! Вы можете поделиться с нами своими идеями и получить бесплатную консультацию.",
+  "home.faq.a7":
+    "Да, мы разрабатываем современные мобильные приложения для платформ iOS and Android.",
   "home.faq.badge": "Часто задаваемые вопросы",
   "home.faq.desc": "Все, что вам интересно, здесь.",
   "home.faq.title": "Часто задаваемые вопросы",
   "home.features.badge": "Функции",
-  "home.features.card1.desc": "Мы автоматизируем вашу работу, используя новейшие модели LLM и глубокого обучения.",
+  "home.features.card1.desc":
+    "Мы автоматизируем вашу работу, используя новейшие модели LLM и глубокого обучения.",
   "home.features.card1.title": "Продвинутый искусственный интеллект",
-  "home.features.card2.desc": "Масштабируемые системы, работающие с низкой задержкой по всему миру.",
+  "home.features.card2.desc":
+    "Масштабируемые системы, работающие с низкой задержкой по всему миру.",
   "home.features.card2.title": "Глобальная инфраструктура",
-  "home.features.card3.desc": "Ваши данные в безопасности благодаря шифрованию AES-256 и передовым протоколам безопасности.",
+  "home.features.card3.desc":
+    "Ваши данные в безопасности благодаря шифрованию AES-256 и передовым протоколам безопасности.",
   "home.features.card3.title": "Полная безопасность",
-  "home.features.desc": "Мы предлагаем самые современные технологии, которые выведут ваш бизнес на новый уровень.",
+  "home.features.desc":
+    "Мы предлагаем самые современные технологии, которые выведут ваш бизнес на новый уровень.",
   "home.features.title": "Почему вам следует выбрать нас?",
   "home.hero.badge": "Турецкая инновационная технологическая компания",
-  "home.hero.desc": "Мы перемещаем ваш бизнес в центр цифровой трансформации с помощью новаторских решений в области искусственного интеллекта, разработки программного обеспечения и интеллектуальных систем.",
+  "home.hero.desc":
+    "Мы перемещаем ваш бизнес в центр цифровой трансформации с помощью новаторских решений в области искусственного интеллекта, разработки программного обеспечения и интеллектуальных систем.",
   "home.hero.explore": "Откройте для себя услуги",
   "home.hero.start": "Присоединяйтесь к списку ожидания",
   "home.hero.title": "Технологии будущего с нами сегодня",
   "home.howitworks.badge": "Период",
   "home.howitworks.desc": "Узнайте шаг за шагом, как мы воплощаем ваш проект в жизнь.",
-  "home.howitworks.step1.desc": "Мы анализируем ваши потребности и определяем наиболее подходящий стек технологий.",
+  "home.howitworks.step1.desc":
+    "Мы анализируем ваши потребности и определяем наиболее подходящий стек технологий.",
   "home.howitworks.step1.title": "Анализ и планирование",
-  "home.howitworks.step2.desc": "Мы создаем удобные интерфейсы и надежную серверную структуру с использованием современных принципов дизайна.",
+  "home.howitworks.step2.desc":
+    "Мы создаем удобные интерфейсы и надежную серверную структуру с использованием современных принципов дизайна.",
   "home.howitworks.step2.title": "Разработка и тестирование",
-  "home.howitworks.step3.desc": "Мы публикуем ваш проект и продолжаем оказывать бесперебойную поддержку.",
+  "home.howitworks.step3.desc":
+    "Мы публикуем ваш проект и продолжаем оказывать бесперебойную поддержку.",
   "home.howitworks.step3.title": "Запуск и поддержка",
   "home.howitworks.title": "Как мы работаем?",
   "home.services.badge": "Наши услуги",
-  "home.services.desc": "Познакомьтесь с профессиональными решениями, которые мы предлагаем, чтобы развивать ваш бизнес и выделяться в цифровом мире.",
-  "home.services.item1.desc": "Модели искусственного интеллекта и системы автоматизации, подготовленные специально для вашего бизнеса.",
+  "home.services.desc":
+    "Познакомьтесь с профессиональными решениями, которые мы предлагаем, чтобы развивать ваш бизнес и выделяться в цифровом мире.",
+  "home.services.item1.desc":
+    "Модели искусственного интеллекта и системы автоматизации, подготовленные специально для вашего бизнеса.",
   "home.services.item1.title": "Решения искусственного интеллекта",
-  "home.services.item2.desc": "Масштабируемые и безопасные веб-приложения с современными платформами.",
+  "home.services.item2.desc":
+    "Масштабируемые и безопасные веб-приложения с современными платформами.",
   "home.services.item2.title": "Веб-разработка",
-  "home.services.item3.desc": "Высокопроизводительные нативные и гибридные мобильные приложения для iOS и Android.",
+  "home.services.item3.desc":
+    "Высокопроизводительные нативные и гибридные мобильные приложения для iOS и Android.",
   "home.services.item3.title": "Мобильное приложение",
-  "home.services.item4.desc": "Услуги по управлению облачной инфраструктурой и оптимизации баз данных.",
+  "home.services.item4.desc":
+    "Услуги по управлению облачной инфраструктурой и оптимизации баз данных.",
   "home.services.item4.title": "Облако и данные",
-  "home.services.item5.desc": "Мы обеспечиваем безопасность ваших систем и проводим анализ уязвимостей.",
+  "home.services.item5.desc":
+    "Мы обеспечиваем безопасность ваших систем и проводим анализ уязвимостей.",
   "home.services.item5.title": "Кибербезопасность",
-  "home.services.item6.desc": "Профессиональное руководство и консультации на пути к цифровой трансформации.",
+  "home.services.item6.desc":
+    "Профессиональное руководство и консультации на пути к цифровой трансформации.",
   "home.services.item6.title": "Техническая консультация",
   "home.services.title": "Технологические решения, соответствующие вашим потребностям",
   "home.stats.projects": "Завершенный проект",
@@ -3046,14 +3769,21 @@ const ru: Dict = {
   "home.stats.team": "Экспертный персонал",
   "home.stats.users": "Активный пользователь",
   "home.testimonials.badge": "Комментарии",
-  "home.testimonials.t1.text": "Работа с Fun Technology полностью изменила наши бизнес-процессы. Благодаря решениям искусственного интеллекта наша эффективность возросла.",
-  "home.testimonials.t2.text": "Г-н Мухаммед и его команда очень профессиональны. Они доставили наше мобильное приложение вовремя и безупречно.",
-  "home.testimonials.t3.text": "У нас не было проблем с технической поддержкой. У них всегда подход, ориентированный на решение.",
-  "home.testimonials.t4.text": "Наш сайт теперь стал намного быстрее и безопаснее. Спасибо, интересная технология!",
-  "home.testimonials.t5.text": "Они добавили ценность нашему проекту своими инновационными подходами и дальновидными перспективами.",
-  "home.testimonials.t6.text": "Они проделали огромную работу по упрощению наших сложных систем. Я определенно рекомендую это.",
+  "home.testimonials.t1.text":
+    "Работа с Fun Technology полностью изменила наши бизнес-процессы. Благодаря решениям искусственного интеллекта наша эффективность возросла.",
+  "home.testimonials.t2.text":
+    "Г-н Мухаммед и его команда очень профессиональны. Они доставили наше мобильное приложение вовремя и безупречно.",
+  "home.testimonials.t3.text":
+    "У нас не было проблем с технической поддержкой. У них всегда подход, ориентированный на решение.",
+  "home.testimonials.t4.text":
+    "Наш сайт теперь стал намного быстрее и безопаснее. Спасибо, интересная технология!",
+  "home.testimonials.t5.text":
+    "Они добавили ценность нашему проекту своими инновационными подходами и дальновидными перспективами.",
+  "home.testimonials.t6.text":
+    "Они проделали огромную работу по упрощению наших сложных систем. Я определенно рекомендую это.",
   "home.testimonials.title": "Истории успеха наших клиентов",
-  "home.whatwedo.text": "Как Fun Technology, мы разрабатываем инновационные программные решения, поддерживаемые искусственным интеллектом, чтобы подготовить ваш бизнес к будущему.",
+  "home.whatwedo.text":
+    "Как Fun Technology, мы разрабатываем инновационные программные решения, поддерживаемые искусственным интеллектом, чтобы подготовить ваш бизнес к будущему.",
   "inline.contact.message_error": "Пожалуйста, введите действительный текст сообщения.",
   "inline.contact.subject_error": "Введите осмысленное название темы.",
   "lang.label": "Выберите язык",
@@ -3098,27 +3828,33 @@ const ru: Dict = {
   "nexy.assistant_title": "Fun Technology Assistant",
   "nexy.beta_tag": "Beta",
   "nexy.beta_warning": "Неправильный ответ может иметь последствия на этапе разработки",
-  "nexy.capabilities.1.desc": "Он понимает ваши вопросы и предоставляет вам наиболее точную информацию в течение нескольких секунд.",
+  "nexy.capabilities.1.desc":
+    "Он понимает ваши вопросы и предоставляет вам наиболее точную информацию в течение нескольких секунд.",
   "nexy.capabilities.1.title": "Продвинутый интеллект",
-  "nexy.capabilities.2.desc": "Он обеспечивает бесперебойную поддержку 24 часа в сутки, 7 дней в неделю, без ожидания.",
+  "nexy.capabilities.2.desc":
+    "Он обеспечивает бесперебойную поддержку 24 часа в сутки, 7 дней в неделю, без ожидания.",
   "nexy.capabilities.2.title": "Быстрый ответ",
   "nexy.capabilities.3.desc": "Он может общаться с вами на любом нужном вам языке.",
   "nexy.capabilities.3.title": "Многоязычная поддержка",
-  "nexy.capabilities.4.desc": "Ваши разговоры остаются конфиденциальными, и ваши данные никогда не передаются.",
+  "nexy.capabilities.4.desc":
+    "Ваши разговоры остаются конфиденциальными, и ваши данные никогда не передаются.",
   "nexy.capabilities.4.title": "Безопасное взаимодействие",
-  "nexy.capabilities.5.desc": "Он выполняет интеллектуальный поиск среди ваших документов и данных.",
+  "nexy.capabilities.5.desc":
+    "Он выполняет интеллектуальный поиск среди ваших документов и данных.",
   "nexy.capabilities.5.title": "Умный поиск",
   "nexy.capabilities.6.desc": "Устанавливает человеческие, беглые и содержательные диалоги.",
   "nexy.capabilities.6.title": "Естественная речь",
   "nexy.capabilities.badge": "Способности",
-  "nexy.capabilities.desc": "Nexy, оснащенный технологией искусственного интеллекта, всегда с вами.",
+  "nexy.capabilities.desc":
+    "Nexy, оснащенный технологией искусственного интеллекта, всегда с вами.",
   "nexy.capabilities.title": "Что может Некси?",
   "nexy.chat.response": "Спасибо за ваше сообщение. Могу я чем-нибудь помочь?",
   "nexy.copy_tooltip": "Copy",
   "nexy.demo.query": "Можете ли вы дать информацию о ваших услугах?",
   "nexy.help_button": "Помощь",
   "nexy.hero.badge": "Забавный технологический помощник с искусственным интеллектом",
-  "nexy.hero.desc": "Ваш цифровой помощник на базе искусственного интеллекта, который облегчает вашу работу.",
+  "nexy.hero.desc":
+    "Ваш цифровой помощник на базе искусственного интеллекта, который облегчает вашу работу.",
   "nexy.hero.title": "Знакомьтесь, Некси",
   "nexy.msg1": "Привет! Я Nexy, помощник по веселым технологиям. Могу я чем-нибудь помочь?",
   "nexy.placeholder": "Type your message...",
@@ -3130,96 +3866,134 @@ const ru: Dict = {
   "policy.contact.desc": "Если у вас есть вопросы, вы можете связаться с нами:",
   "policy.contact.title": "Коммуникация",
   "policy.last_updated": "Дата последнего обновления: 19.03.2026.",
-  "policy.privacy.contact_desc": "Если у вас есть какие-либо вопросы о нашей Политике конфиденциальности или обработке ваших личных данных, вы можете связаться с нами:",
-  "policy.privacy.intro": "В нашей Политике конфиденциальности объясняется, как мы собираем, используем и защищаем вашу личную информацию. Ваша конфиденциальность и безопасность — наш приоритет.",
-  "policy.privacy.s1.desc": "Мы можем собирать определенную личную информацию от вас, когда вы посещаете наш веб-сайт, создаете учетную запись или взаимодействуете с нашими услугами. Эта информация может включать в себя:",
+  "policy.privacy.contact_desc":
+    "Если у вас есть какие-либо вопросы о нашей Политике конфиденциальности или обработке ваших личных данных, вы можете связаться с нами:",
+  "policy.privacy.intro":
+    "В нашей Политике конфиденциальности объясняется, как мы собираем, используем и защищаем вашу личную информацию. Ваша конфиденциальность и безопасность — наш приоритет.",
+  "policy.privacy.s1.desc":
+    "Мы можем собирать определенную личную информацию от вас, когда вы посещаете наш веб-сайт, создаете учетную запись или взаимодействуете с нашими услугами. Эта информация может включать в себя:",
   "policy.privacy.s1.item1": "Имя и фамилия",
   "policy.privacy.s1.item2": "Адрес электронной почты",
   "policy.privacy.s1.item3": "Контактная информация",
   "policy.privacy.s1.item4": "Другая информация, добровольно предоставленная вами",
   "policy.privacy.s1.title": "Информация, которую мы собираем",
-  "policy.privacy.s2.desc": "Мы можем использовать информацию, которую собираем, для следующих целей:",
+  "policy.privacy.s2.desc":
+    "Мы можем использовать информацию, которую собираем, для следующих целей:",
   "policy.privacy.s2.item1": "Для предоставления и улучшения наших услуг",
   "policy.privacy.s2.item2": "Персонализируйте пользовательский опыт",
   "policy.privacy.s2.item3": "Чтобы предоставить информацию о вашей учетной записи",
   "policy.privacy.s2.item4": "Информирование о кампаниях и инновациях",
   "policy.privacy.s2.item5": "Для улучшения наших услуг путем анализа посещаемости сайта.",
   "policy.privacy.s2.title": "Как мы используем вашу информацию",
-  "policy.privacy.s3.desc": "Мы серьезно относимся к безопасности ваших личных данных. Мы реализуем меры безопасности, соответствующие отраслевым стандартам, для защиты от несанкционированного доступа, изменения, раскрытия или уничтожения. Однако помните, что передача данных через Интернет или электронное хранилище не является на 100% безопасной.",
+  "policy.privacy.s3.desc":
+    "Мы серьезно относимся к безопасности ваших личных данных. Мы реализуем меры безопасности, соответствующие отраслевым стандартам, для защиты от несанкционированного доступа, изменения, раскрытия или уничтожения. Однако помните, что передача данных через Интернет или электронное хранилище не является на 100% безопасной.",
   "policy.privacy.s3.title": "Безопасность данных",
-  "policy.privacy.s4.desc": "Ваши личные данные: не будут продаваться или передаваться в коммерческих целях без вашего явного разрешения. Они могут быть переданы поставщикам услуг, если этого требуют юридические обязательства или при условии соблюдения конфиденциальности.",
+  "policy.privacy.s4.desc":
+    "Ваши личные данные: не будут продаваться или передаваться в коммерческих целях без вашего явного разрешения. Они могут быть переданы поставщикам услуг, если этого требуют юридические обязательства или при условии соблюдения конфиденциальности.",
   "policy.privacy.s4.title": "Передача третьим лицам",
-  "policy.privacy.s5.desc": "Наш веб-сайт может использовать файлы cookie для улучшения пользовательского опыта. Благодаря файлам cookie собирается информация о том, как вы используете сайт. Вы можете отказаться от файлов cookie или получать предупреждения, изменив настройки браузера.",
+  "policy.privacy.s5.desc":
+    "Наш веб-сайт может использовать файлы cookie для улучшения пользовательского опыта. Благодаря файлам cookie собирается информация о том, как вы используете сайт. Вы можете отказаться от файлов cookie или получать предупреждения, изменив настройки браузера.",
   "policy.privacy.s5.title": "Файлы cookie",
-  "policy.privacy.s6.desc": "Настоящая Политика конфиденциальности может время от времени обновляться. Любые внесенные изменения публикуются на этой странице, а дата вступления в силу обновляется. Мы рекомендуем вам регулярно проверять эту страницу на наличие обновлений.",
+  "policy.privacy.s6.desc":
+    "Настоящая Политика конфиденциальности может время от времени обновляться. Любые внесенные изменения публикуются на этой странице, а дата вступления в силу обновляется. Мы рекомендуем вам регулярно проверять эту страницу на наличие обновлений.",
   "policy.privacy.s6.title": "Изменения",
-  "policy.service.intro": "Используя платформу Fun Technology, вы соглашаетесь использовать наши услуги в рамках безопасных, юридических и этических правил. Вот основные условия использования:",
-  "policy.service.s1.desc": "Чтобы использовать платформу, вы должны создать учетную запись с точной и актуальной информацией. Вы несете ответственность за конфиденциальность информации вашего аккаунта.",
+  "policy.service.intro":
+    "Используя платформу Fun Technology, вы соглашаетесь использовать наши услуги в рамках безопасных, юридических и этических правил. Вот основные условия использования:",
+  "policy.service.s1.desc":
+    "Чтобы использовать платформу, вы должны создать учетную запись с точной и актуальной информацией. Вы несете ответственность за конфиденциальность информации вашего аккаунта.",
   "policy.service.s1.title": "Использование учетной записи",
-  "policy.service.s2.desc": "Контент, которым вы делитесь, и транзакции, которые вы совершаете на Платформе, должны соответствовать всем применимым законам и правилам.",
+  "policy.service.s2.desc":
+    "Контент, которым вы делитесь, и транзакции, которые вы совершаете на Платформе, должны соответствовать всем применимым законам и правилам.",
   "policy.service.s2.title": "Юридическое соответствие",
-  "policy.service.s3.desc": "Fun Technology реализует передовые меры безопасности для защиты ваших данных. В целях безопасности вашей учетной записи вы должны хранить свои пароли в секрете.",
+  "policy.service.s3.desc":
+    "Fun Technology реализует передовые меры безопасности для защиты ваших данных. В целях безопасности вашей учетной записи вы должны хранить свои пароли в секрете.",
   "policy.service.s3.title": "Безопасность и конфиденциальность",
-  "policy.service.s4.desc": "Fun Teknoloji принимает на себя ограниченную ответственность за контент и сторонние ссылки на платформе. Пользователи используют платформу под свою ответственность.",
+  "policy.service.s4.desc":
+    "Fun Teknoloji принимает на себя ограниченную ответственность за контент и сторонние ссылки на платформе. Пользователи используют платформу под свою ответственность.",
   "policy.service.s4.title": "Отказ от ответственности",
-  "policy.service.s5.desc": "Fun Teknoloji оставляет за собой право вносить изменения в контент, функции или условия использования с целью улучшения функциональности платформы.",
+  "policy.service.s5.desc":
+    "Fun Teknoloji оставляет за собой право вносить изменения в контент, функции или условия использования с целью улучшения функциональности платформы.",
   "policy.service.s5.title": "Изменения в сервисе",
-  "policy.service.s6.desc": "В случае нарушения условий использования платформа может ограничить или закрыть учетные записи временно или навсегда.",
+  "policy.service.s6.desc":
+    "В случае нарушения условий использования платформа может ограничить или закрыть учетные записи временно или навсегда.",
   "policy.service.s6.title": "Санкции",
   "pricing.badge": "Цены",
-  "pricing.desc": "В настоящее время мы работаем над тем, чтобы сделать наши системы более эффективными и экономичными.",
+  "pricing.desc":
+    "В настоящее время мы работаем над тем, чтобы сделать наши системы более эффективными и экономичными.",
   "pricing.title": "Наши новые пакеты скоро будут здесь",
-  "projects.hero.desc": "Наши ориентированные на решения проекты разработаны с использованием инновационных технологий.",
+  "projects.hero.desc":
+    "Наши ориентированные на решения проекты разработаны с использованием инновационных технологий.",
   "projects.hero.title": "Мы строим будущее",
-  "projects.nexy.desc": "Цифровой помощник на основе искусственного интеллекта от Fun Technology. Умное руководство для бизнеса и пользователей.",
-  "projects.quakesafe.desc": "Новая эра в технологиях обеспечения безопасности при стихийных бедствиях. Умные системы, которые спасают жизни во время и после землетрясения.",
+  "projects.nexy.desc":
+    "Цифровой помощник на основе искусственного интеллекта от Fun Technology. Умное руководство для бизнеса и пользователей.",
+  "projects.quakesafe.desc":
+    "Новая эра в технологиях обеспечения безопасности при стихийных бедствиях. Умные системы, которые спасают жизни во время и после землетрясения.",
   "projects.soon.desc": "Мы продолжаем работать над нашими новыми интересными проектами.",
   "projects.soon.title": "Скоро будет еще больше",
   "projects.view": "Обзор проекта",
   "quakesafe.cta.button": "Получите ранний доступ",
   "quakesafe.cta.desc": "Технологии призваны не только облегчать жизнь, но и защищать ее.",
   "quakesafe.cta.title": "Мы строим более безопасное будущее",
-  "quakesafe.features.1.desc": "Получайте критические оповещения за несколько секунд до того, как достигнут волны землетрясения.",
+  "quakesafe.features.1.desc":
+    "Получайте критические оповещения за несколько секунд до того, как достигнут волны землетрясения.",
   "quakesafe.features.1.title": "Мгновенные оповещения",
-  "quakesafe.features.10.desc": "Поделитесь своим состоянием здоровья и группой крови в случае чрезвычайной ситуации.",
+  "quakesafe.features.10.desc":
+    "Поделитесь своим состоянием здоровья и группой крови в случае чрезвычайной ситуации.",
   "quakesafe.features.10.title": "Отслеживание здоровья",
-  "quakesafe.features.11.desc": "Просмотрите исторические данные о землетрясениях и рисках в вашем районе.",
+  "quakesafe.features.11.desc":
+    "Просмотрите исторические данные о землетрясениях и рисках в вашем районе.",
   "quakesafe.features.11.title": "Прошлый анализ",
-  "quakesafe.features.12.desc": "Платформа, которая объединяет нуждающихся и тех, кто может помочь.",
+  "quakesafe.features.12.desc":
+    "Платформа, которая объединяет нуждающихся и тех, кто может помочь.",
   "quakesafe.features.12.title": "Сеть солидарности",
-  "quakesafe.features.2.desc": "Узнайте в режиме реального времени, где находятся ваши близкие во время стихийного бедствия.",
+  "quakesafe.features.2.desc":
+    "Узнайте в режиме реального времени, где находятся ваши близкие во время стихийного бедствия.",
   "quakesafe.features.2.title": "Отслеживание местоположения",
-  "quakesafe.features.3.desc": "Мгновенный маршрут до ближайших сборочных центров и безопасных зон.",
+  "quakesafe.features.3.desc":
+    "Мгновенный маршрут до ближайших сборочных центров и безопасных зон.",
   "quakesafe.features.3.title": "Безопасные зоны",
   "quakesafe.features.4.desc": "Объедините всех членов семьи в одну сеть и отслеживайте их статус.",
   "quakesafe.features.4.title": "Семейные группы",
-  "quakesafe.features.5.desc": "Доступ к важным руководствам и картам даже при отключении Интернета.",
+  "quakesafe.features.5.desc":
+    "Доступ к важным руководствам и картам даже при отключении Интернета.",
   "quakesafe.features.5.title": "Автономный режим",
-  "quakesafe.features.6.desc": "Прогнозирование риска ущерба и анализ безопасности территории с помощью искусственного интеллекта.",
+  "quakesafe.features.6.desc":
+    "Прогнозирование риска ущерба и анализ безопасности территории с помощью искусственного интеллекта.",
   "quakesafe.features.6.title": "ИИ-анализ",
-  "quakesafe.features.7.desc": "Возможность связи между устройствами при выходе из строя базовых станций.",
+  "quakesafe.features.7.desc":
+    "Возможность связи между устройствами при выходе из строя базовых станций.",
   "quakesafe.features.7.title": "Ячеистая сеть",
   "quakesafe.features.8.desc": "Храните важные документы и данные о здоровье в безопасности.",
   "quakesafe.features.8.title": "Облачное резервное копирование",
-  "quakesafe.features.9.desc": "Сообщайте властям о местонахождении тех, кто находится под завалами, одним щелчком мыши.",
+  "quakesafe.features.9.desc":
+    "Сообщайте властям о местонахождении тех, кто находится под завалами, одним щелчком мыши.",
   "quakesafe.features.9.title": "Быстрое уведомление",
-  "quakesafe.features.desc": "Все инструменты, необходимые вам до, во время и после стихийного бедствия, находятся на одной платформе.",
+  "quakesafe.features.desc":
+    "Все инструменты, необходимые вам до, во время и после стихийного бедствия, находятся на одной платформе.",
   "quakesafe.features.title": "Комплексная сеть защиты",
-  "quakesafe.hero.desc": "Революция в сейсмической безопасности с помощью искусственного интеллекта и сенсорных сетей. Ваш самый большой помощник в те моменты, когда решающее значение имеют даже секунды.",
+  "quakesafe.hero.desc":
+    "Революция в сейсмической безопасности с помощью искусственного интеллекта и сенсорных сетей. Ваш самый большой помощник в те моменты, когда решающее значение имеют даже секунды.",
   "quakesafe.hero.title": "Не бойтесь землетрясений, будьте в безопасности с QuakeSafe",
-  "reviews.desc": "Узнайте истории наших деловых партнеров, которые преобразились с помощью Fun Technology.",
+  "reviews.desc":
+    "Узнайте истории наших деловых партнеров, которые преобразились с помощью Fun Technology.",
   "reviews.r1.name": "Ахмет Йылмаз",
-  "reviews.r1.text": "Программные решения, которые вы предлагаете владельцу малого бизнеса, стали настоящим спасением для повышения эффективности нашей работы. Это действительно превзошло мои ожидания.",
+  "reviews.r1.text":
+    "Программные решения, которые вы предлагаете владельцу малого бизнеса, стали настоящим спасением для повышения эффективности нашей работы. Это действительно превзошло мои ожидания.",
   "reviews.r2.name": "Зейнеп Кая",
-  "reviews.r2.text": "Интеграция искусственного интеллекта просто невероятна! Мы сэкономили много времени за счет автоматизации наших бизнес-процессов.",
+  "reviews.r2.text":
+    "Интеграция искусственного интеллекта просто невероятна! Мы сэкономили много времени за счет автоматизации наших бизнес-процессов.",
   "reviews.r3.name": "Мурат Демир",
-  "reviews.r3.text": "Эта технология произвела революцию в наших процессах анализа данных. Понимание настолько глубоко, что теперь мы принимаем решения с гораздо большей уверенностью.",
+  "reviews.r3.text":
+    "Эта технология произвела революцию в наших процессах анализа данных. Понимание настолько глубоко, что теперь мы принимаем решения с гораздо большей уверенностью.",
   "reviews.r4.name": "Элиф Шахин",
-  "reviews.r4.text": "Для менеджера проекта этот инструмент оказался неоценимым для обеспечения координации между командами. Удобный интерфейс — это здорово!",
+  "reviews.r4.text":
+    "Для менеджера проекта этот инструмент оказался неоценимым для обеспечения координации между командами. Удобный интерфейс — это здорово!",
   "reviews.r5.name": "Джанер Озкан",
-  "reviews.r5.text": "Скорость и качество их процесса разработки просто поражают воображение. Нам удалось получить наши проекты вовремя, сохраняя при этом исключительные стандарты качества.",
+  "reviews.r5.text":
+    "Скорость и качество их процесса разработки просто поражают воображение. Нам удалось получить наши проекты вовремя, сохраняя при этом исключительные стандарты качества.",
   "reviews.r6.name": "Селин Айдын",
-  "reviews.r6.text": "Эта платформа изменила способ управления нашим цифровым присутствием. Технология настолько современная и впечатляющая, что вся наша команда была поражена.",
+  "reviews.r6.text":
+    "Эта платформа изменила способ управления нашим цифровым присутствием. Технология настолько современная и впечатляющая, что вся наша команда была поражена.",
   "reviews.title": "Что говорят наши клиенты?",
   "reviews.verified": "Проверенный клиент",
   "sitemap.desc": "Обзор всех страниц сайта Fun Teknoloji.",
@@ -3230,7 +4004,8 @@ const ru: Dict = {
   "team.desc": "Познакомьтесь с талантливыми именами, стоящими за Fun Technology.",
   "team.join.desc": "Хотите строить будущее вместе с нами? Ждем ваших заявок.",
   "team.join.title": "Присоединяйтесь к нашей команде",
-  "team.member.muhammed.bio": "Мухаммед Эрбай, основатель Fun Technology, возглавляет компанию, стремясь сделать технологии доступными и полезными для всех.",
+  "team.member.muhammed.bio":
+    "Мухаммед Эрбай, основатель Fun Technology, возглавляет компанию, стремясь сделать технологии доступными и полезными для всех.",
   "team.title": "Сила нашего успеха",
   "theme.dark": "Переключиться на темную тему",
   "theme.light": "Переключиться на открытую тему",
@@ -3246,34 +4021,60 @@ const ru: Dict = {
   "home.testimonials.t6.name": "Селин Айдын",
   "blog.index.untitled": "Без названия",
   "blog.index.category_default": "Технологии",
-  "nexy.resp.pricing.0": "Fiyatlandırma politikalarımız üzerinde çalışıyoruz. En güncel paketler için Fiyatlandırma sayfamızı takip edebilirsiniz. Şu an için bekleme listemize katılmak en iyi seçenek!",
-  "nexy.resp.pricing.1": "Şu an için tüm hizmetlerimiz için size özel teklif sunuyoruz, detaylar yakında sayfalarımızda olacak. Genelde proje bazlı fiyatlandırma yapıyoruz.",
-  "nexy.resp.pricing.2": "Paketlerimiz güncelleniyor. Fun Teknoloji olarak her bütçeye uygun teknoloji çözümleri üretmeyi hedefliyoruz.",
-  "nexy.resp.services.0": "Yapay zeka entegrasyonu, özel yazılım geliştirme, mobil uygulama ve siber güvenlik alanlarında profesyonel çözümler sunuyoruz. Hangi alanla ilgileniyorsunuz?",
-  "nexy.resp.services.1": "Dijital dönüşüm yolculuğunuzda size en modern teknoloji yığını ile eşlik ediyoruz. React, Next.js, AI modelleri ve daha fazlasını kullanıyoruz.",
-  "nexy.resp.services.2": "İş süreçlerinizi otomatize edecek yapay zeka çözümlerimiz hakkında detaylı bilgi için Hizmetler sayfamıza bakabilirsiniz. Verimliliğinizi %40'a kadar artırabiliriz.",
-  "nexy.resp.founder.0": "Fun Teknoloji, Muhammed Erbay tarafından 2025 yılında vizyoner bir teknoloji şirketi olarak kurulmuştur.",
-  "nexy.resp.founder.1": "Kurucumuz Muhammed Erbay, teknolojiyi herkes için erişilebilir ve faydalı kılma vizyonuyla bu yola çıktı. Kendisi genç ve hırslı bir girişimcidir.",
-  "nexy.resp.founder.2": "2025'te Muhammed Erbay liderliğinde kurulan Fun Teknoloji, Türkiye'nin dijital geleceğine odaklanıyor. Muhammed Bey bizzat projelerin mimarisini denetliyor.",
-  "nexy.resp.contact.0": "Bize iletişim sayfasındaki formdan veya support@funteknoloji.com adresinden ulaşabilirsiniz! 7/24 destek veriyoruz.",
-  "nexy.resp.contact.1": "Sorularınız için her zaman buradayız, iletişim kısmından bize yazmaktan çekinmeyin. Ayrıca Discord kanalımızda çok aktif bir topluluğumuz var.",
-  "nexy.resp.contact.2": "Discord topluluğumuza katılarak da ekibimizle doğrudan iletişime geçebilirsiniz. Linki İletişim sayfasında bulabilirsiniz.",
-  "nexy.resp.about.0": "Fun Teknoloji, teknolojiyi 'eğlenceli' ve 'faydalı' kılmak için kuruldu. Yapay zeka ve yazılım bizim tutkumuz.",
-  "nexy.resp.about.1": "Misyonumuz, işletmeleri geleceğin teknolojileriyle bugünden tanıştırmak. Vizyonumuz ise global çapta bir teknoloji üssü olmak.",
-  "nexy.resp.about.2": "Hakkımızda sayfasında tüm tarihimizi ve değerlerimizi bulabilirsiniz. İnovasyon, kalite ve güvenilirlik en önemli ilkelerimizdir.",
-  "nexy.resp.careers.0": "Ekibimiz sürekli büyüyor! Kariyer fırsatları için bize özgeçmişinizi gönderebilir veya LinkedIn sayfamızı takip edebilirsiniz.",
-  "nexy.resp.careers.1": "Yetenekli mühendisler, tasarımcılar ve yapay zeka meraklıları ile çalışmaktan her zaman mutluluk duyarız.",
-  "nexy.resp.careers.2": "Şu an spesifik bir ilanımız olmasa da, yetenekli insanlara her zaman kapımız açık. Bize yazın!",
-  "nexy.resp.tech.0": "Geliştirmelerimizde modern teknolojiler kullanıyoruz. React, TypeScript, TanStack, Tailwind ve çeşitli LLM modelleri vazgeçilmezimiz.",
-  "nexy.resp.tech.1": "Sistemlerimizi yüksek performans ve ölçeklenebilirlik odaklı tasarlıyoruz. Cloud teknolojilerini en verimli şekilde kullanıyoruz.",
-  "nexy.resp.tech.2": "Fun Teknoloji olarak sürekli AR-GE yapıyoruz. En yeni frameworkleri ve yapay zeka tekniklerini ilk biz uyguluyoruz.",
+  "nexy.resp.pricing.0":
+    "Fiyatlandırma politikalarımız üzerinde çalışıyoruz. En güncel paketler için Fiyatlandırma sayfamızı takip edebilirsiniz. Şu an için bekleme listemize katılmak en iyi seçenek!",
+  "nexy.resp.pricing.1":
+    "Şu an için tüm hizmetlerimiz için size özel teklif sunuyoruz, detaylar yakında sayfalarımızda olacak. Genelde proje bazlı fiyatlandırma yapıyoruz.",
+  "nexy.resp.pricing.2":
+    "Paketlerimiz güncelleniyor. Fun Teknoloji olarak her bütçeye uygun teknoloji çözümleri üretmeyi hedefliyoruz.",
+  "nexy.resp.services.0":
+    "Yapay zeka entegrasyonu, özel yazılım geliştirme, mobil uygulama ve siber güvenlik alanlarında profesyonel çözümler sunuyoruz. Hangi alanla ilgileniyorsunuz?",
+  "nexy.resp.services.1":
+    "Dijital dönüşüm yolculuğunuzda size en modern teknoloji yığını ile eşlik ediyoruz. React, Next.js, AI modelleri ve daha fazlasını kullanıyoruz.",
+  "nexy.resp.services.2":
+    "İş süreçlerinizi otomatize edecek yapay zeka çözümlerimiz hakkında detaylı bilgi için Hizmetler sayfamıza bakabilirsiniz. Verimliliğinizi %40'a kadar artırabiliriz.",
+  "nexy.resp.founder.0":
+    "Fun Teknoloji, Muhammed Erbay tarafından 2025 yılında vizyoner bir teknoloji şirketi olarak kurulmuştur.",
+  "nexy.resp.founder.1":
+    "Kurucumuz Muhammed Erbay, teknolojiyi herkes için erişilebilir ve faydalı kılma vizyonuyla bu yola çıktı. Kendisi genç ve hırslı bir girişimcidir.",
+  "nexy.resp.founder.2":
+    "2025'te Muhammed Erbay liderliğinde kurulan Fun Teknoloji, Türkiye'nin dijital geleceğine odaklanıyor. Muhammed Bey bizzat projelerin mimarisini denetliyor.",
+  "nexy.resp.contact.0":
+    "Bize iletişim sayfasındaki formdan veya support@funteknoloji.com adresinden ulaşabilirsiniz! 7/24 destek veriyoruz.",
+  "nexy.resp.contact.1":
+    "Sorularınız için her zaman buradayız, iletişim kısmından bize yazmaktan çekinmeyin. Ayrıca Discord kanalımızda çok aktif bir topluluğumuz var.",
+  "nexy.resp.contact.2":
+    "Discord topluluğumuza katılarak da ekibimizle doğrudan iletişime geçebilirsiniz. Linki İletişim sayfasında bulabilirsiniz.",
+  "nexy.resp.about.0":
+    "Fun Teknoloji, teknolojiyi 'eğlenceli' ve 'faydalı' kılmak için kuruldu. Yapay zeka ve yazılım bizim tutkumuz.",
+  "nexy.resp.about.1":
+    "Misyonumuz, işletmeleri geleceğin teknolojileriyle bugünden tanıştırmak. Vizyonumuz ise global çapta bir teknoloji üssü olmak.",
+  "nexy.resp.about.2":
+    "Hakkımızda sayfasında tüm tarihimizi ve değerlerimizi bulabilirsiniz. İnovasyon, kalite ve güvenilirlik en önemli ilkelerimizdir.",
+  "nexy.resp.careers.0":
+    "Ekibimiz sürekli büyüyor! Kariyer fırsatları için bize özgeçmişinizi gönderebilir veya LinkedIn sayfamızı takip edebilirsiniz.",
+  "nexy.resp.careers.1":
+    "Yetenekli mühendisler, tasarımcılar ve yapay zeka meraklıları ile çalışmaktan her zaman mutluluk duyarız.",
+  "nexy.resp.careers.2":
+    "Şu an spesifik bir ilanımız olmasa da, yetenekli insanlara her zaman kapımız açık. Bize yazın!",
+  "nexy.resp.tech.0":
+    "Geliştirmelerimizde modern teknolojiler kullanıyoruz. React, TypeScript, TanStack, Tailwind ve çeşitli LLM modelleri vazgeçilmezimiz.",
+  "nexy.resp.tech.1":
+    "Sistemlerimizi yüksek performans ve ölçeklenebilirlik odaklı tasarlıyoruz. Cloud teknolojilerini en verimli şekilde kullanıyoruz.",
+  "nexy.resp.tech.2":
+    "Fun Teknoloji olarak sürekli AR-GE yapıyoruz. En yeni frameworkleri ve yapay zeka tekniklerini ilk biz uyguluyoruz.",
   "nexy.resp.greeting.0": "Merhaba! Size nasıl yardımcı olabilirim? Bugün teknoloji dolu bir gün!",
-  "nexy.resp.greeting.1": "Selamlar! Ben Nexy, Fun Teknoloji'nin yapay zeka asistanıyım. Sizi dinliyorum.",
-  "nexy.resp.greeting.2": "Hoş geldiniz! Merak ettiğiniz bir şey mi var? Size Fun Teknoloji hakkında her şeyi anlatabilirim.",
+  "nexy.resp.greeting.1":
+    "Selamlar! Ben Nexy, Fun Teknoloji'nin yapay zeka asistanıyım. Sizi dinliyorum.",
+  "nexy.resp.greeting.2":
+    "Hoş geldiniz! Merak ettiğiniz bir şey mi var? Size Fun Teknoloji hakkında her şeyi anlatabilirim.",
   "nexy.resp.default.0": "Mesajınız için teşekkürler. Size nasıl yardımcı olabilirim?",
-  "nexy.resp.default.1": "Bu konuda size daha detaylı yardımcı olabilmemiz için lütfen iletişim formunu doldurun.",
-  "nexy.resp.default.2": "Harika bir soru! Ama bu konuda henüz tam bir bilgim yok. İsterseniz ekibimize sorabilirim?",
-  "nexy.resp.default.3": "Size nasıl daha iyi yardımcı olabilirim? Teknoloji çözümlerimiz, kurucumuz veya hizmetlerimiz hakkında konuşabiliriz.",
+  "nexy.resp.default.1":
+    "Bu konuda size daha detaylı yardımcı olabilmemiz için lütfen iletişim formunu doldurun.",
+  "nexy.resp.default.2":
+    "Harika bir soru! Ama bu konuda henüz tam bir bilgim yok. İsterseniz ekibimize sorabilirim?",
+  "nexy.resp.default.3":
+    "Size nasıl daha iyi yardımcı olabilirim? Teknoloji çözümlerimiz, kurucumuz veya hizmetlerimiz hakkında konuşabiliriz.",
   "service.feature.automation": "Otomasyon",
   "service.feature.big_data": "Büyük Veri",
   "service.feature.bi": "İş Zekası",
@@ -3313,7 +4114,8 @@ const ar: Dict = {
   "about.cta.title": "دعونا نعمل معا",
   "about.desc": "تأسست Fun Teknoloji في عام 2025 على يد محمد ارباي.",
   "about.mission.badge": "مهمتنا",
-  "about.mission.desc": "لمساعدة الشركات بجميع أحجامها على اكتساب ميزة تنافسية في العالم الرقمي من خلال تمكينها من الاستفادة من الذكاء الاصطناعي وحلول التكنولوجيا المتقدمة.",
+  "about.mission.desc":
+    "لمساعدة الشركات بجميع أحجامها على اكتساب ميزة تنافسية في العالم الرقمي من خلال تمكينها من الاستفادة من الذكاء الاصطناعي وحلول التكنولوجيا المتقدمة.",
   "about.mission.title": "تمكين الشركات بالتكنولوجيا",
   "about.stats.clients": "عميل سعيد",
   "about.stats.projects": "مشروع مكتمل",
@@ -3359,7 +4161,8 @@ const ar: Dict = {
   "blog.title": "من عالم التكنولوجيا",
   "brand_kit.badge": "Corporate",
   "brand_kit.colors.title": "Our Color Palette",
-  "brand_kit.desc": "You can download Fun Teknoloji logos and visual materials here and take a look at the usage guide.",
+  "brand_kit.desc":
+    "You can download Fun Teknoloji logos and visual materials here and take a look at the usage guide.",
   "brand_kit.download_png": "Download PNG",
   "brand_kit.logos.fun_black.desc": "Black version for use on light-colored backgrounds.",
   "brand_kit.logos.fun_black.title": "Fun Technology Black Logo",
@@ -3418,7 +4221,8 @@ const ar: Dict = {
   "docs.sidebar.getting_started": "بداية",
   "docs.sidebar.intro": "مدخل",
   "docs.sidebar.setup": "الإعداد السريع",
-  "docs.soon.desc": "يتم الآن إعداد أدلة المستخدم التفصيلية لمنصتنا وخدماتنا. سنكون هنا في أقرب وقت ممكن.",
+  "docs.soon.desc":
+    "يتم الآن إعداد أدلة المستخدم التفصيلية لمنصتنا وخدماتنا. سنكون هنا في أقرب وقت ممكن.",
   "docs.soon.title": "قريبا جدا",
   "docs.title": "التوثيق",
   "error.home": "الصفحة الرئيسية",
@@ -3431,27 +4235,35 @@ const ar: Dict = {
   "faq.cat.services": "خدمات",
   "faq.cat.technical": "اِصطِلاحِيّ",
   "faq.desc": "أسئلة حول خدماتنا وعملياتنا.",
-  "faq.q1.a": "Fun Technology هي شركة تكنولوجيا متخصصة في الذكاء الاصطناعي وتطوير البرمجيات المخصصة والتحول الرقمي.",
+  "faq.q1.a":
+    "Fun Technology هي شركة تكنولوجيا متخصصة في الذكاء الاصطناعي وتطوير البرمجيات المخصصة والتحول الرقمي.",
   "faq.q1.q": "ما هي تكنولوجيا المرح؟",
-  "faq.q10.a": "نعم، جميع بياناتك محمية بطرق التشفير القياسية الصناعية والبنية التحتية السحابية الآمنة.",
+  "faq.q10.a":
+    "نعم، جميع بياناتك محمية بطرق التشفير القياسية الصناعية والبنية التحتية السحابية الآمنة.",
   "faq.q10.q": "هل بياناتي آمنة؟",
-  "faq.q11.a": "خصوصية بيانات المستخدم هي أولويتنا القصوى. للحصول على معلومات مفصلة، ​​يمكنك الاطلاع على صفحة سياسة الخصوصية الخاصة بنا.",
+  "faq.q11.a":
+    "خصوصية بيانات المستخدم هي أولويتنا القصوى. للحصول على معلومات مفصلة، ​​يمكنك الاطلاع على صفحة سياسة الخصوصية الخاصة بنا.",
   "faq.q11.q": "ما هي سياسة الخصوصية الخاصة بك؟",
   "faq.q2.a": "تأسست شركة Fun Technology في عام 2025 على يد محمد إرباي كمبادرة تكنولوجية ذات رؤية.",
   "faq.q2.q": "متى تأسست شركة Fun Teknoloji؟",
-  "faq.q3.a": "لأننا نؤمن بأن التكنولوجيا لا ينبغي أن تكون مملة ومعقدة، بل يجب أن تكون أداة تجعل الحياة أسهل و\"ممتعة\".",
+  "faq.q3.a":
+    'لأننا نؤمن بأن التكنولوجيا لا ينبغي أن تكون مملة ومعقدة، بل يجب أن تكون أداة تجعل الحياة أسهل و"ممتعة".',
   "faq.q3.q": "لماذا اسمك Fun Teknoloji؟",
-  "faq.q4.a": "نحن نقدم تطوير البرمجيات وتكامل الذكاء الاصطناعي وتحليلات البيانات والأمن السيبراني والحلول السحابية.",
+  "faq.q4.a":
+    "نحن نقدم تطوير البرمجيات وتكامل الذكاء الاصطناعي وتحليلات البيانات والأمن السيبراني والحلول السحابية.",
   "faq.q4.q": "ما هي الخدمات التي تقدمها؟",
-  "faq.q5.a": "نحن نتبع عملية شفافة تتكون من مراحل تحليل المتطلبات والنماذج الأولية والتطوير والاختبار والنشر.",
+  "faq.q5.a":
+    "نحن نتبع عملية شفافة تتكون من مراحل تحليل المتطلبات والنماذج الأولية والتطوير والاختبار والنشر.",
   "faq.q5.q": "كيف تعمل عملية البرامج المخصصة؟",
   "faq.q6.a": "هذا يعتمد على أهدافك. سيقوم فريقنا بتحليل احتياجاتك والتوصية بالمنصة الأنسب لك.",
   "faq.q6.q": "هل يجب أن أقوم بإنشاء تطبيق جوال أو موقع ويب؟",
-  "faq.q7.a": "نحن نستخدم مجموعات التكنولوجيا الحديثة مثل React وNext.js وTypeScript وPython وPyTorch وDatabase وAWS.",
+  "faq.q7.a":
+    "نحن نستخدم مجموعات التكنولوجيا الحديثة مثل React وNext.js وTypeScript وPython وPyTorch وDatabase وAWS.",
   "faq.q7.q": "ما هي التقنيات التي تستخدمها؟",
   "faq.q8.a": "نعم، نحن نقدم دعمًا شاملاً لواجهة برمجة التطبيقات (API) وتوثيقًا لحلول مؤسستنا.",
   "faq.q8.q": "هل لديك دعم API؟",
-  "faq.q9.a": "نقوم بتطوير نماذج خاصة بمشروعك باستخدام مجموعات البيانات الخاصة بنا وأطر التعلم العميق الحديثة.",
+  "faq.q9.a":
+    "نقوم بتطوير نماذج خاصة بمشروعك باستخدام مجموعات البيانات الخاصة بنا وأطر التعلم العميق الحديثة.",
   "faq.q9.q": "كيف يمكنك تدريب نماذج الذكاء الاصطناعي؟",
   "faq.title": "الأسئلة المتداولة",
   "footer.description": "نحن نبني تقنيات المستقبل اليوم.",
@@ -3461,9 +4273,11 @@ const ar: Dict = {
   "home.cta.desc": "إذا كان لديك أي أسئلة أو كنت بحاجة إلى مساعدة، فاتصل بفريق الدعم لدينا.",
   "home.cta.more": "اكتشف المزيد",
   "home.cta.title": "ابدأ اليوم.",
-  "home.faq.a1": "Fun Technology هي شركة تقنية متخصصة في الذكاء الاصطناعي وتطوير البرمجيات المخصصة والتحول الرقمي.",
+  "home.faq.a1":
+    "Fun Technology هي شركة تقنية متخصصة في الذكاء الاصطناعي وتطوير البرمجيات المخصصة والتحول الرقمي.",
   "home.faq.a2": "نعم، نحن نقدم دعماً فنياً وصيانة على مدار الساعة طوال أيام الأسبوع لمشاريعكم.",
-  "home.faq.a3": "على الرغم من أنها تختلف حسب نطاق المشروع، إلا أننا نكمل المشاريع الصغيرة في غضون 2-4 أسابيع، والمشاريع الشاملة في غضون 2-4 أشهر.",
+  "home.faq.a3":
+    "على الرغم من أنها تختلف حسب نطاق المشروع، إلا أننا نكمل المشاريع الصغيرة في غضون 2-4 أسابيع، والمشاريع الشاملة في غضون 2-4 أشهر.",
   "home.faq.a4": "يتم تحديد السعر خصيصاً بناءً على تعقيد مشروعكم والميزات المطلوبة.",
   "home.faq.a5": "نعم، نحن متخصصون في دمج نماذج الذكاء الاصطناعي في أنظمتكم الحالية.",
   "home.faq.a6": "بالتأكيد! يمكنكم مشاركة أفكار مشاريعكم معنا والحصول على استشارة مجانية.",
@@ -3481,7 +4295,8 @@ const ar: Dict = {
   "home.features.desc": "نحن نقدم أحدث التقنيات التي ستأخذ عملك إلى المستوى التالي.",
   "home.features.title": "لماذا يجب عليك أن تختارنا؟",
   "home.hero.badge": "شركة التكنولوجيا المبتكرة التركية",
-  "home.hero.desc": "ننقل أعمالك إلى مركز التحول الرقمي بحلول رائدة في مجال الذكاء الاصطناعي وتطوير البرمجيات والأنظمة الذكية.",
+  "home.hero.desc":
+    "ننقل أعمالك إلى مركز التحول الرقمي بحلول رائدة في مجال الذكاء الاصطناعي وتطوير البرمجيات والأنظمة الذكية.",
   "home.hero.explore": "اكتشف الخدمات",
   "home.hero.start": "انضم إلى قائمة الانتظار",
   "home.hero.title": "تقنيات المستقبل معنا اليوم",
@@ -3489,18 +4304,21 @@ const ar: Dict = {
   "home.howitworks.desc": "اكتشف خطوة بخطوة كيف نجعل مشروعك ينبض بالحياة.",
   "home.howitworks.step1.desc": "نحن نحلل احتياجاتك ونحدد حزمة التكنولوجيا الأكثر ملاءمة.",
   "home.howitworks.step1.title": "التحليل والتخطيط",
-  "home.howitworks.step2.desc": "نقوم بإنشاء واجهات سهلة الاستخدام وهياكل خلفية قوية مع مبادئ التصميم الحديثة.",
+  "home.howitworks.step2.desc":
+    "نقوم بإنشاء واجهات سهلة الاستخدام وهياكل خلفية قوية مع مبادئ التصميم الحديثة.",
   "home.howitworks.step2.title": "التطوير والاختبار",
   "home.howitworks.step3.desc": "ننشر مشروعك ونستمر في تقديم الدعم دون انقطاع.",
   "home.howitworks.step3.title": "الإطلاق والدعم",
   "home.howitworks.title": "كيف نعمل؟",
   "home.services.badge": "خدماتنا",
-  "home.services.desc": "تعرف على الحلول الاحترافية التي نقدمها لتنمية أعمالك والتميز في العالم الرقمي.",
+  "home.services.desc":
+    "تعرف على الحلول الاحترافية التي نقدمها لتنمية أعمالك والتميز في العالم الرقمي.",
   "home.services.item1.desc": "نماذج الذكاء الاصطناعي وأنظمة الأتمتة المدربة خصيصًا لعملك.",
   "home.services.item1.title": "حلول الذكاء الاصطناعي",
   "home.services.item2.desc": "تطبيقات ويب قابلة للتطوير وآمنة مع أطر عمل حديثة.",
   "home.services.item2.title": "تطوير الويب",
-  "home.services.item3.desc": "تطبيقات الهاتف المحمول الأصلية والمختلطة عالية الأداء لنظامي التشغيل iOS وAndroid.",
+  "home.services.item3.desc":
+    "تطبيقات الهاتف المحمول الأصلية والمختلطة عالية الأداء لنظامي التشغيل iOS وAndroid.",
   "home.services.item3.title": "تطبيق الهاتف المحمول",
   "home.services.item4.desc": "إدارة البنية التحتية السحابية وخدمات تحسين قواعد البيانات.",
   "home.services.item4.title": "السحابة والبيانات",
@@ -3514,14 +4332,20 @@ const ar: Dict = {
   "home.stats.team": "طاقم عمل خبير",
   "home.stats.users": "مستخدم نشط",
   "home.testimonials.badge": "تعليقات",
-  "home.testimonials.t1.text": "لقد أدى العمل مع Fun Technology إلى تغيير عمليات أعمالنا بالكامل. بفضل حلول الذكاء الاصطناعي، زادت كفاءتنا.",
-  "home.testimonials.t2.text": "السيد محمد وفريقه محترفون للغاية. لقد قاموا بتسليم تطبيق الهاتف المحمول الخاص بنا في الوقت المحدد وبشكل لا تشوبه شائبة.",
+  "home.testimonials.t1.text":
+    "لقد أدى العمل مع Fun Technology إلى تغيير عمليات أعمالنا بالكامل. بفضل حلول الذكاء الاصطناعي، زادت كفاءتنا.",
+  "home.testimonials.t2.text":
+    "السيد محمد وفريقه محترفون للغاية. لقد قاموا بتسليم تطبيق الهاتف المحمول الخاص بنا في الوقت المحدد وبشكل لا تشوبه شائبة.",
   "home.testimonials.t3.text": "لم تكن لدينا مشاكل مع الدعم الفني. لديهم دائمًا نهج موجه نحو الحل.",
-  "home.testimonials.t4.text": "أصبح موقعنا الإلكتروني الآن أسرع وأكثر أمانًا. شكرا لك تكنولوجيا المرح!",
-  "home.testimonials.t5.text": "لقد أضافوا قيمة لمشروعنا من خلال مناهجهم المبتكرة ووجهات نظرهم الحكيمة.",
-  "home.testimonials.t6.text": "لقد قاموا بعمل رائع في تبسيط أنظمتنا المعقدة. أنا أوصي به بالتأكيد.",
+  "home.testimonials.t4.text":
+    "أصبح موقعنا الإلكتروني الآن أسرع وأكثر أمانًا. شكرا لك تكنولوجيا المرح!",
+  "home.testimonials.t5.text":
+    "لقد أضافوا قيمة لمشروعنا من خلال مناهجهم المبتكرة ووجهات نظرهم الحكيمة.",
+  "home.testimonials.t6.text":
+    "لقد قاموا بعمل رائع في تبسيط أنظمتنا المعقدة. أنا أوصي به بالتأكيد.",
   "home.testimonials.title": "قصص نجاح عملائنا",
-  "home.whatwedo.text": "نحن في شركة Fun Technology نقوم بتطوير حلول برمجية مبتكرة مدعومة بالذكاء الاصطناعي لإعداد أعمالك للمستقبل.",
+  "home.whatwedo.text":
+    "نحن في شركة Fun Technology نقوم بتطوير حلول برمجية مبتكرة مدعومة بالذكاء الاصطناعي لإعداد أعمالك للمستقبل.",
   "inline.contact.message_error": "الرجاء إدخال نص رسالة صالح.",
   "inline.contact.subject_error": "الرجاء إدخال عنوان موضوع ذي معنى.",
   "lang.label": "اختر اللغة",
@@ -3568,7 +4392,8 @@ const ar: Dict = {
   "nexy.beta_warning": "قد يكون للإجابة الخاطئة عواقب أثناء مرحلة التطوير",
   "nexy.capabilities.1.desc": "فهو يفهم أسئلتك ويزودك بالمعلومات الأكثر دقة في غضون ثوان.",
   "nexy.capabilities.1.title": "الاستخبارات المتقدمة",
-  "nexy.capabilities.2.desc": "فهو يوفر دعمًا متواصلًا على مدار 24 ساعة طوال أيام الأسبوع، دون أي وقت انتظار.",
+  "nexy.capabilities.2.desc":
+    "فهو يوفر دعمًا متواصلًا على مدار 24 ساعة طوال أيام الأسبوع، دون أي وقت انتظار.",
   "nexy.capabilities.2.title": "الاستجابة السريعة",
   "nexy.capabilities.3.desc": "يمكنه التواصل معك بأي لغة تحتاجها.",
   "nexy.capabilities.3.title": "دعم متعدد اللغات",
@@ -3598,9 +4423,12 @@ const ar: Dict = {
   "policy.contact.desc": "إذا كان لديك أي أسئلة يمكنك الاتصال بنا:",
   "policy.contact.title": "تواصل",
   "policy.last_updated": "تاريخ آخر تحديث: 19/03/2026",
-  "policy.privacy.contact_desc": "إذا كانت لديك أي أسئلة حول سياسة الخصوصية الخاصة بنا أو معالجة بياناتك الشخصية، يمكنك الاتصال بنا:",
-  "policy.privacy.intro": "توضح سياسة الخصوصية الخاصة بنا كيف نقوم بجمع معلوماتك الشخصية واستخدامها وحمايتها. خصوصيتك وأمنك هي أولويتنا.",
-  "policy.privacy.s1.desc": "قد نقوم بجمع معلومات شخصية معينة منك عند زيارتك لموقعنا الإلكتروني، أو إنشاء حساب، أو التفاعل مع خدماتنا. قد تشمل هذه المعلومات:",
+  "policy.privacy.contact_desc":
+    "إذا كانت لديك أي أسئلة حول سياسة الخصوصية الخاصة بنا أو معالجة بياناتك الشخصية، يمكنك الاتصال بنا:",
+  "policy.privacy.intro":
+    "توضح سياسة الخصوصية الخاصة بنا كيف نقوم بجمع معلوماتك الشخصية واستخدامها وحمايتها. خصوصيتك وأمنك هي أولويتنا.",
+  "policy.privacy.s1.desc":
+    "قد نقوم بجمع معلومات شخصية معينة منك عند زيارتك لموقعنا الإلكتروني، أو إنشاء حساب، أو التفاعل مع خدماتنا. قد تشمل هذه المعلومات:",
   "policy.privacy.s1.item1": "الاسم واللقب",
   "policy.privacy.s1.item2": "عنوان البريد الإلكتروني",
   "policy.privacy.s1.item3": "معلومات الاتصال",
@@ -3613,34 +4441,47 @@ const ar: Dict = {
   "policy.privacy.s2.item4": "التواصل حول الحملات والابتكارات",
   "policy.privacy.s2.item5": "لتحسين خدماتنا من خلال تحليل حركة المرور على الموقع",
   "policy.privacy.s2.title": "كيف نستخدم معلوماتك",
-  "policy.privacy.s3.desc": "نحن نأخذ أمن بياناتك الشخصية على محمل الجد. نحن ننفذ إجراءات أمنية متوافقة مع معايير الصناعة للحماية من الوصول غير المصرح به أو التغيير أو الكشف أو التدمير. ومع ذلك، تذكر أن نقل البيانات عبر الإنترنت أو التخزين الإلكتروني ليس آمنًا بنسبة 100%.",
+  "policy.privacy.s3.desc":
+    "نحن نأخذ أمن بياناتك الشخصية على محمل الجد. نحن ننفذ إجراءات أمنية متوافقة مع معايير الصناعة للحماية من الوصول غير المصرح به أو التغيير أو الكشف أو التدمير. ومع ذلك، تذكر أن نقل البيانات عبر الإنترنت أو التخزين الإلكتروني ليس آمنًا بنسبة 100%.",
   "policy.privacy.s3.title": "أمن البيانات",
-  "policy.privacy.s4.desc": "بياناتك الشخصية: لن يتم بيعها أو مشاركتها لأغراض تجارية دون الحصول على إذن صريح منك. ويجوز مشاركتها مع مقدمي الخدمة عندما تتطلب ذلك الالتزامات القانونية أو بشرط التزامهم بالسرية.",
+  "policy.privacy.s4.desc":
+    "بياناتك الشخصية: لن يتم بيعها أو مشاركتها لأغراض تجارية دون الحصول على إذن صريح منك. ويجوز مشاركتها مع مقدمي الخدمة عندما تتطلب ذلك الالتزامات القانونية أو بشرط التزامهم بالسرية.",
   "policy.privacy.s4.title": "المشاركة مع أطراف ثالثة",
-  "policy.privacy.s5.desc": "قد يستخدم موقعنا ملفات تعريف الارتباط لتحسين تجربة المستخدم. بفضل ملفات تعريف الارتباط، يتم جمع معلومات حول كيفية استخدامك للموقع. يمكنك رفض ملفات تعريف الارتباط أو تلقي تحذيرات عن طريق تغيير إعدادات المتصفح الخاص بك.",
+  "policy.privacy.s5.desc":
+    "قد يستخدم موقعنا ملفات تعريف الارتباط لتحسين تجربة المستخدم. بفضل ملفات تعريف الارتباط، يتم جمع معلومات حول كيفية استخدامك للموقع. يمكنك رفض ملفات تعريف الارتباط أو تلقي تحذيرات عن طريق تغيير إعدادات المتصفح الخاص بك.",
   "policy.privacy.s5.title": "ملفات تعريف الارتباط",
-  "policy.privacy.s6.desc": "قد يتم تحديث سياسة الخصوصية هذه من وقت لآخر. يتم نشر أي تغييرات يتم إجراؤها على هذه الصفحة ويتم تحديث تاريخ السريان. نوصي بمراجعة هذه الصفحة بانتظام للحصول على التحديثات.",
+  "policy.privacy.s6.desc":
+    "قد يتم تحديث سياسة الخصوصية هذه من وقت لآخر. يتم نشر أي تغييرات يتم إجراؤها على هذه الصفحة ويتم تحديث تاريخ السريان. نوصي بمراجعة هذه الصفحة بانتظام للحصول على التحديثات.",
   "policy.privacy.s6.title": "التغييرات",
-  "policy.service.intro": "باستخدامك منصة Fun Technology، فإنك توافق على استخدام خدماتنا ضمن إطار القواعد الآمنة والقانونية والأخلاقية. فيما يلي شروط الاستخدام الأساسية:",
-  "policy.service.s1.desc": "من أجل استخدام المنصة، يجب عليك إنشاء حساب يحتوي على معلومات دقيقة وحديثة. أنت مسؤول عن سرية معلومات حسابك.",
+  "policy.service.intro":
+    "باستخدامك منصة Fun Technology، فإنك توافق على استخدام خدماتنا ضمن إطار القواعد الآمنة والقانونية والأخلاقية. فيما يلي شروط الاستخدام الأساسية:",
+  "policy.service.s1.desc":
+    "من أجل استخدام المنصة، يجب عليك إنشاء حساب يحتوي على معلومات دقيقة وحديثة. أنت مسؤول عن سرية معلومات حسابك.",
   "policy.service.s1.title": "استخدام الحساب",
-  "policy.service.s2.desc": "يجب أن يتوافق المحتوى الذي تشاركه والمعاملات التي تجريها على المنصة مع جميع القوانين واللوائح المعمول بها.",
+  "policy.service.s2.desc":
+    "يجب أن يتوافق المحتوى الذي تشاركه والمعاملات التي تجريها على المنصة مع جميع القوانين واللوائح المعمول بها.",
   "policy.service.s2.title": "الامتثال القانوني",
-  "policy.service.s3.desc": "تطبق Fun Technology إجراءات أمنية متقدمة لحماية بياناتك. من أجل أمان حسابك، يجب عليك الحفاظ على سرية كلمات المرور الخاصة بك.",
+  "policy.service.s3.desc":
+    "تطبق Fun Technology إجراءات أمنية متقدمة لحماية بياناتك. من أجل أمان حسابك، يجب عليك الحفاظ على سرية كلمات المرور الخاصة بك.",
   "policy.service.s3.title": "الأمن والخصوصية",
-  "policy.service.s4.desc": "تقبل Fun Teknoloji المسؤولية المحدودة عن المحتوى وروابط الطرف الثالث على المنصة. يستخدم المستخدمون المنصة على مسؤولياتهم الخاصة.",
+  "policy.service.s4.desc":
+    "تقبل Fun Teknoloji المسؤولية المحدودة عن المحتوى وروابط الطرف الثالث على المنصة. يستخدم المستخدمون المنصة على مسؤولياتهم الخاصة.",
   "policy.service.s4.title": "تنصل",
-  "policy.service.s5.desc": "تحتفظ Fun Teknoloji بالحق في إجراء تغييرات على المحتوى أو الميزات أو شروط الاستخدام من أجل تحسين وظائف النظام الأساسي.",
+  "policy.service.s5.desc":
+    "تحتفظ Fun Teknoloji بالحق في إجراء تغييرات على المحتوى أو الميزات أو شروط الاستخدام من أجل تحسين وظائف النظام الأساسي.",
   "policy.service.s5.title": "تغييرات الخدمة",
-  "policy.service.s6.desc": "في حالة انتهاك شروط الاستخدام، يجوز للمنصة تقييد أو إغلاق الحسابات بشكل مؤقت أو دائم.",
+  "policy.service.s6.desc":
+    "في حالة انتهاك شروط الاستخدام، يجوز للمنصة تقييد أو إغلاق الحسابات بشكل مؤقت أو دائم.",
   "policy.service.s6.title": "العقوبات",
   "pricing.badge": "التسعير",
   "pricing.desc": "نحن نعمل حاليًا على جعل أنظمتنا أكثر كفاءة واقتصادية.",
   "pricing.title": "باقاتنا الجديدة متاحة قريبًا",
   "projects.hero.desc": "تم تطوير مشاريعنا الموجهة نحو الحلول باستخدام تقنيات مبتكرة.",
   "projects.hero.title": "نحن نبني المستقبل",
-  "projects.nexy.desc": "المساعد الرقمي القائم على الذكاء الاصطناعي من Fun Technology. دليل ذكي للشركات والمستخدمين.",
-  "projects.quakesafe.desc": "حقبة جديدة في تكنولوجيا السلامة في حالات الكوارث. الأنظمة الذكية التي تنقذ الأرواح أثناء وبعد الزلزال.",
+  "projects.nexy.desc":
+    "المساعد الرقمي القائم على الذكاء الاصطناعي من Fun Technology. دليل ذكي للشركات والمستخدمين.",
+  "projects.quakesafe.desc":
+    "حقبة جديدة في تكنولوجيا السلامة في حالات الكوارث. الأنظمة الذكية التي تنقذ الأرواح أثناء وبعد الزلزال.",
   "projects.soon.desc": "نواصل العمل على مشاريعنا الجديدة والمثيرة.",
   "projects.soon.title": "المزيد قريبا",
   "projects.view": "قم بمراجعة المشروع",
@@ -3663,7 +4504,8 @@ const ar: Dict = {
   "quakesafe.features.4.title": "المجموعات العائلية",
   "quakesafe.features.5.desc": "يمكنك الوصول إلى الأدلة والخرائط المهمة حتى عند انقطاع الإنترنت.",
   "quakesafe.features.5.title": "وضع غير متصل بالشبكة",
-  "quakesafe.features.6.desc": "التنبؤ بمخاطر الأضرار وتحليل أمن المنطقة باستخدام الذكاء الاصطناعي.",
+  "quakesafe.features.6.desc":
+    "التنبؤ بمخاطر الأضرار وتحليل أمن المنطقة باستخدام الذكاء الاصطناعي.",
   "quakesafe.features.6.title": "تحليل الذكاء الاصطناعي",
   "quakesafe.features.7.desc": "القدرة على التواصل بين الأجهزة عند تعطل المحطات الأساسية.",
   "quakesafe.features.7.title": "شبكة شبكية",
@@ -3671,23 +4513,31 @@ const ar: Dict = {
   "quakesafe.features.8.title": "النسخ الاحتياطي السحابي",
   "quakesafe.features.9.desc": "الإبلاغ عن موقع من هم تحت الأنقاض إلى السلطات بنقرة واحدة.",
   "quakesafe.features.9.title": "الإخطار السريع",
-  "quakesafe.features.desc": "جميع الأدوات التي تحتاجها قبل وأثناء وبعد وقوع الكارثة موجودة على منصة واحدة.",
+  "quakesafe.features.desc":
+    "جميع الأدوات التي تحتاجها قبل وأثناء وبعد وقوع الكارثة موجودة على منصة واحدة.",
   "quakesafe.features.title": "شبكة الحماية الشاملة",
-  "quakesafe.hero.desc": "ثورة في مجال السلامة من الزلازل باستخدام الذكاء الاصطناعي وشبكات الاستشعار. أكبر داعم لك في تلك اللحظات التي تكون فيها الثواني حاسمة.",
+  "quakesafe.hero.desc":
+    "ثورة في مجال السلامة من الزلازل باستخدام الذكاء الاصطناعي وشبكات الاستشعار. أكبر داعم لك في تلك اللحظات التي تكون فيها الثواني حاسمة.",
   "quakesafe.hero.title": "لا تخف من الزلازل، ابق آمنًا مع QuakeSafe",
   "reviews.desc": "اكتشف قصص شركائنا التجاريين الذين تحولوا باستخدام Fun Technology.",
   "reviews.r1.name": "أحمد يلماز",
-  "reviews.r1.text": "باعتبارك مالك شركة صغيرة، كانت الحلول البرمجية التي تقدمها بمثابة المنقذ في تحسين كفاءتنا التشغيلية. لقد تجاوزت توقعاتي حقًا.",
+  "reviews.r1.text":
+    "باعتبارك مالك شركة صغيرة، كانت الحلول البرمجية التي تقدمها بمثابة المنقذ في تحسين كفاءتنا التشغيلية. لقد تجاوزت توقعاتي حقًا.",
   "reviews.r2.name": "زينب كايا",
-  "reviews.r2.text": "تكامل الذكاء الاصطناعي أمر لا يصدق على الإطلاق! لقد وفرنا الكثير من الوقت من خلال أتمتة عملياتنا التجارية.",
+  "reviews.r2.text":
+    "تكامل الذكاء الاصطناعي أمر لا يصدق على الإطلاق! لقد وفرنا الكثير من الوقت من خلال أتمتة عملياتنا التجارية.",
   "reviews.r3.name": "مراد دمير",
-  "reviews.r3.text": "لقد أحدثت هذه التكنولوجيا ثورة في عمليات تحليل البيانات لدينا. إن الرؤى عميقة جدًا لدرجة أننا الآن نتخذ قراراتنا بثقة أكبر.",
+  "reviews.r3.text":
+    "لقد أحدثت هذه التكنولوجيا ثورة في عمليات تحليل البيانات لدينا. إن الرؤى عميقة جدًا لدرجة أننا الآن نتخذ قراراتنا بثقة أكبر.",
   "reviews.r4.name": "إليف شاهين",
-  "reviews.r4.text": "كمدير للمشروع، كانت هذه الأداة لا تقدر بثمن لضمان التنسيق بين الفرق. الواجهة سهلة الاستخدام رائعة!",
+  "reviews.r4.text":
+    "كمدير للمشروع، كانت هذه الأداة لا تقدر بثمن لضمان التنسيق بين الفرق. الواجهة سهلة الاستخدام رائعة!",
   "reviews.r5.name": "كانر أوزكان",
-  "reviews.r5.text": "إن سرعة وجودة عملية التطوير الخاصة بهم مذهلة. تمكنا من استلام مشاريعنا في الوقت المحدد مع الحفاظ على معايير الجودة الاستثنائية.",
+  "reviews.r5.text":
+    "إن سرعة وجودة عملية التطوير الخاصة بهم مذهلة. تمكنا من استلام مشاريعنا في الوقت المحدد مع الحفاظ على معايير الجودة الاستثنائية.",
   "reviews.r6.name": "سيلين أيدين",
-  "reviews.r6.text": "لقد غيرت هذه المنصة الطريقة التي ندير بها تواجدنا الرقمي. التكنولوجيا حديثة ومثيرة للإعجاب لدرجة أن فريقنا بأكمله اندهش.",
+  "reviews.r6.text":
+    "لقد غيرت هذه المنصة الطريقة التي ندير بها تواجدنا الرقمي. التكنولوجيا حديثة ومثيرة للإعجاب لدرجة أن فريقنا بأكمله اندهش.",
   "reviews.title": "ماذا يقول عملاؤنا؟",
   "reviews.verified": "عميل تم التحقق منه",
   "sitemap.desc": "نظرة عامة على جميع الصفحات الموجودة على موقع Fun Teknoloji.",
@@ -3698,7 +4548,8 @@ const ar: Dict = {
   "team.desc": "تعرف على الأسماء الموهوبة وراء Fun Technology.",
   "team.join.desc": "هل ترغب في بناء المستقبل معنا؟ نحن في انتظار طلباتكم.",
   "team.join.title": "انضم إلى فريقنا",
-  "team.member.muhammed.bio": "محمد ارباي، مؤسس شركة Fun Technology، يقود الشركة برؤية تجعل التكنولوجيا في متناول الجميع ومفيدة للجميع.",
+  "team.member.muhammed.bio":
+    "محمد ارباي، مؤسس شركة Fun Technology، يقود الشركة برؤية تجعل التكنولوجيا في متناول الجميع ومفيدة للجميع.",
   "team.title": "القوة وراء نجاحنا",
   "theme.dark": "قم بالتبديل إلى المظهر الداكن",
   "theme.light": "التبديل إلى فتح الموضوع",
@@ -3714,34 +4565,60 @@ const ar: Dict = {
   "home.testimonials.t6.name": "سيلين أيدين",
   "blog.index.untitled": "مقال بدون عنوان",
   "blog.index.category_default": "تكنولوجيا",
-  "nexy.resp.pricing.0": "Fiyatlandırma politikalarımız üzerinde çalışıyoruz. En güncel paketler için Fiyatlandırma sayfamızı takip edebilirsiniz. Şu an için bekleme listemize katılmak en iyi seçenek!",
-  "nexy.resp.pricing.1": "Şu an için tüm hizmetlerimiz için size özel teklif sunuyoruz, detaylar yakında sayfalarımızda olacak. Genelde proje bazlı fiyatlandırma yapıyoruz.",
-  "nexy.resp.pricing.2": "Paketlerimiz güncelleniyor. Fun Teknoloji olarak her bütçeye uygun teknoloji çözümleri üretmeyi hedefliyoruz.",
-  "nexy.resp.services.0": "Yapay zeka entegrasyonu, özel yazılım geliştirme, mobil uygulama ve siber güvenlik alanlarında profesyonel çözümler sunuyoruz. Hangi alanla ilgileniyorsunuz?",
-  "nexy.resp.services.1": "Dijital dönüşüm yolculuğunuzda size en modern teknoloji yığını ile eşlik ediyoruz. React, Next.js, AI modelleri ve daha fazlasını kullanıyoruz.",
-  "nexy.resp.services.2": "İş süreçlerinizi otomatize edecek yapay zeka çözümlerimiz hakkında detaylı bilgi için Hizmetler sayfamıza bakabilirsiniz. Verimliliğinizi %40'a kadar artırabiliriz.",
-  "nexy.resp.founder.0": "Fun Teknoloji, Muhammed Erbay tarafından 2025 yılında vizyoner bir teknoloji şirketi olarak kurulmuştur.",
-  "nexy.resp.founder.1": "Kurucumuz Muhammed Erbay, teknolojiyi herkes için erişilebilir ve faydalı kılma vizyonuyla bu yola çıktı. Kendisi genç ve hırslı bir girişimcidir.",
-  "nexy.resp.founder.2": "2025'te Muhammed Erbay liderliğinde kurulan Fun Teknoloji, Türkiye'nin dijital geleceğine odaklanıyor. Muhammed Bey bizzat projelerin mimarisini denetliyor.",
-  "nexy.resp.contact.0": "Bize iletişim sayfasındaki formdan veya support@funteknoloji.com adresinden ulaşabilirsiniz! 7/24 destek veriyoruz.",
-  "nexy.resp.contact.1": "Sorularınız için her zaman buradayız, iletişim kısmından bize yazmaktan çekinmeyin. Ayrıca Discord kanalımızda çok aktif bir topluluğumuz var.",
-  "nexy.resp.contact.2": "Discord topluluğumuza katılarak da ekibimizle doğrudan iletişime geçebilirsiniz. Linki İletişim sayfasında bulabilirsiniz.",
-  "nexy.resp.about.0": "Fun Teknoloji, teknolojiyi 'eğlenceli' ve 'faydalı' kılmak için kuruldu. Yapay zeka ve yazılım bizim tutkumuz.",
-  "nexy.resp.about.1": "Misyonumuz, işletmeleri geleceğin teknolojileriyle bugünden tanıştırmak. Vizyonumuz ise global çapta bir teknoloji üssü olmak.",
-  "nexy.resp.about.2": "Hakkımızda sayfasında tüm tarihimizi ve değerlerimizi bulabilirsiniz. İnovasyon, kalite ve güvenilirlik en önemli ilkelerimizdir.",
-  "nexy.resp.careers.0": "Ekibimiz sürekli büyüyor! Kariyer fırsatları için bize özgeçmişinizi gönderebilir veya LinkedIn sayfamızı takip edebilirsiniz.",
-  "nexy.resp.careers.1": "Yetenekli mühendisler, tasarımcılar ve yapay zeka meraklıları ile çalışmaktan her zaman mutluluk duyarız.",
-  "nexy.resp.careers.2": "Şu an spesifik bir ilanımız olmasa da, yetenekli insanlara her zaman kapımız açık. Bize yazın!",
-  "nexy.resp.tech.0": "Geliştirmelerimizde modern teknolojiler kullanıyoruz. React, TypeScript, TanStack, Tailwind ve çeşitli LLM modelleri vazgeçilmezimiz.",
-  "nexy.resp.tech.1": "Sistemlerimizi yüksek performans ve ölçeklenebilirlik odaklı tasarlıyoruz. Cloud teknolojilerini en verimli şekilde kullanıyoruz.",
-  "nexy.resp.tech.2": "Fun Teknoloji olarak sürekli AR-GE yapıyoruz. En yeni frameworkleri ve yapay zeka tekniklerini ilk biz uyguluyoruz.",
+  "nexy.resp.pricing.0":
+    "Fiyatlandırma politikalarımız üzerinde çalışıyoruz. En güncel paketler için Fiyatlandırma sayfamızı takip edebilirsiniz. Şu an için bekleme listemize katılmak en iyi seçenek!",
+  "nexy.resp.pricing.1":
+    "Şu an için tüm hizmetlerimiz için size özel teklif sunuyoruz, detaylar yakında sayfalarımızda olacak. Genelde proje bazlı fiyatlandırma yapıyoruz.",
+  "nexy.resp.pricing.2":
+    "Paketlerimiz güncelleniyor. Fun Teknoloji olarak her bütçeye uygun teknoloji çözümleri üretmeyi hedefliyoruz.",
+  "nexy.resp.services.0":
+    "Yapay zeka entegrasyonu, özel yazılım geliştirme, mobil uygulama ve siber güvenlik alanlarında profesyonel çözümler sunuyoruz. Hangi alanla ilgileniyorsunuz?",
+  "nexy.resp.services.1":
+    "Dijital dönüşüm yolculuğunuzda size en modern teknoloji yığını ile eşlik ediyoruz. React, Next.js, AI modelleri ve daha fazlasını kullanıyoruz.",
+  "nexy.resp.services.2":
+    "İş süreçlerinizi otomatize edecek yapay zeka çözümlerimiz hakkında detaylı bilgi için Hizmetler sayfamıza bakabilirsiniz. Verimliliğinizi %40'a kadar artırabiliriz.",
+  "nexy.resp.founder.0":
+    "Fun Teknoloji, Muhammed Erbay tarafından 2025 yılında vizyoner bir teknoloji şirketi olarak kurulmuştur.",
+  "nexy.resp.founder.1":
+    "Kurucumuz Muhammed Erbay, teknolojiyi herkes için erişilebilir ve faydalı kılma vizyonuyla bu yola çıktı. Kendisi genç ve hırslı bir girişimcidir.",
+  "nexy.resp.founder.2":
+    "2025'te Muhammed Erbay liderliğinde kurulan Fun Teknoloji, Türkiye'nin dijital geleceğine odaklanıyor. Muhammed Bey bizzat projelerin mimarisini denetliyor.",
+  "nexy.resp.contact.0":
+    "Bize iletişim sayfasındaki formdan veya support@funteknoloji.com adresinden ulaşabilirsiniz! 7/24 destek veriyoruz.",
+  "nexy.resp.contact.1":
+    "Sorularınız için her zaman buradayız, iletişim kısmından bize yazmaktan çekinmeyin. Ayrıca Discord kanalımızda çok aktif bir topluluğumuz var.",
+  "nexy.resp.contact.2":
+    "Discord topluluğumuza katılarak da ekibimizle doğrudan iletişime geçebilirsiniz. Linki İletişim sayfasında bulabilirsiniz.",
+  "nexy.resp.about.0":
+    "Fun Teknoloji, teknolojiyi 'eğlenceli' ve 'faydalı' kılmak için kuruldu. Yapay zeka ve yazılım bizim tutkumuz.",
+  "nexy.resp.about.1":
+    "Misyonumuz, işletmeleri geleceğin teknolojileriyle bugünden tanıştırmak. Vizyonumuz ise global çapta bir teknoloji üssü olmak.",
+  "nexy.resp.about.2":
+    "Hakkımızda sayfasında tüm tarihimizi ve değerlerimizi bulabilirsiniz. İnovasyon, kalite ve güvenilirlik en önemli ilkelerimizdir.",
+  "nexy.resp.careers.0":
+    "Ekibimiz sürekli büyüyor! Kariyer fırsatları için bize özgeçmişinizi gönderebilir veya LinkedIn sayfamızı takip edebilirsiniz.",
+  "nexy.resp.careers.1":
+    "Yetenekli mühendisler, tasarımcılar ve yapay zeka meraklıları ile çalışmaktan her zaman mutluluk duyarız.",
+  "nexy.resp.careers.2":
+    "Şu an spesifik bir ilanımız olmasa da, yetenekli insanlara her zaman kapımız açık. Bize yazın!",
+  "nexy.resp.tech.0":
+    "Geliştirmelerimizde modern teknolojiler kullanıyoruz. React, TypeScript, TanStack, Tailwind ve çeşitli LLM modelleri vazgeçilmezimiz.",
+  "nexy.resp.tech.1":
+    "Sistemlerimizi yüksek performans ve ölçeklenebilirlik odaklı tasarlıyoruz. Cloud teknolojilerini en verimli şekilde kullanıyoruz.",
+  "nexy.resp.tech.2":
+    "Fun Teknoloji olarak sürekli AR-GE yapıyoruz. En yeni frameworkleri ve yapay zeka tekniklerini ilk biz uyguluyoruz.",
   "nexy.resp.greeting.0": "Merhaba! Size nasıl yardımcı olabilirim? Bugün teknoloji dolu bir gün!",
-  "nexy.resp.greeting.1": "Selamlar! Ben Nexy, Fun Teknoloji'nin yapay zeka asistanıyım. Sizi dinliyorum.",
-  "nexy.resp.greeting.2": "Hoş geldiniz! Merak ettiğiniz bir şey mi var? Size Fun Teknoloji hakkında her şeyi anlatabilirim.",
+  "nexy.resp.greeting.1":
+    "Selamlar! Ben Nexy, Fun Teknoloji'nin yapay zeka asistanıyım. Sizi dinliyorum.",
+  "nexy.resp.greeting.2":
+    "Hoş geldiniz! Merak ettiğiniz bir şey mi var? Size Fun Teknoloji hakkında her şeyi anlatabilirim.",
   "nexy.resp.default.0": "Mesajınız için teşekkürler. Size nasıl yardımcı olabilirim?",
-  "nexy.resp.default.1": "Bu konuda size daha detaylı yardımcı olabilmemiz için lütfen iletişim formunu doldurun.",
-  "nexy.resp.default.2": "Harika bir soru! Ama bu konuda henüz tam bir bilgim yok. İsterseniz ekibimize sorabilirim?",
-  "nexy.resp.default.3": "Size nasıl daha iyi yardımcı olabilirim? Teknoloji çözümlerimiz, kurucumuz veya hizmetlerimiz hakkında konuşabiliriz.",
+  "nexy.resp.default.1":
+    "Bu konuda size daha detaylı yardımcı olabilmemiz için lütfen iletişim formunu doldurun.",
+  "nexy.resp.default.2":
+    "Harika bir soru! Ama bu konuda henüz tam bir bilgim yok. İsterseniz ekibimize sorabilirim?",
+  "nexy.resp.default.3":
+    "Size nasıl daha iyi yardımcı olabilirim? Teknoloji çözümlerimiz, kurucumuz veya hizmetlerimiz hakkında konuşabiliriz.",
   "service.feature.automation": "Otomasyon",
   "service.feature.big_data": "Büyük Veri",
   "service.feature.bi": "İş Zekası",
@@ -3781,7 +4658,8 @@ const it: Dict = {
   "about.cta.title": "Lavoriamo insieme",
   "about.desc": "Fun Teknoloji è stata fondata nel 2025 da Muhammed Erbay.",
   "about.mission.badge": "La nostra missione",
-  "about.mission.desc": "Aiutare le aziende di tutte le dimensioni a ottenere un vantaggio competitivo nel mondo digitale consentendo loro di beneficiare dell’intelligenza artificiale e di soluzioni tecnologiche avanzate.",
+  "about.mission.desc":
+    "Aiutare le aziende di tutte le dimensioni a ottenere un vantaggio competitivo nel mondo digitale consentendo loro di beneficiare dell’intelligenza artificiale e di soluzioni tecnologiche avanzate.",
   "about.mission.title": "Potenziare le imprese con la tecnologia",
   "about.stats.clients": "Cliente felice",
   "about.stats.projects": "Progetto completato",
@@ -3791,7 +4669,8 @@ const it: Dict = {
   "about.title": "Costruiamo il futuro insieme alla tecnologia.",
   "about.values.1.desc": "Basiamo l'onestà e la trasparenza in tutto ciò che facciamo.",
   "about.values.1.title": "Affidabilità",
-  "about.values.2.desc": "Seguiamo le tecnologie più recenti e produciamo soluzioni pionieristiche.",
+  "about.values.2.desc":
+    "Seguiamo le tecnologie più recenti e produciamo soluzioni pionieristiche.",
   "about.values.2.title": "innovazione",
   "about.values.3.desc": "Consideriamo il successo dei nostri clienti come il nostro successo.",
   "about.values.3.title": "Attenzione al cliente",
@@ -3821,13 +4700,15 @@ const it: Dict = {
   "blog.post.read_aloud": "Leggi ad alta voce",
   "blog.post.reading_started": "È iniziata la lettura ad alta voce.",
   "blog.post.select_language": "SELEZIONA LINGUA",
-  "blog.post.stay_updated": "Non perdere gli sviluppi nel mondo dell'intelligenza artificiale e del software.",
+  "blog.post.stay_updated":
+    "Non perdere gli sviluppi nel mondo dell'intelligenza artificiale e del software.",
   "blog.post.stop_reading": "Smetti di leggere",
   "blog.post.translation_warning": "Il testo potrebbe essere tradotto in modo errato",
   "blog.title": "Dal mondo della tecnologia",
   "brand_kit.badge": "Corporate",
   "brand_kit.colors.title": "Our Color Palette",
-  "brand_kit.desc": "You can download Fun Teknoloji logos and visual materials here and take a look at the usage guide.",
+  "brand_kit.desc":
+    "You can download Fun Teknoloji logos and visual materials here and take a look at the usage guide.",
   "brand_kit.download_png": "Download PNG",
   "brand_kit.logos.fun_black.desc": "Black version for use on light-colored backgrounds.",
   "brand_kit.logos.fun_black.title": "Fun Technology Black Logo",
@@ -3863,7 +4744,8 @@ const it: Dict = {
   "contact.captcha.title": "Verifica della sicurezza",
   "contact.captcha.verify": "verificare",
   "contact.community.button": "Unisciti a Discord",
-  "contact.community.desc": "Unisciti alla nostra community tecnologica e comunica direttamente con il nostro team.",
+  "contact.community.desc":
+    "Unisciti alla nostra community tecnologica e comunica direttamente con il nostro team.",
   "contact.community.title": "Unisciti alla nostra comunità",
   "contact.desc": "Siamo qui per le tue domande.",
   "contact.form.email": "E-mail",
@@ -3886,7 +4768,8 @@ const it: Dict = {
   "docs.sidebar.getting_started": "Inizio",
   "docs.sidebar.intro": "Entrata",
   "docs.sidebar.setup": "Configurazione rapida",
-  "docs.soon.desc": "Sono in preparazione guide utente dettagliate per la nostra piattaforma e i nostri servizi. Saremo qui il prima possibile.",
+  "docs.soon.desc":
+    "Sono in preparazione guide utente dettagliate per la nostra piattaforma e i nostri servizi. Saremo qui il prima possibile.",
   "docs.soon.title": "Molto presto",
   "docs.title": "Documentazione",
   "error.home": "Pagina iniziale",
@@ -3899,27 +4782,38 @@ const it: Dict = {
   "faq.cat.services": "Servizi",
   "faq.cat.technical": "Tecnico",
   "faq.desc": "Domande sui nostri servizi e processi.",
-  "faq.q1.a": "Fun Technology è una società tecnologica specializzata in intelligenza artificiale, sviluppo di software personalizzato e trasformazione digitale.",
+  "faq.q1.a":
+    "Fun Technology è una società tecnologica specializzata in intelligenza artificiale, sviluppo di software personalizzato e trasformazione digitale.",
   "faq.q1.q": "Cos'è la tecnologia divertente?",
-  "faq.q10.a": "Sì, tutti i tuoi dati sono protetti da metodi di crittografia standard del settore e da un'infrastruttura cloud sicura.",
+  "faq.q10.a":
+    "Sì, tutti i tuoi dati sono protetti da metodi di crittografia standard del settore e da un'infrastruttura cloud sicura.",
   "faq.q10.q": "I miei dati sono al sicuro?",
-  "faq.q11.a": "La privacy dei dati degli utenti è la nostra massima priorità. Per informazioni dettagliate puoi consultare la nostra pagina Privacy Policy.",
+  "faq.q11.a":
+    "La privacy dei dati degli utenti è la nostra massima priorità. Per informazioni dettagliate puoi consultare la nostra pagina Privacy Policy.",
   "faq.q11.q": "Qual è la vostra politica sulla privacy?",
-  "faq.q2.a": "Fun Technology è stata fondata nel 2025 da Muhammed Erbay come iniziativa tecnologica visionaria.",
+  "faq.q2.a":
+    "Fun Technology è stata fondata nel 2025 da Muhammed Erbay come iniziativa tecnologica visionaria.",
   "faq.q2.q": "Quando è stata fondata Fun Teknoloji?",
-  "faq.q3.a": "Perché crediamo che la tecnologia non debba essere noiosa e complicata, ma uno strumento che renda la vita più semplice e 'divertente'.",
+  "faq.q3.a":
+    "Perché crediamo che la tecnologia non debba essere noiosa e complicata, ma uno strumento che renda la vita più semplice e 'divertente'.",
   "faq.q3.q": "Perché il tuo nome è Fun Teknoloji?",
-  "faq.q4.a": "Offriamo sviluppo software, integrazione dell'intelligenza artificiale, analisi dei dati, sicurezza informatica e soluzioni cloud.",
+  "faq.q4.a":
+    "Offriamo sviluppo software, integrazione dell'intelligenza artificiale, analisi dei dati, sicurezza informatica e soluzioni cloud.",
   "faq.q4.q": "Quali servizi offrite?",
-  "faq.q5.a": "Seguiamo un processo trasparente composto da fasi di analisi dei requisiti, prototipazione, sviluppo, test e pubblicazione.",
+  "faq.q5.a":
+    "Seguiamo un processo trasparente composto da fasi di analisi dei requisiti, prototipazione, sviluppo, test e pubblicazione.",
   "faq.q5.q": "Come funziona il processo del software personalizzato?",
-  "faq.q6.a": "Questo dipende dai tuoi obiettivi. Il nostro team analizzerà le tue esigenze e ti consiglierà la piattaforma più adatta.",
+  "faq.q6.a":
+    "Questo dipende dai tuoi obiettivi. Il nostro team analizzerà le tue esigenze e ti consiglierà la piattaforma più adatta.",
   "faq.q6.q": "Dovrei creare un'applicazione mobile o un sito Web?",
-  "faq.q7.a": "Utilizziamo stack tecnologici moderni come React, Next.js, TypeScript, Python, PyTorch, Database e AWS.",
+  "faq.q7.a":
+    "Utilizziamo stack tecnologici moderni come React, Next.js, TypeScript, Python, PyTorch, Database e AWS.",
   "faq.q7.q": "Quali tecnologie usi?",
-  "faq.q8.a": "Sì, forniamo supporto API completo e documentazione per le nostre soluzioni aziendali.",
+  "faq.q8.a":
+    "Sì, forniamo supporto API completo e documentazione per le nostre soluzioni aziendali.",
   "faq.q8.q": "Hai il supporto API?",
-  "faq.q9.a": "Sviluppiamo modelli specifici per il tuo progetto con i nostri set di dati e moderni framework di deep learning.",
+  "faq.q9.a":
+    "Sviluppiamo modelli specifici per il tuo progetto con i nostri set di dati e moderni framework di deep learning.",
   "faq.q9.q": "Come si addestrano i modelli IA?",
   "faq.title": "Domande frequenti",
   "footer.description": "Stiamo costruendo oggi le tecnologie del futuro.",
@@ -3929,52 +4823,70 @@ const it: Dict = {
   "home.cta.desc": "Se hai domande o hai bisogno di aiuto, contatta il nostro team di supporto.",
   "home.cta.more": "Scopri di più",
   "home.cta.title": "Inizia oggi.",
-  "home.faq.a1": "Fun Technology è un'azienda tecnologica specializzata in intelligenza artificiale, sviluppo software personalizzato e trasformazione digitale.",
+  "home.faq.a1":
+    "Fun Technology è un'azienda tecnologica specializzata in intelligenza artificiale, sviluppo software personalizzato e trasformazione digitale.",
   "home.faq.a2": "Sì, offriamo supporto tecnico e manutenzione 24/7 per i vostri progetti.",
-  "home.faq.a3": "Sebbene vari in base alla portata del progetto, completiamo i piccoli progetti in 2-4 settimane e i progetti complessi in 2-4 mesi.",
-  "home.faq.a4": "Il prezzo è determinato specificamente dalla complessità del progetto e dalle funzionalità richieste.",
-  "home.faq.a5": "Sì, siamo specializzati nell'integrazione di modelli di IA nei vostri sistemi esistenti.",
-  "home.faq.a6": "Certamente! Potete condividere le vostre idee di progetto con noi e ricevere una consulenza gratuita.",
+  "home.faq.a3":
+    "Sebbene vari in base alla portata del progetto, completiamo i piccoli progetti in 2-4 settimane e i progetti complessi in 2-4 mesi.",
+  "home.faq.a4":
+    "Il prezzo è determinato specificamente dalla complessità del progetto e dalle funzionalità richieste.",
+  "home.faq.a5":
+    "Sì, siamo specializzati nell'integrazione di modelli di IA nei vostri sistemi esistenti.",
+  "home.faq.a6":
+    "Certamente! Potete condividere le vostre idee di progetto con noi e ricevere una consulenza gratuita.",
   "home.faq.a7": "Sì, sviluppiamo moderne applicazioni mobili per piattaforme iOS and Android.",
   "home.faq.badge": "Domande frequenti",
   "home.faq.desc": "Tutto ciò che ti chiedi è qui.",
   "home.faq.title": "Domande frequenti",
   "home.features.badge": "Caratteristiche",
-  "home.features.card1.desc": "Automatizziamo il tuo lavoro utilizzando i più recenti modelli LLM e deep learning.",
+  "home.features.card1.desc":
+    "Automatizziamo il tuo lavoro utilizzando i più recenti modelli LLM e deep learning.",
   "home.features.card1.title": "Intelligenza artificiale avanzata",
   "home.features.card2.desc": "Sistemi scalabili che operano con bassa latenza in tutto il mondo.",
   "home.features.card2.title": "Infrastruttura globale",
-  "home.features.card3.desc": "I tuoi dati sono al sicuro con la crittografia AES-256 e protocolli di sicurezza avanzati.",
+  "home.features.card3.desc":
+    "I tuoi dati sono al sicuro con la crittografia AES-256 e protocolli di sicurezza avanzati.",
   "home.features.card3.title": "Sicurezza totale",
-  "home.features.desc": "Offriamo le tecnologie più moderne che porteranno il tuo business al livello successivo.",
+  "home.features.desc":
+    "Offriamo le tecnologie più moderne che porteranno il tuo business al livello successivo.",
   "home.features.title": "Perché dovresti sceglierci?",
   "home.hero.badge": "L'azienda tecnologica innovativa di Türkiye",
-  "home.hero.desc": "Spostiamo il tuo business al centro della trasformazione digitale con soluzioni pionieristiche nel campo dell'intelligenza artificiale, dello sviluppo software e dei sistemi intelligenti.",
+  "home.hero.desc":
+    "Spostiamo il tuo business al centro della trasformazione digitale con soluzioni pionieristiche nel campo dell'intelligenza artificiale, dello sviluppo software e dei sistemi intelligenti.",
   "home.hero.explore": "Scopri i servizi",
   "home.hero.start": "Iscriviti alla lista d'attesa",
   "home.hero.title": "Le tecnologie del futuro sono con noi oggi",
   "home.howitworks.badge": "Periodo",
   "home.howitworks.desc": "Scopri passo dopo passo come diamo vita al tuo progetto.",
-  "home.howitworks.step1.desc": "Analizziamo le tue esigenze e determiniamo lo stack tecnologico più adatto.",
+  "home.howitworks.step1.desc":
+    "Analizziamo le tue esigenze e determiniamo lo stack tecnologico più adatto.",
   "home.howitworks.step1.title": "Analisi e pianificazione",
-  "home.howitworks.step2.desc": "Creiamo interfacce user-friendly e solide strutture backend con principi di design moderni.",
+  "home.howitworks.step2.desc":
+    "Creiamo interfacce user-friendly e solide strutture backend con principi di design moderni.",
   "home.howitworks.step2.title": "Sviluppo e test",
-  "home.howitworks.step3.desc": "Pubblichiamo il tuo progetto e continuiamo a fornire supporto ininterrotto.",
+  "home.howitworks.step3.desc":
+    "Pubblichiamo il tuo progetto e continuiamo a fornire supporto ininterrotto.",
   "home.howitworks.step3.title": "Lancio e supporto",
   "home.howitworks.title": "Come lavoriamo?",
   "home.services.badge": "I nostri servizi",
-  "home.services.desc": "Scopri le soluzioni professionali che offriamo per far crescere il tuo business e distinguerti nel mondo digitale.",
-  "home.services.item1.desc": "Modelli di intelligenza artificiale e sistemi di automazione formati appositamente per il tuo business.",
+  "home.services.desc":
+    "Scopri le soluzioni professionali che offriamo per far crescere il tuo business e distinguerti nel mondo digitale.",
+  "home.services.item1.desc":
+    "Modelli di intelligenza artificiale e sistemi di automazione formati appositamente per il tuo business.",
   "home.services.item1.title": "Soluzioni di intelligenza artificiale",
   "home.services.item2.desc": "Applicazioni web scalabili e sicure con framework moderni.",
   "home.services.item2.title": "Sviluppo Web",
-  "home.services.item3.desc": "Applicazioni mobili native e ibride ad alte prestazioni per iOS e Android.",
+  "home.services.item3.desc":
+    "Applicazioni mobili native e ibride ad alte prestazioni per iOS e Android.",
   "home.services.item3.title": "Applicazione mobile",
-  "home.services.item4.desc": "Servizi di gestione dell'infrastruttura cloud e ottimizzazione dei database.",
+  "home.services.item4.desc":
+    "Servizi di gestione dell'infrastruttura cloud e ottimizzazione dei database.",
   "home.services.item4.title": "Nuvola e dati",
-  "home.services.item5.desc": "Garantiamo la sicurezza dei vostri sistemi ed effettuiamo analisi delle vulnerabilità.",
+  "home.services.item5.desc":
+    "Garantiamo la sicurezza dei vostri sistemi ed effettuiamo analisi delle vulnerabilità.",
   "home.services.item5.title": "Sicurezza informatica",
-  "home.services.item6.desc": "Guida e consulenza professionale nel tuo percorso di trasformazione digitale.",
+  "home.services.item6.desc":
+    "Guida e consulenza professionale nel tuo percorso di trasformazione digitale.",
   "home.services.item6.title": "Consulenza Tecnica",
   "home.services.title": "Soluzioni tecnologiche specifiche per le vostre esigenze",
   "home.stats.projects": "Progetto completato",
@@ -3982,14 +4894,21 @@ const it: Dict = {
   "home.stats.team": "Personale esperto",
   "home.stats.users": "Utente attivo",
   "home.testimonials.badge": "Commenti",
-  "home.testimonials.t1.text": "Lavorare con Fun Technology ha cambiato completamente i nostri processi aziendali. Grazie alle soluzioni di intelligenza artificiale, la nostra efficienza è aumentata.",
-  "home.testimonials.t2.text": "Il signor Muhammed e il suo team sono molto professionali. Hanno consegnato la nostra applicazione mobile in tempo e in modo impeccabile.",
-  "home.testimonials.t3.text": "Non abbiamo avuto problemi con il supporto tecnico. Hanno sempre un approccio orientato alla soluzione.",
-  "home.testimonials.t4.text": "Il nostro sito web ora è molto più veloce e sicuro. Grazie tecnologia divertente!",
-  "home.testimonials.t5.text": "Hanno aggiunto valore al nostro progetto con i loro approcci innovativi e prospettive visionarie.",
-  "home.testimonials.t6.text": "Hanno fatto un ottimo lavoro semplificando i nostri sistemi complessi. Lo consiglio vivamente.",
+  "home.testimonials.t1.text":
+    "Lavorare con Fun Technology ha cambiato completamente i nostri processi aziendali. Grazie alle soluzioni di intelligenza artificiale, la nostra efficienza è aumentata.",
+  "home.testimonials.t2.text":
+    "Il signor Muhammed e il suo team sono molto professionali. Hanno consegnato la nostra applicazione mobile in tempo e in modo impeccabile.",
+  "home.testimonials.t3.text":
+    "Non abbiamo avuto problemi con il supporto tecnico. Hanno sempre un approccio orientato alla soluzione.",
+  "home.testimonials.t4.text":
+    "Il nostro sito web ora è molto più veloce e sicuro. Grazie tecnologia divertente!",
+  "home.testimonials.t5.text":
+    "Hanno aggiunto valore al nostro progetto con i loro approcci innovativi e prospettive visionarie.",
+  "home.testimonials.t6.text":
+    "Hanno fatto un ottimo lavoro semplificando i nostri sistemi complessi. Lo consiglio vivamente.",
   "home.testimonials.title": "Storie di successo dei nostri clienti",
-  "home.whatwedo.text": "Come Fun Technology, sviluppiamo soluzioni software innovative supportate dall'intelligenza artificiale per preparare la tua azienda al futuro.",
+  "home.whatwedo.text":
+    "Come Fun Technology, sviluppiamo soluzioni software innovative supportate dall'intelligenza artificiale per preparare la tua azienda al futuro.",
   "inline.contact.message_error": "Inserisci un testo del messaggio valido.",
   "inline.contact.subject_error": "Inserisci un titolo dell'oggetto significativo.",
   "lang.label": "Seleziona lingua",
@@ -4034,27 +4953,32 @@ const it: Dict = {
   "nexy.assistant_title": "Fun Technology Assistant",
   "nexy.beta_tag": "Beta",
   "nexy.beta_warning": "Una risposta sbagliata può avere conseguenze durante la fase di sviluppo",
-  "nexy.capabilities.1.desc": "Comprende le tue domande e ti fornisce le informazioni più precise in pochi secondi.",
+  "nexy.capabilities.1.desc":
+    "Comprende le tue domande e ti fornisce le informazioni più precise in pochi secondi.",
   "nexy.capabilities.1.title": "Intelligenza avanzata",
-  "nexy.capabilities.2.desc": "Fornisce supporto ininterrotto 24 ore su 24, 7 giorni su 7, senza tempi di attesa.",
+  "nexy.capabilities.2.desc":
+    "Fornisce supporto ininterrotto 24 ore su 24, 7 giorni su 7, senza tempi di attesa.",
   "nexy.capabilities.2.title": "Risposta rapida",
   "nexy.capabilities.3.desc": "Può comunicare con te in qualsiasi lingua tu abbia bisogno.",
   "nexy.capabilities.3.title": "Supporto multilingue",
-  "nexy.capabilities.4.desc": "Le tue conversazioni rimangono private e i tuoi dati non vengono mai condivisi.",
+  "nexy.capabilities.4.desc":
+    "Le tue conversazioni rimangono private e i tuoi dati non vengono mai condivisi.",
   "nexy.capabilities.4.title": "Interazione sicura",
   "nexy.capabilities.5.desc": "Esegue ricerche intelligenti tra i tuoi documenti e dati.",
   "nexy.capabilities.5.title": "Ricerca intelligente",
   "nexy.capabilities.6.desc": "Stabilisce dialoghi umani, fluenti e significativi.",
   "nexy.capabilities.6.title": "Discorso naturale",
   "nexy.capabilities.badge": "Abilità",
-  "nexy.capabilities.desc": "Dotato di tecnologia di intelligenza artificiale, Nexy è sempre con te.",
+  "nexy.capabilities.desc":
+    "Dotato di tecnologia di intelligenza artificiale, Nexy è sempre con te.",
   "nexy.capabilities.title": "Cosa può fare Nexy?",
   "nexy.chat.response": "Grazie per il tuo messaggio Come posso aiutarla?",
   "nexy.copy_tooltip": "Copy",
   "nexy.demo.query": "Potete dare informazioni sui vostri servizi?",
   "nexy.help_button": "Aiuto",
   "nexy.hero.badge": "Divertente assistente AI per la tecnologia",
-  "nexy.hero.desc": "Il tuo assistente digitale basato sull'intelligenza artificiale che semplifica il tuo lavoro.",
+  "nexy.hero.desc":
+    "Il tuo assistente digitale basato sull'intelligenza artificiale che semplifica il tuo lavoro.",
   "nexy.hero.title": "Incontra Nexy",
   "nexy.msg1": "Ciao! Sono Nexy, assistente di Fun Technology. Come posso aiutarla?",
   "nexy.placeholder": "Type your message...",
@@ -4066,96 +4990,135 @@ const it: Dict = {
   "policy.contact.desc": "Se avete domande potete contattarci:",
   "policy.contact.title": "Comunicazione",
   "policy.last_updated": "Data dell'ultimo aggiornamento: 19/03/2026",
-  "policy.privacy.contact_desc": "Se hai domande sulla nostra Informativa sulla privacy o sul trattamento dei tuoi dati personali, puoi contattarci:",
-  "policy.privacy.intro": "La nostra Informativa sulla privacy spiega come raccogliamo, utilizziamo e proteggiamo le tue informazioni personali. La tua privacy e sicurezza sono la nostra priorità.",
-  "policy.privacy.s1.desc": "Potremmo raccogliere determinate informazioni personali da te quando visiti il ​​nostro sito Web, crei un account o interagisci con i nostri servizi. Queste informazioni possono includere:",
+  "policy.privacy.contact_desc":
+    "Se hai domande sulla nostra Informativa sulla privacy o sul trattamento dei tuoi dati personali, puoi contattarci:",
+  "policy.privacy.intro":
+    "La nostra Informativa sulla privacy spiega come raccogliamo, utilizziamo e proteggiamo le tue informazioni personali. La tua privacy e sicurezza sono la nostra priorità.",
+  "policy.privacy.s1.desc":
+    "Potremmo raccogliere determinate informazioni personali da te quando visiti il ​​nostro sito Web, crei un account o interagisci con i nostri servizi. Queste informazioni possono includere:",
   "policy.privacy.s1.item1": "Nome e cognome",
   "policy.privacy.s1.item2": "Indirizzo e-mail",
   "policy.privacy.s1.item3": "Informazioni sui contatti",
   "policy.privacy.s1.item4": "Altre informazioni da te fornite volontariamente",
   "policy.privacy.s1.title": "Informazioni che raccogliamo",
-  "policy.privacy.s2.desc": "Potremmo utilizzare le informazioni che raccogliamo per i seguenti scopi:",
+  "policy.privacy.s2.desc":
+    "Potremmo utilizzare le informazioni che raccogliamo per i seguenti scopi:",
   "policy.privacy.s2.item1": "Per fornire e migliorare i nostri servizi",
   "policy.privacy.s2.item2": "Personalizza l'esperienza dell'utente",
   "policy.privacy.s2.item3": "Per fornire informazioni sul tuo account",
   "policy.privacy.s2.item4": "Comunicare campagne e innovazioni",
   "policy.privacy.s2.item5": "Per migliorare i nostri servizi analizzando il traffico del sito",
   "policy.privacy.s2.title": "Come utilizziamo le tue informazioni",
-  "policy.privacy.s3.desc": "Prendiamo sul serio la sicurezza dei tuoi dati personali. Implementiamo misure di sicurezza standard del settore per proteggere da accessi non autorizzati, alterazioni, divulgazione o distruzione. Tuttavia, ricorda che la trasmissione dei dati su Internet o l'archiviazione elettronica non è sicura al 100%.",
+  "policy.privacy.s3.desc":
+    "Prendiamo sul serio la sicurezza dei tuoi dati personali. Implementiamo misure di sicurezza standard del settore per proteggere da accessi non autorizzati, alterazioni, divulgazione o distruzione. Tuttavia, ricorda che la trasmissione dei dati su Internet o l'archiviazione elettronica non è sicura al 100%.",
   "policy.privacy.s3.title": "Sicurezza dei dati",
-  "policy.privacy.s4.desc": "I tuoi dati personali: non saranno venduti o condivisi per scopi commerciali senza il tuo esplicito consenso. Possono essere condivisi con i fornitori di servizi quando richiesto da obblighi legali o a condizione che rispettino la riservatezza.",
+  "policy.privacy.s4.desc":
+    "I tuoi dati personali: non saranno venduti o condivisi per scopi commerciali senza il tuo esplicito consenso. Possono essere condivisi con i fornitori di servizi quando richiesto da obblighi legali o a condizione che rispettino la riservatezza.",
   "policy.privacy.s4.title": "Condivisione con terze parti",
-  "policy.privacy.s5.desc": "Il nostro sito web può utilizzare i cookie per migliorare l'esperienza dell'utente. Grazie ai cookie vengono raccolte informazioni su come utilizzi il sito. Puoi rifiutare i cookie o ricevere avvisi modificando le impostazioni del browser.",
+  "policy.privacy.s5.desc":
+    "Il nostro sito web può utilizzare i cookie per migliorare l'esperienza dell'utente. Grazie ai cookie vengono raccolte informazioni su come utilizzi il sito. Puoi rifiutare i cookie o ricevere avvisi modificando le impostazioni del browser.",
   "policy.privacy.s5.title": "Biscotti",
-  "policy.privacy.s6.desc": "La presente Informativa sulla privacy può essere aggiornata di volta in volta. Eventuali modifiche apportate vengono pubblicate su questa pagina e la data di entrata in vigore viene aggiornata. Ti consigliamo di controllare regolarmente questa pagina per gli aggiornamenti.",
+  "policy.privacy.s6.desc":
+    "La presente Informativa sulla privacy può essere aggiornata di volta in volta. Eventuali modifiche apportate vengono pubblicate su questa pagina e la data di entrata in vigore viene aggiornata. Ti consigliamo di controllare regolarmente questa pagina per gli aggiornamenti.",
   "policy.privacy.s6.title": "Cambiamenti",
-  "policy.service.intro": "Utilizzando la piattaforma Fun Technology, accetti di utilizzare i nostri servizi nel quadro di regole sicure, legali ed etiche. Ecco le condizioni base di utilizzo:",
-  "policy.service.s1.desc": "Per utilizzare la piattaforma è necessario creare un account con informazioni precise e aggiornate. Sei responsabile della riservatezza delle informazioni del tuo account.",
+  "policy.service.intro":
+    "Utilizzando la piattaforma Fun Technology, accetti di utilizzare i nostri servizi nel quadro di regole sicure, legali ed etiche. Ecco le condizioni base di utilizzo:",
+  "policy.service.s1.desc":
+    "Per utilizzare la piattaforma è necessario creare un account con informazioni precise e aggiornate. Sei responsabile della riservatezza delle informazioni del tuo account.",
   "policy.service.s1.title": "Utilizzo dell'account",
-  "policy.service.s2.desc": "Il contenuto che condividi e le transazioni che effettui sulla Piattaforma devono essere conformi a tutte le leggi e i regolamenti applicabili.",
+  "policy.service.s2.desc":
+    "Il contenuto che condividi e le transazioni che effettui sulla Piattaforma devono essere conformi a tutte le leggi e i regolamenti applicabili.",
   "policy.service.s2.title": "Conformità legale",
-  "policy.service.s3.desc": "Fun Technology implementa misure di sicurezza avanzate per proteggere i tuoi dati. Per la sicurezza del tuo account, devi mantenere segrete le tue password.",
+  "policy.service.s3.desc":
+    "Fun Technology implementa misure di sicurezza avanzate per proteggere i tuoi dati. Per la sicurezza del tuo account, devi mantenere segrete le tue password.",
   "policy.service.s3.title": "Sicurezza e privacy",
-  "policy.service.s4.desc": "Fun Teknoloji accetta una responsabilità limitata per il contenuto e i collegamenti di terze parti sulla piattaforma. Gli utenti utilizzano la piattaforma secondo le proprie responsabilità.",
+  "policy.service.s4.desc":
+    "Fun Teknoloji accetta una responsabilità limitata per il contenuto e i collegamenti di terze parti sulla piattaforma. Gli utenti utilizzano la piattaforma secondo le proprie responsabilità.",
   "policy.service.s4.title": "Disclaimer",
-  "policy.service.s5.desc": "Fun Teknoloji si riserva il diritto di apportare modifiche al contenuto, alle caratteristiche o ai termini di utilizzo al fine di migliorare la funzionalità della piattaforma.",
+  "policy.service.s5.desc":
+    "Fun Teknoloji si riserva il diritto di apportare modifiche al contenuto, alle caratteristiche o ai termini di utilizzo al fine di migliorare la funzionalità della piattaforma.",
   "policy.service.s5.title": "Modifiche al servizio",
-  "policy.service.s6.desc": "In caso di violazione dei termini di utilizzo, la piattaforma può limitare o chiudere gli account temporaneamente o permanentemente.",
+  "policy.service.s6.desc":
+    "In caso di violazione dei termini di utilizzo, la piattaforma può limitare o chiudere gli account temporaneamente o permanentemente.",
   "policy.service.s6.title": "Sanzioni",
   "pricing.badge": "Prezzi",
-  "pricing.desc": "Attualmente stiamo lavorando per rendere i nostri sistemi più efficienti ed economici.",
+  "pricing.desc":
+    "Attualmente stiamo lavorando per rendere i nostri sistemi più efficienti ed economici.",
   "pricing.title": "I nostri nuovi pacchetti saranno presto disponibili",
-  "projects.hero.desc": "I nostri progetti orientati alla soluzione sviluppati con tecnologie innovative.",
+  "projects.hero.desc":
+    "I nostri progetti orientati alla soluzione sviluppati con tecnologie innovative.",
   "projects.hero.title": "Stiamo costruendo il futuro",
-  "projects.nexy.desc": "L'assistente digitale basato sull'intelligenza artificiale di Fun Technology. Guida intelligente per aziende e utenti.",
-  "projects.quakesafe.desc": "Una nuova era nella tecnologia per la sicurezza in caso di catastrofi. Sistemi intelligenti che salvano vite umane durante e dopo un terremoto.",
+  "projects.nexy.desc":
+    "L'assistente digitale basato sull'intelligenza artificiale di Fun Technology. Guida intelligente per aziende e utenti.",
+  "projects.quakesafe.desc":
+    "Una nuova era nella tecnologia per la sicurezza in caso di catastrofi. Sistemi intelligenti che salvano vite umane durante e dopo un terremoto.",
   "projects.soon.desc": "Continuiamo a lavorare sui nostri nuovi entusiasmanti progetti.",
   "projects.soon.title": "Altro in arrivo",
   "projects.view": "Rivedere il progetto",
   "quakesafe.cta.button": "Ottieni l'accesso anticipato",
-  "quakesafe.cta.desc": "La tecnologia non serve solo a semplificare la vita, ma anche a proteggerla.",
+  "quakesafe.cta.desc":
+    "La tecnologia non serve solo a semplificare la vita, ma anche a proteggerla.",
   "quakesafe.cta.title": "Stiamo costruendo un futuro più sicuro",
-  "quakesafe.features.1.desc": "Ricevi avvisi critici pochi secondi prima che le onde del terremoto raggiungano.",
+  "quakesafe.features.1.desc":
+    "Ricevi avvisi critici pochi secondi prima che le onde del terremoto raggiungano.",
   "quakesafe.features.1.title": "Avvisi istantanei",
-  "quakesafe.features.10.desc": "Condividi il tuo stato di salute e il tuo gruppo sanguigno in caso di emergenza.",
+  "quakesafe.features.10.desc":
+    "Condividi il tuo stato di salute e il tuo gruppo sanguigno in caso di emergenza.",
   "quakesafe.features.10.title": "Monitoraggio della salute",
   "quakesafe.features.11.desc": "Esamina i dati storici sui terremoti e i rischi nella tua zona.",
   "quakesafe.features.11.title": "Analisi del passato",
   "quakesafe.features.12.desc": "Una piattaforma che unisce chi ha bisogno e chi può aiutare.",
   "quakesafe.features.12.title": "Rete di solidarietà",
-  "quakesafe.features.2.desc": "Scopri in tempo reale dove si trovano i tuoi cari durante un disastro.",
+  "quakesafe.features.2.desc":
+    "Scopri in tempo reale dove si trovano i tuoi cari durante un disastro.",
   "quakesafe.features.2.title": "Monitoraggio della posizione",
-  "quakesafe.features.3.desc": "Percorso immediato verso i centri di raccolta e le aree sicure più vicini.",
+  "quakesafe.features.3.desc":
+    "Percorso immediato verso i centri di raccolta e le aree sicure più vicini.",
   "quakesafe.features.3.title": "Aree sicure",
-  "quakesafe.features.4.desc": "Porta tutti i membri della famiglia in un'unica rete e monitora il loro stato.",
+  "quakesafe.features.4.desc":
+    "Porta tutti i membri della famiglia in un'unica rete e monitora il loro stato.",
   "quakesafe.features.4.title": "Gruppi familiari",
-  "quakesafe.features.5.desc": "Accedi a guide e mappe critiche anche quando Internet non è disponibile.",
+  "quakesafe.features.5.desc":
+    "Accedi a guide e mappe critiche anche quando Internet non è disponibile.",
   "quakesafe.features.5.title": "Modalità offline",
-  "quakesafe.features.6.desc": "Previsione del rischio danni e analisi della sicurezza dell’area con l’intelligenza artificiale.",
+  "quakesafe.features.6.desc":
+    "Previsione del rischio danni e analisi della sicurezza dell’area con l’intelligenza artificiale.",
   "quakesafe.features.6.title": "Analisi dell'intelligenza artificiale",
-  "quakesafe.features.7.desc": "Capacità di comunicare tra dispositivi quando le stazioni base non funzionano.",
+  "quakesafe.features.7.desc":
+    "Capacità di comunicare tra dispositivi quando le stazioni base non funzionano.",
   "quakesafe.features.7.title": "Rete a maglie",
-  "quakesafe.features.8.desc": "Mantieni i tuoi documenti importanti e i tuoi dati sanitari al sicuro.",
+  "quakesafe.features.8.desc":
+    "Mantieni i tuoi documenti importanti e i tuoi dati sanitari al sicuro.",
   "quakesafe.features.8.title": "Backup sul cloud",
-  "quakesafe.features.9.desc": "Segnalare alle autorità la posizione delle persone sotto le macerie con un solo clic.",
+  "quakesafe.features.9.desc":
+    "Segnalare alle autorità la posizione delle persone sotto le macerie con un solo clic.",
   "quakesafe.features.9.title": "Notifica rapida",
-  "quakesafe.features.desc": "Tutti gli strumenti di cui hai bisogno prima, durante e dopo un disastro si trovano su un'unica piattaforma.",
+  "quakesafe.features.desc":
+    "Tutti gli strumenti di cui hai bisogno prima, durante e dopo un disastro si trovano su un'unica piattaforma.",
   "quakesafe.features.title": "Rete di protezione completa",
-  "quakesafe.hero.desc": "Rivoluzione nella sicurezza sismica con intelligenza artificiale e reti di sensori. Il tuo più grande sostenitore in quei momenti in cui anche i secondi sono fondamentali.",
+  "quakesafe.hero.desc":
+    "Rivoluzione nella sicurezza sismica con intelligenza artificiale e reti di sensori. Il tuo più grande sostenitore in quei momenti in cui anche i secondi sono fondamentali.",
   "quakesafe.hero.title": "Non aver paura dei terremoti, stai al sicuro con QuakeSafe",
-  "reviews.desc": "Scopri le storie dei nostri partner commerciali che si sono trasformati con Fun Technology.",
+  "reviews.desc":
+    "Scopri le storie dei nostri partner commerciali che si sono trasformati con Fun Technology.",
   "reviews.r1.name": "Ahmet Yilmaz",
-  "reviews.r1.text": "In qualità di proprietario di una piccola impresa, le soluzioni software che offri sono state un vero toccasana per migliorare la nostra efficienza operativa. Ha davvero superato le mie aspettative.",
+  "reviews.r1.text":
+    "In qualità di proprietario di una piccola impresa, le soluzioni software che offri sono state un vero toccasana per migliorare la nostra efficienza operativa. Ha davvero superato le mie aspettative.",
   "reviews.r2.name": "Zeynep Kaya",
-  "reviews.r2.text": "L’integrazione dell’intelligenza artificiale è assolutamente incredibile! Abbiamo risparmiato molto tempo automatizzando i nostri processi aziendali.",
+  "reviews.r2.text":
+    "L’integrazione dell’intelligenza artificiale è assolutamente incredibile! Abbiamo risparmiato molto tempo automatizzando i nostri processi aziendali.",
   "reviews.r3.name": "Murat Demir",
-  "reviews.r3.text": "Questa tecnologia ha rivoluzionato i nostri processi di analisi dei dati. Le intuizioni sono così profonde che ora prendiamo le nostre decisioni con molta più fiducia.",
+  "reviews.r3.text":
+    "Questa tecnologia ha rivoluzionato i nostri processi di analisi dei dati. Le intuizioni sono così profonde che ora prendiamo le nostre decisioni con molta più fiducia.",
   "reviews.r4.name": "Elif Sahin",
-  "reviews.r4.text": "In qualità di project manager, questo strumento si è rivelato prezioso per garantire il coordinamento tra i team. L'interfaccia user-friendly è fantastica!",
+  "reviews.r4.text":
+    "In qualità di project manager, questo strumento si è rivelato prezioso per garantire il coordinamento tra i team. L'interfaccia user-friendly è fantastica!",
   "reviews.r5.name": "Caner Özkan",
-  "reviews.r5.text": "La velocità e la qualità del loro processo di sviluppo sono strabilianti. Siamo stati in grado di ricevere i nostri progetti in tempo mantenendo standard di qualità eccezionali.",
+  "reviews.r5.text":
+    "La velocità e la qualità del loro processo di sviluppo sono strabilianti. Siamo stati in grado di ricevere i nostri progetti in tempo mantenendo standard di qualità eccezionali.",
   "reviews.r6.name": "Selin Aydin",
-  "reviews.r6.text": "Questa piattaforma ha trasformato il modo in cui gestiamo la nostra presenza digitale. La tecnologia è così moderna e impressionante che tutto il nostro team è rimasto sbalordito.",
+  "reviews.r6.text":
+    "Questa piattaforma ha trasformato il modo in cui gestiamo la nostra presenza digitale. La tecnologia è così moderna e impressionante che tutto il nostro team è rimasto sbalordito.",
   "reviews.title": "Cosa dicono i nostri clienti?",
   "reviews.verified": "Cliente verificato",
   "sitemap.desc": "Panoramica di tutte le pagine del sito Web Fun Teknoloji.",
@@ -4166,7 +5129,8 @@ const it: Dict = {
   "team.desc": "Incontra i nomi di talento dietro Fun Technology.",
   "team.join.desc": "Vorresti costruire il futuro insieme a noi? Aspettiamo le vostre candidature.",
   "team.join.title": "Unisciti al nostro team",
-  "team.member.muhammed.bio": "Muhammed Erbay, il fondatore di Fun Technology, guida l'azienda con la visione di rendere la tecnologia accessibile e utile per tutti.",
+  "team.member.muhammed.bio":
+    "Muhammed Erbay, il fondatore di Fun Technology, guida l'azienda con la visione di rendere la tecnologia accessibile e utile per tutti.",
   "team.title": "Il potere dietro il nostro successo",
   "theme.dark": "Passa al tema scuro",
   "theme.light": "Passa ad Apri tema",
@@ -4182,34 +5146,60 @@ const it: Dict = {
   "home.testimonials.t6.name": "Selin Aydin",
   "blog.index.untitled": "Post senza titolo",
   "blog.index.category_default": "Tecnologia",
-  "nexy.resp.pricing.0": "Fiyatlandırma politikalarımız üzerinde çalışıyoruz. En güncel paketler için Fiyatlandırma sayfamızı takip edebilirsiniz. Şu an için bekleme listemize katılmak en iyi seçenek!",
-  "nexy.resp.pricing.1": "Şu an için tüm hizmetlerimiz için size özel teklif sunuyoruz, detaylar yakında sayfalarımızda olacak. Genelde proje bazlı fiyatlandırma yapıyoruz.",
-  "nexy.resp.pricing.2": "Paketlerimiz güncelleniyor. Fun Teknoloji olarak her bütçeye uygun teknoloji çözümleri üretmeyi hedefliyoruz.",
-  "nexy.resp.services.0": "Yapay zeka entegrasyonu, özel yazılım geliştirme, mobil uygulama ve siber güvenlik alanlarında profesyonel çözümler sunuyoruz. Hangi alanla ilgileniyorsunuz?",
-  "nexy.resp.services.1": "Dijital dönüşüm yolculuğunuzda size en modern teknoloji yığını ile eşlik ediyoruz. React, Next.js, AI modelleri ve daha fazlasını kullanıyoruz.",
-  "nexy.resp.services.2": "İş süreçlerinizi otomatize edecek yapay zeka çözümlerimiz hakkında detaylı bilgi için Hizmetler sayfamıza bakabilirsiniz. Verimliliğinizi %40'a kadar artırabiliriz.",
-  "nexy.resp.founder.0": "Fun Teknoloji, Muhammed Erbay tarafından 2025 yılında vizyoner bir teknoloji şirketi olarak kurulmuştur.",
-  "nexy.resp.founder.1": "Kurucumuz Muhammed Erbay, teknolojiyi herkes için erişilebilir ve faydalı kılma vizyonuyla bu yola çıktı. Kendisi genç ve hırslı bir girişimcidir.",
-  "nexy.resp.founder.2": "2025'te Muhammed Erbay liderliğinde kurulan Fun Teknoloji, Türkiye'nin dijital geleceğine odaklanıyor. Muhammed Bey bizzat projelerin mimarisini denetliyor.",
-  "nexy.resp.contact.0": "Bize iletişim sayfasındaki formdan veya support@funteknoloji.com adresinden ulaşabilirsiniz! 7/24 destek veriyoruz.",
-  "nexy.resp.contact.1": "Sorularınız için her zaman buradayız, iletişim kısmından bize yazmaktan çekinmeyin. Ayrıca Discord kanalımızda çok aktif bir topluluğumuz var.",
-  "nexy.resp.contact.2": "Discord topluluğumuza katılarak da ekibimizle doğrudan iletişime geçebilirsiniz. Linki İletişim sayfasında bulabilirsiniz.",
-  "nexy.resp.about.0": "Fun Teknoloji, teknolojiyi 'eğlenceli' ve 'faydalı' kılmak için kuruldu. Yapay zeka ve yazılım bizim tutkumuz.",
-  "nexy.resp.about.1": "Misyonumuz, işletmeleri geleceğin teknolojileriyle bugünden tanıştırmak. Vizyonumuz ise global çapta bir teknoloji üssü olmak.",
-  "nexy.resp.about.2": "Hakkımızda sayfasında tüm tarihimizi ve değerlerimizi bulabilirsiniz. İnovasyon, kalite ve güvenilirlik en önemli ilkelerimizdir.",
-  "nexy.resp.careers.0": "Ekibimiz sürekli büyüyor! Kariyer fırsatları için bize özgeçmişinizi gönderebilir veya LinkedIn sayfamızı takip edebilirsiniz.",
-  "nexy.resp.careers.1": "Yetenekli mühendisler, tasarımcılar ve yapay zeka meraklıları ile çalışmaktan her zaman mutluluk duyarız.",
-  "nexy.resp.careers.2": "Şu an spesifik bir ilanımız olmasa da, yetenekli insanlara her zaman kapımız açık. Bize yazın!",
-  "nexy.resp.tech.0": "Geliştirmelerimizde modern teknolojiler kullanıyoruz. React, TypeScript, TanStack, Tailwind ve çeşitli LLM modelleri vazgeçilmezimiz.",
-  "nexy.resp.tech.1": "Sistemlerimizi yüksek performans ve ölçeklenebilirlik odaklı tasarlıyoruz. Cloud teknolojilerini en verimli şekilde kullanıyoruz.",
-  "nexy.resp.tech.2": "Fun Teknoloji olarak sürekli AR-GE yapıyoruz. En yeni frameworkleri ve yapay zeka tekniklerini ilk biz uyguluyoruz.",
+  "nexy.resp.pricing.0":
+    "Fiyatlandırma politikalarımız üzerinde çalışıyoruz. En güncel paketler için Fiyatlandırma sayfamızı takip edebilirsiniz. Şu an için bekleme listemize katılmak en iyi seçenek!",
+  "nexy.resp.pricing.1":
+    "Şu an için tüm hizmetlerimiz için size özel teklif sunuyoruz, detaylar yakında sayfalarımızda olacak. Genelde proje bazlı fiyatlandırma yapıyoruz.",
+  "nexy.resp.pricing.2":
+    "Paketlerimiz güncelleniyor. Fun Teknoloji olarak her bütçeye uygun teknoloji çözümleri üretmeyi hedefliyoruz.",
+  "nexy.resp.services.0":
+    "Yapay zeka entegrasyonu, özel yazılım geliştirme, mobil uygulama ve siber güvenlik alanlarında profesyonel çözümler sunuyoruz. Hangi alanla ilgileniyorsunuz?",
+  "nexy.resp.services.1":
+    "Dijital dönüşüm yolculuğunuzda size en modern teknoloji yığını ile eşlik ediyoruz. React, Next.js, AI modelleri ve daha fazlasını kullanıyoruz.",
+  "nexy.resp.services.2":
+    "İş süreçlerinizi otomatize edecek yapay zeka çözümlerimiz hakkında detaylı bilgi için Hizmetler sayfamıza bakabilirsiniz. Verimliliğinizi %40'a kadar artırabiliriz.",
+  "nexy.resp.founder.0":
+    "Fun Teknoloji, Muhammed Erbay tarafından 2025 yılında vizyoner bir teknoloji şirketi olarak kurulmuştur.",
+  "nexy.resp.founder.1":
+    "Kurucumuz Muhammed Erbay, teknolojiyi herkes için erişilebilir ve faydalı kılma vizyonuyla bu yola çıktı. Kendisi genç ve hırslı bir girişimcidir.",
+  "nexy.resp.founder.2":
+    "2025'te Muhammed Erbay liderliğinde kurulan Fun Teknoloji, Türkiye'nin dijital geleceğine odaklanıyor. Muhammed Bey bizzat projelerin mimarisini denetliyor.",
+  "nexy.resp.contact.0":
+    "Bize iletişim sayfasındaki formdan veya support@funteknoloji.com adresinden ulaşabilirsiniz! 7/24 destek veriyoruz.",
+  "nexy.resp.contact.1":
+    "Sorularınız için her zaman buradayız, iletişim kısmından bize yazmaktan çekinmeyin. Ayrıca Discord kanalımızda çok aktif bir topluluğumuz var.",
+  "nexy.resp.contact.2":
+    "Discord topluluğumuza katılarak da ekibimizle doğrudan iletişime geçebilirsiniz. Linki İletişim sayfasında bulabilirsiniz.",
+  "nexy.resp.about.0":
+    "Fun Teknoloji, teknolojiyi 'eğlenceli' ve 'faydalı' kılmak için kuruldu. Yapay zeka ve yazılım bizim tutkumuz.",
+  "nexy.resp.about.1":
+    "Misyonumuz, işletmeleri geleceğin teknolojileriyle bugünden tanıştırmak. Vizyonumuz ise global çapta bir teknoloji üssü olmak.",
+  "nexy.resp.about.2":
+    "Hakkımızda sayfasında tüm tarihimizi ve değerlerimizi bulabilirsiniz. İnovasyon, kalite ve güvenilirlik en önemli ilkelerimizdir.",
+  "nexy.resp.careers.0":
+    "Ekibimiz sürekli büyüyor! Kariyer fırsatları için bize özgeçmişinizi gönderebilir veya LinkedIn sayfamızı takip edebilirsiniz.",
+  "nexy.resp.careers.1":
+    "Yetenekli mühendisler, tasarımcılar ve yapay zeka meraklıları ile çalışmaktan her zaman mutluluk duyarız.",
+  "nexy.resp.careers.2":
+    "Şu an spesifik bir ilanımız olmasa da, yetenekli insanlara her zaman kapımız açık. Bize yazın!",
+  "nexy.resp.tech.0":
+    "Geliştirmelerimizde modern teknolojiler kullanıyoruz. React, TypeScript, TanStack, Tailwind ve çeşitli LLM modelleri vazgeçilmezimiz.",
+  "nexy.resp.tech.1":
+    "Sistemlerimizi yüksek performans ve ölçeklenebilirlik odaklı tasarlıyoruz. Cloud teknolojilerini en verimli şekilde kullanıyoruz.",
+  "nexy.resp.tech.2":
+    "Fun Teknoloji olarak sürekli AR-GE yapıyoruz. En yeni frameworkleri ve yapay zeka tekniklerini ilk biz uyguluyoruz.",
   "nexy.resp.greeting.0": "Merhaba! Size nasıl yardımcı olabilirim? Bugün teknoloji dolu bir gün!",
-  "nexy.resp.greeting.1": "Selamlar! Ben Nexy, Fun Teknoloji'nin yapay zeka asistanıyım. Sizi dinliyorum.",
-  "nexy.resp.greeting.2": "Hoş geldiniz! Merak ettiğiniz bir şey mi var? Size Fun Teknoloji hakkında her şeyi anlatabilirim.",
+  "nexy.resp.greeting.1":
+    "Selamlar! Ben Nexy, Fun Teknoloji'nin yapay zeka asistanıyım. Sizi dinliyorum.",
+  "nexy.resp.greeting.2":
+    "Hoş geldiniz! Merak ettiğiniz bir şey mi var? Size Fun Teknoloji hakkında her şeyi anlatabilirim.",
   "nexy.resp.default.0": "Mesajınız için teşekkürler. Size nasıl yardımcı olabilirim?",
-  "nexy.resp.default.1": "Bu konuda size daha detaylı yardımcı olabilmemiz için lütfen iletişim formunu doldurun.",
-  "nexy.resp.default.2": "Harika bir soru! Ama bu konuda henüz tam bir bilgim yok. İsterseniz ekibimize sorabilirim?",
-  "nexy.resp.default.3": "Size nasıl daha iyi yardımcı olabilirim? Teknoloji çözümlerimiz, kurucumuz veya hizmetlerimiz hakkında konuşabiliriz.",
+  "nexy.resp.default.1":
+    "Bu konuda size daha detaylı yardımcı olabilmemiz için lütfen iletişim formunu doldurun.",
+  "nexy.resp.default.2":
+    "Harika bir soru! Ama bu konuda henüz tam bir bilgim yok. İsterseniz ekibimize sorabilirim?",
+  "nexy.resp.default.3":
+    "Size nasıl daha iyi yardımcı olabilirim? Teknoloji çözümlerimiz, kurucumuz veya hizmetlerimiz hakkında konuşabiliriz.",
   "service.feature.automation": "Otomasyon",
   "service.feature.big_data": "Büyük Veri",
   "service.feature.bi": "İş Zekası",
@@ -4249,7 +5239,8 @@ const pt: Dict = {
   "about.cta.title": "Vamos trabalhar juntos",
   "about.desc": "A Fun Teknoloji foi fundada em 2025 por Muhammed Erbay.",
   "about.mission.badge": "Nossa missão",
-  "about.mission.desc": "Ajudar empresas de todos os tamanhos a obter vantagem competitiva no mundo digital, permitindo-lhes beneficiar de inteligência artificial e soluções tecnológicas avançadas.",
+  "about.mission.desc":
+    "Ajudar empresas de todos os tamanhos a obter vantagem competitiva no mundo digital, permitindo-lhes beneficiar de inteligência artificial e soluções tecnológicas avançadas.",
   "about.mission.title": "Capacitando empresas com tecnologia",
   "about.stats.clients": "Cliente feliz",
   "about.stats.projects": "Projeto concluído",
@@ -4263,11 +5254,13 @@ const pt: Dict = {
   "about.values.2.title": "inovação",
   "about.values.3.desc": "Vemos o sucesso dos nossos clientes como o nosso próprio sucesso.",
   "about.values.3.title": "Foco no cliente",
-  "about.values.4.desc": "Produzimos não só trabalhos funcionais, mas também estéticos e de qualidade.",
+  "about.values.4.desc":
+    "Produzimos não só trabalhos funcionais, mas também estéticos e de qualidade.",
   "about.values.4.title": "Qualidade",
   "about.values.5.desc": "Encontramos soluções simples e eficazes para problemas complexos.",
   "about.values.5.title": "Simplicidade",
-  "about.values.6.desc": "Acreditamos que o desenvolvimento não tem fim, estamos em constante aprendizado.",
+  "about.values.6.desc":
+    "Acreditamos que o desenvolvimento não tem fim, estamos em constante aprendizado.",
   "about.values.6.title": "Melhoria Contínua",
   "about.values.badge": "Nossos valores",
   "about.values.title": "Princípios que nos tornam quem somos",
@@ -4289,13 +5282,15 @@ const pt: Dict = {
   "blog.post.read_aloud": "Leia em voz alta",
   "blog.post.reading_started": "A leitura em voz alta começou.",
   "blog.post.select_language": "SELECIONE O IDIOMA",
-  "blog.post.stay_updated": "Não perca os desenvolvimentos no mundo da inteligência artificial e do software.",
+  "blog.post.stay_updated":
+    "Não perca os desenvolvimentos no mundo da inteligência artificial e do software.",
   "blog.post.stop_reading": "Pare de ler",
   "blog.post.translation_warning": "O texto pode estar traduzido incorretamente",
   "blog.title": "Do mundo da tecnologia",
   "brand_kit.badge": "Corporate",
   "brand_kit.colors.title": "Our Color Palette",
-  "brand_kit.desc": "You can download Fun Teknoloji logos and visual materials here and take a look at the usage guide.",
+  "brand_kit.desc":
+    "You can download Fun Teknoloji logos and visual materials here and take a look at the usage guide.",
   "brand_kit.download_png": "Download PNG",
   "brand_kit.logos.fun_black.desc": "Black version for use on light-colored backgrounds.",
   "brand_kit.logos.fun_black.title": "Fun Technology Black Logo",
@@ -4331,7 +5326,8 @@ const pt: Dict = {
   "contact.captcha.title": "Verificação de segurança",
   "contact.captcha.verify": "verificar",
   "contact.community.button": "Junte-se à discórdia",
-  "contact.community.desc": "Junte-se à nossa comunidade tecnológica e comunique-se diretamente com nossa equipe.",
+  "contact.community.desc":
+    "Junte-se à nossa comunidade tecnológica e comunique-se diretamente com nossa equipe.",
   "contact.community.title": "Junte-se à nossa comunidade",
   "contact.desc": "Estamos aqui para tirar suas dúvidas.",
   "contact.form.email": "E-mail",
@@ -4354,7 +5350,8 @@ const pt: Dict = {
   "docs.sidebar.getting_started": "Começo",
   "docs.sidebar.intro": "Entrada",
   "docs.sidebar.setup": "Configuração rápida",
-  "docs.soon.desc": "Guias de usuário detalhados estão sendo preparados para nossa plataforma e serviços. Estaremos aqui o mais breve possível.",
+  "docs.soon.desc":
+    "Guias de usuário detalhados estão sendo preparados para nossa plataforma e serviços. Estaremos aqui o mais breve possível.",
   "docs.soon.title": "Muito em breve",
   "docs.title": "Documentação",
   "error.home": "Página inicial",
@@ -4367,82 +5364,114 @@ const pt: Dict = {
   "faq.cat.services": "Serviços",
   "faq.cat.technical": "Técnico",
   "faq.desc": "Dúvidas sobre nossos serviços e processos.",
-  "faq.q1.a": "A Fun Technology é uma empresa de tecnologia especializada em inteligência artificial, desenvolvimento de software customizado e transformação digital.",
+  "faq.q1.a":
+    "A Fun Technology é uma empresa de tecnologia especializada em inteligência artificial, desenvolvimento de software customizado e transformação digital.",
   "faq.q1.q": "O que é tecnologia divertida?",
-  "faq.q10.a": "Sim, todos os seus dados são protegidos por métodos de criptografia padrão do setor e infraestrutura em nuvem segura.",
+  "faq.q10.a":
+    "Sim, todos os seus dados são protegidos por métodos de criptografia padrão do setor e infraestrutura em nuvem segura.",
   "faq.q10.q": "Meus dados estão seguros?",
-  "faq.q11.a": "A privacidade dos dados do usuário é nossa principal prioridade. Para informações detalhadas, você pode consultar nossa página de Política de Privacidade.",
+  "faq.q11.a":
+    "A privacidade dos dados do usuário é nossa principal prioridade. Para informações detalhadas, você pode consultar nossa página de Política de Privacidade.",
   "faq.q11.q": "Qual é a sua política de privacidade?",
-  "faq.q2.a": "A Fun Technology foi fundada em 2025 por Muhammed Erbay como uma iniciativa tecnológica visionária.",
+  "faq.q2.a":
+    "A Fun Technology foi fundada em 2025 por Muhammed Erbay como uma iniciativa tecnológica visionária.",
   "faq.q2.q": "Quando foi fundada a Fun Teknoloji?",
-  "faq.q3.a": "Porque acreditamos que a tecnologia não deve ser chata e complicada, mas sim uma ferramenta que torna a vida mais fácil e ‘divertida’.",
+  "faq.q3.a":
+    "Porque acreditamos que a tecnologia não deve ser chata e complicada, mas sim uma ferramenta que torna a vida mais fácil e ‘divertida’.",
   "faq.q3.q": "Por que seu nome é Fun Teknoloji?",
-  "faq.q4.a": "Oferecemos desenvolvimento de software, integração de inteligência artificial, análise de dados, segurança cibernética e soluções em nuvem.",
+  "faq.q4.a":
+    "Oferecemos desenvolvimento de software, integração de inteligência artificial, análise de dados, segurança cibernética e soluções em nuvem.",
   "faq.q4.q": "Quais serviços você oferece?",
-  "faq.q5.a": "Seguimos um processo transparente que consiste nas etapas de análise de requisitos, prototipagem, desenvolvimento, testes e publicação.",
+  "faq.q5.a":
+    "Seguimos um processo transparente que consiste nas etapas de análise de requisitos, prototipagem, desenvolvimento, testes e publicação.",
   "faq.q5.q": "Como funciona o processo de software personalizado?",
-  "faq.q6.a": "Isso depende de seus objetivos. Nossa equipe analisará suas necessidades e recomendará a plataforma mais adequada.",
+  "faq.q6.a":
+    "Isso depende de seus objetivos. Nossa equipe analisará suas necessidades e recomendará a plataforma mais adequada.",
   "faq.q6.q": "Devo construir um aplicativo móvel ou site?",
-  "faq.q7.a": "Usamos pilhas de tecnologia modernas como React, Next.js, TypeScript, Python, PyTorch, Database e AWS.",
+  "faq.q7.a":
+    "Usamos pilhas de tecnologia modernas como React, Next.js, TypeScript, Python, PyTorch, Database e AWS.",
   "faq.q7.q": "Quais tecnologias você usa?",
-  "faq.q8.a": "Sim, oferecemos suporte abrangente de API e documentação para nossas soluções empresariais.",
+  "faq.q8.a":
+    "Sim, oferecemos suporte abrangente de API e documentação para nossas soluções empresariais.",
   "faq.q8.q": "Você tem suporte de API?",
-  "faq.q9.a": "Desenvolvemos modelos específicos para o seu projeto com nossos próprios conjuntos de dados e estruturas modernas de aprendizagem profunda.",
+  "faq.q9.a":
+    "Desenvolvemos modelos específicos para o seu projeto com nossos próprios conjuntos de dados e estruturas modernas de aprendizagem profunda.",
   "faq.q9.q": "Como você treina modelos de IA?",
   "faq.title": "Perguntas frequentes",
   "footer.description": "Estamos construindo hoje as tecnologias do futuro.",
   "footer.rights": "Todos os direitos reservados.",
   "footer.status": "Status do sistema",
   "home.cta.button": "Contate-nos",
-  "home.cta.desc": "Se você tiver alguma dúvida ou precisar de ajuda, entre em contato com nossa equipe de suporte.",
+  "home.cta.desc":
+    "Se você tiver alguma dúvida ou precisar de ajuda, entre em contato com nossa equipe de suporte.",
   "home.cta.more": "Descubra mais",
   "home.cta.title": "Comece hoje.",
-  "home.faq.a1": "A Fun Technology è uma empresa de tecnologia especializada em inteligência artificial, desenvolvimento de software personalizado e transformação digital.",
+  "home.faq.a1":
+    "A Fun Technology è uma empresa de tecnologia especializada em inteligência artificial, desenvolvimento de software personalizado e transformação digital.",
   "home.faq.a2": "Sim, oferecemos suporte técnico e manutenção 24/7 para seus projetos.",
-  "home.faq.a3": "Embora varie dependendo do escopo do projeto, concluímos projetos pequenos em 2-4 semanas e projetos abrangentes em 2-4 meses.",
-  "home.faq.a4": "O preço è determinado especificamente pela complexidade do seu projeto e pelos recursos necessários.",
-  "home.faq.a5": "Sim, somos especialistas na integração de modelos de IA nos seus sistemas existentes.",
-  "home.faq.a6": "Certamente! Você pode compartilhar suas ideias de projeto conosco e obter consultoria gratuita.",
-  "home.faq.a7": "Sim, desenvolvemos aplicações móveis modernas para as plataformas iOS and Android.",
+  "home.faq.a3":
+    "Embora varie dependendo do escopo do projeto, concluímos projetos pequenos em 2-4 semanas e projetos abrangentes em 2-4 meses.",
+  "home.faq.a4":
+    "O preço è determinado especificamente pela complexidade do seu projeto e pelos recursos necessários.",
+  "home.faq.a5":
+    "Sim, somos especialistas na integração de modelos de IA nos seus sistemas existentes.",
+  "home.faq.a6":
+    "Certamente! Você pode compartilhar suas ideias de projeto conosco e obter consultoria gratuita.",
+  "home.faq.a7":
+    "Sim, desenvolvemos aplicações móveis modernas para as plataformas iOS and Android.",
   "home.faq.badge": "Perguntas frequentes",
   "home.faq.desc": "Tudo o que você quer saber está aqui.",
   "home.faq.title": "Perguntas frequentes",
   "home.features.badge": "Características",
-  "home.features.card1.desc": "Automatizamos seu trabalho usando os mais recentes modelos de LLM e aprendizado profundo.",
+  "home.features.card1.desc":
+    "Automatizamos seu trabalho usando os mais recentes modelos de LLM e aprendizado profundo.",
   "home.features.card1.title": "Inteligência Artificial Avançada",
-  "home.features.card2.desc": "Sistemas escaláveis ​​que operam com baixa latência em todo o mundo.",
+  "home.features.card2.desc":
+    "Sistemas escaláveis ​​que operam com baixa latência em todo o mundo.",
   "home.features.card2.title": "Infraestrutura Global",
-  "home.features.card3.desc": "Seus dados estão seguros com criptografia AES-256 e protocolos de segurança avançados.",
+  "home.features.card3.desc":
+    "Seus dados estão seguros com criptografia AES-256 e protocolos de segurança avançados.",
   "home.features.card3.title": "Segurança Total",
-  "home.features.desc": "Oferecemos as mais modernas tecnologias que levarão seu negócio ao próximo nível.",
+  "home.features.desc":
+    "Oferecemos as mais modernas tecnologias que levarão seu negócio ao próximo nível.",
   "home.features.title": "Por que você deve nos escolher?",
   "home.hero.badge": "Empresa de tecnologia inovadora de Türkiye",
-  "home.hero.desc": "Levamos o seu negócio para o centro da transformação digital com soluções pioneiras na área de inteligência artificial, desenvolvimento de software e sistemas inteligentes.",
+  "home.hero.desc":
+    "Levamos o seu negócio para o centro da transformação digital com soluções pioneiras na área de inteligência artificial, desenvolvimento de software e sistemas inteligentes.",
   "home.hero.explore": "Descubra serviços",
   "home.hero.start": "Junte-se à lista de espera",
   "home.hero.title": "As tecnologias do futuro estão conosco hoje",
   "home.howitworks.badge": "Período",
   "home.howitworks.desc": "Descubra passo a passo como damos vida ao seu projeto.",
-  "home.howitworks.step1.desc": "Analisamos suas necessidades e determinamos a pilha de tecnologia mais adequada.",
+  "home.howitworks.step1.desc":
+    "Analisamos suas necessidades e determinamos a pilha de tecnologia mais adequada.",
   "home.howitworks.step1.title": "Análise e Planejamento",
-  "home.howitworks.step2.desc": "Estabelecemos interfaces fáceis de usar e estruturas de back-end fortes com princípios de design modernos.",
+  "home.howitworks.step2.desc":
+    "Estabelecemos interfaces fáceis de usar e estruturas de back-end fortes com princípios de design modernos.",
   "home.howitworks.step2.title": "Desenvolvimento e Teste",
-  "home.howitworks.step3.desc": "Publicamos seu projeto e continuamos fornecendo suporte ininterrupto.",
+  "home.howitworks.step3.desc":
+    "Publicamos seu projeto e continuamos fornecendo suporte ininterrupto.",
   "home.howitworks.step3.title": "Lançamento e suporte",
   "home.howitworks.title": "Como trabalhamos?",
   "home.services.badge": "Nossos serviços",
-  "home.services.desc": "Conheça as soluções profissionais que oferecemos para expandir seu negócio e se destacar no mundo digital.",
-  "home.services.item1.desc": "Modelos de inteligência artificial e sistemas de automação treinados especificamente para o seu negócio.",
+  "home.services.desc":
+    "Conheça as soluções profissionais que oferecemos para expandir seu negócio e se destacar no mundo digital.",
+  "home.services.item1.desc":
+    "Modelos de inteligência artificial e sistemas de automação treinados especificamente para o seu negócio.",
   "home.services.item1.title": "Soluções de Inteligência Artificial",
   "home.services.item2.desc": "Aplicativos web escaláveis ​​e seguros com estruturas modernas.",
   "home.services.item2.title": "Desenvolvimento Web",
-  "home.services.item3.desc": "Aplicativos móveis nativos e híbridos de alto desempenho para iOS e Android.",
+  "home.services.item3.desc":
+    "Aplicativos móveis nativos e híbridos de alto desempenho para iOS e Android.",
   "home.services.item3.title": "Aplicativo móvel",
-  "home.services.item4.desc": "Serviços de gerenciamento de infraestrutura em nuvem e otimização de banco de dados.",
+  "home.services.item4.desc":
+    "Serviços de gerenciamento de infraestrutura em nuvem e otimização de banco de dados.",
   "home.services.item4.title": "Nuvem e dados",
-  "home.services.item5.desc": "Garantimos a segurança dos seus sistemas e realizamos análises de vulnerabilidades.",
+  "home.services.item5.desc":
+    "Garantimos a segurança dos seus sistemas e realizamos análises de vulnerabilidades.",
   "home.services.item5.title": "Segurança Cibernética",
-  "home.services.item6.desc": "Orientação e consultoria profissional em sua jornada de transformação digital.",
+  "home.services.item6.desc":
+    "Orientação e consultoria profissional em sua jornada de transformação digital.",
   "home.services.item6.title": "Consultoria Técnica",
   "home.services.title": "Soluções tecnológicas específicas para suas necessidades",
   "home.stats.projects": "Projeto concluído",
@@ -4450,14 +5479,21 @@ const pt: Dict = {
   "home.stats.team": "Equipe especializada",
   "home.stats.users": "Usuário ativo",
   "home.testimonials.badge": "Comentários",
-  "home.testimonials.t1.text": "Trabalhar com a Fun Technology mudou completamente nossos processos de negócios. Graças às soluções de inteligência artificial, a nossa eficiência aumentou.",
-  "home.testimonials.t2.text": "Sr. Muhammed e sua equipe são muito profissionais. Eles entregaram nosso aplicativo móvel no prazo e na perfeição.",
-  "home.testimonials.t3.text": "Não tivemos problemas com suporte técnico. Eles sempre têm uma abordagem orientada para a solução.",
-  "home.testimonials.t4.text": "Nosso site agora está muito mais rápido e seguro. Obrigado Tecnologia Divertida!",
-  "home.testimonials.t5.text": "Eles agregaram valor ao nosso projeto com suas abordagens inovadoras e perspectivas visionárias.",
-  "home.testimonials.t6.text": "Eles fizeram um ótimo trabalho simplificando nossos sistemas complexos. Eu definitivamente recomendo.",
+  "home.testimonials.t1.text":
+    "Trabalhar com a Fun Technology mudou completamente nossos processos de negócios. Graças às soluções de inteligência artificial, a nossa eficiência aumentou.",
+  "home.testimonials.t2.text":
+    "Sr. Muhammed e sua equipe são muito profissionais. Eles entregaram nosso aplicativo móvel no prazo e na perfeição.",
+  "home.testimonials.t3.text":
+    "Não tivemos problemas com suporte técnico. Eles sempre têm uma abordagem orientada para a solução.",
+  "home.testimonials.t4.text":
+    "Nosso site agora está muito mais rápido e seguro. Obrigado Tecnologia Divertida!",
+  "home.testimonials.t5.text":
+    "Eles agregaram valor ao nosso projeto com suas abordagens inovadoras e perspectivas visionárias.",
+  "home.testimonials.t6.text":
+    "Eles fizeram um ótimo trabalho simplificando nossos sistemas complexos. Eu definitivamente recomendo.",
   "home.testimonials.title": "Histórias de sucesso de nossos clientes",
-  "home.whatwedo.text": "Como Fun Technology, desenvolvemos soluções de software inovadoras apoiadas em inteligência artificial para preparar o seu negócio para o futuro.",
+  "home.whatwedo.text":
+    "Como Fun Technology, desenvolvemos soluções de software inovadoras apoiadas em inteligência artificial para preparar o seu negócio para o futuro.",
   "inline.contact.message_error": "Por favor insira um texto de mensagem válido.",
   "inline.contact.subject_error": "Insira um título de assunto significativo.",
   "lang.label": "Selecione o idioma",
@@ -4502,27 +5538,33 @@ const pt: Dict = {
   "nexy.assistant_title": "Fun Technology Assistant",
   "nexy.beta_tag": "Beta",
   "nexy.beta_warning": "Resposta errada pode ter consequências durante a fase de desenvolvimento",
-  "nexy.capabilities.1.desc": "Ele entende suas perguntas e fornece as informações mais precisas em segundos.",
+  "nexy.capabilities.1.desc":
+    "Ele entende suas perguntas e fornece as informações mais precisas em segundos.",
   "nexy.capabilities.1.title": "Inteligência Avançada",
-  "nexy.capabilities.2.desc": "Oferece suporte ininterrupto 24 horas por dia, 7 dias por semana, sem tempo de espera.",
+  "nexy.capabilities.2.desc":
+    "Oferece suporte ininterrupto 24 horas por dia, 7 dias por semana, sem tempo de espera.",
   "nexy.capabilities.2.title": "Resposta rápida",
-  "nexy.capabilities.3.desc": "Ele pode se comunicar com você em qualquer idioma que você precisar.",
+  "nexy.capabilities.3.desc":
+    "Ele pode se comunicar com você em qualquer idioma que você precisar.",
   "nexy.capabilities.3.title": "Suporte multilíngue",
-  "nexy.capabilities.4.desc": "Suas conversas são mantidas privadas e seus dados nunca são compartilhados.",
+  "nexy.capabilities.4.desc":
+    "Suas conversas são mantidas privadas e seus dados nunca são compartilhados.",
   "nexy.capabilities.4.title": "Interação Segura",
   "nexy.capabilities.5.desc": "Realiza pesquisas inteligentes entre seus documentos e dados.",
   "nexy.capabilities.5.title": "Pesquisa inteligente",
   "nexy.capabilities.6.desc": "Estabelece diálogos humanos, fluentes e significativos.",
   "nexy.capabilities.6.title": "Fala Natural",
   "nexy.capabilities.badge": "Habilidades",
-  "nexy.capabilities.desc": "Equipada com tecnologia de inteligência artificial, a Nexy está sempre com você.",
+  "nexy.capabilities.desc":
+    "Equipada com tecnologia de inteligência artificial, a Nexy está sempre com você.",
   "nexy.capabilities.title": "O que Nexy pode fazer?",
   "nexy.chat.response": "Obrigado pela sua mensagem. Como posso ajudá-lo?",
   "nexy.copy_tooltip": "Copy",
   "nexy.demo.query": "Você pode fornecer informações sobre seus serviços?",
   "nexy.help_button": "Ajuda",
   "nexy.hero.badge": "Assistente de IA de tecnologia divertida",
-  "nexy.hero.desc": "Seu assistente digital baseado em inteligência artificial que facilita seu trabalho.",
+  "nexy.hero.desc":
+    "Seu assistente digital baseado em inteligência artificial que facilita seu trabalho.",
   "nexy.hero.title": "Conheça Nexy",
   "nexy.msg1": "Olá! Sou Nexy, assistente de Fun Technology. Como posso ajudá-lo?",
   "nexy.placeholder": "Type your message...",
@@ -4534,9 +5576,12 @@ const pt: Dict = {
   "policy.contact.desc": "Se você tiver alguma dúvida, pode entrar em contato conosco:",
   "policy.contact.title": "Comunicação",
   "policy.last_updated": "Data da última atualização: 19/03/2026",
-  "policy.privacy.contact_desc": "Se tiver alguma dúvida sobre a nossa Política de Privacidade ou sobre o tratamento dos seus dados pessoais, pode contactar-nos:",
-  "policy.privacy.intro": "Nossa Política de Privacidade explica como coletamos, usamos e protegemos suas informações pessoais. Sua privacidade e segurança são nossa prioridade.",
-  "policy.privacy.s1.desc": "Podemos coletar certas informações pessoais suas quando você visita nosso site, cria uma conta ou interage com nossos serviços. Essas informações podem incluir:",
+  "policy.privacy.contact_desc":
+    "Se tiver alguma dúvida sobre a nossa Política de Privacidade ou sobre o tratamento dos seus dados pessoais, pode contactar-nos:",
+  "policy.privacy.intro":
+    "Nossa Política de Privacidade explica como coletamos, usamos e protegemos suas informações pessoais. Sua privacidade e segurança são nossa prioridade.",
+  "policy.privacy.s1.desc":
+    "Podemos coletar certas informações pessoais suas quando você visita nosso site, cria uma conta ou interage com nossos serviços. Essas informações podem incluir:",
   "policy.privacy.s1.item1": "Nome e sobrenome",
   "policy.privacy.s1.item2": "Endereço de email",
   "policy.privacy.s1.item3": "Informações de contato",
@@ -4549,81 +5594,115 @@ const pt: Dict = {
   "policy.privacy.s2.item4": "Comunicação sobre campanhas e inovações",
   "policy.privacy.s2.item5": "Para melhorar nossos serviços analisando o tráfego do site",
   "policy.privacy.s2.title": "Como usamos suas informações",
-  "policy.privacy.s3.desc": "Levamos a sério a segurança dos seus dados pessoais. Implementamos medidas de segurança padrão da indústria para proteger contra acesso não autorizado, alteração, divulgação ou destruição. Porém, lembre-se que a transmissão de dados pela Internet ou armazenamento eletrônico não é 100% segura.",
+  "policy.privacy.s3.desc":
+    "Levamos a sério a segurança dos seus dados pessoais. Implementamos medidas de segurança padrão da indústria para proteger contra acesso não autorizado, alteração, divulgação ou destruição. Porém, lembre-se que a transmissão de dados pela Internet ou armazenamento eletrônico não é 100% segura.",
   "policy.privacy.s3.title": "Segurança de dados",
-  "policy.privacy.s4.desc": "Seus dados pessoais: Não serão vendidos ou compartilhados para fins comerciais sem a sua autorização expressa. Poderão ser partilhados com prestadores de serviços quando exigido por obrigações legais ou desde que estes respeitem a confidencialidade.",
+  "policy.privacy.s4.desc":
+    "Seus dados pessoais: Não serão vendidos ou compartilhados para fins comerciais sem a sua autorização expressa. Poderão ser partilhados com prestadores de serviços quando exigido por obrigações legais ou desde que estes respeitem a confidencialidade.",
   "policy.privacy.s4.title": "Compartilhamento com terceiros",
-  "policy.privacy.s5.desc": "Nosso site pode usar cookies para melhorar a experiência do usuário. Graças aos cookies, são coletadas informações sobre como você usa o site. Você pode rejeitar cookies ou receber avisos alterando as configurações do seu navegador.",
+  "policy.privacy.s5.desc":
+    "Nosso site pode usar cookies para melhorar a experiência do usuário. Graças aos cookies, são coletadas informações sobre como você usa o site. Você pode rejeitar cookies ou receber avisos alterando as configurações do seu navegador.",
   "policy.privacy.s5.title": "Biscoitos",
-  "policy.privacy.s6.desc": "Esta Política de Privacidade pode ser atualizada periodicamente. Quaisquer alterações feitas são publicadas nesta página e a data efetiva é atualizada. Recomendamos que você verifique esta página regularmente para atualizações.",
+  "policy.privacy.s6.desc":
+    "Esta Política de Privacidade pode ser atualizada periodicamente. Quaisquer alterações feitas são publicadas nesta página e a data efetiva é atualizada. Recomendamos que você verifique esta página regularmente para atualizações.",
   "policy.privacy.s6.title": "Mudanças",
-  "policy.service.intro": "Ao utilizar a plataforma Fun Technology, você concorda em utilizar nossos serviços dentro da estrutura de regras seguras, legais e éticas. Aqui estão os termos básicos de uso:",
-  "policy.service.s1.desc": "Para utilizar a plataforma, você deve criar uma conta com informações precisas e atualizadas. Você é responsável pela confidencialidade das informações da sua conta.",
+  "policy.service.intro":
+    "Ao utilizar a plataforma Fun Technology, você concorda em utilizar nossos serviços dentro da estrutura de regras seguras, legais e éticas. Aqui estão os termos básicos de uso:",
+  "policy.service.s1.desc":
+    "Para utilizar a plataforma, você deve criar uma conta com informações precisas e atualizadas. Você é responsável pela confidencialidade das informações da sua conta.",
   "policy.service.s1.title": "Uso da conta",
-  "policy.service.s2.desc": "O conteúdo que você compartilha e as transações que você realiza na Plataforma devem cumprir todas as leis e regulamentos aplicáveis.",
+  "policy.service.s2.desc":
+    "O conteúdo que você compartilha e as transações que você realiza na Plataforma devem cumprir todas as leis e regulamentos aplicáveis.",
   "policy.service.s2.title": "Conformidade Legal",
-  "policy.service.s3.desc": "Fun Technology implementa medidas de segurança avançadas para proteger seus dados. Para segurança da sua conta, você deve manter suas senhas secretas.",
+  "policy.service.s3.desc":
+    "Fun Technology implementa medidas de segurança avançadas para proteger seus dados. Para segurança da sua conta, você deve manter suas senhas secretas.",
   "policy.service.s3.title": "Segurança e privacidade",
-  "policy.service.s4.desc": "Fun Teknoloji aceita responsabilidade limitada pelo conteúdo e links de terceiros na plataforma. Os usuários usam a plataforma sob sua própria responsabilidade.",
+  "policy.service.s4.desc":
+    "Fun Teknoloji aceita responsabilidade limitada pelo conteúdo e links de terceiros na plataforma. Os usuários usam a plataforma sob sua própria responsabilidade.",
   "policy.service.s4.title": "Isenção de responsabilidade",
-  "policy.service.s5.desc": "A Fun Teknoloji reserva-se o direito de fazer alterações no conteúdo, características ou termos de uso, a fim de melhorar a funcionalidade da plataforma.",
+  "policy.service.s5.desc":
+    "A Fun Teknoloji reserva-se o direito de fazer alterações no conteúdo, características ou termos de uso, a fim de melhorar a funcionalidade da plataforma.",
   "policy.service.s5.title": "Mudanças de serviço",
-  "policy.service.s6.desc": "Em caso de violação dos termos de uso, a plataforma poderá restringir ou encerrar contas temporária ou permanentemente.",
+  "policy.service.s6.desc":
+    "Em caso de violação dos termos de uso, a plataforma poderá restringir ou encerrar contas temporária ou permanentemente.",
   "policy.service.s6.title": "Sanções",
   "pricing.badge": "Preços",
-  "pricing.desc": "Atualmente estamos trabalhando para tornar nossos sistemas mais eficientes e econômicos.",
+  "pricing.desc":
+    "Atualmente estamos trabalhando para tornar nossos sistemas mais eficientes e econômicos.",
   "pricing.title": "Nossos novos pacotes chegarão em breve",
-  "projects.hero.desc": "Nossos projetos orientados a soluções desenvolvidos com tecnologias inovadoras.",
+  "projects.hero.desc":
+    "Nossos projetos orientados a soluções desenvolvidos com tecnologias inovadoras.",
   "projects.hero.title": "Estamos construindo o futuro",
-  "projects.nexy.desc": "Assistente digital baseado em inteligência artificial da Fun Technology. Guia inteligente para empresas e usuários.",
-  "projects.quakesafe.desc": "Uma nova era na tecnologia de segurança em desastres. Sistemas inteligentes que salvam vidas durante e após um terremoto.",
+  "projects.nexy.desc":
+    "Assistente digital baseado em inteligência artificial da Fun Technology. Guia inteligente para empresas e usuários.",
+  "projects.quakesafe.desc":
+    "Uma nova era na tecnologia de segurança em desastres. Sistemas inteligentes que salvam vidas durante e após um terremoto.",
   "projects.soon.desc": "Continuamos a trabalhar em nossos novos e emocionantes projetos.",
   "projects.soon.title": "Mais em breve",
   "projects.view": "Revise o projeto",
   "quakesafe.cta.button": "Obtenha acesso antecipado",
-  "quakesafe.cta.desc": "A tecnologia não serve apenas para facilitar a vida, mas também para protegê-la.",
+  "quakesafe.cta.desc":
+    "A tecnologia não serve apenas para facilitar a vida, mas também para protegê-la.",
   "quakesafe.cta.title": "Estamos construindo um futuro mais seguro",
-  "quakesafe.features.1.desc": "Receba alertas críticos segundos antes das ondas do terremoto chegarem.",
+  "quakesafe.features.1.desc":
+    "Receba alertas críticos segundos antes das ondas do terremoto chegarem.",
   "quakesafe.features.1.title": "Alertas instantâneos",
-  "quakesafe.features.10.desc": "Compartilhe seu estado de saúde e tipo sanguíneo em caso de emergência.",
+  "quakesafe.features.10.desc":
+    "Compartilhe seu estado de saúde e tipo sanguíneo em caso de emergência.",
   "quakesafe.features.10.title": "Acompanhamento de saúde",
   "quakesafe.features.11.desc": "Revise os dados históricos e os riscos de terremotos em sua área.",
   "quakesafe.features.11.title": "Análise Passada",
   "quakesafe.features.12.desc": "Uma plataforma que reúne quem precisa e quem pode ajudar.",
   "quakesafe.features.12.title": "Rede Solidária",
-  "quakesafe.features.2.desc": "Veja em tempo real onde estão seus entes queridos durante um desastre.",
+  "quakesafe.features.2.desc":
+    "Veja em tempo real onde estão seus entes queridos durante um desastre.",
   "quakesafe.features.2.title": "Rastreamento de localização",
-  "quakesafe.features.3.desc": "Rota instantânea para os centros de montagem e áreas seguras mais próximos.",
+  "quakesafe.features.3.desc":
+    "Rota instantânea para os centros de montagem e áreas seguras mais próximos.",
   "quakesafe.features.3.title": "Áreas Seguras",
-  "quakesafe.features.4.desc": "Reúna todos os membros da família em uma rede e acompanhe seu status.",
+  "quakesafe.features.4.desc":
+    "Reúna todos os membros da família em uma rede e acompanhe seu status.",
   "quakesafe.features.4.title": "Grupos Familiares",
-  "quakesafe.features.5.desc": "Acesse guias e mapas críticos mesmo quando a Internet estiver desligada.",
+  "quakesafe.features.5.desc":
+    "Acesse guias e mapas críticos mesmo quando a Internet estiver desligada.",
   "quakesafe.features.5.title": "Modo off-line",
-  "quakesafe.features.6.desc": "Previsão de risco de danos e análise de segurança de área com inteligência artificial.",
+  "quakesafe.features.6.desc":
+    "Previsão de risco de danos e análise de segurança de área com inteligência artificial.",
   "quakesafe.features.6.title": "Análise de IA",
-  "quakesafe.features.7.desc": "Capacidade de comunicação entre dispositivos quando as estações base ficam inoperantes.",
+  "quakesafe.features.7.desc":
+    "Capacidade de comunicação entre dispositivos quando as estações base ficam inoperantes.",
   "quakesafe.features.7.title": "Rede de malha",
   "quakesafe.features.8.desc": "Mantenha seus documentos importantes e dados de saúde seguros.",
   "quakesafe.features.8.title": "Backup na nuvem",
-  "quakesafe.features.9.desc": "Relatar às autoridades a localização dos que estão sob os escombros com um único clique.",
+  "quakesafe.features.9.desc":
+    "Relatar às autoridades a localização dos que estão sob os escombros com um único clique.",
   "quakesafe.features.9.title": "Notificação rápida",
-  "quakesafe.features.desc": "Todas as ferramentas que você precisa antes, durante e depois de um desastre estão em uma única plataforma.",
+  "quakesafe.features.desc":
+    "Todas as ferramentas que você precisa antes, durante e depois de um desastre estão em uma única plataforma.",
   "quakesafe.features.title": "Rede de Proteção Abrangente",
-  "quakesafe.hero.desc": "Revolução na segurança contra terremotos com inteligência artificial e redes de sensores. Seu maior apoiador naqueles momentos em que até os segundos são críticos.",
+  "quakesafe.hero.desc":
+    "Revolução na segurança contra terremotos com inteligência artificial e redes de sensores. Seu maior apoiador naqueles momentos em que até os segundos são críticos.",
   "quakesafe.hero.title": "Não tenha medo de terremotos, fique seguro com QuakeSafe",
-  "reviews.desc": "Descubra as histórias de nossos parceiros de negócios que se transformaram com a Fun Technology.",
+  "reviews.desc":
+    "Descubra as histórias de nossos parceiros de negócios que se transformaram com a Fun Technology.",
   "reviews.r1.name": "Ahmet Yilmaz",
-  "reviews.r1.text": "Como proprietário de uma pequena empresa, as soluções de software que você oferece têm salvado nossa vida na melhoria de nossa eficiência operacional. Realmente superou minhas expectativas.",
+  "reviews.r1.text":
+    "Como proprietário de uma pequena empresa, as soluções de software que você oferece têm salvado nossa vida na melhoria de nossa eficiência operacional. Realmente superou minhas expectativas.",
   "reviews.r2.name": "Zeynep Kaya",
-  "reviews.r2.text": "A integração de IA é absolutamente incrível! Economizamos muito tempo automatizando nossos processos de negócios.",
+  "reviews.r2.text":
+    "A integração de IA é absolutamente incrível! Economizamos muito tempo automatizando nossos processos de negócios.",
   "reviews.r3.name": "Murat Demir",
-  "reviews.r3.text": "Essa tecnologia revolucionou nossos processos de análise de dados. Os insights são tão profundos que agora tomamos nossas decisões com muito mais confiança.",
+  "reviews.r3.text":
+    "Essa tecnologia revolucionou nossos processos de análise de dados. Os insights são tão profundos que agora tomamos nossas decisões com muito mais confiança.",
   "reviews.r4.name": "Elif Sahin",
-  "reviews.r4.text": "Como gerente de projeto, esta ferramenta tem sido inestimável para garantir a coordenação entre equipes. A interface amigável é ótima!",
+  "reviews.r4.text":
+    "Como gerente de projeto, esta ferramenta tem sido inestimável para garantir a coordenação entre equipes. A interface amigável é ótima!",
   "reviews.r5.name": "Caner Özkan",
-  "reviews.r5.text": "A velocidade e a qualidade do seu processo de desenvolvimento são alucinantes. Conseguimos receber nossos projetos dentro do prazo, mantendo padrões de qualidade excepcionais.",
+  "reviews.r5.text":
+    "A velocidade e a qualidade do seu processo de desenvolvimento são alucinantes. Conseguimos receber nossos projetos dentro do prazo, mantendo padrões de qualidade excepcionais.",
   "reviews.r6.name": "Selin Aydin",
-  "reviews.r6.text": "Esta plataforma transformou a forma como gerimos a nossa presença digital. A tecnologia é tão moderna e impressionante que toda a nossa equipe ficou maravilhada.",
+  "reviews.r6.text":
+    "Esta plataforma transformou a forma como gerimos a nossa presença digital. A tecnologia é tão moderna e impressionante que toda a nossa equipe ficou maravilhada.",
   "reviews.title": "O que nossos clientes dizem?",
   "reviews.verified": "Cliente verificado",
   "sitemap.desc": "Visão geral de todas as páginas do site Fun Teknoloji.",
@@ -4634,7 +5713,8 @@ const pt: Dict = {
   "team.desc": "Conheça os nomes talentosos por trás da Fun Technology.",
   "team.join.desc": "Gostaria de construir o futuro connosco? Estamos aguardando suas inscrições.",
   "team.join.title": "Junte-se à nossa equipe",
-  "team.member.muhammed.bio": "Muhammed Erbay, fundador da Fun Technology, lidera a empresa com a visão de tornar a tecnologia acessível e útil para todos.",
+  "team.member.muhammed.bio":
+    "Muhammed Erbay, fundador da Fun Technology, lidera a empresa com a visão de tornar a tecnologia acessível e útil para todos.",
   "team.title": "O poder por trás do nosso sucesso",
   "theme.dark": "Mudar para tema escuro",
   "theme.light": "Mudar para tema aberto",
@@ -4650,34 +5730,60 @@ const pt: Dict = {
   "home.testimonials.t6.name": "Selin Aydin",
   "blog.index.untitled": "Post sem título",
   "blog.index.category_default": "Tecnologia",
-  "nexy.resp.pricing.0": "Fiyatlandırma politikalarımız üzerinde çalışıyoruz. En güncel paketler için Fiyatlandırma sayfamızı takip edebilirsiniz. Şu an için bekleme listemize katılmak en iyi seçenek!",
-  "nexy.resp.pricing.1": "Şu an için tüm hizmetlerimiz için size özel teklif sunuyoruz, detaylar yakında sayfalarımızda olacak. Genelde proje bazlı fiyatlandırma yapıyoruz.",
-  "nexy.resp.pricing.2": "Paketlerimiz güncelleniyor. Fun Teknoloji olarak her bütçeye uygun teknoloji çözümleri üretmeyi hedefliyoruz.",
-  "nexy.resp.services.0": "Yapay zeka entegrasyonu, özel yazılım geliştirme, mobil uygulama ve siber güvenlik alanlarında profesyonel çözümler sunuyoruz. Hangi alanla ilgileniyorsunuz?",
-  "nexy.resp.services.1": "Dijital dönüşüm yolculuğunuzda size en modern teknoloji yığını ile eşlik ediyoruz. React, Next.js, AI modelleri ve daha fazlasını kullanıyoruz.",
-  "nexy.resp.services.2": "İş süreçlerinizi otomatize edecek yapay zeka çözümlerimiz hakkında detaylı bilgi için Hizmetler sayfamıza bakabilirsiniz. Verimliliğinizi %40'a kadar artırabiliriz.",
-  "nexy.resp.founder.0": "Fun Teknoloji, Muhammed Erbay tarafından 2025 yılında vizyoner bir teknoloji şirketi olarak kurulmuştur.",
-  "nexy.resp.founder.1": "Kurucumuz Muhammed Erbay, teknolojiyi herkes için erişilebilir ve faydalı kılma vizyonuyla bu yola çıktı. Kendisi genç ve hırslı bir girişimcidir.",
-  "nexy.resp.founder.2": "2025'te Muhammed Erbay liderliğinde kurulan Fun Teknoloji, Türkiye'nin dijital geleceğine odaklanıyor. Muhammed Bey bizzat projelerin mimarisini denetliyor.",
-  "nexy.resp.contact.0": "Bize iletişim sayfasındaki formdan veya support@funteknoloji.com adresinden ulaşabilirsiniz! 7/24 destek veriyoruz.",
-  "nexy.resp.contact.1": "Sorularınız için her zaman buradayız, iletişim kısmından bize yazmaktan çekinmeyin. Ayrıca Discord kanalımızda çok aktif bir topluluğumuz var.",
-  "nexy.resp.contact.2": "Discord topluluğumuza katılarak da ekibimizle doğrudan iletişime geçebilirsiniz. Linki İletişim sayfasında bulabilirsiniz.",
-  "nexy.resp.about.0": "Fun Teknoloji, teknolojiyi 'eğlenceli' ve 'faydalı' kılmak için kuruldu. Yapay zeka ve yazılım bizim tutkumuz.",
-  "nexy.resp.about.1": "Misyonumuz, işletmeleri geleceğin teknolojileriyle bugünden tanıştırmak. Vizyonumuz ise global çapta bir teknoloji üssü olmak.",
-  "nexy.resp.about.2": "Hakkımızda sayfasında tüm tarihimizi ve değerlerimizi bulabilirsiniz. İnovasyon, kalite ve güvenilirlik en önemli ilkelerimizdir.",
-  "nexy.resp.careers.0": "Ekibimiz sürekli büyüyor! Kariyer fırsatları için bize özgeçmişinizi gönderebilir veya LinkedIn sayfamızı takip edebilirsiniz.",
-  "nexy.resp.careers.1": "Yetenekli mühendisler, tasarımcılar ve yapay zeka meraklıları ile çalışmaktan her zaman mutluluk duyarız.",
-  "nexy.resp.careers.2": "Şu an spesifik bir ilanımız olmasa da, yetenekli insanlara her zaman kapımız açık. Bize yazın!",
-  "nexy.resp.tech.0": "Geliştirmelerimizde modern teknolojiler kullanıyoruz. React, TypeScript, TanStack, Tailwind ve çeşitli LLM modelleri vazgeçilmezimiz.",
-  "nexy.resp.tech.1": "Sistemlerimizi yüksek performans ve ölçeklenebilirlik odaklı tasarlıyoruz. Cloud teknolojilerini en verimli şekilde kullanıyoruz.",
-  "nexy.resp.tech.2": "Fun Teknoloji olarak sürekli AR-GE yapıyoruz. En yeni frameworkleri ve yapay zeka tekniklerini ilk biz uyguluyoruz.",
+  "nexy.resp.pricing.0":
+    "Fiyatlandırma politikalarımız üzerinde çalışıyoruz. En güncel paketler için Fiyatlandırma sayfamızı takip edebilirsiniz. Şu an için bekleme listemize katılmak en iyi seçenek!",
+  "nexy.resp.pricing.1":
+    "Şu an için tüm hizmetlerimiz için size özel teklif sunuyoruz, detaylar yakında sayfalarımızda olacak. Genelde proje bazlı fiyatlandırma yapıyoruz.",
+  "nexy.resp.pricing.2":
+    "Paketlerimiz güncelleniyor. Fun Teknoloji olarak her bütçeye uygun teknoloji çözümleri üretmeyi hedefliyoruz.",
+  "nexy.resp.services.0":
+    "Yapay zeka entegrasyonu, özel yazılım geliştirme, mobil uygulama ve siber güvenlik alanlarında profesyonel çözümler sunuyoruz. Hangi alanla ilgileniyorsunuz?",
+  "nexy.resp.services.1":
+    "Dijital dönüşüm yolculuğunuzda size en modern teknoloji yığını ile eşlik ediyoruz. React, Next.js, AI modelleri ve daha fazlasını kullanıyoruz.",
+  "nexy.resp.services.2":
+    "İş süreçlerinizi otomatize edecek yapay zeka çözümlerimiz hakkında detaylı bilgi için Hizmetler sayfamıza bakabilirsiniz. Verimliliğinizi %40'a kadar artırabiliriz.",
+  "nexy.resp.founder.0":
+    "Fun Teknoloji, Muhammed Erbay tarafından 2025 yılında vizyoner bir teknoloji şirketi olarak kurulmuştur.",
+  "nexy.resp.founder.1":
+    "Kurucumuz Muhammed Erbay, teknolojiyi herkes için erişilebilir ve faydalı kılma vizyonuyla bu yola çıktı. Kendisi genç ve hırslı bir girişimcidir.",
+  "nexy.resp.founder.2":
+    "2025'te Muhammed Erbay liderliğinde kurulan Fun Teknoloji, Türkiye'nin dijital geleceğine odaklanıyor. Muhammed Bey bizzat projelerin mimarisini denetliyor.",
+  "nexy.resp.contact.0":
+    "Bize iletişim sayfasındaki formdan veya support@funteknoloji.com adresinden ulaşabilirsiniz! 7/24 destek veriyoruz.",
+  "nexy.resp.contact.1":
+    "Sorularınız için her zaman buradayız, iletişim kısmından bize yazmaktan çekinmeyin. Ayrıca Discord kanalımızda çok aktif bir topluluğumuz var.",
+  "nexy.resp.contact.2":
+    "Discord topluluğumuza katılarak da ekibimizle doğrudan iletişime geçebilirsiniz. Linki İletişim sayfasında bulabilirsiniz.",
+  "nexy.resp.about.0":
+    "Fun Teknoloji, teknolojiyi 'eğlenceli' ve 'faydalı' kılmak için kuruldu. Yapay zeka ve yazılım bizim tutkumuz.",
+  "nexy.resp.about.1":
+    "Misyonumuz, işletmeleri geleceğin teknolojileriyle bugünden tanıştırmak. Vizyonumuz ise global çapta bir teknoloji üssü olmak.",
+  "nexy.resp.about.2":
+    "Hakkımızda sayfasında tüm tarihimizi ve değerlerimizi bulabilirsiniz. İnovasyon, kalite ve güvenilirlik en önemli ilkelerimizdir.",
+  "nexy.resp.careers.0":
+    "Ekibimiz sürekli büyüyor! Kariyer fırsatları için bize özgeçmişinizi gönderebilir veya LinkedIn sayfamızı takip edebilirsiniz.",
+  "nexy.resp.careers.1":
+    "Yetenekli mühendisler, tasarımcılar ve yapay zeka meraklıları ile çalışmaktan her zaman mutluluk duyarız.",
+  "nexy.resp.careers.2":
+    "Şu an spesifik bir ilanımız olmasa da, yetenekli insanlara her zaman kapımız açık. Bize yazın!",
+  "nexy.resp.tech.0":
+    "Geliştirmelerimizde modern teknolojiler kullanıyoruz. React, TypeScript, TanStack, Tailwind ve çeşitli LLM modelleri vazgeçilmezimiz.",
+  "nexy.resp.tech.1":
+    "Sistemlerimizi yüksek performans ve ölçeklenebilirlik odaklı tasarlıyoruz. Cloud teknolojilerini en verimli şekilde kullanıyoruz.",
+  "nexy.resp.tech.2":
+    "Fun Teknoloji olarak sürekli AR-GE yapıyoruz. En yeni frameworkleri ve yapay zeka tekniklerini ilk biz uyguluyoruz.",
   "nexy.resp.greeting.0": "Merhaba! Size nasıl yardımcı olabilirim? Bugün teknoloji dolu bir gün!",
-  "nexy.resp.greeting.1": "Selamlar! Ben Nexy, Fun Teknoloji'nin yapay zeka asistanıyım. Sizi dinliyorum.",
-  "nexy.resp.greeting.2": "Hoş geldiniz! Merak ettiğiniz bir şey mi var? Size Fun Teknoloji hakkında her şeyi anlatabilirim.",
+  "nexy.resp.greeting.1":
+    "Selamlar! Ben Nexy, Fun Teknoloji'nin yapay zeka asistanıyım. Sizi dinliyorum.",
+  "nexy.resp.greeting.2":
+    "Hoş geldiniz! Merak ettiğiniz bir şey mi var? Size Fun Teknoloji hakkında her şeyi anlatabilirim.",
   "nexy.resp.default.0": "Mesajınız için teşekkürler. Size nasıl yardımcı olabilirim?",
-  "nexy.resp.default.1": "Bu konuda size daha detaylı yardımcı olabilmemiz için lütfen iletişim formunu doldurun.",
-  "nexy.resp.default.2": "Harika bir soru! Ama bu konuda henüz tam bir bilgim yok. İsterseniz ekibimize sorabilirim?",
-  "nexy.resp.default.3": "Size nasıl daha iyi yardımcı olabilirim? Teknoloji çözümlerimiz, kurucumuz veya hizmetlerimiz hakkında konuşabiliriz.",
+  "nexy.resp.default.1":
+    "Bu konuda size daha detaylı yardımcı olabilmemiz için lütfen iletişim formunu doldurun.",
+  "nexy.resp.default.2":
+    "Harika bir soru! Ama bu konuda henüz tam bir bilgim yok. İsterseniz ekibimize sorabilirim?",
+  "nexy.resp.default.3":
+    "Size nasıl daha iyi yardımcı olabilirim? Teknoloji çözümlerimiz, kurucumuz veya hizmetlerimiz hakkında konuşabiliriz.",
   "service.feature.automation": "Otomasyon",
   "service.feature.big_data": "Büyük Veri",
   "service.feature.bi": "İş Zekası",
@@ -4717,7 +5823,8 @@ const ja: Dict = {
   "about.cta.title": "一緒に働きましょう",
   "about.desc": "Fun Teknoloji は 2025 年に Muhammed Erbay によって設立されました。",
   "about.mission.badge": "私たちの使命",
-  "about.mission.desc": "あらゆる規模の企業が人工知能と高度なテクノロジー ソリューションの恩恵を享受できるようにすることで、デジタル世界で競争上の優位性を獲得できるように支援します。",
+  "about.mission.desc":
+    "あらゆる規模の企業が人工知能と高度なテクノロジー ソリューションの恩恵を享受できるようにすることで、デジタル世界で競争上の優位性を獲得できるように支援します。",
   "about.mission.title": "テクノロジーでビジネスを強化する",
   "about.stats.clients": "幸せな顧客",
   "about.stats.projects": "完了したプロジェクト",
@@ -4727,7 +5834,8 @@ const ja: Dict = {
   "about.title": "私たちはテクノロジーとともに未来を築いていきます。",
   "about.values.1.desc": "私たちはすべての活動において誠実さと透明性を基盤としています。",
   "about.values.1.title": "信頼性",
-  "about.values.2.desc": "私たちは最新のテクノロジーを追求し、先駆的なソリューションを生み出します。",
+  "about.values.2.desc":
+    "私たちは最新のテクノロジーを追求し、先駆的なソリューションを生み出します。",
   "about.values.2.title": "革新",
   "about.values.3.desc": "私たちはお客様の成功を私たち自身の成功とみなしています。",
   "about.values.3.title": "顧客重視",
@@ -4763,7 +5871,8 @@ const ja: Dict = {
   "blog.title": "テクノロジーの世界から",
   "brand_kit.badge": "Corporate",
   "brand_kit.colors.title": "Our Color Palette",
-  "brand_kit.desc": "You can download Fun Teknoloji logos and visual materials here and take a look at the usage guide.",
+  "brand_kit.desc":
+    "You can download Fun Teknoloji logos and visual materials here and take a look at the usage guide.",
   "brand_kit.download_png": "Download PNG",
   "brand_kit.logos.fun_black.desc": "Black version for use on light-colored backgrounds.",
   "brand_kit.logos.fun_black.title": "Fun Technology Black Logo",
@@ -4778,7 +5887,8 @@ const ja: Dict = {
   "brand_kit.title": "Brand Kit",
   "changelog.badge": "アップデート",
   "changelog.coming_soon": "もうすぐ",
-  "changelog.desc": "Fun Technology プラットフォームの最新のイノベーションと改善点をフォローしてください。",
+  "changelog.desc":
+    "Fun Technology プラットフォームの最新のイノベーションと改善点をフォローしてください。",
   "changelog.details_soon": "このセクションの詳細は間もなく共有されます。",
   "changelog.item1.desc": "主要なプラットフォームのアップデートとエンタープライズ イノベーション。",
   "changelog.item1.title": "バージョン2.0がリリースされました",
@@ -4794,12 +5904,14 @@ const ja: Dict = {
   "changelog.last_update": "最終更新日: 2026 年 6 月 15 日",
   "changelog.title": "変更履歴",
   "contact.captcha.cancel": "キャンセル",
-  "contact.captcha.desc": "以下のプロセスを完了して、あなたがロボットではないことを確認してください。",
+  "contact.captcha.desc":
+    "以下のプロセスを完了して、あなたがロボットではないことを確認してください。",
   "contact.captcha.error": "答えが不正解です。もう一度お試しください。",
   "contact.captcha.title": "セキュリティの検証",
   "contact.captcha.verify": "確認する",
   "contact.community.button": "Discordに参加する",
-  "contact.community.desc": "当社の技術コミュニティに参加して、当社のチームと直接コミュニケーションをとってください。",
+  "contact.community.desc":
+    "当社の技術コミュニティに参加して、当社のチームと直接コミュニケーションをとってください。",
   "contact.community.title": "コミュニティに参加してください",
   "contact.desc": "ご質問をお受けいたします。",
   "contact.form.email": "電子メール",
@@ -4822,7 +5934,8 @@ const ja: Dict = {
   "docs.sidebar.getting_started": "始まり",
   "docs.sidebar.intro": "入り口",
   "docs.sidebar.setup": "クイックセットアップ",
-  "docs.soon.desc": "当社のプラットフォームとサービスについては、詳細なユーザー ガイドが準備中です。できるだけ早く到着します。",
+  "docs.soon.desc":
+    "当社のプラットフォームとサービスについては、詳細なユーザー ガイドが準備中です。できるだけ早く到着します。",
   "docs.soon.title": "もうすぐ",
   "docs.title": "ドキュメント",
   "error.home": "ホームページ",
@@ -4835,43 +5948,60 @@ const ja: Dict = {
   "faq.cat.services": "サービス",
   "faq.cat.technical": "テクニカル",
   "faq.desc": "当社のサービスとプロセスに関する質問。",
-  "faq.q1.a": "Fun Technology は、人工知能、カスタム ソフトウェア開発、デジタル変革を専門とするテクノロジー企業です。",
+  "faq.q1.a":
+    "Fun Technology は、人工知能、カスタム ソフトウェア開発、デジタル変革を専門とするテクノロジー企業です。",
   "faq.q1.q": "楽しいテクノロジーとは何ですか?",
-  "faq.q10.a": "はい、すべてのデータは業界標準の暗号化方式と安全なクラウド インフラストラクチャによって保護されています。",
+  "faq.q10.a":
+    "はい、すべてのデータは業界標準の暗号化方式と安全なクラウド インフラストラクチャによって保護されています。",
   "faq.q10.q": "私のデータは安全ですか?",
-  "faq.q11.a": "ユーザーデータのプライバシーは当社の最優先事項です。詳細については、プライバシー ポリシーのページをご覧ください。",
+  "faq.q11.a":
+    "ユーザーデータのプライバシーは当社の最優先事項です。詳細については、プライバシー ポリシーのページをご覧ください。",
   "faq.q11.q": "あなたのプライバシーポリシーは何ですか?",
-  "faq.q2.a": "Fun Technology は、先見の明のあるテクノロジー イニシアチブとして、Muhammed Erbay によって 2025 年に設立されました。",
+  "faq.q2.a":
+    "Fun Technology は、先見の明のあるテクノロジー イニシアチブとして、Muhammed Erbay によって 2025 年に設立されました。",
   "faq.q2.q": "Fun Teknoloji はいつ設立されましたか?",
-  "faq.q3.a": "なぜなら、テクノロジーは退屈で複雑なものではなく、生活を楽にして「楽しい」ものにするツールであるべきだと私たちは信じているからです。",
+  "faq.q3.a":
+    "なぜなら、テクノロジーは退屈で複雑なものではなく、生活を楽にして「楽しい」ものにするツールであるべきだと私たちは信じているからです。",
   "faq.q3.q": "あなたの名前はなぜ Fun Teknoloji ですか?",
-  "faq.q4.a": "ソフトウェア開発、人工知能統合、データ分析、サイバーセキュリティ、クラウド ソリューションを提供します。",
+  "faq.q4.a":
+    "ソフトウェア開発、人工知能統合、データ分析、サイバーセキュリティ、クラウド ソリューションを提供します。",
   "faq.q4.q": "どのようなサービスを提供していますか?",
-  "faq.q5.a": "私たちは、要件分析、プロトタイピング、開発、テスト、公開の各段階からなる透明なプロセスに従います。",
+  "faq.q5.a":
+    "私たちは、要件分析、プロトタイピング、開発、テスト、公開の各段階からなる透明なプロセスに従います。",
   "faq.q5.q": "カスタム ソフトウェア プロセスはどのように機能しますか?",
-  "faq.q6.a": "これはあなたの目標によって異なります。私たちのチームがお客様のニーズを分析し、最適なプラットフォームを推奨します。",
+  "faq.q6.a":
+    "これはあなたの目標によって異なります。私たちのチームがお客様のニーズを分析し、最適なプラットフォームを推奨します。",
   "faq.q6.q": "モバイル アプリケーションまたは Web サイトを構築する必要がありますか?",
-  "faq.q7.a": "私たちは React、Next.js、TypeScript、Python、PyTorch、Database、AWS などの最新のテクノロジー スタックを使用しています。",
+  "faq.q7.a":
+    "私たちは React、Next.js、TypeScript、Python、PyTorch、Database、AWS などの最新のテクノロジー スタックを使用しています。",
   "faq.q7.q": "どのようなテクノロジーを使用していますか?",
-  "faq.q8.a": "はい、エンタープライズ ソリューション向けに包括的な API サポートとドキュメントを提供します。",
+  "faq.q8.a":
+    "はい、エンタープライズ ソリューション向けに包括的な API サポートとドキュメントを提供します。",
   "faq.q8.q": "API サポートはありますか?",
-  "faq.q9.a": "当社は、独自のデータセットと最新の深層学習フレームワークを使用して、お客様のプロジェクトに固有のモデルを開発します。",
+  "faq.q9.a":
+    "当社は、独自のデータセットと最新の深層学習フレームワークを使用して、お客様のプロジェクトに固有のモデルを開発します。",
   "faq.q9.q": "AI モデルをどのようにトレーニングしますか?",
   "faq.title": "よくある質問",
   "footer.description": "私たちは今日、未来のテクノロジーを構築しています。",
   "footer.rights": "無断転載を禁じます。",
   "footer.status": "システムステータス",
   "home.cta.button": "お問い合わせ",
-  "home.cta.desc": "ご質問がある場合、またはサポートが必要な場合は、サポート チームにお問い合わせください。",
+  "home.cta.desc":
+    "ご質問がある場合、またはサポートが必要な場合は、サポート チームにお問い合わせください。",
   "home.cta.more": "もっと発見する",
   "home.cta.title": "今日から始めましょう。",
-  "home.faq.a1": "Fun Technologyは、人工知能、カスタムソフトウェア開発、デジタルトランスフォーメーションを専門とするテクノロジー企業です。",
-  "home.faq.a2": "はい、お客様のプロジェクトに対して24時間年中無休のテクニカルサポートとメンテナンスサービスを提供しています。",
-  "home.faq.a3": "プロジェクトの規模により異なりますが、小規模なプロジェクトは2〜4週間、包括的なプロジェクトは2〜4ヶ月で完了します。",
+  "home.faq.a1":
+    "Fun Technologyは、人工知能、カスタムソフトウェア開発、デジタルトランスフォーメーションを専門とするテクノロジー企業です。",
+  "home.faq.a2":
+    "はい、お客様のプロジェクトに対して24時間年中無休のテクニカルサポートとメンテナンスサービスを提供しています。",
+  "home.faq.a3":
+    "プロジェクトの規模により異なりますが、小規模なプロジェクトは2〜4週間、包括的なプロジェクトは2〜4ヶ月で完了します。",
   "home.faq.a4": "価格は、プロジェクトの複雑さや必要な機能に基づいて個別に決定されます。",
   "home.faq.a5": "はい、AIモデルを既存のシステムに統合することに特化しています。",
-  "home.faq.a6": "もちろんです！プロジェクトのアイデアを共有していただければ、無料のコンサルティングを提供いたします。",
-  "home.faq.a7": "はい、iOSとAndroidの両方のプラットフォーム向けに最新のモバイルアプリケーションを開発しています。",
+  "home.faq.a6":
+    "もちろんです！プロジェクトのアイデアを共有していただければ、無料のコンサルティングを提供いたします。",
+  "home.faq.a7":
+    "はい、iOSとAndroidの両方のプラットフォーム向けに最新のモバイルアプリケーションを開発しています。",
   "home.faq.badge": "よくある質問",
   "home.faq.desc": "あなたが疑問に思うすべてがここにあります。",
   "home.faq.title": "よくある質問",
@@ -4880,37 +6010,48 @@ const ja: Dict = {
   "home.features.card1.title": "高度な人工知能",
   "home.features.card2.desc": "世界中で低遅延で動作するスケーラブルなシステム。",
   "home.features.card2.title": "グローバルインフラストラクチャ",
-  "home.features.card3.desc": "データは、AES-256 暗号化と高度なセキュリティ プロトコルで安全に保護されます。",
+  "home.features.card3.desc":
+    "データは、AES-256 暗号化と高度なセキュリティ プロトコルで安全に保護されます。",
   "home.features.card3.title": "完全なセキュリティ",
-  "home.features.desc": "私たちは、お客様のビジネスを次のレベルに引き上げる最新のテクノロジーを提供します。",
+  "home.features.desc":
+    "私たちは、お客様のビジネスを次のレベルに引き上げる最新のテクノロジーを提供します。",
   "home.features.title": "なぜ当社を選ぶべきなのでしょうか?",
   "home.hero.badge": "トゥルキエの革新的なテクノロジー企業",
-  "home.hero.desc": "私たちは、人工知能、ソフトウェア開発、スマート システムの分野における先駆的なソリューションにより、お客様のビジネスをデジタル変革の中心へと導きます。",
+  "home.hero.desc":
+    "私たちは、人工知能、ソフトウェア開発、スマート システムの分野における先駆的なソリューションにより、お客様のビジネスをデジタル変革の中心へと導きます。",
   "home.hero.explore": "サービスの発見",
   "home.hero.start": "順番待ちリストに参加する",
   "home.hero.title": "未来のテクノロジーは今日も私たちにあります",
   "home.howitworks.badge": "期間",
-  "home.howitworks.desc": "私たちがあなたのプロジェクトをどのように実現するかを段階的に理解してください。",
+  "home.howitworks.desc":
+    "私たちがあなたのプロジェクトをどのように実現するかを段階的に理解してください。",
   "home.howitworks.step1.desc": "お客様のニーズを分析し、最適なテクノロジースタックを決定します。",
   "home.howitworks.step1.title": "分析と計画",
-  "home.howitworks.step2.desc": "私たちは、最新の設計原則に基づいて、ユーザーフレンドリーなインターフェイスと強力なバックエンド構造を確立します。",
+  "home.howitworks.step2.desc":
+    "私たちは、最新の設計原則に基づいて、ユーザーフレンドリーなインターフェイスと強力なバックエンド構造を確立します。",
   "home.howitworks.step2.title": "開発とテスト",
-  "home.howitworks.step3.desc": "私たちはあなたのプロジェクトを公開し、継続的にサポートを提供します。",
+  "home.howitworks.step3.desc":
+    "私たちはあなたのプロジェクトを公開し、継続的にサポートを提供します。",
   "home.howitworks.step3.title": "立ち上げとサポート",
   "home.howitworks.title": "私たちはどのように働くのか?",
   "home.services.badge": "当社のサービス",
-  "home.services.desc": "ビジネスを成長させ、デジタル世界で目立つために当社が提供するプロフェッショナルなソリューションをご紹介します。",
-  "home.services.item1.desc": "お客様のビジネス向けに特別にトレーニングされた人工知能モデルと自動化システム。",
+  "home.services.desc":
+    "ビジネスを成長させ、デジタル世界で目立つために当社が提供するプロフェッショナルなソリューションをご紹介します。",
+  "home.services.item1.desc":
+    "お客様のビジネス向けに特別にトレーニングされた人工知能モデルと自動化システム。",
   "home.services.item1.title": "人工知能ソリューション",
-  "home.services.item2.desc": "最新のフレームワークを備えたスケーラブルで安全な Web アプリケーション。",
+  "home.services.item2.desc":
+    "最新のフレームワークを備えたスケーラブルで安全な Web アプリケーション。",
   "home.services.item2.title": "ウェブ開発",
-  "home.services.item3.desc": "iOS および Android 用の高性能ネイティブおよびハイブリッド モバイル アプリケーション。",
+  "home.services.item3.desc":
+    "iOS および Android 用の高性能ネイティブおよびハイブリッド モバイル アプリケーション。",
   "home.services.item3.title": "モバイルアプリケーション",
   "home.services.item4.desc": "クラウド インフラストラクチャ管理およびデータベース最適化サービス。",
   "home.services.item4.title": "クラウドとデータ",
   "home.services.item5.desc": "お客様のシステムのセキュリティを確保し、脆弱性分析を実施します。",
   "home.services.item5.title": "サイバーセキュリティ",
-  "home.services.item6.desc": "デジタル変革への取り組みに関する専門的なガイダンスとコンサルティング。",
+  "home.services.item6.desc":
+    "デジタル変革への取り組みに関する専門的なガイダンスとコンサルティング。",
   "home.services.item6.title": "技術コンサルティング",
   "home.services.title": "お客様のニーズに特化したテクノロジー ソリューション",
   "home.stats.projects": "完了したプロジェクト",
@@ -4918,14 +6059,21 @@ const ja: Dict = {
   "home.stats.team": "専門スタッフ",
   "home.stats.users": "アクティブなユーザー",
   "home.testimonials.badge": "コメント",
-  "home.testimonials.t1.text": "Fun Technology との連携により、当社のビジネス プロセスは完全に変わりました。人工知能ソリューションのおかげで、私たちの効率は向上しました。",
-  "home.testimonials.t2.text": "ムハメッド氏と彼のチームは非常にプロフェッショナルです。彼らは私たちのモバイルアプリケーションを時間通りに完璧に納品してくれました。",
-  "home.testimonials.t3.text": "技術サポートに関しては何の問題もありませんでした。彼らは常にソリューション指向のアプローチをとります。",
-  "home.testimonials.t4.text": "私たちのウェブサイトはより高速かつ安全になりました。ファンテクノロジーさん、ありがとうございます！",
-  "home.testimonials.t5.text": "彼らは革新的なアプローチと先見の明のある視点で私たちのプロジェクトに付加価値を与えてくれました。",
-  "home.testimonials.t6.text": "彼らは私たちの複雑なシステムを簡素化するという素晴らしい仕事をしてくれました。ぜひお勧めします。",
+  "home.testimonials.t1.text":
+    "Fun Technology との連携により、当社のビジネス プロセスは完全に変わりました。人工知能ソリューションのおかげで、私たちの効率は向上しました。",
+  "home.testimonials.t2.text":
+    "ムハメッド氏と彼のチームは非常にプロフェッショナルです。彼らは私たちのモバイルアプリケーションを時間通りに完璧に納品してくれました。",
+  "home.testimonials.t3.text":
+    "技術サポートに関しては何の問題もありませんでした。彼らは常にソリューション指向のアプローチをとります。",
+  "home.testimonials.t4.text":
+    "私たちのウェブサイトはより高速かつ安全になりました。ファンテクノロジーさん、ありがとうございます！",
+  "home.testimonials.t5.text":
+    "彼らは革新的なアプローチと先見の明のある視点で私たちのプロジェクトに付加価値を与えてくれました。",
+  "home.testimonials.t6.text":
+    "彼らは私たちの複雑なシステムを簡素化するという素晴らしい仕事をしてくれました。ぜひお勧めします。",
   "home.testimonials.title": "お客様の成功事例",
-  "home.whatwedo.text": "Fun Technology として、私たちはお客様のビジネスを将来に備えるために、人工知能によってサポートされる革新的なソフトウェア ソリューションを開発しています。",
+  "home.whatwedo.text":
+    "Fun Technology として、私たちはお客様のビジネスを将来に備えるために、人工知能によってサポートされる革新的なソフトウェア ソリューションを開発しています。",
   "inline.contact.message_error": "有効なメッセージ テキストを入力してください。",
   "inline.contact.subject_error": "意味のある件名を入力してください。",
   "lang.label": "言語の選択",
@@ -4976,7 +6124,8 @@ const ja: Dict = {
   "nexy.capabilities.2.title": "素早い対応",
   "nexy.capabilities.3.desc": "必要なあらゆる言語で通信できます。",
   "nexy.capabilities.3.title": "多言語サポート",
-  "nexy.capabilities.4.desc": "あなたの会話はプライベートに保たれ、データが共有されることはありません。",
+  "nexy.capabilities.4.desc":
+    "あなたの会話はプライベートに保たれ、データが共有されることはありません。",
   "nexy.capabilities.4.title": "安全なインタラクション",
   "nexy.capabilities.5.desc": "ドキュメントとデータの間でインテリジェントな検索を実行します。",
   "nexy.capabilities.5.title": "スマート検索",
@@ -4997,14 +6146,18 @@ const ja: Dict = {
   "nexy.read_tooltip": "Read Aloud",
   "nexy.status.active": "アクティブサポート",
   "nexy.toast.copy": "メッセージがコピーされました!",
-  "nexy.why.desc": "Nexy は単なるチャットボットではありません。それはあなたのビジネスのデジタルの顔です。",
+  "nexy.why.desc":
+    "Nexy は単なるチャットボットではありません。それはあなたのビジネスのデジタルの顔です。",
   "nexy.why.title": "未来のお問い合わせフォーム",
   "policy.contact.desc": "ご質問がございましたら、以下までご連絡ください。",
   "policy.contact.title": "コミュニケーション",
   "policy.last_updated": "最終更新日: 2026/03/19",
-  "policy.privacy.contact_desc": "当社のプライバシー ポリシーまたは個人データの処理についてご質問がある場合は、以下までお問い合わせください。",
-  "policy.privacy.intro": "当社のプライバシー ポリシーでは、当社がお客様の個人情報をどのように収集、使用、保護するかを説明します。あなたのプライバシーとセキュリティは私たちの最優先事項です。",
-  "policy.privacy.s1.desc": "お客様が当社のウェブサイトにアクセスしたり、アカウントを作成したり、当社のサービスを利用したりする際に、当社はお客様から特定の個人情報を収集する場合があります。この情報には次のものが含まれる場合があります。",
+  "policy.privacy.contact_desc":
+    "当社のプライバシー ポリシーまたは個人データの処理についてご質問がある場合は、以下までお問い合わせください。",
+  "policy.privacy.intro":
+    "当社のプライバシー ポリシーでは、当社がお客様の個人情報をどのように収集、使用、保護するかを説明します。あなたのプライバシーとセキュリティは私たちの最優先事項です。",
+  "policy.privacy.s1.desc":
+    "お客様が当社のウェブサイトにアクセスしたり、アカウントを作成したり、当社のサービスを利用したりする際に、当社はお客様から特定の個人情報を収集する場合があります。この情報には次のものが含まれる場合があります。",
   "policy.privacy.s1.item1": "名前と姓",
   "policy.privacy.s1.item2": "電子メールアドレス",
   "policy.privacy.s1.item3": "連絡先",
@@ -5017,34 +6170,48 @@ const ja: Dict = {
   "policy.privacy.s2.item4": "キャンペーンやイノベーションについてのコミュニケーション",
   "policy.privacy.s2.item5": "サイトのトラフィックを分析してサービスを改善するため",
   "policy.privacy.s2.title": "お客様の情報の使用方法",
-  "policy.privacy.s3.desc": "当社はお客様の個人データのセキュリティを真剣に考えています。当社は、不正なアクセス、改ざん、開示、破壊から保護するために業界標準のセキュリティ対策を導入しています。ただし、インターネットや電子ストレージを介したデータ送信は 100% 安全ではないことに注意してください。",
+  "policy.privacy.s3.desc":
+    "当社はお客様の個人データのセキュリティを真剣に考えています。当社は、不正なアクセス、改ざん、開示、破壊から保護するために業界標準のセキュリティ対策を導入しています。ただし、インターネットや電子ストレージを介したデータ送信は 100% 安全ではないことに注意してください。",
   "policy.privacy.s3.title": "データセキュリティ",
-  "policy.privacy.s4.desc": "お客様の個人データ: お客様の明示的な許可なしに、商業目的で販売または共有されることはありません。法的義務により要求される場合、またはサービスプロバイダーが機密保持を遵守することを条件として、サービスプロバイダーと共有される場合があります。",
+  "policy.privacy.s4.desc":
+    "お客様の個人データ: お客様の明示的な許可なしに、商業目的で販売または共有されることはありません。法的義務により要求される場合、またはサービスプロバイダーが機密保持を遵守することを条件として、サービスプロバイダーと共有される場合があります。",
   "policy.privacy.s4.title": "第三者との共有",
-  "policy.privacy.s5.desc": "当社の Web サイトでは、ユーザー エクスペリエンスを向上させるために Cookie を使用する場合があります。 Cookie のおかげで、サイトの使用方法に関する情報が収集されます。ブラウザの設定を変更することで、Cookie を拒否したり、警告を受け取ることができます。",
+  "policy.privacy.s5.desc":
+    "当社の Web サイトでは、ユーザー エクスペリエンスを向上させるために Cookie を使用する場合があります。 Cookie のおかげで、サイトの使用方法に関する情報が収集されます。ブラウザの設定を変更することで、Cookie を拒否したり、警告を受け取ることができます。",
   "policy.privacy.s5.title": "クッキー",
-  "policy.privacy.s6.desc": "このプライバシーポリシーは随時更新される場合があります。加えられた変更はすべてこのページに公開され、発効日が更新されます。このページの更新情報を定期的にチェックすることをお勧めします。",
+  "policy.privacy.s6.desc":
+    "このプライバシーポリシーは随時更新される場合があります。加えられた変更はすべてこのページに公開され、発効日が更新されます。このページの更新情報を定期的にチェックすることをお勧めします。",
   "policy.privacy.s6.title": "変更点",
-  "policy.service.intro": "Fun Technology プラットフォームを使用すると、安全、法的、倫理的なルールの枠組み内で当社のサービスを使用することに同意したものとみなされます。基本的な利用規約は次のとおりです。",
-  "policy.service.s1.desc": "プラットフォームを使用するには、正確かつ最新の情報を使用してアカウントを作成する必要があります。あなたは、自分のアカウント情報の機密保持について責任を負います。",
+  "policy.service.intro":
+    "Fun Technology プラットフォームを使用すると、安全、法的、倫理的なルールの枠組み内で当社のサービスを使用することに同意したものとみなされます。基本的な利用規約は次のとおりです。",
+  "policy.service.s1.desc":
+    "プラットフォームを使用するには、正確かつ最新の情報を使用してアカウントを作成する必要があります。あなたは、自分のアカウント情報の機密保持について責任を負います。",
   "policy.service.s1.title": "アカウントの使用状況",
-  "policy.service.s2.desc": "プラットフォーム上で共有するコンテンツおよび取引は、適用されるすべての法律および規制に準拠する必要があります。",
+  "policy.service.s2.desc":
+    "プラットフォーム上で共有するコンテンツおよび取引は、適用されるすべての法律および規制に準拠する必要があります。",
   "policy.service.s2.title": "法令遵守",
-  "policy.service.s3.desc": "Fun Technology は、データを保護するために高度なセキュリティ対策を実装しています。アカウントのセキュリティを確保するために、パスワードを秘密にしておく必要があります。",
+  "policy.service.s3.desc":
+    "Fun Technology は、データを保護するために高度なセキュリティ対策を実装しています。アカウントのセキュリティを確保するために、パスワードを秘密にしておく必要があります。",
   "policy.service.s3.title": "セキュリティとプライバシー",
-  "policy.service.s4.desc": "Fun Teknoloji は、プラットフォーム上のコンテンツおよびサードパーティのリンクに対して限定的責任を負います。ユーザーは自らの責任においてプラットフォームを使用します。",
+  "policy.service.s4.desc":
+    "Fun Teknoloji は、プラットフォーム上のコンテンツおよびサードパーティのリンクに対して限定的責任を負います。ユーザーは自らの責任においてプラットフォームを使用します。",
   "policy.service.s4.title": "免責事項",
-  "policy.service.s5.desc": "Fun Teknoloji は、プラットフォームの機能を向上させるために、コンテンツ、機能、または使用条件を変更する権利を留保します。",
+  "policy.service.s5.desc":
+    "Fun Teknoloji は、プラットフォームの機能を向上させるために、コンテンツ、機能、または使用条件を変更する権利を留保します。",
   "policy.service.s5.title": "サービスの変更",
-  "policy.service.s6.desc": "利用規約に違反した場合、プラットフォームはアカウントを一時的または永久に制限または閉鎖することがあります。",
+  "policy.service.s6.desc":
+    "利用規約に違反した場合、プラットフォームはアカウントを一時的または永久に制限または閉鎖することがあります。",
   "policy.service.s6.title": "制裁",
   "pricing.badge": "価格設定",
   "pricing.desc": "当社は現在、システムをより効率的かつ経済的にするために取り組んでいます。",
   "pricing.title": "新しいパッケージがもうすぐ登場します",
-  "projects.hero.desc": "当社のソリューション指向プロジェクトは、革新的なテクノロジーを使用して開発されました。",
+  "projects.hero.desc":
+    "当社のソリューション指向プロジェクトは、革新的なテクノロジーを使用して開発されました。",
   "projects.hero.title": "私たちは未来を築いています",
-  "projects.nexy.desc": "Fun Technology の人工知能ベースのデジタル アシスタント。企業とユーザーのためのスマートなガイド。",
-  "projects.quakesafe.desc": "災害安全技術の新時代。地震中および地震後に命を救うスマート システム。",
+  "projects.nexy.desc":
+    "Fun Technology の人工知能ベースのデジタル アシスタント。企業とユーザーのためのスマートなガイド。",
+  "projects.quakesafe.desc":
+    "災害安全技術の新時代。地震中および地震後に命を救うスマート システム。",
   "projects.soon.desc": "私たちはエキサイティングな新しいプロジェクトに取り組み続けます。",
   "projects.soon.title": "さらに近日公開予定",
   "projects.view": "プロジェクトを確認する",
@@ -5065,7 +6232,8 @@ const ja: Dict = {
   "quakesafe.features.3.title": "安全なエリア",
   "quakesafe.features.4.desc": "家族全員を 1 つのネットワークに集め、ステータスを追跡します。",
   "quakesafe.features.4.title": "家族グループ",
-  "quakesafe.features.5.desc": "インターネットが切断された場合でも、重要なガイドや地図にアクセスできます。",
+  "quakesafe.features.5.desc":
+    "インターネットが切断された場合でも、重要なガイドや地図にアクセスできます。",
   "quakesafe.features.5.title": "オフラインモード",
   "quakesafe.features.6.desc": "人工知能による被害リスク予測とエリアセキュリティ分析。",
   "quakesafe.features.6.title": "AI分析",
@@ -5075,23 +6243,31 @@ const ja: Dict = {
   "quakesafe.features.8.title": "クラウドバックアップ",
   "quakesafe.features.9.desc": "瓦礫の下にある人々の位置をワンクリックで当局に通報します。",
   "quakesafe.features.9.title": "クイック通知",
-  "quakesafe.features.desc": "災害前、災害中、災害後に必要なすべてのツールが単一のプラットフォーム上にあります。",
+  "quakesafe.features.desc":
+    "災害前、災害中、災害後に必要なすべてのツールが単一のプラットフォーム上にあります。",
   "quakesafe.features.title": "包括的な保護ネットワーク",
-  "quakesafe.hero.desc": "人工知能とセンサーネットワークによる地震安全性の革命。一刻を争う瞬間の最大のサポーター。",
+  "quakesafe.hero.desc":
+    "人工知能とセンサーネットワークによる地震安全性の革命。一刻を争う瞬間の最大のサポーター。",
   "quakesafe.hero.title": "地震を恐れる必要はありません。QuakeSafe で安全を確保しましょう",
   "reviews.desc": "Fun Technology で変革を遂げたビジネス パートナーのストーリーをご覧ください。",
   "reviews.r1.name": "アフメト・ユルマズ",
-  "reviews.r1.text": "中小企業の経営者として、貴社が提供するソフトウェア ソリューションは業務効率を向上させる上で救世主となっています。本当に私の期待を上回りました。",
+  "reviews.r1.text":
+    "中小企業の経営者として、貴社が提供するソフトウェア ソリューションは業務効率を向上させる上で救世主となっています。本当に私の期待を上回りました。",
   "reviews.r2.name": "ゼイネプ・カヤ",
-  "reviews.r2.text": "AI の統合は本当に素晴らしいです。ビジネス プロセスを自動化することで、多くの時間を節約できました。",
+  "reviews.r2.text":
+    "AI の統合は本当に素晴らしいです。ビジネス プロセスを自動化することで、多くの時間を節約できました。",
   "reviews.r3.name": "ムラット・デミル",
-  "reviews.r3.text": "このテクノロジーは、当社のデータ分析プロセスに革命をもたらしました。洞察は非常に深いので、私たちはより自信を持って意思決定を下せるようになりました。",
+  "reviews.r3.text":
+    "このテクノロジーは、当社のデータ分析プロセスに革命をもたらしました。洞察は非常に深いので、私たちはより自信を持って意思決定を下せるようになりました。",
   "reviews.r4.name": "エリフ・サヒン",
-  "reviews.r4.text": "プロジェクト マネージャーにとって、このツールはチーム間の調整を確実にするために非常に貴重です。ユーザーフレンドリーなインターフェイスは素晴らしいです!",
+  "reviews.r4.text":
+    "プロジェクト マネージャーにとって、このツールはチーム間の調整を確実にするために非常に貴重です。ユーザーフレンドリーなインターフェイスは素晴らしいです!",
   "reviews.r5.name": "オズカンの杖",
-  "reviews.r5.text": "彼らの開発プロセスのスピードと品質は驚くべきものです。優れた品質基準を維持しながら、予定通りにプロジェクトを受け取ることができました。",
+  "reviews.r5.text":
+    "彼らの開発プロセスのスピードと品質は驚くべきものです。優れた品質基準を維持しながら、予定通りにプロジェクトを受け取ることができました。",
   "reviews.r6.name": "セリン・アイディン",
-  "reviews.r6.text": "このプラットフォームは、デジタル プレゼンスの管理方法を変革しました。このテクノロジーは非常に現代的で印象的であり、私たちのチーム全員が驚きました。",
+  "reviews.r6.text":
+    "このプラットフォームは、デジタル プレゼンスの管理方法を変革しました。このテクノロジーは非常に現代的で印象的であり、私たちのチーム全員が驚きました。",
   "reviews.title": "お客様の声は?",
   "reviews.verified": "認証済みの顧客",
   "sitemap.desc": "Fun Teknoloji Web サイトの全ページの概要。",
@@ -5102,7 +6278,8 @@ const ja: Dict = {
   "team.desc": "Fun Technology の背後にある才能ある人々を紹介します。",
   "team.join.desc": "私たちと一緒に未来を築いてみませんか？皆様のご応募をお待ちしております。",
   "team.join.title": "私たちのチームに参加しましょう",
-  "team.member.muhammed.bio": "Fun Technology の創設者である Muhammed Erbay は、テクノロジーを誰もがアクセスでき便利なものにするというビジョンを持って会社を率いています。",
+  "team.member.muhammed.bio":
+    "Fun Technology の創設者である Muhammed Erbay は、テクノロジーを誰もがアクセスでき便利なものにするというビジョンを持って会社を率いています。",
   "team.title": "私たちの成功の背後にある力",
   "theme.dark": "ダークテーマに切り替える",
   "theme.light": "オープンテーマに切り替える",
@@ -5118,34 +6295,60 @@ const ja: Dict = {
   "home.testimonials.t6.name": "セリン・アイディン",
   "blog.index.untitled": "無題の記事",
   "blog.index.category_default": "テクノロジー",
-  "nexy.resp.pricing.0": "Fiyatlandırma politikalarımız üzerinde çalışıyoruz. En güncel paketler için Fiyatlandırma sayfamızı takip edebilirsiniz. Şu an için bekleme listemize katılmak en iyi seçenek!",
-  "nexy.resp.pricing.1": "Şu an için tüm hizmetlerimiz için size özel teklif sunuyoruz, detaylar yakında sayfalarımızda olacak. Genelde proje bazlı fiyatlandırma yapıyoruz.",
-  "nexy.resp.pricing.2": "Paketlerimiz güncelleniyor. Fun Teknoloji olarak her bütçeye uygun teknoloji çözümleri üretmeyi hedefliyoruz.",
-  "nexy.resp.services.0": "Yapay zeka entegrasyonu, özel yazılım geliştirme, mobil uygulama ve siber güvenlik alanlarında profesyonel çözümler sunuyoruz. Hangi alanla ilgileniyorsunuz?",
-  "nexy.resp.services.1": "Dijital dönüşüm yolculuğunuzda size en modern teknoloji yığını ile eşlik ediyoruz. React, Next.js, AI modelleri ve daha fazlasını kullanıyoruz.",
-  "nexy.resp.services.2": "İş süreçlerinizi otomatize edecek yapay zeka çözümlerimiz hakkında detaylı bilgi için Hizmetler sayfamıza bakabilirsiniz. Verimliliğinizi %40'a kadar artırabiliriz.",
-  "nexy.resp.founder.0": "Fun Teknoloji, Muhammed Erbay tarafından 2025 yılında vizyoner bir teknoloji şirketi olarak kurulmuştur.",
-  "nexy.resp.founder.1": "Kurucumuz Muhammed Erbay, teknolojiyi herkes için erişilebilir ve faydalı kılma vizyonuyla bu yola çıktı. Kendisi genç ve hırslı bir girişimcidir.",
-  "nexy.resp.founder.2": "2025'te Muhammed Erbay liderliğinde kurulan Fun Teknoloji, Türkiye'nin dijital geleceğine odaklanıyor. Muhammed Bey bizzat projelerin mimarisini denetliyor.",
-  "nexy.resp.contact.0": "Bize iletişim sayfasındaki formdan veya support@funteknoloji.com adresinden ulaşabilirsiniz! 7/24 destek veriyoruz.",
-  "nexy.resp.contact.1": "Sorularınız için her zaman buradayız, iletişim kısmından bize yazmaktan çekinmeyin. Ayrıca Discord kanalımızda çok aktif bir topluluğumuz var.",
-  "nexy.resp.contact.2": "Discord topluluğumuza katılarak da ekibimizle doğrudan iletişime geçebilirsiniz. Linki İletişim sayfasında bulabilirsiniz.",
-  "nexy.resp.about.0": "Fun Teknoloji, teknolojiyi 'eğlenceli' ve 'faydalı' kılmak için kuruldu. Yapay zeka ve yazılım bizim tutkumuz.",
-  "nexy.resp.about.1": "Misyonumuz, işletmeleri geleceğin teknolojileriyle bugünden tanıştırmak. Vizyonumuz ise global çapta bir teknoloji üssü olmak.",
-  "nexy.resp.about.2": "Hakkımızda sayfasında tüm tarihimizi ve değerlerimizi bulabilirsiniz. İnovasyon, kalite ve güvenilirlik en önemli ilkelerimizdir.",
-  "nexy.resp.careers.0": "Ekibimiz sürekli büyüyor! Kariyer fırsatları için bize özgeçmişinizi gönderebilir veya LinkedIn sayfamızı takip edebilirsiniz.",
-  "nexy.resp.careers.1": "Yetenekli mühendisler, tasarımcılar ve yapay zeka meraklıları ile çalışmaktan her zaman mutluluk duyarız.",
-  "nexy.resp.careers.2": "Şu an spesifik bir ilanımız olmasa da, yetenekli insanlara her zaman kapımız açık. Bize yazın!",
-  "nexy.resp.tech.0": "Geliştirmelerimizde modern teknolojiler kullanıyoruz. React, TypeScript, TanStack, Tailwind ve çeşitli LLM modelleri vazgeçilmezimiz.",
-  "nexy.resp.tech.1": "Sistemlerimizi yüksek performans ve ölçeklenebilirlik odaklı tasarlıyoruz. Cloud teknolojilerini en verimli şekilde kullanıyoruz.",
-  "nexy.resp.tech.2": "Fun Teknoloji olarak sürekli AR-GE yapıyoruz. En yeni frameworkleri ve yapay zeka tekniklerini ilk biz uyguluyoruz.",
+  "nexy.resp.pricing.0":
+    "Fiyatlandırma politikalarımız üzerinde çalışıyoruz. En güncel paketler için Fiyatlandırma sayfamızı takip edebilirsiniz. Şu an için bekleme listemize katılmak en iyi seçenek!",
+  "nexy.resp.pricing.1":
+    "Şu an için tüm hizmetlerimiz için size özel teklif sunuyoruz, detaylar yakında sayfalarımızda olacak. Genelde proje bazlı fiyatlandırma yapıyoruz.",
+  "nexy.resp.pricing.2":
+    "Paketlerimiz güncelleniyor. Fun Teknoloji olarak her bütçeye uygun teknoloji çözümleri üretmeyi hedefliyoruz.",
+  "nexy.resp.services.0":
+    "Yapay zeka entegrasyonu, özel yazılım geliştirme, mobil uygulama ve siber güvenlik alanlarında profesyonel çözümler sunuyoruz. Hangi alanla ilgileniyorsunuz?",
+  "nexy.resp.services.1":
+    "Dijital dönüşüm yolculuğunuzda size en modern teknoloji yığını ile eşlik ediyoruz. React, Next.js, AI modelleri ve daha fazlasını kullanıyoruz.",
+  "nexy.resp.services.2":
+    "İş süreçlerinizi otomatize edecek yapay zeka çözümlerimiz hakkında detaylı bilgi için Hizmetler sayfamıza bakabilirsiniz. Verimliliğinizi %40'a kadar artırabiliriz.",
+  "nexy.resp.founder.0":
+    "Fun Teknoloji, Muhammed Erbay tarafından 2025 yılında vizyoner bir teknoloji şirketi olarak kurulmuştur.",
+  "nexy.resp.founder.1":
+    "Kurucumuz Muhammed Erbay, teknolojiyi herkes için erişilebilir ve faydalı kılma vizyonuyla bu yola çıktı. Kendisi genç ve hırslı bir girişimcidir.",
+  "nexy.resp.founder.2":
+    "2025'te Muhammed Erbay liderliğinde kurulan Fun Teknoloji, Türkiye'nin dijital geleceğine odaklanıyor. Muhammed Bey bizzat projelerin mimarisini denetliyor.",
+  "nexy.resp.contact.0":
+    "Bize iletişim sayfasındaki formdan veya support@funteknoloji.com adresinden ulaşabilirsiniz! 7/24 destek veriyoruz.",
+  "nexy.resp.contact.1":
+    "Sorularınız için her zaman buradayız, iletişim kısmından bize yazmaktan çekinmeyin. Ayrıca Discord kanalımızda çok aktif bir topluluğumuz var.",
+  "nexy.resp.contact.2":
+    "Discord topluluğumuza katılarak da ekibimizle doğrudan iletişime geçebilirsiniz. Linki İletişim sayfasında bulabilirsiniz.",
+  "nexy.resp.about.0":
+    "Fun Teknoloji, teknolojiyi 'eğlenceli' ve 'faydalı' kılmak için kuruldu. Yapay zeka ve yazılım bizim tutkumuz.",
+  "nexy.resp.about.1":
+    "Misyonumuz, işletmeleri geleceğin teknolojileriyle bugünden tanıştırmak. Vizyonumuz ise global çapta bir teknoloji üssü olmak.",
+  "nexy.resp.about.2":
+    "Hakkımızda sayfasında tüm tarihimizi ve değerlerimizi bulabilirsiniz. İnovasyon, kalite ve güvenilirlik en önemli ilkelerimizdir.",
+  "nexy.resp.careers.0":
+    "Ekibimiz sürekli büyüyor! Kariyer fırsatları için bize özgeçmişinizi gönderebilir veya LinkedIn sayfamızı takip edebilirsiniz.",
+  "nexy.resp.careers.1":
+    "Yetenekli mühendisler, tasarımcılar ve yapay zeka meraklıları ile çalışmaktan her zaman mutluluk duyarız.",
+  "nexy.resp.careers.2":
+    "Şu an spesifik bir ilanımız olmasa da, yetenekli insanlara her zaman kapımız açık. Bize yazın!",
+  "nexy.resp.tech.0":
+    "Geliştirmelerimizde modern teknolojiler kullanıyoruz. React, TypeScript, TanStack, Tailwind ve çeşitli LLM modelleri vazgeçilmezimiz.",
+  "nexy.resp.tech.1":
+    "Sistemlerimizi yüksek performans ve ölçeklenebilirlik odaklı tasarlıyoruz. Cloud teknolojilerini en verimli şekilde kullanıyoruz.",
+  "nexy.resp.tech.2":
+    "Fun Teknoloji olarak sürekli AR-GE yapıyoruz. En yeni frameworkleri ve yapay zeka tekniklerini ilk biz uyguluyoruz.",
   "nexy.resp.greeting.0": "Merhaba! Size nasıl yardımcı olabilirim? Bugün teknoloji dolu bir gün!",
-  "nexy.resp.greeting.1": "Selamlar! Ben Nexy, Fun Teknoloji'nin yapay zeka asistanıyım. Sizi dinliyorum.",
-  "nexy.resp.greeting.2": "Hoş geldiniz! Merak ettiğiniz bir şey mi var? Size Fun Teknoloji hakkında her şeyi anlatabilirim.",
+  "nexy.resp.greeting.1":
+    "Selamlar! Ben Nexy, Fun Teknoloji'nin yapay zeka asistanıyım. Sizi dinliyorum.",
+  "nexy.resp.greeting.2":
+    "Hoş geldiniz! Merak ettiğiniz bir şey mi var? Size Fun Teknoloji hakkında her şeyi anlatabilirim.",
   "nexy.resp.default.0": "Mesajınız için teşekkürler. Size nasıl yardımcı olabilirim?",
-  "nexy.resp.default.1": "Bu konuda size daha detaylı yardımcı olabilmemiz için lütfen iletişim formunu doldurun.",
-  "nexy.resp.default.2": "Harika bir soru! Ama bu konuda henüz tam bir bilgim yok. İsterseniz ekibimize sorabilirim?",
-  "nexy.resp.default.3": "Size nasıl daha iyi yardımcı olabilirim? Teknoloji çözümlerimiz, kurucumuz veya hizmetlerimiz hakkında konuşabiliriz.",
+  "nexy.resp.default.1":
+    "Bu konuda size daha detaylı yardımcı olabilmemiz için lütfen iletişim formunu doldurun.",
+  "nexy.resp.default.2":
+    "Harika bir soru! Ama bu konuda henüz tam bir bilgim yok. İsterseniz ekibimize sorabilirim?",
+  "nexy.resp.default.3":
+    "Size nasıl daha iyi yardımcı olabilirim? Teknoloji çözümlerimiz, kurucumuz veya hizmetlerimiz hakkında konuşabiliriz.",
   "service.feature.automation": "Otomasyon",
   "service.feature.big_data": "Büyük Veri",
   "service.feature.bi": "İş Zekası",
@@ -5185,7 +6388,8 @@ const zh: Dict = {
   "about.cta.title": "让我们一起努力",
   "about.desc": "Fun Teknoloji 由 Muhammed Erbay 于 2025 年创立。",
   "about.mission.badge": "我们的使命",
-  "about.mission.desc": "帮助各种规模的企业从人工智能和先进技术解决方案中受益，从而在数字世界中获得竞争优势。",
+  "about.mission.desc":
+    "帮助各种规模的企业从人工智能和先进技术解决方案中受益，从而在数字世界中获得竞争优势。",
   "about.mission.title": "以科技赋能企业",
   "about.stats.clients": "快乐的顾客",
   "about.stats.projects": "已完成项目",
@@ -5231,7 +6435,8 @@ const zh: Dict = {
   "blog.title": "来自科技世界",
   "brand_kit.badge": "Corporate",
   "brand_kit.colors.title": "Our Color Palette",
-  "brand_kit.desc": "You can download Fun Teknoloji logos and visual materials here and take a look at the usage guide.",
+  "brand_kit.desc":
+    "You can download Fun Teknoloji logos and visual materials here and take a look at the usage guide.",
   "brand_kit.download_png": "Download PNG",
   "brand_kit.logos.fun_black.desc": "Black version for use on light-colored backgrounds.",
   "brand_kit.logos.fun_black.title": "Fun Technology Black Logo",
@@ -5319,7 +6524,8 @@ const zh: Dict = {
   "faq.q5.q": "定制软件流程如何运作？",
   "faq.q6.a": "这取决于您的目标。我们的团队将分析您的需求并为您推荐最合适的平台。",
   "faq.q6.q": "我应该建立移动应用程序或网站吗？",
-  "faq.q7.a": "我们使用现代技术堆栈，例如 React、Next.js、TypeScript、Python、PyTorch、Database 和 AWS。",
+  "faq.q7.a":
+    "我们使用现代技术堆栈，例如 React、Next.js、TypeScript、Python、PyTorch、Database 和 AWS。",
   "faq.q7.q": "你们使用什么技术？",
   "faq.q8.a": "是的，我们为我们的企业解决方案提供全面的 API 支持和文档。",
   "faq.q8.q": "你们有 API 支持吗？",
@@ -5333,9 +6539,11 @@ const zh: Dict = {
   "home.cta.desc": "如果您有任何疑问或需要帮助，请联系我们的支持团队。",
   "home.cta.more": "发现更多",
   "home.cta.title": "今天就开始吧。",
-  "home.faq.a1": "趣味科技（Fun Technology）是一家专注于人工智能、定制软件开发和数字化转型的科技公司。",
+  "home.faq.a1":
+    "趣味科技（Fun Technology）是一家专注于人工智能、定制软件开发和数字化转型的科技公司。",
   "home.faq.a2": "是的，我们为您的项目提供 24/7 全天候技术支持和维护服务。",
-  "home.faq.a3": "虽然取决于项目范围，但我们通常在 2-4 周内完成小型项目，在 2-4 个月内完成综合项目。",
+  "home.faq.a3":
+    "虽然取决于项目范围，但我们通常在 2-4 周内完成小型项目，在 2-4 个月内完成综合项目。",
   "home.faq.a4": "价格根据项目的复杂程度和所需功能专门确定。",
   "home.faq.a5": "是的，我们擅长将 AI 模型集成到您现有的系统中。",
   "home.faq.a6": "当然可以！您可以与我们分享您的项目想法，获取免费咨询。",
@@ -5353,7 +6561,8 @@ const zh: Dict = {
   "home.features.desc": "我们提供最现代的技术，将您的业务提升到一个新的水平。",
   "home.features.title": "为什么您应该选择我们？",
   "home.hero.badge": "土耳其的创新技术公司",
-  "home.hero.desc": "我们通过人工智能、软件开发和智能系统领域的开创性解决方案将您的业务推向数字化转型的中心。",
+  "home.hero.desc":
+    "我们通过人工智能、软件开发和智能系统领域的开创性解决方案将您的业务推向数字化转型的中心。",
   "home.hero.explore": "发现服务",
   "home.hero.start": "加入候补名单",
   "home.hero.title": "未来的技术今天就在我们身边",
@@ -5386,14 +6595,18 @@ const zh: Dict = {
   "home.stats.team": "专家团队",
   "home.stats.users": "活跃用户",
   "home.testimonials.badge": "评论",
-  "home.testimonials.t1.text": "与 Fun Technology 的合作彻底改变了我们的业务流程。得益于人工智能解决方案，我们的效率得到了提高。",
-  "home.testimonials.t2.text": "穆罕默德先生和他的团队非常专业。他们准时、完美地交付了我们的移动应用程序。",
-  "home.testimonials.t3.text": "我们在技术支持方面没有遇到任何问题。他们始终采用以解决方案为导向的方法。",
+  "home.testimonials.t1.text":
+    "与 Fun Technology 的合作彻底改变了我们的业务流程。得益于人工智能解决方案，我们的效率得到了提高。",
+  "home.testimonials.t2.text":
+    "穆罕默德先生和他的团队非常专业。他们准时、完美地交付了我们的移动应用程序。",
+  "home.testimonials.t3.text":
+    "我们在技术支持方面没有遇到任何问题。他们始终采用以解决方案为导向的方法。",
   "home.testimonials.t4.text": "我们的网站现在更快、更安全。谢谢趣科技！",
   "home.testimonials.t5.text": "他们以其创新的方法和富有远见的观点为我们的项目增加了价值。",
   "home.testimonials.t6.text": "他们在简化我们复杂的系统方面做得非常出色。我绝对推荐它。",
   "home.testimonials.title": "我们客户的成功故事",
-  "home.whatwedo.text": "作为 Fun Technology，我们开发由人工智能支持的创新软件解决方案，帮助您的业务为未来做好准备。",
+  "home.whatwedo.text":
+    "作为 Fun Technology，我们开发由人工智能支持的创新软件解决方案，帮助您的业务为未来做好准备。",
   "inline.contact.message_error": "请输入有效的消息文本。",
   "inline.contact.subject_error": "请输入有意义的主题标题。",
   "lang.label": "选择语言",
@@ -5470,9 +6683,12 @@ const zh: Dict = {
   "policy.contact.desc": "如果您有任何疑问，您可以联系我们：",
   "policy.contact.title": "沟通",
   "policy.last_updated": "最后更新日期：2026 年 3 月 19 日",
-  "policy.privacy.contact_desc": "如果您对我们的隐私政策或您的个人数据的处理有任何疑问，您可以联系我们：",
-  "policy.privacy.intro": "我们的隐私政策解释了我们如何收集、使用和保护您的个人信息。您的隐私和安全是我们的首要任务。",
-  "policy.privacy.s1.desc": "当您访问我们的网站、创建帐户或与我们的服务互动时，我们可能会收集您的某些个人信息。这些信息可能包括：",
+  "policy.privacy.contact_desc":
+    "如果您对我们的隐私政策或您的个人数据的处理有任何疑问，您可以联系我们：",
+  "policy.privacy.intro":
+    "我们的隐私政策解释了我们如何收集、使用和保护您的个人信息。您的隐私和安全是我们的首要任务。",
+  "policy.privacy.s1.desc":
+    "当您访问我们的网站、创建帐户或与我们的服务互动时，我们可能会收集您的某些个人信息。这些信息可能包括：",
   "policy.privacy.s1.item1": "姓名",
   "policy.privacy.s1.item2": "电子邮件",
   "policy.privacy.s1.item3": "联系信息",
@@ -5485,22 +6701,30 @@ const zh: Dict = {
   "policy.privacy.s2.item4": "交流活动和创新",
   "policy.privacy.s2.item5": "通过分析网站流量来改善我们的服务",
   "policy.privacy.s2.title": "我们如何使用您的信息",
-  "policy.privacy.s3.desc": "我们认真对待您个人数据的安全。我们实施行业标准的安全措施，以防止未经授权的访问、更改、披露或破坏。但是，请记住，通过互联网或电子存储进行的数据传输并非 100% 安全。",
+  "policy.privacy.s3.desc":
+    "我们认真对待您个人数据的安全。我们实施行业标准的安全措施，以防止未经授权的访问、更改、披露或破坏。但是，请记住，通过互联网或电子存储进行的数据传输并非 100% 安全。",
   "policy.privacy.s3.title": "数据安全",
-  "policy.privacy.s4.desc": "您的个人数据：未经您的明确许可，不会出于商业目的出售或共享。当法律义务要求或遵守保密规定时，可以与服务提供商共享这些信息。",
+  "policy.privacy.s4.desc":
+    "您的个人数据：未经您的明确许可，不会出于商业目的出售或共享。当法律义务要求或遵守保密规定时，可以与服务提供商共享这些信息。",
   "policy.privacy.s4.title": "与第三方共享",
-  "policy.privacy.s5.desc": "我们的网站可能会使用cookies来改善用户体验。借助 cookie，我们可以收集有关您如何使用网站的信息。您可以通过更改浏览器设置来拒绝 cookie 或接收警告。",
+  "policy.privacy.s5.desc":
+    "我们的网站可能会使用cookies来改善用户体验。借助 cookie，我们可以收集有关您如何使用网站的信息。您可以通过更改浏览器设置来拒绝 cookie 或接收警告。",
   "policy.privacy.s5.title": "曲奇饼",
-  "policy.privacy.s6.desc": "本隐私政策可能会不时更新。所做的任何更改都会在此页面上发布，并更新生效日期。我们建议您定期检查此页面以获取更新。",
+  "policy.privacy.s6.desc":
+    "本隐私政策可能会不时更新。所做的任何更改都会在此页面上发布，并更新生效日期。我们建议您定期检查此页面以获取更新。",
   "policy.privacy.s6.title": "变化",
-  "policy.service.intro": "使用趣科技平台，即表示您同意在安全、合法和道德规则的框架内使用我们的服务。以下是基本使用条款：",
-  "policy.service.s1.desc": "为了使用该平台，您必须创建一个包含准确和最新信息的帐户。您有责任对您的帐户信息保密。",
+  "policy.service.intro":
+    "使用趣科技平台，即表示您同意在安全、合法和道德规则的框架内使用我们的服务。以下是基本使用条款：",
+  "policy.service.s1.desc":
+    "为了使用该平台，您必须创建一个包含准确和最新信息的帐户。您有责任对您的帐户信息保密。",
   "policy.service.s1.title": "账户使用情况",
   "policy.service.s2.desc": "您在平台上分享的内容和进行的交易必须遵守所有适用的法律和法规。",
   "policy.service.s2.title": "法律合规性",
-  "policy.service.s3.desc": "Fun Technology 实施先进的安全措施来保护您的数据。为了您的帐户安全，您必须对密码保密。",
+  "policy.service.s3.desc":
+    "Fun Technology 实施先进的安全措施来保护您的数据。为了您的帐户安全，您必须对密码保密。",
   "policy.service.s3.title": "安全和隐私",
-  "policy.service.s4.desc": "Fun Teknoloji 对平台上的内容和第三方链接承担有限责任。用户使用本平台自行承担责任。",
+  "policy.service.s4.desc":
+    "Fun Teknoloji 对平台上的内容和第三方链接承担有限责任。用户使用本平台自行承担责任。",
   "policy.service.s4.title": "免责声明",
   "policy.service.s5.desc": "Fun Teknoloji 保留更改内容、功能或使用条款的权利，以改进平台的功能。",
   "policy.service.s5.title": "服务变更",
@@ -5545,21 +6769,26 @@ const zh: Dict = {
   "quakesafe.features.9.title": "快速通知",
   "quakesafe.features.desc": "灾难发生之前、期间和之后所需的所有工具都位于一个平台上。",
   "quakesafe.features.title": "综合防护网",
-  "quakesafe.hero.desc": "人工智能和传感器网络带来的地震安全革命。在几秒钟都至关重要的时刻，您最大的支持者。",
+  "quakesafe.hero.desc":
+    "人工智能和传感器网络带来的地震安全革命。在几秒钟都至关重要的时刻，您最大的支持者。",
   "quakesafe.hero.title": "不用害怕地震，有了 QuakeSafe 确保安全",
   "reviews.desc": "了解我们的业务合作伙伴通过 Fun Technology 实现转型的故事。",
   "reviews.r1.name": "艾哈迈德·耶尔马兹",
-  "reviews.r1.text": "作为小型企业主，您提供的软件解决方案是提高我们运营效率的救星。这确实超出了我的预期。",
+  "reviews.r1.text":
+    "作为小型企业主，您提供的软件解决方案是提高我们运营效率的救星。这确实超出了我的预期。",
   "reviews.r2.name": "泽内普·卡亚",
   "reviews.r2.text": "AI 集成绝对令人难以置信！通过自动化业务流程，我们节省了大量时间。",
   "reviews.r3.name": "穆拉特·德米尔",
-  "reviews.r3.text": "这项技术彻底改变了我们的数据分析流程。这些见解是如此深刻，以至于我们现在做出决策时更加自信。",
+  "reviews.r3.text":
+    "这项技术彻底改变了我们的数据分析流程。这些见解是如此深刻，以至于我们现在做出决策时更加自信。",
   "reviews.r4.name": "埃利夫·沙欣",
   "reviews.r4.text": "作为项目经理，该工具对于确保跨团队协调非常宝贵。用户友好的界面非常棒！",
   "reviews.r5.name": "卡内尔·厄兹坎",
-  "reviews.r5.text": "他们的开发过程的速度和质量令人惊叹。我们能够按时收到项目，同时保持卓越的质量标准。",
+  "reviews.r5.text":
+    "他们的开发过程的速度和质量令人惊叹。我们能够按时收到项目，同时保持卓越的质量标准。",
   "reviews.r6.name": "塞林·艾丁",
-  "reviews.r6.text": "这个平台改变了我们管理数字业务的方式。这项技术是如此现代化和令人印象深刻，以至于我们整个团队都感到惊讶。",
+  "reviews.r6.text":
+    "这个平台改变了我们管理数字业务的方式。这项技术是如此现代化和令人印象深刻，以至于我们整个团队都感到惊讶。",
   "reviews.title": "我们的客户怎么说？",
   "reviews.verified": "已验证客户",
   "sitemap.desc": "Fun Teknoloji 网站上所有页面的概述。",
@@ -5570,7 +6799,8 @@ const zh: Dict = {
   "team.desc": "认识 Fun Technology 背后的才华横溢的人。",
   "team.join.desc": "您愿意与我们一起共创未来吗？我们正在等待您的申请。",
   "team.join.title": "加入我们的团队",
-  "team.member.muhammed.bio": "Fun Technology 的创始人 Muhammed Erbay 领导公司的愿景是让技术对每个人都可用且有用。",
+  "team.member.muhammed.bio":
+    "Fun Technology 的创始人 Muhammed Erbay 领导公司的愿景是让技术对每个人都可用且有用。",
   "team.title": "我们成功背后的力量",
   "theme.dark": "切换到深色主题",
   "theme.light": "切换到开放主题",
@@ -5586,34 +6816,60 @@ const zh: Dict = {
   "home.testimonials.t6.name": "塞林·艾丁",
   "blog.index.untitled": "无题文章",
   "blog.index.category_default": "科技",
-  "nexy.resp.pricing.0": "Fiyatlandırma politikalarımız üzerinde çalışıyoruz. En güncel paketler için Fiyatlandırma sayfamızı takip edebilirsiniz. Şu an için bekleme listemize katılmak en iyi seçenek!",
-  "nexy.resp.pricing.1": "Şu an için tüm hizmetlerimiz için size özel teklif sunuyoruz, detaylar yakında sayfalarımızda olacak. Genelde proje bazlı fiyatlandırma yapıyoruz.",
-  "nexy.resp.pricing.2": "Paketlerimiz güncelleniyor. Fun Teknoloji olarak her bütçeye uygun teknoloji çözümleri üretmeyi hedefliyoruz.",
-  "nexy.resp.services.0": "Yapay zeka entegrasyonu, özel yazılım geliştirme, mobil uygulama ve siber güvenlik alanlarında profesyonel çözümler sunuyoruz. Hangi alanla ilgileniyorsunuz?",
-  "nexy.resp.services.1": "Dijital dönüşüm yolculuğunuzda size en modern teknoloji yığını ile eşlik ediyoruz. React, Next.js, AI modelleri ve daha fazlasını kullanıyoruz.",
-  "nexy.resp.services.2": "İş süreçlerinizi otomatize edecek yapay zeka çözümlerimiz hakkında detaylı bilgi için Hizmetler sayfamıza bakabilirsiniz. Verimliliğinizi %40'a kadar artırabiliriz.",
-  "nexy.resp.founder.0": "Fun Teknoloji, Muhammed Erbay tarafından 2025 yılında vizyoner bir teknoloji şirketi olarak kurulmuştur.",
-  "nexy.resp.founder.1": "Kurucumuz Muhammed Erbay, teknolojiyi herkes için erişilebilir ve faydalı kılma vizyonuyla bu yola çıktı. Kendisi genç ve hırslı bir girişimcidir.",
-  "nexy.resp.founder.2": "2025'te Muhammed Erbay liderliğinde kurulan Fun Teknoloji, Türkiye'nin dijital geleceğine odaklanıyor. Muhammed Bey bizzat projelerin mimarisini denetliyor.",
-  "nexy.resp.contact.0": "Bize iletişim sayfasındaki formdan veya support@funteknoloji.com adresinden ulaşabilirsiniz! 7/24 destek veriyoruz.",
-  "nexy.resp.contact.1": "Sorularınız için her zaman buradayız, iletişim kısmından bize yazmaktan çekinmeyin. Ayrıca Discord kanalımızda çok aktif bir topluluğumuz var.",
-  "nexy.resp.contact.2": "Discord topluluğumuza katılarak da ekibimizle doğrudan iletişime geçebilirsiniz. Linki İletişim sayfasında bulabilirsiniz.",
-  "nexy.resp.about.0": "Fun Teknoloji, teknolojiyi 'eğlenceli' ve 'faydalı' kılmak için kuruldu. Yapay zeka ve yazılım bizim tutkumuz.",
-  "nexy.resp.about.1": "Misyonumuz, işletmeleri geleceğin teknolojileriyle bugünden tanıştırmak. Vizyonumuz ise global çapta bir teknoloji üssü olmak.",
-  "nexy.resp.about.2": "Hakkımızda sayfasında tüm tarihimizi ve değerlerimizi bulabilirsiniz. İnovasyon, kalite ve güvenilirlik en önemli ilkelerimizdir.",
-  "nexy.resp.careers.0": "Ekibimiz sürekli büyüyor! Kariyer fırsatları için bize özgeçmişinizi gönderebilir veya LinkedIn sayfamızı takip edebilirsiniz.",
-  "nexy.resp.careers.1": "Yetenekli mühendisler, tasarımcılar ve yapay zeka meraklıları ile çalışmaktan her zaman mutluluk duyarız.",
-  "nexy.resp.careers.2": "Şu an spesifik bir ilanımız olmasa da, yetenekli insanlara her zaman kapımız açık. Bize yazın!",
-  "nexy.resp.tech.0": "Geliştirmelerimizde modern teknolojiler kullanıyoruz. React, TypeScript, TanStack, Tailwind ve çeşitli LLM modelleri vazgeçilmezimiz.",
-  "nexy.resp.tech.1": "Sistemlerimizi yüksek performans ve ölçeklenebilirlik odaklı tasarlıyoruz. Cloud teknolojilerini en verimli şekilde kullanıyoruz.",
-  "nexy.resp.tech.2": "Fun Teknoloji olarak sürekli AR-GE yapıyoruz. En yeni frameworkleri ve yapay zeka tekniklerini ilk biz uyguluyoruz.",
+  "nexy.resp.pricing.0":
+    "Fiyatlandırma politikalarımız üzerinde çalışıyoruz. En güncel paketler için Fiyatlandırma sayfamızı takip edebilirsiniz. Şu an için bekleme listemize katılmak en iyi seçenek!",
+  "nexy.resp.pricing.1":
+    "Şu an için tüm hizmetlerimiz için size özel teklif sunuyoruz, detaylar yakında sayfalarımızda olacak. Genelde proje bazlı fiyatlandırma yapıyoruz.",
+  "nexy.resp.pricing.2":
+    "Paketlerimiz güncelleniyor. Fun Teknoloji olarak her bütçeye uygun teknoloji çözümleri üretmeyi hedefliyoruz.",
+  "nexy.resp.services.0":
+    "Yapay zeka entegrasyonu, özel yazılım geliştirme, mobil uygulama ve siber güvenlik alanlarında profesyonel çözümler sunuyoruz. Hangi alanla ilgileniyorsunuz?",
+  "nexy.resp.services.1":
+    "Dijital dönüşüm yolculuğunuzda size en modern teknoloji yığını ile eşlik ediyoruz. React, Next.js, AI modelleri ve daha fazlasını kullanıyoruz.",
+  "nexy.resp.services.2":
+    "İş süreçlerinizi otomatize edecek yapay zeka çözümlerimiz hakkında detaylı bilgi için Hizmetler sayfamıza bakabilirsiniz. Verimliliğinizi %40'a kadar artırabiliriz.",
+  "nexy.resp.founder.0":
+    "Fun Teknoloji, Muhammed Erbay tarafından 2025 yılında vizyoner bir teknoloji şirketi olarak kurulmuştur.",
+  "nexy.resp.founder.1":
+    "Kurucumuz Muhammed Erbay, teknolojiyi herkes için erişilebilir ve faydalı kılma vizyonuyla bu yola çıktı. Kendisi genç ve hırslı bir girişimcidir.",
+  "nexy.resp.founder.2":
+    "2025'te Muhammed Erbay liderliğinde kurulan Fun Teknoloji, Türkiye'nin dijital geleceğine odaklanıyor. Muhammed Bey bizzat projelerin mimarisini denetliyor.",
+  "nexy.resp.contact.0":
+    "Bize iletişim sayfasındaki formdan veya support@funteknoloji.com adresinden ulaşabilirsiniz! 7/24 destek veriyoruz.",
+  "nexy.resp.contact.1":
+    "Sorularınız için her zaman buradayız, iletişim kısmından bize yazmaktan çekinmeyin. Ayrıca Discord kanalımızda çok aktif bir topluluğumuz var.",
+  "nexy.resp.contact.2":
+    "Discord topluluğumuza katılarak da ekibimizle doğrudan iletişime geçebilirsiniz. Linki İletişim sayfasında bulabilirsiniz.",
+  "nexy.resp.about.0":
+    "Fun Teknoloji, teknolojiyi 'eğlenceli' ve 'faydalı' kılmak için kuruldu. Yapay zeka ve yazılım bizim tutkumuz.",
+  "nexy.resp.about.1":
+    "Misyonumuz, işletmeleri geleceğin teknolojileriyle bugünden tanıştırmak. Vizyonumuz ise global çapta bir teknoloji üssü olmak.",
+  "nexy.resp.about.2":
+    "Hakkımızda sayfasında tüm tarihimizi ve değerlerimizi bulabilirsiniz. İnovasyon, kalite ve güvenilirlik en önemli ilkelerimizdir.",
+  "nexy.resp.careers.0":
+    "Ekibimiz sürekli büyüyor! Kariyer fırsatları için bize özgeçmişinizi gönderebilir veya LinkedIn sayfamızı takip edebilirsiniz.",
+  "nexy.resp.careers.1":
+    "Yetenekli mühendisler, tasarımcılar ve yapay zeka meraklıları ile çalışmaktan her zaman mutluluk duyarız.",
+  "nexy.resp.careers.2":
+    "Şu an spesifik bir ilanımız olmasa da, yetenekli insanlara her zaman kapımız açık. Bize yazın!",
+  "nexy.resp.tech.0":
+    "Geliştirmelerimizde modern teknolojiler kullanıyoruz. React, TypeScript, TanStack, Tailwind ve çeşitli LLM modelleri vazgeçilmezimiz.",
+  "nexy.resp.tech.1":
+    "Sistemlerimizi yüksek performans ve ölçeklenebilirlik odaklı tasarlıyoruz. Cloud teknolojilerini en verimli şekilde kullanıyoruz.",
+  "nexy.resp.tech.2":
+    "Fun Teknoloji olarak sürekli AR-GE yapıyoruz. En yeni frameworkleri ve yapay zeka tekniklerini ilk biz uyguluyoruz.",
   "nexy.resp.greeting.0": "Merhaba! Size nasıl yardımcı olabilirim? Bugün teknoloji dolu bir gün!",
-  "nexy.resp.greeting.1": "Selamlar! Ben Nexy, Fun Teknoloji'nin yapay zeka asistanıyım. Sizi dinliyorum.",
-  "nexy.resp.greeting.2": "Hoş geldiniz! Merak ettiğiniz bir şey mi var? Size Fun Teknoloji hakkında her şeyi anlatabilirim.",
+  "nexy.resp.greeting.1":
+    "Selamlar! Ben Nexy, Fun Teknoloji'nin yapay zeka asistanıyım. Sizi dinliyorum.",
+  "nexy.resp.greeting.2":
+    "Hoş geldiniz! Merak ettiğiniz bir şey mi var? Size Fun Teknoloji hakkında her şeyi anlatabilirim.",
   "nexy.resp.default.0": "Mesajınız için teşekkürler. Size nasıl yardımcı olabilirim?",
-  "nexy.resp.default.1": "Bu konuda size daha detaylı yardımcı olabilmemiz için lütfen iletişim formunu doldurun.",
-  "nexy.resp.default.2": "Harika bir soru! Ama bu konuda henüz tam bir bilgim yok. İsterseniz ekibimize sorabilirim?",
-  "nexy.resp.default.3": "Size nasıl daha iyi yardımcı olabilirim? Teknoloji çözümlerimiz, kurucumuz veya hizmetlerimiz hakkında konuşabiliriz.",
+  "nexy.resp.default.1":
+    "Bu konuda size daha detaylı yardımcı olabilmemiz için lütfen iletişim formunu doldurun.",
+  "nexy.resp.default.2":
+    "Harika bir soru! Ama bu konuda henüz tam bir bilgim yok. İsterseniz ekibimize sorabilirim?",
+  "nexy.resp.default.3":
+    "Size nasıl daha iyi yardımcı olabilirim? Teknoloji çözümlerimiz, kurucumuz veya hizmetlerimiz hakkında konuşabiliriz.",
   "service.feature.automation": "Otomasyon",
   "service.feature.big_data": "Büyük Veri",
   "service.feature.bi": "İş Zekası",
@@ -5662,7 +6918,20 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
         setLangState(stored);
       } else {
         const browserLang = navigator.language.split("-")[0] as Lang;
-        const supported: Lang[] = ["tr", "en", "de", "fr", "es", "az", "ru", "ar", "it", "pt", "ja", "zh"];
+        const supported: Lang[] = [
+          "tr",
+          "en",
+          "de",
+          "fr",
+          "es",
+          "az",
+          "ru",
+          "ar",
+          "it",
+          "pt",
+          "ja",
+          "zh",
+        ];
         if (supported.includes(browserLang)) {
           setLangState(browserLang);
         } else {
