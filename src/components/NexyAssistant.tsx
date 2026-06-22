@@ -94,6 +94,11 @@ export default function NexyAssistant() {
     }, speed);
   };
 
+  const getChatBubbleHeight = () => {
+    if (isThinking) return "h-[120px]";
+    return "h-auto";
+  };
+
   const stopTyping = () => {
     if (typingIntervalRef.current) clearInterval(typingIntervalRef.current);
     setIsTyping(false);
@@ -141,12 +146,13 @@ export default function NexyAssistant() {
 
     try {
       const response = await fetch(
-        `/api/nexy/${encodeURIComponent(prompt)}?model=openai&cache=false`,
+        `https://text.pollinations.ai/${encodeURIComponent(prompt)}?model=openai&cache=false`,
       );
       if (!response.ok) throw new Error();
       const text = await response.text();
       return text;
     } catch (err) {
+      console.error("Nexy API Error:", err);
       return t("nexy.resp.default.0");
     }
   };
@@ -218,12 +224,18 @@ export default function NexyAssistant() {
       setIsListening(false);
     };
     recognition.onresult = (event: any) => {
-      const transcript = event.results[0][0].transcript;
-      if (transcript) {
+      let finalTranscript = "";
+      for (let i = event.resultIndex; i < event.results.length; ++i) {
+        if (event.results[i].isFinal) {
+          finalTranscript += event.results[i][0].transcript;
+        }
+      }
+      if (finalTranscript) {
         setUserInput((prev) => {
-          const lastWord = prev.trim().split(" ").pop();
-          if (lastWord === transcript.trim()) return prev;
-          return prev + (prev ? " " : "") + transcript;
+          const trimmedPrev = prev.trim();
+          const trimmedFinal = finalTranscript.trim();
+          if (trimmedPrev.toLowerCase().endsWith(trimmedFinal.toLowerCase())) return prev;
+          return prev + (prev ? " " : "") + trimmedFinal;
         });
       }
     };
@@ -293,24 +305,28 @@ export default function NexyAssistant() {
 
   return (
     <div
-      className={`fixed bottom-6 right-6 z-[100] flex flex-col items-end gap-4 animate-in slide-in-from-right-10 duration-500 transition-all ${isFullscreen ? "inset-6 bottom-auto right-auto items-stretch" : ""}`}
+      className={`fixed z-[100] flex flex-col animate-in slide-in-from-right-10 duration-500 transition-all ${isFullscreen ? "inset-0 p-0 sm:p-4 lg:p-8 items-stretch" : "bottom-6 right-6 items-end gap-4"}`}
     >
       {!isOpen && !isMinimized && showPopup && (
-        <div className="relative max-w-[280px] rounded-2xl bg-[var(--fun-card)] border border-[var(--fun-stroke-1)] p-4 shadow-2xl backdrop-blur-md flex items-center gap-3">
+        <div className="relative max-w-[320px] rounded-3xl bg-[var(--fun-card)] border border-[var(--fun-stroke-1)] p-6 shadow-2xl backdrop-blur-md flex flex-col items-center gap-4 text-center group">
           <button
             onClick={() => setShowPopup(false)}
-            className="absolute -top-2 -right-2 h-6 w-6 rounded-full bg-[var(--fun-surface)] border border-[var(--fun-stroke-1)] flex items-center justify-center text-xs fun-text hover:bg-[var(--fun-stroke-1)] transition-colors shadow-lg"
+            className="absolute -top-3 -right-3 h-8 w-8 rounded-full bg-[var(--fun-surface)] border border-[var(--fun-stroke-1)] flex items-center justify-center text-sm fun-text hover:bg-red-500 hover:text-white transition-all shadow-lg opacity-0 group-hover:opacity-100"
           >
-            ✕
+            <X className="h-4 w-4" />
           </button>
-          <img src="/nexy.png" alt="Nexy" className="h-10 w-10 object-contain" />
-          <p className="text-sm fun-text leading-relaxed font-medium">{t("help.popup")}</p>
-          <div className="absolute -bottom-2 right-6 h-4 w-4 rotate-45 bg-[var(--fun-card)] border-r border-b border-[var(--fun-stroke-1)]" />
+          <div className="h-20 w-20 rounded-2xl bg-[var(--fun-surface)] border border-[var(--fun-stroke-1)] flex items-center justify-center p-3 shadow-inner">
+            <img src="/nexy.png" alt="Nexy" className="h-full w-full object-contain animate-float" />
+          </div>
+          <p className="text-sm fun-text leading-relaxed font-semibold">
+            {t("help.popup")}
+          </p>
+          <div className="absolute -bottom-2 right-12 h-4 w-4 rotate-45 bg-[var(--fun-card)] border-r border-b border-[var(--fun-stroke-1)]" />
         </div>
       )}
       {isOpen && (
         <div
-          className={`rounded-[32px] bg-[var(--fun-card)] border border-[var(--fun-stroke-1)] shadow-2xl flex flex-col overflow-hidden animate-in zoom-in-95 duration-300 origin-bottom-right transition-all ${isFullscreen ? "w-full h-full" : "w-[320px] sm:w-[420px] h-[550px]"}`}
+          className={`bg-[var(--fun-card)] border border-[var(--fun-stroke-1)] shadow-2xl flex flex-col overflow-hidden animate-in zoom-in-95 duration-300 transition-all ${isFullscreen ? "w-full h-full rounded-[0px] sm:rounded-[32px]" : "w-[320px] sm:w-[420px] h-[550px] rounded-[32px] origin-bottom-right"}`}
         >
           <div
             className="p-5 border-b flex items-center justify-between bg-[var(--fun-surface)]"
@@ -323,7 +339,6 @@ export default function NexyAssistant() {
                   alt="Nexy"
                   className="h-14 w-14 object-contain transition-transform hover:scale-110"
                 />
-                <div className="absolute bottom-0 right-0 h-3 w-3 rounded-full bg-green-500 border-2 border-[var(--fun-surface)]" />
               </div>
               <div>
                 <div className="flex items-center gap-2">
@@ -335,7 +350,6 @@ export default function NexyAssistant() {
                     {t("nexy.beta_tag")}
                   </button>
                 </div>
-                <p className="text-[10px] fun-text-muted font-medium">{t("nexy.status.active")}</p>
               </div>
             </div>
             <div className="flex items-center gap-1">
@@ -381,33 +395,33 @@ export default function NexyAssistant() {
           )}
           <div
             ref={scrollRef}
-            className="flex-1 overflow-y-auto p-5 space-y-6 bg-dots scroll-smooth custom-scrollbar"
+            className="flex-1 overflow-y-auto p-5 space-y-8 bg-dots scroll-smooth custom-scrollbar"
           >
             {(searchQuery ? filteredMessages : chatMessages).map((m, i) => {
               return (
                 <div
                   key={i}
-                  className={`flex flex-col ${m.role === "user" ? "items-end" : "items-start"}`}
+                  className={`flex flex-col gap-2 ${m.role === "user" ? "items-end" : "items-start"}`}
                 >
                   <div
-                    className={`relative group/msg max-w-[85%] p-4 rounded-2xl text-[15px] ${m.role === "user" ? "bg-[var(--fun-purple)] text-white rounded-tr-none shadow-lg" : "bg-[var(--fun-surface)] fun-text rounded-tl-none border border-[var(--fun-stroke-1)] shadow-sm"}`}
+                    className={`relative group/msg max-w-[90%] p-5 rounded-2xl text-[15px] leading-relaxed ${m.role === "user" ? "bg-[var(--fun-purple)] text-white rounded-tr-none shadow-lg" : "bg-[var(--fun-surface)] fun-text rounded-tl-none border border-[var(--fun-stroke-1)] shadow-sm"}`}
                   >
-                    <div className="prose prose-sm dark:prose-invert max-w-none">
+                    <div className="prose prose-sm dark:prose-invert max-w-none prose-p:leading-relaxed prose-pre:bg-[var(--fun-card)] prose-pre:border prose-pre:border-[var(--fun-stroke-1)]">
                       <ReactMarkdown remarkPlugins={[remarkGfm]}>
                         {m.displayedText || ""}
                       </ReactMarkdown>
                     </div>
                   </div>
                   {m.role === "nexy" && m.displayedText === m.text && (
-                    <div className="flex items-center gap-2 mt-2 px-1">
+                    <div className="flex items-center gap-3 px-1">
                       <button
                         onClick={() => copyToClipboard(m.text, i)}
-                        className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-[var(--fun-stroke-1)] text-[11px] font-medium transition-all ${m.copied ? "bg-green-500 text-white border-green-500" : "bg-[var(--fun-surface)] fun-text hover:bg-[var(--fun-purple)] hover:text-white"}`}
+                        className={`flex items-center gap-2 px-3 py-2 rounded-xl border border-[var(--fun-stroke-1)] text-[12px] font-semibold transition-all ${m.copied ? "bg-green-500 text-white border-green-500 shadow-lg shadow-green-500/20" : "bg-[var(--fun-surface)] fun-text hover:bg-[var(--fun-purple)] hover:text-white"}`}
                       >
                         {m.copied ? (
-                          <Check className="h-3.5 w-3.5" />
+                          <Check className="h-4 w-4" />
                         ) : (
-                          <Copy className="h-3.5 w-3.5" />
+                          <Copy className="h-4 w-4" />
                         )}
                         {m.copied
                           ? lang === "tr"
@@ -419,12 +433,12 @@ export default function NexyAssistant() {
                       </button>
                       <button
                         onClick={() => speak(m.text)}
-                        className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-[var(--fun-stroke-1)] text-[11px] font-medium transition-all bg-[var(--fun-surface)] fun-text hover:bg-[var(--fun-purple)] hover:text-white`}
+                        className={`flex items-center gap-2 px-3 py-2 rounded-xl border border-[var(--fun-stroke-1)] text-[12px] font-semibold transition-all bg-[var(--fun-surface)] fun-text hover:bg-[var(--fun-purple)] hover:text-white`}
                       >
                         {isSpeaking ? (
-                          <VolumeX className="h-3.5 w-3.5" />
+                          <VolumeX className="h-4 w-4" />
                         ) : (
-                          <Volume2 className="h-3.5 w-3.5" />
+                          <Volume2 className="h-4 w-4" />
                         )}
                         {isSpeaking
                           ? lang === "tr"
@@ -441,7 +455,10 @@ export default function NexyAssistant() {
             })}
             {isThinking && (
               <div className="flex justify-start animate-in fade-in slide-in-from-left-2 duration-300">
-                <div className="bg-[var(--fun-surface)] fun-text p-6 rounded-2xl rounded-tl-none border border-[var(--fun-stroke-1)] shadow-sm min-h-[60px] flex items-center justify-center">
+                <div
+                  className="bg-[var(--fun-surface)] fun-text p-10 rounded-2xl rounded-tl-none border border-[var(--fun-stroke-1)] shadow-sm flex items-center justify-center transition-all duration-300"
+                  style={{ minHeight: "120px" }}
+                >
                   <TypingIndicator />
                 </div>
               </div>
@@ -470,14 +487,14 @@ export default function NexyAssistant() {
               <button
                 type="button"
                 onClick={startListening}
-                className={`absolute left-2.5 top-1/2 -translate-y-1/2 h-8 w-8 rounded-xl flex items-center justify-center transition-all ${isListening ? "bg-red-500 text-white shadow-lg shadow-red-500/20 pulse-animation" : "fun-text-muted hover:bg-[var(--fun-stroke-1)] hover:text-[var(--fun-purple)]"}`}
+                className={`absolute left-2.5 bottom-2.5 h-8 w-8 rounded-xl flex items-center justify-center transition-all ${isListening ? "bg-red-500 text-white shadow-lg shadow-red-500/20 pulse-animation" : "fun-text-muted hover:bg-[var(--fun-stroke-1)] hover:text-[var(--fun-purple)]"}`}
               >
                 <Mic className="h-4 w-4" />
               </button>
               {isTyping || isThinking ? (
                 <button
                   onClick={stopTyping}
-                  className="absolute right-2.5 top-1/2 -translate-y-1/2 h-9 w-9 rounded-xl bg-red-500 text-white flex items-center justify-center hover:opacity-90 transition-all shadow-lg shadow-red-500/20 transform active:scale-95"
+                  className="absolute right-2.5 bottom-2 h-9 w-9 rounded-xl bg-red-500 text-white flex items-center justify-center hover:opacity-90 transition-all shadow-lg shadow-red-500/20 transform active:scale-95"
                   title={lang === "tr" ? "Durdur" : "Stop"}
                 >
                   <Square className="h-4 w-4 fill-current" />
@@ -486,7 +503,7 @@ export default function NexyAssistant() {
                 <button
                   onClick={() => handleSend()}
                   disabled={!userInput.trim()}
-                  className="absolute right-2.5 top-1/2 -translate-y-1/2 h-9 w-9 rounded-xl bg-[var(--fun-purple)] text-white flex items-center justify-center hover:opacity-90 transition-all disabled:opacity-30 disabled:grayscale transform active:scale-95 shadow-lg shadow-[var(--fun-purple)]/20"
+                  className="absolute right-2.5 bottom-2 h-9 w-9 rounded-xl bg-[var(--fun-purple)] text-white flex items-center justify-center hover:opacity-90 transition-all disabled:opacity-30 disabled:grayscale transform active:scale-95 shadow-lg shadow-[var(--fun-purple)]/20"
                 >
                   <Send className="h-4 w-4" />
                 </button>
