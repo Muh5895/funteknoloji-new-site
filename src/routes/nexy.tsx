@@ -88,19 +88,18 @@ function NexyPage() {
                <div className="flex justify-center lg:justify-end">
                   <div className="relative w-full max-w-[500px]">
                      <div className="absolute -inset-10 bg-[var(--fun-purple)]/20 blur-[80px] rounded-full animate-pulse" />
-                     <div className="relative bg-[var(--fun-card)] border border-white/10 rounded-[40px] p-10 shadow-2xl backdrop-blur-2xl">
+                     <div className="relative bg-[#1A1F2B] border border-white/10 rounded-[40px] p-10 shadow-2xl backdrop-blur-2xl">
                         <div className="flex items-center gap-6 mb-8">
                            <div className="h-24 w-24 rounded-3xl bg-[var(--fun-purple)]/10 flex items-center justify-center shadow-2xl border border-[var(--fun-purple)]/20 p-4 overflow-hidden">
                               <img src="/nexy-kafa.png" alt="Nexy" className="w-full h-full object-contain scale-125" />
                            </div>
                            <div>
                               <h2 className="text-3xl font-bold text-white">Nexy</h2>
-                              <p className="text-[var(--fun-purple)] font-medium tracking-widest uppercase text-xs">{t("nexy.status.active")}</p>
                            </div>
                         </div>
                         <div className="space-y-4">
                            <div className="bg-white/5 rounded-2xl rounded-tl-none p-4 border border-white/5">
-                              <p className="text-white/80 text-sm">{t("nexy.msg1")}</p>
+                              <p className="text-white/90 text-sm">{t("nexy.msg1")}</p>
                            </div>
                            <div className="flex justify-end">
                               <div className="bg-[var(--fun-purple)] rounded-2xl rounded-tr-none p-4 text-white text-sm shadow-xl">

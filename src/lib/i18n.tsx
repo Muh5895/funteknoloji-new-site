@@ -5778,8 +5778,29 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
       updateTitle();
 
       // Also update when path changes
+      // Listen for all changes including programmatic ones
+      const observer = new MutationObserver(updateTitle);
+      observer.observe(document.querySelector('body')!, { childList: true, subtree: true });
       window.addEventListener("popstate", updateTitle);
-      return () => window.removeEventListener("popstate", updateTitle);
+
+      // Monkey patch pushState/replaceState as popstate doesn't fire on those
+      const originalPushState = window.history.pushState;
+      const originalReplaceState = window.history.replaceState;
+      window.history.pushState = function(...args) {
+        originalPushState.apply(this, args);
+        updateTitle();
+      };
+      window.history.replaceState = function(...args) {
+        originalReplaceState.apply(this, args);
+        updateTitle();
+      };
+
+      return () => {
+        observer.disconnect();
+        window.removeEventListener("popstate", updateTitle);
+        window.history.pushState = originalPushState;
+        window.history.replaceState = originalReplaceState;
+      };
     }
   }, [lang]);
 
