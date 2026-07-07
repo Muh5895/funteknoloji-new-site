@@ -26,6 +26,7 @@ export default function NexyAssistant() {
   const [showPopup, setShowPopup] = useState(true);
   const [isTyping, setIsTyping] = useState(false);
   const [isThinking, setIsThinking] = useState(false);
+  const [isSpeaking, setIsSpeaking] = useState(false);
   const [chatMessages, setChatMessages] = useState<{ role: 'nexy' | 'user', text: string, displayedText?: string }[]>([]);
   const [userInput, setUserInput] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
@@ -201,6 +202,11 @@ export default function NexyAssistant() {
 
   const speak = (text: string) => {
     if ('speechSynthesis' in window) {
+      if (isSpeaking) {
+        window.speechSynthesis.cancel();
+        setIsSpeaking(false);
+        return;
+      }
       window.speechSynthesis.cancel();
       const ut = new SpeechSynthesisUtterance(text);
       const langMap: Record<string, string> = {
@@ -210,6 +216,9 @@ export default function NexyAssistant() {
       ut.lang = langMap[lang] || "tr-TR";
       ut.rate = 1.0;
       ut.pitch = 1.1;
+      ut.onstart = () => setIsSpeaking(true);
+      ut.onend = () => setIsSpeaking(false);
+      ut.onerror = () => setIsSpeaking(false);
       window.speechSynthesis.speak(ut);
     }
   };
@@ -316,15 +325,16 @@ export default function NexyAssistant() {
         </div>
       )}
       {isOpen && (
-        <div className={`${isMaximized ? 'fixed inset-4 w-auto h-auto' : 'w-[320px] sm:w-[420px] h-[550px]'} rounded-[32px] bg-[var(--fun-card)] border border-[var(--fun-stroke-1)] shadow-2xl flex flex-col overflow-hidden animate-in zoom-in-95 duration-300 origin-bottom-right transition-all`}>
+        <div className={`${isMaximized ? 'fixed inset-4 w-auto h-auto z-[100]' : 'w-[320px] sm:w-[420px] h-[550px]'} rounded-[32px] bg-[var(--fun-card)] border border-[var(--fun-stroke-1)] shadow-2xl flex flex-col overflow-hidden animate-in zoom-in-95 duration-300 origin-bottom-right transition-all`}>
           <div className="p-5 border-b flex items-center justify-between bg-[var(--fun-surface)]" style={{ borderColor: 'var(--fun-stroke-1)' }}>
-            <div className="flex items-center gap-3">
-              <img src="/nexy-kafa.png" alt="Nexy" className="h-16 w-16 sm:h-20 sm:w-20 object-contain scale-110" />
-              <div>
+            <div className="flex flex-1 items-center justify-center gap-4 ml-8">
+              <img src="/nexy-kafa.png" alt="Nexy" className="h-14 w-14 sm:h-20 sm:w-20 object-contain" />
+              <div className="flex flex-col items-start">
                 <div className="flex items-center gap-2">
-                  <p className="font-bold fun-text text-lg sm:text-xl">Nexy</p>
+                  <p className="font-bold fun-text text-xl sm:text-2xl">Nexy</p>
                   <button onClick={() => toast.warning(t("nexy.beta_warning"))} className="bg-[var(--fun-purple)] text-white text-[9px] font-bold px-1.5 py-0.5 rounded uppercase tracking-tighter hover:scale-105 transition-transform">{t("nexy.beta_tag")}</button>
                 </div>
+                <p className="text-[10px] text-[var(--fun-purple)] font-medium tracking-widest uppercase">{t("nexy.status.active")}</p>
               </div>
             </div>
             <div className="flex items-center gap-1">
@@ -356,7 +366,9 @@ export default function NexyAssistant() {
                     {m.role === 'nexy' && m.displayedText === m.text && (
                       <div className="absolute top-1/2 -right-12 -translate-y-1/2 flex flex-col gap-1 opacity-100 lg:opacity-0 lg:group-hover/msg:opacity-100 transition-opacity">
                         <button onClick={() => copyToClipboard(m.text)} className="h-7 w-7 sm:h-5 sm:w-5 flex items-center justify-center rounded bg-[var(--fun-card)] border border-[var(--fun-stroke-1)] fun-text hover:bg-[var(--fun-purple)] hover:text-white transition-colors shadow-sm" title={t("nexy.copy_tooltip")}><Copy className="h-4 w-4 sm:h-3 sm:w-3" /></button>
-                        <button onClick={() => speak(m.text)} className="h-7 w-7 sm:h-5 sm:w-5 flex items-center justify-center rounded bg-[var(--fun-card)] border border-[var(--fun-stroke-1)] fun-text hover:bg-[var(--fun-purple)] hover:text-white transition-colors shadow-sm" title={t("nexy.read_tooltip")}><Volume2 className="h-4 w-4 sm:h-3 sm:w-3" /></button>
+                        <button onClick={() => speak(m.text)} className={`h-7 w-7 sm:h-5 sm:w-5 flex items-center justify-center rounded border border-[var(--fun-stroke-1)] transition-colors shadow-sm ${isSpeaking ? 'bg-red-500 text-white hover:bg-red-600' : 'bg-[var(--fun-card)] fun-text hover:bg-[var(--fun-purple)] hover:text-white'}`} title={isSpeaking ? "Durdur" : t("nexy.read_tooltip")}>
+                          {isSpeaking ? <X className="h-4 w-4 sm:h-3 sm:w-3" /> : <Volume2 className="h-4 w-4 sm:h-3 sm:w-3" />}
+                        </button>
                       </div>
                     )}
                   </div>

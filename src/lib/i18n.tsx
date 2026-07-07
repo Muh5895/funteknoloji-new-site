@@ -276,6 +276,8 @@ const tr: Dict = {
   "nav.team": "Ekibimiz",
   "nav.team.desc": "Ekibimizi tanıyın.",
   "nav.waitlist": "Bekleme Listesine Katıl",
+  "nav.mobile.open": "Menüyü Aç",
+  "nav.mobile.close": "Menüyü Kapat",
   "nexy.aria_help": "Yardım al",
   "nexy.aria_send": "Gönder",
   "nexy.assistant_title": "Fun Teknoloji Asistanı",
@@ -1448,7 +1450,9 @@ const de: Dict = {
   "home.faq.q5": "Kann KI in unsere Systeme integriert werden?",
   "home.faq.q6": "Kann ich eine kostenlose Beratung erhalten?",
   "home.faq.q7": "Entwickeln Sie mobile Anwendungen?",
-};
+
+  "nav.mobile.open": "Menü öffnen",
+  "nav.mobile.close": "Menü schließen",};
 
 const fr: Dict = {
   "404.desc": "Il semble que quelque chose s'est mal passé ou que la page a été déplacée.",
@@ -1917,7 +1921,9 @@ const fr: Dict = {
   "home.faq.q5": "L'IA peut-elle être intégrée à nos systèmes ?",
   "home.faq.q6": "Puis-je obtenir une consultation gratuite ?",
   "home.faq.q7": "Développez-vous des applications mobiles ?",
-};
+
+  "nav.mobile.open": "Ouvrir le menu",
+  "nav.mobile.close": "Fermer le menu",};
 
 const es: Dict = {
   "404.desc": "Parece que algo salió mal o es posible que se haya movido la página.",
@@ -2386,7 +2392,9 @@ const es: Dict = {
   "home.faq.q5": "¿Se puede integrar la IA en nuestros sistemas?",
   "home.faq.q6": "¿Puedo obtener una consulta gratuita?",
   "home.faq.q7": "¿Desarrollan aplicaciones móviles?",
-};
+
+  "nav.mobile.open": "Abrir menú",
+  "nav.mobile.close": "Cerrar menú",};
 
 const az: Dict = {
   "404.desc": "Deyəsən nəsə xəta baş verib və ya səhifə köçürülüb.",
@@ -2856,7 +2864,9 @@ const az: Dict = {
   "home.faq.q5": "Süni intellekt sistemlərimizə inteqrasiya oluna bilərmi?",
   "home.faq.q6": "Pulsuz məsləhət ala bilərəmmi?",
   "home.faq.q7": "Mobil tətbiq hazırlayırsınız?",
-};
+
+  "nav.mobile.open": "Menyunu aç",
+  "nav.mobile.close": "Menyunu bağla",};
 
 const ru: Dict = {
   "404.desc": "Похоже, что-то пошло не так или страница была перемещена.",
@@ -3325,7 +3335,9 @@ const ru: Dict = {
   "home.faq.q5": "Можно ли интегрировать ИИ в наши системы?",
   "home.faq.q6": "Могу ли я получить бесплатную консультацию?",
   "home.faq.q7": "Разрабатываете ли вы мобильные приложения?",
-};
+
+  "nav.mobile.open": "Открыть меню",
+  "nav.mobile.close": "Закрыть меню",};
 
 const ar: Dict = {
   "404.desc": "يبدو أنه حدث خطأ ما أو ربما تم نقل الصفحة.",
@@ -3794,7 +3806,9 @@ const ar: Dict = {
   "home.faq.q5": "هل يمكن دمج الذكاء الاصطناعي في أنظمتنا؟",
   "home.faq.q6": "هل يمكنني الحصول على استشارة مجانية؟",
   "home.faq.q7": "هل تقومون بتطوير تطبيقات الجوال؟",
-};
+
+  "nav.mobile.open": "فتح القائمة",
+  "nav.mobile.close": "إغلاق القائمة",};
 
 const it: Dict = {
   "404.desc": "Sembra che qualcosa sia andato storto o che la pagina sia stata spostata.",
@@ -4263,7 +4277,9 @@ const it: Dict = {
   "home.faq.q5": "L'IA può essere integrata nei nostri sistemi?",
   "home.faq.q6": "Posso avere una consulenza gratuita?",
   "home.faq.q7": "Sviluppate applicazioni mobili?",
-};
+
+  "nav.mobile.open": "Apri menu",
+  "nav.mobile.close": "Chiudi menu",};
 
 const pt: Dict = {
   "404.desc": "Parece que algo deu errado ou a página pode ter sido movida.",
@@ -4732,7 +4748,9 @@ const pt: Dict = {
   "home.faq.q5": "A IA pode ser integrada em nossos sistemas?",
   "home.faq.q6": "Posso obter uma consulta gratuita?",
   "home.faq.q7": "Vocês desenvolvem aplicações móveis?",
-};
+
+  "nav.mobile.open": "Abrir menu",
+  "nav.mobile.close": "Fechar menu",};
 
 const ja: Dict = {
   "404.desc": "何か問題が発生したか、ページが移動された可能性があります。",
@@ -5201,7 +5219,9 @@ const ja: Dict = {
   "home.faq.q5": "AIを既存のシステムに統合できますか？",
   "home.faq.q6": "無料相談は可能ですか？",
   "home.faq.q7": "モバイルアプリの開発は行っていますか？",
-};
+
+  "nav.mobile.open": "メニューを開く",
+  "nav.mobile.close": "メニューを閉じる",};
 
 const zh: Dict = {
   "404.desc": "看起来出了点问题或者页面可能已被移动。",
@@ -5670,7 +5690,9 @@ const zh: Dict = {
   "home.faq.q5": "AI 可以集成到我们的系统中吗？",
   "home.faq.q6": "我可以获得免费咨询吗？",
   "home.faq.q7": "你们开发移动应用吗？",
-};
+
+  "nav.mobile.open": "打开菜单",
+  "nav.mobile.close": "关闭菜单",};
 
 const dicts: Record<Lang, Dict> = { tr, en, de, fr, es, az, ru, ar, it, pt, ja, zh };
 

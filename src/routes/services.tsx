@@ -84,7 +84,7 @@ function ServicesPage() {
                       <h3 className="text-heading-5 md:text-heading-4 font-medium fun-text">{service.title}</h3>
                       <p className="text-tagline-1 fun-text-muted">{service.desc}</p>
                     </div>
-                    <div className="mt-8">
+                    <div className="mt-8 mb-6">
                       <Link to="/contact" className="inline-flex h-12 w-12 items-center justify-center rounded-full ring-8 ring-[var(--fun-card)] transition-all hover:bg-[#6C5CE7]" style={{ backgroundColor: 'var(--fun-text)' }}>
                         <svg className="h-5 w-5" style={{ color: 'var(--color-background)' }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                           <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />

@@ -61,7 +61,7 @@ function NexyPage() {
     <main>
       <section className="pt-32 pb-20 px-4 lg:px-5">
         <ScrollReveal>
-          <div className="max-w-[1880px] mx-auto rounded-[40px] overflow-hidden relative min-h-[600px] flex items-center bg-[#12161F] border border-white/10">
+          <div className="max-w-[1880px] mx-auto rounded-[40px] overflow-hidden relative min-h-[600px] flex items-center bg-[#12161F] border border-white/10 dark:border-white/10">
             <div className="absolute inset-0 z-0">
                <div className="absolute inset-0 bg-gradient-to-br from-[#6C5CE7]/20 via-transparent to-transparent" />
                <div className="absolute top-0 right-0 w-1/2 h-full bg-dots opacity-20" />
@@ -71,12 +71,12 @@ function NexyPage() {
                <div className="space-y-6 md:space-y-8 text-center lg:text-left">
                   <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-md">
                     <Sparkles className="h-4 w-4 text-[var(--fun-purple)]" />
-                    <span className="text-sm font-medium text-white/80">{t("nexy.hero.badge")}</span>
+                    <span className="text-sm font-medium text-white">{t("nexy.hero.badge")}</span>
                   </div>
                   <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white leading-tight">
                     {t("nexy.hero.title")}
                   </h1>
-                  <p className="text-lg md:text-xl text-white/60 max-w-[600px] mx-auto lg:mx-0">
+                  <p className="text-lg md:text-xl text-white/80 max-w-[600px] mx-auto lg:mx-0">
                     {t("nexy.hero.desc")}
                   </p>
                   <div className="flex flex-wrap justify-center lg:justify-start gap-4">
