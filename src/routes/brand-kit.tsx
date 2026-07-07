@@ -3,6 +3,11 @@ import { useLang } from "../lib/i18n";
 import ScrollReveal from "../components/ScrollReveal";
 
 export const Route = createFileRoute("/brand-kit")({
+  head: () => ({
+    meta: [
+      { title: "Marka Kiti - Fun Teknoloji" },
+    ],
+  }),
   component: BrandKitPage,
 });
 

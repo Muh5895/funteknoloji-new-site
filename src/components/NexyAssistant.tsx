@@ -11,6 +11,8 @@ import {
   ChevronRight,
   ChevronLeft,
   Mic,
+  Maximize2,
+  Minimize2,
   Search as SearchIcon
 } from "lucide-react";
 
@@ -19,6 +21,7 @@ export default function NexyAssistant() {
   const navigate = useNavigate();
   const [visible, setVisible] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
+  const [isMaximized, setIsMaximized] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
   const [showPopup, setShowPopup] = useState(true);
   const [isTyping, setIsTyping] = useState(false);
@@ -93,12 +96,16 @@ export default function NexyAssistant() {
 
   const getNexyBrainResponse = async (input: string) => {
     const history = chatMessages.slice(-6).map(m => `${m.role === 'nexy' ? 'Assistant' : 'User'}: ${m.text}`).join('\n');
-    const prompt = `System: Sen Fun Teknoloji şirketinin yapay zeka asistanı Nexy'sin.
+    const prompt = `System: Sen Fun Teknoloji şirketinin resmi yapay zeka asistanı Nexy'sin.
+    Fun Teknoloji'nin projeleri:
+    1. Nexy: İşletmeler ve kullanıcılar için geliştirilmiş, her dilde hizmet verebilen akıllı dijital asistan (şu an konuştuğun sistem).
+    2. QuakeSafe: Yapay zeka ve sensör ağları ile deprem güvenliği sağlayan, erken uyarı ve afet sonrası koordinasyon platformu.
+
     Bilgi Bankası: ${KNOWLEDGE_BASE}
     Dil: Kullanıcının dilinde (${lang}) cevap ver.
     Tarz: Profesyonel, yardımsever ve samimi ol.
     Önemli: Eğer kullanıcı bir sayfaya gitmek isterse cevabının sonuna [REDIRECT:/sayfa] ekle ve BU REDIRECT'ten önce mutlaka kullanıcıya o sayfaya yönlendirdiğini kendi cümlenle söyle (Örn: Seni fiyatlandırma sayfamıza yönlendiriyorum).
-    Kısa ve öz cevaplar ver.
+    Kısa ve öz cevaplar ver. Cevaplarında Pollinations veya başka bir servis reklamı yapma, sadece Nexy olarak konuş.
 
     Önceki Konuşmalar:
     ${history}
@@ -108,8 +115,15 @@ export default function NexyAssistant() {
     try {
       const response = await fetch(`/api/nexy/${encodeURIComponent(prompt)}?model=openai&cache=false`);
       if (!response.ok) throw new Error();
-      const text = await response.text();
-      return text;
+      let text = await response.text();
+
+      // Filter out Pollinations ads
+      text = text.replace(/---[\s\S]*?Support Pollinations\.AI[\s\S]*?---/gi, '');
+      text = text.replace(/🌸[\s\S]*?Ad[\s\S]*?🌸/gi, '');
+      text = text.replace(/Powered by Pollinations\.AI[\s\S]*?accessible for everyone\./gi, '');
+      text = text.replace(/\[Support our mission\]\(https:\/\/pollinations\.ai\/redirect\/kofi\)/gi, '');
+
+      return text.trim();
     } catch (err) {
       return t("nexy.resp.default.0");
     }
@@ -302,19 +316,22 @@ export default function NexyAssistant() {
         </div>
       )}
       {isOpen && (
-        <div className="w-[320px] sm:w-[420px] h-[550px] rounded-[32px] bg-[var(--fun-card)] border border-[var(--fun-stroke-1)] shadow-2xl flex flex-col overflow-hidden animate-in zoom-in-95 duration-300 origin-bottom-right">
+        <div className={`${isMaximized ? 'fixed inset-4 w-auto h-auto' : 'w-[320px] sm:w-[420px] h-[550px]'} rounded-[32px] bg-[var(--fun-card)] border border-[var(--fun-stroke-1)] shadow-2xl flex flex-col overflow-hidden animate-in zoom-in-95 duration-300 origin-bottom-right transition-all`}>
           <div className="p-5 border-b flex items-center justify-between bg-[var(--fun-surface)]" style={{ borderColor: 'var(--fun-stroke-1)' }}>
             <div className="flex items-center gap-3">
-              <img src="/nexy-kafa.png" alt="Nexy" className="h-14 w-14 object-contain scale-125" />
+              <img src="/nexy-kafa.png" alt="Nexy" className="h-16 w-16 sm:h-20 sm:w-20 object-contain scale-110" />
               <div>
                 <div className="flex items-center gap-2">
-                  <p className="font-bold fun-text">Nexy</p>
+                  <p className="font-bold fun-text text-lg sm:text-xl">Nexy</p>
                   <button onClick={() => toast.warning(t("nexy.beta_warning"))} className="bg-[var(--fun-purple)] text-white text-[9px] font-bold px-1.5 py-0.5 rounded uppercase tracking-tighter hover:scale-105 transition-transform">{t("nexy.beta_tag")}</button>
                 </div>
               </div>
             </div>
             <div className="flex items-center gap-1">
               <button onClick={() => setShowSearch(!showSearch)} className="h-8 w-8 rounded-full hover:bg-[var(--fun-stroke-1)] flex items-center justify-center fun-text transition-colors"><SearchIcon className="h-4 w-4" /></button>
+              <button onClick={() => setIsMaximized(!isMaximized)} className="h-8 w-8 rounded-full hover:bg-[var(--fun-stroke-1)] flex items-center justify-center fun-text transition-colors">
+                {isMaximized ? <Minimize2 className="h-4 w-4" /> : <Maximize2 className="h-4 w-4" />}
+              </button>
               <button onClick={() => setIsOpen(false)} className="h-8 w-8 rounded-full hover:bg-[var(--fun-stroke-1)] flex items-center justify-center fun-text transition-colors"><X className="h-4 w-4" /></button>
             </div>
           </div>

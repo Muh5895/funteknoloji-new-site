@@ -5734,6 +5734,22 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
         const localizedTitle = t(titleKey);
         if (localizedTitle && localizedTitle !== titleKey) {
           document.title = localizedTitle;
+        } else {
+          // Fallback if not found in dictionary or matches key
+          const fallbacks: Record<string, string> = {
+            "title.team": "Ekibimiz - Fun Teknoloji",
+            "title.reviews": "Müşteri Yorumları - Fun Teknoloji",
+            "title.changelog": "Değişiklik Günlüğü - Fun Teknoloji",
+            "title.docs": "Dokümantasyon - Fun Teknoloji",
+            "title.faq": "Sıkça Sorulan Sorular - Fun Teknoloji",
+            "title.brand_kit": "Marka Kiti - Fun Teknoloji",
+            "title.service_policy": "Hizmet Politikası - Fun Teknoloji",
+            "title.privacy_policy": "Gizlilik Politikası - Fun Teknoloji",
+            "title.nexy": "Nexy Asistan - Fun Teknoloji"
+          };
+          if (fallbacks[titleKey]) {
+            document.title = fallbacks[titleKey];
+          }
         }
       };
 

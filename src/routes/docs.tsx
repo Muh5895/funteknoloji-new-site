@@ -3,6 +3,11 @@ import { useLang } from "../lib/i18n";
 import ScrollReveal from "../components/ScrollReveal";
 
 export const Route = createFileRoute("/docs")({
+  head: () => ({
+    meta: [
+      { title: "Dokümantasyon - Fun Teknoloji" },
+    ],
+  }),
   component: DocsPage,
 });
 

@@ -4,6 +4,11 @@ import { useLang } from "../lib/i18n";
 import ScrollReveal from "../components/ScrollReveal";
 
 export const Route = createFileRoute("/faq")({
+  head: () => ({
+    meta: [
+      { title: "SSS - Fun Teknoloji" },
+    ],
+  }),
   component: FAQPage,
 });
 

@@ -5,6 +5,11 @@ import { useEffect, useState, useRef } from "react";
 import { teamMembers } from "../constants/team";
 
 export const Route = createFileRoute("/team")({
+  head: () => ({
+    meta: [
+      { title: "Ekibimiz - Fun Teknoloji" },
+    ],
+  }),
   component: TeamPage,
 });
 

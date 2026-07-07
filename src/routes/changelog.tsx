@@ -3,6 +3,11 @@ import { useLang } from "../lib/i18n";
 import ScrollReveal from "../components/ScrollReveal";
 
 export const Route = createFileRoute("/changelog")({
+  head: () => ({
+    meta: [
+      { title: "Değişiklik Günlüğü - Fun Teknoloji" },
+    ],
+  }),
   component: ChangelogPage,
 });
 

@@ -2,6 +2,11 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useLang } from "../lib/i18n";
 
 export const Route = createFileRoute("/service-policy")({
+  head: () => ({
+    meta: [
+      { title: "Hizmet Politikası - Fun Teknoloji" },
+    ],
+  }),
   component: ServicePolicy,
 });
 

@@ -2,6 +2,11 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useLang } from "../lib/i18n";
 
 export const Route = createFileRoute("/privacy-policy")({
+  head: () => ({
+    meta: [
+      { title: "Gizlilik Politikası - Fun Teknoloji" },
+    ],
+  }),
   component: PrivacyPolicy,
 });
 

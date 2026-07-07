@@ -13,6 +13,11 @@ import {
 } from "lucide-react";
 
 export const Route = createFileRoute("/nexy")({
+  head: () => ({
+    meta: [
+      { title: "Nexy Asistan - Fun Teknoloji" },
+    ],
+  }),
   component: NexyPage,
 });
 
@@ -144,7 +149,7 @@ function NexyPage() {
             <div className="max-w-[1880px] mx-auto rounded-[40px] bg-[var(--fun-surface)] p-8 md:p-16 border border-[var(--fun-stroke-1)]">
                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                   <div className="relative">
-                     <div className="aspect-video lg:aspect-square max-h-[400px] lg:max-h-none bg-[var(--fun-card)] rounded-[40px] border border-[var(--fun-stroke-1)] overflow-hidden flex items-center justify-center">
+                     <div className="aspect-video lg:aspect-square max-h-[300px] lg:max-h-[500px] bg-[var(--fun-card)] rounded-[40px] border border-[var(--fun-stroke-1)] overflow-hidden flex items-center justify-center">
                         <MessageCircle className="h-40 w-40 text-[var(--fun-purple)] opacity-20" />
                         <div className="absolute inset-0 flex flex-col items-center justify-center p-8 md:p-12 space-y-6">
                            <div className="w-full bg-[var(--fun-surface)] p-4 rounded-2xl border border-[var(--fun-stroke-1)] animate-in slide-in-from-left duration-500">
