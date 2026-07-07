@@ -299,14 +299,8 @@ function ServicesSection({ t }: { t: (k: string) => string }) {
                 <div className={`${i === 0 ? 'md:col-span-8' : ''} rounded-xl overflow-hidden min-h-[240px] md:min-h-[300px] transition-transform duration-500 flex items-center justify-center relative`} style={{ background: 'linear-gradient(135deg, var(--fun-stroke-2), var(--fun-surface))' }}>
                   <div className="absolute inset-0 bg-gradient-to-br from-[#6C5CE7]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   <div className="text-center p-8 relative z-10">
-                    <div className="mx-auto h-20 w-20 rounded-3xl flex items-center justify-center mb-4 transition-all duration-500 shadow-lg text-[var(--fun-purple)]" style={{ backgroundColor: 'var(--fun-card)' }}>
+                    <div className="mx-auto h-20 w-20 rounded-3xl flex items-center justify-center transition-all duration-500 shadow-lg text-[var(--fun-purple)]" style={{ backgroundColor: 'var(--fun-card)' }}>
                        {service.icon}
-                    </div>
-                    <p className="text-sm fun-text font-bold tracking-widest uppercase">{service.title}</p>
-                    <div className="mt-4 flex justify-center gap-1 opacity-50">
-                       <div className="h-1 w-4 bg-[var(--fun-purple)] rounded-full" />
-                       <div className="h-1 w-1 bg-[var(--fun-purple)] rounded-full" />
-                       <div className="h-1 w-1 bg-[var(--fun-purple)] rounded-full" />
                     </div>
                   </div>
                 </div>

@@ -86,7 +86,7 @@ function NexyPage() {
                      <div className="relative bg-[var(--fun-card)] border border-white/10 rounded-[40px] p-10 shadow-2xl backdrop-blur-2xl">
                         <div className="flex items-center gap-6 mb-8">
                            <div className="h-24 w-24 rounded-3xl bg-[var(--fun-purple)]/10 flex items-center justify-center shadow-2xl border border-[var(--fun-purple)]/20 p-4 overflow-hidden">
-                              <img src="/nexy.png" alt="Nexy" className="w-full h-full object-contain scale-125" />
+                              <img src="/nexy-kafa.png" alt="Nexy" className="w-full h-full object-contain scale-125" />
                            </div>
                            <div>
                               <h2 className="text-3xl font-bold text-white">Nexy</h2>
@@ -141,12 +141,12 @@ function NexyPage() {
 
       <section className="py-24 px-4 lg:px-5">
          <ScrollReveal>
-            <div className="max-w-[1880px] mx-auto rounded-[40px] bg-[var(--fun-surface)] p-12 md:p-24 border border-[var(--fun-stroke-1)]">
-               <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <div className="max-w-[1880px] mx-auto rounded-[40px] bg-[var(--fun-surface)] p-8 md:p-16 border border-[var(--fun-stroke-1)]">
+               <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                   <div className="relative">
-                     <div className="aspect-square bg-[var(--fun-card)] rounded-[40px] border border-[var(--fun-stroke-1)] overflow-hidden flex items-center justify-center">
+                     <div className="aspect-video lg:aspect-square max-h-[400px] lg:max-h-none bg-[var(--fun-card)] rounded-[40px] border border-[var(--fun-stroke-1)] overflow-hidden flex items-center justify-center">
                         <MessageCircle className="h-40 w-40 text-[var(--fun-purple)] opacity-20" />
-                        <div className="absolute inset-0 flex flex-col items-center justify-center p-12 space-y-6">
+                        <div className="absolute inset-0 flex flex-col items-center justify-center p-8 md:p-12 space-y-6">
                            <div className="w-full bg-[var(--fun-surface)] p-4 rounded-2xl border border-[var(--fun-stroke-1)] animate-in slide-in-from-left duration-500">
                               <div className="h-2 w-1/2 bg-[var(--fun-purple)]/20 rounded-full mb-2" />
                               <div className="h-2 w-full bg-[var(--fun-purple)]/10 rounded-full" />
@@ -163,10 +163,28 @@ function NexyPage() {
                      </div>
                   </div>
                   <div className="space-y-8">
-                     <h2 className="text-4xl md:text-5xl font-bold fun-text">{t("nexy.why.title")}</h2>
-                     <p className="text-lg fun-text-muted">
+                     <h2 className="text-4xl md:text-5xl font-bold fun-text leading-tight">{t("nexy.why.title")}</h2>
+                     <p className="text-lg md:text-xl fun-text-muted leading-relaxed">
                         {t("nexy.why.desc")}
                      </p>
+                     <div className="grid grid-cols-2 gap-6">
+                        <div className="p-6 rounded-3xl bg-[var(--fun-card)] border border-[var(--fun-stroke-1)]">
+                           <h4 className="font-bold fun-text mb-2">24/7</h4>
+                           <p className="text-xs fun-text-muted">{t("home.stats.support")}</p>
+                        </div>
+                        <div className="p-6 rounded-3xl bg-[var(--fun-card)] border border-[var(--fun-stroke-1)]">
+                           <h4 className="font-bold fun-text mb-2">12+</h4>
+                           <p className="text-xs fun-text-muted">{t("nexy.capabilities.3.title")}</p>
+                        </div>
+                        <div className="p-6 rounded-3xl bg-[var(--fun-card)] border border-[var(--fun-stroke-1)]">
+                           <h4 className="font-bold fun-text mb-2">∞</h4>
+                           <p className="text-xs fun-text-muted">{t("nexy.capabilities.4.title")}</p>
+                        </div>
+                        <div className="p-6 rounded-3xl bg-[var(--fun-card)] border border-[var(--fun-stroke-1)]">
+                           <h4 className="font-bold fun-text mb-2">AI</h4>
+                           <p className="text-xs fun-text-muted">{t("nexy.capabilities.1.title")}</p>
+                        </div>
+                     </div>
                   </div>
                </div>
             </div>

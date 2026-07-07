@@ -103,6 +103,7 @@ const tr: Dict = {
   "contact.community.title": "Topluluğumuza Katılın",
   "contact.desc": "Sorularınız için buradayız.",
   "contact.form.email": "E-posta",
+  "contact.form.email_placeholder": "ornek@mail.com",
   "contact.form.error": "Bir hata oluştu, lütfen tekrar deneyin.",
   "contact.form.invalid_email": "Lütfen geçerli bir e-posta adresi girin.",
   "contact.form.invalid_message": "Mesajınız çok kısa.",
@@ -315,6 +316,15 @@ const tr: Dict = {
   "title.pricing": "Fiyatlandırma - Fun Teknoloji",
   "title.projects": "Projelerimiz - Fun Teknoloji",
   "title.quakesafe": "QuakeSafe - Deprem Güvenliği",
+  "title.team": "Ekibimiz - Fun Teknoloji",
+  "title.reviews": "Müşteri Yorumları - Fun Teknoloji",
+  "title.changelog": "Değişiklik Günlüğü - Fun Teknoloji",
+  "title.docs": "Dokümantasyon - Fun Teknoloji",
+  "title.faq": "Sıkça Sorulan Sorular - Fun Teknoloji",
+  "title.brand_kit": "Marka Kiti - Fun Teknoloji",
+  "title.service_policy": "Hizmet Politikası - Fun Teknoloji",
+  "title.privacy_policy": "Gizlilik Politikası - Fun Teknoloji",
+  "title.nexy": "Nexy Asistan - Fun Teknoloji",
   "nexy.read_tooltip": "Sesli Oku",
   "nexy.status.active": "Aktif Destek",
   "nexy.toast.copy": "Mesaj kopyalandı!",
@@ -582,6 +592,7 @@ const en: Dict = {
   "contact.community.title": "Join Our Community",
   "contact.desc": "We are here for your questions.",
   "contact.form.email": "Email",
+  "contact.form.email_placeholder": "example@mail.com",
   "contact.form.error": "An error occurred, please try again.",
   "contact.form.invalid_email": "Please enter a valid email address.",
   "contact.form.invalid_message": "Your message is too short.",
@@ -795,6 +806,15 @@ const en: Dict = {
   "title.pricing": "Pricing - Fun Technology",
   "title.projects": "Our Projects - Fun Technology",
   "title.quakesafe": "QuakeSafe - Earthquake Safety",
+  "title.team": "Our Team - Fun Technology",
+  "title.reviews": "Customer Reviews - Fun Technology",
+  "title.changelog": "Changelog - Fun Technology",
+  "title.docs": "Documentation - Fun Technology",
+  "title.faq": "FAQ - Fun Technology",
+  "title.brand_kit": "Brand Kit - Fun Technology",
+  "title.service_policy": "Service Policy - Fun Technology",
+  "title.privacy_policy": "Privacy Policy - Fun Technology",
+  "title.nexy": "Nexy Assistant - Fun Technology",
   "nexy.read_tooltip": "Read Aloud",
   "nexy.status.active": "Active Support",
   "nexy.toast.copy": "Message copied!",
@@ -1058,6 +1078,7 @@ const de: Dict = {
   "contact.community.title": "Treten Sie unserer Community bei",
   "contact.desc": "Wir sind für Ihre Fragen da.",
   "contact.form.email": "E-Mail",
+  "contact.form.email_placeholder": "beispiel@mail.com",
   "contact.form.error": "Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.",
   "contact.form.invalid_email": "Bitte geben Sie eine gültige E-Mail-Adresse ein.",
   "contact.form.invalid_message": "Ihre Nachricht ist zu kurz.",
@@ -1526,6 +1547,7 @@ const fr: Dict = {
   "contact.community.title": "Rejoignez notre communauté",
   "contact.desc": "Nous sommes là pour vos questions.",
   "contact.form.email": "E-mail",
+  "contact.form.email_placeholder": "exemple@mail.com",
   "contact.form.error": "Une erreur s'est produite, veuillez réessayer.",
   "contact.form.invalid_email": "S'il vous plaît, mettez une adresse email valide.",
   "contact.form.invalid_message": "Votre message est trop court.",
@@ -1994,6 +2016,7 @@ const es: Dict = {
   "contact.community.title": "Únase a nuestra comunidad",
   "contact.desc": "Estamos aquí para tus preguntas.",
   "contact.form.email": "Correo electrónico",
+  "contact.form.email_placeholder": "ejemplo@mail.com",
   "contact.form.error": "Se produjo un error, inténtalo de nuevo.",
   "contact.form.invalid_email": "Por favor, introduce una dirección de correo electrónico válida.",
   "contact.form.invalid_message": "Tu mensaje es demasiado corto.",
@@ -2462,6 +2485,7 @@ const az: Dict = {
   "contact.community.title": "İcmamıza Qoşulun",
   "contact.desc": "Suallarınız üçün buradayıq.",
   "contact.form.email": "E-poçt",
+  "contact.form.email_placeholder": "numune@mail.com",
   "contact.form.error": "Xəta baş verdi, yenidən cəhd edin.",
   "contact.form.invalid_email": "Etibarlı e-poçt ünvanı daxil edin.",
   "contact.form.invalid_message": "Mesajınız çox qısadır.",
@@ -2931,6 +2955,7 @@ const ru: Dict = {
   "contact.community.title": "Присоединяйтесь к нашему сообществу",
   "contact.desc": "Мы здесь для ваших вопросов.",
   "contact.form.email": "Электронная почта",
+  "contact.form.email_placeholder": "primer@mail.com",
   "contact.form.error": "Произошла ошибка, попробуйте еще раз.",
   "contact.form.invalid_email": "Пожалуйста, введите действительный адрес электронной почты.",
   "contact.form.invalid_message": "Ваше сообщение слишком короткое.",
@@ -3399,6 +3424,7 @@ const ar: Dict = {
   "contact.community.title": "انضم إلى مجتمعنا",
   "contact.desc": "نحن هنا لطرح أسئلتك.",
   "contact.form.email": "بريد إلكتروني",
+  "contact.form.email_placeholder": "example@mail.com",
   "contact.form.error": "حدث خطأ، يرجى المحاولة مرة أخرى.",
   "contact.form.invalid_email": "يرجى إدخال عنوان بريد إلكتروني صالح.",
   "contact.form.invalid_message": "رسالتك قصيرة جدًا.",
@@ -3867,6 +3893,7 @@ const it: Dict = {
   "contact.community.title": "Unisciti alla nostra comunità",
   "contact.desc": "Siamo qui per le tue domande.",
   "contact.form.email": "E-mail",
+  "contact.form.email_placeholder": "esempio@mail.com",
   "contact.form.error": "Si è verificato un errore, riprova.",
   "contact.form.invalid_email": "Si prega di inserire un indirizzo email valido.",
   "contact.form.invalid_message": "Il tuo messaggio è troppo breve.",
@@ -4335,6 +4362,7 @@ const pt: Dict = {
   "contact.community.title": "Junte-se à nossa comunidade",
   "contact.desc": "Estamos aqui para tirar suas dúvidas.",
   "contact.form.email": "E-mail",
+  "contact.form.email_placeholder": "exemplo@mail.com",
   "contact.form.error": "Ocorreu um erro, tente novamente.",
   "contact.form.invalid_email": "Insira um endereço de e-mail válido.",
   "contact.form.invalid_message": "Sua mensagem é muito curta.",
@@ -4803,6 +4831,7 @@ const ja: Dict = {
   "contact.community.title": "コミュニティに参加してください",
   "contact.desc": "ご質問をお受けいたします。",
   "contact.form.email": "電子メール",
+  "contact.form.email_placeholder": "example@mail.com",
   "contact.form.error": "エラーが発生しました。もう一度お試しください。",
   "contact.form.invalid_email": "有効なメールアドレスを入力してください。",
   "contact.form.invalid_message": "メッセージが短すぎます。",
@@ -5271,6 +5300,7 @@ const zh: Dict = {
   "contact.community.title": "加入我们的社区",
   "contact.desc": "我们在这里解答您的问题。",
   "contact.form.email": "电子邮件",
+  "contact.form.email_placeholder": "example@mail.com",
   "contact.form.error": "发生错误，请重试。",
   "contact.form.invalid_email": "请输入有效的电子邮件地址。",
   "contact.form.invalid_message": "你的留言太短了。",
@@ -5689,8 +5719,17 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
         else if (path.startsWith("/pricing")) titleKey = "title.pricing";
         else if (path.startsWith("/projects")) titleKey = "title.projects";
         else if (path.startsWith("/quakesafe")) titleKey = "title.quakesafe";
-        else if (path.startsWith("/faq")) titleKey = "faq.title";
+        else if (path.startsWith("/faq")) titleKey = "title.faq";
         else if (path.startsWith("/help")) titleKey = "help.title";
+        else if (path.startsWith("/team")) titleKey = "title.team";
+        else if (path.startsWith("/reviews")) titleKey = "title.reviews";
+        else if (path.startsWith("/changelog")) titleKey = "title.changelog";
+        else if (path.startsWith("/docs")) titleKey = "title.docs";
+        else if (path.startsWith("/brand-kit")) titleKey = "title.brand_kit";
+        else if (path.startsWith("/service-policy")) titleKey = "title.service_policy";
+        else if (path.startsWith("/privacy-policy")) titleKey = "title.privacy_policy";
+        else if (path.startsWith("/nexy")) titleKey = "title.nexy";
+        else if (path === "/404") titleKey = "404.title";
 
         const localizedTitle = t(titleKey);
         if (localizedTitle && localizedTitle !== titleKey) {

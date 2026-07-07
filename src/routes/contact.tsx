@@ -140,7 +140,7 @@ function ContactPage() {
                     </div>
                     <div>
                       <label htmlFor="contact-email" className="block text-sm font-medium fun-text mb-2">{t("contact.form.email")}</label>
-                      <input id="contact-email" name="email" type="email" autoComplete="email" value={formData.email} onChange={e => setFormData(p => ({ ...p, email: e.target.value }))} className="w-full rounded-xl px-4 py-3 text-sm outline-none transition-colors" style={{ backgroundColor: 'var(--fun-surface)', borderColor: 'var(--fun-stroke-1)', borderWidth: 1, color: 'var(--fun-text)' }} placeholder="example@mail.com" required />
+                      <input id="contact-email" name="email" type="email" autoComplete="email" value={formData.email} onChange={e => setFormData(p => ({ ...p, email: e.target.value }))} className="w-full rounded-xl px-4 py-3 text-sm outline-none transition-colors" style={{ backgroundColor: 'var(--fun-surface)', borderColor: 'var(--fun-stroke-1)', borderWidth: 1, color: 'var(--fun-text)' }} placeholder={t("contact.form.email_placeholder")} required />
                     </div>
                   </div>
                   <div>

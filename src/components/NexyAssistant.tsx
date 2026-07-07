@@ -11,8 +11,7 @@ import {
   ChevronRight,
   ChevronLeft,
   Mic,
-  Search as SearchIcon,
-  MessageCircleQuestion
+  Search as SearchIcon
 } from "lucide-react";
 
 export default function NexyAssistant() {
@@ -154,7 +153,7 @@ export default function NexyAssistant() {
 
   const startListening = () => {
     if (!('webkitSpeechRecognition' in window)) {
-      toast.error("Tarayıcınız ses tanımayı desteklemiyor.");
+      toast.error(lang === 'tr' ? "Tarayıcınız ses tanımayı desteklemiyor." : "Your browser does not support speech recognition.");
       return;
     }
 
@@ -163,11 +162,19 @@ export default function NexyAssistant() {
     recognition.continuous = false;
     recognition.interimResults = false;
 
-    recognition.onstart = () => setIsListening(true);
+    recognition.onstart = () => {
+      setIsListening(true);
+      toast.info(lang === 'tr' ? "Sizi dinliyorum..." : "Listening...");
+    };
     recognition.onend = () => setIsListening(false);
-    recognition.onresult = (event: any) => {
+    recognition.onerror = () => {
+      setIsListening(false);
+      toast.error(lang === 'tr' ? "Ses algılanamadı." : "Speech not detected.");
+    };
+    recognition.onresult = (event: { results: { [key: number]: { [key: number]: { transcript: string } } } }) => {
       const transcript = event.results[0][0].transcript;
       setUserInput(prev => prev + (prev ? " " : "") + transcript);
+      setIsListening(false);
     };
 
     recognition.start();
@@ -196,21 +203,89 @@ export default function NexyAssistant() {
   if (!visible) return null;
 
   const formatText = (text: string) => {
-    // Bold: **text**
-    let parts = text.split(/(\*\*.*?\*\*)/g);
-    return parts.map((part, i) => {
-      if (part.startsWith('**') && part.endsWith('**')) {
-        return <strong key={i} className="font-extrabold">{part.slice(2, -2)}</strong>;
-      }
-      // Italic: *text*
-      let italicParts = part.split(/(\*.*?\*)/g);
-      return italicParts.map((iPart, j) => {
-        if (iPart.startsWith('*') && iPart.endsWith('*')) {
-          return <em key={`${i}-${j}`} className="italic opacity-90">{iPart.slice(1, -1)}</em>;
+    const lines = text.split('\n');
+    const result: React.ReactNode[] = [];
+    let currentTable: string[][] = [];
+    let inTable = false;
+
+    const processLine = (line: string, key: string | number) => {
+      let parts = line.split(/(\*\*.*?\*\*)/g);
+      return parts.map((part, pi) => {
+        if (part.startsWith('**') && part.endsWith('**')) {
+          return <strong key={`${key}-${pi}`} className="font-extrabold">{part.slice(2, -2)}</strong>;
         }
-        return iPart;
+        let italicParts = part.split(/(\*.*?\*)/g);
+        return italicParts.map((iPart, ji) => {
+          if (iPart.startsWith('*') && iPart.endsWith('*')) {
+            return <em key={`${key}-${pi}-${ji}`} className="italic opacity-90">{iPart.slice(1, -1)}</em>;
+          }
+          return iPart;
+        });
       });
-    });
+    };
+
+    const renderTable = (tableData: string[][], tableKey: string | number) => {
+      if (tableData.length === 0) return null;
+      const headers = tableData[0];
+      const rows = tableData.slice(1);
+
+      return (
+        <div key={`table-wrapper-${tableKey}`} className="overflow-x-auto my-3 border rounded-xl border-[var(--fun-stroke-1)] bg-[var(--fun-card)] shadow-sm">
+          <table className="w-full text-xs text-left border-collapse">
+            <thead className="bg-[var(--fun-surface)] text-[var(--fun-purple)] font-bold">
+              <tr>
+                {headers.map((cell, idx) => (
+                  <th key={idx} className="p-2.5 border-b border-[var(--fun-stroke-1)] whitespace-nowrap">{processLine(cell, `th-${idx}`)}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {rows.map((row, rowIdx) => (
+                <tr key={rowIdx} className="hover:bg-[var(--fun-surface)]/50 transition-colors">
+                  {row.map((cell, cellIdx) => (
+                    <td key={cellIdx} className="p-2.5 border-t border-[var(--fun-stroke-1)]">{processLine(cell, `td-${rowIdx}-${cellIdx}`)}</td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      );
+    };
+
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i].trim();
+
+      if (line.startsWith('|') && line.includes('|')) {
+        const cells = line.split('|').filter((_, idx, arr) => idx > 0 && idx < arr.length - 1).map(c => c.trim());
+
+        if (cells.every(c => c.match(/^[ \-:]+$/))) {
+          continue;
+        }
+
+        if (!inTable) {
+          inTable = true;
+          currentTable = [cells];
+        } else {
+          currentTable.push(cells);
+        }
+      } else {
+        if (inTable) {
+          result.push(renderTable(currentTable, i));
+          currentTable = [];
+          inTable = false;
+        }
+        if (line || lines[i] === '') {
+          result.push(<p key={i} className={lines[i] === '' ? 'h-2' : 'mb-1 leading-relaxed'}>{processLine(lines[i], i)}</p>);
+        }
+      }
+    }
+
+    if (inTable) {
+      result.push(renderTable(currentTable, 'end'));
+    }
+
+    return result;
   };
 
   const filteredMessages = chatMessages.filter(m =>
@@ -230,7 +305,7 @@ export default function NexyAssistant() {
         <div className="w-[320px] sm:w-[420px] h-[550px] rounded-[32px] bg-[var(--fun-card)] border border-[var(--fun-stroke-1)] shadow-2xl flex flex-col overflow-hidden animate-in zoom-in-95 duration-300 origin-bottom-right">
           <div className="p-5 border-b flex items-center justify-between bg-[var(--fun-surface)]" style={{ borderColor: 'var(--fun-stroke-1)' }}>
             <div className="flex items-center gap-3">
-              <img src="/nexy.png" alt="Nexy" className="h-12 w-12 object-contain" />
+              <img src="/nexy-kafa.png" alt="Nexy" className="h-14 w-14 object-contain scale-125" />
               <div>
                 <div className="flex items-center gap-2">
                   <p className="font-bold fun-text">Nexy</p>

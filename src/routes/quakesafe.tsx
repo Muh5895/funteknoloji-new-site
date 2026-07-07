@@ -94,23 +94,53 @@ function QuakeSafePage() {
     <main>
       <section className="pt-32 pb-20 px-4 lg:px-5">
         <ScrollReveal>
-          <div className="max-w-[1880px] mx-auto rounded-[40px] overflow-hidden relative min-h-[600px] flex items-center bg-black border border-white/10">
-            <div className="main-container relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-20 items-center py-24 lg:py-40">
+          <div className="max-w-[1880px] mx-auto rounded-[40px] overflow-hidden relative min-h-[700px] flex items-center bg-black border border-white/10">
+            {/* Background elements */}
+            <div className="absolute inset-0 z-0">
+              <div className="absolute inset-0 bg-gradient-to-br from-red-950/20 via-transparent to-transparent opacity-50" />
+              <div className="absolute top-0 right-0 w-full h-full bg-grid-white/[0.02]" />
+            </div>
+
+            <div className="w-full px-6 md:px-12 lg:px-20 relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-32 items-center py-20 lg:py-32">
                <div className="space-y-8 md:space-y-10 text-center lg:text-left">
-                  <div className="flex items-center justify-center lg:justify-start gap-4">
-                    <img src="/assets/logos/quakesafe_seffaf.png" alt="QuakeSafe" className="h-16 w-16 md:h-20 md:w-20 object-contain" />
-                    <span className="text-3xl md:text-4xl font-bold text-white tracking-tighter">QuakeSafe</span>
+                  <div className="flex items-center justify-center lg:justify-start gap-4 animate-in fade-in slide-in-from-left duration-700">
+                    <img src="/assets/logos/quakesafe_seffaf.png" alt="QuakeSafe" className="h-16 w-16 md:h-24 md:w-24 object-contain" />
+                    <span className="text-3xl md:text-5xl font-bold text-white tracking-tighter">QuakeSafe</span>
                   </div>
-                  <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white leading-tight capitalize">
+                  <h1 className="text-4xl md:text-6xl lg:text-8xl font-bold text-white leading-[1.1] capitalize animate-in fade-in slide-in-from-left duration-1000 delay-200">
                     {t("quakesafe.hero.title")}
                   </h1>
-                  <p className="text-lg md:text-xl text-slate-400 max-w-[600px] mx-auto lg:mx-0">
+                  <p className="text-lg md:text-2xl text-slate-400 max-w-[700px] mx-auto lg:mx-0 leading-relaxed animate-in fade-in slide-in-from-left duration-1000 delay-400">
                     {t("quakesafe.hero.desc")}
                   </p>
-                  <div className="flex flex-wrap justify-center lg:justify-start gap-4">
-                     <ArrowButton href="https://quakesafe.funteknoloji.com" variant="light" className="w-full sm:w-auto !bg-white !text-[#0F172A]">
+                  <div className="flex flex-wrap justify-center lg:justify-start gap-6 animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-600">
+                     <ArrowButton href="https://quakesafe.funteknoloji.com" variant="light" className="w-full sm:w-auto h-16 px-10 text-lg !bg-white !text-[#0F172A] shadow-2xl shadow-white/10">
                        {t("nav.open_platform")}
                      </ArrowButton>
+                  </div>
+               </div>
+
+               <div className="hidden lg:block relative animate-in fade-in zoom-in duration-1000 delay-300">
+                  <div className="absolute -inset-20 bg-red-600/10 blur-[120px] rounded-full" />
+                  <div className="relative aspect-square rounded-[60px] border border-white/10 bg-white/5 backdrop-blur-3xl overflow-hidden flex items-center justify-center">
+                      <div className="absolute inset-0 bg-gradient-to-tr from-red-500/10 to-transparent" />
+                      <ShieldAlert className="h-64 w-64 text-white opacity-20" />
+                      <div className="absolute inset-0 p-12 flex flex-col justify-end">
+                         <div className="space-y-4">
+                            <div className="h-3 w-3/4 bg-white/20 rounded-full" />
+                            <div className="h-3 w-1/2 bg-white/10 rounded-full" />
+                         </div>
+                      </div>
+                  </div>
+                  {/* Decorative card 1 */}
+                  <div className="absolute -top-10 -right-10 p-6 rounded-3xl bg-white text-black shadow-2xl animate-bounce duration-[4000ms]">
+                     <Bell className="h-8 w-8 mb-2" />
+                     <p className="font-bold text-sm">EARLY WARNING</p>
+                  </div>
+                  {/* Decorative card 2 */}
+                  <div className="absolute -bottom-10 -left-10 p-6 rounded-3xl bg-red-600 text-white shadow-2xl">
+                     <Activity className="h-8 w-8 mb-2" />
+                     <p className="font-bold text-sm">REAL-TIME DATA</p>
                   </div>
                </div>
             </div>

@@ -65,7 +65,6 @@ function ChangelogPage() {
                 <div className="flex-1">
                   <div className="flex flex-wrap items-center gap-4 mb-4">
                      <h2 className="text-2xl md:text-3xl font-bold fun-text">{cat.name}</h2>
-                     <span className="text-xs font-bold uppercase tracking-widest bg-[var(--fun-surface)] px-3 py-1 rounded-full fun-text-muted border border-[var(--fun-stroke-1)]">v2.4.0</span>
                   </div>
                   <div className="flex items-center justify-between gap-6 flex-wrap">
                      <p className="text-sm font-medium fun-text-muted">{t("changelog.last_update")}</p>
