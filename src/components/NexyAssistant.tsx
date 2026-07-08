@@ -15,8 +15,18 @@ import {
   Mic,
   Maximize2,
   Minimize2,
+  Plus,
+  MessageSquare,
+  Trash2,
   Search as SearchIcon,
 } from "lucide-react";
+
+interface Chat {
+  id: string;
+  title: string;
+  messages: { role: "nexy" | "user"; text: string; displayedText?: string }[];
+  createdAt: number;
+}
 
 export default function NexyAssistant() {
   const { t, lang } = useLang();
@@ -29,13 +39,18 @@ export default function NexyAssistant() {
   const [isTyping, setIsTyping] = useState(false);
   const [isThinking, setIsThinking] = useState(false);
   const [speakingMessageIndex, setSpeakingMessageIndex] = useState<number | null>(null);
-  const [chatMessages, setChatMessages] = useState<
-    { role: "nexy" | "user"; text: string; displayedText?: string }[]
-  >([]);
+
+  const [chats, setChats] = useState<Chat[]>([]);
+  const [activeChatId, setActiveChatId] = useState<string | null>(null);
+
+  const currentChat = chats.find((c) => c.id === activeChatId);
+  const chatMessages = currentChat?.messages || [];
+
   const [userInput, setUserInput] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [showSearch, setShowSearch] = useState(false);
   const [isListening, setIsListening] = useState(false);
+  const [copiedId, setCopiedId] = useState<number | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -48,22 +63,37 @@ export default function NexyAssistant() {
   }, []);
 
   useEffect(() => {
-    const saved = localStorage.getItem("nexy_chat");
+    const saved = localStorage.getItem("nexy_chats_v2");
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
-        setChatMessages(parsed.map((m: any) => ({ ...m, displayedText: m.text })));
+        const formatted = parsed.map((chat: any) => ({
+          ...chat,
+          messages: chat.messages.map((m: any) => ({ ...m, displayedText: m.text })),
+        }));
+        setChats(formatted);
+        if (formatted.length > 0) {
+          setActiveChatId(formatted[0].id);
+        }
       } catch (e) {}
     }
   }, []);
 
   useEffect(() => {
-    if (chatMessages.length > 0) {
+    if (chats.length > 0) {
       localStorage.setItem(
-        "nexy_chat",
-        JSON.stringify(chatMessages.map(({ role, text }) => ({ role, text }))),
+        "nexy_chats_v2",
+        JSON.stringify(
+          chats.map((c) => ({
+            ...c,
+            messages: c.messages.map(({ role, text }) => ({ role, text })),
+          })),
+        ),
       );
     }
+  }, [chats]);
+
+  useEffect(() => {
     // Improved scrolling: Use requestAnimationFrame to ensure DOM is updated
     if (scrollRef.current) {
       const scroll = () => {
@@ -90,7 +120,7 @@ export default function NexyAssistant() {
 
   const typingIntervalRef = useRef<number | null>(null);
 
-  const typeMessage = (fullText: string, msgIndex: number) => {
+  const typeMessage = (fullText: string, msgIndex: number, chatId: string) => {
     if (typingIntervalRef.current) clearInterval(typingIntervalRef.current);
 
     let currentText = "";
@@ -100,8 +130,17 @@ export default function NexyAssistant() {
     typingIntervalRef.current = window.setInterval(() => {
       if (charIndex < fullText.length) {
         currentText += fullText[charIndex];
-        setChatMessages((prev) =>
-          prev.map((m, i) => (i === msgIndex ? { ...m, displayedText: currentText } : m)),
+        setChats((prev) =>
+          prev.map((c) =>
+            c.id === chatId
+              ? {
+                  ...c,
+                  messages: c.messages.map((m, i) =>
+                    i === msgIndex ? { ...m, displayedText: currentText } : m,
+                  ),
+                }
+              : c,
+          ),
         );
         charIndex++;
       } else {
@@ -117,18 +156,40 @@ export default function NexyAssistant() {
     };
   }, []);
 
+  const createNewChat = () => {
+    const newId = Math.random().toString(36).substring(2, 9);
+    const initialText = t("nexy.msg1");
+    const newChat: Chat = {
+      id: newId,
+      title: lang === "tr" ? "Yeni Sohbet" : "New Chat",
+      messages: [{ role: "nexy", text: initialText, displayedText: "" }],
+      createdAt: Date.now(),
+    };
+    setChats((prev) => [newChat, ...prev]);
+    setActiveChatId(newId);
+    setIsThinking(true);
+    setTimeout(() => {
+      setIsThinking(false);
+      setIsTyping(true);
+      typeMessage(initialText, 0, newId);
+    }, 1000);
+  };
+
+  const deleteChat = (e: React.MouseEvent, id: string) => {
+    e.stopPropagation();
+    const filtered = chats.filter((c) => c.id !== id);
+    setChats(filtered);
+    if (activeChatId === id) {
+      setActiveChatId(filtered.length > 0 ? filtered[0].id : null);
+    }
+    toast.success(lang === "tr" ? "Sohbet silindi" : "Chat deleted");
+  };
+
   const toggleChat = () => {
     setIsOpen(!isOpen);
     setShowPopup(false);
-    if (!isOpen && chatMessages.length === 0) {
-      const initialText = t("nexy.msg1");
-      setChatMessages([{ role: "nexy", text: initialText, displayedText: "" }]);
-      setIsThinking(true);
-      setTimeout(() => {
-        setIsThinking(false);
-        setIsTyping(true);
-        typeMessage(initialText, 0);
-      }, 1000);
+    if (!isOpen && chats.length === 0) {
+      createNewChat();
     }
   };
 
@@ -187,9 +248,23 @@ export default function NexyAssistant() {
       return;
     }
     const userMsg = { role: "user" as const, text: userInput, displayedText: userInput };
-    const newMsgs = [...chatMessages, userMsg];
-    setChatMessages(newMsgs);
+
+    // Update chat title if it's the first user message
+    const shouldUpdateTitle = chatMessages.length <= 1;
+    const chatTitle = shouldUpdateTitle
+      ? userInput.slice(0, 30) + (userInput.length > 30 ? "..." : "")
+      : currentChat?.title;
+
+    setChats((prev) =>
+      prev.map((c) =>
+        c.id === activeChatId
+          ? { ...c, title: chatTitle || c.title, messages: [...c.messages, userMsg] }
+          : c,
+      ),
+    );
+
     const savedInput = userInput;
+    const currentChatId = activeChatId!;
     setUserInput("");
     setIsTyping(true);
     setIsThinking(true);
@@ -207,11 +282,19 @@ export default function NexyAssistant() {
       }, 2500);
     }
 
-    const nexyMsgIndex = newMsgs.length;
-    setChatMessages([...newMsgs, { role: "nexy", text: response, displayedText: "" }]);
+    setChats((prev) =>
+      prev.map((c) => {
+        if (c.id === currentChatId) {
+          const nexyMsgIndex = c.messages.length;
+          const updatedMsgs = [...c.messages, { role: "nexy" as const, text: response, displayedText: "" }];
+          setTimeout(() => typeMessage(response, nexyMsgIndex, currentChatId), 10);
+          return { ...c, messages: updatedMsgs };
+        }
+        return c;
+      })
+    );
     setIsThinking(false);
     setIsTyping(true);
-    typeMessage(response, nexyMsgIndex);
   };
 
   const startListening = () => {
@@ -283,8 +366,10 @@ export default function NexyAssistant() {
     recognition.start();
   };
 
-  const copyToClipboard = (text: string) => {
+  const copyToClipboard = (text: string, index: number) => {
     navigator.clipboard.writeText(text);
+    setCopiedId(index);
+    setTimeout(() => setCopiedId(null), 2000);
     toast.success(t("nexy.toast.copy"), {
       description: "Mesaj panoya kopyalandı.",
       duration: 3000,
@@ -476,30 +561,69 @@ export default function NexyAssistant() {
     <>
       {isOpen && (
         <div
-          className={`${isMaximized ? "fixed inset-0 sm:inset-10 z-[200] rounded-none sm:rounded-[32px]" : "fixed bottom-24 right-6 w-[320px] sm:w-[420px] h-[550px] z-[100] rounded-[32px]"} bg-[var(--fun-card)] border border-[var(--fun-stroke-1)] shadow-2xl flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-500 origin-bottom-right transition-all`}
+          className={`${isMaximized ? "fixed inset-0 z-[200] rounded-none" : "fixed bottom-24 right-6 w-[320px] sm:w-[420px] h-[550px] z-[100] rounded-[32px]"} bg-[var(--fun-card)] border border-[var(--fun-stroke-1)] shadow-2xl flex flex-row overflow-hidden animate-in fade-in zoom-in-95 duration-500 origin-bottom-right transition-all`}
         >
+          {/* Sidebar - only visible when maximized on PC */}
+          {isMaximized && (
+            <div className="hidden md:flex w-72 flex-col bg-[var(--fun-surface)] border-r border-[var(--fun-stroke-1)]">
+              <div className="p-4 border-b border-[var(--fun-stroke-1)]">
+                <button
+                  onClick={createNewChat}
+                  className="w-full py-2.5 px-4 rounded-xl bg-[var(--fun-purple)] text-white font-bold flex items-center justify-center gap-2 hover:scale-[1.02] transition-all shadow-lg shadow-purple-500/20 active:scale-95"
+                >
+                  <Plus className="h-4 w-4" />
+                  {lang === "tr" ? "Yeni Sohbet" : "New Chat"}
+                </button>
+              </div>
+              <div className="flex-1 overflow-y-auto p-3 space-y-2">
+                {chats.map((chat) => (
+                  <div
+                    key={chat.id}
+                    onClick={() => setActiveChatId(chat.id)}
+                    className={`group flex items-center justify-between p-3 rounded-xl cursor-pointer transition-all ${activeChatId === chat.id ? "bg-[var(--fun-purple)] text-white shadow-md" : "hover:bg-[var(--fun-stroke-1)] fun-text"}`}
+                  >
+                    <div className="flex items-center gap-3 overflow-hidden">
+                      <MessageSquare className="h-4 w-4 flex-shrink-0" />
+                      <span className="text-sm font-medium truncate">{chat.title}</span>
+                    </div>
+                    <button
+                      onClick={(e) => deleteChat(e, chat.id)}
+                      className={`p-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-all ${activeChatId === chat.id ? "hover:bg-white/20 text-white" : "hover:bg-red-500 hover:text-white text-red-500"}`}
+                    >
+                      <Trash2 className="h-3.5 w-3.5" />
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          <div className="flex-1 flex flex-col min-w-0">
           <div
-            className={`p-2 sm:p-3 border-b flex items-center bg-[var(--fun-surface)] ${isMaximized ? "rounded-none sm:rounded-t-[32px]" : "rounded-t-[32px]"} h-20 sm:h-24`}
+            className={`p-2 sm:p-3 border-b flex items-center bg-[var(--fun-surface)] ${isMaximized ? "rounded-none" : "rounded-t-[32px]"} h-20 sm:h-24`}
             style={{ borderColor: "var(--fun-stroke-1)" }}
           >
-            <div className="flex flex-1 items-center gap-1">
-              <img
-                src="/nexy-kafa-buyuk.png"
-                alt="Nexy"
-                className="h-16 w-16 object-contain transition-transform duration-500 transform hover:scale-110 sm:h-24 sm:w-24"
-              />
+            <div className="flex flex-1 items-center gap-2">
+              <div className="relative">
+                <img
+                  src="/nexy-kafa-buyuk.png"
+                  alt="Nexy"
+                  className="h-12 w-12 object-contain transition-transform duration-500 transform hover:scale-110 sm:h-14 sm:w-14"
+                />
+                <div className="absolute bottom-1 right-1 w-3 h-3 bg-green-500 border-2 border-[var(--fun-surface)] rounded-full"></div>
+              </div>
               <div className="flex flex-col justify-center items-start">
-                <div className="mt-0.5 flex items-center gap-1.5">
-                  <p className="fun-text text-lg font-bold leading-none tracking-tight sm:text-xl">
+                <div className="flex items-center gap-2">
+                  <p className="fun-text text-lg font-bold leading-none tracking-tight">
                     Nexy
                   </p>
-                  <button
-                    onClick={() => toast.warning(t("nexy.beta_warning"))}
-                    className="rounded-full bg-[var(--fun-purple)] px-1.5 py-0.5 text-[8px] font-bold uppercase tracking-widest text-white shadow-lg shadow-purple-500/20 transition-transform hover:scale-105 sm:text-[9px]"
+                  <span
+                    className="rounded-full bg-[var(--fun-purple)] px-2 py-0.5 text-[9px] font-bold uppercase tracking-widest text-white shadow-lg shadow-purple-500/20"
                   >
                     {t("nexy.beta_tag")}
-                  </button>
+                  </span>
                 </div>
+                <p className="text-[10px] fun-text-muted mt-1 font-medium">AI Assistant</p>
               </div>
             </div>
             <div className="flex-1 flex items-center justify-end gap-1">
@@ -541,43 +665,53 @@ export default function NexyAssistant() {
           )}
           <div
             ref={scrollRef}
-            className={`flex-1 overflow-y-auto p-5 sm:p-8 space-y-6 sm:space-y-8 bg-dots scroll-smooth ${isMaximized ? "max-w-5xl mx-auto w-full" : ""}`}
+            className={`flex-1 overflow-y-auto p-5 sm:p-8 space-y-6 sm:space-y-8 bg-dots scroll-smooth ${isMaximized ? "max-w-6xl mx-auto w-full" : ""}`}
           >
             {(searchQuery ? filteredMessages : chatMessages).map((m, i) => {
               return (
                 <div
                   key={i}
-                  className={`flex ${m.role === "user" ? "justify-end" : "justify-start"} animate-in fade-in slide-in-from-bottom-4 duration-500`}
+                  className={`flex flex-col ${m.role === "user" ? "items-end" : "items-start"} animate-in fade-in slide-in-from-bottom-4 duration-500`}
                 >
                   <div
                     className={`relative group/msg max-w-[85%] sm:max-w-[75%] p-3.5 sm:p-4 rounded-2xl sm:rounded-3xl text-[13px] leading-relaxed ${m.role === "user" ? "bg-gradient-to-br from-[var(--fun-purple)] to-[#8E78FF] text-white rounded-tr-none shadow-xl" : "bg-[var(--fun-surface)] fun-text rounded-tl-none border border-[var(--fun-stroke-1)] shadow-md"}`}
                   >
                     {formatText(m.displayedText || "")}
-                    {m.role === "nexy" && m.displayedText === m.text && (
-                      <div className="mt-3 pt-3 border-t border-[var(--fun-stroke-1)] flex items-center gap-2 opacity-100 lg:opacity-0 lg:group-hover/msg:opacity-100 transition-all duration-300">
-                        <button
-                          onClick={() => copyToClipboard(m.text)}
-                          className="h-7 w-7 sm:h-6 sm:w-6 flex items-center justify-center rounded-lg bg-[var(--fun-card)] border border-[var(--fun-stroke-1)] fun-text hover:bg-[var(--fun-purple)] hover:text-white transition-all active:scale-95"
-                          title={t("nexy.copy_tooltip")}
-                        >
-                          <Copy className="h-3 w-3" />
-                        </button>
-                        <button
-                          onClick={() => speak(m.text, i)}
-                          className={`h-7 w-7 sm:h-6 sm:w-6 flex items-center justify-center rounded-lg border border-[var(--fun-stroke-1)] transition-all active:scale-95 ${speakingMessageIndex === i ? "bg-red-500 text-white" : "bg-[var(--fun-card)] fun-text hover:bg-[var(--fun-purple)] hover:text-white"}`}
-                          title={speakingMessageIndex === i ? "Durdur" : t("nexy.read_tooltip")}
-                        >
-                          {speakingMessageIndex === i ? (
-                            <div className="relative flex items-center justify-center">
-                              <VolumeX className="h-4 w-4" />
-                            </div>
-                          ) : (
-                            <Volume2 className="h-3 w-3" />
-                          )}
-                        </button>
-                      </div>
-                    )}
                   </div>
+                  {m.role === "nexy" && m.displayedText === m.text && (
+                    <div className="mt-2 flex items-center gap-2 px-1 animate-in fade-in slide-in-from-top-1">
+                      <button
+                        onClick={() => copyToClipboard(m.text, i)}
+                        className={`h-8 w-8 flex items-center justify-center rounded-full border border-[var(--fun-stroke-1)] transition-all active:scale-95 ${copiedId === i ? "bg-green-500 text-white border-green-500" : "bg-[var(--fun-card)] fun-text hover:bg-[var(--fun-purple)] hover:text-white"}`}
+                        title={t("nexy.copy_tooltip")}
+                      >
+                        {copiedId === i ? (
+                          <svg
+                            className="h-4 w-4"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            strokeWidth={3}
+                          >
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                          </svg>
+                        ) : (
+                          <Copy className="h-3.5 w-3.5" />
+                        )}
+                      </button>
+                      <button
+                        onClick={() => speak(m.text, i)}
+                        className={`h-8 w-8 flex items-center justify-center rounded-full border border-[var(--fun-stroke-1)] transition-all active:scale-95 ${speakingMessageIndex === i ? "bg-red-500 text-white border-red-500" : "bg-[var(--fun-card)] fun-text hover:bg-[var(--fun-purple)] hover:text-white"}`}
+                        title={speakingMessageIndex === i ? "Durdur" : t("nexy.read_tooltip")}
+                      >
+                        {speakingMessageIndex === i ? (
+                          <VolumeX className="h-4 w-4" />
+                        ) : (
+                          <Volume2 className="h-3.5 w-3.5" />
+                        )}
+                      </button>
+                    </div>
+                  )}
                 </div>
               );
             })}
@@ -628,6 +762,7 @@ export default function NexyAssistant() {
               {t("nexy.disclaimer").toLowerCase()}
             </p>
           </form>
+          </div>
         </div>
       )}
 
