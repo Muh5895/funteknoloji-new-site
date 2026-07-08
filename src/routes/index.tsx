@@ -424,7 +424,7 @@ function ServicesSection({ t }: { t: (k: string) => string }) {
           <h2 className="text-heading-3 md:text-heading-2 font-medium mb-3 fun-text">
             {t("home.services.title")}
           </h2>
-          <p className="text-tagline-1 fun-text-muted lg:max-w-[530px] lg:mx-auto">
+          <p className="text-tagline-1 fun-text-muted lg:max-w-[530px] lg:mx-auto md:text-center">
             {t("home.services.desc")}
           </p>
         </div>

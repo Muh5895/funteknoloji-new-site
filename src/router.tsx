@@ -28,9 +28,7 @@ function DefaultErrorComponent({ error, reset }: { error: Error; reset: () => vo
         <h1 className="text-2xl font-bold tracking-tight text-foreground">
           {import.meta.env.DEV ? t("error.title") : "Oops!"}
         </h1>
-        <p className="mt-2 text-sm text-muted-foreground">
-          {t("error.unexpected")}
-        </p>
+        <p className="mt-2 text-sm text-muted-foreground">{t("error.unexpected")}</p>
         {import.meta.env.DEV && error.message && (
           <pre className="mt-4 max-h-40 overflow-auto rounded-md bg-muted p-3 text-left font-mono text-xs text-destructive">
             {error.message}

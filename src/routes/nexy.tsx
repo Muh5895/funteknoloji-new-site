@@ -51,7 +51,7 @@ function NexyPage() {
     <main>
       <section className="pt-32 pb-20 px-4 lg:px-5">
         <ScrollReveal>
-          <div className="max-w-[1880px] mx-auto rounded-[40px] overflow-hidden relative min-h-[700px] sm:min-h-[600px] flex items-center bg-[#12161F] border border-white/10 dark:border-white/10">
+          <div className="max-w-[1880px] mx-auto rounded-[40px] overflow-hidden relative min-h-[750px] sm:min-h-[600px] flex items-center bg-[#12161F] border border-white/10 dark:border-white/10">
             <div className="absolute inset-0 z-0">
               <div className="absolute inset-0 bg-gradient-to-br from-[#6C5CE7]/20 via-transparent to-transparent" />
               <div className="absolute top-0 right-0 w-1/2 h-full bg-dots opacity-20" />
@@ -65,18 +65,9 @@ function NexyPage() {
                 <p className="text-lg md:text-xl text-white/80 max-w-[600px] mx-auto lg:mx-0">
                   {t("nexy.hero.desc")}
                 </p>
-                <div className="flex flex-wrap justify-center lg:justify-start gap-4">
-                  <ArrowButton
-                    onClick={() => window.dispatchEvent(new CustomEvent("open-nexy-chat"))}
-                    variant="light"
-                    className="w-full sm:w-auto"
-                  >
-                    {lang === "tr" ? "Kullan" : "Use"}
-                  </ArrowButton>
-                </div>
               </div>
               <div className="flex justify-center lg:justify-end">
-                <div className="relative w-full max-w-[500px]">
+                <div className="relative w-full max-w-[500px] flex flex-col gap-8">
                   <div className="absolute -inset-10 bg-[var(--fun-purple)]/20 blur-[80px] rounded-full animate-pulse" />
                   <div className="relative bg-[#1A1F2B] border border-white/10 rounded-[40px] p-10 shadow-2xl backdrop-blur-2xl">
                     <div className="flex items-center gap-6 mb-8">
@@ -101,6 +92,15 @@ function NexyPage() {
                         </div>
                       </div>
                     </div>
+                  </div>
+                  <div className="relative z-10 flex justify-center">
+                    <ArrowButton
+                      onClick={() => window.dispatchEvent(new CustomEvent("open-nexy-chat"))}
+                      variant="light"
+                      className="w-full sm:w-auto"
+                    >
+                      {lang === "tr" ? "Kullan" : "Use"}
+                    </ArrowButton>
                   </div>
                 </div>
               </div>

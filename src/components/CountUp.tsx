@@ -1,6 +1,14 @@
 import { useEffect, useState } from "react";
 
-export default function CountUp({ end, duration = 2000, start = 0 }: { end: number; duration?: number; start?: number }) {
+export default function CountUp({
+  end,
+  duration = 2000,
+  start = 0,
+}: {
+  end: number;
+  duration?: number;
+  start?: number;
+}) {
   const [count, setCount] = useState(start);
 
   useEffect(() => {
