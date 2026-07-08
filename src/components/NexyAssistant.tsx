@@ -48,10 +48,29 @@ export default function NexyAssistant() {
     if (chatMessages.length > 0) {
       localStorage.setItem("nexy_chat", JSON.stringify(chatMessages.map(({ role, text }) => ({ role, text }))));
     }
+    // Improved scrolling: Use requestAnimationFrame to ensure DOM is updated
     if (scrollRef.current) {
-      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+      const scroll = () => {
+        if (scrollRef.current) {
+          scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+        }
+      };
+      requestAnimationFrame(scroll);
+      setTimeout(scroll, 100); // Fallback for slower rendering
     }
-  }, [chatMessages]);
+  }, [chatMessages, isThinking, isTyping]);
+
+  // Prevent background scroll when maximized
+  useEffect(() => {
+    if (isMaximized && isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isMaximized, isOpen]);
 
   const typingIntervalRef = useRef<number | null>(null);
 
@@ -130,9 +149,12 @@ export default function NexyAssistant() {
     }
   };
 
-  const handleSend = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!userInput.trim() || isTyping) return;
+  const handleSend = async (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+
+    // Allow sending if thinking is finished, even if still typing previous response
+    // But prevent double-sending while thinking
+    if (!userInput.trim() || isThinking) return;
 
     if (!navigator.onLine) {
       toast.error(t("error.offline") || "İnternet bağlantınız yok.");
@@ -167,29 +189,54 @@ export default function NexyAssistant() {
   };
 
   const startListening = () => {
-    if (!('webkitSpeechRecognition' in window)) {
+    if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
       toast.error(lang === 'tr' ? "Tarayıcınız ses tanımayı desteklemiyor." : "Your browser does not support speech recognition.");
       return;
     }
 
-    const recognition = new (window as any).webkitSpeechRecognition();
-    recognition.lang = lang === 'tr' ? 'tr-TR' : 'en-US';
+    const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+    const recognition = new SpeechRecognition();
+
+    // Set language based on active site language
+    const langMap: Record<string, string> = {
+      tr: "tr-TR", en: "en-US", de: "de-DE", fr: "fr-FR", es: "es-ES", az: "tr-TR",
+      ru: "ru-RU", ar: "ar-SA", it: "it-IT", pt: "pt-PT", ja: "ja-JP", zh: "zh-CN"
+    };
+    recognition.lang = langMap[lang] || "en-US";
     recognition.continuous = false;
-    recognition.interimResults = false;
+    recognition.interimResults = true; // Enable interim results for better feedback
 
     recognition.onstart = () => {
       setIsListening(true);
-      toast.info(lang === 'tr' ? "Sizi dinliyorum..." : "Listening...");
+      toast.info(lang === 'tr' ? "Dinliyorum..." : "I'm listening...", {
+        icon: <Mic className="h-4 w-4 animate-pulse text-red-500" />,
+        duration: 2000
+      });
     };
-    recognition.onend = () => setIsListening(false);
-    recognition.onerror = () => {
+
+    recognition.onend = () => {
       setIsListening(false);
-      toast.error(lang === 'tr' ? "Ses algılanamadı." : "Speech not detected.");
     };
-    recognition.onresult = (event: { results: { [key: number]: { [key: number]: { transcript: string } } } }) => {
-      const transcript = event.results[0][0].transcript;
-      setUserInput(prev => prev + (prev ? " " : "") + transcript);
+
+    recognition.onerror = (event: any) => {
       setIsListening(false);
+      if (event.error === 'not-allowed') {
+        toast.error(lang === 'tr' ? "Mikrofon izni reddedildi." : "Microphone permission denied.");
+      } else {
+        toast.error(lang === 'tr' ? "Ses algılanamadı." : "Speech not detected.");
+      }
+    };
+
+    recognition.onresult = (event: any) => {
+      const transcript = Array.from(event.results)
+        .map((result: any) => result[0])
+        .map((result: any) => result.transcript)
+        .join('');
+
+      setUserInput(transcript);
+
+      // If it's the final result, maybe auto-send?
+      // For now just update input
     };
 
     recognition.start();
@@ -318,18 +365,21 @@ export default function NexyAssistant() {
   return (
     <>
       {isOpen && (
-        <div className={`${isMaximized ? 'fixed inset-0 w-full h-full z-[200] rounded-none' : 'fixed bottom-24 right-6 w-[320px] sm:w-[420px] h-[550px] z-[100] rounded-[32px]'} bg-[var(--fun-card)] border border-[var(--fun-stroke-1)] shadow-2xl flex flex-col overflow-hidden animate-in zoom-in-95 duration-300 origin-bottom-right transition-all`}>
-          <div className="p-4 sm:p-5 border-b flex items-center justify-between bg-[var(--fun-surface)]" style={{ borderColor: 'var(--fun-stroke-1)' }}>
-            <div className="flex items-center gap-3 sm:gap-4">
-              <img src="/nexy-kafa.png" alt="Nexy" className={`${isMaximized ? 'h-12 w-12 sm:h-16 sm:w-16' : 'h-10 w-10 sm:h-12 sm:w-12'} object-contain`} />
-              <div className="flex flex-col items-start">
-                <div className="flex items-center gap-2">
-                  <p className={`font-bold fun-text ${isMaximized ? 'text-xl sm:text-3xl' : 'text-lg sm:text-xl'}`}>Nexy</p>
-                  <button onClick={() => toast.warning(t("nexy.beta_warning"))} className="bg-[var(--fun-purple)] text-white text-[8px] sm:text-[9px] font-bold px-1.5 py-0.5 rounded uppercase tracking-tighter hover:scale-105 transition-transform">{t("nexy.beta_tag")}</button>
+        <div className={`${isMaximized ? 'fixed inset-0 w-full h-full z-[200] rounded-none p-4 sm:p-8' : 'fixed bottom-24 right-6 w-[320px] sm:w-[420px] h-[550px] z-[100] rounded-[32px]'} bg-[var(--fun-card)] border border-[var(--fun-stroke-1)] shadow-2xl flex flex-col overflow-hidden animate-in fade-in zoom-in-75 duration-500 origin-bottom-right transition-all`}>
+          <div className={`p-4 sm:p-6 border-b flex items-center bg-[var(--fun-surface)] ${isMaximized ? 'rounded-t-[32px]' : ''}`} style={{ borderColor: 'var(--fun-stroke-1)' }}>
+            <div className="flex-1 hidden sm:block"></div>
+            <div className="flex-none sm:flex-1 flex justify-center">
+              <div className="flex items-center gap-3 sm:gap-6">
+                <img src="/nexy-kafa.png" alt="Nexy" className={`${isMaximized ? 'h-16 w-16 sm:h-24 sm:w-24' : 'h-10 w-10 sm:h-14 sm:w-14'} object-contain transform hover:scale-110 transition-transform duration-500`} />
+                <div className="flex flex-col items-start">
+                  <div className="flex items-center gap-2 sm:gap-3">
+                    <p className={`font-bold fun-text tracking-tight ${isMaximized ? 'text-2xl sm:text-4xl' : 'text-xl sm:text-2xl'}`}>Nexy</p>
+                    <button onClick={() => toast.warning(t("nexy.beta_warning"))} className="bg-[var(--fun-purple)] text-white text-[8px] sm:text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-widest hover:scale-105 transition-transform shadow-lg shadow-purple-500/20">{t("nexy.beta_tag")}</button>
+                  </div>
                 </div>
               </div>
             </div>
-            <div className="flex items-center gap-1">
+            <div className="flex-1 flex items-center justify-end gap-1">
               <button onClick={() => setShowSearch(!showSearch)} className="h-8 w-8 rounded-full hover:bg-[var(--fun-stroke-1)] flex items-center justify-center fun-text transition-colors"><SearchIcon className="h-4 w-4" /></button>
               <button onClick={() => setIsMaximized(!isMaximized)} className="h-8 w-8 rounded-full hover:bg-[var(--fun-stroke-1)] flex items-center justify-center fun-text transition-colors">
                 {isMaximized ? <Minimize2 className="h-4 w-4" /> : <Maximize2 className="h-4 w-4" />}
@@ -349,16 +399,16 @@ export default function NexyAssistant() {
               />
             </div>
           )}
-          <div ref={scrollRef} className="flex-1 overflow-y-auto p-5 space-y-5 bg-dots scroll-smooth">
+          <div ref={scrollRef} className={`flex-1 overflow-y-auto p-5 sm:p-8 space-y-6 sm:space-y-8 bg-dots scroll-smooth ${isMaximized ? 'max-w-5xl mx-auto w-full' : ''}`}>
             {(searchQuery ? filteredMessages : chatMessages).map((m, i) => {
               return (
-                <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                  <div className={`relative group/msg max-w-[85%] p-4 rounded-2xl text-[15px] ${m.role === 'user' ? 'bg-[var(--fun-purple)] text-white rounded-tr-none shadow-lg' : 'bg-[var(--fun-surface)] fun-text rounded-tl-none border border-[var(--fun-stroke-1)] shadow-sm'}`}>
+                <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'} animate-in fade-in slide-in-from-bottom-4 duration-500`}>
+                  <div className={`relative group/msg max-w-[85%] sm:max-w-[75%] p-5 sm:p-6 rounded-3xl text-[15px] sm:text-[17px] leading-relaxed ${m.role === 'user' ? 'bg-gradient-to-br from-[var(--fun-purple)] to-[#8E78FF] text-white rounded-tr-none shadow-xl' : 'bg-[var(--fun-surface)] fun-text rounded-tl-none border border-[var(--fun-stroke-1)] shadow-md'}`}>
                     {formatText(m.displayedText || "")}
                     {m.role === 'nexy' && m.displayedText === m.text && (
-                      <div className="absolute top-1/2 -right-12 -translate-y-1/2 flex flex-col gap-1 opacity-100 lg:opacity-0 lg:group-hover/msg:opacity-100 transition-opacity">
-                        <button onClick={() => copyToClipboard(m.text)} className="h-7 w-7 sm:h-5 sm:w-5 flex items-center justify-center rounded bg-[var(--fun-card)] border border-[var(--fun-stroke-1)] fun-text hover:bg-[var(--fun-purple)] hover:text-white transition-colors shadow-sm" title={t("nexy.copy_tooltip")}><Copy className="h-4 w-4 sm:h-3 sm:w-3" /></button>
-                        <button onClick={() => speak(m.text)} className={`h-7 w-7 sm:h-5 sm:w-5 flex items-center justify-center rounded border border-[var(--fun-stroke-1)] transition-colors shadow-sm ${isSpeaking ? 'bg-red-500 text-white hover:bg-red-600' : 'bg-[var(--fun-card)] fun-text hover:bg-[var(--fun-purple)] hover:text-white'}`} title={isSpeaking ? "Durdur" : t("nexy.read_tooltip")}>
+                      <div className={`absolute top-1/2 -translate-y-1/2 flex flex-col gap-2 opacity-100 lg:opacity-0 lg:group-hover/msg:opacity-100 transition-all duration-300 ${m.role === 'user' ? '-left-12' : '-right-14'}`}>
+                        <button onClick={() => copyToClipboard(m.text)} className="h-9 w-9 sm:h-8 sm:w-8 flex items-center justify-center rounded-xl bg-[var(--fun-card)] border border-[var(--fun-stroke-1)] fun-text hover:bg-[var(--fun-purple)] hover:text-white transition-all shadow-lg active:scale-95" title={t("nexy.copy_tooltip")}><Copy className="h-4 w-4" /></button>
+                        <button onClick={() => speak(m.text)} className={`h-9 w-9 sm:h-8 sm:w-8 flex items-center justify-center rounded-xl border border-[var(--fun-stroke-1)] transition-all shadow-lg active:scale-95 ${isSpeaking ? 'bg-red-500 text-white animate-pulse' : 'bg-[var(--fun-card)] fun-text hover:bg-[var(--fun-purple)] hover:text-white'}`} title={isSpeaking ? "Durdur" : t("nexy.read_tooltip")}>
                           {isSpeaking ? <X className="h-4 w-4 sm:h-3 sm:w-3" /> : <Volume2 className="h-4 w-4 sm:h-3 sm:w-3" />}
                         </button>
                       </div>
@@ -375,15 +425,38 @@ export default function NexyAssistant() {
               </div>
             )}
           </div>
-          <form onSubmit={handleSend} className="p-4 border-t space-y-2" style={{ borderColor: 'var(--fun-stroke-1)' }}>
-            <div className="relative">
-              <input type="text" value={userInput} onChange={(e) => setUserInput(e.target.value)} placeholder={t("nexy.placeholder")} className="w-full rounded-2xl bg-[var(--fun-surface)] border border-[var(--fun-stroke-1)] py-3 pl-10 pr-12 text-sm outline-none focus:border-[var(--fun-purple)] transition-colors fun-text" />
-              <button type="button" onClick={startListening} className={`absolute left-2 top-1/2 -translate-y-1/2 h-7 w-7 rounded-full flex items-center justify-center transition-colors ${isListening ? 'bg-red-500 text-white animate-pulse' : 'fun-text-muted hover:bg-[var(--fun-stroke-1)]'}`}>
-                <Mic className="h-4 w-4" />
+          <form onSubmit={handleSend} className={`p-4 sm:p-8 border-t space-y-3 bg-[var(--fun-surface)]/50 backdrop-blur-xl ${isMaximized ? 'rounded-b-[32px]' : ''}`} style={{ borderColor: 'var(--fun-stroke-1)' }}>
+            <div className={`relative ${isMaximized ? 'max-w-4xl mx-auto w-full' : ''}`}>
+              <input
+                type="text"
+                value={userInput}
+                onChange={(e) => setUserInput(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    handleSend();
+                  }
+                }}
+                placeholder={t("nexy.placeholder")}
+                className="w-full rounded-[24px] bg-[var(--fun-surface)] border-2 border-[var(--fun-stroke-1)] py-4 pl-14 pr-16 text-base outline-none focus:border-[var(--fun-purple)] focus:ring-4 focus:ring-[var(--fun-purple)]/10 transition-all fun-text shadow-inner"
+              />
+              <button
+                type="button"
+                onClick={startListening}
+                className={`absolute left-3 top-1/2 -translate-y-1/2 h-10 w-10 rounded-full flex items-center justify-center transition-all ${isListening ? 'bg-red-500 text-white scale-110 shadow-lg shadow-red-500/40 animate-pulse' : 'fun-text-muted hover:bg-[var(--fun-stroke-1)] hover:text-[var(--fun-purple)]'}`}
+              >
+                <Mic className="h-5 w-5" />
               </button>
-              <button type="submit" disabled={isTyping} aria-label={t("nexy.aria_send")} className="absolute right-2 top-1/2 -translate-y-1/2 h-9 w-9 rounded-xl bg-[var(--fun-purple)] text-white flex items-center justify-center hover:opacity-90 transition-opacity disabled:opacity-50"><Send className="h-4 w-4" /></button>
+              <button
+                type="submit"
+                disabled={!userInput.trim() || isThinking}
+                aria-label={t("nexy.aria_send")}
+                className="absolute right-3 top-1/2 -translate-y-1/2 h-11 w-11 rounded-2xl bg-[var(--fun-purple)] text-white flex items-center justify-center hover:scale-105 active:scale-95 transition-all disabled:opacity-30 disabled:hover:scale-100 shadow-lg shadow-purple-500/30"
+              >
+                <Send className="h-5 w-5" />
+              </button>
             </div>
-            <p className="text-[10px] text-center fun-text-muted opacity-60 px-2">{t("nexy.disclaimer")}</p>
+            <p className="text-[11px] text-center fun-text-muted font-medium opacity-50 px-2 tracking-wide uppercase">{t("nexy.disclaimer")}</p>
           </form>
         </div>
       )}

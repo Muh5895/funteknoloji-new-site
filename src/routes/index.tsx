@@ -285,18 +285,29 @@ function ServicesSection({ t }: { t: (k: string) => string }) {
           {services.map((service, i) => (
             <div key={i} className={`${i === 0 ? 'md:col-span-2' : ''} group`}>
               <div className={`h-full rounded-3xl border p-6 md:p-8 ${i === 0 ? 'grid grid-cols-1 md:grid-cols-12 gap-6' : 'grid grid-cols-1 md:grid-cols-2 gap-6'}`} style={{ backgroundColor: 'var(--fun-surface)', borderColor: 'var(--fun-stroke-1)' }}>
-                <aside className={`${i === 0 ? 'md:col-span-4' : ''} pt-8 flex flex-col justify-between space-y-5`}>
+                {/* Mobile: Icon first, then content */}
+                <div className="md:hidden flex justify-center mb-6">
+                  <div className="h-20 w-20 rounded-3xl flex items-center justify-center transition-all duration-500 shadow-lg text-[var(--fun-purple)] bg-[var(--fun-card)]">
+                     {service.icon}
+                  </div>
+                </div>
+
+                <aside className={`${i === 0 ? 'md:col-span-4' : ''} md:pt-8 flex flex-col justify-between space-y-5 text-center md:text-left`}>
                   <div className="space-y-2">
                     <h3 className="text-heading-5 md:text-heading-4 font-medium fun-text">{service.title}</h3>
                     <p className="text-tagline-1 fun-text-muted">{service.desc}</p>
                   </div>
-                  <Link to="/services" className="flex h-12 w-12 md:h-14 md:w-14 items-center justify-center rounded-full ring-8 ring-[var(--fun-card)] transition-all hover:bg-[var(--fun-purple)]" style={{ backgroundColor: 'var(--fun-text)' }}>
-                    <svg className="h-5 w-5" style={{ color: 'var(--fun-surface)' }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-                    </svg>
-                  </Link>
+                  <div className="flex justify-center md:justify-start">
+                    <Link to="/services" className="flex h-12 w-12 md:h-14 md:w-14 items-center justify-center rounded-full ring-8 ring-[var(--fun-card)] transition-all hover:bg-[var(--fun-purple)]" style={{ backgroundColor: 'var(--fun-text)' }}>
+                      <svg className="h-5 w-5" style={{ color: 'var(--fun-surface)' }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                      </svg>
+                    </Link>
+                  </div>
                 </aside>
-                <div className={`${i === 0 ? 'md:col-span-8' : ''} rounded-xl overflow-hidden min-h-[240px] md:min-h-[300px] transition-transform duration-500 flex items-center justify-center relative`} style={{ background: 'linear-gradient(135deg, var(--fun-stroke-2), var(--fun-surface))' }}>
+
+                {/* Desktop: Image/Icon block */}
+                <div className={`${i === 0 ? 'md:col-span-8' : ''} hidden md:flex rounded-xl overflow-hidden min-h-[240px] md:min-h-[300px] transition-transform duration-500 items-center justify-center relative`} style={{ background: 'linear-gradient(135deg, var(--fun-stroke-2), var(--fun-surface))' }}>
                   <div className="absolute inset-0 bg-gradient-to-br from-[#6C5CE7]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   <div className="text-center p-8 relative z-10">
                     <div className="mx-auto h-20 w-20 rounded-3xl flex items-center justify-center transition-all duration-500 shadow-lg text-[var(--fun-purple)]" style={{ backgroundColor: 'var(--fun-card)' }}>

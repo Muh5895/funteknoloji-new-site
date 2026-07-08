@@ -327,6 +327,7 @@ const tr: Dict = {
   "title.service_policy": "Hizmet Politikası - Fun Teknoloji",
   "title.privacy_policy": "Gizlilik Politikası - Fun Teknoloji",
   "title.nexy": "Nexy Asistan - Fun Teknoloji",
+  "title.sitemap": "Site Haritası - Fun Teknoloji",
   "nexy.read_tooltip": "Sesli Oku",
   "nexy.status.active": "Aktif Destek",
   "nexy.toast.copy": "Mesaj kopyalandı!",
@@ -817,6 +818,7 @@ const en: Dict = {
   "title.service_policy": "Service Policy - Fun Technology",
   "title.privacy_policy": "Privacy Policy - Fun Technology",
   "title.nexy": "Nexy Assistant - Fun Technology",
+  "title.sitemap": "Site Map - Fun Technology",
   "nexy.read_tooltip": "Read Aloud",
   "nexy.status.active": "Active Support",
   "nexy.toast.copy": "Message copied!",
@@ -5751,6 +5753,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
         else if (path.startsWith("/service-policy")) titleKey = "title.service_policy";
         else if (path.startsWith("/privacy-policy")) titleKey = "title.privacy_policy";
         else if (path.startsWith("/nexy")) titleKey = "title.nexy";
+        else if (path.startsWith("/sitemap")) titleKey = "title.sitemap";
         else if (path === "/404") titleKey = "404.title";
 
         const localizedTitle = t(titleKey);
@@ -5767,7 +5770,18 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
             "title.brand_kit": "Marka Kiti - Fun Teknoloji",
             "title.service_policy": "Hizmet Politikası - Fun Teknoloji",
             "title.privacy_policy": "Gizlilik Politikası - Fun Teknoloji",
-            "title.nexy": "Nexy Asistan - Fun Teknoloji"
+  "title.sitemap": "网站地图 - Fun Technology",
+            "title.nexy": "Nexy Asistan - Fun Teknoloji",
+  "title.sitemap": "网站地图 - Fun Technology",
+  "title.sitemap": "サイトマップ - Fun Technology",
+  "title.sitemap": "Mapa do site - Fun Technology",
+  "title.sitemap": "Mappa del sito - Fun Technology",
+  "title.sitemap": "خريطة الموقع - Fun Technology",
+  "title.sitemap": "Карта сайта - Fun Technology",
+  "title.sitemap": "Sayt Xəritəsi - Fun Teknoloji",
+  "title.sitemap": "Mapa del sitio - Fun Technology",
+  "title.sitemap": "Plan du site - Fun Technology",
+  "title.sitemap": "Sitemap - Fun Technology"
           };
           if (fallbacks[titleKey]) {
             document.title = fallbacks[titleKey];

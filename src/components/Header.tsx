@@ -135,27 +135,27 @@ export default function Header() {
         >
           <nav className="space-y-2" aria-label="Mobil navigasyon">
             <MobileAccordion label={t("nav.company")}>
-              <Link to="/about" className="block rounded-xl px-4 py-3 fun-text-muted hover:bg-[var(--fun-surface)]" onClick={() => setMobileOpen(false)}>{t("nav.about")}</Link>
-              <Link to="/team" className="block rounded-xl px-4 py-3 fun-text-muted hover:bg-[var(--fun-surface)]" onClick={() => setMobileOpen(false)}>{t("nav.team")}</Link>
-              <Link to="/reviews" className="block rounded-xl px-4 py-3 fun-text-muted hover:bg-[var(--fun-surface)]" onClick={() => setMobileOpen(false)}>{t("nav.reviews")}</Link>
+              <Link to="/about" className="block rounded-xl px-4 py-3 text-base fun-text-muted hover:bg-[var(--fun-surface)]" onClick={() => setMobileOpen(false)}>{t("nav.about")}</Link>
+              <Link to="/team" className="block rounded-xl px-4 py-3 text-base fun-text-muted hover:bg-[var(--fun-surface)]" onClick={() => setMobileOpen(false)}>{t("nav.team")}</Link>
+              <Link to="/reviews" className="block rounded-xl px-4 py-3 text-base fun-text-muted hover:bg-[var(--fun-surface)]" onClick={() => setMobileOpen(false)}>{t("nav.reviews")}</Link>
             </MobileAccordion>
 
             <MobileAccordion label={t("nav.platform")}>
-              <Link to="/services" className="block rounded-xl px-4 py-3 fun-text-muted hover:bg-[var(--fun-surface)]" onClick={() => setMobileOpen(false)}>{t("nav.services")}</Link>
-              <Link to="/projects" className="block rounded-xl px-4 py-3 fun-text-muted hover:bg-[var(--fun-surface)]" onClick={() => setMobileOpen(false)}>{t("nav.projects")}</Link>
-              <Link to="/pricing" className="block rounded-xl px-4 py-3 fun-text-muted hover:bg-[var(--fun-surface)]" onClick={() => setMobileOpen(false)}>{t("nav.pricing")}</Link>
+              <Link to="/services" className="block rounded-xl px-4 py-3 text-base fun-text-muted hover:bg-[var(--fun-surface)]" onClick={() => setMobileOpen(false)}>{t("nav.services")}</Link>
+              <Link to="/projects" className="block rounded-xl px-4 py-3 text-base fun-text-muted hover:bg-[var(--fun-surface)]" onClick={() => setMobileOpen(false)}>{t("nav.projects")}</Link>
+              <Link to="/pricing" className="block rounded-xl px-4 py-3 text-base fun-text-muted hover:bg-[var(--fun-surface)]" onClick={() => setMobileOpen(false)}>{t("nav.pricing")}</Link>
             </MobileAccordion>
 
             <MobileAccordion label={t("nav.resources")}>
-              <Link to="/blog" className="block rounded-xl px-4 py-3 fun-text-muted hover:bg-[var(--fun-surface)]" onClick={() => setMobileOpen(false)}>{t("nav.blog")}</Link>
-              <Link to="/faq" className="block rounded-xl px-4 py-3 fun-text-muted hover:bg-[var(--fun-surface)]" onClick={() => setMobileOpen(false)}>{t("nav.faq")}</Link>
-              <Link to="/changelog" className="block rounded-xl px-4 py-3 fun-text-muted hover:bg-[var(--fun-surface)]" onClick={() => setMobileOpen(false)}>{t("nav.changelog")}</Link>
-              <Link to="/brand-kit" className="block rounded-xl px-4 py-3 fun-text-muted hover:bg-[var(--fun-surface)]" onClick={() => setMobileOpen(false)}>{t("nav.brand_kit")}</Link>
-              <Link to="/docs" className="block rounded-xl px-4 py-3 fun-text-muted hover:bg-[var(--fun-surface)]" onClick={() => setMobileOpen(false)}>{t("nav.docs")}</Link>
-              <Link to="/sitemap" className="block rounded-xl px-4 py-3 fun-text-muted hover:bg-[var(--fun-surface)]" onClick={() => setMobileOpen(false)}>{t("nav.sitemap")}</Link>
+              <Link to="/blog" className="block rounded-xl px-4 py-3 text-base fun-text-muted hover:bg-[var(--fun-surface)]" onClick={() => setMobileOpen(false)}>{t("nav.blog")}</Link>
+              <Link to="/faq" className="block rounded-xl px-4 py-3 text-base fun-text-muted hover:bg-[var(--fun-surface)]" onClick={() => setMobileOpen(false)}>{t("nav.faq")}</Link>
+              <Link to="/changelog" className="block rounded-xl px-4 py-3 text-base fun-text-muted hover:bg-[var(--fun-surface)]" onClick={() => setMobileOpen(false)}>{t("nav.changelog")}</Link>
+              <Link to="/brand-kit" className="block rounded-xl px-4 py-3 text-base fun-text-muted hover:bg-[var(--fun-surface)]" onClick={() => setMobileOpen(false)}>{t("nav.brand_kit")}</Link>
+              <Link to="/docs" className="block rounded-xl px-4 py-3 text-base fun-text-muted hover:bg-[var(--fun-surface)]" onClick={() => setMobileOpen(false)}>{t("nav.docs")}</Link>
+              <Link to="/sitemap" className="block rounded-xl px-4 py-3 text-base fun-text-muted hover:bg-[var(--fun-surface)]" onClick={() => setMobileOpen(false)}>{t("nav.sitemap")}</Link>
             </MobileAccordion>
 
-            <Link to="/contact" className="block rounded-xl px-4 py-4 font-semibold fun-text hover:bg-[var(--fun-surface)] border-b" style={{ borderColor: 'var(--fun-stroke-1)' }} onClick={() => setMobileOpen(false)}>
+            <Link to="/contact" className="block rounded-xl px-4 py-4 text-base font-semibold fun-text hover:bg-[var(--fun-surface)] border-b" style={{ borderColor: 'var(--fun-stroke-1)' }} onClick={() => setMobileOpen(false)}>
               {t("nav.contact")}
             </Link>
           </nav>
@@ -242,7 +242,7 @@ function MobileAccordion({ label, children }: { label: string; children: React.R
     <div className="border-b last:border-0" style={{ borderColor: 'var(--fun-stroke-1)' }}>
       <button
         onClick={() => setOpen(!open)}
-        className="flex w-full items-center justify-between py-4 px-4 text-sm font-semibold fun-text"
+        className="flex w-full items-center justify-between py-4 px-4 text-base font-semibold fun-text"
       >
         {label}
         <svg className={`h-4 w-4 transition-transform duration-300 ${open ? "rotate-180" : ""}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">

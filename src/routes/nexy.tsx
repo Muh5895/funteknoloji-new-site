@@ -150,20 +150,6 @@ function NexyPage() {
                   <div className="relative">
                      <div className="aspect-video lg:aspect-square max-h-[300px] lg:max-h-[500px] bg-[var(--fun-card)] rounded-[40px] border border-[var(--fun-stroke-1)] overflow-hidden flex items-center justify-center">
                         <MessageCircle className="h-40 w-40 text-[var(--fun-purple)] opacity-20" />
-                        <div className="absolute inset-0 flex flex-col items-center justify-center p-8 md:p-12 space-y-6">
-                           <div className="w-full bg-[var(--fun-surface)] p-4 rounded-2xl border border-[var(--fun-stroke-1)] animate-in slide-in-from-left duration-500">
-                              <div className="h-2 w-1/2 bg-[var(--fun-purple)]/20 rounded-full mb-2" />
-                              <div className="h-2 w-full bg-[var(--fun-purple)]/10 rounded-full" />
-                           </div>
-                           <div className="w-full bg-[var(--fun-purple)]/10 p-4 rounded-2xl border border-[var(--fun-purple)]/20 animate-in slide-in-from-right duration-700">
-                              <div className="h-2 w-3/4 bg-[var(--fun-purple)]/30 rounded-full mb-2" />
-                              <div className="h-2 w-1/2 bg-[var(--fun-purple)]/30 rounded-full" />
-                           </div>
-                           <div className="w-full bg-[var(--fun-surface)] p-4 rounded-2xl border border-[var(--fun-stroke-1)] animate-in slide-in-from-left duration-1000">
-                              <div className="h-2 w-2/3 bg-[var(--fun-purple)]/20 rounded-full mb-2" />
-                              <div className="h-2 w-full bg-[var(--fun-purple)]/10 rounded-full" />
-                           </div>
-                        </div>
                      </div>
                   </div>
                   <div className="space-y-8">
