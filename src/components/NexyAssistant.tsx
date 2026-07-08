@@ -303,13 +303,23 @@ export default function NexyAssistant() {
 
       // Strip table markers and formatting for clean speech
       const cleanText = text
-        .replace(/\|/g, " ") // Remove pipes
-        .replace(/---/g, " ") // Remove table divider dashes
-        .replace(/-{2,}/g, " ") // Remove multiple dashes
+        .split("\n")
+        .filter((line) => {
+          const trimmed = line.trim();
+          // Skip empty lines or table separator lines (e.g., |---| or :---:)
+          if (!trimmed) return false;
+          if (trimmed.startsWith("|") && trimmed.replace(/[|:\s\-]/g, "").length === 0)
+            return false;
+          return true;
+        })
+        .join(" ")
+        .replace(/\|/g, " ") // Remove remaining pipes
+        .replace(/#{1,6}\s/g, " ") // Remove markdown headers
         .replace(/\*\*/g, "") // Remove bold markers
         .replace(/\*/g, "") // Remove italic markers
+        .replace(/-{2,}/g, " ") // Remove multiple dashes
         .replace(/\[REDIRECT:.*?\]/g, "") // Remove redirect commands
-        .replace(/\n/g, " ") // Replace newlines with spaces
+        .replace(/\s+/g, " ") // Collapse multiple spaces
         .trim();
 
       const ut = new SpeechSynthesisUtterance(cleanText);
@@ -468,9 +478,9 @@ export default function NexyAssistant() {
             <div className="flex-none sm:flex-1 flex justify-center">
               <div className="flex items-center gap-3 sm:gap-5">
                 <img
-                  src="/nexy-kafa.png"
+                  src="/nexy-kafa-buyuk.png"
                   alt="Nexy"
-                  className={`h-14 w-14 sm:h-16 sm:w-16 object-contain transform hover:scale-110 transition-transform duration-500`}
+                  className={`h-16 w-16 sm:h-20 sm:w-20 object-contain transform hover:scale-110 transition-transform duration-500`}
                 />
                 <div className="flex flex-col items-start justify-center">
                   <div className="flex items-center gap-1.5 sm:gap-2">

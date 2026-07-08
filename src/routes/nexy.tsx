@@ -73,9 +73,9 @@ function NexyPage() {
                     <div className="flex items-center gap-6 mb-8">
                       <div className="h-24 w-24 rounded-3xl bg-[var(--fun-purple)]/10 flex items-center justify-center shadow-2xl border border-[var(--fun-purple)]/20 p-4 overflow-hidden">
                         <img
-                          src="/nexy-kafa.png"
+                          src="/nexy-kafa-buyuk.png"
                           alt="Nexy"
-                          className="w-full h-full object-contain scale-125"
+                          className="w-full h-full object-contain scale-150"
                         />
                       </div>
                       <div>
