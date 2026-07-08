@@ -149,8 +149,35 @@ function PostPage() {
 
     if ("speechSynthesis" in window) {
       window.speechSynthesis.cancel();
-      const fullText = `${post.displayTitle}. ${post.displayText}`;
-      const utterance = new SpeechSynthesisUtterance(fullText);
+
+      // Clean text for natural speech
+      const cleanText = `${post.displayTitle}. ${post.displayText}`
+        .split("\n")
+        .filter((line) => {
+          const trimmed = line.trim();
+          if (!trimmed) return false;
+          // Skip table separator lines
+          if (trimmed.includes("|") && trimmed.replace(/[|:\s-]/g, "").length === 0)
+            return false;
+          // Skip lines that are just dashes
+          if (trimmed.replace(/[\s-]/g, "").length === 0) return false;
+          // Skip code blocks
+          if (trimmed.startsWith("```")) return false;
+          return true;
+        })
+        .join(". ")
+        .replace(/\|/g, " ")
+        .replace(/#{1,6}\s/g, " ")
+        .replace(/\*\*/g, "")
+        .replace(/\*/g, "")
+        .replace(/-{2,}/g, " ")
+        .replace(/(\s-){2,}/g, " ")
+        .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
+        .replace(/!\[([^\]]*)\]\([^)]+\)/g, "")
+        .replace(/\s+/g, " ")
+        .trim();
+
+      const utterance = new SpeechSynthesisUtterance(cleanText);
       utteranceRef.current = utterance;
 
       const langMap: Record<string, string> = {

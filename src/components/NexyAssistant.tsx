@@ -306,13 +306,15 @@ export default function NexyAssistant() {
         .split("\n")
         .filter((line) => {
           const trimmed = line.trim();
-          // Skip empty lines, table separator lines (e.g., |---| or :---:)
-          // or lines that are just dashes or multiple hyphens
+          // Skip empty lines
           if (!trimmed) return false;
-          if (trimmed.startsWith("|") && trimmed.replace(/[|:\s\-]/g, "").length === 0)
+          // Skip table separator lines (e.g., |---| or :---:)
+          if (trimmed.includes("|") && trimmed.replace(/[|:\s-]/g, "").length === 0)
             return false;
-          if (trimmed.replace(/[\s\-]/g, "").length === 0) return false;
-          if (trimmed.startsWith("```")) return false; // Skip code block start/end
+          // Skip lines that are just dashes or hyphens (often used in tables or separators)
+          if (trimmed.replace(/[\s-]/g, "").length === 0) return false;
+          // Skip code block start/end
+          if (trimmed.startsWith("```")) return false;
           return true;
         })
         .join(". ") // Use period to give a small pause between lines
@@ -320,7 +322,8 @@ export default function NexyAssistant() {
         .replace(/#{1,6}\s/g, " ") // Remove markdown headers
         .replace(/\*\*/g, "") // Remove bold markers
         .replace(/\*/g, "") // Remove italic markers
-        .replace(/-{2,}/g, " ") // Remove multiple dashes
+        .replace(/-{2,}/g, " ") // Remove multiple dashes (the main issue)
+        .replace(/(\s-){2,}/g, " ") // Remove repeating space-dash patterns
         .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1") // Replace links [text](url) with just text
         .replace(/!\[([^\]]*)\]\([^)]+\)/g, "") // Remove images ![alt](url)
         .replace(/\[REDIRECT:.*?\]/g, "") // Remove redirect commands
@@ -476,31 +479,26 @@ export default function NexyAssistant() {
           className={`${isMaximized ? "fixed inset-0 sm:inset-10 z-[200] rounded-none sm:rounded-[32px]" : "fixed bottom-24 right-6 w-[320px] sm:w-[420px] h-[550px] z-[100] rounded-[32px]"} bg-[var(--fun-card)] border border-[var(--fun-stroke-1)] shadow-2xl flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-500 origin-bottom-right transition-all`}
         >
           <div
-            className={`p-3 sm:p-5 border-b flex items-center bg-[var(--fun-surface)] ${isMaximized ? "rounded-none sm:rounded-t-[32px]" : "rounded-t-[32px]"}`}
+            className={`p-2 sm:p-3 border-b flex items-center bg-[var(--fun-surface)] ${isMaximized ? "rounded-none sm:rounded-t-[32px]" : "rounded-t-[32px]"} h-20 sm:h-24`}
             style={{ borderColor: "var(--fun-stroke-1)" }}
           >
-            <div className="flex-1 hidden sm:block"></div>
-            <div className="flex-none sm:flex-1 flex justify-center">
-              <div className="flex items-center gap-1 sm:gap-2">
-                <img
-                  src="/nexy-kafa-buyuk.png"
-                  alt="Nexy"
-                  className={`h-14 w-14 sm:h-16 sm:w-16 object-contain transform hover:scale-110 transition-transform duration-500`}
-                />
-                <div className="flex flex-col items-start justify-center">
-                  <div className="flex items-center gap-1 sm:gap-1.5 mt-0.5">
-                    <p
-                      className={`font-bold fun-text tracking-tight text-lg sm:text-xl leading-none`}
-                    >
-                      Nexy
-                    </p>
-                    <button
-                      onClick={() => toast.warning(t("nexy.beta_warning"))}
-                      className="bg-[var(--fun-purple)] text-white text-[7px] sm:text-[8px] font-bold px-1 py-0.5 rounded-full uppercase tracking-widest hover:scale-105 transition-transform shadow-lg shadow-purple-500/20"
-                    >
-                      {t("nexy.beta_tag")}
-                    </button>
-                  </div>
+            <div className="flex flex-1 items-center gap-1">
+              <img
+                src="/nexy-kafa-buyuk.png"
+                alt="Nexy"
+                className="h-16 w-16 object-contain transition-transform duration-500 transform hover:scale-110 sm:h-24 sm:w-24"
+              />
+              <div className="flex flex-col justify-center items-start">
+                <div className="mt-0.5 flex items-center gap-1.5">
+                  <p className="fun-text text-lg font-bold leading-none tracking-tight sm:text-xl">
+                    Nexy
+                  </p>
+                  <button
+                    onClick={() => toast.warning(t("nexy.beta_warning"))}
+                    className="rounded-full bg-[var(--fun-purple)] px-1.5 py-0.5 text-[8px] font-bold uppercase tracking-widest text-white shadow-lg shadow-purple-500/20 transition-transform hover:scale-105 sm:text-[9px]"
+                  >
+                    {t("nexy.beta_tag")}
+                  </button>
                 </div>
               </div>
             </div>

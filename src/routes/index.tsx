@@ -103,7 +103,7 @@ function HeroSection({ t }: { t: (k: string) => string }) {
             <span className="badge-fun badge-fun-gray mb-6 inline-block text-xs tracking-wider animate-in fade-in zoom-in duration-700 delay-100 fill-mode-both">
               {t("home.hero.badge")}
             </span>
-            <h1 className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-bold mb-8 tracking-tight animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-300 fill-mode-both leading-[1.1]">
+            <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-8 tracking-tight animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-300 fill-mode-both leading-[1.1]">
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#12161F] via-[#2A2E38] to-[#40444F] dark:from-white dark:via-white/90 dark:to-white/50">
                 {t("home.hero.title")}
               </span>
@@ -113,7 +113,7 @@ function HeroSection({ t }: { t: (k: string) => string }) {
             </p>
             <div className="flex md:flex-row flex-col gap-5 items-center justify-center animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-700 fill-mode-both">
               <ArrowButton
-                to="/services"
+                to="/projects"
                 variant="dark"
                 className="w-full md:w-auto h-16 px-8 text-xl font-medium shadow-2xl shadow-indigo-500/20"
               >
@@ -148,7 +148,7 @@ function StatsSection({ t }: { t: (k: string) => string }) {
           </div>
           <div>
             <div className="text-4xl md:text-5xl font-bold fun-text mb-2">
-              <CountUp end={150} />+
+              <CountUp end={5} />
             </div>
             <div className="text-sm fun-text-muted uppercase tracking-wider">
               {t("home.stats.projects")}
@@ -156,7 +156,7 @@ function StatsSection({ t }: { t: (k: string) => string }) {
           </div>
           <div>
             <div className="text-4xl md:text-5xl font-bold fun-text mb-2">
-              <CountUp end={1} />
+              <CountUp end={10} />+
             </div>
             <div className="text-sm fun-text-muted uppercase tracking-wider">
               {t("home.stats.team")}
@@ -370,7 +370,7 @@ function HowItWorksSection({ t }: { t: (k: string) => string }) {
         </div>
 
         <div className="mt-14 text-center">
-          <ArrowButton to="/services" variant="dark">
+          <ArrowButton to="/projects" variant="dark">
             {t("home.hero.explore")}
           </ArrowButton>
         </div>
@@ -457,7 +457,7 @@ function ServicesSection({ t }: { t: (k: string) => string }) {
                   </div>
                   <div className="flex justify-start">
                     <Link
-                      to="/services"
+                      to="/projects"
                       className="flex h-12 w-12 md:h-14 md:w-14 items-center justify-center rounded-full ring-8 ring-[var(--fun-card)] transition-all hover:bg-[var(--fun-purple)]"
                       style={{ backgroundColor: "var(--fun-text)" }}
                     >

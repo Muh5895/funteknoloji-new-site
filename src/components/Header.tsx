@@ -110,12 +110,6 @@ export default function Header() {
             onOpen={setOpenDropdown}
           >
             <DropdownItem
-              to="/services"
-              title={t("nav.services")}
-              desc={t("nav.services.desc")}
-              icon={<Zap className="h-4 w-4" />}
-            />
-            <DropdownItem
               to="/projects"
               title={t("nav.projects")}
               desc={t("nav.projects.desc")}
@@ -253,13 +247,6 @@ export default function Header() {
             </MobileAccordion>
 
             <MobileAccordion label={t("nav.platform")}>
-              <Link
-                to="/services"
-                className="block rounded-xl px-4 py-3 text-base fun-text-muted hover:bg-[var(--fun-surface)]"
-                onClick={() => setMobileOpen(false)}
-              >
-                {t("nav.services")}
-              </Link>
               <Link
                 to="/projects"
                 className="block rounded-xl px-4 py-3 text-base fun-text-muted hover:bg-[var(--fun-surface)]"
