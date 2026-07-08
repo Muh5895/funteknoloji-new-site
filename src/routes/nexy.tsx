@@ -59,10 +59,6 @@ function NexyPage() {
 
             <div className="main-container relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center py-20 lg:py-32">
               <div className="space-y-6 md:space-y-8 text-center lg:text-left">
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-md">
-                  <Sparkles className="h-4 w-4 text-[var(--fun-purple)]" />
-                  <span className="text-sm font-medium text-white">{t("nexy.hero.badge")}</span>
-                </div>
                 <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white leading-tight">
                   {t("nexy.hero.title")}
                 </h1>
@@ -70,8 +66,12 @@ function NexyPage() {
                   {t("nexy.hero.desc")}
                 </p>
                 <div className="flex flex-wrap justify-center lg:justify-start gap-4">
-                  <ArrowButton to="/contact" variant="light" className="w-full sm:w-auto">
-                    {t("home.cta.button")}
+                  <ArrowButton
+                    onClick={() => window.dispatchEvent(new CustomEvent("open-nexy-chat"))}
+                    variant="light"
+                    className="w-full sm:w-auto"
+                  >
+                    {lang === "tr" ? "Kullan" : "Use"}
                   </ArrowButton>
                 </div>
               </div>

@@ -37,6 +37,15 @@ export default function NexyAssistant() {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const handleOpenChat = () => {
+      setIsOpen(true);
+      setShowPopup(false);
+    };
+    window.addEventListener("open-nexy-chat", handleOpenChat);
+    return () => window.removeEventListener("open-nexy-chat", handleOpenChat);
+  }, []);
+
+  useEffect(() => {
     const saved = localStorage.getItem("nexy_chat");
     if (saved) {
       try {
@@ -434,26 +443,26 @@ export default function NexyAssistant() {
     <>
       {isOpen && (
         <div
-          className={`${isMaximized ? "fixed inset-4 sm:inset-10 z-[200] rounded-[32px]" : "fixed bottom-24 right-6 w-[320px] sm:w-[420px] h-[550px] z-[100] rounded-[32px]"} bg-[var(--fun-card)] border border-[var(--fun-stroke-1)] shadow-2xl flex flex-col overflow-hidden animate-in fade-in zoom-in-75 duration-500 origin-bottom-right transition-all`}
+          className={`${isMaximized ? "fixed inset-0 sm:inset-10 z-[200] rounded-none sm:rounded-[32px]" : "fixed bottom-24 right-6 w-[320px] sm:w-[420px] h-[550px] z-[100] rounded-[32px]"} bg-[var(--fun-card)] border border-[var(--fun-stroke-1)] shadow-2xl flex flex-col overflow-hidden animate-in fade-in zoom-in-75 duration-500 origin-bottom-right transition-all`}
         >
           <div
-            className={`p-4 sm:p-6 border-b flex items-center bg-[var(--fun-surface)] rounded-t-[32px]`}
+            className={`p-3 sm:p-5 border-b flex items-center bg-[var(--fun-surface)] ${isMaximized ? "rounded-none sm:rounded-t-[32px]" : "rounded-t-[32px]"}`}
             style={{ borderColor: "var(--fun-stroke-1)" }}
           >
             <div className="flex-1 hidden sm:block"></div>
             <div className="flex-none sm:flex-1 flex justify-center">
-              <div className="flex items-center gap-3 sm:gap-6">
+              <div className="flex items-center gap-2 sm:gap-4">
                 <img
                   src="/nexy-kafa.png"
                   alt="Nexy"
-                  className={`h-10 w-10 sm:h-14 sm:w-14 object-contain transform hover:scale-110 transition-transform duration-500`}
+                  className={`h-8 w-8 sm:h-12 sm:w-12 object-contain transform hover:scale-110 transition-transform duration-500`}
                 />
                 <div className="flex flex-col items-start">
-                  <div className="flex items-center gap-2 sm:gap-3">
-                    <p className={`font-bold fun-text tracking-tight text-xl sm:text-2xl`}>Nexy</p>
+                  <div className="flex items-center gap-1.5 sm:gap-2">
+                    <p className={`font-bold fun-text tracking-tight text-lg sm:text-xl`}>Nexy</p>
                     <button
                       onClick={() => toast.warning(t("nexy.beta_warning"))}
-                      className="bg-[var(--fun-purple)] text-white text-[8px] sm:text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-widest hover:scale-105 transition-transform shadow-lg shadow-purple-500/20"
+                      className="bg-[var(--fun-purple)] text-white text-[7px] sm:text-[9px] font-bold px-1.5 py-0.5 rounded-full uppercase tracking-widest hover:scale-105 transition-transform shadow-lg shadow-purple-500/20"
                     >
                       {t("nexy.beta_tag")}
                     </button>
@@ -509,29 +518,29 @@ export default function NexyAssistant() {
                   className={`flex ${m.role === "user" ? "justify-end" : "justify-start"} animate-in fade-in slide-in-from-bottom-4 duration-500`}
                 >
                   <div
-                    className={`relative group/msg max-w-[85%] sm:max-w-[75%] p-4 sm:p-5 rounded-3xl text-sm leading-relaxed ${m.role === "user" ? "bg-gradient-to-br from-[var(--fun-purple)] to-[#8E78FF] text-white rounded-tr-none shadow-xl" : "bg-[var(--fun-surface)] fun-text rounded-tl-none border border-[var(--fun-stroke-1)] shadow-md"}`}
+                    className={`relative group/msg max-w-[85%] sm:max-w-[75%] p-3.5 sm:p-4 rounded-2xl sm:rounded-3xl text-[13px] sm:text-sm leading-relaxed ${m.role === "user" ? "bg-gradient-to-br from-[var(--fun-purple)] to-[#8E78FF] text-white rounded-tr-none shadow-xl" : "bg-[var(--fun-surface)] fun-text rounded-tl-none border border-[var(--fun-stroke-1)] shadow-md"}`}
                   >
                     {formatText(m.displayedText || "")}
                     {m.role === "nexy" && m.displayedText === m.text && (
                       <div
-                        className={`absolute top-1/2 -translate-y-1/2 flex flex-col gap-2 opacity-100 lg:opacity-0 lg:group-hover/msg:opacity-100 transition-all duration-300 ${m.role === "user" ? "-left-12" : "-right-14"}`}
+                        className={`absolute top-1/2 -translate-y-1/2 flex flex-col gap-2 opacity-100 lg:opacity-0 lg:group-hover/msg:opacity-100 transition-all duration-300 ${m.role === "user" ? "-left-11" : "-right-12"}`}
                       >
                         <button
                           onClick={() => copyToClipboard(m.text)}
-                          className="h-9 w-9 sm:h-8 sm:w-8 flex items-center justify-center rounded-xl bg-[var(--fun-card)] border border-[var(--fun-stroke-1)] fun-text hover:bg-[var(--fun-purple)] hover:text-white transition-all shadow-lg active:scale-95"
+                          className="h-8 w-8 sm:h-7 sm:w-7 flex items-center justify-center rounded-lg sm:rounded-xl bg-[var(--fun-card)] border border-[var(--fun-stroke-1)] fun-text hover:bg-[var(--fun-purple)] hover:text-white transition-all shadow-lg active:scale-95"
                           title={t("nexy.copy_tooltip")}
                         >
-                          <Copy className="h-4 w-4" />
+                          <Copy className="h-3.5 w-3.5" />
                         </button>
                         <button
                           onClick={() => speak(m.text)}
-                          className={`h-9 w-9 sm:h-8 sm:w-8 flex items-center justify-center rounded-xl border border-[var(--fun-stroke-1)] transition-all shadow-lg active:scale-95 ${isSpeaking ? "bg-red-500 text-white animate-pulse" : "bg-[var(--fun-card)] fun-text hover:bg-[var(--fun-purple)] hover:text-white"}`}
+                          className={`h-8 w-8 sm:h-7 sm:w-7 flex items-center justify-center rounded-lg sm:rounded-xl border border-[var(--fun-stroke-1)] transition-all shadow-lg active:scale-95 ${isSpeaking ? "bg-red-500 text-white animate-pulse" : "bg-[var(--fun-card)] fun-text hover:bg-[var(--fun-purple)] hover:text-white"}`}
                           title={isSpeaking ? "Durdur" : t("nexy.read_tooltip")}
                         >
                           {isSpeaking ? (
-                            <X className="h-4 w-4 sm:h-3 sm:w-3" />
+                            <X className="h-3.5 w-3.5 sm:h-3 sm:w-3" />
                           ) : (
-                            <Volume2 className="h-4 w-4 sm:h-3 sm:w-3" />
+                            <Volume2 className="h-3.5 w-3.5 sm:h-3 sm:w-3" />
                           )}
                         </button>
                       </div>
@@ -550,7 +559,7 @@ export default function NexyAssistant() {
           </div>
           <form
             onSubmit={handleSend}
-            className={`p-4 sm:p-8 border-t space-y-3 bg-[var(--fun-surface)]/50 backdrop-blur-xl rounded-b-[32px]`}
+            className={`p-4 sm:p-6 border-t space-y-2 bg-[var(--fun-surface)]/50 backdrop-blur-xl ${isMaximized ? "rounded-none sm:rounded-b-[32px]" : "rounded-b-[32px]"}`}
             style={{ borderColor: "var(--fun-stroke-1)" }}
           >
             <div className={`relative ${isMaximized ? "max-w-4xl mx-auto w-full" : ""}`}>
@@ -565,25 +574,25 @@ export default function NexyAssistant() {
                   }
                 }}
                 placeholder={t("nexy.placeholder")}
-                className="w-full rounded-[24px] bg-[var(--fun-surface)] border-2 border-[var(--fun-stroke-1)] py-4 pl-14 pr-16 text-base outline-none focus:border-[var(--fun-purple)] focus:ring-4 focus:ring-[var(--fun-purple)]/10 transition-all fun-text shadow-inner"
+                className="w-full rounded-[20px] bg-[var(--fun-surface)] border-2 border-[var(--fun-stroke-1)] py-3 pl-12 pr-14 text-sm outline-none focus:border-[var(--fun-purple)] focus:ring-4 focus:ring-[var(--fun-purple)]/10 transition-all fun-text shadow-inner"
               />
               <button
                 type="button"
                 onClick={startListening}
-                className={`absolute left-3 top-1/2 -translate-y-1/2 h-10 w-10 rounded-full flex items-center justify-center transition-all ${isListening ? "bg-red-500 text-white scale-110 shadow-lg shadow-red-500/40 animate-pulse" : "fun-text-muted hover:bg-[var(--fun-stroke-1)] hover:text-[var(--fun-purple)]"}`}
+                className={`absolute left-2.5 top-1/2 -translate-y-1/2 h-8 w-8 rounded-full flex items-center justify-center transition-all ${isListening ? "bg-red-500 text-white scale-110 shadow-lg shadow-red-500/40 animate-pulse" : "fun-text-muted hover:bg-[var(--fun-stroke-1)] hover:text-[var(--fun-purple)]"}`}
               >
-                <Mic className="h-5 w-5" />
+                <Mic className="h-4 w-4" />
               </button>
               <button
                 type="submit"
                 disabled={!userInput.trim() || isThinking}
                 aria-label={t("nexy.aria_send")}
-                className="absolute right-3 top-1/2 -translate-y-1/2 h-11 w-11 rounded-2xl bg-[var(--fun-purple)] text-white flex items-center justify-center hover:scale-105 active:scale-95 transition-all disabled:opacity-30 disabled:hover:scale-100 shadow-lg shadow-purple-500/30"
+                className="absolute right-2.5 top-1/2 -translate-y-1/2 h-9 w-9 rounded-xl bg-[var(--fun-purple)] text-white flex items-center justify-center hover:scale-105 active:scale-95 transition-all disabled:opacity-30 disabled:hover:scale-100 shadow-lg shadow-purple-500/30"
               >
-                <Send className="h-5 w-5" />
+                <Send className="h-4 w-4" />
               </button>
             </div>
-            <p className="text-[11px] text-center fun-text-muted font-medium opacity-50 px-2 tracking-wide uppercase">
+            <p className="text-[10px] text-center fun-text-muted font-medium opacity-50 px-2 tracking-wide uppercase">
               {t("nexy.disclaimer")}
             </p>
           </form>

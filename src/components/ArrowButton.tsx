@@ -7,9 +7,10 @@ interface ArrowButtonProps {
   variant?: "dark" | "light" | "green";
   className?: string;
   direction?: "left" | "right";
+  onClick?: () => void;
 }
 
-export default function ArrowButton({ to, href, children, variant = "dark", className = "", direction = "right" }: ArrowButtonProps) {
+export default function ArrowButton({ to, href, children, variant = "dark", className = "", direction = "right", onClick }: ArrowButtonProps) {
   const variants = {
     dark: "btn-fun btn-fun-dark",
     light: "btn-fun btn-fun-light",
@@ -34,6 +35,7 @@ export default function ArrowButton({ to, href, children, variant = "dark", clas
 
   const cls = `${variants[variant]} ${className}`;
 
+  if (onClick) return <button onClick={onClick} className={cls}>{content}</button>;
   if (to) return <Link to={to} className={cls}>{content}</Link>;
   return <a href={href || "#"} className={cls}>{content}</a>;
 }
