@@ -6,6 +6,8 @@ import { toast } from "sonner";
 import {
   X,
   Copy,
+  Volume,
+  VolumeX,
   Volume2,
   Send,
   ChevronRight,
@@ -298,7 +300,19 @@ export default function NexyAssistant() {
       }
       window.speechSynthesis.cancel();
       setSpeakingMessageIndex(index);
-      const ut = new SpeechSynthesisUtterance(text);
+
+      // Strip table markers and formatting for clean speech
+      const cleanText = text
+        .replace(/\|/g, " ") // Remove pipes
+        .replace(/---/g, " ") // Remove table divider dashes
+        .replace(/-{2,}/g, " ") // Remove multiple dashes
+        .replace(/\*\*/g, "") // Remove bold markers
+        .replace(/\*/g, "") // Remove italic markers
+        .replace(/\[REDIRECT:.*?\]/g, "") // Remove redirect commands
+        .replace(/\n/g, " ") // Replace newlines with spaces
+        .trim();
+
+      const ut = new SpeechSynthesisUtterance(cleanText);
       const langMap: Record<string, string> = {
         tr: "tr-TR",
         en: "en-US",
@@ -452,15 +466,19 @@ export default function NexyAssistant() {
           >
             <div className="flex-1 hidden sm:block"></div>
             <div className="flex-none sm:flex-1 flex justify-center">
-              <div className="flex items-center gap-2 sm:gap-3">
+              <div className="flex items-center gap-3 sm:gap-5">
                 <img
                   src="/nexy-kafa.png"
                   alt="Nexy"
-                  className={`h-8 w-8 sm:h-10 sm:w-10 object-contain transform hover:scale-110 transition-transform duration-500`}
+                  className={`h-14 w-14 sm:h-16 sm:w-16 object-contain transform hover:scale-110 transition-transform duration-500`}
                 />
-                <div className="flex flex-col items-start">
+                <div className="flex flex-col items-start justify-center">
                   <div className="flex items-center gap-1.5 sm:gap-2">
-                    <p className={`font-bold fun-text tracking-tight text-base sm:text-lg`}>Nexy</p>
+                    <p
+                      className={`font-bold fun-text tracking-tight text-xl sm:text-2xl leading-none`}
+                    >
+                      Nexy
+                    </p>
                     <button
                       onClick={() => toast.warning(t("nexy.beta_warning"))}
                       className="bg-[var(--fun-purple)] text-white text-[7px] sm:text-[8px] font-bold px-1.5 py-0.5 rounded-full uppercase tracking-widest hover:scale-105 transition-transform shadow-lg shadow-purple-500/20"
@@ -533,13 +551,12 @@ export default function NexyAssistant() {
                         </button>
                         <button
                           onClick={() => speak(m.text, i)}
-                          className={`h-7 w-7 sm:h-6 sm:w-6 flex items-center justify-center rounded-lg border border-[var(--fun-stroke-1)] transition-all active:scale-95 ${speakingMessageIndex === i ? "bg-red-500 text-white animate-pulse" : "bg-[var(--fun-card)] fun-text hover:bg-[var(--fun-purple)] hover:text-white"}`}
+                          className={`h-7 w-7 sm:h-6 sm:w-6 flex items-center justify-center rounded-lg border border-[var(--fun-stroke-1)] transition-all active:scale-95 ${speakingMessageIndex === i ? "bg-red-500 text-white" : "bg-[var(--fun-card)] fun-text hover:bg-[var(--fun-purple)] hover:text-white"}`}
                           title={speakingMessageIndex === i ? "Durdur" : t("nexy.read_tooltip")}
                         >
                           {speakingMessageIndex === i ? (
                             <div className="relative flex items-center justify-center">
-                              <Volume2 className="h-3 w-3" />
-                              <X className="h-2 w-2 absolute -right-1 -top-1" />
+                              <VolumeX className="h-4 w-4" />
                             </div>
                           ) : (
                             <Volume2 className="h-3 w-3" />
