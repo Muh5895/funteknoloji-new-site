@@ -582,7 +582,8 @@ const tr: Dict = {
   "home.faq.q6": "Ürünlerinizi nasıl kullanabilirim?",
   "home.faq.q7": "Ekibinize nasıl katılabilirim?",
 
-  "nexy.use_now": "Hemen Kullan",};
+  "nexy.use_now": "Hemen Kullan",
+};
 
 const en: Dict = {
   "404.desc": "It looks like something went wrong or the page may have been moved.",
@@ -1153,7 +1154,8 @@ const en: Dict = {
   "home.faq.q6": "How can I use your products?",
   "home.faq.q7": "How can I join your team?",
 
-  "nexy.use_now": "Use Now",};
+  "nexy.use_now": "Use Now",
+};
 
 const de: Dict = {
   "404.desc": "Offenbar ist ein Fehler aufgetreten oder die Seite wurde möglicherweise verschoben.",
@@ -1732,7 +1734,8 @@ const de: Dict = {
   "nexy.new_chat": "Neuer Chat",
   "nexy.search_placeholder": "Nachrichten suchen...",
   "nexy.delete_toast": "Chat gelöscht",
-  "nexy.use_now": "Jetzt nutzen",};
+  "nexy.use_now": "Jetzt nutzen",
+};
 
 const fr: Dict = {
   "404.desc": "Il semble que quelque chose s'est mal passé ou que la page a été déplacée.",
@@ -2320,7 +2323,8 @@ const fr: Dict = {
   "nexy.new_chat": "Nouvelle discussion",
   "nexy.search_placeholder": "Rechercher des messages...",
   "nexy.delete_toast": "Discussion supprimée",
-  "nexy.use_now": "Utiliser maintenant",};
+  "nexy.use_now": "Utiliser maintenant",
+};
 
 const es: Dict = {
   "404.desc": "Parece que algo salió mal o es posible que se haya movido la página.",
@@ -2892,7 +2896,8 @@ const es: Dict = {
   "nexy.new_chat": "Nuevo chat",
   "nexy.search_placeholder": "Buscar mensajes...",
   "nexy.delete_toast": "Chat eliminado",
-  "nexy.use_now": "Usar ahora",};
+  "nexy.use_now": "Usar ahora",
+};
 
 const az: Dict = {
   "404.desc": "Deyəsən nəsə xəta baş verib və ya səhifə köçürülüb.",
@@ -3457,7 +3462,8 @@ const az: Dict = {
   "nexy.new_chat": "Yeni Söhbət",
   "nexy.search_placeholder": "Mesajlarda axtar...",
   "nexy.delete_toast": "Söhbət silindi",
-  "nexy.use_now": "İndi istifadə et",};
+  "nexy.use_now": "İndi istifadə et",
+};
 
 const ru: Dict = {
   "404.desc": "Похоже, что-то пошло не так или страница была перемещена.",
@@ -4031,7 +4037,8 @@ const ru: Dict = {
   "nexy.new_chat": "Новый чат",
   "nexy.search_placeholder": "Поиск сообщений...",
   "nexy.delete_toast": "Чат удален",
-  "nexy.use_now": "Использовать сейчас",};
+  "nexy.use_now": "Использовать сейчас",
+};
 
 const ar: Dict = {
   "404.desc": "يبدو أنه حدث خطأ ما أو ربما تم نقل الصفحة.",
@@ -4564,7 +4571,8 @@ const ar: Dict = {
   "nexy.new_chat": "دردشة جديدة",
   "nexy.search_placeholder": "بحث في الرسائل...",
   "nexy.delete_toast": "تم حذف الدردشة",
-  "nexy.use_now": "استخدم الآن",};
+  "nexy.use_now": "استخدم الآن",
+};
 
 const it: Dict = {
   "404.desc": "Sembra che qualcosa sia andato storto o che la pagina sia stata spostata.",
@@ -5133,7 +5141,8 @@ const it: Dict = {
   "nexy.new_chat": "Nuova chat",
   "nexy.search_placeholder": "Cerca messaggi...",
   "nexy.delete_toast": "Chat eliminata",
-  "nexy.use_now": "Usa ora",};
+  "nexy.use_now": "Usa ora",
+};
 
 const pt: Dict = {
   "404.desc": "Parece que algo deu errado ou a página pode ter sido movida.",
@@ -5705,7 +5714,8 @@ const pt: Dict = {
   "nexy.new_chat": "Nova conversa",
   "nexy.search_placeholder": "Pesquisar mensagens...",
   "nexy.delete_toast": "Conversa excluída",
-  "nexy.use_now": "Use agora",};
+  "nexy.use_now": "Use agora",
+};
 
 const ja: Dict = {
   "404.desc": "何か問題が発生したか、ページが移動された可能性があります。",
@@ -6258,7 +6268,8 @@ const ja: Dict = {
   "nexy.new_chat": "新しいチャット",
   "nexy.search_placeholder": "メッセージを検索...",
   "nexy.delete_toast": "チャットが削除されました",
-  "nexy.use_now": "今すぐ使う",};
+  "nexy.use_now": "今すぐ使う",
+};
 
 const zh: Dict = {
   "404.desc": "看起来出了点问题或者页面可能已被移动。",
@@ -6770,7 +6781,8 @@ const zh: Dict = {
   "nexy.new_chat": "新建聊天",
   "nexy.search_placeholder": "搜索消息...",
   "nexy.delete_toast": "聊天已删除",
-  "nexy.use_now": "立即使用",};
+  "nexy.use_now": "立即使用",
+};
 
 const dicts: Record<Lang, Dict> = { tr, en, de, fr, es, az, ru, ar, it, pt, ja, zh };
 
@@ -6861,7 +6873,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
             "title.privacy_policy": "Gizlilik Politikası - Fun Teknoloji",
             "title.nexy": "Nexy Asistan - Fun Teknoloji",
             "title.sitemap": "Site Haritası - Fun Teknoloji",
-          };
+};
           if (fallbacks[titleKey]) {
             document.title = fallbacks[titleKey];
           }

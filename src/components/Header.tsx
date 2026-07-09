@@ -95,8 +95,6 @@ export default function Header() {
               desc={t("nav.team.desc")}
               icon={<Users className="h-4 w-4" />}
             />
-            }
-            />
           </Dropdown>
 
           <Dropdown
