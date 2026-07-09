@@ -74,7 +74,7 @@ export default function Footer() {
               <FooterSection title={t("nav.company")}>
                 <FooterLink to="/about">{t("nav.about")}</FooterLink>
                 <FooterLink to="/team">{t("nav.team")}</FooterLink>
-                <FooterLink to="/reviews">{t("nav.reviews")}</FooterLink>
+
                 <FooterLink to="/sitemap">{t("nav.sitemap")}</FooterLink>
               </FooterSection>
             </div>

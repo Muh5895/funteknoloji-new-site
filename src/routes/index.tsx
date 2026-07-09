@@ -56,9 +56,6 @@ function Index() {
         <ServicesSection t={t} />
       </ScrollReveal>
       <ScrollReveal>
-        <TestimonialsSection t={t} />
-      </ScrollReveal>
-      <ScrollReveal>
         <FAQSection t={t} />
       </ScrollReveal>
       <ScrollReveal>
@@ -220,7 +217,7 @@ function FeaturesSection({ t }: { t: (k: string) => string }) {
                 <Cpu className="h-40 w-40" />
               </div>
               <div className="h-16 w-16 rounded-2xl bg-[var(--fun-purple)]/10 flex items-center justify-center text-[var(--fun-purple)] mb-8 group-hover:bg-[var(--fun-purple)] group-hover:text-white transition-colors duration-500">
-                <Cpu className="h-8 w-8" />
+                <Cpu className="h-8 w-8 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3" />
               </div>
               <h3 className="text-2xl font-bold mb-4 fun-text">{t("home.features.card1.title")}</h3>
               <p className="fun-text-muted leading-relaxed mb-6">{t("home.features.card1.desc")}</p>
@@ -242,7 +239,7 @@ function FeaturesSection({ t }: { t: (k: string) => string }) {
                 <Globe className="h-40 w-40" />
               </div>
               <div className="h-16 w-16 rounded-2xl bg-[var(--fun-purple)]/10 flex items-center justify-center text-[var(--fun-purple)] mb-8 group-hover:bg-[var(--fun-purple)] group-hover:text-white transition-colors duration-500">
-                <Globe className="h-8 w-8" />
+                <Globe className="h-8 w-8 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3" />
               </div>
               <h3 className="text-2xl font-bold mb-4 fun-text">{t("home.features.card2.title")}</h3>
               <p className="fun-text-muted leading-relaxed mb-6">{t("home.features.card2.desc")}</p>
@@ -264,7 +261,7 @@ function FeaturesSection({ t }: { t: (k: string) => string }) {
                 <ShieldCheck className="h-40 w-40" />
               </div>
               <div className="h-16 w-16 rounded-2xl bg-[var(--fun-purple)]/10 flex items-center justify-center text-[var(--fun-purple)] mb-8 group-hover:bg-[var(--fun-purple)] group-hover:text-white transition-colors duration-500">
-                <ShieldCheck className="h-8 w-8" />
+                <ShieldCheck className="h-8 w-8 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3" />
               </div>
               <h3 className="text-2xl font-bold mb-4 fun-text">{t("home.features.card3.title")}</h3>
               <p className="fun-text-muted leading-relaxed mb-6">{t("home.features.card3.desc")}</p>
@@ -387,32 +384,32 @@ function ServicesSection({ t }: { t: (k: string) => string }) {
     {
       title: t("home.services.item1.title"),
       desc: t("home.services.item1.desc"),
-      icon: <Cpu className="h-8 w-8" />,
+      icon: <Cpu className="h-8 w-8 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3" />,
     },
     {
       title: t("home.services.item2.title"),
       desc: t("home.services.item2.desc"),
-      icon: <Code2 className="h-8 w-8" />,
+      icon: <Code2 className="h-8 w-8 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3" />,
     },
     {
       title: t("home.services.item3.title"),
       desc: t("home.services.item3.desc"),
-      icon: <Smartphone className="h-8 w-8" />,
+      icon: <Smartphone className="h-8 w-8 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3" />,
     },
     {
       title: t("home.services.item4.title"),
       desc: t("home.services.item4.desc"),
-      icon: <Database className="h-8 w-8" />,
+      icon: <Database className="h-8 w-8 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3" />,
     },
     {
       title: t("home.services.item5.title"),
       desc: t("home.services.item5.desc"),
-      icon: <Search className="h-8 w-8" />,
+      icon: <Search className="h-8 w-8 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3" />,
     },
     {
       title: t("home.services.item6.title"),
       desc: t("home.services.item6.desc"),
-      icon: <HeartHandshake className="h-8 w-8" />,
+      icon: <HeartHandshake className="h-8 w-8 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3" />,
     },
   ];
 
@@ -449,7 +446,7 @@ function ServicesSection({ t }: { t: (k: string) => string }) {
                 </div>
 
                 <aside
-                  className={`${i === 0 ? "md:col-span-4" : ""} md:pt-8 flex flex-col justify-between space-y-5 text-left`}
+                  className={`${i === 0 ? "md:col-span-4" : ""} md:pt-8 flex flex-col justify-between space-y-5 text-left md:order-1`}
                 >
                   <div className="space-y-2">
                     <h3 className="text-heading-5 md:text-heading-4 font-medium fun-text">
@@ -481,9 +478,9 @@ function ServicesSection({ t }: { t: (k: string) => string }) {
                   </div>
                 </aside>
 
-                {/* Desktop: Image/Icon block */}
+                {/* Desktop: Image/Icon block - Placed second for RIGHT side on desktop */}
                 <div
-                  className={`${i === 0 ? "md:col-span-8" : ""} hidden md:flex rounded-xl overflow-hidden min-h-[240px] md:min-h-[300px] transition-transform duration-500 items-center justify-center relative`}
+                  className={`${i === 0 ? "md:col-span-8" : ""} hidden md:flex rounded-xl overflow-hidden min-h-[240px] md:min-h-[300px] transition-transform duration-500 items-center justify-center relative md:order-2`}
                   style={{
                     background: "linear-gradient(135deg, var(--fun-stroke-2), var(--fun-surface))",
                   }}
@@ -500,83 +497,6 @@ function ServicesSection({ t }: { t: (k: string) => string }) {
                 </div>
               </div>
             </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ============ TESTIMONIALS ============ */
-function TestimonialsSection({ t }: { t: (k: string) => string }) {
-  const testimonials = [
-    { name: t("home.testimonials.t1.name"), text: t("home.testimonials.t1.text") },
-    { name: t("home.testimonials.t2.name"), text: t("home.testimonials.t2.text") },
-    { name: t("home.testimonials.t3.name"), text: t("home.testimonials.t3.text") },
-    { name: t("home.testimonials.t4.name"), text: t("home.testimonials.t4.text") },
-    { name: t("home.testimonials.t5.name"), text: t("home.testimonials.t5.text") },
-    { name: t("home.testimonials.t6.name"), text: t("home.testimonials.t6.text") },
-  ];
-
-  const colors = [
-    "from-[#F4F8E7] to-[#D485FF]",
-    "from-[#E8F4FD] to-[#4A90E2]",
-    "from-[#FFE8E8] to-[#FF6B6B]",
-    "from-[#F0E6FF] to-[#8B5CF6]",
-    "from-[#E6F7FF] to-[#1890FF]",
-    "from-[#FFF7E6] to-[#FF8C00]",
-  ];
-
-  return (
-    <section className="py-16 md:py-24 px-4 lg:px-0">
-      <div className="main-container">
-        <div className="text-center mb-14">
-          <span className="badge-fun badge-fun-green mb-4 inline-block">
-            {t("home.testimonials.badge")}
-          </span>
-          <h2 className="text-heading-3 md:text-heading-2 font-medium xl:max-w-[906px] xl:mx-auto fun-text">
-            {t("home.testimonials.title")}
-          </h2>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {testimonials.map((t, i) => (
-            <article
-              key={i}
-              className="rounded-[20px] p-6 sm:p-8 border"
-              style={{ backgroundColor: "var(--fun-card)", borderColor: "var(--fun-stroke-1)" }}
-            >
-              <div className="flex items-center justify-between pb-5">
-                <div className="flex gap-1">
-                  {[...Array(5)].map((_, j) => (
-                    <svg key={j} className="h-4 w-4" viewBox="0 0 16 16" fill="none">
-                      <path
-                        d="M7.257.486c.275-.648 1.211-.648 1.486 0l1.623 3.827a1 1 0 00.68.484l4.213.331c.714.056 1.003.93.459 1.387l-3.21 2.696a1 1 0 00-.259.783l.98 4.031c.166.683-.591 1.223-1.203.857l-3.606-2.16a1 1 0 00-1.04 0l-3.607 2.16c-.611.366-1.369-.174-1.203-.857l.981-4.031a1 1 0 00-.26-.783L.282 6.515C-.261 6.058.028 5.184.742 5.128l4.213-.331a1 1 0 00.68-.484L7.257.486z"
-                        fill="#864FFE"
-                      />
-                    </svg>
-                  ))}
-                </div>
-                <svg className="h-5 w-5 fun-text" viewBox="0 0 25 24" fill="none">
-                  <path
-                    d="M17.844 4.242h2.76l-6.03 6.777 7.094 9.223h-5.554l-4.35-5.594-4.978 5.594h-2.762l6.45-7.25-6.806-8.75h5.696l3.932 5.113 4.548-5.113zm-.969 14.376h1.53L8.532 5.782H6.891l9.984 12.836z"
-                    fill="currentColor"
-                  />
-                </svg>
-              </div>
-              <p className="pb-6 text-tagline-1 fun-text" style={{ opacity: 0.8 }}>
-                {t.text}
-              </p>
-              <div className="flex items-center gap-3">
-                <div
-                  className={`h-11 w-11 rounded-full bg-gradient-to-br ${colors[i]} flex items-center justify-center relative overflow-hidden group-hover:scale-110 transition-transform`}
-                >
-                  <div className="absolute inset-0 bg-white/20 animate-pulse" />
-                  <span className="text-sm font-bold text-white relative z-10">{t.name[0]}</span>
-                </div>
-                <h3 className="text-sm sm:text-base font-semibold fun-text">{t.name}</h3>
-              </div>
-            </article>
           ))}
         </div>
       </div>

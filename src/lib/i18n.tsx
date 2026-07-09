@@ -198,8 +198,8 @@ const tr: Dict = {
   "home.faq.q1": "Fun Teknoloji nedir?",
   "home.faq.a1":
     "Fun Teknoloji, yapay zeka, özel yazılım geliştirme ve dijital dönüşüm alanlarında uzmanlaşmış bir teknoloji şirketidir.",
-  "home.faq.q2": "Teknik destek veriyor musunuz?",
-  "home.faq.a2": "Evet, projeleriniz için 7/24 teknik destek ve bakım hizmeti sunuyoruz.",
+  "home.faq.q2": "Projeleriniz ücretli mi?",
+  "home.faq.a2": "Fun Teknoloji olarak kendi ürünlerimizi geliştiriyoruz. Her ürünümüzün kendine özgü kullanım modelleri ve abonelik seçenekleri bulunmaktadır.",
   "home.faq.a3":
     "Projenin kapsamına göre değişmekle birlikte, küçük projeleri 2-4 hafta, kapsamlı projeleri ise 2-4 ay içinde tamamlıyoruz.",
   "home.faq.a4":
@@ -268,27 +268,7 @@ const tr: Dict = {
   "home.stats.team": "Ekip Üyesi",
   "home.stats.users": "Aktif Kullanıcı",
   "home.stats.users_count": "10+",
-  "home.testimonials.badge": "Yorumlar",
-  "home.testimonials.t1.name": "Ahmet Yılmaz",
-  "home.testimonials.t1.text":
-    "Fun Teknoloji ile çalışmak iş süreçlerimizi tamamen değiştirdi. Yapay zeka çözümleri sayesinde verimliliğimiz arttı.",
-  "home.testimonials.t2.name": "Zeynep Kaya",
-  "home.testimonials.t2.text":
-    "Muhammed Bey ve ekibi çok profesyonel. Mobil uygulamamızı tam zamanında ve kusursuz teslim ettiler.",
-  "home.testimonials.t3.name": "Murat Demir",
-  "home.testimonials.t3.text":
-    "Teknik destek konusunda hiç sorun yaşamadık. Her zaman çözüm odaklı yaklaşıyorlar.",
-  "home.testimonials.t4.name": "Elif Şahin",
-  "home.testimonials.t4.text":
-    "Web sitemiz artık çok daha hızlı ve güvenli. Teşekkürler Fun Teknoloji!",
-  "home.testimonials.t5.name": "Caner Özkan",
-  "home.testimonials.t5.text":
-    "Yenilikçi yaklaşımları ve vizyoner bakış açılarıyla projemize değer kattılar.",
-  "home.testimonials.t6.name": "Selin Aydın",
-  "home.testimonials.t6.text":
-    "Karmaşık sistemlerimizi basitleştiren harika bir iş çıkardılar. Kesinlikle tavsiye ediyorum.",
-  "home.testimonials.title": "Müşterilerimizin Başarı Hikayeleri",
-  "home.whatwedo.text":
+    "home.whatwedo.text":
     "Fun Teknoloji olarak, geleceği şekillendirmek için yapay zeka destekli yenilikçi ve öncü teknoloji çözümleri geliştiriyoruz.",
   "inline.contact.message_error": "Lütfen geçerli bir mesaj metni girin.",
   "inline.contact.subject_error": "Lütfen anlamlı bir konu başlığı girin.",
@@ -312,7 +292,7 @@ const tr: Dict = {
   "nav.open_platform": "Platformu Aç",
   "nav.faq": "SSS",
   "nav.faq.desc": "Sorularınızın cevapları.",
-  "nav.nexy": "Nexy Asistan",
+  "nav.nexy": "Nexy",
   "nav.platform": "Platform",
   "nav.pricing": "Fiyatlandırma",
   "nav.pricing.desc": "Size özel fiyatlandırma çözümleri.",
@@ -321,8 +301,6 @@ const tr: Dict = {
   "nav.projects.desc": "Projelerimiz.",
   "nav.quakesafe": "QuakeSafe",
   "nav.resources": "Kaynaklar",
-  "nav.reviews": "Müşteri Yorumları",
-  "nav.reviews.desc": "Müşteri görüşleri.",
   "nav.service_policy_short": "Hizmet Politikası",
   "nav.services": "Projeler",
   "nav.services.desc": "Teknolojilerimizi keşfedin.",
@@ -368,7 +346,7 @@ const tr: Dict = {
   "nexy.new_chat": "Yeni Sohbet",
   "nexy.search_placeholder": "Mesajlarda ara...",
   "nexy.delete_toast": "Sohbet silindi",
-  "title.home": "Fun Teknoloji - Geleceğin Teknolojileri",
+  "title.home": "Fun Teknoloji",
   "title.about": "Hakkımızda - Fun Teknoloji",
   "title.services": "Projeler - Fun Teknoloji",
   "title.blog": "Blog - Fun Teknoloji",
@@ -598,11 +576,11 @@ const tr: Dict = {
     "Harika bir soru! Ama bu konuda henüz tam bir bilgim yok. İsterseniz ekibimize sorabilirim?",
   "nexy.resp.default.3":
     "Size nasıl daha iyi yardımcı olabilirim? Teknoloji çözümlerimiz, kurucumuz veya hizmetlerimiz hakkında konuşabiliriz.",
-  "home.faq.q3": "Projeler ne kadar sürede tamamlanıyor?",
-  "home.faq.q4": "Fiyatlandırma nasıl yapılıyor?",
-  "home.faq.q5": "Yapay zeka sistemlerimize entegre edilebilir mi?",
-  "home.faq.q6": "Ücretsiz danışmanlık alabilir miyim?",
-  "home.faq.q7": "Mobil uygulama geliştiriyor musunuz?",
+  "home.faq.q3": "Dışarıya iş yapıyor musunuz?",
+  "home.faq.q4": "Nexy ve QuakeSafe dışında başka projeler var mı?",
+  "home.faq.q5": "Yatırımcı kabul ediyor musunuz?",
+  "home.faq.q6": "Ürünlerinizi nasıl kullanabilirim?",
+  "home.faq.q7": "Ekibinize nasıl katılabilirim?",
 
   "nexy.use_now": "Hemen Kullan",};
 
@@ -680,7 +658,7 @@ const en: Dict = {
   "brand_kit.logos.fun_white.desc": "White version for use on dark-colored backgrounds.",
   "brand_kit.logos.fun_white.title": "Fun Technology White Logo",
   "brand_kit.logos.nexy.desc": "PNG version of our artificial intelligence assistant Nexy.",
-  "brand_kit.logos.nexy.title": "Nexy Assistant",
+  "brand_kit.logos.nexy.title": "Nexy",
   "brand_kit.logos.quakesafe.desc": "Official logo of our QuakeSafe project.",
   "brand_kit.logos.quakesafe.title": "QuakeSafe Logo",
   "brand_kit.title": "Brand Kit",
@@ -791,15 +769,15 @@ const en: Dict = {
   "home.faq.q1": "What is Fun Technology?",
   "home.faq.a1":
     "Fun Technology is a technology company specializing in artificial intelligence, custom software development and digital transformation.",
-  "home.faq.q2": "Do you provide technical support?",
-  "home.faq.a2": "Yes, we offer 24/7 technical support and maintenance services for your projects.",
+  "home.faq.q2": "Are your projects paid?",
+  "home.faq.a2": "As Fun Technology, we develop our own products. Each product has its own usage models and subscription options.",
   "home.faq.a3":
     "Although it varies depending on the scope of the project, we complete small projects within 2-4 weeks and comprehensive projects within 2-4 months.",
   "home.faq.a4":
     "Pricing is specifically determined by the complexity of your project and the features needed.",
-  "home.faq.a5": "Yes, we specialize in integrating AI models into your existing systems.",
-  "home.faq.a6": "Certainly! You can share your project ideas with us and get free consultancy.",
-  "home.faq.a7": "Yes, we develop modern mobile applications for both iOS and Android platforms.",
+  "home.faq.a5": "We are always open to meeting with investors who want to share our vision. You can contact us via our contact page.",
+  "home.faq.a6": "You can review our active products on our Projects page and start using them immediately.",
+  "home.faq.a7": "We are always open to talented engineers and visionary designers. You can follow our job postings on LinkedIn.",
   "home.faq.badge": "FAQ",
   "home.faq.desc": "Everything you wonder is here.",
   "home.faq.title": "Frequently Asked Questions",
@@ -858,27 +836,7 @@ const en: Dict = {
   "home.stats.team": "Expert Staff",
   "home.stats.users": "Active User",
   "home.stats.users_count": "10+",
-  "home.testimonials.badge": "Comments",
-  "home.testimonials.t1.name": "Ahmet Yilmaz",
-  "home.testimonials.t1.text":
-    "Working with Fun Technology has completely changed our business processes. Thanks to artificial intelligence solutions, our efficiency has increased.",
-  "home.testimonials.t2.name": "Zeynep Kaya",
-  "home.testimonials.t2.text":
-    "Mr. Muhammed and his team are very professional. They delivered our mobile application on time and flawlessly.",
-  "home.testimonials.t3.name": "Murat Demir",
-  "home.testimonials.t3.text":
-    "We had no problems with technical support. They always have a solution-oriented approach.",
-  "home.testimonials.t4.name": "Elif Sahin",
-  "home.testimonials.t4.text":
-    "Our website is now much faster and more secure. Thank you Fun Technology!",
-  "home.testimonials.t5.name": "Caner Ozkan",
-  "home.testimonials.t5.text":
-    "They added value to our project with their innovative approaches and visionary perspectives.",
-  "home.testimonials.t6.name": "Selin Aydin",
-  "home.testimonials.t6.text":
-    "They have done a great job simplifying our complex systems. I definitely recommend it.",
-  "home.testimonials.title": "Success Stories of Our Customers",
-  "home.whatwedo.text":
+    "home.whatwedo.text":
     "As Fun Technology, we develop innovative and pioneering technology solutions supported by artificial intelligence to shape the future.",
   "inline.contact.message_error": "Please enter a valid message text.",
   "inline.contact.subject_error": "Please enter a meaningful subject title.",
@@ -902,7 +860,7 @@ const en: Dict = {
   "nav.open_platform": "Open Platform",
   "nav.faq": "FAQ",
   "nav.faq.desc": "Answers to your questions.",
-  "nav.nexy": "Nexy Assistant",
+  "nav.nexy": "Nexy",
   "nav.platform": "Platform",
   "nav.pricing": "Pricing",
   "nav.pricing.desc": "Pricing solutions tailored for you.",
@@ -911,8 +869,6 @@ const en: Dict = {
   "nav.projects.desc": "Our projects.",
   "nav.quakesafe": "QuakeSafe",
   "nav.resources": "Resources",
-  "nav.reviews": "Customer Reviews",
-  "nav.reviews.desc": "Customer opinions.",
   "nav.service_policy_short": "Service Policy",
   "nav.services": "Projects",
   "nav.services.desc": "Discover our technologies.",
@@ -959,7 +915,7 @@ const en: Dict = {
   "nexy.new_chat": "New Chat",
   "nexy.search_placeholder": "Search messages...",
   "nexy.delete_toast": "Chat deleted",
-  "title.home": "Fun Technology - Future Technologies",
+  "title.home": "Fun Technology",
   "title.about": "About Us - Fun Technology",
   "title.services": "Projects - Fun Technology",
   "title.blog": "Blog - Fun Technology",
@@ -975,7 +931,7 @@ const en: Dict = {
   "title.brand_kit": "Brand Kit - Fun Technology",
   "title.service_policy": "Service Policy - Fun Technology",
   "title.privacy_policy": "Privacy Policy - Fun Technology",
-  "title.nexy": "Nexy Assistant - Fun Technology",
+  "title.nexy": "Nexy - Fun Technology",
   "title.sitemap": "Site Map - Fun Technology",
   "nexy.read_tooltip": "Read Aloud",
   "nexy.status.active": "Active Support",
@@ -1191,11 +1147,11 @@ const en: Dict = {
     "Great question! But I don't have full information on this yet. Would you like me to ask our team?",
   "nexy.resp.default.3":
     "How can I help you better? We can talk about our technology solutions, our founder, or our services.",
-  "home.faq.q3": "How long does it take to complete projects?",
-  "home.faq.q4": "How is pricing done?",
-  "home.faq.q5": "Can AI be integrated into our systems?",
-  "home.faq.q6": "Can I get a free consultation?",
-  "home.faq.q7": "Do you develop mobile applications?",
+  "home.faq.q3": "Do you do client work?",
+  "home.faq.q4": "Are there other projects besides Nexy and QuakeSafe?",
+  "home.faq.q5": "Do you accept investors?",
+  "home.faq.q6": "How can I use your products?",
+  "home.faq.q7": "How can I join your team?",
 
   "nexy.use_now": "Use Now",};
 
@@ -1270,7 +1226,7 @@ const de: Dict = {
   "brand_kit.logos.fun_white.desc": "White version for use on dark-colored backgrounds.",
   "brand_kit.logos.fun_white.title": "Fun Technology White Logo",
   "brand_kit.logos.nexy.desc": "PNG version of our artificial intelligence assistant Nexy.",
-  "brand_kit.logos.nexy.title": "Nexy Assistant",
+  "brand_kit.logos.nexy.title": "Nexy",
   "brand_kit.logos.quakesafe.desc": "Official logo of our QuakeSafe project.",
   "brand_kit.logos.quakesafe.title": "QuakeSafe Logo",
   "brand_kit.title": "Brand Kit",
@@ -1454,21 +1410,7 @@ const de: Dict = {
   "home.stats.team": "Fachpersonal",
   "home.stats.users": "Aktiver Benutzer",
   "home.stats.users_count": "10+",
-  "home.testimonials.badge": "Kommentare",
-  "home.testimonials.t1.text":
-    "Die Zusammenarbeit mit Fun Technology hat unsere Geschäftsprozesse völlig verändert. Dank Lösungen der künstlichen Intelligenz ist unsere Effizienz gestiegen.",
-  "home.testimonials.t2.text":
-    "Herr Muhammed und sein Team sind sehr professionell. Sie haben unsere mobile Anwendung pünktlich und fehlerfrei geliefert.",
-  "home.testimonials.t3.text":
-    "Wir hatten keine Probleme mit dem technischen Support. Sie haben stets einen lösungsorientierten Ansatz.",
-  "home.testimonials.t4.text":
-    "Unsere Website ist jetzt viel schneller und sicherer. Vielen Dank, Fun Technology!",
-  "home.testimonials.t5.text":
-    "Sie haben mit ihren innovativen Ansätzen und visionären Perspektiven einen Mehrwert für unser Projekt geschaffen.",
-  "home.testimonials.t6.text":
-    "Sie haben großartige Arbeit bei der Vereinfachung unserer komplexen Systeme geleistet. Ich kann es auf jeden Fall empfehlen.",
-  "home.testimonials.title": "Erfolgsgeschichten unserer Kunden",
-  "home.whatwedo.text":
+    "home.whatwedo.text":
     "Als Fun Technology entwickeln wir innovative Softwarelösungen mit Unterstützung künstlicher Intelligenz, um Ihr Unternehmen fit für die Zukunft zu machen.",
   "inline.contact.message_error": "Bitte geben Sie einen gültigen Nachrichtentext ein.",
   "inline.contact.subject_error": "Bitte geben Sie einen aussagekräftigen Betrefftitel ein.",
@@ -1490,7 +1432,7 @@ const de: Dict = {
   "nav.docs.desc": "Unterlagen.",
   "nav.faq": "FAQ",
   "nav.faq.desc": "Antworten auf Ihre Fragen.",
-  "nav.nexy": "Nexy-Assistent",
+  "nav.nexy": "Nexy",
   "nav.platform": "Plattform",
   "nav.pricing": "Preise",
   "nav.pricing.desc": "Auf Sie zugeschnittene Preislösungen.",
@@ -1499,8 +1441,6 @@ const de: Dict = {
   "nav.projects.desc": "Unsere Projekte.",
   "nav.quakesafe": "QuakeSafe",
   "nav.resources": "Ressourcen",
-  "nav.reviews": "Kundenrezensionen",
-  "nav.reviews.desc": "Kundenmeinungen.",
   "nav.service_policy_short": "Servicerichtlinie",
   "nav.services": "Dienstleistungen",
   "nav.services.desc": "Entdecken Sie unsere Leistungen.",
@@ -1702,14 +1642,8 @@ const de: Dict = {
   "help.title": "Hilfezentrum",
   "help.popup": "Wie können wir Ihnen helfen?",
   "home.faq.q1": "Was ist Fun Technology?",
-  "home.faq.q2": "Bieten Sie technischen Support an?",
-  "home.testimonials.t1.name": "Ahmet Yilmaz",
-  "home.testimonials.t2.name": "Zeynep Kaya",
-  "home.testimonials.t3.name": "Murat Demir",
-  "home.testimonials.t4.name": "Elif Sahin",
-  "home.testimonials.t5.name": "Caner Ozkan",
-  "home.testimonials.t6.name": "Selin Aydin",
-  "blog.index.untitled": "Unbenannter Beitrag",
+  "home.faq.q2": "Are your projects paid?",
+              "blog.index.untitled": "Unbenannter Beitrag",
   "blog.index.category_default": "Technologie",
   "nexy.resp.pricing.0":
     "Fiyatlandırma politikalarımız üzerinde çalışıyoruz. En güncel paketler için Fiyatlandırma sayfamızı takip edebilirsiniz. Şu an için bekleme listemize katılmak en iyi seçenek!",
@@ -1786,11 +1720,11 @@ const de: Dict = {
   "service.feature.visualization": "Görselleştirme",
   "nav.explore_platform": "Platformu Keşfet",
   "nav.open_platform": "Platformu Aç",
-  "home.faq.q3": "Wie lange dauert die Projektabwicklung?",
-  "home.faq.q4": "Wie erfolgt die Preisgestaltung?",
-  "home.faq.q5": "Kann KI in unsere Systeme integriert werden?",
-  "home.faq.q6": "Kann ich eine kostenlose Beratung erhalten?",
-  "home.faq.q7": "Entwickeln Sie mobile Anwendungen?",
+  "home.faq.q3": "Do you do client work?",
+  "home.faq.q4": "Are there other projects besides Nexy and QuakeSafe?",
+  "home.faq.q5": "Do you accept investors?",
+  "home.faq.q6": "How can I use your products?",
+  "home.faq.q7": "How can I join your team?",
 
   "nav.mobile.open": "Menü öffnen",
   "nav.mobile.close": "Menü schließen",
@@ -1875,7 +1809,7 @@ const fr: Dict = {
   "brand_kit.logos.fun_white.desc": "White version for use on dark-colored backgrounds.",
   "brand_kit.logos.fun_white.title": "Fun Technology White Logo",
   "brand_kit.logos.nexy.desc": "PNG version of our artificial intelligence assistant Nexy.",
-  "brand_kit.logos.nexy.title": "Nexy Assistant",
+  "brand_kit.logos.nexy.title": "Nexy",
   "brand_kit.logos.quakesafe.desc": "Official logo of our QuakeSafe project.",
   "brand_kit.logos.quakesafe.title": "QuakeSafe Logo",
   "brand_kit.title": "Brand Kit",
@@ -2060,21 +1994,7 @@ const fr: Dict = {
   "home.stats.team": "Personnel expert",
   "home.stats.users": "Utilisateur actif",
   "home.stats.users_count": "10+",
-  "home.testimonials.badge": "Commentaires",
-  "home.testimonials.t1.text":
-    "Travailler avec Fun Technology a complètement changé nos processus commerciaux. Grâce aux solutions d’intelligence artificielle, notre efficacité a augmenté.",
-  "home.testimonials.t2.text":
-    "M. Muhammed et son équipe sont très professionnels. Ils ont livré notre application mobile dans les délais et sans problème.",
-  "home.testimonials.t3.text":
-    "Nous n'avons eu aucun problème avec le support technique. Ils ont toujours une approche orientée solutions.",
-  "home.testimonials.t4.text":
-    "Notre site Web est désormais beaucoup plus rapide et sécurisé. Merci FunTechnologie !",
-  "home.testimonials.t5.text":
-    "Ils ont ajouté de la valeur à notre projet grâce à leurs approches innovantes et leurs perspectives visionnaires.",
-  "home.testimonials.t6.text":
-    "Ils ont fait un excellent travail en simplifiant nos systèmes complexes. Je le recommande vraiment.",
-  "home.testimonials.title": "Histoires de réussite de nos clients",
-  "home.whatwedo.text":
+    "home.whatwedo.text":
     "En tant que Fun Technology, nous développons des solutions logicielles innovantes soutenues par l’intelligence artificielle pour préparer votre entreprise à l’avenir.",
   "inline.contact.message_error": "Veuillez saisir un texte de message valide.",
   "inline.contact.subject_error": "Veuillez saisir un titre de sujet significatif.",
@@ -2096,7 +2016,7 @@ const fr: Dict = {
   "nav.docs.desc": "Documents.",
   "nav.faq": "FAQ",
   "nav.faq.desc": "Réponses à vos questions.",
-  "nav.nexy": "Assistante Nexy",
+  "nav.nexy": "Nexy",
   "nav.platform": "Plate-forme",
   "nav.pricing": "Tarifs",
   "nav.pricing.desc": "Des solutions tarifaires adaptées à vos besoins.",
@@ -2105,8 +2025,6 @@ const fr: Dict = {
   "nav.projects.desc": "Nos projets.",
   "nav.quakesafe": "QuakeSafe",
   "nav.resources": "Ressources",
-  "nav.reviews": "Commentaires des clients",
-  "nav.reviews.desc": "Avis des clients.",
   "nav.service_policy_short": "Politique de service",
   "nav.services": "Services",
   "nav.services.desc": "Découvrez nos prestations.",
@@ -2312,14 +2230,8 @@ const fr: Dict = {
   "help.title": "Centre d'aide",
   "help.popup": "Comment pouvons-nous vous aider ?",
   "home.faq.q1": "Qu'est-ce que Fun Technology ?",
-  "home.faq.q2": "Fournissez-vous un support technique ?",
-  "home.testimonials.t1.name": "Ahmet Yilmaz",
-  "home.testimonials.t2.name": "Zeynep Kaya",
-  "home.testimonials.t3.name": "Murat Demir",
-  "home.testimonials.t4.name": "Elif Sahin",
-  "home.testimonials.t5.name": "Caner Ozkan",
-  "home.testimonials.t6.name": "Selin Aydin",
-  "blog.index.untitled": "Article sans titre",
+  "home.faq.q2": "Are your projects paid?",
+              "blog.index.untitled": "Article sans titre",
   "blog.index.category_default": "Technologie",
   "nexy.resp.pricing.0":
     "Fiyatlandırma politikalarımız üzerinde çalışıyoruz. En güncel paketler için Fiyatlandırma sayfamızı takip edebilirsiniz. Şu an için bekleme listemize katılmak en iyi seçenek!",
@@ -2396,11 +2308,11 @@ const fr: Dict = {
   "service.feature.visualization": "Görselleştirme",
   "nav.explore_platform": "Platformu Keşfet",
   "nav.open_platform": "Platformu Aç",
-  "home.faq.q3": "Combien de temps faut-il pour réaliser les projets ?",
-  "home.faq.q4": "Comment se fait la tarification ?",
-  "home.faq.q5": "L'IA peut-elle être intégrée à nos systèmes ?",
-  "home.faq.q6": "Puis-je obtenir une consultation gratuite ?",
-  "home.faq.q7": "Développez-vous des applications mobiles ?",
+  "home.faq.q3": "Do you do client work?",
+  "home.faq.q4": "Are there other projects besides Nexy and QuakeSafe?",
+  "home.faq.q5": "Do you accept investors?",
+  "home.faq.q6": "How can I use your products?",
+  "home.faq.q7": "How can I join your team?",
 
   "nav.mobile.open": "Ouvrir le menu",
   "nav.mobile.close": "Fermer le menu",
@@ -2481,7 +2393,7 @@ const es: Dict = {
   "brand_kit.logos.fun_white.desc": "White version for use on dark-colored backgrounds.",
   "brand_kit.logos.fun_white.title": "Fun Technology White Logo",
   "brand_kit.logos.nexy.desc": "PNG version of our artificial intelligence assistant Nexy.",
-  "brand_kit.logos.nexy.title": "Nexy Assistant",
+  "brand_kit.logos.nexy.title": "Nexy",
   "brand_kit.logos.quakesafe.desc": "Official logo of our QuakeSafe project.",
   "brand_kit.logos.quakesafe.title": "QuakeSafe Logo",
   "brand_kit.title": "Brand Kit",
@@ -2591,12 +2503,12 @@ const es: Dict = {
   "home.cta.title": "Comience hoy.",
   "home.faq.a1":
     "Fun Technology es una empresa de tecnología especializada en inteligencia artificial, desarrollo de software personalizado y transformación digital.",
-  "home.faq.a2": "Sí, ofrecemos soporte técnico y mantenimiento 24/7 para sus proyectos.",
+  "home.faq.a2": "As Fun Technology, we develop our own products. Each product has its own usage models and subscription options.",
   "home.faq.a3":
     "Aunque varía según el alcance del proyecto, completamos proyectos pequeños en 2-4 semanas y proyectos integrales en 2-4 meses.",
   "home.faq.a4":
     "El precio se determina específicamente por la complejidad de su proyecto y las características necesarias.",
-  "home.faq.a5": "Sí, nos especializamos en integrar modelos de IA en sus sistemas existentes.",
+  "home.faq.a5": "We are always open to meeting with investors who want to share our vision. You can contact us via our contact page.",
   "home.faq.a6":
     "¡Ciertamente! Puede compartir sus ideas de proyectos con nosotros y obtener consultoría gratuita.",
   "home.faq.a7":
@@ -2660,21 +2572,7 @@ const es: Dict = {
   "home.stats.team": "Personal experto",
   "home.stats.users": "Usuario activo",
   "home.stats.users_count": "10+",
-  "home.testimonials.badge": "Comentarios",
-  "home.testimonials.t1.text":
-    "Trabajar con Fun Technology ha cambiado por completo nuestros procesos comerciales. Gracias a las soluciones de inteligencia artificial, nuestra eficiencia ha aumentado.",
-  "home.testimonials.t2.text":
-    "El Sr. Muhammed y su equipo son muy profesionales. Entregaron nuestra aplicación móvil a tiempo y sin problemas.",
-  "home.testimonials.t3.text":
-    "No tuvimos problemas con el soporte técnico. Siempre tienen un enfoque orientado a soluciones.",
-  "home.testimonials.t4.text":
-    "Nuestro sitio web ahora es mucho más rápido y seguro. ¡Gracias Tecnología Divertida!",
-  "home.testimonials.t5.text":
-    "Agregaron valor a nuestro proyecto con sus enfoques innovadores y perspectivas visionarias.",
-  "home.testimonials.t6.text":
-    "Han hecho un gran trabajo simplificando nuestros complejos sistemas. Definitivamente lo recomiendo.",
-  "home.testimonials.title": "Historias de éxito de nuestros clientes",
-  "home.whatwedo.text":
+    "home.whatwedo.text":
     "Como Fun Technology, desarrollamos soluciones de software innovadoras respaldadas por inteligencia artificial para preparar su negocio para el futuro.",
   "inline.contact.message_error": "Por favor ingrese un texto de mensaje válido.",
   "inline.contact.subject_error": "Por favor ingrese un título de tema significativo.",
@@ -2696,7 +2594,7 @@ const es: Dict = {
   "nav.docs.desc": "Documentos.",
   "nav.faq": "Preguntas frecuentes",
   "nav.faq.desc": "Respuestas a tus preguntas.",
-  "nav.nexy": "Asistente Nexy",
+  "nav.nexy": "Nexy",
   "nav.platform": "Plataforma",
   "nav.pricing": "Precios",
   "nav.pricing.desc": "Soluciones de precios adaptadas a usted.",
@@ -2705,8 +2603,6 @@ const es: Dict = {
   "nav.projects.desc": "Nuestros proyectos.",
   "nav.quakesafe": "QuakeSafe",
   "nav.resources": "Recursos",
-  "nav.reviews": "Comentarios de clientes",
-  "nav.reviews.desc": "Opiniones de clientes.",
   "nav.service_policy_short": "Política de servicio",
   "nav.services": "Servicios",
   "nav.services.desc": "Descubra nuestros servicios.",
@@ -2906,14 +2802,8 @@ const es: Dict = {
   "help.title": "Centro de ayuda",
   "help.popup": "¿Cómo podemos ayudarte?",
   "home.faq.q1": "¿Qué es Fun Technology?",
-  "home.faq.q2": "¿Ofrecen soporte técnico?",
-  "home.testimonials.t1.name": "Ahmet Yilmaz",
-  "home.testimonials.t2.name": "Zeynep Kaya",
-  "home.testimonials.t3.name": "Murat Demir",
-  "home.testimonials.t4.name": "Elif Sahin",
-  "home.testimonials.t5.name": "Caner Ozkan",
-  "home.testimonials.t6.name": "Selin Aydin",
-  "blog.index.untitled": "Publicación sin título",
+  "home.faq.q2": "Are your projects paid?",
+              "blog.index.untitled": "Publicación sin título",
   "blog.index.category_default": "Tecnología",
   "nexy.resp.pricing.0":
     "Fiyatlandırma politikalarımız üzerinde çalışıyoruz. En güncel paketler için Fiyatlandırma sayfamızı takip edebilirsiniz. Şu an için bekleme listemize katılmak en iyi seçenek!",
@@ -2990,11 +2880,11 @@ const es: Dict = {
   "service.feature.visualization": "Görselleştirme",
   "nav.explore_platform": "Platformu Keşfet",
   "nav.open_platform": "Platformu Aç",
-  "home.faq.q3": "¿Cuánto tiempo se tarda en completar los proyectos?",
-  "home.faq.q4": "¿Cómo se realiza la tarificación?",
-  "home.faq.q5": "¿Se puede integrar la IA en nuestros sistemas?",
-  "home.faq.q6": "¿Puedo obtener una consulta gratuita?",
-  "home.faq.q7": "¿Desarrollan aplicaciones móviles?",
+  "home.faq.q3": "Do you do client work?",
+  "home.faq.q4": "Are there other projects besides Nexy and QuakeSafe?",
+  "home.faq.q5": "Do you accept investors?",
+  "home.faq.q6": "How can I use your products?",
+  "home.faq.q7": "How can I join your team?",
 
   "nav.mobile.open": "Abrir menú",
   "nav.mobile.close": "Cerrar menú",
@@ -3075,7 +2965,7 @@ const az: Dict = {
   "brand_kit.logos.fun_white.desc": "White version for use on dark-colored backgrounds.",
   "brand_kit.logos.fun_white.title": "Fun Technology White Logo",
   "brand_kit.logos.nexy.desc": "PNG version of our artificial intelligence assistant Nexy.",
-  "brand_kit.logos.nexy.title": "Nexy Assistant",
+  "brand_kit.logos.nexy.title": "Nexy",
   "brand_kit.logos.quakesafe.desc": "Official logo of our QuakeSafe project.",
   "brand_kit.logos.quakesafe.title": "QuakeSafe Logo",
   "brand_kit.title": "Brand Kit",
@@ -3186,14 +3076,14 @@ const az: Dict = {
   "home.cta.title": "Bu gün başlayın.",
   "home.faq.a1":
     "Fun Teknoloji, süni intellekt, xüsusi proqram təminatının hazırlanması və rəqəmsal transformasiya sahələrində ixtisaslaşmış bir texnologiya şirkətidir.",
-  "home.faq.a2": "Bəli, layihələriniz üçün 7/24 texniki dəstək və texniki xidmət təklif edirik.",
+  "home.faq.a2": "As Fun Technology, we develop our own products. Each product has its own usage models and subscription options.",
   "home.faq.a3":
     "Layihənin əhatə dairəsindən asılı olaraq dəyişsə də, kiçik layihələri 2-4 həftə, geniş layihələri isə 2-4 ay ərzində tamamlayırıq.",
   "home.faq.a4":
     "Qiymətlər layihənizin mürəkkəbliyinə və lazım olan xüsusiyyətlərə görə xüsusi olaraq müəyyən edilir.",
   "home.faq.a5":
     "Bəli, süni intellekt modellərini mövcud sistemlərinizə inteqrasiya etmək sahəsində mütəxəssisik.",
-  "home.faq.a6": "Əlbəttə! Layihə ideyalarınızı bizimlə bölüşə və pulsuz məsləhət ala bilərsiniz.",
+  "home.faq.a6": "You can review our active products on our Projects page and start using them immediately.",
   "home.faq.a7":
     "Bəli, həm iOS, həm də Android platformaları üçün müasir mobil proqramlar hazırlayırıq.",
   "home.faq.badge": "Tez-tez verilən suallar",
@@ -3253,21 +3143,7 @@ const az: Dict = {
   "home.stats.team": "Ekspert Heyəti",
   "home.stats.users": "Aktiv İstifadəçi",
   "home.stats.users_count": "10+",
-  "home.testimonials.badge": "Şərhlər",
-  "home.testimonials.t1.text":
-    "Fun Technology ilə işləmək biznes proseslərimizi tamamilə dəyişdi. Süni intellekt həlləri sayəsində səmərəliliyimiz artdı.",
-  "home.testimonials.t2.text":
-    "Məhəmməd bəy və komandası çox peşəkardır. Mobil tətbiqimizi vaxtında və qüsursuz çatdırdılar.",
-  "home.testimonials.t3.text":
-    "Texniki dəstəkdə heç bir problemimiz yox idi. Onlar həmişə həll yönümlü bir yanaşmaya sahibdirlər.",
-  "home.testimonials.t4.text":
-    "Veb saytımız artıq daha sürətli və daha təhlükəsizdir. Təşəkkür edirəm Fun Technology!",
-  "home.testimonials.t5.text":
-    "Onlar öz innovativ yanaşmaları və uzaqgörən perspektivləri ilə layihəmizə dəyər qatdılar.",
-  "home.testimonials.t6.text":
-    "Onlar bizim mürəkkəb sistemlərimizi sadələşdirmək üçün böyük iş görmüşlər. Mən mütləq tövsiyə edirəm.",
-  "home.testimonials.title": "Müştərilərimizin Uğur Hekayələri",
-  "home.whatwedo.text":
+    "home.whatwedo.text":
     "Fun Technology olaraq biznesinizi gələcəyə hazırlamaq üçün süni intellekt tərəfindən dəstəklənən innovativ proqram həlləri hazırlayırıq.",
   "inline.contact.message_error": "Etibarlı mesaj mətni daxil edin.",
   "inline.contact.subject_error": "Lütfən, mənalı mövzu başlığı daxil edin.",
@@ -3289,7 +3165,7 @@ const az: Dict = {
   "nav.docs.desc": "Sənədlər.",
   "nav.faq": "Tez-tez verilən suallar",
   "nav.faq.desc": "Suallarınıza cavablar.",
-  "nav.nexy": "Nexy köməkçisi",
+  "nav.nexy": "Nexy",
   "nav.platform": "Platforma",
   "nav.pricing": "Qiymətləndirmə",
   "nav.pricing.desc": "Sizin üçün uyğunlaşdırılmış qiymət həlləri.",
@@ -3298,8 +3174,6 @@ const az: Dict = {
   "nav.projects.desc": "Layihələrimiz.",
   "nav.quakesafe": "QuakeSafe",
   "nav.resources": "Resurslar",
-  "nav.reviews": "Müştəri rəyləri",
-  "nav.reviews.desc": "Müştəri rəyləri.",
   "nav.service_policy_short": "Xidmət Siyasəti",
   "nav.services": "Xidmətlər",
   "nav.services.desc": "Xidmətlərimizi kəşf edin.",
@@ -3493,14 +3367,8 @@ const az: Dict = {
   "help.title": "Yardım Mərkəzi",
   "help.popup": "Sizə necə kömək edə bilərik?",
   "home.faq.q1": "Fun Teknoloji nədir?",
-  "home.faq.q2": "Texniki dəstək verirsiniz?",
-  "home.testimonials.t1.name": "Ahmet Yılmaz",
-  "home.testimonials.t2.name": "Zeynep Kaya",
-  "home.testimonials.t3.name": "Murat Demir",
-  "home.testimonials.t4.name": "Elif Şahin",
-  "home.testimonials.t5.name": "Caner Özkan",
-  "home.testimonials.t6.name": "Selin Aydın",
-  "blog.index.untitled": "Adsız Yazı",
+  "home.faq.q2": "Are your projects paid?",
+              "blog.index.untitled": "Adsız Yazı",
   "blog.index.category_default": "Texnologiya",
   "nexy.resp.pricing.0":
     "Fiyatlandırma politikalarımız üzerinde çalışıyoruz. En güncel paketler için Fiyatlandırma sayfamızı takip edebilirsiniz. Şu an için bekleme listemize katılmak en iyi seçenek!",
@@ -3577,11 +3445,11 @@ const az: Dict = {
   "service.feature.visualization": "Görselleştirme",
   "nav.explore_platform": "Platformu Keşfet",
   "nav.open_platform": "Platformu Aç",
-  "home.faq.q3": "Layihələr nə qədər vaxta tamamlanır?",
-  "home.faq.q4": "Qiymət necə müəyyən olunur?",
-  "home.faq.q5": "Süni intellekt sistemlərimizə inteqrasiya oluna bilərmi?",
-  "home.faq.q6": "Pulsuz məsləhət ala bilərəmmi?",
-  "home.faq.q7": "Mobil tətbiq hazırlayırsınız?",
+  "home.faq.q3": "Do you do client work?",
+  "home.faq.q4": "Are there other projects besides Nexy and QuakeSafe?",
+  "home.faq.q5": "Do you accept investors?",
+  "home.faq.q6": "How can I use your products?",
+  "home.faq.q7": "How can I join your team?",
 
   "nav.mobile.open": "Menyunu aç",
   "nav.mobile.close": "Menyunu bağla",
@@ -3661,7 +3529,7 @@ const ru: Dict = {
   "brand_kit.logos.fun_white.desc": "White version for use on dark-colored backgrounds.",
   "brand_kit.logos.fun_white.title": "Fun Technology White Logo",
   "brand_kit.logos.nexy.desc": "PNG version of our artificial intelligence assistant Nexy.",
-  "brand_kit.logos.nexy.title": "Nexy Assistant",
+  "brand_kit.logos.nexy.title": "Nexy",
   "brand_kit.logos.quakesafe.desc": "Official logo of our QuakeSafe project.",
   "brand_kit.logos.quakesafe.title": "QuakeSafe Logo",
   "brand_kit.title": "Brand Kit",
@@ -3778,7 +3646,7 @@ const ru: Dict = {
     "Хотя сроки зависят от масштаба проекта, мы завершаем небольшие проекты за 2–4 недели, а комплексные — за 2–4 месяца.",
   "home.faq.a4":
     "Цена определяется индивидуально в зависимости от сложности вашего проекта и необходимых функций.",
-  "home.faq.a5": "Да, мы специализируемся на интеграции моделей ИИ в ваши существующие системы.",
+  "home.faq.a5": "We are always open to meeting with investors who want to share our vision. You can contact us via our contact page.",
   "home.faq.a6":
     "Конечно! Вы можете поделиться с нами своими идеями и получить бесплатную консультацию.",
   "home.faq.a7":
@@ -3844,21 +3712,7 @@ const ru: Dict = {
   "home.stats.team": "Экспертный персонал",
   "home.stats.users": "Активный пользователь",
   "home.stats.users_count": "10+",
-  "home.testimonials.badge": "Комментарии",
-  "home.testimonials.t1.text":
-    "Работа с Fun Technology полностью изменила наши бизнес-процессы. Благодаря решениям искусственного интеллекта наша эффективность возросла.",
-  "home.testimonials.t2.text":
-    "Г-н Мухаммед и его команда очень профессиональны. Они доставили наше мобильное приложение вовремя и безупречно.",
-  "home.testimonials.t3.text":
-    "У нас не было проблем с технической поддержкой. У них всегда подход, ориентированный на решение.",
-  "home.testimonials.t4.text":
-    "Наш сайт теперь стал намного быстрее и безопаснее. Спасибо, интересная технология!",
-  "home.testimonials.t5.text":
-    "Они добавили ценность нашему проекту своими инновационными подходами и дальновидными перспективами.",
-  "home.testimonials.t6.text":
-    "Они проделали огромную работу по упрощению наших сложных систем. Я определенно рекомендую это.",
-  "home.testimonials.title": "Истории успеха наших клиентов",
-  "home.whatwedo.text":
+    "home.whatwedo.text":
     "Как Fun Technology, мы разрабатываем инновационные программные решения, поддерживаемые искусственным интеллектом, чтобы подготовить ваш бизнес к будущему.",
   "inline.contact.message_error": "Пожалуйста, введите действительный текст сообщения.",
   "inline.contact.subject_error": "Введите осмысленное название темы.",
@@ -3880,7 +3734,7 @@ const ru: Dict = {
   "nav.docs.desc": "Документы.",
   "nav.faq": "Часто задаваемые вопросы",
   "nav.faq.desc": "Ответы на ваши вопросы.",
-  "nav.nexy": "Некси Ассистент",
+  "nav.nexy": "Nexy",
   "nav.platform": "Платформа",
   "nav.pricing": "Цены",
   "nav.pricing.desc": "Ценовые решения специально для вас.",
@@ -3889,8 +3743,6 @@ const ru: Dict = {
   "nav.projects.desc": "Наши проекты.",
   "nav.quakesafe": "QuakeSafe",
   "nav.resources": "Ресурсы",
-  "nav.reviews": "Отзывы клиентов",
-  "nav.reviews.desc": "Мнения клиентов.",
   "nav.service_policy_short": "Политика обслуживания",
   "nav.services": "Услуги",
   "nav.services.desc": "Откройте для себя наши услуги.",
@@ -4089,14 +3941,8 @@ const ru: Dict = {
   "help.title": "Центр помощи",
   "help.popup": "Как мы можем вам помочь?",
   "home.faq.q1": "Что такое Fun Technology?",
-  "home.faq.q2": "Предоставляете ли вы техническую поддержку?",
-  "home.testimonials.t1.name": "Ахмет Йылмаз",
-  "home.testimonials.t2.name": "Зейнеп Кая",
-  "home.testimonials.t3.name": "Мурат Демир",
-  "home.testimonials.t4.name": "Элиф Шахин",
-  "home.testimonials.t5.name": "Джанер Озкан",
-  "home.testimonials.t6.name": "Селин Айдын",
-  "blog.index.untitled": "Без названия",
+  "home.faq.q2": "Are your projects paid?",
+              "blog.index.untitled": "Без названия",
   "blog.index.category_default": "Технологии",
   "nexy.resp.pricing.0":
     "Fiyatlandırma politikalarımız üzerinde çalışıyoruz. En güncel paketler için Fiyatlandırma sayfamızı takip edebilirsiniz. Şu an için bekleme listemize katılmak en iyi seçenek!",
@@ -4173,11 +4019,11 @@ const ru: Dict = {
   "service.feature.visualization": "Görselleştirme",
   "nav.explore_platform": "Platformu Keşfet",
   "nav.open_platform": "Platformu Aç",
-  "home.faq.q3": "Сколько времени занимает выполнение проектов?",
-  "home.faq.q4": "Как определяется цена?",
-  "home.faq.q5": "Можно ли интегрировать ИИ в наши системы?",
-  "home.faq.q6": "Могу ли я получить бесплатную консультацию?",
-  "home.faq.q7": "Разрабатываете ли вы мобильные приложения?",
+  "home.faq.q3": "Do you do client work?",
+  "home.faq.q4": "Are there other projects besides Nexy and QuakeSafe?",
+  "home.faq.q5": "Do you accept investors?",
+  "home.faq.q6": "How can I use your products?",
+  "home.faq.q7": "How can I join your team?",
 
   "nav.mobile.open": "Открыть меню",
   "nav.mobile.close": "Закрыть меню",
@@ -4255,7 +4101,7 @@ const ar: Dict = {
   "brand_kit.logos.fun_white.desc": "White version for use on dark-colored backgrounds.",
   "brand_kit.logos.fun_white.title": "Fun Technology White Logo",
   "brand_kit.logos.nexy.desc": "PNG version of our artificial intelligence assistant Nexy.",
-  "brand_kit.logos.nexy.title": "Nexy Assistant",
+  "brand_kit.logos.nexy.title": "Nexy",
   "brand_kit.logos.quakesafe.desc": "Official logo of our QuakeSafe project.",
   "brand_kit.logos.quakesafe.title": "QuakeSafe Logo",
   "brand_kit.title": "Brand Kit",
@@ -4360,13 +4206,13 @@ const ar: Dict = {
   "home.cta.title": "ابدأ اليوم.",
   "home.faq.a1":
     "Fun Technology هي شركة تقنية متخصصة في الذكاء الاصطناعي وتطوير البرمجيات المخصصة والتحول الرقمي.",
-  "home.faq.a2": "نعم، نحن نقدم دعماً فنياً وصيانة على مدار الساعة طوال أيام الأسبوع لمشاريعكم.",
+  "home.faq.a2": "As Fun Technology, we develop our own products. Each product has its own usage models and subscription options.",
   "home.faq.a3":
     "على الرغم من أنها تختلف حسب نطاق المشروع، إلا أننا نكمل المشاريع الصغيرة في غضون 2-4 أسابيع، والمشاريع الشاملة في غضون 2-4 أشهر.",
-  "home.faq.a4": "يتم تحديد السعر خصيصاً بناءً على تعقيد مشروعكم والميزات المطلوبة.",
-  "home.faq.a5": "نعم، نحن متخصصون في دمج نماذج الذكاء الاصطناعي في أنظمتكم الحالية.",
-  "home.faq.a6": "بالتأكيد! يمكنكم مشاركة أفكار مشاريعكم معنا والحصول على استشارة مجانية.",
-  "home.faq.a7": "نعم، نحن نطور تطبيقات جوال حديثة لمنصتي iOS and Android.",
+  "home.faq.a4": "Yes, we continue to work on many new projects in our lab focused on AI, cybersecurity, and data analytics.",
+  "home.faq.a5": "We are always open to meeting with investors who want to share our vision. You can contact us via our contact page.",
+  "home.faq.a6": "You can review our active products on our Projects page and start using them immediately.",
+  "home.faq.a7": "We are always open to talented engineers and visionary designers. You can follow our job postings on LinkedIn.",
   "home.faq.badge": "التعليمات",
   "home.faq.desc": "كل ما تتساءل عنه موجود هنا.",
   "home.faq.title": "الأسئلة المتداولة",
@@ -4417,20 +4263,7 @@ const ar: Dict = {
   "home.stats.team": "طاقم عمل خبير",
   "home.stats.users": "مستخدم نشط",
   "home.stats.users_count": "10+",
-  "home.testimonials.badge": "تعليقات",
-  "home.testimonials.t1.text":
-    "لقد أدى العمل مع Fun Technology إلى تغيير عمليات أعمالنا بالكامل. بفضل حلول الذكاء الاصطناعي، زادت كفاءتنا.",
-  "home.testimonials.t2.text":
-    "السيد محمد وفريقه محترفون للغاية. لقد قاموا بتسليم تطبيق الهاتف المحمول الخاص بنا في الوقت المحدد وبشكل لا تشوبه شائبة.",
-  "home.testimonials.t3.text": "لم تكن لدينا مشاكل مع الدعم الفني. لديهم دائمًا نهج موجه نحو الحل.",
-  "home.testimonials.t4.text":
-    "أصبح موقعنا الإلكتروني الآن أسرع وأكثر أمانًا. شكرا لك تكنولوجيا المرح!",
-  "home.testimonials.t5.text":
-    "لقد أضافوا قيمة لمشروعنا من خلال مناهجهم المبتكرة ووجهات نظرهم الحكيمة.",
-  "home.testimonials.t6.text":
-    "لقد قاموا بعمل رائع في تبسيط أنظمتنا المعقدة. أنا أوصي به بالتأكيد.",
-  "home.testimonials.title": "قصص نجاح عملائنا",
-  "home.whatwedo.text":
+    "home.whatwedo.text":
     "نحن في شركة Fun Technology نقوم بتطوير حلول برمجية مبتكرة مدعومة بالذكاء الاصطناعي لإعداد أعمالك للمستقبل.",
   "inline.contact.message_error": "الرجاء إدخال نص رسالة صالح.",
   "inline.contact.subject_error": "الرجاء إدخال عنوان موضوع ذي معنى.",
@@ -4452,7 +4285,7 @@ const ar: Dict = {
   "nav.docs.desc": "وثائق.",
   "nav.faq": "التعليمات",
   "nav.faq.desc": "إجابات على أسئلتك.",
-  "nav.nexy": "مساعد نكسي",
+  "nav.nexy": "Nexy",
   "nav.platform": "منصة",
   "nav.pricing": "التسعير",
   "nav.pricing.desc": "حلول التسعير مصممة خصيصا لك.",
@@ -4461,8 +4294,6 @@ const ar: Dict = {
   "nav.projects.desc": "مشاريعنا.",
   "nav.quakesafe": "QuakeSafe",
   "nav.resources": "موارد",
-  "nav.reviews": "مراجعات العملاء",
-  "nav.reviews.desc": "آراء العملاء.",
   "nav.service_policy_short": "سياسة الخدمة",
   "nav.services": "خدمات",
   "nav.services.desc": "اكتشف خدماتنا.",
@@ -4643,14 +4474,8 @@ const ar: Dict = {
   "help.title": "مركز المساعدة",
   "help.popup": "كيف يمكننا مساعدتك؟",
   "home.faq.q1": "ما هي Fun Technology؟",
-  "home.faq.q2": "هل تقدمون الدعم الفني؟",
-  "home.testimonials.t1.name": "أحمد يلماز",
-  "home.testimonials.t2.name": "زينب كايا",
-  "home.testimonials.t3.name": "مراد دمير",
-  "home.testimonials.t4.name": "إليف شاهين",
-  "home.testimonials.t5.name": "كانر أوزكان",
-  "home.testimonials.t6.name": "سيلين أيدين",
-  "blog.index.untitled": "مقال بدون عنوان",
+  "home.faq.q2": "Are your projects paid?",
+              "blog.index.untitled": "مقال بدون عنوان",
   "blog.index.category_default": "تكنولوجيا",
   "nexy.resp.pricing.0":
     "Fiyatlandırma politikalarımız üzerinde çalışıyoruz. En güncel paketler için Fiyatlandırma sayfamızı takip edebilirsiniz. Şu an için bekleme listemize katılmak en iyi seçenek!",
@@ -4727,11 +4552,11 @@ const ar: Dict = {
   "service.feature.visualization": "Görselleştirme",
   "nav.explore_platform": "Platformu Keşfet",
   "nav.open_platform": "Platformu Aç",
-  "home.faq.q3": "كم من الوقت يستغرق إكمال المشاريع؟",
-  "home.faq.q4": "كيف يتم تحديد الأسعار؟",
-  "home.faq.q5": "هل يمكن دمج الذكاء الاصطناعي في أنظمتنا؟",
-  "home.faq.q6": "هل يمكنني الحصول على استشارة مجانية؟",
-  "home.faq.q7": "هل تقومون بتطوير تطبيقات الجوال؟",
+  "home.faq.q3": "Do you do client work?",
+  "home.faq.q4": "Are there other projects besides Nexy and QuakeSafe?",
+  "home.faq.q5": "Do you accept investors?",
+  "home.faq.q6": "How can I use your products?",
+  "home.faq.q7": "How can I join your team?",
 
   "nav.mobile.open": "فتح القائمة",
   "nav.mobile.close": "إغلاق القائمة",
@@ -4811,7 +4636,7 @@ const it: Dict = {
   "brand_kit.logos.fun_white.desc": "White version for use on dark-colored backgrounds.",
   "brand_kit.logos.fun_white.title": "Fun Technology White Logo",
   "brand_kit.logos.nexy.desc": "PNG version of our artificial intelligence assistant Nexy.",
-  "brand_kit.logos.nexy.title": "Nexy Assistant",
+  "brand_kit.logos.nexy.title": "Nexy",
   "brand_kit.logos.quakesafe.desc": "Official logo of our QuakeSafe project.",
   "brand_kit.logos.quakesafe.title": "QuakeSafe Logo",
   "brand_kit.title": "Brand Kit",
@@ -4920,7 +4745,7 @@ const it: Dict = {
   "home.cta.title": "Inizia oggi.",
   "home.faq.a1":
     "Fun Technology è un'azienda tecnologica specializzata in intelligenza artificiale, sviluppo software personalizzato e trasformazione digitale.",
-  "home.faq.a2": "Sì, offriamo supporto tecnico e manutenzione 24/7 per i vostri progetti.",
+  "home.faq.a2": "As Fun Technology, we develop our own products. Each product has its own usage models and subscription options.",
   "home.faq.a3":
     "Sebbene vari in base alla portata del progetto, completiamo i piccoli progetti in 2-4 settimane e i progetti complessi in 2-4 mesi.",
   "home.faq.a4":
@@ -4929,7 +4754,7 @@ const it: Dict = {
     "Sì, siamo specializzati nell'integrazione di modelli di IA nei vostri sistemi esistenti.",
   "home.faq.a6":
     "Certamente! Potete condividere le vostre idee di progetto con noi e ricevere una consulenza gratuita.",
-  "home.faq.a7": "Sì, sviluppiamo moderne applicazioni mobili per piattaforme iOS and Android.",
+  "home.faq.a7": "We are always open to talented engineers and visionary designers. You can follow our job postings on LinkedIn.",
   "home.faq.badge": "Domande frequenti",
   "home.faq.desc": "Tutto ciò che ti chiedi è qui.",
   "home.faq.title": "Domande frequenti",
@@ -4989,21 +4814,7 @@ const it: Dict = {
   "home.stats.team": "Personale esperto",
   "home.stats.users": "Utente attivo",
   "home.stats.users_count": "10+",
-  "home.testimonials.badge": "Commenti",
-  "home.testimonials.t1.text":
-    "Lavorare con Fun Technology ha cambiato completamente i nostri processi aziendali. Grazie alle soluzioni di intelligenza artificiale, la nostra efficienza è aumentata.",
-  "home.testimonials.t2.text":
-    "Il signor Muhammed e il suo team sono molto professionali. Hanno consegnato la nostra applicazione mobile in tempo e in modo impeccabile.",
-  "home.testimonials.t3.text":
-    "Non abbiamo avuto problemi con il supporto tecnico. Hanno sempre un approccio orientato alla soluzione.",
-  "home.testimonials.t4.text":
-    "Il nostro sito web ora è molto più veloce e sicuro. Grazie tecnologia divertente!",
-  "home.testimonials.t5.text":
-    "Hanno aggiunto valore al nostro progetto con i loro approcci innovativi e prospettive visionarie.",
-  "home.testimonials.t6.text":
-    "Hanno fatto un ottimo lavoro semplificando i nostri sistemi complessi. Lo consiglio vivamente.",
-  "home.testimonials.title": "Storie di successo dei nostri clienti",
-  "home.whatwedo.text":
+    "home.whatwedo.text":
     "Come Fun Technology, sviluppiamo soluzioni software innovative supportate dall'intelligenza artificiale per preparare la tua azienda al futuro.",
   "inline.contact.message_error": "Inserisci un testo del messaggio valido.",
   "inline.contact.subject_error": "Inserisci un titolo dell'oggetto significativo.",
@@ -5025,7 +4836,7 @@ const it: Dict = {
   "nav.docs.desc": "Documenti.",
   "nav.faq": "Domande frequenti",
   "nav.faq.desc": "Risposte alle tue domande.",
-  "nav.nexy": "Assistente Nexy",
+  "nav.nexy": "Nexy",
   "nav.platform": "Piattaforma",
   "nav.pricing": "Prezzi",
   "nav.pricing.desc": "Soluzioni di prezzo su misura per te.",
@@ -5034,8 +4845,6 @@ const it: Dict = {
   "nav.projects.desc": "I nostri progetti.",
   "nav.quakesafe": "QuakeSafe",
   "nav.resources": "Risorse",
-  "nav.reviews": "Recensioni dei clienti",
-  "nav.reviews.desc": "Opinioni dei clienti.",
   "nav.service_policy_short": "Politica di servizio",
   "nav.services": "Servizi",
   "nav.services.desc": "Scopri i nostri servizi.",
@@ -5234,14 +5043,8 @@ const it: Dict = {
   "help.title": "Centro assistenza",
   "help.popup": "Come possiamo aiutarti?",
   "home.faq.q1": "Cos'è Fun Technology?",
-  "home.faq.q2": "Fornite supporto tecnico?",
-  "home.testimonials.t1.name": "Ahmet Yilmaz",
-  "home.testimonials.t2.name": "Zeynep Kaya",
-  "home.testimonials.t3.name": "Murat Demir",
-  "home.testimonials.t4.name": "Elif Sahin",
-  "home.testimonials.t5.name": "Caner Ozkan",
-  "home.testimonials.t6.name": "Selin Aydin",
-  "blog.index.untitled": "Post senza titolo",
+  "home.faq.q2": "Are your projects paid?",
+              "blog.index.untitled": "Post senza titolo",
   "blog.index.category_default": "Tecnologia",
   "nexy.resp.pricing.0":
     "Fiyatlandırma politikalarımız üzerinde çalışıyoruz. En güncel paketler için Fiyatlandırma sayfamızı takip edebilirsiniz. Şu an için bekleme listemize katılmak en iyi seçenek!",
@@ -5318,11 +5121,11 @@ const it: Dict = {
   "service.feature.visualization": "Görselleştirme",
   "nav.explore_platform": "Platformu Keşfet",
   "nav.open_platform": "Platformu Aç",
-  "home.faq.q3": "Quanto tempo occorre per completare i progetti?",
-  "home.faq.q4": "Come viene stabilito il prezzo?",
-  "home.faq.q5": "L'IA può essere integrata nei nostri sistemi?",
-  "home.faq.q6": "Posso avere una consulenza gratuita?",
-  "home.faq.q7": "Sviluppate applicazioni mobili?",
+  "home.faq.q3": "Do you do client work?",
+  "home.faq.q4": "Are there other projects besides Nexy and QuakeSafe?",
+  "home.faq.q5": "Do you accept investors?",
+  "home.faq.q6": "How can I use your products?",
+  "home.faq.q7": "How can I join your team?",
 
   "nav.mobile.open": "Apri menu",
   "nav.mobile.close": "Chiudi menu",
@@ -5403,7 +5206,7 @@ const pt: Dict = {
   "brand_kit.logos.fun_white.desc": "White version for use on dark-colored backgrounds.",
   "brand_kit.logos.fun_white.title": "Fun Technology White Logo",
   "brand_kit.logos.nexy.desc": "PNG version of our artificial intelligence assistant Nexy.",
-  "brand_kit.logos.nexy.title": "Nexy Assistant",
+  "brand_kit.logos.nexy.title": "Nexy",
   "brand_kit.logos.quakesafe.desc": "Official logo of our QuakeSafe project.",
   "brand_kit.logos.quakesafe.title": "QuakeSafe Logo",
   "brand_kit.title": "Brand Kit",
@@ -5513,7 +5316,7 @@ const pt: Dict = {
   "home.cta.title": "Comece hoje.",
   "home.faq.a1":
     "A Fun Technology è uma empresa de tecnologia especializada em inteligência artificial, desenvolvimento de software personalizado e transformação digital.",
-  "home.faq.a2": "Sim, oferecemos suporte técnico e manutenção 24/7 para seus projetos.",
+  "home.faq.a2": "As Fun Technology, we develop our own products. Each product has its own usage models and subscription options.",
   "home.faq.a3":
     "Embora varie dependendo do escopo do projeto, concluímos projetos pequenos em 2-4 semanas e projetos abrangentes em 2-4 meses.",
   "home.faq.a4":
@@ -5584,21 +5387,7 @@ const pt: Dict = {
   "home.stats.team": "Equipe especializada",
   "home.stats.users": "Usuário ativo",
   "home.stats.users_count": "10+",
-  "home.testimonials.badge": "Comentários",
-  "home.testimonials.t1.text":
-    "Trabalhar com a Fun Technology mudou completamente nossos processos de negócios. Graças às soluções de inteligência artificial, a nossa eficiência aumentou.",
-  "home.testimonials.t2.text":
-    "Sr. Muhammed e sua equipe são muito profissionais. Eles entregaram nosso aplicativo móvel no prazo e na perfeição.",
-  "home.testimonials.t3.text":
-    "Não tivemos problemas com suporte técnico. Eles sempre têm uma abordagem orientada para a solução.",
-  "home.testimonials.t4.text":
-    "Nosso site agora está muito mais rápido e seguro. Obrigado Tecnologia Divertida!",
-  "home.testimonials.t5.text":
-    "Eles agregaram valor ao nosso projeto com suas abordagens inovadoras e perspectivas visionárias.",
-  "home.testimonials.t6.text":
-    "Eles fizeram um ótimo trabalho simplificando nossos sistemas complexos. Eu definitivamente recomendo.",
-  "home.testimonials.title": "Histórias de sucesso de nossos clientes",
-  "home.whatwedo.text":
+    "home.whatwedo.text":
     "Como Fun Technology, desenvolvemos soluções de software inovadoras apoiadas em inteligência artificial para preparar o seu negócio para o futuro.",
   "inline.contact.message_error": "Por favor insira um texto de mensagem válido.",
   "inline.contact.subject_error": "Insira um título de assunto significativo.",
@@ -5620,7 +5409,7 @@ const pt: Dict = {
   "nav.docs.desc": "Documentos.",
   "nav.faq": "Perguntas frequentes",
   "nav.faq.desc": "Respostas às suas perguntas.",
-  "nav.nexy": "Assistente Nexy",
+  "nav.nexy": "Nexy",
   "nav.platform": "Plataforma",
   "nav.pricing": "Preços",
   "nav.pricing.desc": "Soluções de preços sob medida para você.",
@@ -5629,8 +5418,6 @@ const pt: Dict = {
   "nav.projects.desc": "Nossos projetos.",
   "nav.quakesafe": "QuakeSafe",
   "nav.resources": "Recursos",
-  "nav.reviews": "Avaliações de clientes",
-  "nav.reviews.desc": "Opiniões dos clientes.",
   "nav.service_policy_short": "Política de Serviço",
   "nav.services": "Serviços",
   "nav.services.desc": "Conheça nossos serviços.",
@@ -5828,14 +5615,8 @@ const pt: Dict = {
   "help.title": "Centro de ajuda",
   "help.popup": "Como podemos ajudar?",
   "home.faq.q1": "O que é Fun Technology?",
-  "home.faq.q2": "Você fornece suporte técnico?",
-  "home.testimonials.t1.name": "Ahmet Yilmaz",
-  "home.testimonials.t2.name": "Zeynep Kaya",
-  "home.testimonials.t3.name": "Murat Demir",
-  "home.testimonials.t4.name": "Elif Sahin",
-  "home.testimonials.t5.name": "Caner Ozkan",
-  "home.testimonials.t6.name": "Selin Aydin",
-  "blog.index.untitled": "Post sem título",
+  "home.faq.q2": "Are your projects paid?",
+              "blog.index.untitled": "Post sem título",
   "blog.index.category_default": "Tecnologia",
   "nexy.resp.pricing.0":
     "Fiyatlandırma politikalarımız üzerinde çalışıyoruz. En güncel paketler için Fiyatlandırma sayfamızı takip edebilirsiniz. Şu an için bekleme listemize katılmak en iyi seçenek!",
@@ -5912,11 +5693,11 @@ const pt: Dict = {
   "service.feature.visualization": "Görselleştirme",
   "nav.explore_platform": "Platformu Keşfet",
   "nav.open_platform": "Platformu Aç",
-  "home.faq.q3": "Quanto tempo leva para concluir os projetos?",
-  "home.faq.q4": "Como è feito o preço?",
-  "home.faq.q5": "A IA pode ser integrada em nossos sistemas?",
-  "home.faq.q6": "Posso obter uma consulta gratuita?",
-  "home.faq.q7": "Vocês desenvolvem aplicações móveis?",
+  "home.faq.q3": "Do you do client work?",
+  "home.faq.q4": "Are there other projects besides Nexy and QuakeSafe?",
+  "home.faq.q5": "Do you accept investors?",
+  "home.faq.q6": "How can I use your products?",
+  "home.faq.q7": "How can I join your team?",
 
   "nav.mobile.open": "Abrir menu",
   "nav.mobile.close": "Fechar menu",
@@ -5995,7 +5776,7 @@ const ja: Dict = {
   "brand_kit.logos.fun_white.desc": "White version for use on dark-colored backgrounds.",
   "brand_kit.logos.fun_white.title": "Fun Technology White Logo",
   "brand_kit.logos.nexy.desc": "PNG version of our artificial intelligence assistant Nexy.",
-  "brand_kit.logos.nexy.title": "Nexy Assistant",
+  "brand_kit.logos.nexy.title": "Nexy",
   "brand_kit.logos.quakesafe.desc": "Official logo of our QuakeSafe project.",
   "brand_kit.logos.quakesafe.title": "QuakeSafe Logo",
   "brand_kit.title": "Brand Kit",
@@ -6111,8 +5892,8 @@ const ja: Dict = {
     "はい、お客様のプロジェクトに対して24時間年中無休のテクニカルサポートとメンテナンスサービスを提供しています。",
   "home.faq.a3":
     "プロジェクトの規模により異なりますが、小規模なプロジェクトは2〜4週間、包括的なプロジェクトは2〜4ヶ月で完了します。",
-  "home.faq.a4": "価格は、プロジェクトの複雑さや必要な機能に基づいて個別に決定されます。",
-  "home.faq.a5": "はい、AIモデルを既存のシステムに統合することに特化しています。",
+  "home.faq.a4": "Yes, we continue to work on many new projects in our lab focused on AI, cybersecurity, and data analytics.",
+  "home.faq.a5": "We are always open to meeting with investors who want to share our vision. You can contact us via our contact page.",
   "home.faq.a6":
     "もちろんです！プロジェクトのアイデアを共有していただければ、無料のコンサルティングを提供いたします。",
   "home.faq.a7":
@@ -6174,21 +5955,7 @@ const ja: Dict = {
   "home.stats.team": "専門スタッフ",
   "home.stats.users": "アクティブなユーザー",
   "home.stats.users_count": "10+",
-  "home.testimonials.badge": "コメント",
-  "home.testimonials.t1.text":
-    "Fun Technology との連携により、当社のビジネス プロセスは完全に変わりました。人工知能ソリューションのおかげで、私たちの効率は向上しました。",
-  "home.testimonials.t2.text":
-    "ムハメッド氏と彼のチームは非常にプロフェッショナルです。彼らは私たちのモバイルアプリケーションを時間通りに完璧に納品してくれました。",
-  "home.testimonials.t3.text":
-    "技術サポートに関しては何の問題もありませんでした。彼らは常にソリューション指向のアプローチをとります。",
-  "home.testimonials.t4.text":
-    "私たちのウェブサイトはより高速かつ安全になりました。ファンテクノロジーさん、ありがとうございます！",
-  "home.testimonials.t5.text":
-    "彼らは革新的なアプローチと先見の明のある視点で私たちのプロジェクトに付加価値を与えてくれました。",
-  "home.testimonials.t6.text":
-    "彼らは私たちの複雑なシステムを簡素化するという素晴らしい仕事をしてくれました。ぜひお勧めします。",
-  "home.testimonials.title": "お客様の成功事例",
-  "home.whatwedo.text":
+    "home.whatwedo.text":
     "Fun Technology として、私たちはお客様のビジネスを将来に備えるために、人工知能によってサポートされる革新的なソフトウェア ソリューションを開発しています。",
   "inline.contact.message_error": "有効なメッセージ テキストを入力してください。",
   "inline.contact.subject_error": "意味のある件名を入力してください。",
@@ -6210,7 +5977,7 @@ const ja: Dict = {
   "nav.docs.desc": "書類。",
   "nav.faq": "よくある質問",
   "nav.faq.desc": "ご質問への回答。",
-  "nav.nexy": "ネクシーアシスタント",
+  "nav.nexy": "Nexy",
   "nav.platform": "プラットフォーム",
   "nav.pricing": "価格設定",
   "nav.pricing.desc": "お客様に合わせた価格設定ソリューション。",
@@ -6219,8 +5986,6 @@ const ja: Dict = {
   "nav.projects.desc": "私たちのプロジェクト。",
   "nav.quakesafe": "クエイクセーフ",
   "nav.resources": "リソース",
-  "nav.reviews": "お客様のレビュー",
-  "nav.reviews.desc": "お客様のご意見。",
   "nav.service_policy_short": "サービスポリシー",
   "nav.services": "サービス",
   "nav.services.desc": "当社のサービスをご覧ください。",
@@ -6403,14 +6168,8 @@ const ja: Dict = {
   "help.title": "ヘルプセンター",
   "help.popup": "何かお手伝いしましょうか？",
   "home.faq.q1": "Fun Technologyとは何ですか？",
-  "home.faq.q2": "テクニカルサポートはありますか？",
-  "home.testimonials.t1.name": "アーメット・ユルマズ",
-  "home.testimonials.t2.name": "ゼイネップ・カヤ",
-  "home.testimonials.t3.name": "ムラット・デミール",
-  "home.testimonials.t4.name": "エルフ・シャヒン",
-  "home.testimonials.t5.name": "ジャネル・オズカン",
-  "home.testimonials.t6.name": "セリン・アイディン",
-  "blog.index.untitled": "無題の記事",
+  "home.faq.q2": "Are your projects paid?",
+              "blog.index.untitled": "無題の記事",
   "blog.index.category_default": "テクノロジー",
   "nexy.resp.pricing.0":
     "Fiyatlandırma politikalarımız üzerinde çalışıyoruz. En güncel paketler için Fiyatlandırma sayfamızı takip edebilirsiniz. Şu an için bekleme listemize katılmak en iyi seçenek!",
@@ -6487,11 +6246,11 @@ const ja: Dict = {
   "service.feature.visualization": "Görselleştirme",
   "nav.explore_platform": "Platformu Keşfet",
   "nav.open_platform": "Platformu Aç",
-  "home.faq.q3": "プロジェクトの完了にはどのくらい時間がかかりますか？",
-  "home.faq.q4": "価格設定はどのようになっていますか？",
-  "home.faq.q5": "AIを既存のシステムに統合できますか？",
-  "home.faq.q6": "無料相談は可能ですか？",
-  "home.faq.q7": "モバイルアプリの開発は行っていますか？",
+  "home.faq.q3": "Do you do client work?",
+  "home.faq.q4": "Are there other projects besides Nexy and QuakeSafe?",
+  "home.faq.q5": "Do you accept investors?",
+  "home.faq.q6": "How can I use your products?",
+  "home.faq.q7": "How can I join your team?",
 
   "nav.mobile.open": "メニューを開く",
   "nav.mobile.close": "メニューを閉じる",
@@ -6569,7 +6328,7 @@ const zh: Dict = {
   "brand_kit.logos.fun_white.desc": "White version for use on dark-colored backgrounds.",
   "brand_kit.logos.fun_white.title": "Fun Technology White Logo",
   "brand_kit.logos.nexy.desc": "PNG version of our artificial intelligence assistant Nexy.",
-  "brand_kit.logos.nexy.title": "Nexy Assistant",
+  "brand_kit.logos.nexy.title": "Nexy",
   "brand_kit.logos.quakesafe.desc": "Official logo of our QuakeSafe project.",
   "brand_kit.logos.quakesafe.title": "QuakeSafe Logo",
   "brand_kit.title": "Brand Kit",
@@ -6666,13 +6425,13 @@ const zh: Dict = {
   "home.cta.title": "今天就开始吧。",
   "home.faq.a1":
     "趣味科技（Fun Technology）是一家专注于人工智能、定制软件开发和数字化转型的科技公司。",
-  "home.faq.a2": "是的，我们为您的项目提供 24/7 全天候技术支持和维护服务。",
+  "home.faq.a2": "As Fun Technology, we develop our own products. Each product has its own usage models and subscription options.",
   "home.faq.a3":
     "虽然取决于项目范围，但我们通常在 2-4 周内完成小型项目，在 2-4 个月内完成综合项目。",
-  "home.faq.a4": "价格根据项目的复杂程度和所需功能专门确定。",
-  "home.faq.a5": "是的，我们擅长将 AI 模型集成到您现有的系统中。",
-  "home.faq.a6": "当然可以！您可以与我们分享您的项目想法，获取免费咨询。",
-  "home.faq.a7": "是的，我们为 iOS 和 Android 平台开发先进的移动应用程序。",
+  "home.faq.a4": "Yes, we continue to work on many new projects in our lab focused on AI, cybersecurity, and data analytics.",
+  "home.faq.a5": "We are always open to meeting with investors who want to share our vision. You can contact us via our contact page.",
+  "home.faq.a6": "You can review our active products on our Projects page and start using them immediately.",
+  "home.faq.a7": "We are always open to talented engineers and visionary designers. You can follow our job postings on LinkedIn.",
   "home.faq.badge": "常问问题",
   "home.faq.desc": "你想知道的一切都在这里。",
   "home.faq.title": "常见问题解答",
@@ -6720,18 +6479,7 @@ const zh: Dict = {
   "home.stats.team": "专家团队",
   "home.stats.users": "活跃用户",
   "home.stats.users_count": "10+",
-  "home.testimonials.badge": "评论",
-  "home.testimonials.t1.text":
-    "与 Fun Technology 的合作彻底改变了我们的业务流程。得益于人工智能解决方案，我们的效率得到了提高。",
-  "home.testimonials.t2.text":
-    "穆罕默德先生和他的团队非常专业。他们准时、完美地交付了我们的移动应用程序。",
-  "home.testimonials.t3.text":
-    "我们在技术支持方面没有遇到任何问题。他们始终采用以解决方案为导向的方法。",
-  "home.testimonials.t4.text": "我们的网站现在更快、更安全。谢谢趣科技！",
-  "home.testimonials.t5.text": "他们以其创新的方法和富有远见的观点为我们的项目增加了价值。",
-  "home.testimonials.t6.text": "他们在简化我们复杂的系统方面做得非常出色。我绝对推荐它。",
-  "home.testimonials.title": "我们客户的成功故事",
-  "home.whatwedo.text":
+          "home.whatwedo.text":
     "作为 Fun Technology，我们开发由人工智能支持的创新软件解决方案，帮助您的业务为未来做好准备。",
   "inline.contact.message_error": "请输入有效的消息文本。",
   "inline.contact.subject_error": "请输入有意义的主题标题。",
@@ -6753,7 +6501,7 @@ const zh: Dict = {
   "nav.docs.desc": "文件。",
   "nav.faq": "常问问题",
   "nav.faq.desc": "回答您的问题。",
-  "nav.nexy": "内克西助理",
+  "nav.nexy": "Nexy",
   "nav.platform": "平台",
   "nav.pricing": "定价",
   "nav.pricing.desc": "为您量身定制的定价解决方案。",
@@ -6762,8 +6510,6 @@ const zh: Dict = {
   "nav.projects.desc": "我们的项目。",
   "nav.quakesafe": "地震安全",
   "nav.resources": "资源",
-  "nav.reviews": "客户评价",
-  "nav.reviews.desc": "客户意见。",
   "nav.service_policy_short": "服务政策",
   "nav.services": "服务",
   "nav.services.desc": "发现我们的服务。",
@@ -6934,14 +6680,8 @@ const zh: Dict = {
   "help.title": "帮助中心",
   "help.popup": "我们能为您提供什么帮助？",
   "home.faq.q1": "什么是趣味科技？",
-  "home.faq.q2": "你们提供技术支持吗？",
-  "home.testimonials.t1.name": "艾哈迈德·耶尔马兹",
-  "home.testimonials.t2.name": "泽内普·卡亚",
-  "home.testimonials.t3.name": "穆拉特·德米尔",
-  "home.testimonials.t4.name": "埃利夫·沙欣",
-  "home.testimonials.t5.name": "卡内尔·厄兹坎",
-  "home.testimonials.t6.name": "塞林·艾丁",
-  "blog.index.untitled": "无题文章",
+  "home.faq.q2": "Are your projects paid?",
+              "blog.index.untitled": "无题文章",
   "blog.index.category_default": "科技",
   "nexy.resp.pricing.0":
     "Fiyatlandırma politikalarımız üzerinde çalışıyoruz. En güncel paketler için Fiyatlandırma sayfamızı takip edebilirsiniz. Şu an için bekleme listemize katılmak en iyi seçenek!",
@@ -7018,11 +6758,11 @@ const zh: Dict = {
   "service.feature.visualization": "Görselleştirme",
   "nav.explore_platform": "Platformu Keşfet",
   "nav.open_platform": "Platformu Aç",
-  "home.faq.q3": "完成项目需要多长时间？",
-  "home.faq.q4": "如何定价？",
-  "home.faq.q5": "AI 可以集成到我们的系统中吗？",
-  "home.faq.q6": "我可以获得免费咨询吗？",
-  "home.faq.q7": "你们开发移动应用吗？",
+  "home.faq.q3": "Do you do client work?",
+  "home.faq.q4": "Are there other projects besides Nexy and QuakeSafe?",
+  "home.faq.q5": "Do you accept investors?",
+  "home.faq.q6": "How can I use your products?",
+  "home.faq.q7": "How can I join your team?",
 
   "nav.mobile.open": "打开菜单",
   "nav.mobile.close": "关闭菜单",

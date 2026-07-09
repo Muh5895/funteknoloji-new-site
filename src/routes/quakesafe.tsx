@@ -29,62 +29,62 @@ function QuakeSafePage() {
 
   const features = [
     {
-      icon: <Bell className="h-8 w-8" />,
+      icon: <Bell className="h-8 w-8 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3" />,
       title: t("quakesafe.features.1.title"),
       desc: t("quakesafe.features.1.desc"),
     },
     {
-      icon: <MapPin className="h-8 w-8" />,
+      icon: <MapPin className="h-8 w-8 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3" />,
       title: t("quakesafe.features.2.title"),
       desc: t("quakesafe.features.2.desc"),
     },
     {
-      icon: <ShieldAlert className="h-8 w-8" />,
+      icon: <ShieldAlert className="h-8 w-8 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3" />,
       title: t("quakesafe.features.3.title"),
       desc: t("quakesafe.features.3.desc"),
     },
     {
-      icon: <Users className="h-8 w-8" />,
+      icon: <Users className="h-8 w-8 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3" />,
       title: t("quakesafe.features.4.title"),
       desc: t("quakesafe.features.4.desc"),
     },
     {
-      icon: <Smartphone className="h-8 w-8" />,
+      icon: <Smartphone className="h-8 w-8 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3" />,
       title: t("quakesafe.features.5.title"),
       desc: t("quakesafe.features.5.desc"),
     },
     {
-      icon: <Cpu className="h-8 w-8" />,
+      icon: <Cpu className="h-8 w-8 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3" />,
       title: t("quakesafe.features.6.title"),
       desc: t("quakesafe.features.6.desc"),
     },
     {
-      icon: <Wifi className="h-8 w-8" />,
+      icon: <Wifi className="h-8 w-8 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3" />,
       title: t("quakesafe.features.7.title"),
       desc: t("quakesafe.features.7.desc"),
     },
     {
-      icon: <Cloud className="h-8 w-8" />,
+      icon: <Cloud className="h-8 w-8 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3" />,
       title: t("quakesafe.features.8.title"),
       desc: t("quakesafe.features.8.desc"),
     },
     {
-      icon: <Zap className="h-8 w-8" />,
+      icon: <Zap className="h-8 w-8 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3" />,
       title: t("quakesafe.features.9.title"),
       desc: t("quakesafe.features.9.desc"),
     },
     {
-      icon: <Activity className="h-8 w-8" />,
+      icon: <Activity className="h-8 w-8 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3" />,
       title: t("quakesafe.features.10.title"),
       desc: t("quakesafe.features.10.desc"),
     },
     {
-      icon: <Clock className="h-8 w-8" />,
+      icon: <Clock className="h-8 w-8 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3" />,
       title: t("quakesafe.features.11.title"),
       desc: t("quakesafe.features.11.desc"),
     },
     {
-      icon: <HeartHandshake className="h-8 w-8" />,
+      icon: <HeartHandshake className="h-8 w-8 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3" />,
       title: t("quakesafe.features.12.title"),
       desc: t("quakesafe.features.12.desc"),
     },

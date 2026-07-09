@@ -96,7 +96,7 @@ function AboutPage() {
               <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
                 {[
                   { num: "2025", label: t("about.stats.year") },
-                  { num: t("home.stats.users_count"), label: t("about.stats.clients") },
+                  { num: t("home.stats.users_count"), label: t("home.stats.users") },
                   { num: `${projects.length}`, label: t("about.stats.projects") },
                   { num: `${teamMembers.length}`, label: t("about.stats.team") },
                 ].map((s, i) => (

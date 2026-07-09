@@ -16,32 +16,32 @@ function NexyPage() {
 
   const capabilities = [
     {
-      icon: <BrainCircuit className="h-8 w-8" />,
+      icon: <BrainCircuit className="h-8 w-8 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3" />,
       title: t("nexy.capabilities.1.title"),
       desc: t("nexy.capabilities.1.desc"),
     },
     {
-      icon: <Zap className="h-8 w-8" />,
+      icon: <Zap className="h-8 w-8 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3" />,
       title: t("nexy.capabilities.2.title"),
       desc: t("nexy.capabilities.2.desc"),
     },
     {
-      icon: <Globe className="h-8 w-8" />,
+      icon: <Globe className="h-8 w-8 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3" />,
       title: t("nexy.capabilities.3.title"),
       desc: t("nexy.capabilities.3.desc"),
     },
     {
-      icon: <Shield className="h-8 w-8" />,
+      icon: <Shield className="h-8 w-8 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3" />,
       title: t("nexy.capabilities.4.title"),
       desc: t("nexy.capabilities.4.desc"),
     },
     {
-      icon: <Search className="h-8 w-8" />,
+      icon: <Search className="h-8 w-8 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3" />,
       title: t("nexy.capabilities.5.title"),
       desc: t("nexy.capabilities.5.desc"),
     },
     {
-      icon: <MessageCircle className="h-8 w-8" />,
+      icon: <MessageCircle className="h-8 w-8 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3" />,
       title: t("nexy.capabilities.6.title"),
       desc: t("nexy.capabilities.6.desc"),
     },

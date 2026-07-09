@@ -95,11 +95,7 @@ export default function Header() {
               desc={t("nav.team.desc")}
               icon={<Users className="h-4 w-4" />}
             />
-            <DropdownItem
-              to="/reviews"
-              title={t("nav.reviews")}
-              desc={t("nav.reviews.desc")}
-              icon={<MessageSquareQuote className="h-4 w-4" />}
+            }
             />
           </Dropdown>
 
@@ -237,13 +233,7 @@ export default function Header() {
               >
                 {t("nav.team")}
               </Link>
-              <Link
-                to="/reviews"
-                className="block rounded-xl px-4 py-3 text-base fun-text-muted hover:bg-[var(--fun-surface)]"
-                onClick={() => setMobileOpen(false)}
-              >
-                {t("nav.reviews")}
-              </Link>
+
             </MobileAccordion>
 
             <MobileAccordion label={t("nav.platform")}>
