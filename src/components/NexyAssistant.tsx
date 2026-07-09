@@ -200,7 +200,7 @@ export default function NexyAssistant() {
   };
 
   const generateChatTitle = async (userMsg: string, aiResponse: string) => {
-    const prompt = `User: ${userMsg}\nAssistant: ${aiResponse}\n\nSystem: Based on the conversation above, determine a short and meaningful title for this chat (max 3-4 words). Response in the user's language. Write ONLY the title, no quotes or extra text.`;
+    const prompt = `User: ${userMsg}\nAssistant: ${aiResponse}\n\nSystem: Based on the conversation above, determine a short and meaningful title for this chat (max 3-4 words). The title should summarize the topic. DO NOT just repeat the user's message. Response in the user's language. Write ONLY the title, no quotes or extra text.`;
     try {
       const response = await fetch(
         `/api/nexy/${encodeURIComponent(prompt)}?model=openai&cache=false`,
@@ -208,10 +208,14 @@ export default function NexyAssistant() {
       if (response.ok) {
         let title = await response.text();
         title = title.replace(/---[\s\S]*?Support Pollinations\.AI[\s\S]*?---/gi, "").trim();
-        return title.replace(/^"|"$/g, "") || userMsg.slice(0, 30);
+        title = title.replace(/^"|"$/g, "").trim();
+        if (title && title.length < 50) return title;
       }
     } catch (e) {}
-    return userMsg.slice(0, 30);
+
+    // Fallback logic if AI fails or returns garbage
+    if (userMsg.length <= 20) return userMsg;
+    return userMsg.slice(0, 20) + "...";
   };
 
   const getNexyBrainResponse = async (input: string) => {
@@ -698,7 +702,7 @@ export default function NexyAssistant() {
               <div className="flex flex-col justify-center items-start">
                 <div className="flex items-center gap-2">
                   <p className="fun-text text-lg font-bold leading-none tracking-tight">
-                    Nexy Assistant
+                    Nexy
                   </p>
                   <span
                     className="rounded-full bg-[var(--fun-purple)] px-2 py-0.5 text-[9px] font-bold uppercase tracking-widest text-white shadow-lg shadow-purple-500/20"

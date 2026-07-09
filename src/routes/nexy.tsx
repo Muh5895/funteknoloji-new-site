@@ -65,6 +65,15 @@ function NexyPage() {
                 <p className="text-lg md:text-xl text-white/80 max-w-[600px] mx-auto lg:mx-0">
                   {t("nexy.hero.desc")}
                 </p>
+                <div className="relative z-10 flex justify-center lg:justify-start pt-4">
+                  <ArrowButton
+                    onClick={() => window.dispatchEvent(new CustomEvent("open-nexy-chat"))}
+                    variant="light"
+                    className="w-full sm:w-auto"
+                  >
+                    {lang === "tr" ? "Kullan" : "Use"}
+                  </ArrowButton>
+                </div>
               </div>
               <div className="flex justify-center lg:justify-end">
                 <div className="relative w-full max-w-[500px] flex flex-col gap-8">
@@ -92,15 +101,6 @@ function NexyPage() {
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <div className="relative z-10 flex justify-center lg:justify-start">
-                    <ArrowButton
-                      onClick={() => window.dispatchEvent(new CustomEvent("open-nexy-chat"))}
-                      variant="light"
-                      className="w-full sm:w-auto"
-                    >
-                      {lang === "tr" ? "Kullan" : "Use"}
-                    </ArrowButton>
                   </div>
                 </div>
               </div>
