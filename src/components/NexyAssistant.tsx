@@ -687,7 +687,7 @@ export default function NexyAssistant() {
             <div className="flex flex-1 items-center gap-2">
               <button
                 onClick={() => setIsSidebarOpen(true)}
-                className={`p-2 -ml-1 rounded-lg hover:bg-[var(--fun-stroke-1)] fun-text md:hidden`}
+                className={`p-2 -ml-1 rounded-lg hover:bg-[var(--fun-stroke-1)] fun-text ${isMaximized ? "md:hidden" : "hidden"}`}
               >
                 <Menu className="h-5 w-5" />
               </button>
@@ -697,7 +697,7 @@ export default function NexyAssistant() {
                   alt="Nexy"
                   className="h-12 w-12 object-contain transition-transform duration-500 transform hover:scale-110 sm:h-14 sm:w-14"
                 />
-                <div className="absolute bottom-1 right-1 w-3 h-3 bg-green-500 border-2 border-[var(--fun-surface)] rounded-full"></div>
+                <div className="absolute bottom-1 right-1 w-3 h-3 bg-green-500 border-2 border-[var(--fun-surface)] rounded-full hidden sm:block"></div>
               </div>
               <div className="flex flex-col justify-center items-start">
                 <div className="flex items-center gap-2">
