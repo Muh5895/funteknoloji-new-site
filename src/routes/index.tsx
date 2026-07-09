@@ -105,7 +105,7 @@ function HeroSection({ t }: { t: (k: string) => string }) {
             <span className="badge-fun badge-fun-gray mb-6 inline-block text-xs tracking-wider animate-in fade-in zoom-in duration-700 delay-100 fill-mode-both">
               {t("home.hero.badge")}
             </span>
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-8 tracking-tight animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-300 fill-mode-both leading-[1.1]">
+            <h1 className="text-heading-2 md:text-heading-1 lg:text-heading-huge font-bold mb-8 tracking-tight animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-300 fill-mode-both leading-[1.1]">
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#12161F] via-[#2A2E38] to-[#40444F] dark:from-white dark:via-white/90 dark:to-white/50">
                 {t("home.hero.title")}
               </span>
@@ -143,7 +143,7 @@ function StatsSection({ t }: { t: (k: string) => string }) {
       <div className="main-container">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
           <div>
-            <div className="text-4xl md:text-5xl font-bold fun-text mb-2">10+</div>
+            <div className="text-4xl md:text-5xl font-bold fun-text mb-2">{t("home.stats.users_count")}</div>
             <div className="text-sm fun-text-muted uppercase tracking-wider">
               {t("home.stats.users")}
             </div>

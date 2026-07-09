@@ -59,7 +59,7 @@ function NexyPage() {
 
             <div className="main-container relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center py-20 lg:py-32">
               <div className="space-y-6 md:space-y-8 text-center lg:text-left">
-                <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white leading-tight">
+                <h1 className="text-heading-2 md:text-heading-1 lg:text-heading-huge font-bold text-white leading-tight">
                   {t("nexy.hero.title")}
                 </h1>
                 <p className="text-lg md:text-xl text-white/80 max-w-[600px] mx-auto lg:mx-0">

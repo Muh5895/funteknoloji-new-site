@@ -167,7 +167,7 @@ export default function NexyAssistant() {
     const initialText = t("nexy.msg1");
     const newChat: Chat = {
       id: newId,
-      title: lang === "tr" ? "Yeni Sohbet" : "New Chat",
+      title: t("nexy.new_chat"),
       messages: [{ role: "nexy", text: initialText, displayedText: "" }],
       createdAt: Date.now(),
     };
@@ -188,7 +188,7 @@ export default function NexyAssistant() {
     if (activeChatId === id) {
       setActiveChatId(filtered.length > 0 ? filtered[0].id : null);
     }
-    toast.success(lang === "tr" ? "Sohbet silindi" : "Chat deleted");
+    toast.success(t("nexy.delete_toast"));
   };
 
   const toggleChat = () => {
@@ -617,7 +617,7 @@ export default function NexyAssistant() {
                 className="flex-1 py-2.5 px-4 rounded-xl bg-[var(--fun-purple)] text-white font-bold flex items-center justify-center gap-2 hover:scale-[1.02] transition-all shadow-lg shadow-purple-500/20 active:scale-95"
               >
                 <Plus className="h-4 w-4" />
-                {lang === "tr" ? "Yeni Sohbet" : "New Chat"}
+                {t("nexy.new_chat")}
               </button>
               <button
                 onClick={() => setIsSidebarOpen(false)}
@@ -744,7 +744,7 @@ export default function NexyAssistant() {
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder={lang === "tr" ? "Mesajlarda ara..." : "Search messages..."}
+                placeholder={t("nexy.search_placeholder")}
                 className="w-full bg-transparent text-xs fun-text outline-none"
               />
             </div>
@@ -844,8 +844,8 @@ export default function NexyAssistant() {
                 <Send className="h-4 w-4" />
               </button>
             </div>
-            <p className="text-[9px] text-center fun-text-muted font-medium opacity-50 px-2 tracking-wide first-letter:uppercase">
-              {t("nexy.disclaimer").toLowerCase()}
+            <p className="text-[9px] text-center fun-text-muted font-medium opacity-50 px-2 tracking-wide">
+              {t("nexy.disclaimer")}
             </p>
           </form>
           </div>

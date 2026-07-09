@@ -267,6 +267,7 @@ const tr: Dict = {
   "home.stats.support": "Kesintisiz Destek",
   "home.stats.team": "Ekip Üyesi",
   "home.stats.users": "Aktif Kullanıcı",
+  "home.stats.users_count": "10+",
   "home.testimonials.badge": "Yorumlar",
   "home.testimonials.t1.name": "Ahmet Yılmaz",
   "home.testimonials.t1.text":
@@ -364,6 +365,9 @@ const tr: Dict = {
   "nexy.msg1": "Merhaba! Ben Nexy, Fun Teknoloji asistanıyım. Size nasıl yardımcı olabilirim?",
   "nexy.placeholder": "Mesajınızı yazın...",
   "nexy.disclaimer": "Nexy Hata Yapabilir. Önemli Bilgileri Kontrol Edin.",
+  "nexy.new_chat": "Yeni Sohbet",
+  "nexy.search_placeholder": "Mesajlarda ara...",
+  "nexy.delete_toast": "Sohbet silindi",
   "title.home": "Fun Teknoloji - Geleceğin Teknolojileri",
   "title.about": "Hakkımızda - Fun Teknoloji",
   "title.services": "Projeler - Fun Teknoloji",
@@ -852,6 +856,7 @@ const en: Dict = {
   "home.stats.support": "Uninterrupted Support",
   "home.stats.team": "Expert Staff",
   "home.stats.users": "Active User",
+  "home.stats.users_count": "10+",
   "home.testimonials.badge": "Comments",
   "home.testimonials.t1.name": "Ahmet Yilmaz",
   "home.testimonials.t1.text":
@@ -950,6 +955,9 @@ const en: Dict = {
   "nexy.msg1": "Hello! I'm Nexy, Fun Technology assistant. How can I help you?",
   "nexy.placeholder": "Type your message...",
   "nexy.disclaimer": "Nexy can make mistakes. Check important info.",
+  "nexy.new_chat": "New Chat",
+  "nexy.search_placeholder": "Search messages...",
+  "nexy.delete_toast": "Chat deleted",
   "title.home": "Fun Technology - Future Technologies",
   "title.about": "About Us - Fun Technology",
   "title.services": "Projects - Fun Technology",
@@ -1443,6 +1451,7 @@ const de: Dict = {
   "home.stats.support": "Ununterbrochener Support",
   "home.stats.team": "Fachpersonal",
   "home.stats.users": "Aktiver Benutzer",
+  "home.stats.users_count": "10+",
   "home.testimonials.badge": "Kommentare",
   "home.testimonials.t1.text":
     "Die Zusammenarbeit mit Fun Technology hat unsere Geschäftsprozesse völlig verändert. Dank Lösungen der künstlichen Intelligenz ist unsere Effizienz gestiegen.",
@@ -1498,6 +1507,7 @@ const de: Dict = {
   "nav.team": "Unser Team",
   "nav.team.desc": "Lernen Sie unser Team kennen.",
   "nav.waitlist": "Treten Sie der Warteliste bei",
+  "nexy.disclaimer": "Nexy kann Fehler machen. Wichtige Informationen prüfen.",
   "nexy.aria_help": "Get help",
   "nexy.aria_send": "Send",
   "nexy.assistant_title": "Fun Technology Assistant",
@@ -1782,7 +1792,10 @@ const de: Dict = {
 
   "nav.mobile.open": "Menü öffnen",
   "nav.mobile.close": "Menü schließen",
-};
+
+  "nexy.new_chat": "Neuer Chat",
+  "nexy.search_placeholder": "Nachrichten suchen...",
+  "nexy.delete_toast": "Chat gelöscht",};
 
 const fr: Dict = {
   "404.desc": "Il semble que quelque chose s'est mal passé ou que la page a été déplacée.",
@@ -2043,6 +2056,7 @@ const fr: Dict = {
   "home.stats.support": "Assistance ininterrompue",
   "home.stats.team": "Personnel expert",
   "home.stats.users": "Utilisateur actif",
+  "home.stats.users_count": "10+",
   "home.testimonials.badge": "Commentaires",
   "home.testimonials.t1.text":
     "Travailler avec Fun Technology a complètement changé nos processus commerciaux. Grâce aux solutions d’intelligence artificielle, notre efficacité a augmenté.",
@@ -2098,6 +2112,7 @@ const fr: Dict = {
   "nav.team": "Notre équipe",
   "nav.team.desc": "Apprenez à connaître notre équipe.",
   "nav.waitlist": "Rejoignez la liste d'attente",
+  "nexy.disclaimer": "Nexy peut faire des erreurs. Vérifiez les informations importantes.",
   "nexy.aria_help": "Get help",
   "nexy.aria_send": "Send",
   "nexy.assistant_title": "Fun Technology Assistant",
@@ -2386,7 +2401,10 @@ const fr: Dict = {
 
   "nav.mobile.open": "Ouvrir le menu",
   "nav.mobile.close": "Fermer le menu",
-};
+
+  "nexy.new_chat": "Nouvelle discussion",
+  "nexy.search_placeholder": "Rechercher des messages...",
+  "nexy.delete_toast": "Discussion supprimée",};
 
 const es: Dict = {
   "404.desc": "Parece que algo salió mal o es posible que se haya movido la página.",
@@ -2637,6 +2655,7 @@ const es: Dict = {
   "home.stats.support": "Soporte ininterrumpido",
   "home.stats.team": "Personal experto",
   "home.stats.users": "Usuario activo",
+  "home.stats.users_count": "10+",
   "home.testimonials.badge": "Comentarios",
   "home.testimonials.t1.text":
     "Trabajar con Fun Technology ha cambiado por completo nuestros procesos comerciales. Gracias a las soluciones de inteligencia artificial, nuestra eficiencia ha aumentado.",
@@ -2692,6 +2711,7 @@ const es: Dict = {
   "nav.team": "Nuestro equipo",
   "nav.team.desc": "Conozca nuestro equipo.",
   "nav.waitlist": "Únase a la lista de espera",
+  "nexy.disclaimer": "Nexy puede cometer errores. Verifique la información importante.",
   "nexy.aria_help": "Get help",
   "nexy.aria_send": "Send",
   "nexy.assistant_title": "Fun Technology Assistant",
@@ -2974,7 +2994,10 @@ const es: Dict = {
 
   "nav.mobile.open": "Abrir menú",
   "nav.mobile.close": "Cerrar menú",
-};
+
+  "nexy.new_chat": "Nuevo chat",
+  "nexy.search_placeholder": "Buscar mensajes...",
+  "nexy.delete_toast": "Chat eliminado",};
 
 const az: Dict = {
   "404.desc": "Deyəsən nəsə xəta baş verib və ya səhifə köçürülüb.",
@@ -3224,6 +3247,7 @@ const az: Dict = {
   "home.stats.support": "Fasiləsiz Dəstək",
   "home.stats.team": "Ekspert Heyəti",
   "home.stats.users": "Aktiv İstifadəçi",
+  "home.stats.users_count": "10+",
   "home.testimonials.badge": "Şərhlər",
   "home.testimonials.t1.text":
     "Fun Technology ilə işləmək biznes proseslərimizi tamamilə dəyişdi. Süni intellekt həlləri sayəsində səmərəliliyimiz artdı.",
@@ -3279,6 +3303,7 @@ const az: Dict = {
   "nav.team": "Bizim komanda",
   "nav.team.desc": "Komandamızla tanış olun.",
   "nav.waitlist": "Gözləmə siyahısına qoşulun",
+  "nexy.disclaimer": "Nexy səhv edə bilər. Vacib məlumatları yoxlayın.",
   "nexy.aria_help": "Get help",
   "nexy.aria_send": "Send",
   "nexy.assistant_title": "Fun Technology Assistant",
@@ -3555,7 +3580,10 @@ const az: Dict = {
 
   "nav.mobile.open": "Menyunu aç",
   "nav.mobile.close": "Menyunu bağla",
-};
+
+  "nexy.new_chat": "Yeni Söhbət",
+  "nexy.search_placeholder": "Mesajlarda axtar...",
+  "nexy.delete_toast": "Söhbət silindi",};
 
 const ru: Dict = {
   "404.desc": "Похоже, что-то пошло не так или страница была перемещена.",
@@ -3809,6 +3837,7 @@ const ru: Dict = {
   "home.stats.support": "Непрерывная поддержка",
   "home.stats.team": "Экспертный персонал",
   "home.stats.users": "Активный пользователь",
+  "home.stats.users_count": "10+",
   "home.testimonials.badge": "Комментарии",
   "home.testimonials.t1.text":
     "Работа с Fun Technology полностью изменила наши бизнес-процессы. Благодаря решениям искусственного интеллекта наша эффективность возросла.",
@@ -3864,6 +3893,7 @@ const ru: Dict = {
   "nav.team": "Наша команда",
   "nav.team.desc": "Познакомьтесь с нашей командой.",
   "nav.waitlist": "Присоединяйтесь к списку ожидания",
+  "nexy.disclaimer": "Nexy может ошибаться. Проверяйте важную информацию.",
   "nexy.aria_help": "Get help",
   "nexy.aria_send": "Send",
   "nexy.assistant_title": "Fun Technology Assistant",
@@ -4145,7 +4175,10 @@ const ru: Dict = {
 
   "nav.mobile.open": "Открыть меню",
   "nav.mobile.close": "Закрыть меню",
-};
+
+  "nexy.new_chat": "Новый чат",
+  "nexy.search_placeholder": "Поиск сообщений...",
+  "nexy.delete_toast": "Чат удален",};
 
 const ar: Dict = {
   "404.desc": "يبدو أنه حدث خطأ ما أو ربما تم نقل الصفحة.",
@@ -4376,6 +4409,7 @@ const ar: Dict = {
   "home.stats.support": "الدعم المتواصل",
   "home.stats.team": "طاقم عمل خبير",
   "home.stats.users": "مستخدم نشط",
+  "home.stats.users_count": "10+",
   "home.testimonials.badge": "تعليقات",
   "home.testimonials.t1.text":
     "لقد أدى العمل مع Fun Technology إلى تغيير عمليات أعمالنا بالكامل. بفضل حلول الذكاء الاصطناعي، زادت كفاءتنا.",
@@ -4430,6 +4464,7 @@ const ar: Dict = {
   "nav.team": "فريقنا",
   "nav.team.desc": "تعرف على فريقنا.",
   "nav.waitlist": "انضم إلى قائمة الانتظار",
+  "nexy.disclaimer": "قد يرتكب نكسي أخطاء. تحقق من المعلومات المهمة.",
   "nexy.aria_help": "Get help",
   "nexy.aria_send": "Send",
   "nexy.assistant_title": "Fun Technology Assistant",
@@ -4693,7 +4728,10 @@ const ar: Dict = {
 
   "nav.mobile.open": "فتح القائمة",
   "nav.mobile.close": "إغلاق القائمة",
-};
+
+  "nexy.new_chat": "دردشة جديدة",
+  "nexy.search_placeholder": "بحث في الرسائل...",
+  "nexy.delete_toast": "تم حذف الدردشة",};
 
 const it: Dict = {
   "404.desc": "Sembra che qualcosa sia andato storto o che la pagina sia stata spostata.",
@@ -4942,6 +4980,7 @@ const it: Dict = {
   "home.stats.support": "Supporto ininterrotto",
   "home.stats.team": "Personale esperto",
   "home.stats.users": "Utente attivo",
+  "home.stats.users_count": "10+",
   "home.testimonials.badge": "Commenti",
   "home.testimonials.t1.text":
     "Lavorare con Fun Technology ha cambiato completamente i nostri processi aziendali. Grazie alle soluzioni di intelligenza artificiale, la nostra efficienza è aumentata.",
@@ -4997,6 +5036,7 @@ const it: Dict = {
   "nav.team": "La nostra squadra",
   "nav.team.desc": "Conosci il nostro team.",
   "nav.waitlist": "Iscriviti alla lista d'attesa",
+  "nexy.disclaimer": "Nexy può commettere errori. Verifica le informazioni importanti.",
   "nexy.aria_help": "Get help",
   "nexy.aria_send": "Send",
   "nexy.assistant_title": "Fun Technology Assistant",
@@ -5278,7 +5318,10 @@ const it: Dict = {
 
   "nav.mobile.open": "Apri menu",
   "nav.mobile.close": "Chiudi menu",
-};
+
+  "nexy.new_chat": "Nuova chat",
+  "nexy.search_placeholder": "Cerca messaggi...",
+  "nexy.delete_toast": "Chat eliminata",};
 
 const pt: Dict = {
   "404.desc": "Parece que algo deu errado ou a página pode ter sido movida.",
@@ -5531,6 +5574,7 @@ const pt: Dict = {
   "home.stats.support": "Suporte ininterrupto",
   "home.stats.team": "Equipe especializada",
   "home.stats.users": "Usuário ativo",
+  "home.stats.users_count": "10+",
   "home.testimonials.badge": "Comentários",
   "home.testimonials.t1.text":
     "Trabalhar com a Fun Technology mudou completamente nossos processos de negócios. Graças às soluções de inteligência artificial, a nossa eficiência aumentou.",
@@ -5586,6 +5630,7 @@ const pt: Dict = {
   "nav.team": "Nossa equipe",
   "nav.team.desc": "Conheça nossa equipe.",
   "nav.waitlist": "Junte-se à lista de espera",
+  "nexy.disclaimer": "O Nexy pode cometer erros. Verifique informações importantes.",
   "nexy.aria_help": "Get help",
   "nexy.aria_send": "Send",
   "nexy.assistant_title": "Fun Technology Assistant",
@@ -5866,7 +5911,10 @@ const pt: Dict = {
 
   "nav.mobile.open": "Abrir menu",
   "nav.mobile.close": "Fechar menu",
-};
+
+  "nexy.new_chat": "Nova conversa",
+  "nexy.search_placeholder": "Pesquisar mensagens...",
+  "nexy.delete_toast": "Conversa excluída",};
 
 const ja: Dict = {
   "404.desc": "何か問題が発生したか、ページが移動された可能性があります。",
@@ -6115,6 +6163,7 @@ const ja: Dict = {
   "home.stats.support": "中断のないサポート",
   "home.stats.team": "専門スタッフ",
   "home.stats.users": "アクティブなユーザー",
+  "home.stats.users_count": "10+",
   "home.testimonials.badge": "コメント",
   "home.testimonials.t1.text":
     "Fun Technology との連携により、当社のビジネス プロセスは完全に変わりました。人工知能ソリューションのおかげで、私たちの効率は向上しました。",
@@ -6170,6 +6219,7 @@ const ja: Dict = {
   "nav.team": "私たちのチーム",
   "nav.team.desc": "私たちのチームについて知りましょう。",
   "nav.waitlist": "順番待ちリストに参加する",
+  "nexy.disclaimer": "Nexyは間違いを犯す可能性があります。重要な情報を確認してください。",
   "nexy.aria_help": "Get help",
   "nexy.aria_send": "Send",
   "nexy.assistant_title": "Fun Technology Assistant",
@@ -6435,7 +6485,10 @@ const ja: Dict = {
 
   "nav.mobile.open": "メニューを開く",
   "nav.mobile.close": "メニューを閉じる",
-};
+
+  "nexy.new_chat": "新しいチャット",
+  "nexy.search_placeholder": "メッセージを検索...",
+  "nexy.delete_toast": "チャットが削除されました",};
 
 const zh: Dict = {
   "404.desc": "看起来出了点问题或者页面可能已被移动。",
@@ -6655,6 +6708,7 @@ const zh: Dict = {
   "home.stats.support": "不间断的支持",
   "home.stats.team": "专家团队",
   "home.stats.users": "活跃用户",
+  "home.stats.users_count": "10+",
   "home.testimonials.badge": "评论",
   "home.testimonials.t1.text":
     "与 Fun Technology 的合作彻底改变了我们的业务流程。得益于人工智能解决方案，我们的效率得到了提高。",
@@ -6707,6 +6761,7 @@ const zh: Dict = {
   "nav.team": "我们的团队",
   "nav.team.desc": "了解我们的团队。",
   "nav.waitlist": "加入候补名单",
+  "nexy.disclaimer": "Nexy 可能会出错。请检查重要信息。",
   "nexy.aria_help": "Get help",
   "nexy.aria_send": "Send",
   "nexy.assistant_title": "Fun Technology Assistant",
@@ -6960,7 +7015,10 @@ const zh: Dict = {
 
   "nav.mobile.open": "打开菜单",
   "nav.mobile.close": "关闭菜单",
-};
+
+  "nexy.new_chat": "新建聊天",
+  "nexy.search_placeholder": "搜索消息...",
+  "nexy.delete_toast": "聊天已删除",};
 
 const dicts: Record<Lang, Dict> = { tr, en, de, fr, es, az, ru, ar, it, pt, ja, zh };
 

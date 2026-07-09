@@ -62,7 +62,7 @@ function SitemapPage() {
           <ScrollReveal>
             <div className="text-center mb-14">
               <span className="badge-fun badge-fun-gray mb-4 inline-block">{t("nav.sitemap")}</span>
-              <h1 className="text-heading-3 md:text-heading-2 font-medium fun-text mb-3">
+              <h1 className="text-heading-2 md:text-heading-1 lg:text-heading-huge font-medium fun-text mb-3">
                 {t("nav.sitemap")}
               </h1>
               <p className="text-tagline-1 fun-text-muted max-w-[600px] mx-auto">

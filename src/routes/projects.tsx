@@ -20,7 +20,9 @@ function ProjectsPage() {
         <ScrollReveal>
           <div className="text-center mb-16">
             <span className="badge-fun badge-fun-gray mb-4 inline-block">{t("nav.projects")}</span>
-            <h1 className="text-heading-2 font-bold fun-text mb-4">{t("projects.hero.title")}</h1>
+            <h1 className="text-heading-2 md:text-heading-1 lg:text-heading-huge font-bold fun-text mb-4">
+              {t("projects.hero.title")}
+            </h1>
             <p className="max-w-[700px] mx-auto fun-text-muted text-lg">
               {t("projects.hero.desc")}
             </p>

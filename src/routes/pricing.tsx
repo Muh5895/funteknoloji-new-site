@@ -26,7 +26,7 @@ function PricingPage() {
               <span className="badge-fun badge-fun-white mb-4 inline-block">
                 {t("pricing.badge")}
               </span>
-              <h1 className="text-heading-3 md:text-heading-2 lg:text-heading-1 font-medium mb-4 fun-text">
+              <h1 className="text-heading-2 md:text-heading-1 lg:text-heading-huge font-medium mb-4 fun-text">
                 {t("pricing.title")}
               </h1>
               <p className="max-w-[600px] mx-auto text-tagline-1 fun-text-muted">
