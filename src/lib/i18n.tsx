@@ -7049,18 +7049,8 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
             "title.brand_kit": "Marka Kiti - Fun Teknoloji",
             "title.service_policy": "Hizmet Politikası - Fun Teknoloji",
             "title.privacy_policy": "Gizlilik Politikası - Fun Teknoloji",
-            "title.sitemap": "网站地图 - Fun Technology",
             "title.nexy": "Nexy Asistan - Fun Teknoloji",
-            "title.sitemap": "网站地图 - Fun Technology",
-            "title.sitemap": "サイトマップ - Fun Technology",
-            "title.sitemap": "Mapa do site - Fun Technology",
-            "title.sitemap": "Mappa del sito - Fun Technology",
-            "title.sitemap": "خريطة الموقع - Fun Technology",
-            "title.sitemap": "Карта сайта - Fun Technology",
-            "title.sitemap": "Sayt Xəritəsi - Fun Teknoloji",
-            "title.sitemap": "Mapa del sitio - Fun Technology",
-            "title.sitemap": "Plan du site - Fun Technology",
-            "title.sitemap": "Sitemap - Fun Technology",
+            "title.sitemap": "Site Haritası - Fun Teknoloji",
           };
           if (fallbacks[titleKey]) {
             document.title = fallbacks[titleKey];

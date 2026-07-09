@@ -93,7 +93,7 @@ function NexyPage() {
                       </div>
                     </div>
                   </div>
-                  <div className="relative z-10 flex justify-center">
+                  <div className="relative z-10 flex justify-center lg:justify-start">
                     <ArrowButton
                       onClick={() => window.dispatchEvent(new CustomEvent("open-nexy-chat"))}
                       variant="light"

@@ -4,6 +4,8 @@ import { useState, useEffect, useRef } from "react";
 import ArrowButton from "../components/ArrowButton";
 import { useLang } from "../lib/i18n";
 import CountUp from "../components/CountUp";
+import { teamMembers } from "../constants/team";
+import { projects } from "../constants/projects";
 import {
   Cpu,
   Smartphone,
@@ -148,7 +150,7 @@ function StatsSection({ t }: { t: (k: string) => string }) {
           </div>
           <div>
             <div className="text-4xl md:text-5xl font-bold fun-text mb-2">
-              <CountUp end={5} />
+              <CountUp end={projects.length} />
             </div>
             <div className="text-sm fun-text-muted uppercase tracking-wider">
               {t("home.stats.projects")}
@@ -156,7 +158,7 @@ function StatsSection({ t }: { t: (k: string) => string }) {
           </div>
           <div>
             <div className="text-4xl md:text-5xl font-bold fun-text mb-2">
-              <CountUp end={10} />+
+              <CountUp end={teamMembers.length} />
             </div>
             <div className="text-sm fun-text-muted uppercase tracking-wider">
               {t("home.stats.team")}

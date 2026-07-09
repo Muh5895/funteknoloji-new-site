@@ -4,6 +4,7 @@ import ArrowButton from "../components/ArrowButton";
 import { useLang } from "../lib/i18n";
 import { useEffect, useState, useRef } from "react";
 import { teamMembers } from "../constants/team";
+import { projects } from "../constants/projects";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
@@ -96,7 +97,7 @@ function AboutPage() {
                 {[
                   { num: "2025", label: t("about.stats.year") },
                   { num: "100+", label: t("about.stats.clients") },
-                  { num: "50+", label: t("about.stats.projects") },
+                  { num: `${projects.length}`, label: t("about.stats.projects") },
                   { num: `${teamMembers.length}`, label: t("about.stats.team") },
                 ].map((s, i) => (
                   <div key={i} className="text-center">

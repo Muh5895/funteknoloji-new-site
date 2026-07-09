@@ -19,6 +19,9 @@ import {
   MessageSquare,
   Trash2,
   Search as SearchIcon,
+  Menu,
+  Edit2,
+  Check,
 } from "lucide-react";
 
 interface Chat {
@@ -42,6 +45,9 @@ export default function NexyAssistant() {
 
   const [chats, setChats] = useState<Chat[]>([]);
   const [activeChatId, setActiveChatId] = useState<string | null>(null);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [editingChatId, setEditingChatId] = useState<string | null>(null);
+  const [editingTitle, setEditingTitle] = useState("");
 
   const currentChat = chats.find((c) => c.id === activeChatId);
   const chatMessages = currentChat?.messages || [];
@@ -193,6 +199,21 @@ export default function NexyAssistant() {
     }
   };
 
+  const generateChatTitle = async (userMsg: string, aiResponse: string) => {
+    const prompt = `User: ${userMsg}\nAssistant: ${aiResponse}\n\nSystem: Based on the conversation above, determine a short and meaningful title for this chat (max 3-4 words). Response in the user's language. Write ONLY the title, no quotes or extra text.`;
+    try {
+      const response = await fetch(
+        `/api/nexy/${encodeURIComponent(prompt)}?model=openai&cache=false`,
+      );
+      if (response.ok) {
+        let title = await response.text();
+        title = title.replace(/---[\s\S]*?Support Pollinations\.AI[\s\S]*?---/gi, "").trim();
+        return title.replace(/^"|"$/g, "") || userMsg.slice(0, 30);
+      }
+    } catch (e) {}
+    return userMsg.slice(0, 30);
+  };
+
   const getNexyBrainResponse = async (input: string) => {
     const history = chatMessages
       .slice(-6)
@@ -249,21 +270,17 @@ export default function NexyAssistant() {
     }
     const userMsg = { role: "user" as const, text: userInput, displayedText: userInput };
 
-    // Update chat title if it's the first user message
+    const savedInput = userInput;
     const shouldUpdateTitle = chatMessages.length <= 1;
-    const chatTitle = shouldUpdateTitle
-      ? userInput.slice(0, 30) + (userInput.length > 30 ? "..." : "")
-      : currentChat?.title;
 
     setChats((prev) =>
       prev.map((c) =>
         c.id === activeChatId
-          ? { ...c, title: chatTitle || c.title, messages: [...c.messages, userMsg] }
+          ? { ...c, messages: [...c.messages, userMsg] }
           : c,
       ),
     );
 
-    const savedInput = userInput;
     const currentChatId = activeChatId!;
     setUserInput("");
     setIsTyping(true);
@@ -293,6 +310,13 @@ export default function NexyAssistant() {
         return c;
       })
     );
+
+    if (shouldUpdateTitle) {
+      const newTitle = await generateChatTitle(savedInput, response);
+      setChats((prev) =>
+        prev.map((c) => (c.id === currentChatId ? { ...c, title: newTitle } : c))
+      );
+    }
     setIsThinking(false);
     setIsTyping(true);
   };
@@ -557,46 +581,99 @@ export default function NexyAssistant() {
     m.text.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
+  const startEditing = (e: React.MouseEvent, chat: Chat) => {
+    e.stopPropagation();
+    setEditingChatId(chat.id);
+    setEditingTitle(chat.title);
+  };
+
+  const saveTitle = (e: React.FormEvent | React.FocusEvent) => {
+    e.preventDefault();
+    if (editingChatId) {
+      setChats((prev) =>
+        prev.map((c) => (c.id === editingChatId ? { ...c, title: editingTitle || c.title } : c)),
+      );
+      setEditingChatId(null);
+    }
+  };
+
   return (
     <>
       {isOpen && (
         <div
           className={`${isMaximized ? "fixed inset-0 z-[200] rounded-none" : "fixed bottom-24 right-6 w-[320px] sm:w-[420px] h-[550px] z-[100] rounded-[32px]"} bg-[var(--fun-card)] border border-[var(--fun-stroke-1)] shadow-2xl flex flex-row overflow-hidden animate-in fade-in zoom-in-95 duration-500 origin-bottom-right transition-all`}
         >
-          {/* Sidebar - only visible when maximized on PC */}
-          {isMaximized && (
-            <div className="hidden md:flex w-72 flex-col bg-[var(--fun-surface)] border-r border-[var(--fun-stroke-1)]">
-              <div className="p-4 border-b border-[var(--fun-stroke-1)]">
-                <button
-                  onClick={createNewChat}
-                  className="w-full py-2.5 px-4 rounded-xl bg-[var(--fun-purple)] text-white font-bold flex items-center justify-center gap-2 hover:scale-[1.02] transition-all shadow-lg shadow-purple-500/20 active:scale-95"
-                >
-                  <Plus className="h-4 w-4" />
-                  {lang === "tr" ? "Yeni Sohbet" : "New Chat"}
-                </button>
-              </div>
-              <div className="flex-1 overflow-y-auto p-3 space-y-2">
-                {chats.map((chat) => (
-                  <div
-                    key={chat.id}
-                    onClick={() => setActiveChatId(chat.id)}
-                    className={`group flex items-center justify-between p-3 rounded-xl cursor-pointer transition-all ${activeChatId === chat.id ? "bg-[var(--fun-purple)] text-white shadow-md" : "hover:bg-[var(--fun-stroke-1)] fun-text"}`}
-                  >
-                    <div className="flex items-center gap-3 overflow-hidden">
-                      <MessageSquare className="h-4 w-4 flex-shrink-0" />
-                      <span className="text-sm font-medium truncate">{chat.title}</span>
-                    </div>
-                    <button
-                      onClick={(e) => deleteChat(e, chat.id)}
-                      className={`p-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-all ${activeChatId === chat.id ? "hover:bg-white/20 text-white" : "hover:bg-red-500 hover:text-white text-red-500"}`}
-                    >
-                      <Trash2 className="h-3.5 w-3.5" />
-                    </button>
-                  </div>
-                ))}
-              </div>
+          {/* Sidebar */}
+          <div
+            className={`${isSidebarOpen ? "flex" : "hidden"} ${isMaximized ? "md:flex" : ""} absolute inset-0 z-[210] md:relative md:z-0 md:inset-auto w-72 flex-col bg-[var(--fun-surface)] border-r border-[var(--fun-stroke-1)] animate-in slide-in-from-left duration-300 shadow-2xl md:shadow-none`}
+          >
+            <div className="p-4 border-b border-[var(--fun-stroke-1)] flex items-center justify-between">
+              <button
+                onClick={createNewChat}
+                className="flex-1 py-2.5 px-4 rounded-xl bg-[var(--fun-purple)] text-white font-bold flex items-center justify-center gap-2 hover:scale-[1.02] transition-all shadow-lg shadow-purple-500/20 active:scale-95"
+              >
+                <Plus className="h-4 w-4" />
+                {lang === "tr" ? "Yeni Sohbet" : "New Chat"}
+              </button>
+              <button
+                onClick={() => setIsSidebarOpen(false)}
+                className="md:hidden ml-2 p-2 rounded-lg hover:bg-[var(--fun-stroke-1)] fun-text"
+              >
+                <X className="h-5 w-5" />
+              </button>
             </div>
-          )}
+            <div className="flex-1 overflow-y-auto p-3 space-y-2">
+              {chats.map((chat) => (
+                <div
+                  key={chat.id}
+                  onClick={() => {
+                    setActiveChatId(chat.id);
+                    setIsSidebarOpen(false);
+                  }}
+                  className={`group flex items-center justify-between p-3 rounded-xl cursor-pointer transition-all ${activeChatId === chat.id ? "bg-[var(--fun-purple)] text-white shadow-md" : "hover:bg-[var(--fun-stroke-1)] fun-text"}`}
+                >
+                  <div className="flex items-center gap-3 overflow-hidden flex-1">
+                    <MessageSquare className="h-4 w-4 flex-shrink-0" />
+                    {editingChatId === chat.id ? (
+                      <form onSubmit={saveTitle} className="flex-1 min-w-0" onClick={e => e.stopPropagation()}>
+                        <input
+                          autoFocus
+                          value={editingTitle}
+                          onChange={(e) => setEditingTitle(e.target.value)}
+                          onBlur={saveTitle}
+                          className="w-full bg-white/20 text-white rounded px-1 outline-none text-sm"
+                        />
+                      </form>
+                    ) : (
+                      <span className="text-sm font-medium truncate">{chat.title}</span>
+                    )}
+                  </div>
+                  <div className="flex items-center">
+                    {editingChatId === chat.id ? (
+                      <button onClick={saveTitle} className="p-1 hover:bg-white/20 rounded">
+                        <Check className="h-3.5 w-3.5 text-white" />
+                      </button>
+                    ) : (
+                      <>
+                        <button
+                          onClick={(e) => startEditing(e, chat)}
+                          className={`p-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-all ${activeChatId === chat.id ? "hover:bg-white/20 text-white" : "hover:bg-[var(--fun-stroke-1)] fun-text-muted"}`}
+                        >
+                          <Edit2 className="h-3.5 w-3.5" />
+                        </button>
+                        <button
+                          onClick={(e) => deleteChat(e, chat.id)}
+                          className={`p-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-all ${activeChatId === chat.id ? "hover:bg-white/20 text-white" : "hover:bg-red-500 hover:text-white text-red-500"}`}
+                        >
+                          <Trash2 className="h-3.5 w-3.5" />
+                        </button>
+                      </>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
 
           <div className="flex-1 flex flex-col min-w-0">
           <div
@@ -604,6 +681,12 @@ export default function NexyAssistant() {
             style={{ borderColor: "var(--fun-stroke-1)" }}
           >
             <div className="flex flex-1 items-center gap-2">
+              <button
+                onClick={() => setIsSidebarOpen(true)}
+                className={`p-2 -ml-1 rounded-lg hover:bg-[var(--fun-stroke-1)] fun-text md:hidden`}
+              >
+                <Menu className="h-5 w-5" />
+              </button>
               <div className="relative">
                 <img
                   src="/nexy-kafa-buyuk.png"
@@ -615,7 +698,7 @@ export default function NexyAssistant() {
               <div className="flex flex-col justify-center items-start">
                 <div className="flex items-center gap-2">
                   <p className="fun-text text-lg font-bold leading-none tracking-tight">
-                    Nexy
+                    Nexy Assistant
                   </p>
                   <span
                     className="rounded-full bg-[var(--fun-purple)] px-2 py-0.5 text-[9px] font-bold uppercase tracking-widest text-white shadow-lg shadow-purple-500/20"
@@ -623,7 +706,6 @@ export default function NexyAssistant() {
                     {t("nexy.beta_tag")}
                   </span>
                 </div>
-                <p className="text-[10px] fun-text-muted mt-1 font-medium">AI Assistant</p>
               </div>
             </div>
             <div className="flex-1 flex items-center justify-end gap-1">
