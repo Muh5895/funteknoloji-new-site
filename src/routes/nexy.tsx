@@ -65,22 +65,15 @@ function NexyPage() {
                 <p className="text-lg md:text-xl text-white/80 max-w-[600px] mx-auto lg:mx-0">
                   {t("nexy.hero.desc")}
                 </p>
-                <div className="relative z-10 flex justify-center lg:justify-start pt-4">
-                  <ArrowButton
-                    onClick={() => window.dispatchEvent(new CustomEvent("open-nexy-chat"))}
-                    variant="light"
-                    className="w-full sm:w-auto"
-                  >
-                    {lang === "tr" ? "Kullan" : "Use"}
-                  </ArrowButton>
-                </div>
               </div>
               <div className="flex justify-center lg:justify-end">
                 <div className="relative w-full max-w-[500px] flex flex-col gap-8">
                   <div className="absolute -inset-10 bg-[var(--fun-purple)]/20 blur-[80px] rounded-full animate-pulse" />
-                  <div className="relative bg-[#1A1F2B] border border-white/10 rounded-[40px] p-10 shadow-2xl backdrop-blur-2xl">
-                    <div className="flex items-center gap-6 mb-8">
-                      <div className="h-24 w-24 rounded-3xl bg-[var(--fun-purple)]/10 flex items-center justify-center shadow-2xl border border-[var(--fun-purple)]/20 p-4 overflow-hidden">
+                  <div className="relative bg-[#0A0C14] border border-white/5 rounded-[40px] p-8 sm:p-10 shadow-2xl backdrop-blur-3xl overflow-hidden group/card">
+                    <div className="absolute inset-0 bg-gradient-to-br from-[var(--fun-purple)]/10 to-transparent opacity-0 group-hover/card:opacity-100 transition-opacity duration-700" />
+
+                    <div className="relative z-10 flex items-center gap-6 mb-8">
+                      <div className="h-20 w-20 sm:h-24 sm:w-24 rounded-3xl bg-black flex items-center justify-center shadow-2xl border border-white/5 p-4 overflow-hidden">
                         <img
                           src="/nexy-kafa-buyuk.png"
                           alt="Nexy"
@@ -88,17 +81,34 @@ function NexyPage() {
                         />
                       </div>
                       <div>
-                        <h2 className="text-3xl font-bold text-white">Nexy</h2>
+                        <h2 className="text-2xl sm:text-3xl font-bold text-white">Nexy</h2>
+                        <div className="flex items-center gap-2 mt-1">
+                          <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+                          <span className="text-xs text-green-500 font-medium uppercase tracking-widest">{t("nexy.status.active")}</span>
+                        </div>
                       </div>
                     </div>
-                    <div className="space-y-4">
-                      <div className="bg-white/5 rounded-2xl rounded-tl-none p-4 border border-white/5">
-                        <p className="text-white/90 text-sm">{t("nexy.msg1")}</p>
-                      </div>
-                      <div className="flex justify-end">
-                        <div className="bg-[var(--fun-purple)] rounded-2xl rounded-tr-none p-4 text-white text-sm shadow-xl">
-                          {t("nexy.demo.query")}
+
+                    <div className="relative z-10 space-y-6">
+                      <div className="space-y-4">
+                        <div className="bg-white/5 rounded-2xl rounded-tl-none p-4 border border-white/5">
+                          <p className="text-white/90 text-sm leading-relaxed">{t("nexy.msg1")}</p>
                         </div>
+                        <div className="flex justify-end">
+                          <div className="bg-[var(--fun-purple)] rounded-2xl rounded-tr-none p-4 text-white text-sm shadow-xl">
+                            {t("nexy.demo.query")}
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="pt-4">
+                        <ArrowButton
+                          onClick={() => window.dispatchEvent(new CustomEvent("open-nexy-chat"))}
+                          variant="light"
+                          className="w-full justify-center !bg-white !text-black hover:!bg-[var(--fun-purple)] hover:!text-white"
+                        >
+                          {t("nexy.use_now")}
+                        </ArrowButton>
                       </div>
                     </div>
                   </div>
