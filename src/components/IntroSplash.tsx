@@ -14,19 +14,27 @@ export default function IntroSplash() {
     if (sessionStorage.getItem(SKIP_KEY)) return;
     sessionStorage.setItem(SKIP_KEY, "1");
     setShow(true);
-    // lock scroll while playing
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = prev;
-    };
   }, []);
+
+  useEffect(() => {
+    if (!show) return;
+    // lock scroll while playing
+    const originalOverflow = document.body.style.overflow;
+    const originalHeight = document.body.style.height;
+    document.body.style.overflow = "hidden";
+    document.body.style.height = "100vh";
+    return () => {
+      document.body.style.overflow = originalOverflow;
+      document.body.style.height = originalHeight;
+    };
+  }, [show]);
 
   const finish = () => {
     setFading(true);
     setTimeout(() => {
       setShow(false);
       document.body.style.overflow = "";
+      document.body.style.height = "";
     }, 600);
   };
 

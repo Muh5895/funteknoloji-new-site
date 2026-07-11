@@ -109,6 +109,23 @@ function RootShell({ children }: { children: React.ReactNode }) {
   );
 }
 
+function RTLAndLangHandler({ children }: { children: React.ReactNode }) {
+  const { lang } = useLang();
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      document.documentElement.lang = lang;
+      if (lang === "ar") {
+        document.documentElement.dir = "rtl";
+      } else {
+        document.documentElement.dir = "ltr";
+      }
+    }
+  }, [lang]);
+
+  return <>{children}</>;
+}
+
 function RootComponent() {
   useEffect(() => {
     inject();
@@ -116,12 +133,14 @@ function RootComponent() {
 
   return (
     <LanguageProvider>
-      <IntroSplash />
-      <Header />
-      <Outlet />
-      <NexyAssistant />
-      <Footer />
-      <Toaster position="bottom-right" richColors closeButton expand={false} />
+      <RTLAndLangHandler>
+        <IntroSplash />
+        <Header />
+        <Outlet />
+        <NexyAssistant />
+        <Footer />
+        <Toaster position="bottom-right" richColors closeButton expand={false} />
+      </RTLAndLangHandler>
     </LanguageProvider>
   );
 }

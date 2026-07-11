@@ -361,31 +361,37 @@ function ServicesSection({ t }: { t: (k: string) => string }) {
       title: t("home.services.item1.title"),
       desc: t("home.services.item1.desc"),
       icon: <Cpu className="h-8 w-8" />,
+      image: "/Ai.png",
     },
     {
       title: t("home.services.item2.title"),
       desc: t("home.services.item2.desc"),
       icon: <Code2 className="h-8 w-8" />,
+      image: "/Web.png",
     },
     {
       title: t("home.services.item3.title"),
       desc: t("home.services.item3.desc"),
       icon: <Smartphone className="h-8 w-8" />,
+      image: "/Telefon.png",
     },
     {
       title: t("home.services.item4.title"),
       desc: t("home.services.item4.desc"),
       icon: <Database className="h-8 w-8" />,
+      image: "/Veri.png",
     },
     {
       title: t("home.services.item5.title"),
       desc: t("home.services.item5.desc"),
       icon: <Search className="h-8 w-8" />,
+      image: "/Siber.png",
     },
     {
       title: t("home.services.item6.title"),
       desc: t("home.services.item6.desc"),
       icon: <HeartHandshake className="h-8 w-8" />,
+      image: "/Danışmanlık.jpeg",
     },
   ];
 
@@ -414,10 +420,14 @@ function ServicesSection({ t }: { t: (k: string) => string }) {
                   borderColor: "var(--fun-stroke-1)",
                 }}
               >
-                {/* Mobile: Icon first, then content */}
+                {/* Mobile: Image block (shows service image on mobile instead of just small icon block) */}
                 <div className="md:hidden flex justify-start mb-6">
-                  <div className="h-20 w-20 rounded-3xl flex items-center justify-center transition-all duration-500 shadow-lg text-[var(--fun-purple)] bg-[var(--fun-card)]">
-                    {service.icon}
+                  <div className="h-20 w-20 rounded-3xl overflow-hidden flex items-center justify-center transition-all duration-500 shadow-lg bg-[var(--fun-card)] border border-[var(--fun-stroke-1)]">
+                    <img
+                      src={service.image}
+                      alt={service.title}
+                      className="w-full h-full object-cover"
+                    />
                   </div>
                 </div>
 
@@ -454,22 +464,16 @@ function ServicesSection({ t }: { t: (k: string) => string }) {
                   </div>
                 </aside>
 
-                {/* Desktop: Image/Icon block - Placed second for RIGHT side on desktop */}
+                {/* Desktop: Image block - Placed second for RIGHT side on desktop */}
                 <div
-                  className={`${i === 0 ? "md:col-span-8" : ""} hidden md:flex rounded-xl overflow-hidden min-h-[240px] md:min-h-[300px] transition-transform duration-500 items-center justify-center relative md:order-2`}
-                  style={{
-                    background: "linear-gradient(135deg, var(--fun-stroke-2), var(--fun-surface))",
-                  }}
+                  className={`${i === 0 ? "md:col-span-8" : ""} hidden md:flex rounded-xl overflow-hidden min-h-[240px] md:min-h-[300px] transition-transform duration-500 items-center justify-center relative md:order-2 border border-[var(--fun-stroke-1)]`}
                 >
+                  <img
+                    src={service.image}
+                    alt={service.title}
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
                   <div className="absolute inset-0 bg-gradient-to-br from-[#6C5CE7]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  <div className="text-center p-8 relative z-10">
-                    <div
-                      className="mx-auto h-20 w-20 rounded-3xl flex items-center justify-center transition-all duration-500 shadow-lg text-[var(--fun-purple)]"
-                      style={{ backgroundColor: "var(--fun-card)" }}
-                    >
-                      {service.icon}
-                    </div>
-                  </div>
                 </div>
               </div>
             </div>
