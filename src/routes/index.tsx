@@ -213,66 +213,42 @@ function FeaturesSection({ t }: { t: (k: string) => string }) {
               className="rounded-[32px] p-8 md:p-10 relative overflow-hidden group border border-[var(--fun-stroke-1)] hover:border-[var(--fun-purple)] transition-all duration-500"
               style={{ backgroundColor: "var(--fun-card)" }}
             >
-              <div className="absolute top-0 right-0 p-10 opacity-5 group-hover:opacity-10 group-hover:scale-110 transition-all duration-700">
+              <div className="absolute top-0 right-0 p-10 opacity-5">
                 <Cpu className="h-40 w-40" />
               </div>
               <div className="h-16 w-16 rounded-2xl bg-[var(--fun-purple)]/10 flex items-center justify-center text-[var(--fun-purple)] mb-8 group-hover:bg-[var(--fun-purple)] group-hover:text-white transition-colors duration-500">
-                <Cpu className="h-8 w-8 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3" />
+                <Cpu className="h-8 w-8" />
               </div>
               <h3 className="text-2xl font-bold mb-4 fun-text">{t("home.features.card1.title")}</h3>
-              <p className="fun-text-muted leading-relaxed mb-6">{t("home.features.card1.desc")}</p>
-              <div className="flex gap-2">
-                <span className="px-3 py-1 rounded-full bg-[var(--fun-surface)] border border-[var(--fun-stroke-1)] text-xs fun-text">
-                  Neural Networks
-                </span>
-                <span className="px-3 py-1 rounded-full bg-[var(--fun-surface)] border border-[var(--fun-stroke-1)] text-xs fun-text">
-                  LLM
-                </span>
-              </div>
+              <p className="fun-text-muted leading-relaxed">{t("home.features.card1.desc")}</p>
             </div>
 
             <div
               className="rounded-[32px] p-8 md:p-10 relative overflow-hidden group border border-[var(--fun-stroke-1)] hover:border-[var(--fun-purple)] transition-all duration-500"
               style={{ backgroundColor: "var(--fun-card)" }}
             >
-              <div className="absolute top-0 right-0 p-10 opacity-5 group-hover:opacity-10 group-hover:scale-110 transition-all duration-700">
+              <div className="absolute top-0 right-0 p-10 opacity-5">
                 <Globe className="h-40 w-40" />
               </div>
               <div className="h-16 w-16 rounded-2xl bg-[var(--fun-purple)]/10 flex items-center justify-center text-[var(--fun-purple)] mb-8 group-hover:bg-[var(--fun-purple)] group-hover:text-white transition-colors duration-500">
-                <Globe className="h-8 w-8 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3" />
+                <Globe className="h-8 w-8" />
               </div>
               <h3 className="text-2xl font-bold mb-4 fun-text">{t("home.features.card2.title")}</h3>
-              <p className="fun-text-muted leading-relaxed mb-6">{t("home.features.card2.desc")}</p>
-              <div className="flex gap-2">
-                <span className="px-3 py-1 rounded-full bg-[var(--fun-surface)] border border-[var(--fun-stroke-1)] text-xs fun-text">
-                  Global CDN
-                </span>
-                <span className="px-3 py-1 rounded-full bg-[var(--fun-surface)] border border-[var(--fun-stroke-1)] text-xs fun-text">
-                  Autoscale
-                </span>
-              </div>
+              <p className="fun-text-muted leading-relaxed">{t("home.features.card2.desc")}</p>
             </div>
 
             <div
               className="rounded-[32px] p-8 md:p-10 relative overflow-hidden group border border-[var(--fun-stroke-1)] hover:border-[var(--fun-purple)] transition-all duration-500"
               style={{ backgroundColor: "var(--fun-card)" }}
             >
-              <div className="absolute top-0 right-0 p-10 opacity-5 group-hover:opacity-10 group-hover:scale-110 transition-all duration-700">
+              <div className="absolute top-0 right-0 p-10 opacity-5">
                 <ShieldCheck className="h-40 w-40" />
               </div>
               <div className="h-16 w-16 rounded-2xl bg-[var(--fun-purple)]/10 flex items-center justify-center text-[var(--fun-purple)] mb-8 group-hover:bg-[var(--fun-purple)] group-hover:text-white transition-colors duration-500">
-                <ShieldCheck className="h-8 w-8 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3" />
+                <ShieldCheck className="h-8 w-8" />
               </div>
               <h3 className="text-2xl font-bold mb-4 fun-text">{t("home.features.card3.title")}</h3>
-              <p className="fun-text-muted leading-relaxed mb-6">{t("home.features.card3.desc")}</p>
-              <div className="flex gap-2">
-                <span className="px-3 py-1 rounded-full bg-[var(--fun-surface)] border border-[var(--fun-stroke-1)] text-xs fun-text">
-                  AES-256
-                </span>
-                <span className="px-3 py-1 rounded-full bg-[var(--fun-surface)] border border-[var(--fun-stroke-1)] text-xs fun-text">
-                  SSL
-                </span>
-              </div>
+              <p className="fun-text-muted leading-relaxed">{t("home.features.card3.desc")}</p>
             </div>
           </div>
         </div>
@@ -384,32 +360,32 @@ function ServicesSection({ t }: { t: (k: string) => string }) {
     {
       title: t("home.services.item1.title"),
       desc: t("home.services.item1.desc"),
-      icon: <Cpu className="h-8 w-8 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3" />,
+      icon: <Cpu className="h-8 w-8" />,
     },
     {
       title: t("home.services.item2.title"),
       desc: t("home.services.item2.desc"),
-      icon: <Code2 className="h-8 w-8 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3" />,
+      icon: <Code2 className="h-8 w-8" />,
     },
     {
       title: t("home.services.item3.title"),
       desc: t("home.services.item3.desc"),
-      icon: <Smartphone className="h-8 w-8 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3" />,
+      icon: <Smartphone className="h-8 w-8" />,
     },
     {
       title: t("home.services.item4.title"),
       desc: t("home.services.item4.desc"),
-      icon: <Database className="h-8 w-8 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3" />,
+      icon: <Database className="h-8 w-8" />,
     },
     {
       title: t("home.services.item5.title"),
       desc: t("home.services.item5.desc"),
-      icon: <Search className="h-8 w-8 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3" />,
+      icon: <Search className="h-8 w-8" />,
     },
     {
       title: t("home.services.item6.title"),
       desc: t("home.services.item6.desc"),
-      icon: <HeartHandshake className="h-8 w-8 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3" />,
+      icon: <HeartHandshake className="h-8 w-8" />,
     },
   ];
 

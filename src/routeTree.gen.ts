@@ -14,7 +14,6 @@ import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as SitemapRouteImport } from './routes/sitemap'
 import { Route as ServicesRouteImport } from './routes/services'
 import { Route as ServicePolicyRouteImport } from './routes/service-policy'
-import { Route as ReviewsRouteImport } from './routes/reviews'
 import { Route as QuakesafeRouteImport } from './routes/quakesafe'
 import { Route as ProjectsRouteImport } from './routes/projects'
 import { Route as PrivacyPolicyRouteImport } from './routes/privacy-policy'
@@ -55,11 +54,6 @@ const ServicesRoute = ServicesRouteImport.update({
 const ServicePolicyRoute = ServicePolicyRouteImport.update({
   id: '/service-policy',
   path: '/service-policy',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ReviewsRoute = ReviewsRouteImport.update({
-  id: '/reviews',
-  path: '/reviews',
   getParentRoute: () => rootRouteImport,
 } as any)
 const QuakesafeRoute = QuakesafeRouteImport.update({
@@ -158,7 +152,6 @@ export interface FileRoutesByFullPath {
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/projects': typeof ProjectsRoute
   '/quakesafe': typeof QuakesafeRoute
-  '/reviews': typeof ReviewsRoute
   '/service-policy': typeof ServicePolicyRoute
   '/services': typeof ServicesRoute
   '/sitemap': typeof SitemapRoute
@@ -181,7 +174,6 @@ export interface FileRoutesByTo {
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/projects': typeof ProjectsRoute
   '/quakesafe': typeof QuakesafeRoute
-  '/reviews': typeof ReviewsRoute
   '/service-policy': typeof ServicePolicyRoute
   '/services': typeof ServicesRoute
   '/sitemap': typeof SitemapRoute
@@ -206,7 +198,6 @@ export interface FileRoutesById {
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/projects': typeof ProjectsRoute
   '/quakesafe': typeof QuakesafeRoute
-  '/reviews': typeof ReviewsRoute
   '/service-policy': typeof ServicePolicyRoute
   '/services': typeof ServicesRoute
   '/sitemap': typeof SitemapRoute
@@ -232,7 +223,6 @@ export interface FileRouteTypes {
     | '/privacy-policy'
     | '/projects'
     | '/quakesafe'
-    | '/reviews'
     | '/service-policy'
     | '/services'
     | '/sitemap'
@@ -255,7 +245,6 @@ export interface FileRouteTypes {
     | '/privacy-policy'
     | '/projects'
     | '/quakesafe'
-    | '/reviews'
     | '/service-policy'
     | '/services'
     | '/sitemap'
@@ -279,7 +268,6 @@ export interface FileRouteTypes {
     | '/privacy-policy'
     | '/projects'
     | '/quakesafe'
-    | '/reviews'
     | '/service-policy'
     | '/services'
     | '/sitemap'
@@ -304,7 +292,6 @@ export interface RootRouteChildren {
   PrivacyPolicyRoute: typeof PrivacyPolicyRoute
   ProjectsRoute: typeof ProjectsRoute
   QuakesafeRoute: typeof QuakesafeRoute
-  ReviewsRoute: typeof ReviewsRoute
   ServicePolicyRoute: typeof ServicePolicyRoute
   ServicesRoute: typeof ServicesRoute
   SitemapRoute: typeof SitemapRoute
@@ -347,13 +334,6 @@ declare module '@tanstack/react-router' {
       path: '/service-policy'
       fullPath: '/service-policy'
       preLoaderRoute: typeof ServicePolicyRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/reviews': {
-      id: '/reviews'
-      path: '/reviews'
-      fullPath: '/reviews'
-      preLoaderRoute: typeof ReviewsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/quakesafe': {
@@ -498,7 +478,6 @@ const rootRouteChildren: RootRouteChildren = {
   PrivacyPolicyRoute: PrivacyPolicyRoute,
   ProjectsRoute: ProjectsRoute,
   QuakesafeRoute: QuakesafeRoute,
-  ReviewsRoute: ReviewsRoute,
   ServicePolicyRoute: ServicePolicyRoute,
   ServicesRoute: ServicesRoute,
   SitemapRoute: SitemapRoute,

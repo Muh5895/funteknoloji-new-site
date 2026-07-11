@@ -74,9 +74,13 @@ const tr: Dict = {
   "blog.post.stay_updated": "Yapay zeka ve yazılım dünyasındaki gelişmeleri kaçırmayın.",
   "blog.post.stop_reading": "Okumayı Durdur",
   "blog.post.translation_warning": "Metin Hatalı Çevrilmiş Olabilir",
+  "blog.post.share": "Bu Yazıyı Paylaş",
+  "blog.post.share_success": "Paylaşım linki kopyalandı!",
   "blog.title": "Teknoloji Dünyasından",
   "brand_kit.badge": "Kurumsal",
   "brand_kit.colors.title": "Renk Paletimiz",
+  "brand_kit.colors.purple": "Mor",
+  "brand_kit.colors.black": "Siyah",
   "brand_kit.desc":
     "Fun Teknoloji logolarını ve görsel materyallerini buradan indirebilir, kullanım kılavuzuna göz atabilirsiniz.",
   "brand_kit.download_png": "PNG İndir",
@@ -454,8 +458,8 @@ const tr: Dict = {
   "quakesafe.features.4.title": "Aile Grupları",
   "quakesafe.features.5.desc": "İnternet kesildiğinde bile kritik rehberlere ve haritalara erişin.",
   "quakesafe.features.5.title": "Çevrimdışı Mod",
-  "quakesafe.features.6.desc": "Yapay zeka ile hasar risk tahmini ve bölge güvenliği analizi.",
-  "quakesafe.features.6.title": "AI Analizi",
+  "quakesafe.features.6.desc": "Afet anında ve sonrasında acil durum rehberliği ve destek sağlayan yapay zeka sohbet asistanı.",
+  "quakesafe.features.6.title": "AI Sohbet",
   "quakesafe.features.7.desc": "Baz istasyonları çöktüğünde cihazlar arası iletişim yeteneği.",
   "quakesafe.features.7.title": "Mesh Ağı",
   "quakesafe.features.8.desc": "Önemli belgelerinizi ve sağlık verilerinizi güvenli saklayın.",
@@ -646,9 +650,13 @@ const en: Dict = {
     "Don't miss the developments in the world of artificial intelligence and software.",
   "blog.post.stop_reading": "Stop Reading",
   "blog.post.translation_warning": "The Text Might Be Translated Incorrectly",
+  "blog.post.share": "Share This Article",
+  "blog.post.share_success": "Sharing link copied!",
   "blog.title": "From the World of Technology",
   "brand_kit.badge": "Corporate",
   "brand_kit.colors.title": "Our Color Palette",
+  "brand_kit.colors.purple": "Purple",
+  "brand_kit.colors.black": "Black",
   "brand_kit.desc":
     "You can download Fun Teknoloji logos and visual materials here and take a look at the usage guide.",
   "brand_kit.download_png": "Download PNG",
@@ -1024,9 +1032,8 @@ const en: Dict = {
   "quakesafe.features.4.title": "Family Groups",
   "quakesafe.features.5.desc": "Access critical guides and maps even when the internet goes out.",
   "quakesafe.features.5.title": "Offline Mode",
-  "quakesafe.features.6.desc":
-    "Damage risk prediction and area security analysis with artificial intelligence.",
-  "quakesafe.features.6.title": "AI Analysis",
+  "quakesafe.features.6.desc": "AI chat assistant providing emergency guidance and support during and after a disaster.",
+  "quakesafe.features.6.title": "AI Chat",
   "quakesafe.features.7.desc": "Ability to communicate between devices when base stations go down.",
   "quakesafe.features.7.title": "Mesh Network",
   "quakesafe.features.8.desc": "Keep your important documents and health data safe.",
@@ -1218,6 +1225,8 @@ const de: Dict = {
   "blog.title": "Aus der Welt der Technik",
   "brand_kit.badge": "Corporate",
   "brand_kit.colors.title": "Our Color Palette",
+  "brand_kit.colors.purple": "Violett",
+  "brand_kit.colors.black": "Schwarz",
   "brand_kit.desc":
     "You can download Fun Teknoloji logos and visual materials here and take a look at the usage guide.",
   "brand_kit.download_png": "Download PNG",
@@ -1588,9 +1597,8 @@ const de: Dict = {
   "quakesafe.features.5.desc":
     "Greifen Sie auch dann auf wichtige Reiseführer und Karten zu, wenn das Internet ausfällt.",
   "quakesafe.features.5.title": "Offline-Modus",
-  "quakesafe.features.6.desc":
-    "Schadensrisikovorhersage und Bereichssicherheitsanalyse mit künstlicher Intelligenz.",
-  "quakesafe.features.6.title": "KI-Analyse",
+  "quakesafe.features.6.desc": "KI-Chat-Assistent für Notfallberatung und Unterstützung während und nach einer Katastrophe.",
+  "quakesafe.features.6.title": "KI-Chat",
   "quakesafe.features.7.desc":
     "Möglichkeit zur Kommunikation zwischen Geräten, wenn Basisstationen ausfallen.",
   "quakesafe.features.7.title": "Mesh-Netzwerk",
@@ -1802,6 +1810,8 @@ const fr: Dict = {
   "blog.title": "Du monde de la technologie",
   "brand_kit.badge": "Corporate",
   "brand_kit.colors.title": "Our Color Palette",
+  "brand_kit.colors.purple": "Violet",
+  "brand_kit.colors.black": "Noir",
   "brand_kit.desc":
     "You can download Fun Teknoloji logos and visual materials here and take a look at the usage guide.",
   "brand_kit.download_png": "Download PNG",
@@ -2175,9 +2185,8 @@ const fr: Dict = {
   "quakesafe.features.5.desc":
     "Accédez à des guides et des cartes critiques même lorsque Internet est coupé.",
   "quakesafe.features.5.title": "Mode hors ligne",
-  "quakesafe.features.6.desc":
-    "Prédiction des risques de dommages et analyse de la sécurité des zones avec l’intelligence artificielle.",
-  "quakesafe.features.6.title": "Analyse de l'IA",
+  "quakesafe.features.6.desc": "Assistant de chat IA fournissant des conseils d'urgence et un soutien pendant et après une catastrophe.",
+  "quakesafe.features.6.title": "Chat IA",
   "quakesafe.features.7.desc":
     "Possibilité de communiquer entre les appareils lorsque les stations de base tombent en panne.",
   "quakesafe.features.7.title": "Réseau maillé",
@@ -2387,6 +2396,8 @@ const es: Dict = {
   "blog.title": "Del mundo de la tecnología",
   "brand_kit.badge": "Corporate",
   "brand_kit.colors.title": "Our Color Palette",
+  "brand_kit.colors.purple": "Púrpura",
+  "brand_kit.colors.black": "Negro",
   "brand_kit.desc":
     "You can download Fun Teknoloji logos and visual materials here and take a look at the usage guide.",
   "brand_kit.download_png": "Download PNG",
@@ -2751,9 +2762,8 @@ const es: Dict = {
   "quakesafe.features.4.title": "Grupos familiares",
   "quakesafe.features.5.desc": "Acceda a guías y mapas críticos incluso cuando no haya Internet.",
   "quakesafe.features.5.title": "Modo sin conexión",
-  "quakesafe.features.6.desc":
-    "Predicción de riesgos de daños y análisis de seguridad del área con inteligencia artificial.",
-  "quakesafe.features.6.title": "Análisis de IA",
+  "quakesafe.features.6.desc": "Asistente de chat de IA que brinda orientación y apoyo de emergencia durante y después de un desastre.",
+  "quakesafe.features.6.title": "Chat de IA",
   "quakesafe.features.7.desc":
     "Capacidad de comunicarse entre dispositivos cuando las estaciones base fallan.",
   "quakesafe.features.7.title": "Red de malla",
@@ -2960,6 +2970,8 @@ const az: Dict = {
   "blog.title": "Texnologiya Dünyasından",
   "brand_kit.badge": "Corporate",
   "brand_kit.colors.title": "Our Color Palette",
+  "brand_kit.colors.purple": "Bənövşəyi",
+  "brand_kit.colors.black": "Qara",
   "brand_kit.desc":
     "You can download Fun Teknoloji logos and visual materials here and take a look at the usage guide.",
   "brand_kit.download_png": "Download PNG",
@@ -3317,9 +3329,8 @@ const az: Dict = {
   "quakesafe.features.5.desc":
     "Hətta internet kəsildikdə belə kritik bələdçilərə və xəritələrə daxil olun.",
   "quakesafe.features.5.title": "Oflayn rejim",
-  "quakesafe.features.6.desc":
-    "Süni intellektlə zərər riskinin proqnozlaşdırılması və ərazinin təhlükəsizliyinin təhlili.",
-  "quakesafe.features.6.title": "AI təhlili",
+  "quakesafe.features.6.desc": "Fəlakət zamanı və sonrasında təcili yardım təlimatı və dəstək verən süni intellekt söhbət köməkçisi.",
+  "quakesafe.features.6.title": "AI Söhbət",
   "quakesafe.features.7.desc":
     "Baza stansiyaları sıradan çıxdıqda cihazlar arasında əlaqə qurmaq imkanı.",
   "quakesafe.features.7.title": "Mesh şəbəkəsi",
@@ -3525,6 +3536,8 @@ const ru: Dict = {
   "blog.title": "Из мира технологий",
   "brand_kit.badge": "Corporate",
   "brand_kit.colors.title": "Our Color Palette",
+  "brand_kit.colors.purple": "Фиолетовый",
+  "brand_kit.colors.black": "Черный",
   "brand_kit.desc":
     "You can download Fun Teknoloji logos and visual materials here and take a look at the usage guide.",
   "brand_kit.download_png": "Download PNG",
@@ -3892,9 +3905,8 @@ const ru: Dict = {
   "quakesafe.features.5.desc":
     "Доступ к важным руководствам и картам даже при отключении Интернета.",
   "quakesafe.features.5.title": "Автономный режим",
-  "quakesafe.features.6.desc":
-    "Прогнозирование риска ущерба и анализ безопасности территории с помощью искусственного интеллекта.",
-  "quakesafe.features.6.title": "ИИ-анализ",
+  "quakesafe.features.6.desc": "Чат-ассистент с ИИ, предоставляющий инструкции и поддержку в чрезвычайных ситуациях во время и после катастрофы.",
+  "quakesafe.features.6.title": "ИИ-чат",
   "quakesafe.features.7.desc":
     "Возможность связи между устройствами при выходе из строя базовых станций.",
   "quakesafe.features.7.title": "Ячеистая сеть",
@@ -4098,6 +4110,8 @@ const ar: Dict = {
   "blog.title": "من عالم التكنولوجيا",
   "brand_kit.badge": "Corporate",
   "brand_kit.colors.title": "Our Color Palette",
+  "brand_kit.colors.purple": "بنفسجي",
+  "brand_kit.colors.black": "أسود",
   "brand_kit.desc":
     "You can download Fun Teknoloji logos and visual materials here and take a look at the usage guide.",
   "brand_kit.download_png": "Download PNG",
@@ -4429,9 +4443,8 @@ const ar: Dict = {
   "quakesafe.features.4.title": "المجموعات العائلية",
   "quakesafe.features.5.desc": "يمكنك الوصول إلى الأدلة والخرائط المهمة حتى عند انقطاع الإنترنت.",
   "quakesafe.features.5.title": "وضع غير متصل بالشبكة",
-  "quakesafe.features.6.desc":
-    "التنبؤ بمخاطر الأضرار وتحليل أمن المنطقة باستخدام الذكاء الاصطناعي.",
-  "quakesafe.features.6.title": "تحليل الذكاء الاصطناعي",
+  "quakesafe.features.6.desc": "مساعد دردشة الذكاء الاصطناعي لتقديم التوجيه والدعم في حالات الطوارئ أثناء وبعد الكارثة.",
+  "quakesafe.features.6.title": "دردشة الذكاء الاصطناعي",
   "quakesafe.features.7.desc": "القدرة على التواصل بين الأجهزة عند تعطل المحطات الأساسية.",
   "quakesafe.features.7.title": "شبكة شبكية",
   "quakesafe.features.8.desc": "حافظ على وثائقك المهمة وبياناتك الصحية آمنة.",
@@ -4634,6 +4647,8 @@ const it: Dict = {
   "blog.title": "Dal mondo della tecnologia",
   "brand_kit.badge": "Corporate",
   "brand_kit.colors.title": "Our Color Palette",
+  "brand_kit.colors.purple": "Viola",
+  "brand_kit.colors.black": "Nero",
   "brand_kit.desc":
     "You can download Fun Teknoloji logos and visual materials here and take a look at the usage guide.",
   "brand_kit.download_png": "Download PNG",
@@ -4995,9 +5010,8 @@ const it: Dict = {
   "quakesafe.features.5.desc":
     "Accedi a guide e mappe critiche anche quando Internet non è disponibile.",
   "quakesafe.features.5.title": "Modalità offline",
-  "quakesafe.features.6.desc":
-    "Previsione del rischio danni e analisi della sicurezza dell’area con l’intelligenza artificiale.",
-  "quakesafe.features.6.title": "Analisi dell'intelligenza artificiale",
+  "quakesafe.features.6.desc": "Assistente chat IA che fornisce guida e supporto di emergenza durante e dopo un disastro.",
+  "quakesafe.features.6.title": "Chat IA",
   "quakesafe.features.7.desc":
     "Capacità di comunicare tra dispositivi quando le stazioni base non funzionano.",
   "quakesafe.features.7.title": "Rete a maglie",
@@ -5205,6 +5219,8 @@ const pt: Dict = {
   "blog.title": "Do mundo da tecnologia",
   "brand_kit.badge": "Corporate",
   "brand_kit.colors.title": "Our Color Palette",
+  "brand_kit.colors.purple": "Roxo",
+  "brand_kit.colors.black": "Preto",
   "brand_kit.desc":
     "You can download Fun Teknoloji logos and visual materials here and take a look at the usage guide.",
   "brand_kit.download_png": "Download PNG",
@@ -5569,9 +5585,8 @@ const pt: Dict = {
   "quakesafe.features.5.desc":
     "Acesse guias e mapas críticos mesmo quando a Internet estiver desligada.",
   "quakesafe.features.5.title": "Modo off-line",
-  "quakesafe.features.6.desc":
-    "Previsão de risco de danos e análise de segurança de área com inteligência artificial.",
-  "quakesafe.features.6.title": "Análise de IA",
+  "quakesafe.features.6.desc": "Assistente de chat de IA que fornece orientação e suporte de emrgência durante e após um desastre.",
+  "quakesafe.features.6.title": "Chat de IA",
   "quakesafe.features.7.desc":
     "Capacidade de comunicação entre dispositivos quando as estações base ficam inoperantes.",
   "quakesafe.features.7.title": "Rede de malha",
@@ -5776,6 +5791,8 @@ const ja: Dict = {
   "blog.title": "テクノロジーの世界から",
   "brand_kit.badge": "Corporate",
   "brand_kit.colors.title": "Our Color Palette",
+  "brand_kit.colors.purple": "紫",
+  "brand_kit.colors.black": "黒",
   "brand_kit.desc":
     "You can download Fun Teknoloji logos and visual materials here and take a look at the usage guide.",
   "brand_kit.download_png": "Download PNG",
@@ -6127,8 +6144,8 @@ const ja: Dict = {
   "quakesafe.features.5.desc":
     "インターネットが切断された場合でも、重要なガイドや地図にアクセスできます。",
   "quakesafe.features.5.title": "オフラインモード",
-  "quakesafe.features.6.desc": "人工知能による被害リスク予測とエリアセキュリティ分析。",
-  "quakesafe.features.6.title": "AI分析",
+  "quakesafe.features.6.desc": "災害中および災害後に緊急のガイダンスとサポートを提供するAIチャットアシスタント。",
+  "quakesafe.features.6.title": "AIチャット",
   "quakesafe.features.7.desc": "基地局がダウンした場合でもデバイス間で通信できる機能。",
   "quakesafe.features.7.title": "メッシュネットワーク",
   "quakesafe.features.8.desc": "重要な書類や健康データを安全に保管してください。",
@@ -6329,6 +6346,8 @@ const zh: Dict = {
   "blog.title": "来自科技世界",
   "brand_kit.badge": "Corporate",
   "brand_kit.colors.title": "Our Color Palette",
+  "brand_kit.colors.purple": "紫色",
+  "brand_kit.colors.black": "黑色",
   "brand_kit.desc":
     "You can download Fun Teknoloji logos and visual materials here and take a look at the usage guide.",
   "brand_kit.download_png": "Download PNG",
@@ -6643,8 +6662,8 @@ const zh: Dict = {
   "quakesafe.features.4.title": "家庭团体",
   "quakesafe.features.5.desc": "即使互联网中断，也能访问重要指南和地图。",
   "quakesafe.features.5.title": "离线模式",
-  "quakesafe.features.6.desc": "利用人工智能进行损害风险预测和区域安全分析。",
-  "quakesafe.features.6.title": "人工智能分析",
+  "quakesafe.features.6.desc": "AI聊天助手在灾难期间和之后提供紧急指导和支持。",
+  "quakesafe.features.6.title": "AI聊天",
   "quakesafe.features.7.desc": "当基站出现故障时，设备之间能够进行通信。",
   "quakesafe.features.7.title": "网状网络",
   "quakesafe.features.8.desc": "确保您的重要文件和健康数据安全。",

@@ -287,7 +287,7 @@ export default function NexyAssistant() {
 
     const currentChatId = activeChatId!;
     setUserInput("");
-    setIsTyping(true);
+    setIsTyping(false);
     setIsThinking(true);
 
     let response = await getNexyBrainResponse(savedInput);
@@ -692,12 +692,14 @@ export default function NexyAssistant() {
                 <Menu className="h-5 w-5" />
               </button>
               <div className="relative">
-                <img
-                  src="/nexy-kafa-buyuk.png"
-                  alt="Nexy"
-                  className="h-12 w-12 object-contain transition-transform duration-500 transform hover:scale-110 sm:h-14 sm:w-14"
-                />
-                <div className="absolute bottom-1 right-1 w-3 h-3 bg-green-500 border-2 border-[var(--fun-surface)] rounded-full hidden sm:block"></div>
+                <div className="h-12 w-12 sm:h-14 sm:w-14 rounded-xl overflow-hidden flex items-center justify-center p-1 border border-zinc-800" style={{ backgroundColor: "#000000" }}>
+                  <img
+                    src="/nexy-kafa-buyuk.png"
+                    alt="Nexy"
+                    className="h-full w-full object-contain transition-transform duration-500 transform hover:scale-110"
+                  />
+                </div>
+                <div className="absolute -bottom-1 -right-1 w-3.5 h-3.5 bg-green-500 border-2 border-[var(--fun-surface)] rounded-full hidden sm:block"></div>
               </div>
               <div className="flex flex-col justify-center items-start">
                 <div className="flex items-center gap-2">
@@ -754,10 +756,11 @@ export default function NexyAssistant() {
             className={`flex-1 overflow-y-auto p-5 sm:p-8 space-y-6 sm:space-y-8 bg-dots scroll-smooth ${isMaximized ? "max-w-6xl mx-auto w-full" : ""}`}
           >
             {(searchQuery ? filteredMessages : chatMessages).map((m, i) => {
+              const isMsgTyping = m.role === "nexy" && m.displayedText !== m.text;
               return (
                 <div
                   key={i}
-                  className={`flex flex-col ${m.role === "user" ? "items-end" : "items-start"} animate-in fade-in slide-in-from-bottom-4 duration-500`}
+                  className={`flex flex-col ${m.role === "user" ? "items-end" : "items-start"} ${isMsgTyping ? "" : "animate-in fade-in slide-in-from-bottom-4 duration-500"}`}
                 >
                   <div
                     className={`relative group/msg max-w-[85%] sm:max-w-[75%] p-3.5 sm:p-4 rounded-2xl sm:rounded-3xl text-[13px] leading-relaxed ${m.role === "user" ? "bg-gradient-to-br from-[var(--fun-purple)] to-[#8E78FF] text-white rounded-tr-none shadow-xl" : "bg-[var(--fun-surface)] fun-text rounded-tl-none border border-[var(--fun-stroke-1)] shadow-md"}`}

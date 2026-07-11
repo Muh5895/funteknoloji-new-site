@@ -120,8 +120,8 @@ function BrandKitPage() {
         <section className="mt-20 p-8 md:p-12 rounded-[40px] bg-[var(--fun-surface)] border border-[var(--fun-stroke-1)]">
           <h2 className="text-2xl font-bold fun-text mb-6">{t("brand_kit.colors.title")}</h2>
           <div className="grid grid-cols-2 md:grid-cols-2 gap-4">
-            <ColorCard hex="#864FFE" name="Purple" />
-            <ColorCard hex="#000000" name="Black" />
+            <ColorCard hex="#864FFE" name={t("brand_kit.colors.purple")} />
+            <ColorCard hex="#000000" name={t("brand_kit.colors.black")} />
           </div>
         </section>
       </div>
