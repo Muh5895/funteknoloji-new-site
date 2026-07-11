@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
-import introAsset from "../assets/intro.mp4.asset.json";
 
 const SKIP_KEY = "fun_intro_played";
+const INTRO_VIDEO_URL = "https://framerusercontent.com/assets/n1Tyvvk0VdGSZB1OokWWISh7YtU.mp4";
 
 export default function IntroSplash() {
   const [show, setShow] = useState(false);
@@ -35,8 +35,12 @@ export default function IntroSplash() {
     const v = videoRef.current;
     if (!v) return;
 
+    // Force 1.5x speed initially if possible
+    v.playbackRate = 1.5;
+
     const playVideo = async () => {
       try {
+        v.playbackRate = 1.5;
         await v.play();
       } catch (err) {
         console.error("Video play failed:", err);
@@ -46,8 +50,8 @@ export default function IntroSplash() {
 
     playVideo();
 
-    // safety: max 10s
-    const t = setTimeout(finish, 10000);
+    // safety timeout: max 12s
+    const t = setTimeout(finish, 12000);
     return () => clearTimeout(t);
   }, [show]);
 
@@ -56,11 +60,14 @@ export default function IntroSplash() {
   return (
     <div
       className={`fixed inset-0 z-[9999] flex items-center justify-center bg-black transition-opacity duration-500 ${fading ? "opacity-0" : "opacity-100"}`}
-      onContextMenu={(e) => e.preventDefault()}
+      onContextMenu={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+      }}
     >
       <video
         ref={videoRef}
-        src={introAsset.url}
+        src={INTRO_VIDEO_URL}
         muted
         playsInline
         autoPlay
@@ -68,12 +75,21 @@ export default function IntroSplash() {
         disablePictureInPicture
         disableRemotePlayback
         controlsList="nodownload noremoteplayback nofullscreen noplaybackrate"
+        onLoadedMetadata={(e) => {
+          e.currentTarget.playbackRate = 1.5;
+        }}
+        onCanPlay={(e) => {
+          e.currentTarget.playbackRate = 1.5;
+        }}
         onEnded={finish}
         onError={(e) => {
           console.error("Video error:", e);
           finish();
         }}
-        onContextMenu={(e) => e.preventDefault()}
+        onContextMenu={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+        }}
         className="h-full w-full object-cover pointer-events-none select-none"
       />
     </div>

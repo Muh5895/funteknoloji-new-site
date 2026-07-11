@@ -15,10 +15,9 @@ import {
   Activity,
   Clock,
   HeartHandshake,
-  Workflow,
-  Wrench,
-  Radio,
-  FileCheck,
+  Terminal,
+  Webhook,
+  BellRing,
 } from "lucide-react";
 
 export const Route = createFileRoute("/quakesafe")({
@@ -222,11 +221,13 @@ function QuakeSafePage() {
             <div className="main-container relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center py-20 lg:py-28">
               <div className="space-y-6 md:space-y-8 text-center lg:text-left">
                 <div className="flex items-center justify-center lg:justify-start gap-4 mb-4">
-                  <img
-                    src="/assets/logos/quakesafe_seffaf.png"
-                    alt="QuakeSafe"
-                    className="h-12 w-12 object-contain"
-                  />
+                  <div className="h-14 w-14 rounded-full bg-white/5 border border-white/10 p-2 flex items-center justify-center overflow-hidden">
+                    <img
+                      src="/assets/logos/quakesafe_seffaf.png"
+                      alt="QuakeSafe"
+                      className="h-full w-full object-contain rounded-full"
+                    />
+                  </div>
                   <span className="text-3xl font-bold text-white tracking-tighter">QuakeSafe</span>
                 </div>
                 <h1 className="text-heading-2 md:text-heading-1 lg:text-heading-huge font-extrabold text-white leading-tight capitalize">
@@ -253,39 +254,6 @@ function QuakeSafePage() {
 
                   {/* Realtime Seismograph Display */}
                   <Seismograph />
-
-                  {/* Simulated Activity Stream */}
-                  <div className="bg-[#12161F]/90 rounded-[28px] p-6 border border-white/5 text-left flex flex-col justify-between shadow-2xl backdrop-blur-3xl">
-                    <div>
-                      <h3 className="font-bold text-white text-base mb-4 flex items-center gap-2">
-                        <Activity className="h-5 w-5 text-red-500" />
-                        Son Deprem Aktivitesi (Seismic Activity Log)
-                      </h3>
-                      <div className="space-y-3">
-                        <div className="flex items-center justify-between p-3.5 rounded-2xl bg-black/40 border border-white/5">
-                          <div className="flex items-center gap-3">
-                            <span className="px-2 py-0.5 text-xs rounded bg-green-500/20 text-green-400 font-mono font-bold">1.2</span>
-                            <span className="text-sm text-slate-300 font-semibold">Marmara Denizi</span>
-                          </div>
-                          <span className="text-xs text-slate-500 font-mono">10 sn önce</span>
-                        </div>
-                        <div className="flex items-center justify-between p-3.5 rounded-2xl bg-black/40 border border-white/5">
-                          <div className="flex items-center gap-3">
-                            <span className="px-2 py-0.5 text-xs rounded bg-orange-500/20 text-orange-400 font-mono font-bold">3.4</span>
-                            <span className="text-sm text-slate-300 font-semibold">Kahramanmaraş</span>
-                          </div>
-                          <span className="text-xs text-slate-500 font-mono">2 dk önce</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="mt-4 pt-4 border-t border-white/5 flex items-center justify-between text-[11px] text-slate-400">
-                      <span>Aktif Düğüm (Nodes): 1,240</span>
-                      <span className="text-green-500 font-semibold flex items-center gap-1">
-                        <span className="h-1.5 w-1.5 rounded-full bg-green-500" />
-                        Sistem Çevrimiçi
-                      </span>
-                    </div>
-                  </div>
                 </div>
               </div>
             </div>
@@ -313,9 +281,9 @@ function QuakeSafePage() {
                   <div className="h-14 w-14 rounded-2xl bg-[var(--fun-purple)]/10 text-[var(--fun-purple)] flex items-center justify-center font-bold text-xl mb-6">
                     01
                   </div>
-                  <h3 className="text-xl font-bold fun-text mb-3">Erken Algılama (P-Dalgası)</h3>
+                  <h3 className="text-xl font-bold fun-text mb-3">Sismik Veri Akışı</h3>
                   <p className="fun-text-muted text-sm leading-relaxed">
-                    Sensör ağımız, deprem anında yüzeye ilk ulaşan ama yıkıcı olmayan P-dalgalarını saniyeler öncesinden yakalar.
+                    Türkiye genelindeki hassas sensör ağlarımızdan gelen sismik titreşimler anlık olarak takip edilir.
                   </p>
                 </div>
               </div>
@@ -343,7 +311,7 @@ function QuakeSafePage() {
                   </div>
                   <h3 className="text-xl font-bold fun-text mb-3">Erken Uyarı & Otomasyon</h3>
                   <p className="fun-text-muted text-sm leading-relaxed">
-                    Gaz ve elektrik akışları otomatik kesilir, asansörler güvenli kata indirilir ve sakinlere kaçış rotası uyarısı gönderilir.
+                    Yazılım tetikleyicilerimiz ile kritik sitemleriniz otomatik kapatılır ve sakinlere kaçış rotası uyarısı gönderilir.
                   </p>
                 </div>
               </div>
@@ -383,44 +351,44 @@ function QuakeSafePage() {
         </div>
       </section>
 
-      {/* Product Integration & Benefits Section */}
+      {/* Software Integration & Benefits Section */}
       <section className="py-24 px-4 lg:px-5 bg-gradient-to-br from-[var(--fun-surface)] to-[var(--color-background)] border-t border-[var(--fun-stroke-1)]">
         <div className="max-w-[1200px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <ScrollReveal>
             <div className="space-y-6">
-              <span className="badge-fun badge-fun-purple">Donanım & Entegrasyon</span>
+              <span className="badge-fun badge-fun-purple">Yazılım Entegrasyonu & API</span>
               <h2 className="text-3xl md:text-5xl font-extrabold fun-text leading-tight">
-                Her Yapıya Uygun, Profesyonel Entegrasyon
+                Akıllı Yazılım ve API Entegrasyonları
               </h2>
               <p className="fun-text-muted text-base md:text-lg leading-relaxed">
-                QuakeSafe, sadece bir yazılımdan ibaret değildir. Endüstriyel sınıf sensörlerimiz ve akıllı kontrol rölelerimiz bina sistemlerinize bizzat entegre edilir.
+                QuakeSafe, modern yazılım ekosisteminizle tam uyumlu çalışır. Tek bir API çağrısı ile tüm acil durum senaryolarını tetikleyin.
               </p>
               <div className="space-y-4">
                 <div className="flex gap-4">
                   <div className="h-10 w-10 rounded-xl bg-[var(--fun-purple)]/10 text-[var(--fun-purple)] flex items-center justify-center shrink-0">
-                    <Wrench className="h-5 w-5" />
+                    <Terminal className="h-5 w-5" />
                   </div>
                   <div>
-                    <h4 className="font-bold fun-text text-base">Kolay Tak Çalıştır Kurulum</h4>
-                    <p className="text-sm fun-text-muted">Ana şebeke girişlerinize takılan akıllı cihazlarımız hızla kalibre edilir.</p>
+                    <h4 className="font-bold fun-text text-base">SaaS Tabanlı Yönetim Paneli</h4>
+                    <p className="text-sm fun-text-muted">Tüm tesislerinizin sismik durumunu tek bir ekrandan gerçek zamanlı takip edin.</p>
                   </div>
                 </div>
                 <div className="flex gap-4">
                   <div className="h-10 w-10 rounded-xl bg-[var(--fun-purple)]/10 text-[var(--fun-purple)] flex items-center justify-center shrink-0">
-                    <Radio className="h-5 w-5" />
+                    <Webhook className="h-5 w-5" />
                   </div>
                   <div>
-                    <h4 className="font-bold fun-text text-base">RF & Lora Bağımsız İletişim</h4>
-                    <p className="text-sm fun-text-muted">Hücresel şebekeler çalışmasa bile özel telsiz frekansları ile cihazlar kendi arasında haberleşir.</p>
+                    <h4 className="font-bold fun-text text-base">Gelişmiş Webhook & API Desteği</h4>
+                    <p className="text-sm fun-text-muted">Deprem anında kendi sunucularınıza ve IoT cihazlarınıza otomatik sinyal gönderin.</p>
                   </div>
                 </div>
                 <div className="flex gap-4">
                   <div className="h-10 w-10 rounded-xl bg-[var(--fun-purple)]/10 text-[var(--fun-purple)] flex items-center justify-center shrink-0">
-                    <FileCheck className="h-5 w-5" />
+                    <BellRing className="h-5 w-5" />
                   </div>
                   <div>
-                    <h4 className="font-bold fun-text text-base">Resmi Sertifikalı Koruma</h4>
-                    <p className="text-sm fun-text-muted">Uluslararası standartlara uygun olarak üretilen sistemlerimiz yüksek dayanıklılık garantisine sahiptir.</p>
+                    <h4 className="font-bold fun-text text-base">Anlık Çoklu Bildirim Kanalı</h4>
+                    <p className="text-sm fun-text-muted">E-posta, SMS, Push bildirimleri ve özel sesli arama servisleri ile tüm ekibi anında uyarın.</p>
                   </div>
                 </div>
               </div>
@@ -430,14 +398,14 @@ function QuakeSafePage() {
           <ScrollReveal>
             <div className="relative rounded-[40px] overflow-hidden border border-[var(--fun-stroke-1)] shadow-2xl group">
               <img
-                src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80"
-                alt="Donanım Entegrasyonu"
+                src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80"
+                alt="Yazılım Entegrasyonu"
                 className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-8">
                 <div>
                   <span className="text-xs text-[var(--fun-purple)] font-bold uppercase tracking-widest bg-white/10 backdrop-blur-md px-3 py-1 rounded-full border border-white/10 mb-2 inline-block">Milisaniyelik Güvenlik</span>
-                  <p className="text-white text-base font-semibold">Endüstriyel Sismik Sensör Node Ünitesi</p>
+                  <p className="text-white text-base font-semibold">Yazılım ve API Dashboard İzleme</p>
                 </div>
               </div>
             </div>
@@ -459,22 +427,30 @@ function QuakeSafePage() {
           </ScrollReveal>
 
           <div className="space-y-4">
-            <FAQItem
-              q="Sistem depremi ne kadar süre öncesinden haber verebilir?"
-              a="Depremin merkez üssünün sensör ağımıza olan uzaklığına bağlı olarak, yıkıcı S-dalgaları ulaşmadan önce 5 ila 45 saniye arasında erken uyarı süresi kazanılabilir. Bu süre hayati öneme sahiptir."
-            />
-            <FAQItem
-              q="İnternet veya elektrik kesildiğinde sistem çalışır mı?"
-              a="Evet. QuakeSafe donanım üniteleri dahili yedek bataryaya ve yerel radyo frekans haberleşme modüllerine sahiptir, böylece şebekeden bağımsız çalışabilir."
-            />
-            <FAQItem
-              q="Otomasyon sistemleri evime veya iş yerime nasıl entegre edilir?"
-              a="Akıllı vana kontrol ünitelerimiz ve bina otomasyon rölelerimiz, mevcut sigorta kutunuza ve ana vanalarınıza uzman ekiplerimiz tarafından kolayca monte edilir."
-            />
-            <FAQItem
-              q="Hatalı alarm riskine karşı nasıl bir önlem bulunuyor?"
-              a="Sensörlerimiz ve bulut yapay zeka motorumuz gürültü filtreleme teknolojisine sahiptir. Hatalı alarmları sıfıra indirmek için çoklu düğüm doğrulama algoritması kullanılır."
-            />
+            <ScrollReveal>
+              <FAQItem
+                q="Sistem depremi ne kadar süre öncesinden haber verebilir?"
+                a="Depremin merkez üssünün sismik veri kaynaklarımıza olan uzaklığına bağlı olarak, yıkıcı S-dalgaları ulaşmadan önce 5 ila 45 saniye arasında erken uyarı süresi kazanılabilir. Bu süre hayati öneme sahiptir."
+              />
+            </ScrollReveal>
+            <ScrollReveal>
+              <FAQItem
+                q="İnternet veya elektrik kesildiğinde sistem çalışır mı?"
+                a="Evet. QuakeSafe yazılımsal altyapısı, yedekli sunucu lokasyonları ve akıllı yerel kesintisiz ağ protokolleri üzerinden kesintisiz bir şekilde çalışmaya devam edecek şekilde dizayn edilmiştir."
+              />
+            </ScrollReveal>
+            <ScrollReveal>
+              <FAQItem
+                q="Otomasyon sistemleri evime veya iş yerime nasıl entegre edilir?"
+                a="QuakeSafe API ve akıllı yazılım entegrasyonu, mevcut akıllı ev hub'larınız ve işletmenizin IoT sistemleri üzerinden doğrudan yazılımsal tetikleyicilerle kontrol edilir."
+              />
+            </ScrollReveal>
+            <ScrollReveal>
+              <FAQItem
+                q="Hatalı alarm riskine karşı nasıl bir önlem bulunuyor?"
+                a="Bulut tabanlı AI motorumuz sismik gürültüleri filtreleme teknolojisine sahiptir. Hatalı alarmları sıfıra indirmek için çoklu sismik doğrulama algoritması kullanılır."
+              />
+            </ScrollReveal>
           </div>
         </div>
       </section>

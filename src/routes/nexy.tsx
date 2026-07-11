@@ -167,11 +167,6 @@ function NexyPage() {
                       className="w-full h-full object-contain scale-150"
                     />
                   </div>
-                  <div className="space-y-1.5">
-                    <div className="bg-white/10 backdrop-blur-md rounded-full px-5 py-2 text-xs font-semibold text-white/95 border border-white/10 shadow-lg tracking-wide uppercase">
-                      2 MINUTE INTEGRATION
-                    </div>
-                  </div>
                 </div>
               </div>
               <div className="space-y-8">

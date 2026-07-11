@@ -423,21 +423,19 @@ function PostPage() {
 
         {/* Social Sharing Section */}
         <ScrollReveal>
-          <div className="my-12 p-6 rounded-3xl border border-[var(--fun-stroke-1)] bg-[var(--fun-surface)]/50 backdrop-blur-md flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div className="flex items-center gap-3">
-              <span className="font-bold fun-text text-lg">{t("blog.post.share")}</span>
-            </div>
-            <div className="flex items-center gap-2.5">
+          <div className="my-8 p-4 max-w-[500px] mx-auto rounded-[24px] border border-[var(--fun-stroke-1)] bg-[var(--fun-surface)]/50 backdrop-blur-md flex flex-row items-center justify-between gap-4">
+            <span className="font-bold fun-text text-sm sm:text-base">{t("blog.post.share")}</span>
+            <div className="flex items-center gap-2">
               {/* WhatsApp */}
               <a
                 href={`https://api.whatsapp.com/send?text=${encodeURIComponent(`${post.displayTitle} - ${shareUrl}`)}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="h-11 w-11 flex items-center justify-center rounded-full bg-[#25D366] hover:bg-[#20ba56] text-white transition-colors"
+                className="h-9 w-9 flex items-center justify-center rounded-full bg-[#25D366] hover:bg-[#20ba56] text-white transition-colors"
                 title="WhatsApp"
               >
-                <svg className="h-5 w-5 fill-current" viewBox="0 0 24 24">
-                  <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.03 11.966.03c3.184.001 6.177 1.237 8.428 3.49 2.251 2.252 3.486 5.247 3.483 8.43-.004 6.616-5.34 11.933-11.91 11.933-1.999-.001-3.955-.502-5.69-1.455L0 24zm6.59-4.846c1.66.986 3.284 1.489 4.936 1.492 5.428.002 9.845-4.382 9.848-9.75.002-2.602-1.01-5.05-2.85-6.895-1.84-1.846-4.291-2.861-6.891-2.863-5.433 0-9.851 4.38-9.854 9.749-.001 1.774.475 3.514 1.38 5.023l-.95 3.473 3.581-.929zm12.353-6.877c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.353-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.05-.149-.471-1.137-.646-1.558-.171-.41-.359-.356-.492-.356-.171 0-.368-.013-.565-.013-.197 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.121.57-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+                <svg className="h-4.5 w-4.5 fill-current" viewBox="0 0 24 24">
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.353-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.05-.149-.471-1.137-.646-1.558-.171-.41-.359-.356-.492-.356-.171 0-.368-.013-.565-.013-.197 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.121.57-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.135-1.61a11.8 11.8 0 005.908 1.589h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
                 </svg>
               </a>
               {/* X / Twitter */}
@@ -445,10 +443,10 @@ function PostPage() {
                 href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.displayTitle)}&url=${encodeURIComponent(shareUrl)}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="h-11 w-11 flex items-center justify-center rounded-full bg-black border border-white/10 hover:bg-zinc-900 text-white transition-colors"
+                className="h-9 w-9 flex items-center justify-center rounded-full bg-black border border-white/10 hover:bg-zinc-900 text-white transition-colors"
                 title="X (Twitter)"
               >
-                <svg className="h-4 w-4 fill-current" viewBox="0 0 24 24">
+                <svg className="h-3.5 w-3.5 fill-current" viewBox="0 0 24 24">
                   <path d="M18.244 2.25h3.308l-7.227 7.75 8.502 11.25H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.285L1.254 2.25h6.81l4.7 6.228 5.48-6.228zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z"/>
                 </svg>
               </a>
@@ -457,10 +455,10 @@ function PostPage() {
                 href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="h-11 w-11 flex items-center justify-center rounded-full bg-[#0077b5] hover:bg-[#006297] text-white transition-colors"
+                className="h-9 w-9 flex items-center justify-center rounded-full bg-[#0077b5] hover:bg-[#006297] text-white transition-colors"
                 title="LinkedIn"
               >
-                <svg className="h-4 w-4 fill-current" viewBox="0 0 24 24">
+                <svg className="h-3.5 w-3.5 fill-current" viewBox="0 0 24 24">
                   <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.5-.79-1.5-1.764s.534-1.764 1.5-1.764 1.5.79 1.5 1.764-.534 1.764-1.5 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
                 </svg>
               </a>
@@ -469,10 +467,10 @@ function PostPage() {
                 href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="h-11 w-11 flex items-center justify-center rounded-full bg-[#1877f2] hover:bg-[#166fe5] text-white transition-colors"
+                className="h-9 w-9 flex items-center justify-center rounded-full bg-[#1877f2] hover:bg-[#166fe5] text-white transition-colors"
                 title="Facebook"
               >
-                <svg className="h-5 w-5 fill-current" viewBox="0 0 24 24">
+                <svg className="h-4 w-4 fill-current" viewBox="0 0 24 24">
                   <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
                 </svg>
               </a>
@@ -482,10 +480,10 @@ function PostPage() {
                   navigator.clipboard.writeText(shareUrl);
                   toast.success(t("blog.post.share_success"));
                 }}
-                className="h-11 w-11 flex items-center justify-center rounded-full bg-[var(--fun-purple)] hover:bg-[var(--fun-purple)]/90 text-white transition-colors"
+                className="h-9 w-9 flex items-center justify-center rounded-full bg-[var(--fun-purple)] hover:bg-[var(--fun-purple)]/90 text-white transition-colors"
                 title="Copy Link"
               >
-                <svg className="h-5 w-5 fill-none stroke-current" strokeWidth={2.5} viewBox="0 0 24 24">
+                <svg className="h-4 w-4 fill-none stroke-current" strokeWidth={2.5} viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.75" />
                   <path strokeLinecap="round" strokeLinejoin="round" d="M10.81 15.312a4.5 4.5 0 01-1.242-7.244l4.5-4.5a4.5 4.5 0 016.364 6.364l-1.757 1.75" />
                 </svg>
