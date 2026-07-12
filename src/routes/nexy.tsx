@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useLang } from "../lib/i18n";
 import ScrollReveal from "../components/ScrollReveal";
 import ArrowButton from "../components/ArrowButton";
-import { Sparkles, BrainCircuit, MessageCircle, Zap, Globe, Shield, Search } from "lucide-react";
+import { Sparkles, BrainCircuit, MessageCircle, Zap, Globe, Shield, Search, Clock, Languages, ShieldCheck } from "lucide-react";
 
 export const Route = createFileRoute("/nexy")({
   head: () => ({
@@ -16,32 +16,32 @@ function NexyPage() {
 
   const capabilities = [
     {
-      icon: <BrainCircuit className="h-8 w-8 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3" />,
+      icon: <BrainCircuit className="h-8 w-8" />,
       title: t("nexy.capabilities.1.title"),
       desc: t("nexy.capabilities.1.desc"),
     },
     {
-      icon: <Zap className="h-8 w-8 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3" />,
+      icon: <Zap className="h-8 w-8" />,
       title: t("nexy.capabilities.2.title"),
       desc: t("nexy.capabilities.2.desc"),
     },
     {
-      icon: <Globe className="h-8 w-8 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3" />,
+      icon: <Globe className="h-8 w-8" />,
       title: t("nexy.capabilities.3.title"),
       desc: t("nexy.capabilities.3.desc"),
     },
     {
-      icon: <Shield className="h-8 w-8 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3" />,
+      icon: <Shield className="h-8 w-8" />,
       title: t("nexy.capabilities.4.title"),
       desc: t("nexy.capabilities.4.desc"),
     },
     {
-      icon: <Search className="h-8 w-8 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3" />,
+      icon: <Search className="h-8 w-8" />,
       title: t("nexy.capabilities.5.title"),
       desc: t("nexy.capabilities.5.desc"),
     },
     {
-      icon: <MessageCircle className="h-8 w-8 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3" />,
+      icon: <MessageCircle className="h-8 w-8" />,
       title: t("nexy.capabilities.6.title"),
       desc: t("nexy.capabilities.6.desc"),
     },
@@ -65,6 +65,15 @@ function NexyPage() {
                 <p className="text-lg md:text-xl text-white/80 max-w-[600px] mx-auto lg:mx-0">
                   {t("nexy.hero.desc")}
                 </p>
+                <div className="flex justify-center lg:justify-start">
+                  <ArrowButton
+                    onClick={() => window.dispatchEvent(new CustomEvent("open-nexy-chat"))}
+                    variant="light"
+                    className="h-14 px-8 !bg-white !text-black hover:!bg-[var(--fun-purple)] hover:!text-white"
+                  >
+                    {t("nexy.use_now")}
+                  </ArrowButton>
+                </div>
               </div>
               <div className="flex justify-center lg:justify-end">
                 <div className="relative w-full max-w-[500px] flex flex-col gap-8">
@@ -99,16 +108,6 @@ function NexyPage() {
                             {t("nexy.demo.query")}
                           </div>
                         </div>
-                      </div>
-
-                      <div className="pt-4">
-                        <ArrowButton
-                          onClick={() => window.dispatchEvent(new CustomEvent("open-nexy-chat"))}
-                          variant="light"
-                          className="w-full justify-center !bg-white !text-black hover:!bg-[var(--fun-purple)] hover:!text-white"
-                        >
-                          {t("nexy.use_now")}
-                        </ArrowButton>
                       </div>
                     </div>
                   </div>
@@ -153,9 +152,21 @@ function NexyPage() {
         <ScrollReveal>
           <div className="max-w-[1880px] mx-auto rounded-[40px] bg-[var(--fun-surface)] p-8 md:p-16 border border-[var(--fun-stroke-1)]">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-              <div className="relative">
-                <div className="aspect-video lg:aspect-square max-h-[300px] lg:max-h-[500px] bg-[var(--fun-card)] rounded-[40px] border border-[var(--fun-stroke-1)] overflow-hidden flex items-center justify-center">
-                  <MessageCircle className="h-40 w-40 text-[var(--fun-purple)] opacity-20" />
+              <div className="relative flex items-center justify-center p-8 bg-gradient-to-br from-[#12161F] to-[#0A0C14] rounded-[40px] border border-white/5 shadow-2xl overflow-hidden min-h-[350px] lg:min-h-[480px]">
+                {/* Background glow lines */}
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[350px] rounded-full bg-[var(--fun-purple)]/15 blur-[80px]" />
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[250px] h-[250px] rounded-full border border-[var(--fun-purple)]/20 animate-pulse" />
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[180px] h-[180px] rounded-full border border-dashed border-[var(--fun-purple)]/10" />
+
+                {/* Main high fidelity icon in the center */}
+                <div className="relative z-10 flex flex-col items-center gap-6 text-center">
+                  <div className="h-28 w-28 rounded-[32px] bg-black flex items-center justify-center shadow-2xl border border-white/10 p-5 overflow-hidden transform hover:scale-105 transition-all duration-500">
+                    <img
+                      src="/nexy-kafa-buyuk.png"
+                      alt="Nexy"
+                      className="w-full h-full object-contain scale-150"
+                    />
+                  </div>
                 </div>
               </div>
               <div className="space-y-8">
@@ -166,21 +177,41 @@ function NexyPage() {
                   {t("nexy.why.desc")}
                 </p>
                 <div className="grid grid-cols-2 gap-6">
-                  <div className="p-6 rounded-3xl bg-[var(--fun-card)] border border-[var(--fun-stroke-1)]">
-                    <h4 className="font-bold fun-text mb-2">24/7</h4>
-                    <p className="text-xs fun-text-muted">{t("home.stats.support")}</p>
+                  <div className="p-6 rounded-3xl bg-[var(--fun-card)] border border-[var(--fun-stroke-1)] flex items-start gap-4">
+                    <div className="h-12 w-12 rounded-2xl bg-[var(--fun-purple)]/10 text-[var(--fun-purple)] flex items-center justify-center shrink-0">
+                      <Clock className="h-6 w-6" />
+                    </div>
+                    <div>
+                      <h4 className="font-extrabold fun-text text-xl mb-1">24/7</h4>
+                      <p className="text-xs fun-text-muted font-medium">{t("home.stats.support")}</p>
+                    </div>
                   </div>
-                  <div className="p-6 rounded-3xl bg-[var(--fun-card)] border border-[var(--fun-stroke-1)]">
-                    <h4 className="font-bold fun-text mb-2">12+</h4>
-                    <p className="text-xs fun-text-muted">{t("nexy.capabilities.3.title")}</p>
+                  <div className="p-6 rounded-3xl bg-[var(--fun-card)] border border-[var(--fun-stroke-1)] flex items-start gap-4">
+                    <div className="h-12 w-12 rounded-2xl bg-[var(--fun-purple)]/10 text-[var(--fun-purple)] flex items-center justify-center shrink-0">
+                      <Languages className="h-6 w-6" />
+                    </div>
+                    <div>
+                      <h4 className="font-extrabold fun-text text-xl mb-1">12+</h4>
+                      <p className="text-xs fun-text-muted font-medium">{t("nexy.capabilities.3.title")}</p>
+                    </div>
                   </div>
-                  <div className="p-6 rounded-3xl bg-[var(--fun-card)] border border-[var(--fun-stroke-1)]">
-                    <h4 className="font-bold fun-text mb-2">∞</h4>
-                    <p className="text-xs fun-text-muted">{t("nexy.capabilities.4.title")}</p>
+                  <div className="p-6 rounded-3xl bg-[var(--fun-card)] border border-[var(--fun-stroke-1)] flex items-start gap-4">
+                    <div className="h-12 w-12 rounded-2xl bg-[var(--fun-purple)]/10 text-[var(--fun-purple)] flex items-center justify-center shrink-0">
+                      <ShieldCheck className="h-6 w-6" />
+                    </div>
+                    <div>
+                      <h4 className="font-extrabold fun-text text-xl mb-1">∞</h4>
+                      <p className="text-xs fun-text-muted font-medium">{t("nexy.capabilities.4.title")}</p>
+                    </div>
                   </div>
-                  <div className="p-6 rounded-3xl bg-[var(--fun-card)] border border-[var(--fun-stroke-1)]">
-                    <h4 className="font-bold fun-text mb-2">AI</h4>
-                    <p className="text-xs fun-text-muted">{t("nexy.capabilities.1.title")}</p>
+                  <div className="p-6 rounded-3xl bg-[var(--fun-card)] border border-[var(--fun-stroke-1)] flex items-start gap-4">
+                    <div className="h-12 w-12 rounded-2xl bg-[var(--fun-purple)]/10 text-[var(--fun-purple)] flex items-center justify-center shrink-0">
+                      <Sparkles className="h-6 w-6" />
+                    </div>
+                    <div>
+                      <h4 className="font-extrabold fun-text text-xl mb-1">AI</h4>
+                      <p className="text-xs fun-text-muted font-medium">{t("nexy.capabilities.1.title")}</p>
+                    </div>
                   </div>
                 </div>
               </div>

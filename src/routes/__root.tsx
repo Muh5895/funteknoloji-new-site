@@ -10,7 +10,7 @@ import { Toaster } from "../components/ui/sonner";
 import { inject } from "@vercel/analytics";
 
 const THEME_INIT = `
-(function(){try{var s=localStorage.getItem('theme');var d=s?s==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;if(d){document.documentElement.classList.add('dark');document.documentElement.style.backgroundColor='black';}else{document.documentElement.style.backgroundColor='white';}var l=localStorage.getItem('lang');var supported=['tr','en','de','fr','es','az','ru','ar','it','pt','ja','zh'];if(l && supported.includes(l))document.documentElement.lang=l;}catch(e){}})();
+(function(){try{var s=localStorage.getItem('theme');var d=(s && s !== 'system')?s==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;if(d){document.documentElement.classList.add('dark');document.documentElement.style.backgroundColor='black';}else{document.documentElement.style.backgroundColor='white';}var l=localStorage.getItem('lang');var supported=['tr','en','de','fr','es','az','ru','ar','it','pt','ja','zh'];if(l && supported.includes(l))document.documentElement.lang=l;}catch(e){}})();
 `;
 
 function NotFoundComponent() {
@@ -109,6 +109,23 @@ function RootShell({ children }: { children: React.ReactNode }) {
   );
 }
 
+function RTLAndLangHandler({ children }: { children: React.ReactNode }) {
+  const { lang } = useLang();
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      document.documentElement.lang = lang;
+      if (lang === "ar") {
+        document.documentElement.dir = "rtl";
+      } else {
+        document.documentElement.dir = "ltr";
+      }
+    }
+  }, [lang]);
+
+  return <>{children}</>;
+}
+
 function RootComponent() {
   useEffect(() => {
     inject();
@@ -116,12 +133,14 @@ function RootComponent() {
 
   return (
     <LanguageProvider>
-      <IntroSplash />
-      <Header />
-      <Outlet />
-      <NexyAssistant />
-      <Footer />
-      <Toaster position="bottom-right" richColors closeButton expand={false} />
+      <RTLAndLangHandler>
+        <IntroSplash />
+        <Header />
+        <Outlet />
+        <NexyAssistant />
+        <Footer />
+        <Toaster position="bottom-right" richColors closeButton expand={false} />
+      </RTLAndLangHandler>
     </LanguageProvider>
   );
 }

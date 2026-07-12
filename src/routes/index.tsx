@@ -102,7 +102,7 @@ function HeroSection({ t }: { t: (k: string) => string }) {
             <span className="badge-fun badge-fun-gray mb-6 inline-block text-xs tracking-wider animate-in fade-in zoom-in duration-700 delay-100 fill-mode-both">
               {t("home.hero.badge")}
             </span>
-            <h1 className="text-heading-2 md:text-heading-1 lg:text-heading-huge font-bold mb-8 tracking-tight animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-300 fill-mode-both leading-[1.1]">
+            <h1 className="text-heading-1 md:text-heading-huge lg:text-[124px] lg:leading-[0.95] font-bold mb-8 tracking-tight animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-300 fill-mode-both leading-[1.1]">
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#12161F] via-[#2A2E38] to-[#40444F] dark:from-white dark:via-white/90 dark:to-white/50">
                 {t("home.hero.title")}
               </span>
@@ -213,66 +213,42 @@ function FeaturesSection({ t }: { t: (k: string) => string }) {
               className="rounded-[32px] p-8 md:p-10 relative overflow-hidden group border border-[var(--fun-stroke-1)] hover:border-[var(--fun-purple)] transition-all duration-500"
               style={{ backgroundColor: "var(--fun-card)" }}
             >
-              <div className="absolute top-0 right-0 p-10 opacity-5 group-hover:opacity-10 group-hover:scale-110 transition-all duration-700">
+              <div className="absolute top-0 right-0 p-10 opacity-5">
                 <Cpu className="h-40 w-40" />
               </div>
               <div className="h-16 w-16 rounded-2xl bg-[var(--fun-purple)]/10 flex items-center justify-center text-[var(--fun-purple)] mb-8 group-hover:bg-[var(--fun-purple)] group-hover:text-white transition-colors duration-500">
-                <Cpu className="h-8 w-8 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3" />
+                <Cpu className="h-8 w-8" />
               </div>
               <h3 className="text-2xl font-bold mb-4 fun-text">{t("home.features.card1.title")}</h3>
-              <p className="fun-text-muted leading-relaxed mb-6">{t("home.features.card1.desc")}</p>
-              <div className="flex gap-2">
-                <span className="px-3 py-1 rounded-full bg-[var(--fun-surface)] border border-[var(--fun-stroke-1)] text-xs fun-text">
-                  Neural Networks
-                </span>
-                <span className="px-3 py-1 rounded-full bg-[var(--fun-surface)] border border-[var(--fun-stroke-1)] text-xs fun-text">
-                  LLM
-                </span>
-              </div>
+              <p className="fun-text-muted leading-relaxed">{t("home.features.card1.desc")}</p>
             </div>
 
             <div
               className="rounded-[32px] p-8 md:p-10 relative overflow-hidden group border border-[var(--fun-stroke-1)] hover:border-[var(--fun-purple)] transition-all duration-500"
               style={{ backgroundColor: "var(--fun-card)" }}
             >
-              <div className="absolute top-0 right-0 p-10 opacity-5 group-hover:opacity-10 group-hover:scale-110 transition-all duration-700">
+              <div className="absolute top-0 right-0 p-10 opacity-5">
                 <Globe className="h-40 w-40" />
               </div>
               <div className="h-16 w-16 rounded-2xl bg-[var(--fun-purple)]/10 flex items-center justify-center text-[var(--fun-purple)] mb-8 group-hover:bg-[var(--fun-purple)] group-hover:text-white transition-colors duration-500">
-                <Globe className="h-8 w-8 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3" />
+                <Globe className="h-8 w-8" />
               </div>
               <h3 className="text-2xl font-bold mb-4 fun-text">{t("home.features.card2.title")}</h3>
-              <p className="fun-text-muted leading-relaxed mb-6">{t("home.features.card2.desc")}</p>
-              <div className="flex gap-2">
-                <span className="px-3 py-1 rounded-full bg-[var(--fun-surface)] border border-[var(--fun-stroke-1)] text-xs fun-text">
-                  Global CDN
-                </span>
-                <span className="px-3 py-1 rounded-full bg-[var(--fun-surface)] border border-[var(--fun-stroke-1)] text-xs fun-text">
-                  Autoscale
-                </span>
-              </div>
+              <p className="fun-text-muted leading-relaxed">{t("home.features.card2.desc")}</p>
             </div>
 
             <div
               className="rounded-[32px] p-8 md:p-10 relative overflow-hidden group border border-[var(--fun-stroke-1)] hover:border-[var(--fun-purple)] transition-all duration-500"
               style={{ backgroundColor: "var(--fun-card)" }}
             >
-              <div className="absolute top-0 right-0 p-10 opacity-5 group-hover:opacity-10 group-hover:scale-110 transition-all duration-700">
+              <div className="absolute top-0 right-0 p-10 opacity-5">
                 <ShieldCheck className="h-40 w-40" />
               </div>
               <div className="h-16 w-16 rounded-2xl bg-[var(--fun-purple)]/10 flex items-center justify-center text-[var(--fun-purple)] mb-8 group-hover:bg-[var(--fun-purple)] group-hover:text-white transition-colors duration-500">
-                <ShieldCheck className="h-8 w-8 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3" />
+                <ShieldCheck className="h-8 w-8" />
               </div>
               <h3 className="text-2xl font-bold mb-4 fun-text">{t("home.features.card3.title")}</h3>
-              <p className="fun-text-muted leading-relaxed mb-6">{t("home.features.card3.desc")}</p>
-              <div className="flex gap-2">
-                <span className="px-3 py-1 rounded-full bg-[var(--fun-surface)] border border-[var(--fun-stroke-1)] text-xs fun-text">
-                  AES-256
-                </span>
-                <span className="px-3 py-1 rounded-full bg-[var(--fun-surface)] border border-[var(--fun-stroke-1)] text-xs fun-text">
-                  SSL
-                </span>
-              </div>
+              <p className="fun-text-muted leading-relaxed">{t("home.features.card3.desc")}</p>
             </div>
           </div>
         </div>
@@ -384,32 +360,38 @@ function ServicesSection({ t }: { t: (k: string) => string }) {
     {
       title: t("home.services.item1.title"),
       desc: t("home.services.item1.desc"),
-      icon: <Cpu className="h-8 w-8 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3" />,
+      icon: <Cpu className="h-8 w-8" />,
+      image: "/Ai.png",
     },
     {
       title: t("home.services.item2.title"),
       desc: t("home.services.item2.desc"),
-      icon: <Code2 className="h-8 w-8 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3" />,
+      icon: <Code2 className="h-8 w-8" />,
+      image: "/Web.png",
     },
     {
       title: t("home.services.item3.title"),
       desc: t("home.services.item3.desc"),
-      icon: <Smartphone className="h-8 w-8 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3" />,
+      icon: <Smartphone className="h-8 w-8" />,
+      image: "/Telefon.png",
     },
     {
       title: t("home.services.item4.title"),
       desc: t("home.services.item4.desc"),
-      icon: <Database className="h-8 w-8 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3" />,
+      icon: <Database className="h-8 w-8" />,
+      image: "/Veri.png",
     },
     {
       title: t("home.services.item5.title"),
       desc: t("home.services.item5.desc"),
-      icon: <Search className="h-8 w-8 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3" />,
+      icon: <Search className="h-8 w-8" />,
+      image: "/Siber.png",
     },
     {
       title: t("home.services.item6.title"),
       desc: t("home.services.item6.desc"),
-      icon: <HeartHandshake className="h-8 w-8 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3" />,
+      icon: <HeartHandshake className="h-8 w-8" />,
+      image: "/Danışmanlık.jpeg",
     },
   ];
 
@@ -432,32 +414,36 @@ function ServicesSection({ t }: { t: (k: string) => string }) {
           {services.map((service, i) => (
             <div key={i} className={`${i === 0 ? "md:col-span-2" : ""} group`}>
               <div
-                className={`h-full rounded-3xl border p-6 md:p-8 ${i === 0 ? "grid grid-cols-1 md:grid-cols-12 gap-6" : "grid grid-cols-1 md:grid-cols-2 gap-6"}`}
+                className="h-full rounded-[36px] border p-6 md:p-10 grid grid-cols-1 md:grid-cols-12 gap-8 items-center"
                 style={{
                   backgroundColor: "var(--fun-surface)",
                   borderColor: "var(--fun-stroke-1)",
                 }}
               >
-                {/* Mobile: Icon first, then content */}
-                <div className="md:hidden flex justify-start mb-6">
-                  <div className="h-20 w-20 rounded-3xl flex items-center justify-center transition-all duration-500 shadow-lg text-[var(--fun-purple)] bg-[var(--fun-card)]">
-                    {service.icon}
+                {/* Mobile: Image block (shows service image on mobile instead of just small icon block) - Enlarged to fill space beautifully and reduce the gap */}
+                <div className="md:hidden flex justify-start mb-4">
+                  <div className="w-full h-[180px] rounded-[24px] overflow-hidden flex items-center justify-center transition-all duration-500 shadow-lg bg-[var(--fun-card)] border border-[var(--fun-stroke-1)]">
+                    <img
+                      src={service.image}
+                      alt={service.title}
+                      className="w-full h-full object-cover"
+                    />
                   </div>
                 </div>
 
                 <aside
-                  className={`${i === 0 ? "md:col-span-4" : ""} md:pt-8 flex flex-col justify-between space-y-5 text-left md:order-1`}
+                  className={`${i === 0 ? "md:col-span-9" : "md:col-span-7"} flex flex-col justify-center space-y-6 text-left md:order-2 py-2`}
                 >
-                  <div className="space-y-2">
-                    <h3 className="text-heading-5 md:text-heading-4 font-medium fun-text">
+                  <div className="space-y-3">
+                    <h3 className="text-heading-5 md:text-heading-3 font-bold fun-text tracking-tight leading-tight">
                       {service.title}
                     </h3>
-                    <p className="text-tagline-1 fun-text-muted">{service.desc}</p>
+                    <p className="text-tagline-1 lg:text-base fun-text-muted leading-relaxed">{service.desc}</p>
                   </div>
-                  <div className="flex justify-start">
+                  <div className="flex justify-start pt-2">
                     <Link
                       to="/projects"
-                      className="flex h-12 w-12 md:h-14 md:w-14 items-center justify-center rounded-full ring-8 ring-[var(--fun-card)] transition-all hover:bg-[var(--fun-purple)]"
+                      className="flex h-12 w-12 md:h-14 md:w-14 items-center justify-center rounded-full ring-8 ring-[var(--fun-card)] transition-all hover:bg-[var(--fun-purple)] hover:scale-105 active:scale-95"
                       style={{ backgroundColor: "var(--fun-text)" }}
                     >
                       <svg
@@ -466,7 +452,7 @@ function ServicesSection({ t }: { t: (k: string) => string }) {
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
-                        strokeWidth={2}
+                        strokeWidth={2.5}
                       >
                         <path
                           strokeLinecap="round"
@@ -478,21 +464,17 @@ function ServicesSection({ t }: { t: (k: string) => string }) {
                   </div>
                 </aside>
 
-                {/* Desktop: Image/Icon block - Placed second for RIGHT side on desktop */}
-                <div
-                  className={`${i === 0 ? "md:col-span-8" : ""} hidden md:flex rounded-xl overflow-hidden min-h-[240px] md:min-h-[300px] transition-transform duration-500 items-center justify-center relative md:order-2`}
-                  style={{
-                    background: "linear-gradient(135deg, var(--fun-stroke-2), var(--fun-surface))",
-                  }}
-                >
-                  <div className="absolute inset-0 bg-gradient-to-br from-[#6C5CE7]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  <div className="text-center p-8 relative z-10">
-                    <div
-                      className="mx-auto h-20 w-20 rounded-3xl flex items-center justify-center transition-all duration-500 shadow-lg text-[var(--fun-purple)]"
-                      style={{ backgroundColor: "var(--fun-card)" }}
-                    >
-                      {service.icon}
-                    </div>
+                {/* Desktop: Image block - Placed first for LEFT side on desktop, adjusted to be larger, perfectly centered, and styled elegantly */}
+                <div className={`${i === 0 ? "md:col-span-3 md:justify-start md:pl-2" : "md:col-span-5"} hidden md:flex items-center justify-center md:order-1`}>
+                  <div
+                    className={`rounded-[32px] overflow-hidden ${i === 0 ? "h-[220px] w-[220px]" : "h-[180px] w-[180px]"} transition-transform duration-500 relative border border-[var(--fun-stroke-1)] shadow-2xl flex items-center justify-center bg-black/5 dark:bg-white/5`}
+                  >
+                    <img
+                      src={service.image}
+                      alt={service.title}
+                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-br from-[#6C5CE7]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   </div>
                 </div>
               </div>
