@@ -414,7 +414,7 @@ function ServicesSection({ t }: { t: (k: string) => string }) {
           {services.map((service, i) => (
             <div key={i} className={`${i === 0 ? "md:col-span-2" : ""} group`}>
               <div
-                className={`h-full rounded-3xl border p-6 md:p-8 ${i === 0 ? "grid grid-cols-1 md:grid-cols-12 gap-6" : "grid grid-cols-1 md:grid-cols-2 gap-6"}`}
+                className="h-full rounded-[36px] border p-6 md:p-10 grid grid-cols-1 md:grid-cols-12 gap-8 items-center"
                 style={{
                   backgroundColor: "var(--fun-surface)",
                   borderColor: "var(--fun-stroke-1)",
@@ -432,18 +432,18 @@ function ServicesSection({ t }: { t: (k: string) => string }) {
                 </div>
 
                 <aside
-                  className={`${i === 0 ? "md:col-span-8" : ""} md:pt-8 flex flex-col justify-between space-y-5 text-left md:order-2`}
+                  className={`md:col-span-7 ${i === 0 ? "md:col-span-8" : ""} flex flex-col justify-between space-y-6 text-left md:order-2 h-full py-2`}
                 >
-                  <div className="space-y-2">
-                    <h3 className="text-heading-5 md:text-heading-4 font-medium fun-text">
+                  <div className="space-y-3">
+                    <h3 className="text-heading-5 md:text-heading-3 font-bold fun-text tracking-tight leading-tight">
                       {service.title}
                     </h3>
-                    <p className="text-tagline-1 fun-text-muted">{service.desc}</p>
+                    <p className="text-tagline-1 lg:text-base fun-text-muted leading-relaxed">{service.desc}</p>
                   </div>
-                  <div className="flex justify-start">
+                  <div className="flex justify-start pt-2">
                     <Link
                       to="/projects"
-                      className="flex h-12 w-12 md:h-14 md:w-14 items-center justify-center rounded-full ring-8 ring-[var(--fun-card)] transition-all hover:bg-[var(--fun-purple)]"
+                      className="flex h-12 w-12 md:h-14 md:w-14 items-center justify-center rounded-full ring-8 ring-[var(--fun-card)] transition-all hover:bg-[var(--fun-purple)] hover:scale-105 active:scale-95"
                       style={{ backgroundColor: "var(--fun-text)" }}
                     >
                       <svg
@@ -452,7 +452,7 @@ function ServicesSection({ t }: { t: (k: string) => string }) {
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
-                        strokeWidth={2}
+                        strokeWidth={2.5}
                       >
                         <path
                           strokeLinecap="round"
@@ -464,15 +464,15 @@ function ServicesSection({ t }: { t: (k: string) => string }) {
                   </div>
                 </aside>
 
-                {/* Desktop: Image block - Placed first for LEFT side on desktop, adjusted to be medium-sized (160px), perfectly centered, and styled elegantly */}
-                <div className={`${i === 0 ? "md:col-span-4" : ""} hidden md:flex items-center justify-center md:order-1`}>
+                {/* Desktop: Image block - Placed first for LEFT side on desktop, adjusted to be larger, perfectly centered, and styled elegantly */}
+                <div className={`md:col-span-5 ${i === 0 ? "md:col-span-4" : ""} hidden md:flex items-center justify-center md:order-1`}>
                   <div
-                    className="rounded-3xl overflow-hidden h-[160px] w-[160px] transition-transform duration-500 relative border border-[var(--fun-stroke-1)] shadow-md"
+                    className={`rounded-[32px] overflow-hidden ${i === 0 ? "h-[220px] w-[220px]" : "h-[180px] w-[180px]"} transition-transform duration-500 relative border border-[var(--fun-stroke-1)] shadow-2xl flex items-center justify-center bg-black/5 dark:bg-white/5`}
                   >
                     <img
                       src={service.image}
                       alt={service.title}
-                      className="absolute inset-0 w-full h-full object-cover"
+                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-gradient-to-br from-[#6C5CE7]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   </div>
