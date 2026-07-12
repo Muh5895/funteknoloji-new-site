@@ -420,9 +420,9 @@ function ServicesSection({ t }: { t: (k: string) => string }) {
                   borderColor: "var(--fun-stroke-1)",
                 }}
               >
-                {/* Mobile: Image block (shows service image on mobile instead of just small icon block) - Enlarged to fill space beautifully and reduce the gap */}
-                <div className="md:hidden flex justify-start mb-4">
-                  <div className="w-full h-[180px] rounded-[24px] overflow-hidden flex items-center justify-center transition-all duration-500 shadow-lg bg-[var(--fun-card)] border border-[var(--fun-stroke-1)]">
+                {/* Mobile: Image block (shows service image on mobile instead of just small icon block) - Sized up nicely and elegantly to h-28 w-28 to fill space without full widening */}
+                <div className="md:hidden flex justify-start mb-3">
+                  <div className="h-28 w-28 rounded-[24px] overflow-hidden flex items-center justify-center transition-all duration-500 shadow-lg bg-[var(--fun-card)] border border-[var(--fun-stroke-1)]">
                     <img
                       src={service.image}
                       alt={service.title}
