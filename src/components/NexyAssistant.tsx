@@ -63,6 +63,7 @@ export default function NexyAssistant() {
     const handleOpenChat = () => {
       setIsOpen(true);
       setShowPopup(false);
+      setIsMinimized(false);
     };
     window.addEventListener("open-nexy-chat", handleOpenChat);
     return () => window.removeEventListener("open-nexy-chat", handleOpenChat);
@@ -696,10 +697,9 @@ export default function NexyAssistant() {
                   <img
                     src="/nexy-kafa-buyuk.png"
                     alt="Nexy"
-                    className="h-full w-full object-contain transition-transform duration-500 transform hover:scale-110"
+                    className="h-full w-full object-contain"
                   />
                 </div>
-                <div className="absolute -bottom-1 -right-1 w-3.5 h-3.5 bg-green-500 border-2 border-[var(--fun-surface)] rounded-full hidden sm:block"></div>
               </div>
               <div className="flex flex-col justify-center items-start">
                 <div className="flex items-center gap-2">

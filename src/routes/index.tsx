@@ -464,14 +464,14 @@ function ServicesSection({ t }: { t: (k: string) => string }) {
                   </div>
                 </aside>
 
-                {/* Desktop: Image block - Placed second for RIGHT side on desktop */}
+                {/* Desktop: Image block - Placed second for RIGHT side on desktop, adjusted to be smaller and styled elegantly */}
                 <div
-                  className={`${i === 0 ? "md:col-span-8" : ""} hidden md:flex rounded-xl overflow-hidden min-h-[240px] md:min-h-[300px] transition-transform duration-500 items-center justify-center relative md:order-2 border border-[var(--fun-stroke-1)]`}
+                  className={`${i === 0 ? "md:col-span-5 md:col-start-8" : ""} hidden md:flex rounded-2xl overflow-hidden h-[180px] max-w-[280px] w-full transition-transform duration-500 items-center justify-center relative md:order-2 border border-[var(--fun-stroke-1)] ml-auto`}
                 >
                   <img
                     src={service.image}
                     alt={service.title}
-                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    className="absolute inset-0 w-full h-full object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-br from-[#6C5CE7]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 </div>
