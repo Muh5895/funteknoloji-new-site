@@ -464,16 +464,18 @@ function ServicesSection({ t }: { t: (k: string) => string }) {
                   </div>
                 </aside>
 
-                {/* Desktop: Image block - Placed first for LEFT side on desktop, adjusted to be smaller (130px size) and styled elegantly */}
-                <div
-                  className={`${i === 0 ? "md:col-span-3" : ""} hidden md:flex rounded-2xl overflow-hidden h-[130px] max-w-[130px] w-full transition-transform duration-500 items-center justify-center relative md:order-1 border border-[var(--fun-stroke-1)] mr-auto`}
-                >
-                  <img
-                    src={service.image}
-                    alt={service.title}
-                    className="absolute inset-0 w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-br from-[#6C5CE7]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                {/* Desktop: Image block - Placed first for LEFT side on desktop, adjusted to be medium-sized (160px), perfectly centered, and styled elegantly */}
+                <div className={`${i === 0 ? "md:col-span-4" : ""} hidden md:flex items-center justify-center md:order-1`}>
+                  <div
+                    className="rounded-3xl overflow-hidden h-[160px] w-[160px] transition-transform duration-500 relative border border-[var(--fun-stroke-1)] shadow-md"
+                  >
+                    <img
+                      src={service.image}
+                      alt={service.title}
+                      className="absolute inset-0 w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-br from-[#6C5CE7]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  </div>
                 </div>
               </div>
             </div>
