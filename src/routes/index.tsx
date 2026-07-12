@@ -432,7 +432,7 @@ function ServicesSection({ t }: { t: (k: string) => string }) {
                 </div>
 
                 <aside
-                  className={`md:col-span-7 ${i === 0 ? "md:col-span-8" : ""} flex flex-col justify-between space-y-6 text-left md:order-2 h-full py-2`}
+                  className={`${i === 0 ? "md:col-span-8" : "md:col-span-7"} flex flex-col justify-center space-y-6 text-left md:order-2 py-2`}
                 >
                   <div className="space-y-3">
                     <h3 className="text-heading-5 md:text-heading-3 font-bold fun-text tracking-tight leading-tight">
@@ -465,7 +465,7 @@ function ServicesSection({ t }: { t: (k: string) => string }) {
                 </aside>
 
                 {/* Desktop: Image block - Placed first for LEFT side on desktop, adjusted to be larger, perfectly centered, and styled elegantly */}
-                <div className={`md:col-span-5 ${i === 0 ? "md:col-span-4" : ""} hidden md:flex items-center justify-center md:order-1`}>
+                <div className={`${i === 0 ? "md:col-span-4" : "md:col-span-5"} hidden md:flex items-center justify-center md:order-1`}>
                   <div
                     className={`rounded-[32px] overflow-hidden ${i === 0 ? "h-[220px] w-[220px]" : "h-[180px] w-[180px]"} transition-transform duration-500 relative border border-[var(--fun-stroke-1)] shadow-2xl flex items-center justify-center bg-black/5 dark:bg-white/5`}
                   >
