@@ -14,6 +14,13 @@ const entries = [
   { path: "/changelog", changefreq: "monthly", priority: "0.5" },
   { path: "/brand-kit", changefreq: "monthly", priority: "0.5" },
   { path: "/contact", changefreq: "yearly", priority: "0.7" },
+  { path: "/quakesafe", changefreq: "weekly", priority: "0.9" },
+  { path: "/nexy", changefreq: "weekly", priority: "0.9" },
+  { path: "/privacy-policy", changefreq: "monthly", priority: "0.5" },
+  { path: "/service-policy", changefreq: "monthly", priority: "0.5" },
+  { path: "/docs", changefreq: "weekly", priority: "0.8" },
+  { path: "/help", changefreq: "weekly", priority: "0.7" },
+  { path: "/faq", changefreq: "monthly", priority: "0.7" },
   { path: "/sitemap", changefreq: "monthly", priority: "0.3" },
 ];
 

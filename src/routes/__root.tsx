@@ -5,6 +5,7 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import NexyAssistant from "../components/NexyAssistant";
 import IntroSplash from "../components/IntroSplash";
+import CookieBanner from "../components/CookieBanner";
 import { LanguageProvider, useLang } from "../lib/i18n";
 import { Toaster } from "../components/ui/sonner";
 import { inject } from "@vercel/analytics";
@@ -138,6 +139,7 @@ function RootComponent() {
         <Header />
         <Outlet />
         <NexyAssistant />
+        <CookieBanner />
         <Footer />
         <Toaster position="bottom-right" richColors closeButton expand={false} />
       </RTLAndLangHandler>

@@ -90,3 +90,28 @@ export const getFaqs = async () => {
   const { data } = await supabase.from("faqs").select("*");
   return data || [];
 };
+
+export interface CookieConsentPayload {
+  consent_necessary: boolean;
+  consent_analytics: boolean;
+  consent_marketing: boolean;
+  user_lang: string;
+  user_agent?: string;
+  referrer?: string;
+  screen_resolution?: string;
+  device_type?: string;
+}
+
+export const submitCookieConsent = async (payload: CookieConsentPayload) => {
+  try {
+    const { error } = await supabase.from("cookies").insert([payload]);
+    if (error) {
+      console.error("DB_COOKIE_SUBMIT_ERR:", error);
+      return { success: false, error };
+    }
+    return { success: true };
+  } catch (error) {
+    console.error("DB_COOKIE_SUBMIT_EXCEPTION:", error);
+    return { success: false, error };
+  }
+};

@@ -8,7 +8,23 @@ import ScrollReveal from "../components/ScrollReveal";
 
 export const Route = createFileRoute("/blog/")({
   head: () => ({
-    meta: [{ title: "Blog - Fun Teknoloji" }],
+    meta: [
+      { title: "Teknoloji Blogu - Yapay Zeka, Yazılım ve Siber Güvenlik | Fun Teknoloji" },
+      { name: "description", content: "Yapay zeka, modern yazılım teknolojileri, siber güvenlik rehberleri ve dijital dönüşüm dünyasından en son haberler, analizler ve içgörüler." },
+      { name: "keywords", content: "teknoloji blogu, yapay zeka makaleleri, yazılım rehberleri, kodlama ipuçları, siber güvenlik haberleri, Fun Teknoloji Blog" },
+      { name: "robots", content: "index, follow" },
+      { property: "og:title", content: "Teknoloji Blogu - Yapay Zeka, Yazılım ve Siber Güvenlik | Fun Teknoloji" },
+      { property: "og:description", content: "Yapay zeka, modern yazılım teknolojileri ve dijital dönüşüm dünyasından en son analizler ve içgörüler." },
+      { property: "og:url", content: "https://funteknoloji.com/blog" },
+      { property: "og:type", content: "website" },
+      { property: "og:image", content: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:site", content: "@funteknoloji_" },
+      { name: "twitter:title", content: "Teknoloji Blogu - Fun Teknoloji" },
+      { name: "twitter:description", content: "Yapay zeka, modern yazılım teknolojileri ve dijital dünyadaki son gelişmeleri kaçırmayın." },
+      { name: "twitter:image", content: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b" },
+    ],
+    links: [{ rel: "canonical", href: "https://funteknoloji.com/blog" }],
   }),
   component: BlogPage,
 });

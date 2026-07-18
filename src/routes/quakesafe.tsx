@@ -18,7 +18,23 @@ import {
 
 export const Route = createFileRoute("/quakesafe")({
   head: () => ({
-    meta: [{ title: "QuakeSafe - Deprem Güvenliği" }],
+    meta: [
+      { title: "QuakeSafe - Yapay Zeka Destekli Deprem Güvenliği Altyapısı" },
+      { name: "description", content: "QuakeSafe; yapay zeka ve akıllı sensör ağları kullanarak deprem öncesi, anı ve sonrasında saniyelerin kritik olduğu zamanlarda hayat kurtaran bir deprem güvenliği teknolojisidir." },
+      { name: "keywords", content: "QuakeSafe, deprem güvenliği, anlık deprem uyarısı, afet yönetimi, deprem takip sistemi, mesh ağı, acil durum yardımı" },
+      { name: "robots", content: "index, follow" },
+      { property: "og:title", content: "QuakeSafe - Yapay Zeka Destekli Deprem Güvenliği Altyapısı" },
+      { property: "og:description", content: "Deprem dalgaları ulaşmadan saniyeler önce kritik uyarılar alın, sevdiklerinizin konumunu anlık takip edin." },
+      { property: "og:url", content: "https://funteknoloji.com/quakesafe" },
+      { property: "og:type", content: "website" },
+      { property: "og:image", content: "https://funteknoloji.com/assets/logos/quakesafe_seffaf.png" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:site", content: "@funteknoloji_" },
+      { name: "twitter:title", content: "QuakeSafe - Deprem Güvenliği Teknolojileri" },
+      { name: "twitter:description", content: "Deprem anında sevdiklerinizle güvende kalın. Yapay zeka ve mesh ağları ile kesintisiz iletişim." },
+      { name: "twitter:image", content: "https://funteknoloji.com/assets/logos/quakesafe_seffaf.png" },
+    ],
+    links: [{ rel: "canonical", href: "https://funteknoloji.com/quakesafe" }],
   }),
   component: QuakeSafePage,
 });

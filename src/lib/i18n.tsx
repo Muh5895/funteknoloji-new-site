@@ -587,6 +587,19 @@ const tr: Dict = {
   "home.faq.q7": "Ekibinize nasıl katılabilirim?",
 
   "nexy.use_now": "Hemen Kullan",
+
+  "cookies.title": "Gizlilik ve Çerez Yönetimi",
+  "cookies.description": "Size en iyi deneyimi sunabilmek için çerezleri kullanıyoruz. Tercihlerinizi özelleştirebilirsiniz.",
+  "cookies.accept_all": "Hepsini Kabul Et",
+  "cookies.reject_all": "Hepsini Reddet",
+  "cookies.save_settings": "Seçimleri Kaydet",
+  "cookies.customize": "Çerezleri Özelleştir",
+  "cookies.necessary.title": "Zorunlu Çerezler",
+  "cookies.necessary.desc": "Sitenin düzgün çalışması ve temel güvenlik özellikleri için gereklidir.",
+  "cookies.analytics.title": "Analitik Çerezler",
+  "cookies.analytics.desc": "Kullanıcı deneyimini geliştirmek amacıyla ziyaret istatistiklerini anonim olarak analiz etmemizi sağlar.",
+  "cookies.marketing.title": "Pazarlama Çerezleri",
+  "cookies.marketing.desc": "İlgi alanlarınıza uygun kişiselleştirilmiş içerikler sunmamıza yardımcı olur.",
 };
 
 const en: Dict = {
@@ -1162,6 +1175,19 @@ const en: Dict = {
   "home.faq.q7": "How can I join your team?",
 
   "nexy.use_now": "Use Now",
+
+  "cookies.title": "Privacy and Cookie Management",
+  "cookies.description": "We use cookies to offer you the best experience. You can customize your preferences.",
+  "cookies.accept_all": "Accept All",
+  "cookies.reject_all": "Reject All",
+  "cookies.save_settings": "Save Choices",
+  "cookies.customize": "Customize Cookies",
+  "cookies.necessary.title": "Necessary Cookies",
+  "cookies.necessary.desc": "Required for the proper operation and basic security features of the site.",
+  "cookies.analytics.title": "Analytical Cookies",
+  "cookies.analytics.desc": "Allows us to anonymously analyze visit statistics to improve user experience.",
+  "cookies.marketing.title": "Marketing Cookies",
+  "cookies.marketing.desc": "Helps us deliver personalized content matching your interests.",
 };
 
 const de: Dict = {
@@ -1743,6 +1769,19 @@ const de: Dict = {
   "nexy.search_placeholder": "Nachrichten suchen...",
   "nexy.delete_toast": "Chat gelöscht",
   "nexy.use_now": "Jetzt nutzen",
+
+  "cookies.title": "Datenschutz- und Cookie-Verwaltung",
+  "cookies.description": "Wir verwenden Cookies, um Ihnen das beste Erlebnis zu bieten. Sie können Ihre Einstellungen anpassen.",
+  "cookies.accept_all": "Alle akzeptieren",
+  "cookies.reject_all": "Alle ablehnen",
+  "cookies.save_settings": "Auswahl speichern",
+  "cookies.customize": "Cookies anpassen",
+  "cookies.necessary.title": "Notwendige Cookies",
+  "cookies.necessary.desc": "Erforderlich für den ordnungsgemäßen Betrieb und grundlegende Sicherheitsfunktionen der Website.",
+  "cookies.analytics.title": "Analytische Cookies",
+  "cookies.analytics.desc": "Ermöglicht uns die anonyme Analyse von Besuchsstatistiken zur Verbesserung der Benutzererfahrung.",
+  "cookies.marketing.title": "Marketing-Cookies",
+  "cookies.marketing.desc": "Hilft uns, personalisierte Inhalte bereitzustellen, die Ihren Interessen entsprechen.",
 };
 
 const fr: Dict = {
@@ -2333,6 +2372,19 @@ const fr: Dict = {
   "nexy.search_placeholder": "Rechercher des messages...",
   "nexy.delete_toast": "Discussion supprimée",
   "nexy.use_now": "Utiliser maintenant",
+
+  "cookies.title": "Gestion de la confidentialité et des cookies",
+  "cookies.description": "Nous utilisons des cookies pour vous offrir la meilleure expérience possible. Vous pouvez personnaliser vos préférences.",
+  "cookies.accept_all": "Tout accepter",
+  "cookies.reject_all": "Tout refuser",
+  "cookies.save_settings": "Enregistrer les choix",
+  "cookies.customize": "Personnaliser les cookies",
+  "cookies.necessary.title": "Cookies nécessaires",
+  "cookies.necessary.desc": "Requis pour le bon fonctionnement et les fonctionnalités de sécurité de base du site.",
+  "cookies.analytics.title": "Cookies analytiques",
+  "cookies.analytics.desc": "Permet d'analyser anonymement les statistiques de visite pour améliorer l'expérience utilisateur.",
+  "cookies.marketing.title": "Cookies marketing",
+  "cookies.marketing.desc": "Nous aide à proposer des contenus personnalisés adaptés à vos centres d'intérêt.",
 };
 
 const es: Dict = {
@@ -2907,6 +2959,19 @@ const es: Dict = {
   "nexy.search_placeholder": "Buscar mensajes...",
   "nexy.delete_toast": "Chat eliminado",
   "nexy.use_now": "Usar ahora",
+
+  "cookies.title": "Gestión de privacidad y cookies",
+  "cookies.description": "Utilizamos cookies para ofrecerle la mejor experiencia. Puede personalizar sus preferencias.",
+  "cookies.accept_all": "Aceptar todo",
+  "cookies.reject_all": "Rechazar todo",
+  "cookies.save_settings": "Guardar opciones",
+  "cookies.customize": "Personalizar cookies",
+  "cookies.necessary.title": "Cookies necesarias",
+  "cookies.necessary.desc": "Requerido para el correcto funcionamiento y características de seguridad básicas del sitio.",
+  "cookies.analytics.title": "Cookies analíticas",
+  "cookies.analytics.desc": "Permite analizar de forma anónima las estadísticas de visitas para mejorar la experiencia de usuario.",
+  "cookies.marketing.title": "Cookies de marketing",
+  "cookies.marketing.desc": "Ayuda a ofrecer contenido personalizado según sus intereses.",
 };
 
 const az: Dict = {
@@ -3474,6 +3539,19 @@ const az: Dict = {
   "nexy.search_placeholder": "Mesajlarda axtar...",
   "nexy.delete_toast": "Söhbət silindi",
   "nexy.use_now": "İndi istifadə et",
+
+  "cookies.title": "Məxfilik və Kuki İdarəetməsi",
+  "cookies.description": "Sizə ən yaxşı təcrübəni təqdim etmək üçün kukilərdən istifadə edirik. Seçimlərinizi fərdiləşdirə bilərsiniz.",
+  "cookies.accept_all": "Hamısını Qəbul Et",
+  "cookies.reject_all": "Hamısını Rədd Et",
+  "cookies.save_settings": "Seçimləri Yadda Saxla",
+  "cookies.customize": "Kukiləri Fərdiləşdir",
+  "cookies.necessary.title": "Zəruri Kukilər",
+  "cookies.necessary.desc": "Saytın düzgün işləməsi və əsas təhlükəsizlik funksiyaları üçün tələb olunur.",
+  "cookies.analytics.title": "Analitik Kukilər",
+  "cookies.analytics.desc": "İstifadəçi təcrübəsini təkmilləşdirmək üçün ziyarət statistikalarını anonim təhlil etməyə imkan verir.",
+  "cookies.marketing.title": "Marketinq Kukiləri",
+  "cookies.marketing.desc": "Maraqlarınıza uyğun fərdiləşdirilmiş məzmun təqdim etməyə kömək edir.",
 };
 
 const ru: Dict = {
@@ -4050,6 +4128,19 @@ const ru: Dict = {
   "nexy.search_placeholder": "Поиск сообщений...",
   "nexy.delete_toast": "Чат удален",
   "nexy.use_now": "Использовать сейчас",
+
+  "cookies.title": "Конфиденциальность и управление файлами cookie",
+  "cookies.description": "Мы используем файлы cookie, чтобы предложить вам наилучший сервис. Вы можете настроить свои предпочтения.",
+  "cookies.accept_all": "Принять все",
+  "cookies.reject_all": "Отклонить все",
+  "cookies.save_settings": "Сохранить настройки",
+  "cookies.customize": "Настроить файлы cookie",
+  "cookies.necessary.title": "Необходимые файлы cookie",
+  "cookies.necessary.desc": "Требуются для надлежащей работы и базовых функций безопасности сайта.",
+  "cookies.analytics.title": "Аналитические файлы cookie",
+  "cookies.analytics.desc": "Позволяют нам анонимно анализировать статистику посещений для улучшения пользовательского интерфейса.",
+  "cookies.marketing.title": "Маркетинговые файлы cookie",
+  "cookies.marketing.desc": "Помогают нам предоставлять персонализированный контент в соответствии с вашими интересами.",
 };
 
 const ar: Dict = {
@@ -4585,6 +4676,19 @@ const ar: Dict = {
   "nexy.search_placeholder": "بحث في الرسائل...",
   "nexy.delete_toast": "تم حذف الدردشة",
   "nexy.use_now": "استخدم الآن",
+
+  "cookies.title": "إدارة الخصوصية وملفات تعريف الارتباط",
+  "cookies.description": "نحن نستخدم ملفات تعريف الارتباط لنقدم لك أفضل تجربة. يمكنك تخصيص تفضيلاتك.",
+  "cookies.accept_all": "قبول الكل",
+  "cookies.reject_all": "رفض الكل",
+  "cookies.save_settings": "حفظ الخيارات",
+  "cookies.customize": "تخصيص ملفات تعريف الارتباط",
+  "cookies.necessary.title": "ملفات تعريف الارتباط الضرورية",
+  "cookies.necessary.desc": "مطلوبة للتشغيل السليم وميزات الأمان الأساسية للموقع.",
+  "cookies.analytics.title": "ملفات تعريف الارتباط التحليلية",
+  "cookies.analytics.desc": "تتيح لنا تحليل إحصاءات الزيارة بشكل مجهول لتحسين تجربة المستخدم.",
+  "cookies.marketing.title": "ملفات تعريف الارتباط التسويقية",
+  "cookies.marketing.desc": "تساعدنا في تقديم محتوى مخصص يتناسب مع اهتماماتك.",
 };
 
 const it: Dict = {
@@ -5156,6 +5260,19 @@ const it: Dict = {
   "nexy.search_placeholder": "Cerca messaggi...",
   "nexy.delete_toast": "Chat eliminata",
   "nexy.use_now": "Usa ora",
+
+  "cookies.title": "Gestione della privacy e dei cookie",
+  "cookies.description": "Utilizziamo i cookie per offrirti la migliore esperienza possibile. Puoi personalizzare le tue preferenze.",
+  "cookies.accept_all": "Accetta tutto",
+  "cookies.reject_all": "Rifiuta tutto",
+  "cookies.save_settings": "Salva scelte",
+  "cookies.customize": "Personalizza cookie",
+  "cookies.necessary.title": "Cookie necessari",
+  "cookies.necessary.desc": "Richiesto per il corretto funzionamento e le funzionalità di sicurezza di base del sito.",
+  "cookies.analytics.title": "Cookie analitici",
+  "cookies.analytics.desc": "Consente di analizzare in modo anonimo le statistiche delle visite per migliorare l'esperienza dell'utente.",
+  "cookies.marketing.title": "Cookie di marketing",
+  "cookies.marketing.desc": "Ci aiuta a fornire contenuti personalizzati in linea con i tuoi interessi.",
 };
 
 const pt: Dict = {
@@ -5730,6 +5847,19 @@ const pt: Dict = {
   "nexy.search_placeholder": "Pesquisar mensagens...",
   "nexy.delete_toast": "Conversa excluída",
   "nexy.use_now": "Use agora",
+
+  "cookies.title": "Gerenciamento de Privacidade e Cookies",
+  "cookies.description": "Utilizamos cookies para lhe oferecer a melhor experiência possível. Você pode personalizar suas preferências.",
+  "cookies.accept_all": "Aceitar Todos",
+  "cookies.reject_all": "Rejeitar Todos",
+  "cookies.save_settings": "Salvar Escolhas",
+  "cookies.customize": "Personalizar Cookies",
+  "cookies.necessary.title": "Cookies Necessários",
+  "cookies.necessary.desc": "Necessários para o funcionamento correto e recursos básicos de segurança do site.",
+  "cookies.analytics.title": "Cookies Analíticos",
+  "cookies.analytics.desc": "Permite-nos analisar anonimamente as estatísticas de visitas para melhorar a experiência do usuário.",
+  "cookies.marketing.title": "Cookies de Marketing",
+  "cookies.marketing.desc": "Ajuda-nos a fornecer conteúdos personalizados adequados aos seus interesses.",
 };
 
 const ja: Dict = {
@@ -6286,6 +6416,19 @@ const ja: Dict = {
   "nexy.search_placeholder": "メッセージを検索...",
   "nexy.delete_toast": "チャットが削除されました",
   "nexy.use_now": "今すぐ使う",
+
+  "cookies.title": "プライバシーとクッキーの管理",
+  "cookies.description": "最適な体験を提供するためにクッキーを使用しています。設定をカスタマイズできます。",
+  "cookies.accept_all": "すべて同意する",
+  "cookies.reject_all": "すべて拒否する",
+  "cookies.save_settings": "選択を保存する",
+  "cookies.customize": "クッキーをカスタマイズする",
+  "cookies.necessary.title": "必須のクッキー",
+  "cookies.necessary.desc": "サイトの適切な動作と基本的なセキュリティ機能のために必要です。",
+  "cookies.analytics.title": "分析用クッキー",
+  "cookies.analytics.desc": "ユーザー体験を向上させるために、訪問統計を匿名で分析することを可能にします。",
+  "cookies.marketing.title": "マーケティング用クッキー",
+  "cookies.marketing.desc": "興味関心に合わせたパーソナライズされたコンテンツの提供をサポートします。",
 };
 
 const zh: Dict = {
@@ -6801,6 +6944,19 @@ const zh: Dict = {
   "nexy.search_placeholder": "搜索消息...",
   "nexy.delete_toast": "聊天已删除",
   "nexy.use_now": "立即使用",
+
+  "cookies.title": "隐私与 Cookie 管理",
+  "cookies.description": "我们使用 Cookie 为您提供最佳体验。您可以自定义您的偏好设置。",
+  "cookies.accept_all": "接受全部",
+  "cookies.reject_all": "拒绝全部",
+  "cookies.save_settings": "保存选择",
+  "cookies.customize": "自定义 Cookie",
+  "cookies.necessary.title": "必要 Cookie",
+  "cookies.necessary.desc": "网站正常运行和基本安全功能所必需的 Cookie。",
+  "cookies.analytics.title": "分析 Cookie",
+  "cookies.analytics.desc": "允许我们匿名分析访问统计数据，以改进用户体验。",
+  "cookies.marketing.title": "营销 Cookie",
+  "cookies.marketing.desc": "帮助我们提供符合您兴趣的个性化内容。",
 };
 
 const dicts: Record<Lang, Dict> = { tr, en, de, fr, es, az, ru, ar, it, pt, ja, zh };

@@ -6,7 +6,23 @@ import { Sparkles, BrainCircuit, MessageCircle, Zap, Globe, Shield, Search, Cloc
 
 export const Route = createFileRoute("/nexy")({
   head: () => ({
-    meta: [{ title: "Nexy Asistan - Fun Teknoloji" }],
+    meta: [
+      { title: "Nexy - Yapay Zeka Tabanlı Akıllı İş Asistanı" },
+      { name: "description", content: "Nexy; Fun Teknoloji tarafından geliştirilen, 12+ dilde destek veren ve 7/24 kesintisiz, insan benzeri akıcı konuşmalar kurabilen yenilikçi yapay zeka asistanıdır." },
+      { name: "keywords", content: "Nexy, yapay zeka asistanı, akıllı arama, çok dilli yapay zeka, chatbot, Fun Teknoloji AI, müşteri desteği otomasyonu" },
+      { name: "robots", content: "index, follow" },
+      { property: "og:title", content: "Nexy - Yapay Zeka Tabanlı Akıllı İş Asistanı" },
+      { property: "og:description", content: "Saniyeler içinde akıllı yanıtlar, döküman aramaları ve gelişmiş çok dilli diyalog yetenekleriyle Nexy her an yanınızda." },
+      { property: "og:url", content: "https://funteknoloji.com/nexy" },
+      { property: "og:type", content: "website" },
+      { property: "og:image", content: "https://funteknoloji.com/nexy.png" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:site", content: "@funteknoloji_" },
+      { name: "twitter:title", content: "Nexy - Fun Teknoloji AI Asistanı" },
+      { name: "twitter:description", content: "İşlerinizi kolaylaştıran, dökümanlarınız arasında akıllı arama yapabilen yapay zeka destekli dijital asistan." },
+      { name: "twitter:image", content: "https://funteknoloji.com/nexy.png" },
+    ],
+    links: [{ rel: "canonical", href: "https://funteknoloji.com/nexy" }],
   }),
   component: NexyPage,
 });
