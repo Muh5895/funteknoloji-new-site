@@ -113,6 +113,10 @@
   --fun-card: #ffffff;
   --fun-text: #12161f;
   --fun-text-muted: rgba(18, 22, 31, 0.6);
+
+  --sparkle-base-lightness: 96%;
+  --sparkle-text-color: #12161f;
+  --sparkle-border-color: #e8ebf0;
 }
 
 [data-sonner-toast] {
@@ -187,6 +191,10 @@
   --fun-card: #0d0d0d;
   --fun-text: #f3f5f8;
   --fun-text-muted: rgba(243, 245, 248, 0.65);
+
+  --sparkle-base-lightness: 12%;
+  --sparkle-text-color: #ffffff;
+  --sparkle-border-color: #1f1f1f;
 }
 
 @layer base {
@@ -525,19 +533,19 @@
   --bg:
     radial-gradient(
       40% 50% at center 100%,
-      hsl(270 calc((var(--active) * 47%) + 50%) 72% / calc(var(--active) + 0.5)),
+      hsl(270 calc(var(--active) * 97%) 72% / var(--active)),
       transparent
     ),
     radial-gradient(
       80% 100% at center 120%,
-      hsl(260 calc((var(--active) * 47%) + 50%) 70% / calc(var(--active) + 0.5)),
+      hsl(260 calc(var(--active) * 97%) 70% / var(--active)),
       transparent
     ),
-    hsl(260 calc((var(--active) * 47%) + 50%) calc((var(--active) * 20%) + 50%));
+    hsl(260 calc(var(--active) * 97%) calc((var(--active) * 44%) + var(--sparkle-base-lightness, 12%)));
   background: var(--bg);
   font-size: 1.2rem;
   font-weight: 500;
-  border: 0;
+  border: 1px solid var(--sparkle-border-color);
   cursor: pointer;
   padding: 1em 1em;
   display: flex;
@@ -553,8 +561,17 @@
   transition:
     box-shadow 0.3s,
     scale 0.3s,
-    background 0.3s;
+    background 0.3s,
+    border-color 0.3s,
+    color 0.3s;
   scale: calc(1 + (var(--active) * 0.1));
+  color: var(--sparkle-text-color);
+}
+
+.sparkle-button.active-sparkle,
+.sparkle-button:is(:hover, :focus-visible) {
+  border-color: transparent !important;
+  color: white !important;
 }
 
 .sparkle-button:active {
@@ -571,6 +588,11 @@
   animation-delay: calc((0.3s * 1.5) + (var(--delay) * 1s));
   animation-duration: 0.6s;
   transition: color 0.3s;
+}
+
+.sparkle-button.active-sparkle .sparkle path,
+.sparkle-button:is(:hover, :focus-visible) .sparkle path {
+  color: white !important;
 }
 
 .sparkle-button:is(:hover, :focus-visible) path {
@@ -720,7 +742,7 @@
 .sparkle-text {
   translate: 2% -6%;
   letter-spacing: 0.01ch;
-  color: white;
+  color: inherit;
   transition: color 0.3s;
 }
 

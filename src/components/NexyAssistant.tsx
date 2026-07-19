@@ -3,6 +3,8 @@ import { useLang } from "../lib/i18n";
 import { useNavigate } from "@tanstack/react-router";
 import { KNOWLEDGE_BASE } from "../lib/knowledge";
 import { toast } from "sonner";
+import { supabase } from "../lib/supabase";
+import { Eye, EyeOff } from "lucide-react";
 import {
   X,
   Copy,
@@ -61,6 +63,8 @@ export default function NexyAssistant() {
   });
   const [liveEmail, setLiveUserEmail] = useState("");
   const [livePassword, setLiveUserPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
   const [liveMessages, setLiveMessages] = useState<{ role: "agent" | "user"; text: string; id: string; timestamp: number }[]>(() => {
     if (typeof window !== "undefined") {
       const saved = localStorage.getItem("live_support_messages");
@@ -663,7 +667,7 @@ export default function NexyAssistant() {
                 style={{ borderColor: "var(--fun-stroke-1)" }}
               >
                 <div>
-                  <h3 className="text-sm sm:text-base font-bold tracking-tight text-[var(--fun-purple)] leading-tight">{t("help.menu.title")}</h3>
+                  <h3 className="text-sm sm:text-base font-bold tracking-tight text-white leading-tight">{t("help.menu.title")}</h3>
                   <p className="text-[10px] sm:text-xs fun-text-muted mt-0.5">{t("help.menu.desc")}</p>
                 </div>
                 <button
@@ -696,7 +700,6 @@ export default function NexyAssistant() {
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between">
                       <h4 className="text-xs sm:text-sm font-bold fun-text tracking-tight">{t("help.menu.ai.title")}</h4>
-                      <ChevronRight className="h-4 w-4 fun-text-muted group-hover:translate-x-1 transition-transform" />
                     </div>
                     <p className="text-[10px] sm:text-[11px] fun-text-muted mt-1 leading-normal">{t("help.menu.ai.desc")}</p>
                   </div>
@@ -754,7 +757,7 @@ export default function NexyAssistant() {
 
               {/* Login Form */}
               <form
-                onSubmit={(e) => {
+                onSubmit={async (e) => {
                   e.preventDefault();
                   if (!liveEmail || !livePassword) {
                     toast.error(lang === "tr" ? "Lütfen tüm alanları doldurun." : "Please fill in all fields.");
@@ -764,9 +767,38 @@ export default function NexyAssistant() {
                     toast.error(lang === "tr" ? "Geçersiz e-posta adresi." : "Invalid email address.");
                     return;
                   }
-                  setLiveUser({ email: liveEmail });
-                  setSupportView("live_chat");
-                  toast.success(lang === "tr" ? "Giriş yapıldı!" : "Logged in successfully!");
+
+                  setIsLoggingIn(true);
+                  try {
+                    const { data, error } = await supabase.auth.signInWithPassword({
+                      email: liveEmail,
+                      password: livePassword,
+                    });
+
+                    if (error) {
+                      // Precise user friendly error messages for Supabase authentication
+                      const errMsg = error.message.toLowerCase();
+                      if (errMsg.includes("invalid login credentials") || errMsg.includes("invalid double quote") || errMsg.includes("email not confirmed")) {
+                        toast.error(lang === "tr" ? "Hatalı şifre veya e-posta adresi!" : "Invalid email or password!");
+                      } else if (errMsg.includes("banned") || errMsg.includes("suspended") || errMsg.includes("restricted")) {
+                        toast.error(lang === "tr" ? "Hesabınız askıya alınmıştır (banlanmışsınız)." : "Your account has been banned/suspended.");
+                      } else {
+                        toast.error(error.message);
+                      }
+                      setIsLoggingIn(false);
+                      return;
+                    }
+
+                    if (data?.user) {
+                      setLiveUser({ email: data.user.email || liveEmail });
+                      setSupportView("live_chat");
+                      toast.success(lang === "tr" ? "Başarıyla giriş yapıldı!" : "Logged in successfully!");
+                    }
+                  } catch (err: any) {
+                    toast.error(lang === "tr" ? "Sistem hatası oluştu. Lütfen tekrar deneyin." : "System error occurred. Please try again.");
+                  } finally {
+                    setIsLoggingIn(false);
+                  }
                 }}
                 className="flex-1 p-5 sm:p-6 flex flex-col justify-start gap-4 pt-8"
               >
@@ -777,10 +809,11 @@ export default function NexyAssistant() {
                     <input
                       type="email"
                       required
+                      disabled={isLoggingIn}
                       value={liveEmail}
                       onChange={(e) => setLiveUserEmail(e.target.value)}
                       placeholder={t("contact.form.email_placeholder")}
-                      className="w-full rounded-xl bg-[var(--fun-surface)] border border-[var(--fun-stroke-1)] py-2.5 pl-10 pr-4 text-xs outline-none focus:border-[var(--fun-purple)] transition-all fun-text"
+                      className="w-full rounded-xl bg-[var(--fun-surface)] border border-[var(--fun-stroke-1)] py-2.5 pl-10 pr-4 text-xs outline-none focus:border-[var(--fun-purple)] transition-all fun-text disabled:opacity-50"
                     />
                   </div>
                 </div>
@@ -790,21 +823,35 @@ export default function NexyAssistant() {
                   <div className="relative">
                     <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 fun-text-muted" />
                     <input
-                      type="password"
+                      type={showPassword ? "text" : "password"}
                       required
+                      disabled={isLoggingIn}
                       value={livePassword}
                       onChange={(e) => setLiveUserPassword(e.target.value)}
                       placeholder="••••••••"
-                      className="w-full rounded-xl bg-[var(--fun-surface)] border border-[var(--fun-stroke-1)] py-2.5 pl-10 pr-4 text-xs outline-none focus:border-[var(--fun-purple)] transition-all fun-text"
+                      className="w-full rounded-xl bg-[var(--fun-surface)] border border-[var(--fun-stroke-1)] py-2.5 pl-10 pr-12 text-xs outline-none focus:border-[var(--fun-purple)] transition-all fun-text disabled:opacity-50"
                     />
+                    <button
+                      type="button"
+                      disabled={isLoggingIn}
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 h-6 w-6 flex items-center justify-center text-zinc-400 hover:text-[var(--fun-purple)] transition-colors"
+                    >
+                      {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                    </button>
                   </div>
                 </div>
 
                 <button
                   type="submit"
-                  className="w-full mt-4 py-3 rounded-xl bg-[var(--fun-purple)] text-white font-bold text-xs flex items-center justify-center gap-2 hover:scale-[1.02] transition-all shadow-lg shadow-purple-500/20 active:scale-95 cursor-pointer"
+                  disabled={isLoggingIn}
+                  className="w-full mt-4 py-3 rounded-xl bg-[var(--fun-purple)] text-white font-bold text-xs flex items-center justify-center gap-2 hover:scale-[1.02] transition-all shadow-lg shadow-purple-500/20 active:scale-95 cursor-pointer disabled:opacity-50"
                 >
-                  {lang === "tr" ? "Giriş Yap" : "Log In"}
+                  {isLoggingIn ? (
+                    <div className="h-4 w-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  ) : (
+                    lang === "tr" ? "Giriş Yap" : "Log In"
+                  )}
                 </button>
               </form>
             </div>
@@ -1273,10 +1320,10 @@ export default function NexyAssistant() {
           </button>
           <div className="sp">
             <button
-              className={`sparkle-button ${isOpen ? "--active: 1" : ""} ${isMinimized ? "opacity-50 pointer-events-none" : ""}`}
+              className={`sparkle-button ${isOpen ? "active-sparkle" : ""} ${isMinimized ? "opacity-50 pointer-events-none" : ""}`}
               onClick={toggleChat}
               aria-label={t("nexy.aria_help")}
-              style={isOpen ? ({ "--active": 1 } as any) : {}}
+              style={{ "--active": isOpen ? 1 : 0 } as any}
             >
               <span className="spark"></span>
               <span className="backdrop"></span>
