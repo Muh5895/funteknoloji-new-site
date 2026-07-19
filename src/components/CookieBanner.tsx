@@ -193,22 +193,22 @@ export default function CookieBanner() {
                   </div>
                   <p className="text-[10px] fun-text-muted mt-0.5 leading-normal">{t("cookies.necessary.desc")}</p>
                 </div>
-                <label className="relative inline-flex items-center cursor-not-allowed shrink-0 pointer-events-none">
+                <label className="relative inline-flex items-center cursor-not-allowed shrink-0">
                   <input type="checkbox" checked disabled className="sr-only peer" />
-                  <div className="w-8 h-4.5 bg-zinc-800 dark:bg-black rounded-full after:content-[''] after:absolute after:top-[2px] after:right-[2px] after:bg-zinc-400 after:rounded-full after:h-3.5 after:w-3.5 after:transition-all"></div>
+                  <div className="w-8 h-4.5 bg-[var(--fun-purple)] rounded-full after:content-[''] after:absolute after:top-[2px] after:right-[2px] after:bg-white after:rounded-full after:h-3.5 after:w-3.5 after:transition-all"></div>
                 </label>
               </div>
 
               {/* Analytics */}
               <div
-                className="flex items-center justify-between p-3 rounded-xl bg-[var(--fun-surface)] border border-[var(--fun-stroke-2)] hover:border-[var(--fun-purple)]/30 transition-all cursor-pointer animate-none"
+                className="flex items-center justify-between p-3 rounded-xl bg-[var(--fun-surface)] border border-[var(--fun-stroke-2)] hover:border-[var(--fun-purple)]/30 transition-all cursor-pointer"
                 onClick={() => setConsent(prev => ({ ...prev, analytics: !prev.analytics }))}
               >
                 <div className="flex-1 pr-3">
                   <h4 className="text-xs font-bold">{t("cookies.analytics.title")}</h4>
                   <p className="text-[10px] fun-text-muted mt-0.5 leading-normal">{t("cookies.analytics.desc")}</p>
                 </div>
-                <label className="relative inline-flex items-center cursor-pointer shrink-0 pointer-events-none">
+                <label className="relative inline-flex items-center cursor-pointer shrink-0">
                   <input
                     type="checkbox"
                     checked={consent.analytics}
@@ -225,14 +225,14 @@ export default function CookieBanner() {
 
               {/* Marketing */}
               <div
-                className="flex items-center justify-between p-3 rounded-xl bg-[var(--fun-surface)] border border-[var(--fun-stroke-2)] hover:border-[var(--fun-purple)]/30 transition-all cursor-pointer animate-none"
+                className="flex items-center justify-between p-3 rounded-xl bg-[var(--fun-surface)] border border-[var(--fun-stroke-2)] hover:border-[var(--fun-purple)]/30 transition-all cursor-pointer"
                 onClick={() => setConsent(prev => ({ ...prev, marketing: !prev.marketing }))}
               >
                 <div className="flex-1 pr-3">
                   <h4 className="text-xs font-bold">{t("cookies.marketing.title")}</h4>
                   <p className="text-[10px] fun-text-muted mt-0.5 leading-normal">{t("cookies.marketing.desc")}</p>
                 </div>
-                <label className="relative inline-flex items-center cursor-pointer shrink-0 pointer-events-none">
+                <label className="relative inline-flex items-center cursor-pointer shrink-0">
                   <input
                     type="checkbox"
                     checked={consent.marketing}

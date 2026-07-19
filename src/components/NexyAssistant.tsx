@@ -1,10 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 import { useLang } from "../lib/i18n";
 import { useNavigate } from "@tanstack/react-router";
+import { LiveLoginView, LiveChatView } from "./LiveSupportViews";
 import { KNOWLEDGE_BASE } from "../lib/knowledge";
 import { toast } from "sonner";
-import { supabase } from "../lib/supabase";
-import { Eye, EyeOff } from "lucide-react";
 import {
   X,
   Copy,
@@ -24,10 +23,11 @@ import {
   Menu,
   Edit2,
   Check,
-  Lock,
-  User,
+  Eye,
+  EyeOff,
   LogOut,
 } from "lucide-react";
+import { supabase } from "../lib/supabase";
 
 interface Chat {
   id: string;
@@ -48,80 +48,41 @@ export default function NexyAssistant() {
   const [isThinking, setIsThinking] = useState(false);
   const [speakingMessageIndex, setSpeakingMessageIndex] = useState<number | null>(null);
   const [supportView, setSupportView] = useState<"menu" | "chat" | "live_login" | "live_chat">("menu");
-
-  // Live support authentication and messages with lazy state initializers to prevent Strict Mode reset
   const [liveUser, setLiveUser] = useState<{ email: string } | null>(() => {
     if (typeof window !== "undefined") {
       const saved = localStorage.getItem("live_support_user");
-      if (saved) {
-        try {
-          return JSON.parse(saved);
-        } catch (e) {}
-      }
+      return saved ? JSON.parse(saved) : null;
     }
     return null;
   });
-  const [liveEmail, setLiveUserEmail] = useState("");
-  const [livePassword, setLiveUserPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
-  const [isLoggingIn, setIsLoggingIn] = useState(false);
-
-  // Pre-chat info states
-  const [liveName, setLiveName] = useState(() => {
-    if (typeof window !== "undefined") {
-      return localStorage.getItem("live_support_name") || "";
-    }
-    return "";
-  });
-  const [liveSubject, setLiveSubject] = useState("");
-  const [hasFilledPreChatInfo, setHasFilledPreChatInfo] = useState(() => {
-    if (typeof window !== "undefined") {
-      return localStorage.getItem("live_support_info_filled") === "true";
-    }
-    return false;
-  });
-
-  const [liveSearchQuery, setLiveSearchQuery] = useState("");
-  const [showLiveSearch, setShowLiveSearch] = useState(false);
-  const [showEndChatConfirmation, setShowEndChatConfirmation] = useState(false);
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      localStorage.setItem("live_support_name", liveName);
-    }
-  }, [liveName]);
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      localStorage.setItem("live_support_info_filled", hasFilledPreChatInfo ? "true" : "false");
-    }
-  }, [hasFilledPreChatInfo]);
+  const [liveEmail, setLiveEmail] = useState("");
+  const [livePassword, setLivePassword] = useState("");
   const [liveMessages, setLiveMessages] = useState<{ role: "agent" | "user"; text: string; id: string; timestamp: number }[]>(() => {
     if (typeof window !== "undefined") {
       const saved = localStorage.getItem("live_support_messages");
-      if (saved) {
-        try {
-          return JSON.parse(saved);
-        } catch (e) {}
-      }
+      return saved ? JSON.parse(saved) : [];
     }
     return [];
   });
   const [liveAgentTyping, setLiveAgentTyping] = useState(false);
 
   useEffect(() => {
-    if (liveUser) {
-      localStorage.setItem("live_support_user", JSON.stringify(liveUser));
-    } else {
-      localStorage.removeItem("live_support_user");
+    if (typeof window !== "undefined") {
+      if (liveUser) {
+        localStorage.setItem("live_support_user", JSON.stringify(liveUser));
+      } else {
+        localStorage.removeItem("live_support_user");
+      }
     }
   }, [liveUser]);
 
   useEffect(() => {
-    if (liveMessages.length > 0) {
-      localStorage.setItem("live_support_messages", JSON.stringify(liveMessages));
-    } else {
-      localStorage.removeItem("live_support_messages");
+    if (typeof window !== "undefined") {
+      if (liveMessages.length > 0) {
+        localStorage.setItem("live_support_messages", JSON.stringify(liveMessages));
+      } else {
+        localStorage.removeItem("live_support_messages");
+      }
     }
   }, [liveMessages]);
 
@@ -193,7 +154,7 @@ export default function NexyAssistant() {
       requestAnimationFrame(scroll);
       setTimeout(scroll, 100); // Fallback for slower rendering
     }
-  }, [chatMessages, isThinking, isTyping, liveMessages, liveAgentTyping]);
+  }, [chatMessages, isThinking, isTyping]);
 
   // Prevent background scroll when maximized
   useEffect(() => {
@@ -208,16 +169,6 @@ export default function NexyAssistant() {
   }, [isMaximized, isOpen]);
 
   const typingIntervalRef = useRef<number | null>(null);
-
-  const stopAIResponse = () => {
-    if (typingIntervalRef.current) {
-      clearInterval(typingIntervalRef.current);
-      typingIntervalRef.current = null;
-    }
-    setIsThinking(false);
-    setIsTyping(false);
-    toast.info(lang === "tr" ? "Cevap durduruldu." : "Response stopped.");
-  };
 
   const typeMessage = (fullText: string, msgIndex: number, chatId: string) => {
     if (typingIntervalRef.current) clearInterval(typingIntervalRef.current);
@@ -295,11 +246,9 @@ export default function NexyAssistant() {
   const generateChatTitle = async (userMsg: string, aiResponse: string) => {
     const prompt = `User: ${userMsg}\nAssistant: ${aiResponse}\n\nSystem: Based on the conversation above, determine a short and meaningful title for this chat (max 3-4 words). The title should summarize the topic. DO NOT just repeat the user's message. Response in the user's language. Write ONLY the title, no quotes or extra text.`;
     try {
-      const response = await fetch("/api/nexy", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ prompt, model: "openai" })
-      });
+      const response = await fetch(
+        `/api/nexy/${encodeURIComponent(prompt)}?model=openai&cache=false`,
+      );
       if (response.ok) {
         let title = await response.text();
         title = title.replace(/---[\s\S]*?Support Pollinations\.AI[\s\S]*?---/gi, "").trim();
@@ -334,29 +283,10 @@ export default function NexyAssistant() {
 
     User: ${input}`;
 
-    // Client-side off-topic check for programming queries that don't involve Fun Teknoloji
-    const lowerInput = input.toLowerCase();
-    const offTopicTriggers = [
-      "kod yaz", "bana kod", "write code", "javascript", "python", "html", "css",
-      "react", "programming", "bana yazılım", "programlama", "sql", "database",
-      "docker", "typescript", "kodlama", "yazılım geliştir", "kodunu", "hacker", "hackle"
-    ];
-    const hasOffTopic = offTopicTriggers.some(trigger => lowerInput.includes(trigger));
-    const isCompanyRelated = lowerInput.includes("fun teknoloji") ||
-                             lowerInput.includes("fun technology") ||
-                             lowerInput.includes("nexy") ||
-                             lowerInput.includes("quakesafe");
-
-    if (hasOffTopic && !isCompanyRelated) {
-      return "🔴 Nexy, Fun Teknoloji şirketinin resmi asistanıdır. İstek dışı kod yazma, programlama veya genel geliştirme talepleri engellenmiştir. Lütfen yalnızca Fun Teknoloji projeleri ve hizmetleri hakkında sorular sorun.";
-    }
-
     try {
-      const response = await fetch("/api/nexy", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ prompt, model: "openai" })
-      });
+      const response = await fetch(
+        `/api/nexy/${encodeURIComponent(prompt)}?model=openai&cache=false`,
+      );
       if (!response.ok) throw new Error();
       let text = await response.text();
 
@@ -371,7 +301,7 @@ export default function NexyAssistant() {
 
       return text.trim();
     } catch (err) {
-      throw err;
+      return t("nexy.resp.default.0");
     }
   };
 
@@ -404,38 +334,7 @@ export default function NexyAssistant() {
     setIsTyping(false);
     setIsThinking(true);
 
-    let response = "";
-    let isError = false;
-
-    try {
-      response = await getNexyBrainResponse(savedInput);
-      if (response.startsWith("🔴")) {
-        isError = true;
-      }
-    } catch (err) {
-      response = "🔴 Bir Hata Oluştu Tekrar Deneyin";
-      isError = true;
-    }
-
-    if (isError) {
-      setChats((prev) =>
-        prev.map((c) => {
-          if (c.id === currentChatId) {
-            return {
-              ...c,
-              messages: [
-                ...c.messages,
-                { role: "nexy" as const, text: response, displayedText: response }
-              ],
-            };
-          }
-          return c;
-        })
-      );
-      setIsThinking(false);
-      setIsTyping(false);
-      return;
-    }
+    let response = await getNexyBrainResponse(savedInput);
 
     // Check for REDIRECT command
     const redirectMatch = response.match(/\[REDIRECT:(.+)\]/);
@@ -616,14 +515,6 @@ export default function NexyAssistant() {
   if (!visible) return null;
 
   const formatText = (text: string) => {
-    if (text.startsWith("🔴")) {
-      return (
-        <span className="flex items-center gap-2 text-red-500 font-bold py-1">
-          <span className="text-base shrink-0">⚠️</span>
-          <span>{text.replace("🔴", "").trim()}</span>
-        </span>
-      );
-    }
     const lines = text.split("\n");
     const result: React.ReactNode[] = [];
     let currentTable: string[][] = [];
@@ -768,7 +659,7 @@ export default function NexyAssistant() {
                 style={{ borderColor: "var(--fun-stroke-1)" }}
               >
                 <div>
-                  <h3 className="text-sm sm:text-base font-bold tracking-tight text-white leading-tight">{t("help.menu.title")}</h3>
+                  <h3 className="text-sm sm:text-base font-bold tracking-tight text-[var(--fun-purple)] leading-tight">{t("help.menu.title")}</h3>
                   <p className="text-[10px] sm:text-xs fun-text-muted mt-0.5">{t("help.menu.desc")}</p>
                 </div>
                 <button
@@ -780,7 +671,7 @@ export default function NexyAssistant() {
               </div>
 
               {/* Menu Body */}
-              <div className="flex-1 overflow-y-auto p-5 sm:p-6 flex flex-col justify-start pt-6 gap-4">
+              <div className="flex-1 overflow-y-auto p-5 sm:p-6 flex flex-col justify-start gap-4 pt-8">
                 {/* AI Assistant Card */}
                 <div
                   onClick={() => {
@@ -791,11 +682,11 @@ export default function NexyAssistant() {
                   }}
                   className="group p-4 sm:p-5 rounded-2xl bg-[var(--fun-surface)] border border-[var(--fun-stroke-2)] hover:border-[var(--fun-purple)]/50 transition-all duration-300 cursor-pointer hover:scale-[1.02] shadow-sm flex items-start gap-4"
                 >
-                  <div className="h-10 w-10 sm:h-11 sm:w-11 rounded-xl overflow-hidden bg-[var(--fun-purple)] text-[var(--fun-purple)] flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                  <div className="h-10 w-10 sm:h-11 sm:w-11 rounded-xl bg-[var(--fun-purple)]/10 text-[var(--fun-purple)] flex items-center justify-center shrink-0 group-hover:scale-110 transition-all overflow-hidden relative">
                     <img
                       src="/nexy-kafa-buyuk.png"
                       alt="Nexy"
-                      className="h-full w-full object-cover"
+                      className="absolute inset-0 h-full w-full object-cover"
                     />
                   </div>
                   <div className="flex-1 min-w-0">
@@ -830,464 +721,30 @@ export default function NexyAssistant() {
               </div>
             </div>
           ) : supportView === "live_login" ? (
-            <div className="flex-1 flex flex-col h-full bg-[var(--fun-card)] select-none animate-in fade-in duration-300">
-              {/* Login Header */}
-              <div
-                className="p-5 sm:p-6 border-b flex items-center justify-between bg-[var(--fun-surface)] h-20 sm:h-24"
-                style={{ borderColor: "var(--fun-stroke-1)" }}
-              >
-                <div className="flex items-center gap-2">
-                  <button
-                    onClick={() => setSupportView("menu")}
-                    className="p-2 -ml-1 rounded-lg hover:bg-[var(--fun-stroke-1)] fun-text flex items-center justify-center shrink-0"
-                  >
-                    <ChevronLeft className="h-5 w-5" />
-                  </button>
-                  <div>
-                    <h3 className="text-sm sm:text-base font-bold tracking-tight text-[var(--fun-purple)] leading-tight">{t("help.menu.live.title")}</h3>
-                    <p className="text-[10px] sm:text-xs fun-text-muted mt-0.5">{lang === "tr" ? "Giriş Yapın" : "Log In"}</p>
-                  </div>
-                </div>
-                <button
-                  onClick={() => setIsOpen(false)}
-                  className="h-9 w-9 rounded-full hover:bg-[var(--fun-stroke-1)] flex items-center justify-center fun-text transition-colors"
-                >
-                  <X className="h-5 w-5" />
-                </button>
-              </div>
-
-              {/* Login Form */}
-              <form
-                onSubmit={async (e) => {
-                  e.preventDefault();
-                  if (!liveEmail || !livePassword) {
-                    toast.error(lang === "tr" ? "Lütfen tüm alanları doldurun." : "Please fill in all fields.");
-                    return;
-                  }
-                  if (!liveEmail.includes("@")) {
-                    toast.error(lang === "tr" ? "Geçersiz e-posta adresi." : "Invalid email address.");
-                    return;
-                  }
-
-                  setIsLoggingIn(true);
-                  try {
-                    const { data, error } = await supabase.auth.signInWithPassword({
-                      email: liveEmail,
-                      password: livePassword,
-                    });
-
-                    if (error) {
-                      // Precise user friendly error messages for Supabase authentication
-                      const errMsg = error.message.toLowerCase();
-                      if (errMsg.includes("invalid login credentials") || errMsg.includes("invalid double quote") || errMsg.includes("email not confirmed")) {
-                        toast.error(lang === "tr" ? "Hatalı şifre veya e-posta adresi!" : "Invalid email or password!");
-                      } else if (errMsg.includes("banned") || errMsg.includes("suspended") || errMsg.includes("restricted")) {
-                        toast.error(lang === "tr" ? "Hesabınız askıya alınmıştır (banlanmışsınız)." : "Your account has been banned/suspended.");
-                      } else {
-                        toast.error(error.message);
-                      }
-                      setIsLoggingIn(false);
-                      return;
-                    }
-
-                    if (data?.user) {
-                      setLiveUser({ email: data.user.email || liveEmail });
-                      setSupportView("live_chat");
-                      toast.success(lang === "tr" ? "Başarıyla giriş yapıldı!" : "Logged in successfully!");
-                    }
-                  } catch (err: any) {
-                    toast.error(lang === "tr" ? "Sistem hatası oluştu. Lütfen tekrar deneyin." : "System error occurred. Please try again.");
-                  } finally {
-                    setIsLoggingIn(false);
-                  }
-                }}
-                className="flex-1 p-5 sm:p-6 flex flex-col justify-start gap-4 pt-8"
-              >
-                <div className="space-y-1">
-                  <label className="text-xs font-bold fun-text-muted">{t("contact.form.email")}</label>
-                  <div className="relative">
-                    <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 fun-text-muted" />
-                    <input
-                      type="email"
-                      required
-                      disabled={isLoggingIn}
-                      value={liveEmail}
-                      onChange={(e) => setLiveUserEmail(e.target.value)}
-                      placeholder={t("contact.form.email_placeholder")}
-                      className="w-full rounded-xl bg-[var(--fun-surface)] border border-[var(--fun-stroke-1)] py-2.5 pl-10 pr-4 text-xs outline-none focus:border-[var(--fun-purple)] transition-all fun-text disabled:opacity-50"
-                    />
-                  </div>
-                </div>
-
-                <div className="space-y-1">
-                  <label className="text-xs font-bold fun-text-muted">{lang === "tr" ? "Şifre" : "Password"}</label>
-                  <div className="relative">
-                    <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 fun-text-muted" />
-                    <input
-                      type={showPassword ? "text" : "password"}
-                      required
-                      disabled={isLoggingIn}
-                      value={livePassword}
-                      onChange={(e) => setLiveUserPassword(e.target.value)}
-                      placeholder="••••••••"
-                      className="w-full rounded-xl bg-[var(--fun-surface)] border border-[var(--fun-stroke-1)] py-2.5 pl-10 pr-12 text-xs outline-none focus:border-[var(--fun-purple)] transition-all fun-text disabled:opacity-50"
-                    />
-                    <button
-                      type="button"
-                      disabled={isLoggingIn}
-                      onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 h-6 w-6 flex items-center justify-center text-zinc-400 hover:text-[var(--fun-purple)] transition-colors"
-                    >
-                      {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                    </button>
-                  </div>
-                </div>
-
-                <div className="flex justify-end -mt-2">
-                  <a
-                    href="https://account.funteknoloji.com/forgot-password"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-[10px] sm:text-xs font-semibold text-[var(--fun-purple)] hover:underline cursor-pointer"
-                  >
-                    {lang === "tr" ? "Şifremi Unuttum" : "Forgot Password?"}
-                  </a>
-                </div>
-
-                <button
-                  type="submit"
-                  disabled={isLoggingIn}
-                  className="w-full mt-2 py-3 rounded-xl bg-[var(--fun-purple)] text-white font-bold text-xs flex items-center justify-center gap-2 hover:scale-[1.02] transition-all shadow-lg shadow-purple-500/20 active:scale-95 cursor-pointer disabled:opacity-50"
-                >
-                  {isLoggingIn ? (
-                    <div className="h-4 w-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                  ) : (
-                    lang === "tr" ? "Giriş Yap" : "Log In"
-                  )}
-                </button>
-              </form>
-            </div>
+            <LiveLoginView
+              onBack={() => setSupportView("menu")}
+              onLoginSuccess={(user) => {
+                setLiveUser(user);
+                setSupportView("live_chat");
+              }}
+              lang={lang}
+            />
           ) : supportView === "live_chat" ? (
-            !hasFilledPreChatInfo ? (
-              <div className="flex-1 flex flex-col h-full bg-[var(--fun-card)] select-none animate-in fade-in duration-300">
-                {/* Header */}
-                <div
-                  className="p-5 sm:p-6 border-b flex items-center justify-between bg-[var(--fun-surface)] h-20 sm:h-24"
-                  style={{ borderColor: "var(--fun-stroke-1)" }}
-                >
-                  <div className="flex items-center gap-2">
-                    <button
-                      onClick={() => setSupportView("menu")}
-                      className="p-2 -ml-1 rounded-lg hover:bg-[var(--fun-stroke-1)] fun-text flex items-center justify-center shrink-0"
-                    >
-                      <ChevronLeft className="h-5 w-5" />
-                    </button>
-                    <div>
-                      <h3 className="text-sm sm:text-base font-bold tracking-tight fun-text leading-tight">{t("help.menu.live.title")}</h3>
-                      <p className="text-[10px] sm:text-xs fun-text-muted mt-0.5">{lang === "tr" ? "Ön Bilgiler" : "Pre-Chat Info"}</p>
-                    </div>
-                  </div>
-                  <button
-                    onClick={() => setIsOpen(false)}
-                    className="h-9 w-9 rounded-full hover:bg-[var(--fun-stroke-1)] flex items-center justify-center fun-text transition-colors"
-                  >
-                    <X className="h-5 w-5" />
-                  </button>
-                </div>
-
-                {/* Body Form */}
-                <form
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    if (!liveName.trim() || !liveSubject.trim()) {
-                      toast.error(lang === "tr" ? "Lütfen tüm alanları doldurun." : "Please fill in all fields.");
-                      return;
-                    }
-                    setHasFilledPreChatInfo(true);
-                    toast.success(lang === "tr" ? "Canlı destek başlatılıyor..." : "Starting live support...");
-                  }}
-                  className="flex-1 p-5 sm:p-6 flex flex-col justify-start gap-4 pt-8"
-                >
-                  <div className="space-y-1">
-                    <label className="text-xs font-bold fun-text-muted">{lang === "tr" ? "Adınız Soyadınız" : "Full Name"}</label>
-                    <input
-                      type="text"
-                      required
-                      value={liveName}
-                      onChange={(e) => setLiveName(e.target.value)}
-                      placeholder={lang === "tr" ? "Adınızı ve soyadınızı girin" : "Enter your full name"}
-                      className="w-full rounded-xl bg-[var(--fun-surface)] border border-[var(--fun-stroke-1)] py-2.5 px-4 text-xs outline-none focus:border-[var(--fun-purple)] transition-all fun-text"
-                    />
-                  </div>
-
-                  <div className="space-y-1">
-                    <label className="text-xs font-bold fun-text-muted">{lang === "tr" ? "Yardım Almak İstediğiniz Konu" : "Support Topic"}</label>
-                    <input
-                      type="text"
-                      required
-                      value={liveSubject}
-                      onChange={(e) => setLiveSubject(e.target.value)}
-                      placeholder={lang === "tr" ? "Destek almak istediğiniz konuyu yazın" : "What do you need help with?"}
-                      className="w-full rounded-xl bg-[var(--fun-surface)] border border-[var(--fun-stroke-1)] py-2.5 px-4 text-xs outline-none focus:border-[var(--fun-purple)] transition-all fun-text"
-                    />
-                  </div>
-
-                  <button
-                    type="submit"
-                    className="w-full mt-4 py-3 rounded-xl bg-[var(--fun-purple)] text-white font-bold text-xs flex items-center justify-center gap-2 hover:scale-[1.02] transition-all shadow-lg shadow-purple-500/20 active:scale-95 cursor-pointer"
-                  >
-                    {lang === "tr" ? "Canlı Sohbeti Başlat" : "Start Live Chat"}
-                  </button>
-                </form>
-              </div>
-            ) : (
-              <div className="flex-1 flex flex-col h-full bg-[var(--fun-card)] select-none animate-in fade-in duration-300 relative">
-                {/* Chat Header */}
-                <div
-                  className="p-5 sm:p-6 border-b flex items-center justify-between bg-[var(--fun-surface)] h-20 sm:h-24"
-                  style={{ borderColor: "var(--fun-stroke-1)" }}
-                >
-                  <div className="flex items-center gap-2">
-                    <button
-                      onClick={() => setSupportView("menu")}
-                      className="p-2 -ml-1 rounded-lg hover:bg-[var(--fun-stroke-1)] fun-text flex items-center justify-center shrink-0"
-                    >
-                      <ChevronLeft className="h-5 w-5" />
-                    </button>
-                    <div className="relative">
-                      <div className="h-10 w-10 rounded-full overflow-hidden flex items-center justify-center p-1 border border-zinc-800 bg-[var(--fun-purple)]">
-                        <MessageSquare className="h-5 w-5 text-white" />
-                      </div>
-                      <span className="absolute bottom-0 right-0 h-3 w-3 rounded-full bg-green-500 border-2 border-[var(--fun-surface)]"></span>
-                    </div>
-                    <div>
-                      <h3 className="text-sm font-bold tracking-tight fun-text leading-tight">{lang === "tr" ? "Can (Canlı Destek)" : "Can (Live Support)"}</h3>
-                      <p className="text-[10px] fun-text-muted mt-0.5">{lang === "tr" ? "Çevrimiçi" : "Online"}</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <button
-                      onClick={() => setShowLiveSearch(!showLiveSearch)}
-                      className="h-8 w-8 rounded-full hover:bg-[var(--fun-stroke-1)] flex items-center justify-center fun-text transition-colors"
-                      title={lang === "tr" ? "Arama" : "Search"}
-                    >
-                      <SearchIcon className="h-4 w-4" />
-                    </button>
-                    <button
-                      onClick={() => setIsMaximized(!isMaximized)}
-                      className="h-8 w-8 rounded-full hover:bg-[var(--fun-stroke-1)] flex items-center justify-center fun-text transition-colors"
-                      title={isMaximized ? (lang === "tr" ? "Küçült" : "Minimize") : (lang === "tr" ? "Büyüt" : "Maximize")}
-                    >
-                      {isMaximized ? <Minimize2 className="h-4 w-4" /> : <Maximize2 className="h-4 w-4" />}
-                    </button>
-                    <button
-                      onClick={() => {
-                        setShowEndChatConfirmation(true);
-                      }}
-                      className="h-8 w-8 rounded-full hover:bg-red-500/10 flex items-center justify-center text-red-500 transition-colors"
-                      title={lang === "tr" ? "Sohbeti Sonlandır" : "End Chat"}
-                    >
-                      <LogOut className="h-4 w-4" />
-                    </button>
-                    <button
-                      onClick={() => setIsOpen(false)}
-                      className="h-8 w-8 rounded-full hover:bg-[var(--fun-stroke-1)] flex items-center justify-center fun-text transition-colors"
-                    >
-                      <X className="h-4 w-4" />
-                    </button>
-                  </div>
-                </div>
-
-                {showLiveSearch && (
-                  <div className="px-5 py-3 border-b border-[var(--fun-stroke-1)] bg-[var(--fun-surface)] animate-in slide-in-from-top-2">
-                    <input
-                      autoFocus
-                      type="text"
-                      value={liveSearchQuery}
-                      onChange={(e) => setLiveSearchQuery(e.target.value)}
-                      placeholder={lang === "tr" ? "Mesajlarda ara..." : "Search messages..."}
-                      className="w-full bg-transparent text-xs fun-text outline-none"
-                    />
-                  </div>
-                )}
-
-              {/* Chat Body */}
-              <div
-                ref={scrollRef}
-                className={`flex-1 overflow-y-auto p-5 sm:p-6 space-y-4 bg-dots scroll-smooth ${isMaximized ? "max-w-4xl mx-auto w-full" : ""}`}
-              >
-                {/* Inline Confirmation Pop-up Overlay */}
-                {showEndChatConfirmation && (
-                  <div className="absolute inset-0 bg-black/60 backdrop-blur-sm z-[220] flex items-center justify-center p-5 animate-in fade-in duration-300">
-                    <div className="bg-[var(--fun-card)] border border-[var(--fun-stroke-1)] rounded-2xl p-5 max-w-[280px] w-full text-center shadow-2xl animate-in zoom-in-95 duration-300">
-                      <div className="h-10 w-10 rounded-full bg-red-500/10 text-red-500 flex items-center justify-center mx-auto mb-3">
-                        <LogOut className="h-5 w-5" />
-                      </div>
-                      <h4 className="text-sm font-bold fun-text">{lang === "tr" ? "Sohbeti Sonlandır?" : "End Live Chat?"}</h4>
-                      <p className="text-[11px] fun-text-muted mt-2 leading-relaxed">
-                        {lang === "tr"
-                          ? "Canlı sohbeti sonlandırmak istediğinize emin misiniz? Sohbet geçmişiniz silinecektir."
-                          : "Are you sure you want to end the live chat? Your chat history will be deleted."}
-                      </p>
-                      <div className="flex gap-2.5 mt-4">
-                        <button
-                          type="button"
-                          onClick={() => setShowEndChatConfirmation(false)}
-                          className="flex-1 py-2 px-3 border border-[var(--fun-stroke-1)] rounded-xl text-xs font-semibold fun-text hover:bg-[var(--fun-surface)] transition-colors cursor-pointer"
-                        >
-                          {lang === "tr" ? "İptal" : "Cancel"}
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => {
-                            setLiveMessages([]);
-                            setHasFilledPreChatInfo(false);
-                            setShowEndChatConfirmation(false);
-                            setSupportView("menu");
-                            toast.success(lang === "tr" ? "Canlı sohbet sonlandırıldı." : "Live support chat ended.");
-                          }}
-                          className="flex-1 py-2 px-3 bg-red-500 text-white rounded-xl text-xs font-bold hover:bg-red-600 transition-colors shadow-lg shadow-red-500/20 cursor-pointer"
-                        >
-                          {lang === "tr" ? "Evet, Sonlandır" : "Yes, End"}
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                {(liveSearchQuery ? liveMessages.filter(m => m.text.toLowerCase().includes(liveSearchQuery.toLowerCase())) : liveMessages).length === 0 && (
-                  <div className="text-center py-8">
-                    <div className="h-12 w-12 rounded-full bg-[var(--fun-purple)]/10 text-[var(--fun-purple)] flex items-center justify-center mx-auto mb-3">
-                      <MessageSquare className="h-6 w-6" />
-                    </div>
-                    <h4 className="text-sm sm:text-lg md:text-xl font-bold fun-text">{lang === "tr" ? "Canlı Destek Başlatıldı" : "Live Support Started"}</h4>
-                    <p className="text-[10px] sm:text-xs md:text-sm fun-text-muted max-w-[280px] mx-auto mt-2 leading-normal">
-                      {lang === "tr" ? "Sorunuzu yazın, temsilcimiz hemen yardımcı olacaktır." : "Type your question, our agent will help you immediately."}
-                    </p>
-                  </div>
-                )}
-                {(liveSearchQuery ? liveMessages.filter(m => m.text.toLowerCase().includes(liveSearchQuery.toLowerCase())) : liveMessages).map((msg) => (
-                  <div
-                    key={msg.id}
-                    className={`flex flex-col ${msg.role === "user" ? "items-end" : "items-start"} animate-in fade-in slide-in-from-bottom-2 duration-300`}
-                  >
-                    <div
-                      className={`max-w-[85%] p-3 rounded-2xl text-xs leading-relaxed ${msg.role === "user" ? "bg-gradient-to-br from-[var(--fun-purple)] to-[#8E78FF] text-white rounded-tr-none shadow-md" : "bg-[var(--fun-surface)] fun-text rounded-tl-none border border-[var(--fun-stroke-1)] shadow-sm"}`}
-                    >
-                      <p>{msg.text}</p>
-                    </div>
-                    <span className="text-[8px] fun-text-muted mt-1 px-1">
-                      {new Date(msg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                    </span>
-                  </div>
-                ))}
-                {liveAgentTyping && (
-                  <div className="flex justify-start animate-in fade-in duration-300">
-                    <div className="bg-[var(--fun-surface)] fun-text p-3 rounded-2xl rounded-tl-none border border-[var(--fun-stroke-1)] shadow-sm">
-                      <TypingIndicator />
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              {/* Chat Input */}
-              <form
-                onSubmit={async (e) => {
-                  e.preventDefault();
-                  if (!userInput.trim() || liveAgentTyping) return;
-
-                  const userMsgText = userInput;
-                  setUserInput("");
-
-                  const userMsg = {
-                    role: "user" as const,
-                    text: userMsgText,
-                    id: Math.random().toString(36).substring(2, 9),
-                    timestamp: Date.now()
-                  };
-
-                  setLiveMessages((prev) => [...prev, userMsg]);
-                  setLiveAgentTyping(true);
-
-                  // Call the AI /api/nexy mimicking a live support agent named Can
-                  const prompt = `System: Sen Fun Teknoloji şirketinin canlı destek ekibinden Can'sın.
-                  Giriş yapan kullanıcının e-postası: ${liveUser?.email}.
-                  Giriş yapan kullanıcının adı: ${liveName}.
-                  Kullanıcının destek almak istediği konu: ${liveSubject}.
-                  Sen bir yapay zeka değilsin, gerçek bir canlı destek temsilcisisin. Doğal, dost canlısı, profesyonel ve çözüm odaklı konuş.
-                  Kullanıcının dilinde cevap ver (${lang}).
-                  Cevaplarını kısa tut (maksimum 1-2 cümle) ve Pollinations veya başka servislerin adını geçirme, sadece Fun Teknoloji adına yardımcı ol.
-
-                  Konuşma Geçmişi:
-                  ${liveMessages.slice(-6).map(m => `${m.role === "user" ? "User" : "Agent Can"}: ${m.text}`).join("\n")}
-                  User: ${userMsgText}`;
-
-                  try {
-                    const response = await fetch(
-                      `/api/nexy/${encodeURIComponent(prompt)}?model=openai&cache=false`
-                    );
-                    const text = await response.text();
-                    const cleanText = text
-                      .replace(/---[\s\S]*?Support Pollinations\.AI[\s\S]*?---/gi, "")
-                      .replace(/Powered by Pollinations\.AI.*/gi, "")
-                      .trim();
-
-                    setTimeout(() => {
-                      setLiveMessages((prev) => [
-                        ...prev,
-                        {
-                          role: "agent" as const,
-                          text: cleanText || (lang === "tr" ? "Size nasıl yardımcı olabilirim?" : "How can I assist you?"),
-                          id: Math.random().toString(36).substring(2, 9),
-                          timestamp: Date.now()
-                        }
-                      ]);
-                      setLiveAgentTyping(false);
-                    }, 1500);
-                  } catch (e) {
-                    setTimeout(() => {
-                      setLiveMessages((prev) => [
-                        ...prev,
-                        {
-                          role: "agent" as const,
-                          text: lang === "tr" ? "Bağlantı hatası oluştu, lütfen tekrar deneyin." : "Connection error, please try again.",
-                          id: Math.random().toString(36).substring(2, 9),
-                          timestamp: Date.now()
-                        }
-                      ]);
-                      setLiveAgentTyping(false);
-                    }, 1500);
-                  }
-                }}
-                className="p-4 border-t bg-[var(--fun-surface)]/50 backdrop-blur-xl rounded-b-[32px]"
-                style={{ borderColor: "var(--fun-stroke-1)" }}
-              >
-                <div className={`relative ${isMaximized ? "max-w-4xl mx-auto w-full" : ""}`}>
-                  <input
-                    type="text"
-                    value={userInput}
-                    onChange={(e) => setUserInput(e.target.value)}
-                    placeholder={lang === "tr" ? "Mesajınızı yazın..." : "Type your message..."}
-                    className="w-full rounded-[20px] bg-[var(--fun-surface)] border-2 border-[var(--fun-stroke-1)] py-3 pl-12 pr-14 text-xs outline-none focus:border-[var(--fun-purple)] focus:ring-4 focus:ring-[var(--fun-purple)]/10 transition-all fun-text shadow-inner"
-                  />
-                  <button
-                    type="button"
-                    onClick={startListening}
-                    className={`absolute left-2.5 top-1/2 -translate-y-1/2 h-8 w-8 rounded-full flex items-center justify-center transition-all ${isListening ? "bg-red-500 text-white scale-110 shadow-lg shadow-red-500/40 animate-pulse" : "fun-text-muted hover:bg-[var(--fun-stroke-1)] hover:text-[var(--fun-purple)]"}`}
-                  >
-                    <Mic className="h-4 w-4" />
-                  </button>
-                  <button
-                    type="submit"
-                    disabled={!userInput.trim() || liveAgentTyping}
-                    className="absolute right-2.5 top-1/2 -translate-y-1/2 h-9 w-9 rounded-xl bg-[var(--fun-purple)] text-white flex items-center justify-center hover:scale-105 active:scale-95 transition-all disabled:opacity-30 disabled:hover:scale-100 shadow-lg shadow-purple-500/30 cursor-pointer"
-                  >
-                    <Send className="h-4 w-4" />
-                  </button>
-                </div>
-              </form>
-            </div>
-            )
+            <LiveChatView
+              user={liveUser!}
+              messages={liveMessages}
+              setMessages={setLiveMessages}
+              onBack={() => setSupportView("menu")}
+              onLogout={() => {
+                setLiveUser(null);
+                setLiveMessages([]);
+                setSupportView("menu");
+              }}
+              lang={lang}
+              isAgentTyping={liveAgentTyping}
+              setIsAgentTyping={setLiveAgentTyping}
+              isMaximized={isMaximized}
+            />
           ) : (
             <>
               {/* Sidebar */}
@@ -1527,25 +984,14 @@ export default function NexyAssistant() {
               >
                 <Mic className="h-4 w-4" />
               </button>
-              {isThinking || isTyping ? (
-                <button
-                  type="button"
-                  onClick={stopAIResponse}
-                  className="absolute right-2.5 top-1/2 -translate-y-1/2 h-9 w-9 rounded-xl bg-red-500 text-white flex items-center justify-center hover:scale-105 active:scale-95 transition-all shadow-lg shadow-red-500/30 cursor-pointer"
-                  title={lang === "tr" ? "Durdur" : "Stop"}
-                >
-                  <div className="h-3 w-3 bg-white rounded-sm" />
-                </button>
-              ) : (
-                <button
-                  type="submit"
-                  disabled={!userInput.trim()}
-                  aria-label={t("nexy.aria_send")}
-                  className="absolute right-2.5 top-1/2 -translate-y-1/2 h-9 w-9 rounded-xl bg-[var(--fun-purple)] text-white flex items-center justify-center hover:scale-105 active:scale-95 transition-all disabled:opacity-30 disabled:hover:scale-100 shadow-lg shadow-purple-500/30 cursor-pointer"
-                >
-                  <Send className="h-4 w-4" />
-                </button>
-              )}
+              <button
+                type="submit"
+                disabled={!userInput.trim() || isThinking}
+                aria-label={t("nexy.aria_send")}
+                className="absolute right-2.5 top-1/2 -translate-y-1/2 h-9 w-9 rounded-xl bg-[var(--fun-purple)] text-white flex items-center justify-center hover:scale-105 active:scale-95 transition-all disabled:opacity-30 disabled:hover:scale-100 shadow-lg shadow-purple-500/30"
+              >
+                <Send className="h-4 w-4" />
+              </button>
             </div>
             <p className="text-[9px] text-center fun-text-muted font-medium opacity-50 px-2 tracking-wide">
               {t("nexy.disclaimer")}
@@ -1587,10 +1033,10 @@ export default function NexyAssistant() {
           </button>
           <div className="sp">
             <button
-              className={`sparkle-button ${isOpen ? "active-sparkle" : ""} ${isMinimized ? "opacity-50 pointer-events-none" : ""}`}
+              className={`sparkle-button ${isOpen ? "--active: 1" : ""} ${isMinimized ? "opacity-50 pointer-events-none" : ""}`}
               onClick={toggleChat}
               aria-label={t("nexy.aria_help")}
-              style={{ "--active": isOpen ? 1 : 0 } as any}
+              style={isOpen ? ({ "--active": 1 } as any) : {}}
             >
               <span className="spark"></span>
               <span className="backdrop"></span>

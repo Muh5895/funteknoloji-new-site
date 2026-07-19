@@ -608,7 +608,7 @@ const tr: Dict = {
   "help.menu.ai.desc": "Yapay zeka asistanımız Nexy ile 7/24 anında sohbet edin.",
   "help.menu.live.title": "Canlı Destek",
   "help.menu.live.desc": "Müşteri temsilcilerimizle canlı olarak görüşün.",
-  "help.menu.live.status": "Yakında / Çevrimdışı",
+  "help.menu.live.status": "Çevrimdışı",
   "help.menu.live.toast": "Canlı destek ekibimiz şu an çevrimdışı. Lütfen AI Asistanımızı kullanın.",
 };
 
@@ -1206,7 +1206,7 @@ const en: Dict = {
   "help.menu.ai.desc": "Chat instantly with our AI assistant Nexy 24/7.",
   "help.menu.live.title": "Live Support",
   "help.menu.live.desc": "Connect with our support representatives live.",
-  "help.menu.live.status": "Offline / Coming Soon",
+  "help.menu.live.status": "Offline",
   "help.menu.live.toast": "Our live support team is currently offline. Please use our AI Assistant.",
 };
 
@@ -1810,7 +1810,7 @@ const de: Dict = {
   "help.menu.ai.desc": "Chatten Sie rund um die Uhr sofort mit unserem KI-Assistenten Nexy.",
   "help.menu.live.title": "Live-Support",
   "help.menu.live.desc": "Verbinden Sie sich live mit unseren Support-Mitarbeitern.",
-  "help.menu.live.status": "Offline / Demnächst",
+  "help.menu.live.status": "Offline",
   "help.menu.live.toast": "Unser Live-Support-Team ist derzeit offline. Bitte nutzen Sie unseren KI-Assistenten.",
 };
 
@@ -2423,7 +2423,7 @@ const fr: Dict = {
   "help.menu.ai.desc": "Discutez instantanément avec notre assistant IA Nexy 24/7.",
   "help.menu.live.title": "Support en direct",
   "help.menu.live.desc": "Connectez-vous en direct avec nos conseillers.",
-  "help.menu.live.status": "Hors ligne / Bientôt disponible",
+  "help.menu.live.status": "Hors ligne",
   "help.menu.live.toast": "Notre équipe de support en direct est actuellement hors ligne. Veuillez utiliser notre assistant IA.",
 };
 
@@ -3020,7 +3020,7 @@ const es: Dict = {
   "help.menu.ai.desc": "Chatea instantáneamente con nuestro asistente de IA Nexy 24/7.",
   "help.menu.live.title": "Soporte en vivo",
   "help.menu.live.desc": "Conéctate en vivo con nuestros representantes.",
-  "help.menu.live.status": "Desconectado / Próximamente",
+  "help.menu.live.status": "Desconectado",
   "help.menu.live.toast": "Nuestro equipo de soporte en vivo está desconectado. Por favor, usa nuestro asistente de IA.",
 };
 
@@ -3610,7 +3610,7 @@ const az: Dict = {
   "help.menu.ai.desc": "Süni intellekt assistanımız Nexy ilə 7/24 anında söhbət edin.",
   "help.menu.live.title": "Canlı Dəstək",
   "help.menu.live.desc": "Müştəri təmsilçilərimizlə canlı olaraq danışın.",
-  "help.menu.live.status": "Tezliklə / Oflayn",
+  "help.menu.live.status": "Oflayn",
   "help.menu.live.toast": "Canlı dəstək komandamız hazırda oflayndır. Zəhmət olmasa AI Assistanımızı istifadə edin.",
 };
 
@@ -4209,7 +4209,7 @@ const ru: Dict = {
   "help.menu.ai.desc": "Мгновенно общайтесь с нашим ИИ-ассистентом Nexy 24/7.",
   "help.menu.live.title": "Живой чат",
   "help.menu.live.desc": "Свяжитесь с нашими специалистами поддержки в реальном времени.",
-  "help.menu.live.status": "Офлайн / Скоро",
+  "help.menu.live.status": "Офлайн",
   "help.menu.live.toast": "Наша команда живой поддержки сейчас офлайн. Пожалуйста, используйте ИИ-ассистента.",
 };
 
@@ -4767,7 +4767,7 @@ const ar: Dict = {
   "help.menu.ai.desc": "تحدث فورًا مع مساعد الذكاء الاصطناعي نكسي على مدار الساعة.",
   "help.menu.live.title": "الدعم المباشر",
   "help.menu.live.desc": "تواصل مباشرة مع ممثلي الدعم لدينا.",
-  "help.menu.live.status": "غير متصل / قريبًا",
+  "help.menu.live.status": "غير متصل",
   "help.menu.live.toast": "فريق الدعم المباشر لدينا غير متصل حاليًا. يرجى استخدام مساعد الذكاء الاصطناعي.",
 };
 
@@ -5361,7 +5361,7 @@ const it: Dict = {
   "help.menu.ai.desc": "Chatta istantaneamente con il nostro assistente IA Nexy 24/7.",
   "help.menu.live.title": "Supporto dal vivo",
   "help.menu.live.desc": "Connettiti dal vivo con i nostri operatori.",
-  "help.menu.live.status": "Offline / Prossimamente",
+  "help.menu.live.status": "Offline",
   "help.menu.live.toast": "Il nostro team di supporto dal vivo è offline. Ti preghiamo di usare il nostro assistente IA.",
 };
 
@@ -5958,7 +5958,7 @@ const pt: Dict = {
   "help.menu.ai.desc": "Converse instantaneamente com nosso assistente de IA Nexy 24/7.",
   "help.menu.live.title": "Suporte ao vivo",
   "help.menu.live.desc": "Fale ao vivo com nossos representantes de suporte.",
-  "help.menu.live.status": "Offline / Em breve",
+  "help.menu.live.status": "Offline",
   "help.menu.live.toast": "Nossa equipe de suporte ao vivo está offline. Por favor, use nosso assistente de IA.",
 };
 
@@ -6537,7 +6537,7 @@ const ja: Dict = {
   "help.menu.ai.desc": "24時間365日、AIアシスタントのNexyとすぐに対話できます。",
   "help.menu.live.title": "ライブサポート",
   "help.menu.live.desc": "サポート担当者とライブでつながります。",
-  "help.menu.live.status": "オフライン / まもなく登場",
+  "help.menu.live.status": "オフライン",
   "help.menu.live.toast": "現在ライブサポートチームはオフラインです。AIアシスタントをご利用ください。",
 };
 
@@ -7075,7 +7075,7 @@ const zh: Dict = {
   "help.menu.ai.desc": "24/7 全天候与我们的 AI 助手 Nexy 立即对话。",
   "help.menu.live.title": "在线客服",
   "help.menu.live.desc": "与我们的支持代表进行实时联系。",
-  "help.menu.live.status": "离线 / 敬请期待",
+  "help.menu.live.status": "离线",
   "help.menu.live.toast": "我们的在线客服团队目前处于离线状态。请使用我们的 AI 助手。",
 };
 
