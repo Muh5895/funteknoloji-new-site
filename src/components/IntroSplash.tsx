@@ -11,8 +11,12 @@ export default function IntroSplash() {
   useEffect(() => {
     if (typeof window === "undefined") return;
     // play once per session
-    if (sessionStorage.getItem(SKIP_KEY)) return;
+    if (sessionStorage.getItem(SKIP_KEY)) {
+      window.__introPlaying = false;
+      return;
+    }
     sessionStorage.setItem(SKIP_KEY, "1");
+    window.__introPlaying = true;
     setShow(true);
   }, []);
 
@@ -31,6 +35,10 @@ export default function IntroSplash() {
 
   const finish = () => {
     setFading(true);
+    if (typeof window !== "undefined") {
+      window.__introPlaying = false;
+      window.dispatchEvent(new Event("intro-finished"));
+    }
     setTimeout(() => {
       setShow(false);
       document.body.style.overflow = "";

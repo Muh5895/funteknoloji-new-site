@@ -102,16 +102,105 @@ export interface CookieConsentPayload {
   device_type?: string;
 }
 
-export const submitCookieConsent = async (payload: CookieConsentPayload) => {
+export interface AdvancedCookieConsentPayload extends CookieConsentPayload {
+  session_id: string;
+  country_code?: string;
+}
+
+export interface CookieConsentEventPayload {
+  session_id: string;
+  event_type: "BANNER_SHOWN" | "ACCEPT_ALL" | "REJECT_ALL" | "CUSTOM_SAVE" | "BANNER_CLOSED";
+  consent_necessary: boolean;
+  consent_analytics: boolean;
+  consent_marketing: boolean;
+  user_lang: string;
+  user_agent?: string;
+  referrer?: string;
+  screen_resolution?: string;
+  device_type?: string;
+}
+
+/**
+ * Submits the standard cookie consent to legacy table, and also writes to advanced tracking tables.
+ */
+export const submitCookieConsent = async (payload: CookieConsentPayload, sessionId?: string) => {
   try {
-    const { error } = await supabase.from("cookies").insert([payload]);
+    // 1. Write to Legacy table for backwards compatibility
+    const { error: legacyErr } = await supabase.from("cookies").insert([payload]);
+    if (legacyErr) {
+      console.warn("DB_COOKIE_LEGACY_SUBMIT_ERR (non-blocking):", legacyErr);
+    }
+
+    // If session ID is provided, write to advanced tables
+    if (sessionId) {
+      const advancedPayload: AdvancedCookieConsentPayload = {
+        ...payload,
+        session_id: sessionId,
+      };
+
+      // 2. Check if a consent record for this session already exists
+      const { data: existing, error: checkErr } = await supabase
+        .from("cookie_consents")
+        .select("id")
+        .eq("session_id", sessionId)
+        .limit(1);
+
+      if (checkErr) {
+        console.warn("DB_ADVANCED_CHECK_ERR (non-blocking):", checkErr);
+      }
+
+      if (existing && existing.length > 0) {
+        // Update existing record
+        const { error: updateErr } = await supabase
+          .from("cookie_consents")
+          .update({
+            consent_necessary: advancedPayload.consent_necessary,
+            consent_analytics: advancedPayload.consent_analytics,
+            consent_marketing: advancedPayload.consent_marketing,
+            user_lang: advancedPayload.user_lang,
+            user_agent: advancedPayload.user_agent,
+            referrer: advancedPayload.referrer,
+            screen_resolution: advancedPayload.screen_resolution,
+            device_type: advancedPayload.device_type,
+            updated_at: new Date().toISOString(),
+          })
+          .eq("session_id", sessionId);
+
+        if (updateErr) {
+          console.warn("DB_ADVANCED_UPDATE_ERR (non-blocking):", updateErr);
+        }
+      } else {
+        // Insert new record
+        const { error: insertErr } = await supabase
+          .from("cookie_consents")
+          .insert([advancedPayload]);
+
+        if (insertErr) {
+          console.warn("DB_ADVANCED_INSERT_ERR (non-blocking):", insertErr);
+        }
+      }
+    }
+
+    return { success: true };
+  } catch (error) {
+    console.error("DB_COOKIE_SUBMIT_EXCEPTION:", error);
+    return { success: false, error };
+  }
+};
+
+/**
+ * Submits a precise user interaction event to the audit log table.
+ */
+export const submitCookieConsentEvent = async (payload: CookieConsentEventPayload) => {
+  try {
+    const { error } = await supabase.from("cookie_consent_events").insert([payload]);
     if (error) {
-      console.error("DB_COOKIE_SUBMIT_ERR:", error);
+      console.warn("DB_COOKIE_EVENT_SUBMIT_ERR (non-blocking):", error);
       return { success: false, error };
     }
     return { success: true };
   } catch (error) {
-    console.error("DB_COOKIE_SUBMIT_EXCEPTION:", error);
+    console.error("DB_COOKIE_EVENT_EXCEPTION:", error);
     return { success: false, error };
   }
 };

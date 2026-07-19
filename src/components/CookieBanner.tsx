@@ -1,7 +1,18 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useLang } from "../lib/i18n";
-import { submitCookieConsent } from "../lib/engine";
+import { submitCookieConsent, submitCookieConsentEvent } from "../lib/engine";
 import { Settings, ShieldCheck, X } from "lucide-react";
+
+// Simple helper to generate/retrieve a persistent UUID for session tracking
+function getOrCreateSessionId() {
+  if (typeof window === "undefined") return "";
+  let id = localStorage.getItem("cookie_session_id");
+  if (!id) {
+    id = "session_" + Math.random().toString(36).substr(2, 9) + "_" + Date.now().toString(36);
+    localStorage.setItem("cookie_session_id", id);
+  }
+  return id;
+}
 
 export default function CookieBanner() {
   const { t, lang } = useLang();
@@ -13,12 +24,39 @@ export default function CookieBanner() {
     marketing: true,
   });
 
+  const sessionIdRef = useRef<string>("");
+  const bannerShownLogged = useRef<boolean>(false);
+
   useEffect(() => {
-    if (typeof window !== "undefined") {
+    if (typeof window === "undefined") return;
+
+    sessionIdRef.current = getOrCreateSessionId();
+
+    const win = window as any;
+
+    const checkAndShow = () => {
       const storedConsent = localStorage.getItem("cookie_consent");
       if (!storedConsent) {
         setIsVisible(true);
+        // Log BANNER_SHOWN audit event if not logged already
+        if (!bannerShownLogged.current) {
+          bannerShownLogged.current = true;
+          logEvent("BANNER_SHOWN", true, true, true);
+        }
       }
+    };
+
+    if (win.__introPlaying) {
+      const handleIntroFinished = () => {
+        checkAndShow();
+        window.removeEventListener("intro-finished", handleIntroFinished);
+      };
+      window.addEventListener("intro-finished", handleIntroFinished);
+      return () => {
+        window.removeEventListener("intro-finished", handleIntroFinished);
+      };
+    } else {
+      checkAndShow();
     }
   }, []);
 
@@ -34,7 +72,29 @@ export default function CookieBanner() {
     return "desktop";
   };
 
-  const handleConsent = async (analyticsVal: boolean, marketingVal: boolean) => {
+  const logEvent = async (
+    eventType: "BANNER_SHOWN" | "ACCEPT_ALL" | "REJECT_ALL" | "CUSTOM_SAVE" | "BANNER_CLOSED",
+    necessaryVal: boolean,
+    analyticsVal: boolean,
+    marketingVal: boolean
+  ) => {
+    if (!sessionIdRef.current) return;
+    const payload = {
+      session_id: sessionIdRef.current,
+      event_type: eventType,
+      consent_necessary: necessaryVal,
+      consent_analytics: analyticsVal,
+      consent_marketing: marketingVal,
+      user_lang: lang,
+      user_agent: typeof navigator !== "undefined" ? navigator.userAgent : undefined,
+      referrer: typeof document !== "undefined" ? document.referrer : undefined,
+      screen_resolution: typeof window !== "undefined" ? `${window.screen.width}x${window.screen.height}` : undefined,
+      device_type: getDeviceType(),
+    };
+    await submitCookieConsentEvent(payload);
+  };
+
+  const handleConsent = async (analyticsVal: boolean, marketingVal: boolean, actionType?: "ACCEPT_ALL" | "REJECT_ALL" | "CUSTOM_SAVE") => {
     const consentObj = {
       necessary: true,
       analytics: analyticsVal,
@@ -56,7 +116,18 @@ export default function CookieBanner() {
       device_type: getDeviceType(),
     };
 
-    await submitCookieConsent(payload);
+    // Log the event type
+    const resolvedAction = actionType || (analyticsVal && marketingVal ? "ACCEPT_ALL" : (!analyticsVal && !marketingVal ? "REJECT_ALL" : "CUSTOM_SAVE"));
+    await logEvent(resolvedAction, true, analyticsVal, marketingVal);
+
+    // Save final status to consolidated states
+    await submitCookieConsent(payload, sessionIdRef.current);
+  };
+
+  const handleClose = async () => {
+    // If they just close without selection, we treat as minimal consent (necessary only or false)
+    await logEvent("BANNER_CLOSED", true, false, false);
+    handleConsent(false, false, "REJECT_ALL");
   };
 
   if (!isVisible) return null;
@@ -79,7 +150,7 @@ export default function CookieBanner() {
             <h3 className="text-lg font-bold tracking-tight">{t("cookies.title")}</h3>
           </div>
           <button
-            onClick={() => handleConsent(false, false)}
+            onClick={handleClose}
             className="p-1 rounded-full hover:bg-[var(--fun-stroke-1)] transition-colors"
           >
             <X className="h-5 w-5" />
@@ -93,7 +164,7 @@ export default function CookieBanner() {
             </p>
             <div className="flex flex-col sm:flex-row gap-3 pt-1">
               <button
-                onClick={() => handleConsent(true, true)}
+                onClick={() => handleConsent(true, true, "ACCEPT_ALL")}
                 className="flex-1 btn-fun btn-fun-dark !py-3 !text-sm font-medium"
               >
                 {t("cookies.accept_all")}
@@ -167,7 +238,7 @@ export default function CookieBanner() {
                 {t("contact.captcha.cancel")}
               </button>
               <button
-                onClick={() => handleConsent(consent.analytics, consent.marketing)}
+                onClick={() => handleConsent(consent.analytics, consent.marketing, "CUSTOM_SAVE")}
                 className="flex-1 btn-fun btn-fun-dark !py-3 !text-sm font-medium"
               >
                 {t("cookies.save_settings")}
