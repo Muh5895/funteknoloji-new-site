@@ -209,6 +209,16 @@ export default function NexyAssistant() {
 
   const typingIntervalRef = useRef<number | null>(null);
 
+  const stopAIResponse = () => {
+    if (typingIntervalRef.current) {
+      clearInterval(typingIntervalRef.current);
+      typingIntervalRef.current = null;
+    }
+    setIsThinking(false);
+    setIsTyping(false);
+    toast.info(lang === "tr" ? "Cevap durduruldu." : "Response stopped.");
+  };
+
   const typeMessage = (fullText: string, msgIndex: number, chatId: string) => {
     if (typingIntervalRef.current) clearInterval(typingIntervalRef.current);
 
@@ -285,9 +295,11 @@ export default function NexyAssistant() {
   const generateChatTitle = async (userMsg: string, aiResponse: string) => {
     const prompt = `User: ${userMsg}\nAssistant: ${aiResponse}\n\nSystem: Based on the conversation above, determine a short and meaningful title for this chat (max 3-4 words). The title should summarize the topic. DO NOT just repeat the user's message. Response in the user's language. Write ONLY the title, no quotes or extra text.`;
     try {
-      const response = await fetch(
-        `/api/nexy/${encodeURIComponent(prompt)}?model=openai&cache=false`,
-      );
+      const response = await fetch("/api/nexy", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ prompt, model: "openai" })
+      });
       if (response.ok) {
         let title = await response.text();
         title = title.replace(/---[\s\S]*?Support Pollinations\.AI[\s\S]*?---/gi, "").trim();
@@ -322,10 +334,29 @@ export default function NexyAssistant() {
 
     User: ${input}`;
 
+    // Client-side off-topic check for programming queries that don't involve Fun Teknoloji
+    const lowerInput = input.toLowerCase();
+    const offTopicTriggers = [
+      "kod yaz", "bana kod", "write code", "javascript", "python", "html", "css",
+      "react", "programming", "bana yazılım", "programlama", "sql", "database",
+      "docker", "typescript", "kodlama", "yazılım geliştir", "kodunu", "hacker", "hackle"
+    ];
+    const hasOffTopic = offTopicTriggers.some(trigger => lowerInput.includes(trigger));
+    const isCompanyRelated = lowerInput.includes("fun teknoloji") ||
+                             lowerInput.includes("fun technology") ||
+                             lowerInput.includes("nexy") ||
+                             lowerInput.includes("quakesafe");
+
+    if (hasOffTopic && !isCompanyRelated) {
+      return "🔴 Nexy, Fun Teknoloji şirketinin resmi asistanıdır. İstek dışı kod yazma, programlama veya genel geliştirme talepleri engellenmiştir. Lütfen yalnızca Fun Teknoloji projeleri ve hizmetleri hakkında sorular sorun.";
+    }
+
     try {
-      const response = await fetch(
-        `/api/nexy/${encodeURIComponent(prompt)}?model=openai&cache=false`,
-      );
+      const response = await fetch("/api/nexy", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ prompt, model: "openai" })
+      });
       if (!response.ok) throw new Error();
       let text = await response.text();
 
@@ -340,7 +371,7 @@ export default function NexyAssistant() {
 
       return text.trim();
     } catch (err) {
-      return t("nexy.resp.default.0");
+      throw err;
     }
   };
 
@@ -373,7 +404,38 @@ export default function NexyAssistant() {
     setIsTyping(false);
     setIsThinking(true);
 
-    let response = await getNexyBrainResponse(savedInput);
+    let response = "";
+    let isError = false;
+
+    try {
+      response = await getNexyBrainResponse(savedInput);
+      if (response.startsWith("🔴")) {
+        isError = true;
+      }
+    } catch (err) {
+      response = "🔴 Bir Hata Oluştu Tekrar Deneyin";
+      isError = true;
+    }
+
+    if (isError) {
+      setChats((prev) =>
+        prev.map((c) => {
+          if (c.id === currentChatId) {
+            return {
+              ...c,
+              messages: [
+                ...c.messages,
+                { role: "nexy" as const, text: response, displayedText: response }
+              ],
+            };
+          }
+          return c;
+        })
+      );
+      setIsThinking(false);
+      setIsTyping(false);
+      return;
+    }
 
     // Check for REDIRECT command
     const redirectMatch = response.match(/\[REDIRECT:(.+)\]/);
@@ -554,6 +616,14 @@ export default function NexyAssistant() {
   if (!visible) return null;
 
   const formatText = (text: string) => {
+    if (text.startsWith("🔴")) {
+      return (
+        <span className="flex items-center gap-2 text-red-500 font-bold py-1">
+          <span className="text-base shrink-0">⚠️</span>
+          <span>{text.replace("🔴", "").trim()}</span>
+        </span>
+      );
+    }
     const lines = text.split("\n");
     const result: React.ReactNode[] = [];
     let currentTable: string[][] = [];
@@ -1457,14 +1527,25 @@ export default function NexyAssistant() {
               >
                 <Mic className="h-4 w-4" />
               </button>
-              <button
-                type="submit"
-                disabled={!userInput.trim() || isThinking}
-                aria-label={t("nexy.aria_send")}
-                className="absolute right-2.5 top-1/2 -translate-y-1/2 h-9 w-9 rounded-xl bg-[var(--fun-purple)] text-white flex items-center justify-center hover:scale-105 active:scale-95 transition-all disabled:opacity-30 disabled:hover:scale-100 shadow-lg shadow-purple-500/30"
-              >
-                <Send className="h-4 w-4" />
-              </button>
+              {isThinking || isTyping ? (
+                <button
+                  type="button"
+                  onClick={stopAIResponse}
+                  className="absolute right-2.5 top-1/2 -translate-y-1/2 h-9 w-9 rounded-xl bg-red-500 text-white flex items-center justify-center hover:scale-105 active:scale-95 transition-all shadow-lg shadow-red-500/30 cursor-pointer"
+                  title={lang === "tr" ? "Durdur" : "Stop"}
+                >
+                  <div className="h-3 w-3 bg-white rounded-sm" />
+                </button>
+              ) : (
+                <button
+                  type="submit"
+                  disabled={!userInput.trim()}
+                  aria-label={t("nexy.aria_send")}
+                  className="absolute right-2.5 top-1/2 -translate-y-1/2 h-9 w-9 rounded-xl bg-[var(--fun-purple)] text-white flex items-center justify-center hover:scale-105 active:scale-95 transition-all disabled:opacity-30 disabled:hover:scale-100 shadow-lg shadow-purple-500/30 cursor-pointer"
+                >
+                  <Send className="h-4 w-4" />
+                </button>
+              )}
             </div>
             <p className="text-[9px] text-center fun-text-muted font-medium opacity-50 px-2 tracking-wide">
               {t("nexy.disclaimer")}

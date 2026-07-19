@@ -355,9 +355,13 @@ function ContactPage() {
               <button
                 onClick={handleFinalSubmit}
                 disabled={loading}
-                className="flex-1 btn-fun btn-fun-dark !py-3"
+                className="flex-1 btn-fun btn-fun-dark !py-3 flex items-center justify-center"
               >
-                {loading ? "..." : t("contact.captcha.verify")}
+                {loading ? (
+                  <div className="h-5 w-5 border-2 border-white border-dashed rounded-full animate-spin" />
+                ) : (
+                  t("contact.captcha.verify")
+                )}
               </button>
             </div>
           </div>

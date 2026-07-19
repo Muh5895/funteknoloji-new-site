@@ -9,14 +9,6 @@
       "destination": "https://eiecuiberhqmyvvlrakn.supabase.co/auth/v1/$1"
     },
     {
-      "source": "/api/nexy/(.+)",
-      "destination": "https://text.pollinations.ai/$1"
-    },
-    {
-      "source": "/api/nexy/",
-      "destination": "/403"
-    },
-    {
       "source": "/(.*)",
       "destination": "/"
     }
