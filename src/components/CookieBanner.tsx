@@ -80,9 +80,33 @@ export default function CookieBanner() {
     localStorage.setItem("cookie_consent", JSON.stringify(consentObj));
     setIsVisible(false);
 
+    // High-accuracy User Agent client hints detection
+    let preciseOsVersion = "";
+    if (typeof navigator !== "undefined" && (navigator as any).userAgentData) {
+      try {
+        const highEntropyValues = await (navigator as any).userAgentData.getHighEntropyValues([
+          "platformVersion",
+          "architecture",
+          "model",
+          "uaFullVersion"
+        ]);
+        if (highEntropyValues.platformVersion) {
+          const majorVersion = parseInt(highEntropyValues.platformVersion.split(".")[0], 10);
+          if (highEntropyValues.platform === "Windows") {
+            // For Windows 11, the platformVersion is >= 13.0.0
+            preciseOsVersion = majorVersion >= 13 ? "11" : "10";
+          } else {
+            preciseOsVersion = highEntropyValues.platformVersion;
+          }
+        }
+      } catch (err) {
+        console.warn("UserAgentData fetch failed:", err);
+      }
+    }
+
     // Dynamic, high-accuracy client system metrics
     const rawUa = typeof navigator !== "undefined" ? navigator.userAgent : "";
-    const parsedUa = parseUserAgent(rawUa);
+    const parsedUa = parseUserAgent(rawUa, preciseOsVersion);
     const network = getNetworkStats();
     const consoleErrors = getCapturedConsoleErrors();
 
@@ -161,51 +185,66 @@ export default function CookieBanner() {
           <div className="mt-3.5 space-y-4">
             <div className="space-y-2.5 max-h-[190px] overflow-y-auto pr-0.5 custom-scrollbar">
               {/* Necessary */}
-              <div className="flex items-start gap-2.5 p-2.5 rounded-xl bg-[var(--fun-surface)] border border-[var(--fun-stroke-2)]">
-                <input
-                  type="checkbox"
-                  checked={consent.necessary}
-                  disabled
-                  className="mt-0.5 accent-[var(--fun-purple)] h-3.5 w-3.5"
-                />
-                <div>
-                  <h4 className="text-xs font-bold">{t("cookies.necessary.title")}</h4>
+              <div className="flex items-center justify-between p-3 rounded-xl bg-[var(--fun-surface)] border border-[var(--fun-stroke-2)] transition-all">
+                <div className="flex-1 pr-3">
+                  <div className="flex items-center gap-1.5">
+                    <h4 className="text-xs font-bold">{t("cookies.necessary.title")}</h4>
+                    <span className="text-[9px] font-semibold bg-[var(--fun-purple)]/10 text-[var(--fun-purple)] px-1.5 py-0.5 rounded-md uppercase tracking-wider">{t("cookies.required")}</span>
+                  </div>
                   <p className="text-[10px] fun-text-muted mt-0.5 leading-normal">{t("cookies.necessary.desc")}</p>
                 </div>
+                <label className="relative inline-flex items-center cursor-not-allowed shrink-0">
+                  <input type="checkbox" checked disabled className="sr-only peer" />
+                  <div className="w-8 h-4.5 bg-[var(--fun-purple)] rounded-full after:content-[''] after:absolute after:top-[2px] after:right-[2px] after:bg-white after:rounded-full after:h-3.5 after:w-3.5 after:transition-all"></div>
+                </label>
               </div>
 
               {/* Analytics */}
               <div
-                className="flex items-start gap-2.5 p-2.5 rounded-xl bg-[var(--fun-surface)] border border-[var(--fun-stroke-2)] cursor-pointer"
+                className="flex items-center justify-between p-3 rounded-xl bg-[var(--fun-surface)] border border-[var(--fun-stroke-2)] hover:border-[var(--fun-purple)]/30 transition-all cursor-pointer"
                 onClick={() => setConsent(prev => ({ ...prev, analytics: !prev.analytics }))}
               >
-                <input
-                  type="checkbox"
-                  checked={consent.analytics}
-                  onChange={() => {}}
-                  className="mt-0.5 accent-[var(--fun-purple)] h-3.5 w-3.5"
-                />
-                <div>
+                <div className="flex-1 pr-3">
                   <h4 className="text-xs font-bold">{t("cookies.analytics.title")}</h4>
                   <p className="text-[10px] fun-text-muted mt-0.5 leading-normal">{t("cookies.analytics.desc")}</p>
                 </div>
+                <label className="relative inline-flex items-center cursor-pointer shrink-0">
+                  <input
+                    type="checkbox"
+                    checked={consent.analytics}
+                    onChange={() => {}}
+                    className="sr-only peer"
+                  />
+                  <div className={`w-8 h-4.5 rounded-full transition-colors relative after:content-[''] after:absolute after:top-[2px] after:bg-white after:rounded-full after:h-3.5 after:w-3.5 after:transition-all ${
+                    consent.analytics
+                      ? "bg-[var(--fun-purple)] after:right-[2px]"
+                      : "bg-gray-300 dark:bg-zinc-700 after:left-[2px]"
+                  }`}></div>
+                </label>
               </div>
 
               {/* Marketing */}
               <div
-                className="flex items-start gap-2.5 p-2.5 rounded-xl bg-[var(--fun-surface)] border border-[var(--fun-stroke-2)] cursor-pointer"
+                className="flex items-center justify-between p-3 rounded-xl bg-[var(--fun-surface)] border border-[var(--fun-stroke-2)] hover:border-[var(--fun-purple)]/30 transition-all cursor-pointer"
                 onClick={() => setConsent(prev => ({ ...prev, marketing: !prev.marketing }))}
               >
-                <input
-                  type="checkbox"
-                  checked={consent.marketing}
-                  onChange={() => {}}
-                  className="mt-0.5 accent-[var(--fun-purple)] h-3.5 w-3.5"
-                />
-                <div>
+                <div className="flex-1 pr-3">
                   <h4 className="text-xs font-bold">{t("cookies.marketing.title")}</h4>
                   <p className="text-[10px] fun-text-muted mt-0.5 leading-normal">{t("cookies.marketing.desc")}</p>
                 </div>
+                <label className="relative inline-flex items-center cursor-pointer shrink-0">
+                  <input
+                    type="checkbox"
+                    checked={consent.marketing}
+                    onChange={() => {}}
+                    className="sr-only peer"
+                  />
+                  <div className={`w-8 h-4.5 rounded-full transition-colors relative after:content-[''] after:absolute after:top-[2px] after:bg-white after:rounded-full after:h-3.5 after:w-3.5 after:transition-all ${
+                    consent.marketing
+                      ? "bg-[var(--fun-purple)] after:right-[2px]"
+                      : "bg-gray-300 dark:bg-zinc-700 after:left-[2px]"
+                  }`}></div>
+                </label>
               </div>
             </div>
 
