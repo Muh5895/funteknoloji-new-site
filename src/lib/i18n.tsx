@@ -601,7 +601,15 @@ const tr: Dict = {
   "cookies.analytics.desc": "Kullanıcı deneyimini geliştirmek amacıyla ziyaret istatistiklerini anonim olarak analiz etmemizi sağlar.",
   "cookies.marketing.title": "Pazarlama Çerezleri",
   "cookies.marketing.desc": "İlgi alanlarınıza uygun kişiselleştirilmiş içerikler sunmamıza yardımcı olur.",
-  "cookies.cancel": "İptal",
+  "cookies.cancel": "Geri",
+  "help.menu.title": "Yardım ve Destek",
+  "help.menu.desc": "Size nasıl yardımcı olabiliriz?",
+  "help.menu.ai.title": "Yapay Zeka Asistanı (Nexy)",
+  "help.menu.ai.desc": "Yapay zeka asistanımız Nexy ile 7/24 anında sohbet edin.",
+  "help.menu.live.title": "Canlı Destek",
+  "help.menu.live.desc": "Müşteri temsilcilerimizle canlı olarak görüşün.",
+  "help.menu.live.status": "Yakında / Çevrimdışı",
+  "help.menu.live.toast": "Canlı destek ekibimiz şu an çevrimdışı. Lütfen AI Asistanımızı kullanın.",
 };
 
 const en: Dict = {
@@ -1191,7 +1199,15 @@ const en: Dict = {
   "cookies.analytics.desc": "Allows us to anonymously analyze visit statistics to improve user experience.",
   "cookies.marketing.title": "Marketing Cookies",
   "cookies.marketing.desc": "Helps us deliver personalized content matching your interests.",
-  "cookies.cancel": "Cancel",
+  "cookies.cancel": "Back",
+  "help.menu.title": "Help & Support",
+  "help.menu.desc": "How can we help you?",
+  "help.menu.ai.title": "AI Assistant (Nexy)",
+  "help.menu.ai.desc": "Chat instantly with our AI assistant Nexy 24/7.",
+  "help.menu.live.title": "Live Support",
+  "help.menu.live.desc": "Connect with our support representatives live.",
+  "help.menu.live.status": "Offline / Coming Soon",
+  "help.menu.live.toast": "Our live support team is currently offline. Please use our AI Assistant.",
 };
 
 const de: Dict = {
@@ -1787,7 +1803,15 @@ const de: Dict = {
   "cookies.analytics.desc": "Ermöglicht uns die anonyme Analyse von Besuchsstatistiken zur Verbesserung der Benutzererfahrung.",
   "cookies.marketing.title": "Marketing-Cookies",
   "cookies.marketing.desc": "Hilft uns, personalisierte Inhalte bereitzustellen, die Ihren Interessen entsprechen.",
-  "cookies.cancel": "Abbrechen",
+  "cookies.cancel": "Zurück",
+  "help.menu.title": "Hilfe & Support",
+  "help.menu.desc": "Wie können wir Ihnen helfen?",
+  "help.menu.ai.title": "KI-Assistent (Nexy)",
+  "help.menu.ai.desc": "Chatten Sie rund um die Uhr sofort mit unserem KI-Assistenten Nexy.",
+  "help.menu.live.title": "Live-Support",
+  "help.menu.live.desc": "Verbinden Sie sich live mit unseren Support-Mitarbeitern.",
+  "help.menu.live.status": "Offline / Demnächst",
+  "help.menu.live.toast": "Unser Live-Support-Team ist derzeit offline. Bitte nutzen Sie unseren KI-Assistenten.",
 };
 
 const fr: Dict = {
@@ -2392,7 +2416,15 @@ const fr: Dict = {
   "cookies.analytics.desc": "Permet d'analyser anonymement les statistiques de visite pour améliorer l'expérience utilisateur.",
   "cookies.marketing.title": "Cookies marketing",
   "cookies.marketing.desc": "Nous aide à proposer des contenus personnalisés adaptés à vos centres d'intérêt.",
-  "cookies.cancel": "Annuler",
+  "cookies.cancel": "Retour",
+  "help.menu.title": "Aide & Support",
+  "help.menu.desc": "Comment pouvons-nous vous aider ?",
+  "help.menu.ai.title": "Assistant IA (Nexy)",
+  "help.menu.ai.desc": "Discutez instantanément avec notre assistant IA Nexy 24/7.",
+  "help.menu.live.title": "Support en direct",
+  "help.menu.live.desc": "Connectez-vous en direct avec nos conseillers.",
+  "help.menu.live.status": "Hors ligne / Bientôt disponible",
+  "help.menu.live.toast": "Notre équipe de support en direct est actuellement hors ligne. Veuillez utiliser notre assistant IA.",
 };
 
 const es: Dict = {
@@ -2981,7 +3013,15 @@ const es: Dict = {
   "cookies.analytics.desc": "Permite analizar de forma anónima las estadísticas de visitas para mejorar la experiencia de usuario.",
   "cookies.marketing.title": "Cookies de marketing",
   "cookies.marketing.desc": "Ayuda a ofrecer contenido personalizado según sus intereses.",
-  "cookies.cancel": "Cancelar",
+  "cookies.cancel": "Volver",
+  "help.menu.title": "Ayuda y Soporte",
+  "help.menu.desc": "¿Cómo podemos ayudarte?",
+  "help.menu.ai.title": "Asistente de IA (Nexy)",
+  "help.menu.ai.desc": "Chatea instantáneamente con nuestro asistente de IA Nexy 24/7.",
+  "help.menu.live.title": "Soporte en vivo",
+  "help.menu.live.desc": "Conéctate en vivo con nuestros representantes.",
+  "help.menu.live.status": "Desconectado / Próximamente",
+  "help.menu.live.toast": "Nuestro equipo de soporte en vivo está desconectado. Por favor, usa nuestro asistente de IA.",
 };
 
 const az: Dict = {
@@ -3563,7 +3603,15 @@ const az: Dict = {
   "cookies.analytics.desc": "İstifadəçi təcrübəsini təkmilləşdirmək üçün ziyarət statistikalarını anonim təhlil etməyə imkan verir.",
   "cookies.marketing.title": "Marketinq Kukiləri",
   "cookies.marketing.desc": "Maraqlarınıza uyğun fərdiləşdirilmiş məzmun təqdim etməyə kömək edir.",
-  "cookies.cancel": "Ləğv et",
+  "cookies.cancel": "Geri",
+  "help.menu.title": "Kömək və Dəstək",
+  "help.menu.desc": "Sizə necə kömək edə bilərik?",
+  "help.menu.ai.title": "Süni İntellekt Assistanı (Nexy)",
+  "help.menu.ai.desc": "Süni intellekt assistanımız Nexy ilə 7/24 anında söhbət edin.",
+  "help.menu.live.title": "Canlı Dəstək",
+  "help.menu.live.desc": "Müştəri təmsilçilərimizlə canlı olaraq danışın.",
+  "help.menu.live.status": "Tezliklə / Oflayn",
+  "help.menu.live.toast": "Canlı dəstək komandamız hazırda oflayndır. Zəhmət olmasa AI Assistanımızı istifadə edin.",
 };
 
 const ru: Dict = {
@@ -4154,7 +4202,15 @@ const ru: Dict = {
   "cookies.analytics.desc": "Позволяют нам анонимно анализировать статистику посещений для улучшения пользовательского интерфейса.",
   "cookies.marketing.title": "Маркетинговые файлы cookie",
   "cookies.marketing.desc": "Помогают нам предоставлять персонализированный контент в соответствии с вашими интересами.",
-  "cookies.cancel": "Отмена",
+  "cookies.cancel": "Назад",
+  "help.menu.title": "Помощь и поддержка",
+  "help.menu.desc": "Как мы можем вам помочь?",
+  "help.menu.ai.title": "ИИ-ассистент (Nexy)",
+  "help.menu.ai.desc": "Мгновенно общайтесь с нашим ИИ-ассистентом Nexy 24/7.",
+  "help.menu.live.title": "Живой чат",
+  "help.menu.live.desc": "Свяжитесь с нашими специалистами поддержки в реальном времени.",
+  "help.menu.live.status": "Офлайн / Скоро",
+  "help.menu.live.toast": "Наша команда живой поддержки сейчас офлайн. Пожалуйста, используйте ИИ-ассистента.",
 };
 
 const ar: Dict = {
@@ -4704,7 +4760,15 @@ const ar: Dict = {
   "cookies.analytics.desc": "تتيح لنا تحليل إحصاءات الزيارة بشكل مجهول لتحسين تجربة المستخدم.",
   "cookies.marketing.title": "ملفات تعريف الارتباط التسويقية",
   "cookies.marketing.desc": "تساعدنا في تقديم محتوى مخصص يتناسب مع اهتماماتك.",
-  "cookies.cancel": "يلغي",
+  "cookies.cancel": "رجوع",
+  "help.menu.title": "المساعدة والدعم",
+  "help.menu.desc": "كيف يمكننا مساعدتك؟",
+  "help.menu.ai.title": "مساعد الذكاء الاصطناعي (Nexy)",
+  "help.menu.ai.desc": "تحدث فورًا مع مساعد الذكاء الاصطناعي نكسي على مدار الساعة.",
+  "help.menu.live.title": "الدعم المباشر",
+  "help.menu.live.desc": "تواصل مباشرة مع ممثلي الدعم لدينا.",
+  "help.menu.live.status": "غير متصل / قريبًا",
+  "help.menu.live.toast": "فريق الدعم المباشر لدينا غير متصل حاليًا. يرجى استخدام مساعد الذكاء الاصطناعي.",
 };
 
 const it: Dict = {
@@ -5290,7 +5354,15 @@ const it: Dict = {
   "cookies.analytics.desc": "Consente di analizzare in modo anonimo le statistiche delle visite per migliorare l'esperienza dell'utente.",
   "cookies.marketing.title": "Cookie di marketing",
   "cookies.marketing.desc": "Ci aiuta a fornire contenuti personalizzati in linea con i tuoi interessi.",
-  "cookies.cancel": "Annulla",
+  "cookies.cancel": "Indietro",
+  "help.menu.title": "Aiuto e Supporto",
+  "help.menu.desc": "Come possiamo aiutarti?",
+  "help.menu.ai.title": "Assistente IA (Nexy)",
+  "help.menu.ai.desc": "Chatta istantaneamente con il nostro assistente IA Nexy 24/7.",
+  "help.menu.live.title": "Supporto dal vivo",
+  "help.menu.live.desc": "Connettiti dal vivo con i nostri operatori.",
+  "help.menu.live.status": "Offline / Prossimamente",
+  "help.menu.live.toast": "Il nostro team di supporto dal vivo è offline. Ti preghiamo di usare il nostro assistente IA.",
 };
 
 const pt: Dict = {
@@ -5879,7 +5951,15 @@ const pt: Dict = {
   "cookies.analytics.desc": "Permite-nos analisar anonimamente as estatísticas de visitas para melhorar a experiência do usuário.",
   "cookies.marketing.title": "Cookies de Marketing",
   "cookies.marketing.desc": "Ajuda-nos a fornecer conteúdos personalizados adequados aos seus interesses.",
-  "cookies.cancel": "Cancelar",
+  "cookies.cancel": "Voltar",
+  "help.menu.title": "Ajuda e Suporte",
+  "help.menu.desc": "Como podemos ajudar?",
+  "help.menu.ai.title": "Assistente de IA (Nexy)",
+  "help.menu.ai.desc": "Converse instantaneamente com nosso assistente de IA Nexy 24/7.",
+  "help.menu.live.title": "Suporte ao vivo",
+  "help.menu.live.desc": "Fale ao vivo com nossos representantes de suporte.",
+  "help.menu.live.status": "Offline / Em breve",
+  "help.menu.live.toast": "Nossa equipe de suporte ao vivo está offline. Por favor, use nosso assistente de IA.",
 };
 
 const ja: Dict = {
@@ -6450,7 +6530,15 @@ const ja: Dict = {
   "cookies.analytics.desc": "ユーザー体験を向上させるために、訪問統計を匿名で分析することを可能にします。",
   "cookies.marketing.title": "マーケティング用クッキー",
   "cookies.marketing.desc": "興味関心に合わせたパーソナライズされたコンテンツの提供をサポートします。",
-  "cookies.cancel": "キャンセル",
+  "cookies.cancel": "戻る",
+  "help.menu.title": "ヘルプ＆サポート",
+  "help.menu.desc": "どのようなご用件でしょうか？",
+  "help.menu.ai.title": "AIアシスタント (Nexy)",
+  "help.menu.ai.desc": "24時間365日、AIアシスタントのNexyとすぐに対話できます。",
+  "help.menu.live.title": "ライブサポート",
+  "help.menu.live.desc": "サポート担当者とライブでつながります。",
+  "help.menu.live.status": "オフライン / まもなく登場",
+  "help.menu.live.toast": "現在ライブサポートチームはオフラインです。AIアシスタントをご利用ください。",
 };
 
 const zh: Dict = {
@@ -6980,7 +7068,15 @@ const zh: Dict = {
   "cookies.analytics.desc": "允许我们匿名分析访问统计数据，以改进用户体验。",
   "cookies.marketing.title": "营销 Cookie",
   "cookies.marketing.desc": "帮助我们提供符合您兴趣的个性化内容。",
-  "cookies.cancel": "取消",
+  "cookies.cancel": "返回",
+  "help.menu.title": "帮助与支持",
+  "help.menu.desc": "我们能为您提供什么帮助？",
+  "help.menu.ai.title": "AI 助手 (Nexy)",
+  "help.menu.ai.desc": "24/7 全天候与我们的 AI 助手 Nexy 立即对话。",
+  "help.menu.live.title": "在线客服",
+  "help.menu.live.desc": "与我们的支持代表进行实时联系。",
+  "help.menu.live.status": "离线 / 敬请期待",
+  "help.menu.live.toast": "我们的在线客服团队目前处于离线状态。请使用我们的 AI 助手。",
 };
 
 const dicts: Record<Lang, Dict> = { tr, en, de, fr, es, az, ru, ar, it, pt, ja, zh };

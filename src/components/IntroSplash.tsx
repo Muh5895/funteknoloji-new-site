@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 
 const SKIP_KEY = "fun_intro_played";
-const INTRO_VIDEO_URL = "https://framerusercontent.com/assets/n1Tyvvk0VdGSZB1OokWWISh7YtU.mp4";
+const INTRO_VIDEO_URL = "/assets/intro.mp4";
 
 export default function IntroSplash() {
   const [show, setShow] = useState(false);
