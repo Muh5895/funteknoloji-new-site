@@ -22,6 +22,9 @@ import {
   Menu,
   Edit2,
   Check,
+  Lock,
+  User,
+  LogOut,
 } from "lucide-react";
 
 interface Chat {
@@ -42,7 +45,50 @@ export default function NexyAssistant() {
   const [isTyping, setIsTyping] = useState(false);
   const [isThinking, setIsThinking] = useState(false);
   const [speakingMessageIndex, setSpeakingMessageIndex] = useState<number | null>(null);
-  const [supportView, setSupportView] = useState<"menu" | "chat">("menu");
+  const [supportView, setSupportView] = useState<"menu" | "chat" | "live_login" | "live_chat">("menu");
+
+  // Live support authentication and messages with lazy state initializers to prevent Strict Mode reset
+  const [liveUser, setLiveUser] = useState<{ email: string } | null>(() => {
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem("live_support_user");
+      if (saved) {
+        try {
+          return JSON.parse(saved);
+        } catch (e) {}
+      }
+    }
+    return null;
+  });
+  const [liveEmail, setLiveUserEmail] = useState("");
+  const [livePassword, setLiveUserPassword] = useState("");
+  const [liveMessages, setLiveMessages] = useState<{ role: "agent" | "user"; text: string; id: string; timestamp: number }[]>(() => {
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem("live_support_messages");
+      if (saved) {
+        try {
+          return JSON.parse(saved);
+        } catch (e) {}
+      }
+    }
+    return [];
+  });
+  const [liveAgentTyping, setLiveAgentTyping] = useState(false);
+
+  useEffect(() => {
+    if (liveUser) {
+      localStorage.setItem("live_support_user", JSON.stringify(liveUser));
+    } else {
+      localStorage.removeItem("live_support_user");
+    }
+  }, [liveUser]);
+
+  useEffect(() => {
+    if (liveMessages.length > 0) {
+      localStorage.setItem("live_support_messages", JSON.stringify(liveMessages));
+    } else {
+      localStorage.removeItem("live_support_messages");
+    }
+  }, [liveMessages]);
 
   const [chats, setChats] = useState<Chat[]>([]);
   const [activeChatId, setActiveChatId] = useState<string | null>(null);
@@ -112,7 +158,7 @@ export default function NexyAssistant() {
       requestAnimationFrame(scroll);
       setTimeout(scroll, 100); // Fallback for slower rendering
     }
-  }, [chatMessages, isThinking, isTyping]);
+  }, [chatMessages, isThinking, isTyping, liveMessages, liveAgentTyping]);
 
   // Prevent background scroll when maximized
   useEffect(() => {
@@ -629,7 +675,7 @@ export default function NexyAssistant() {
               </div>
 
               {/* Menu Body */}
-              <div className="flex-1 overflow-y-auto p-5 sm:p-6 flex flex-col justify-center gap-4">
+              <div className="flex-1 overflow-y-auto p-5 sm:p-6 flex flex-col justify-start pt-6 gap-4">
                 {/* AI Assistant Card */}
                 <div
                   onClick={() => {
@@ -640,11 +686,11 @@ export default function NexyAssistant() {
                   }}
                   className="group p-4 sm:p-5 rounded-2xl bg-[var(--fun-surface)] border border-[var(--fun-stroke-2)] hover:border-[var(--fun-purple)]/50 transition-all duration-300 cursor-pointer hover:scale-[1.02] shadow-sm flex items-start gap-4"
                 >
-                  <div className="h-10 w-10 sm:h-11 sm:w-11 rounded-xl bg-[var(--fun-purple)]/10 text-[var(--fun-purple)] flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                  <div className="h-10 w-10 sm:h-11 sm:w-11 rounded-xl overflow-hidden bg-[var(--fun-purple)] text-[var(--fun-purple)] flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
                     <img
                       src="/nexy-kafa-buyuk.png"
                       alt="Nexy"
-                      className="h-7 w-7 object-contain"
+                      className="h-full w-full object-cover"
                     />
                   </div>
                   <div className="flex-1 min-w-0">
@@ -659,26 +705,285 @@ export default function NexyAssistant() {
                 {/* Live Support Card */}
                 <div
                   onClick={() => {
-                    toast.info(t("help.menu.live.toast"), {
-                      icon: "💬"
-                    });
+                    if (liveUser) {
+                      setSupportView("live_chat");
+                    } else {
+                      setSupportView("live_login");
+                    }
                   }}
-                  className="group p-4 sm:p-5 rounded-2xl bg-[var(--fun-surface)] border border-[var(--fun-stroke-2)] hover:border-zinc-500/20 transition-all duration-300 cursor-pointer hover:scale-[1.02] shadow-sm flex items-start gap-4"
+                  className="group p-4 sm:p-5 rounded-2xl bg-[var(--fun-surface)] border border-[var(--fun-stroke-2)] hover:border-[var(--fun-purple)]/50 transition-all duration-300 cursor-pointer hover:scale-[1.02] shadow-sm flex items-start gap-4"
                 >
-                  <div className="h-10 w-10 sm:h-11 sm:w-11 rounded-xl bg-zinc-500/10 text-zinc-500 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                  <div className="h-10 w-10 sm:h-11 sm:w-11 rounded-xl bg-[var(--fun-purple)]/10 text-[var(--fun-purple)] flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
                     <MessageSquare className="h-5 w-5" />
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between gap-2">
                       <h4 className="text-xs sm:text-sm font-bold fun-text tracking-tight">{t("help.menu.live.title")}</h4>
-                      <span className="text-[8px] sm:text-[9px] font-bold bg-zinc-500/10 text-zinc-500 px-2 py-0.5 rounded-full uppercase tracking-wider whitespace-nowrap">
-                        {t("help.menu.live.status")}
-                      </span>
                     </div>
                     <p className="text-[10px] sm:text-[11px] fun-text-muted mt-1 leading-normal">{t("help.menu.live.desc")}</p>
                   </div>
                 </div>
               </div>
+            </div>
+          ) : supportView === "live_login" ? (
+            <div className="flex-1 flex flex-col h-full bg-[var(--fun-card)] select-none animate-in fade-in duration-300">
+              {/* Login Header */}
+              <div
+                className="p-5 sm:p-6 border-b flex items-center justify-between bg-[var(--fun-surface)] h-20 sm:h-24"
+                style={{ borderColor: "var(--fun-stroke-1)" }}
+              >
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => setSupportView("menu")}
+                    className="p-2 -ml-1 rounded-lg hover:bg-[var(--fun-stroke-1)] fun-text flex items-center justify-center shrink-0"
+                  >
+                    <ChevronLeft className="h-5 w-5" />
+                  </button>
+                  <div>
+                    <h3 className="text-sm sm:text-base font-bold tracking-tight text-[var(--fun-purple)] leading-tight">{t("help.menu.live.title")}</h3>
+                    <p className="text-[10px] sm:text-xs fun-text-muted mt-0.5">{lang === "tr" ? "Giriş Yapın" : "Log In"}</p>
+                  </div>
+                </div>
+                <button
+                  onClick={() => setIsOpen(false)}
+                  className="h-9 w-9 rounded-full hover:bg-[var(--fun-stroke-1)] flex items-center justify-center fun-text transition-colors"
+                >
+                  <X className="h-5 w-5" />
+                </button>
+              </div>
+
+              {/* Login Form */}
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  if (!liveEmail || !livePassword) {
+                    toast.error(lang === "tr" ? "Lütfen tüm alanları doldurun." : "Please fill in all fields.");
+                    return;
+                  }
+                  if (!liveEmail.includes("@")) {
+                    toast.error(lang === "tr" ? "Geçersiz e-posta adresi." : "Invalid email address.");
+                    return;
+                  }
+                  setLiveUser({ email: liveEmail });
+                  setSupportView("live_chat");
+                  toast.success(lang === "tr" ? "Giriş yapıldı!" : "Logged in successfully!");
+                }}
+                className="flex-1 p-5 sm:p-6 flex flex-col justify-start gap-4 pt-8"
+              >
+                <div className="space-y-1">
+                  <label className="text-xs font-bold fun-text-muted">{t("contact.form.email")}</label>
+                  <div className="relative">
+                    <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 fun-text-muted" />
+                    <input
+                      type="email"
+                      required
+                      value={liveEmail}
+                      onChange={(e) => setLiveUserEmail(e.target.value)}
+                      placeholder={t("contact.form.email_placeholder")}
+                      className="w-full rounded-xl bg-[var(--fun-surface)] border border-[var(--fun-stroke-1)] py-2.5 pl-10 pr-4 text-xs outline-none focus:border-[var(--fun-purple)] transition-all fun-text"
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-1">
+                  <label className="text-xs font-bold fun-text-muted">{lang === "tr" ? "Şifre" : "Password"}</label>
+                  <div className="relative">
+                    <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 fun-text-muted" />
+                    <input
+                      type="password"
+                      required
+                      value={livePassword}
+                      onChange={(e) => setLiveUserPassword(e.target.value)}
+                      placeholder="••••••••"
+                      className="w-full rounded-xl bg-[var(--fun-surface)] border border-[var(--fun-stroke-1)] py-2.5 pl-10 pr-4 text-xs outline-none focus:border-[var(--fun-purple)] transition-all fun-text"
+                    />
+                  </div>
+                </div>
+
+                <button
+                  type="submit"
+                  className="w-full mt-4 py-3 rounded-xl bg-[var(--fun-purple)] text-white font-bold text-xs flex items-center justify-center gap-2 hover:scale-[1.02] transition-all shadow-lg shadow-purple-500/20 active:scale-95 cursor-pointer"
+                >
+                  {lang === "tr" ? "Giriş Yap" : "Log In"}
+                </button>
+              </form>
+            </div>
+          ) : supportView === "live_chat" ? (
+            <div className="flex-1 flex flex-col h-full bg-[var(--fun-card)] select-none animate-in fade-in duration-300">
+              {/* Chat Header */}
+              <div
+                className="p-5 sm:p-6 border-b flex items-center justify-between bg-[var(--fun-surface)] h-20 sm:h-24"
+                style={{ borderColor: "var(--fun-stroke-1)" }}
+              >
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => setSupportView("menu")}
+                    className="p-2 -ml-1 rounded-lg hover:bg-[var(--fun-stroke-1)] fun-text flex items-center justify-center shrink-0"
+                  >
+                    <ChevronLeft className="h-5 w-5" />
+                  </button>
+                  <div className="relative">
+                    <div className="h-10 w-10 rounded-full overflow-hidden flex items-center justify-center p-1 border border-zinc-800 bg-[var(--fun-purple)]">
+                      <MessageSquare className="h-5 w-5 text-white" />
+                    </div>
+                    <span className="absolute bottom-0 right-0 h-3 w-3 rounded-full bg-green-500 border-2 border-[var(--fun-surface)]"></span>
+                  </div>
+                  <div>
+                    <h3 className="text-sm font-bold tracking-tight text-[var(--fun-purple)] leading-tight">{lang === "tr" ? "Can (Canlı Destek)" : "Can (Live Support)"}</h3>
+                    <p className="text-[10px] fun-text-muted mt-0.5">{lang === "tr" ? "Çevrimiçi" : "Online"}</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-1">
+                  <button
+                    onClick={() => {
+                      setLiveUser(null);
+                      setLiveUserEmail("");
+                      setLiveUserPassword("");
+                      setLiveMessages([]);
+                      setSupportView("menu");
+                      toast.success(lang === "tr" ? "Oturum kapatıldı." : "Logged out successfully.");
+                    }}
+                    className="h-8 w-8 rounded-full hover:bg-red-500/10 flex items-center justify-center text-red-500 transition-colors"
+                    title={lang === "tr" ? "Çıkış Yap" : "Log Out"}
+                  >
+                    <LogOut className="h-4 w-4" />
+                  </button>
+                  <button
+                    onClick={() => setIsOpen(false)}
+                    className="h-8 w-8 rounded-full hover:bg-[var(--fun-stroke-1)] flex items-center justify-center fun-text transition-colors"
+                  >
+                    <X className="h-4 w-4" />
+                  </button>
+                </div>
+              </div>
+
+              {/* Chat Body */}
+              <div
+                ref={scrollRef}
+                className="flex-1 overflow-y-auto p-5 sm:p-6 space-y-4 bg-dots scroll-smooth"
+              >
+                {liveMessages.length === 0 && (
+                  <div className="text-center py-8">
+                    <div className="h-12 w-12 rounded-full bg-[var(--fun-purple)]/10 text-[var(--fun-purple)] flex items-center justify-center mx-auto mb-3">
+                      <MessageSquare className="h-6 w-6" />
+                    </div>
+                    <h4 className="text-xs font-bold fun-text">{lang === "tr" ? "Canlı Destek Başlatıldı" : "Live Support Started"}</h4>
+                    <p className="text-[10px] fun-text-muted max-w-[200px] mx-auto mt-1 leading-normal">
+                      {lang === "tr" ? "Sorunuzu yazın, temsilcimiz hemen yardımcı olacaktır." : "Type your question, our agent will help you immediately."}
+                    </p>
+                  </div>
+                )}
+                {liveMessages.map((msg) => (
+                  <div
+                    key={msg.id}
+                    className={`flex flex-col ${msg.role === "user" ? "items-end" : "items-start"} animate-in fade-in slide-in-from-bottom-2 duration-300`}
+                  >
+                    <div
+                      className={`max-w-[85%] p-3 rounded-2xl text-xs leading-relaxed ${msg.role === "user" ? "bg-gradient-to-br from-[var(--fun-purple)] to-[#8E78FF] text-white rounded-tr-none shadow-md" : "bg-[var(--fun-surface)] fun-text rounded-tl-none border border-[var(--fun-stroke-1)] shadow-sm"}`}
+                    >
+                      <p>{msg.text}</p>
+                    </div>
+                    <span className="text-[8px] fun-text-muted mt-1 px-1">
+                      {new Date(msg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                    </span>
+                  </div>
+                ))}
+                {liveAgentTyping && (
+                  <div className="flex justify-start animate-in fade-in duration-300">
+                    <div className="bg-[var(--fun-surface)] fun-text p-3 rounded-2xl rounded-tl-none border border-[var(--fun-stroke-1)] shadow-sm">
+                      <TypingIndicator />
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Chat Input */}
+              <form
+                onSubmit={async (e) => {
+                  e.preventDefault();
+                  if (!userInput.trim() || liveAgentTyping) return;
+
+                  const userMsgText = userInput;
+                  setUserInput("");
+
+                  const userMsg = {
+                    role: "user" as const,
+                    text: userMsgText,
+                    id: Math.random().toString(36).substring(2, 9),
+                    timestamp: Date.now()
+                  };
+
+                  setLiveMessages((prev) => [...prev, userMsg]);
+                  setLiveAgentTyping(true);
+
+                  // Call the AI /api/nexy mimicking a live support agent named Can
+                  const prompt = `System: Sen Fun Teknoloji şirketinin canlı destek ekibinden Can'sın.
+                  Giriş yapan kullanıcının e-postası: ${liveUser?.email}.
+                  Sen bir yapay zeka değilsin, gerçek bir canlı destek temsilcisisin. Doğal, dost canlısı, profesyonel ve çözüm odaklı konuş.
+                  Kullanıcının dilinde cevap ver (${lang}).
+                  Cevaplarını kısa tut (maksimum 1-2 cümle) ve Pollinations veya başka servislerin adını geçirme, sadece Fun Teknoloji adına yardımcı ol.
+
+                  Konuşma Geçmişi:
+                  ${liveMessages.slice(-6).map(m => `${m.role === "user" ? "User" : "Agent Can"}: ${m.text}`).join("\n")}
+                  User: ${userMsgText}`;
+
+                  try {
+                    const response = await fetch(
+                      `/api/nexy/${encodeURIComponent(prompt)}?model=openai&cache=false`
+                    );
+                    const text = await response.text();
+                    const cleanText = text
+                      .replace(/---[\s\S]*?Support Pollinations\.AI[\s\S]*?---/gi, "")
+                      .replace(/Powered by Pollinations\.AI.*/gi, "")
+                      .trim();
+
+                    setTimeout(() => {
+                      setLiveMessages((prev) => [
+                        ...prev,
+                        {
+                          role: "agent" as const,
+                          text: cleanText || (lang === "tr" ? "Size nasıl yardımcı olabilirim?" : "How can I assist you?"),
+                          id: Math.random().toString(36).substring(2, 9),
+                          timestamp: Date.now()
+                        }
+                      ]);
+                      setLiveAgentTyping(false);
+                    }, 1500);
+                  } catch (e) {
+                    setTimeout(() => {
+                      setLiveMessages((prev) => [
+                        ...prev,
+                        {
+                          role: "agent" as const,
+                          text: lang === "tr" ? "Bağlantı hatası oluştu, lütfen tekrar deneyin." : "Connection error, please try again.",
+                          id: Math.random().toString(36).substring(2, 9),
+                          timestamp: Date.now()
+                        }
+                      ]);
+                      setLiveAgentTyping(false);
+                    }, 1500);
+                  }
+                }}
+                className="p-4 border-t bg-[var(--fun-surface)]/50 backdrop-blur-xl rounded-b-[32px]"
+                style={{ borderColor: "var(--fun-stroke-1)" }}
+              >
+                <div className="relative">
+                  <input
+                    type="text"
+                    value={userInput}
+                    onChange={(e) => setUserInput(e.target.value)}
+                    placeholder={lang === "tr" ? "Mesajınızı yazın..." : "Type your message..."}
+                    className="w-full rounded-[20px] bg-[var(--fun-surface)] border-2 border-[var(--fun-stroke-1)] py-3 pl-4 pr-14 text-xs outline-none focus:border-[var(--fun-purple)] focus:ring-4 focus:ring-[var(--fun-purple)]/10 transition-all fun-text shadow-inner"
+                  />
+                  <button
+                    type="submit"
+                    disabled={!userInput.trim() || liveAgentTyping}
+                    className="absolute right-2.5 top-1/2 -translate-y-1/2 h-9 w-9 rounded-xl bg-[var(--fun-purple)] text-white flex items-center justify-center hover:scale-105 active:scale-95 transition-all disabled:opacity-30 disabled:hover:scale-100 shadow-lg shadow-purple-500/30 cursor-pointer"
+                  >
+                    <Send className="h-4 w-4" />
+                  </button>
+                </div>
+              </form>
             </div>
           ) : (
             <>
@@ -983,22 +1288,22 @@ export default function NexyAssistant() {
               >
                 <path
                   d="M14.187 8.096L15 5.25L15.813 8.096C16.0231 8.83114 16.4171 9.50062 16.9577 10.0413C17.4984 10.5819 18.1679 10.9759 18.903 11.186L21.75 12L18.904 12.813C18.1689 13.0231 17.4994 13.4171 16.9587 13.9577C16.4181 14.4984 16.0241 15.1679 15.814 15.903L15 18.75L14.187 15.904C13.9769 15.1689 13.5829 14.4994 13.0423 13.9587C12.5016 13.4181 11.8321 13.0241 11.097 12.814L8.25 12L11.096 11.187C11.8311 10.9769 12.5006 10.5829 13.0413 10.0423C13.5819 9.50162 13.9759 8.83214 14.186 8.097L14.187 8.096Z"
-                  fill="black"
-                  stroke="black"
+                  fill="white"
+                  stroke="white"
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 ></path>
                 <path
                   d="M6 14.25L5.741 15.285C5.59267 15.8785 5.28579 16.4206 4.85319 16.8532C4.42059 17.2858 3.87853 17.5927 3.285 17.741L2.25 18L3.285 18.259C3.87853 18.4073 4.42059 18.7142 4.85319 19.1468C5.28579 19.5794 5.59267 20.1215 5.741 20.715L6 21.75L6.259 20.715C6.40725 20.1216 6.71398 19.5796 7.14639 19.147C7.5788 18.7144 8.12065 18.4075 8.714 18.259L9.75 18L8.714 17.741C8.12065 17.5925 7.5788 17.2856 7.14639 16.853C6.71398 16.4204 6.40725 15.8784 6.259 15.285L6 14.25Z"
-                  fill="black"
-                  stroke="black"
+                  fill="white"
+                  stroke="white"
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 ></path>
                 <path
                   d="M6.5 4L6.303 4.5915C6.24777 4.75718 6.15472 4.90774 6.03123 5.03123C5.90774 5.15472 5.75718 5.24777 5.5915 5.303L5 5.5L5.5915 5.697C5.75718 5.75223 5.90774 5.84528 6.03123 5.96877C6.15472 6.09226 6.24777 6.24282 6.303 6.4085L6.5 7L6.697 6.4085C6.75223 6.24282 6.84528 6.09226 6.96877 5.96877C7.09226 5.84528 7.24282 5.75223 7.4085 5.697L8 5.5L7.4085 5.303C7.24282 5.24777 7.09226 5.15472 6.96877 5.03123C6.84528 4.90774 6.75223 4.75718 6.697 4.5915L6.5 4Z"
-                  fill="black"
-                  stroke="black"
+                  fill="white"
+                  stroke="white"
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 ></path>
