@@ -53,7 +53,6 @@ export default function ThemeToggle() {
     applyTheme(theme);
     localStorage.setItem("theme", theme);
 
-    // Watch system media query if theme is set to 'system'
     if (theme === "system") {
       const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
       const handleChange = () => applyTheme("system");
@@ -67,7 +66,7 @@ export default function ThemeToggle() {
       value: "light" as ThemeMode,
       label: lang === "tr" ? "Açık" : "Light",
       icon: (
-        <svg className="h-5 w-5 md:h-6 md:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
           <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
         </svg>
       ),
@@ -76,7 +75,7 @@ export default function ThemeToggle() {
       value: "dark" as ThemeMode,
       label: lang === "tr" ? "Koyu" : "Dark",
       icon: (
-        <svg className="h-5 w-5 md:h-6 md:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
           <path strokeLinecap="round" strokeLinejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" />
         </svg>
       ),
@@ -85,7 +84,7 @@ export default function ThemeToggle() {
       value: "system" as ThemeMode,
       label: lang === "tr" ? "Sistem" : "System",
       icon: (
-        <svg className="h-5 w-5 md:h-6 md:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+        <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
           <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
           <line x1="8" y1="21" x2="16" y2="21" />
           <line x1="12" y1="17" x2="12" y2="21" />
@@ -101,7 +100,7 @@ export default function ThemeToggle() {
       <button
         onClick={() => setOpen((o) => !o)}
         type="button"
-        className="flex h-11 w-11 md:h-12 md:w-12 items-center justify-center rounded-full border transition-all hover:bg-[var(--fun-surface)] text-[var(--fun-text)] active:scale-95"
+        className="flex h-10 w-10 items-center justify-center rounded-full border transition-all hover:bg-[var(--fun-surface)] text-[var(--fun-text)] active:scale-95"
         style={{ borderColor: "var(--fun-stroke-1)" }}
         aria-label="Toggle theme"
       >
@@ -110,10 +109,10 @@ export default function ThemeToggle() {
 
       {open && (
         <div
-          className="absolute right-0 top-full z-[120] mt-2 w-44 md:w-48 rounded-[22px] border shadow-2xl animate-scale-in origin-top-right p-2 backdrop-blur-xl"
+          className="absolute right-0 top-full z-[120] mt-2 w-36 rounded-xl border shadow-xl animate-scale-in origin-top-right p-1.5 backdrop-blur-xl"
           style={{ backgroundColor: "var(--fun-card)", borderColor: "var(--fun-stroke-1)" }}
         >
-          <div className="flex flex-col gap-1.5">
+          <div className="flex flex-col gap-1">
             {toggleOptions.map((opt) => (
               <button
                 key={opt.value}
@@ -122,7 +121,7 @@ export default function ThemeToggle() {
                   setTheme(opt.value);
                   setOpen(false);
                 }}
-                className={`flex items-center gap-3 px-4 py-2.5 rounded-[14px] text-sm md:text-base font-semibold tracking-tight transition-all text-left ${theme === opt.value ? "bg-[var(--fun-purple)] text-white shadow-md shadow-purple-500/10" : "hover:bg-[var(--fun-surface)] text-[var(--fun-text)]"}`}
+                className={`flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-semibold tracking-tight transition-all text-left ${theme === opt.value ? "bg-[var(--fun-purple)] text-white shadow-md" : "hover:bg-[var(--fun-surface)] text-[var(--fun-text)]"}`}
               >
                 <span className="shrink-0">{opt.icon}</span>
                 <span>{opt.label}</span>

@@ -600,6 +600,7 @@ const tr: Dict = {
   "cookies.analytics.desc": "Kullanıcı deneyimini geliştirmek amacıyla ziyaret istatistiklerini anonim olarak analiz etmemizi sağlar.",
   "cookies.marketing.title": "Pazarlama Çerezleri",
   "cookies.marketing.desc": "İlgi alanlarınıza uygun kişiselleştirilmiş içerikler sunmamıza yardımcı olur.",
+  "cookies.cancel": "İptal",
 };
 
 const en: Dict = {
@@ -1188,6 +1189,7 @@ const en: Dict = {
   "cookies.analytics.desc": "Allows us to anonymously analyze visit statistics to improve user experience.",
   "cookies.marketing.title": "Marketing Cookies",
   "cookies.marketing.desc": "Helps us deliver personalized content matching your interests.",
+  "cookies.cancel": "Cancel",
 };
 
 const de: Dict = {
@@ -1782,6 +1784,7 @@ const de: Dict = {
   "cookies.analytics.desc": "Ermöglicht uns die anonyme Analyse von Besuchsstatistiken zur Verbesserung der Benutzererfahrung.",
   "cookies.marketing.title": "Marketing-Cookies",
   "cookies.marketing.desc": "Hilft uns, personalisierte Inhalte bereitzustellen, die Ihren Interessen entsprechen.",
+  "cookies.cancel": "Abbrechen",
 };
 
 const fr: Dict = {
@@ -2385,6 +2388,7 @@ const fr: Dict = {
   "cookies.analytics.desc": "Permet d'analyser anonymement les statistiques de visite pour améliorer l'expérience utilisateur.",
   "cookies.marketing.title": "Cookies marketing",
   "cookies.marketing.desc": "Nous aide à proposer des contenus personnalisés adaptés à vos centres d'intérêt.",
+  "cookies.cancel": "Annuler",
 };
 
 const es: Dict = {
@@ -2972,6 +2976,7 @@ const es: Dict = {
   "cookies.analytics.desc": "Permite analizar de forma anónima las estadísticas de visitas para mejorar la experiencia de usuario.",
   "cookies.marketing.title": "Cookies de marketing",
   "cookies.marketing.desc": "Ayuda a ofrecer contenido personalizado según sus intereses.",
+  "cookies.cancel": "Cancelar",
 };
 
 const az: Dict = {
@@ -3552,6 +3557,7 @@ const az: Dict = {
   "cookies.analytics.desc": "İstifadəçi təcrübəsini təkmilləşdirmək üçün ziyarət statistikalarını anonim təhlil etməyə imkan verir.",
   "cookies.marketing.title": "Marketinq Kukiləri",
   "cookies.marketing.desc": "Maraqlarınıza uyğun fərdiləşdirilmiş məzmun təqdim etməyə kömək edir.",
+  "cookies.cancel": "Ləğv et",
 };
 
 const ru: Dict = {
@@ -4141,6 +4147,7 @@ const ru: Dict = {
   "cookies.analytics.desc": "Позволяют нам анонимно анализировать статистику посещений для улучшения пользовательского интерфейса.",
   "cookies.marketing.title": "Маркетинговые файлы cookie",
   "cookies.marketing.desc": "Помогают нам предоставлять персонализированный контент в соответствии с вашими интересами.",
+  "cookies.cancel": "Отмена",
 };
 
 const ar: Dict = {
@@ -4689,6 +4696,7 @@ const ar: Dict = {
   "cookies.analytics.desc": "تتيح لنا تحليل إحصاءات الزيارة بشكل مجهول لتحسين تجربة المستخدم.",
   "cookies.marketing.title": "ملفات تعريف الارتباط التسويقية",
   "cookies.marketing.desc": "تساعدنا في تقديم محتوى مخصص يتناسب مع اهتماماتك.",
+  "cookies.cancel": "يلغي",
 };
 
 const it: Dict = {
@@ -5273,6 +5281,7 @@ const it: Dict = {
   "cookies.analytics.desc": "Consente di analizzare in modo anonimo le statistiche delle visite per migliorare l'esperienza dell'utente.",
   "cookies.marketing.title": "Cookie di marketing",
   "cookies.marketing.desc": "Ci aiuta a fornire contenuti personalizzati in linea con i tuoi interessi.",
+  "cookies.cancel": "Annulla",
 };
 
 const pt: Dict = {
@@ -5860,6 +5869,7 @@ const pt: Dict = {
   "cookies.analytics.desc": "Permite-nos analisar anonimamente as estatísticas de visitas para melhorar a experiência do usuário.",
   "cookies.marketing.title": "Cookies de Marketing",
   "cookies.marketing.desc": "Ajuda-nos a fornecer conteúdos personalizados adequados aos seus interesses.",
+  "cookies.cancel": "Cancelar",
 };
 
 const ja: Dict = {
@@ -6429,6 +6439,7 @@ const ja: Dict = {
   "cookies.analytics.desc": "ユーザー体験を向上させるために、訪問統計を匿名で分析することを可能にします。",
   "cookies.marketing.title": "マーケティング用クッキー",
   "cookies.marketing.desc": "興味関心に合わせたパーソナライズされたコンテンツの提供をサポートします。",
+  "cookies.cancel": "キャンセル",
 };
 
 const zh: Dict = {
@@ -6957,6 +6968,7 @@ const zh: Dict = {
   "cookies.analytics.desc": "允许我们匿名分析访问统计数据，以改进用户体验。",
   "cookies.marketing.title": "营销 Cookie",
   "cookies.marketing.desc": "帮助我们提供符合您兴趣的个性化内容。",
+  "cookies.cancel": "取消",
 };
 
 const dicts: Record<Lang, Dict> = { tr, en, de, fr, es, az, ru, ar, it, pt, ja, zh };
