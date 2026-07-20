@@ -47,7 +47,7 @@ const localTrans: Record<string, any> = {
     imageLimitError: "En fazla 5 adet resim yükleyebilirsiniz.",
     archivedWarning: "Bu sohbet sonlandırılmıştır. Yeni mesaj gönderilemez.",
     online: "Çevrimiçi",
-    onlineAgent: "Destek Temsilcisi Can",
+    onlineAgent: "Destek Temsilcisi",
     typeMessage: "Mesajınızı yazın...",
     logout: "Oturumu Kapat",
   },
@@ -77,7 +77,7 @@ const localTrans: Record<string, any> = {
     imageLimitError: "You can upload a maximum of 5 images.",
     archivedWarning: "This chat has ended. New messages cannot be sent.",
     online: "Online",
-    onlineAgent: "Support Agent Can",
+    onlineAgent: "Support Agent",
     typeMessage: "Type your message...",
     logout: "Logout",
   },
@@ -107,7 +107,7 @@ const localTrans: Record<string, any> = {
     imageLimitError: "Sie können maximal 5 Bilder hochladen.",
     archivedWarning: "Dieser Chat wurde beendet. Neue Nachrichten können nicht gesendet werden.",
     online: "Online",
-    onlineAgent: "Support-Mitarbeiter Can",
+    onlineAgent: "Support-Mitarbeiter",
     typeMessage: "Schreiben Sie Ihre Nachricht...",
     logout: "Abmelden",
   },
@@ -137,7 +137,7 @@ const localTrans: Record<string, any> = {
     imageLimitError: "Vous pouvez télécharger un maximum de 5 images.",
     archivedWarning: "Ce chat est terminé. Impossible d'envoyer de nouveaux messages.",
     online: "En ligne",
-    onlineAgent: "Agent de support Can",
+    onlineAgent: "Agent de support",
     typeMessage: "Tapez votre message...",
     logout: "Se déconnecter",
   },
@@ -167,7 +167,7 @@ const localTrans: Record<string, any> = {
     imageLimitError: "Puede subir un máximo de 5 imágenes.",
     archivedWarning: "Este chat ha finalizado. No se pueden enviar mensajes nuevos.",
     online: "En línea",
-    onlineAgent: "Agente de soporte Can",
+    onlineAgent: "Agente de soporte",
     typeMessage: "Escriba su mensaje...",
     logout: "Cerrar sesión",
   },
@@ -197,7 +197,7 @@ const localTrans: Record<string, any> = {
     imageLimitError: "Ən çox 5 şəkil yükləyə bilərsiniz.",
     archivedWarning: "Bu söhbət sonlandırılıb. Yeni mesaj göndərmək olmaz.",
     online: "Onlayn",
-    onlineAgent: "Dəstək Nümayəndəsi Can",
+    onlineAgent: "Dəstək Nümayəndəsi",
     typeMessage: "Mesajınızı yazın...",
     logout: "Çıxış et",
   },
@@ -227,7 +227,7 @@ const localTrans: Record<string, any> = {
     imageLimitError: "Вы можете загрузить не более 5 изображений.",
     archivedWarning: "Этот чат завершен. Новые сообщения отправлять нельзя.",
     online: "В сети",
-    onlineAgent: "Агент поддержки Can",
+    onlineAgent: "Агент поддержки",
     typeMessage: "Введите ваше сообщение...",
     logout: "Выйти",
   },
@@ -257,7 +257,7 @@ const localTrans: Record<string, any> = {
     imageLimitError: "يمكنك تحميل 5 صور كحد أقصى.",
     archivedWarning: "انتهت هذه الدردشة. لا يمكن إرسال رسائل جديدة.",
     online: "متصل",
-    onlineAgent: "وكيل الدعم Can",
+    onlineAgent: "وكيل الدعم",
     typeMessage: "اكتب رسالتك...",
     logout: "تسجيل الخروج",
   },
@@ -284,10 +284,10 @@ const localTrans: Record<string, any> = {
     descriptionPlaceholder: "Descrivi il tuo problema in dettaglio...",
     startChat: "Avvia chat",
     translationWarning: "I messaggi sono tradotti automaticamente e possono contenere errori.",
-    imageLimitError: "Puoi caricare un massimo di 5 immagini.",
+    imageLimitError: "Puoi caricare un maxim di 5 immagini.",
     archivedWarning: "Questa chat è terminata. Non è possibile inviare nuovi messaggi.",
     online: "Online",
-    onlineAgent: "Agente di supporto Can",
+    onlineAgent: "Agente di supporto",
     typeMessage: "Digita il tuo messaggio...",
     logout: "Esci",
   },
@@ -317,7 +317,7 @@ const localTrans: Record<string, any> = {
     imageLimitError: "Você pode enviar no máximo 5 imagens.",
     archivedWarning: "Este chat foi encerrado. Novas mensagens não podem ser enviadas.",
     online: "Online",
-    onlineAgent: "Agente de suporte Can",
+    onlineAgent: "Agente de suporte",
     typeMessage: "Digite sua mensagem...",
     logout: "Sair",
   },
@@ -347,7 +347,7 @@ const localTrans: Record<string, any> = {
     imageLimitError: "最大5枚の画像をアップロードできます。",
     archivedWarning: "このチャットは終了しました。新しいメッセージは送信できません。",
     online: "オンライン",
-    onlineAgent: "サポート担当者 Can",
+    onlineAgent: "サポート担当者",
     typeMessage: "メッセージを入力してください...",
     logout: "ログアウト",
   },
@@ -377,7 +377,7 @@ const localTrans: Record<string, any> = {
     imageLimitError: "您最多只能上传 5 张图片。",
     archivedWarning: "此会话已结束。无法发送新消息。",
     online: "在线",
-    onlineAgent: "客服代表 Can",
+    onlineAgent: "客服代表",
     typeMessage: "输入您要发送的消息...",
     logout: "退出登录",
   }
@@ -402,6 +402,23 @@ export function LiveLoginView({ onBack, onLoginSuccess, lang }: LiveLoginViewPro
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
+  const translateSupabaseError = (msg: string): string => {
+    const m = msg.toLowerCase();
+    if (m.includes("invalid login credentials") || m.includes("invalid credentials")) {
+      return "Hatalı giriş bilgileri. Lütfen e-posta ve şifrenizi kontrol edin.";
+    }
+    if (m.includes("email not confirmed")) {
+      return "E-posta adresi henüz doğrulanmamış.";
+    }
+    if (m.includes("user not found")) {
+      return "Kullanıcı bulunamadı.";
+    }
+    if (m.includes("network")) {
+      return "Bağlantı hatası oluştu. Lütfen internetinizi kontrol edin.";
+    }
+    return msg;
+  };
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email || !password) {
@@ -421,13 +438,13 @@ export function LiveLoginView({ onBack, onLoginSuccess, lang }: LiveLoginViewPro
       });
 
       if (error) {
-        toast.error(error.message);
+        toast.error(translateSupabaseError(error.message));
       } else if (data?.user) {
         toast.success(getTranslation(lang, "loginSuccess"));
         onLoginSuccess({ email: data.user.email || email });
       }
     } catch (err: any) {
-      toast.error(err.message || "Login error");
+      toast.error(translateSupabaseError(err.message || "Login error"));
     } finally {
       setLoading(false);
     }
@@ -458,8 +475,8 @@ export function LiveLoginView({ onBack, onLoginSuccess, lang }: LiveLoginViewPro
         </div>
       </div>
 
-      {/* Form */}
-      <form onSubmit={handleLogin} className="flex-1 p-5 sm:p-6 flex flex-col justify-center gap-4">
+      {/* Form - Top Aligned for proper aesthetic spacing and symmetry */}
+      <form onSubmit={handleLogin} className="flex-1 p-5 sm:p-6 flex flex-col justify-start pt-6 gap-4">
         <div className="space-y-1.5">
           <label className="text-xs font-semibold fun-text">
             {getTranslation(lang, "email")}
@@ -700,6 +717,19 @@ export function LiveChatView({
     setAttachedImages((prev) => prev.filter((_, i) => i !== index));
   };
 
+  // Dynamically generated professional Turkish support representative name, saved on session mount
+  const [agentName, setAgentName] = useState(() => {
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem("live_support_agent_name");
+      if (saved) return saved;
+      const names = ["Emre", "Ahmet", "Yiğit", "Elif", "Burak", "Kaan", "Ceren", "Selin", "Mert", "Deniz"];
+      const chosen = names[Math.floor(Math.random() * names.length)];
+      localStorage.setItem("live_support_agent_name", chosen);
+      return chosen;
+    }
+    return "Müşteri Temsilcisi";
+  });
+
   const handleSend = async (e: React.FormEvent) => {
     e.preventDefault();
     if ((!input.trim() && attachedImages.length === 0) || isAgentTyping || readOnly) return;
@@ -726,20 +756,24 @@ export function LiveChatView({
       userTextInTr = await translateToTurkish(userText, lang);
     }
 
-    // Agent "Can" system instructions - Agent Can always speaks in Turkish
-    const prompt = `System: Sen Fun Teknoloji şirketinin canlı destek ekibinden Can'sın.
+    // System instructions with dynamic agent name
+    const prompt = `System: Sen Fun Teknoloji şirketinin canlı destek ekibinden ${agentName}'sin.
     Giriş yapan kullanıcının e-postası: ${user.email}.
     Sen bir yapay zeka değilsin, gerçek bir canlı destek temsilcisisin. Doğal, dost canlısı, profesyonel, Türkçe konuşacaksın.
     Cevaplarını kısa tut (maksimum 1-2 cümle) ve Pollinations veya başka servislerin adını geçirme, sadece Fun Teknoloji adına yardımcı ol.
 
     Konuşma Geçmişi:
-    ${messages.slice(-6).map(m => `${m.role === "user" ? "User" : "Agent Can"}: ${m.text}`).join("\n")}
+    ${messages.slice(-6).map(m => `${m.role === "user" ? "User" : `Agent ${agentName}`}: ${m.text}`).join("\n")}
     User: ${userTextInTr}`;
 
     try {
-      const response = await fetch(
-        `/api/nexy/${encodeURIComponent(prompt)}?model=openai&cache=false`
-      );
+      const response = await fetch("/api/nexy", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ prompt, model: "openai", cache: "false" }),
+      });
       const text = await response.text();
       const cleanText = text
         .replace(/---[\s\S]*?Support Pollinations\.AI[\s\S]*?---/gi, "")
@@ -796,7 +830,7 @@ export function LiveChatView({
           </button>
           <div>
             <h3 className="text-sm sm:text-base font-bold tracking-tight fun-text leading-tight">
-              Can
+              {agentName}
             </h3>
             <p className="text-[10px] sm:text-xs text-green-500 font-semibold mt-0.5 animate-pulse">
               {readOnly ? (lang === "tr" ? "Sonlandırıldı" : "Closed") : getTranslation(lang, "online")}
@@ -844,42 +878,95 @@ export function LiveChatView({
                 {lang === "tr" ? "Canlı Sohbet Başlatıldı" : "Live Chat Started"}
               </p>
               <p className="text-[10px] sm:text-[11px] fun-text-muted max-w-[200px] mt-1 leading-normal">
-                {lang === "tr" ? "Müşteri temsilcimiz Can kısa süre içinde size yardımcı olacaktır." : "Our customer agent Can will assist you shortly."}
+                {lang === "tr" ? `Müşteri temsilcimiz ${agentName} kısa süre içinde size yardımcı olacaktır.` : `Our customer agent ${agentName} will assist you shortly.`}
               </p>
             </div>
           </div>
         )}
 
-        {messages.map((m) => (
-          <div
-            key={m.id}
-            className={`flex flex-col ${m.role === "user" ? "items-end" : "items-start"} animate-in fade-in slide-in-from-bottom-2 duration-300`}
-          >
-            <div
-              className={`max-w-[80%] rounded-2xl px-4 py-2.5 text-xs font-medium leading-relaxed ${m.role === "user" ? "bg-[var(--fun-purple)] text-white rounded-br-none shadow-lg shadow-purple-500/10" : "bg-[var(--fun-surface)] fun-text border border-[var(--fun-stroke-1)] rounded-bl-none shadow-sm"}`}
-            >
-              {m.text && <p className="whitespace-pre-wrap">{m.text}</p>}
+        {messages.map((m) => {
+          const isSystemMsg = m.id === "system-details-init";
 
-              {/* Images Grid inside message bubble */}
-              {m.images && m.images.length > 0 && (
-                <div className={`grid ${m.images.length === 1 ? "grid-cols-1" : "grid-cols-2 sm:grid-cols-3"} gap-2 mt-2`}>
-                  {m.images.map((img, idx) => (
-                    <div
-                      key={idx}
-                      onClick={() => setSelectedImage(img)}
-                      className="relative h-16 w-16 sm:h-20 sm:w-20 rounded-lg overflow-hidden border border-white/10 shadow-sm cursor-zoom-in hover:scale-105 transition-transform"
-                    >
-                      <img src={img} alt="Uploaded attachment" className="h-full w-full object-cover" />
+          // Basic local Markdown Bold & Italic parser for message bubbles
+          const renderMessageText = (text: string) => {
+            if (!text) return null;
+            const lines = text.split("\n");
+            return lines.map((line, idx) => {
+              const parts = line.split(/(\*\*.*?\*\*)/g);
+              const content = parts.map((part, pi) => {
+                if (part.startsWith("**") && part.endsWith("**")) {
+                  return (
+                    <strong key={pi} className="font-extrabold text-[var(--fun-purple)] dark:text-purple-300">
+                      {part.slice(2, -2)}
+                    </strong>
+                  );
+                }
+                const italicParts = part.split(/(\*.*?\*)/g);
+                return italicParts.map((iPart, ji) => {
+                  if (iPart.startsWith("*") && iPart.endsWith("*")) {
+                    return (
+                      <em key={ji} className="italic opacity-90">
+                        {iPart.slice(1, -1)}
+                      </em>
+                    );
+                  }
+                  return iPart;
+                });
+              });
+              return (
+                <div key={idx} className={line === "" ? "h-2" : "mb-1"}>
+                  {content}
+                </div>
+              );
+            });
+          };
+
+          return (
+            <div
+              key={m.id}
+              className={`flex flex-col ${isSystemMsg ? "items-center w-full" : m.role === "user" ? "items-end" : "items-start"} animate-in fade-in slide-in-from-bottom-2 duration-300`}
+            >
+              {isSystemMsg ? (
+                <div className="w-full max-w-[90%] rounded-2xl p-4 bg-purple-500/5 border border-purple-500/20 text-xs font-medium leading-relaxed fun-text shadow-sm relative overflow-hidden my-2">
+                  <div className="absolute top-0 left-0 w-1.5 h-full bg-[var(--fun-purple)]" />
+                  <div className="pl-2">
+                    {renderMessageText(m.text)}
+                  </div>
+                </div>
+              ) : (
+                <div
+                  className={`max-w-[80%] rounded-2xl px-4 py-2.5 text-xs font-medium leading-relaxed ${m.role === "user" ? "bg-[var(--fun-purple)] text-white rounded-br-none shadow-lg shadow-purple-500/10" : "bg-[var(--fun-surface)] fun-text border border-[var(--fun-stroke-1)] rounded-bl-none shadow-sm"}`}
+                >
+                  {m.text && (
+                    <div className="whitespace-pre-wrap">
+                      {m.role === "user" ? m.text : renderMessageText(m.text)}
                     </div>
-                  ))}
+                  )}
+
+                  {/* Images Grid inside message bubble */}
+                  {m.images && m.images.length > 0 && (
+                    <div className={`grid ${m.images.length === 1 ? "grid-cols-1" : "grid-cols-2 sm:grid-cols-3"} gap-2 mt-2`}>
+                      {m.images.map((img, idx) => (
+                        <div
+                          key={idx}
+                          onClick={() => setSelectedImage(img)}
+                          className="relative h-16 w-16 sm:h-20 sm:w-20 rounded-lg overflow-hidden border border-white/10 shadow-sm cursor-zoom-in hover:scale-105 transition-transform"
+                        >
+                          <img src={img} alt="Uploaded attachment" className="h-full w-full object-cover" />
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
               )}
+              {!isSystemMsg && (
+                <span className="text-[9px] fun-text-muted mt-1 px-1 font-medium opacity-50">
+                  {new Date(m.timestamp).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+                </span>
+              )}
             </div>
-            <span className="text-[9px] fun-text-muted mt-1 px-1 font-medium opacity-50">
-              {new Date(m.timestamp).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
-            </span>
-          </div>
-        ))}
+          );
+        })}
 
         {isAgentTyping && (
           <div className="flex flex-col items-start space-y-1">
@@ -950,7 +1037,7 @@ export function LiveChatView({
               <button
                 type="submit"
                 disabled={(!input.trim() && attachedImages.length === 0) || isAgentTyping}
-                className="absolute right-2.5 top-1/2 -translate-y-1/2 h-8 w-8 rounded-xl bg-[var(--fun-purple)] text-white flex items-center justify-center hover:scale-105 active:scale-95 transition-all disabled:opacity-30 disabled:hover:scale-100 shadow-lg shadow-purple-500/30 cursor-pointer"
+                className="absolute right-2.5 top-1/2 -translate-y-1/2 h-8 w-8 rounded-xl bg-[var(--fun-purple)] text-white flex items-center justify-center hover:scale-105 active:scale-95 transition-all disabled:opacity-30 disabled:hover:scale-100 shadow-lg shadow-purple-500/30 cursor-pointer z-10"
               >
                 <Send className="h-3.5 w-3.5" />
               </button>

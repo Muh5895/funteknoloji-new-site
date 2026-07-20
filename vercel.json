@@ -9,8 +9,8 @@
       "destination": "https://eiecuiberhqmyvvlrakn.supabase.co/auth/v1/$1"
     },
     {
-      "source": "/api/nexy/(.+)",
-      "destination": "/api/nexy?prompt=$1"
+      "source": "/api/nexy",
+      "destination": "api/nexy"
     },
     {
       "source": "/api/nexy/",

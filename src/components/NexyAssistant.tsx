@@ -260,9 +260,13 @@ export default function NexyAssistant() {
   const generateChatTitle = async (userMsg: string, aiResponse: string) => {
     const prompt = `User: ${userMsg}\nAssistant: ${aiResponse}\n\nSystem: Based on the conversation above, determine a short and meaningful title for this chat (max 3-4 words). The title should summarize the topic. DO NOT just repeat the user's message. Response in the user's language. Write ONLY the title, no quotes or extra text.`;
     try {
-      const response = await fetch(
-        `/api/nexy/${encodeURIComponent(prompt)}?model=openai&cache=false`,
-      );
+      const response = await fetch("/api/nexy", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ prompt, model: "openai", cache: "false" }),
+      });
       if (response.ok) {
         let title = await response.text();
         title = title.replace(/---[\s\S]*?Support Pollinations\.AI[\s\S]*?---/gi, "").trim();
@@ -313,10 +317,14 @@ export default function NexyAssistant() {
     User: ${input}`;
 
     try {
-      const response = await fetch(
-        `/api/nexy/${encodeURIComponent(prompt)}?model=openai&cache=false`,
-        { signal: controller.signal }
-      );
+      const response = await fetch("/api/nexy", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ prompt, model: "openai", cache: "false" }),
+        signal: controller.signal,
+      });
       if (!response.ok) throw new Error();
       let text = await response.text();
 
@@ -809,12 +817,12 @@ export default function NexyAssistant() {
                 localStorage.setItem("live_support_importance", details.importance);
 
                 // Pre-populate chat with the compiled ticket details
-                const initialMsg = `*Yeni Canlı Destek Talebi*\n\n📌 *Konu:* ${details.subject}\n⚡ *Önem Seviyesi:* ${details.importance}\n📝 *Açıklama:* ${details.description}`;
+                const initialMsg = `**Yeni Canlı Destek Talebi**\n\n📌 **Konu:** ${details.subject}\n⚡ **Önem Seviyesi:** ${details.importance}\n📝 **Açıklama:** ${details.description}`;
                 setLiveMessages([
                   {
                     role: "user",
                     text: initialMsg,
-                    id: Math.random().toString(36).substring(2, 9),
+                    id: "system-details-init",
                     timestamp: Date.now()
                   }
                 ]);
@@ -1098,7 +1106,7 @@ export default function NexyAssistant() {
               <button
                 type="button"
                 onClick={startListening}
-                className={`absolute left-2.5 top-1/2 -translate-y-1/2 h-8 w-8 rounded-full flex items-center justify-center transition-all ${isListening ? "bg-red-500 text-white scale-110 shadow-lg shadow-red-500/40 animate-pulse" : "fun-text-muted hover:bg-[var(--fun-stroke-1)] hover:text-[var(--fun-purple)]"}`}
+                className={`absolute left-2.5 top-1/2 -translate-y-1/2 h-8 w-8 rounded-full flex items-center justify-center transition-all z-10 ${isListening ? "bg-red-500 text-white scale-110 shadow-lg shadow-red-500/40 animate-pulse" : "fun-text-muted hover:bg-[var(--fun-stroke-1)] hover:text-[var(--fun-purple)]"}`}
               >
                 <Mic className="h-4 w-4" />
               </button>
@@ -1108,7 +1116,7 @@ export default function NexyAssistant() {
                   onClick={handleStopRequest}
                   aria-label="Durdur"
                   title="Durdur"
-                  className="absolute right-2.5 top-1/2 -translate-y-1/2 h-9 w-9 rounded-xl bg-red-500 text-white flex items-center justify-center hover:scale-105 active:scale-95 transition-all shadow-lg shadow-red-500/30"
+                  className="absolute right-2.5 top-1/2 -translate-y-1/2 h-9 w-9 rounded-xl bg-red-500 text-white flex items-center justify-center hover:scale-105 active:scale-95 transition-all shadow-lg shadow-red-500/30 z-10"
                 >
                   <Square className="h-4 w-4 fill-white text-white" />
                 </button>
@@ -1117,7 +1125,7 @@ export default function NexyAssistant() {
                   type="submit"
                   disabled={!userInput.trim() || isThinking}
                   aria-label={t("nexy.aria_send")}
-                  className="absolute right-2.5 top-1/2 -translate-y-1/2 h-9 w-9 rounded-xl bg-[var(--fun-purple)] text-white flex items-center justify-center hover:scale-105 active:scale-95 transition-all disabled:opacity-30 disabled:hover:scale-100 shadow-lg shadow-purple-500/30"
+                  className="absolute right-2.5 top-1/2 -translate-y-1/2 h-9 w-9 rounded-xl bg-[var(--fun-purple)] text-white flex items-center justify-center hover:scale-105 active:scale-95 transition-all disabled:opacity-30 disabled:hover:scale-100 shadow-lg shadow-purple-500/30 z-10"
                 >
                   <Send className="h-4 w-4" />
                 </button>

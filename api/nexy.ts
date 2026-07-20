@@ -1,6 +1,19 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
+  // Allow OPTIONS preflight requests
+  if (req.method === "OPTIONS") {
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+    return res.status(200).end();
+  }
+
+  // Reject GET or any method other than POST to prevent users from just typing /api/nexy/naber in the browser
+  if (req.method !== "POST") {
+    return res.status(405).send("Nexy error: Sadece POST istekleri kabul edilir.");
+  }
+
   // CORS & origin checks to ensure only this site can request
   const origin = req.headers.origin;
   const referer = req.headers.referer;
@@ -12,7 +25,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   } else if (referer && allowedOriginsPattern.test(referer)) {
     isAllowed = true;
   } else if (!origin && !referer) {
-    // Allow if direct server-side fetch / dev testing without origin headers
+    // Allow direct local dev testing if no headers
     isAllowed = true;
   }
 
@@ -20,7 +33,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(403).send("Nexy error: Access denied");
   }
 
-  const { prompt, model = "openai", cache = "false" } = req.query;
+  // Read body parameters
+  const { prompt, model = "openai", cache = "false" } = req.body || {};
 
   if (!prompt) {
     return res.status(400).send("Nexy error: Prompt is required");
