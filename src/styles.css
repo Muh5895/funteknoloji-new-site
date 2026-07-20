@@ -313,6 +313,11 @@
   background-color: var(--fun-green);
   color: var(--fun-text);
 }
+
+.badge-fun-purple {
+  background-color: rgba(134, 79, 254, 0.1);
+  color: var(--fun-purple);
+}
 .btn-fun-green:hover {
   background-color: #6c5ce7;
   color: white;
@@ -553,16 +558,17 @@
 }
 
 .sparkle-button:is(:hover, :focus-visible, .active-sparkle) {
-  background: #12161f;
-  color: #ffffff;
-  border-color: #12161f;
-  box-shadow: 0 6px 20px rgba(134, 79, 254, 0.25);
+  background: var(--sparkle-bg);
+  color: var(--sparkle-text-color);
+  border-color: var(--sparkle-border-color);
+  box-shadow: 0 6px 20px rgba(134, 79, 254, 0.12);
 }
 
 .dark .sparkle-button:is(:hover, :focus-visible, .active-sparkle) {
   background: var(--fun-purple);
   color: #ffffff;
   border-color: var(--fun-purple);
+  box-shadow: 0 6px 20px rgba(134, 79, 254, 0.25);
 }
 
 .sparkle-button:active {

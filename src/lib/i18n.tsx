@@ -350,7 +350,7 @@ const tr: Dict = {
   "nexy.new_chat": "Yeni Sohbet",
   "nexy.search_placeholder": "Mesajlarda ara...",
   "nexy.delete_toast": "Sohbet silindi",
-  "title.home": "Fun Teknoloji",
+  "title.home": "Fun Teknoloji - Geleceğin Yapay Zeka ve Yazılım Çözümleri",
   "title.about": "Hakkımızda - Fun Teknoloji",
   "title.services": "Projeler - Fun Teknoloji",
   "title.blog": "Blog - Fun Teknoloji",
@@ -610,6 +610,8 @@ const tr: Dict = {
   "help.menu.live.desc": "Müşteri temsilcilerimizle canlı olarak görüşün.",
   "help.menu.live.status": "Çevrimdışı",
   "help.menu.live.toast": "Canlı destek ekibimiz şu an çevrimdışı. Lütfen AI Asistanımızı kullanın.",
+  "live_support.image_limit_error": "En fazla 5 adet resim yükleyebilirsiniz.",
+  "live_support.translation_warning": "Mesajlar otomatik olarak çevrilmektedir ve hatalı olabilir.",
 };
 
 const en: Dict = {
@@ -947,7 +949,7 @@ const en: Dict = {
   "nexy.new_chat": "New Chat",
   "nexy.search_placeholder": "Search messages...",
   "nexy.delete_toast": "Chat deleted",
-  "title.home": "Fun Technology",
+  "title.home": "Fun Technology - Future AI and Software Solutions",
   "title.about": "About Us - Fun Technology",
   "title.services": "Projects - Fun Technology",
   "title.blog": "Blog - Fun Technology",
@@ -1208,6 +1210,8 @@ const en: Dict = {
   "help.menu.live.desc": "Connect with our support representatives live.",
   "help.menu.live.status": "Offline",
   "help.menu.live.toast": "Our live support team is currently offline. Please use our AI Assistant.",
+  "live_support.image_limit_error": "You can upload a maximum of 5 images.",
+  "live_support.translation_warning": "Messages are automatically translated and may contain errors.",
 };
 
 const de: Dict = {

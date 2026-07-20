@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useLang } from "../lib/i18n";
 import { useNavigate } from "@tanstack/react-router";
-import { LiveLoginView, LiveChatView } from "./LiveSupportViews";
+import { LiveLoginView, LiveChatView, LiveTicketDetailsView } from "./LiveSupportViews";
 import { KNOWLEDGE_BASE } from "../lib/knowledge";
 import { toast } from "sonner";
 import {
@@ -26,6 +26,7 @@ import {
   Eye,
   EyeOff,
   LogOut,
+  Square,
 } from "lucide-react";
 import { supabase } from "../lib/supabase";
 
@@ -47,7 +48,7 @@ export default function NexyAssistant() {
   const [isTyping, setIsTyping] = useState(false);
   const [isThinking, setIsThinking] = useState(false);
   const [speakingMessageIndex, setSpeakingMessageIndex] = useState<number | null>(null);
-  const [supportView, setSupportView] = useState<"menu" | "chat" | "live_login" | "live_chat">("menu");
+  const [supportView, setSupportView] = useState<"menu" | "chat" | "live_login" | "live_details" | "live_chat">("menu");
   const [liveUser, setLiveUser] = useState<{ email: string } | null>(() => {
     if (typeof window !== "undefined") {
       const saved = localStorage.getItem("live_support_user");
@@ -57,7 +58,7 @@ export default function NexyAssistant() {
   });
   const [liveEmail, setLiveEmail] = useState("");
   const [livePassword, setLivePassword] = useState("");
-  const [liveMessages, setLiveMessages] = useState<{ role: "agent" | "user"; text: string; id: string; timestamp: number }[]>(() => {
+  const [liveMessages, setLiveMessages] = useState<{ role: "agent" | "user"; text: string; id: string; timestamp: number; images?: string[] }[]>(() => {
     if (typeof window !== "undefined") {
       const saved = localStorage.getItem("live_support_messages");
       return saved ? JSON.parse(saved) : [];
@@ -65,6 +66,15 @@ export default function NexyAssistant() {
     return [];
   });
   const [liveAgentTyping, setLiveAgentTyping] = useState(false);
+  const [isPastSession, setIsPastSession] = useState(false);
+  const abortControllerRef = useRef<AbortController | null>(null);
+  const [pastSessions, setPastSessions] = useState<any[]>(() => {
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem("live_support_history");
+      return saved ? JSON.parse(saved) : [];
+    }
+    return [];
+  });
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -107,10 +117,14 @@ export default function NexyAssistant() {
       setIsOpen(true);
       setShowPopup(false);
       setIsMinimized(false);
+      setSupportView("chat");
+      if (chats.length === 0) {
+        createNewChat();
+      }
     };
     window.addEventListener("open-nexy-chat", handleOpenChat);
     return () => window.removeEventListener("open-nexy-chat", handleOpenChat);
-  }, []);
+  }, [chats]);
 
   useEffect(() => {
     const saved = localStorage.getItem("nexy_chats_v2");
@@ -262,7 +276,22 @@ export default function NexyAssistant() {
     return userMsg.slice(0, 20) + "...";
   };
 
+  const handleStopRequest = () => {
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+      abortControllerRef.current = null;
+    }
+    setIsThinking(false);
+    setIsTyping(false);
+  };
+
   const getNexyBrainResponse = async (input: string) => {
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+    }
+    const controller = new AbortController();
+    abortControllerRef.current = controller;
+
     const history = chatMessages
       .slice(-6)
       .map((m) => `${m.role === "nexy" ? "Assistant" : "User"}: ${m.text}`)
@@ -286,6 +315,7 @@ export default function NexyAssistant() {
     try {
       const response = await fetch(
         `/api/nexy/${encodeURIComponent(prompt)}?model=openai&cache=false`,
+        { signal: controller.signal }
       );
       if (!response.ok) throw new Error();
       let text = await response.text();
@@ -335,6 +365,12 @@ export default function NexyAssistant() {
     setIsThinking(true);
 
     let response = await getNexyBrainResponse(savedInput);
+
+    // If request was stopped/cancelled, return immediately
+    if (abortControllerRef.current === null) {
+      return;
+    }
+    abortControllerRef.current = null;
 
     // Check for REDIRECT command
     const redirectMatch = response.match(/\[REDIRECT:(.+)\]/);
@@ -659,7 +695,7 @@ export default function NexyAssistant() {
                 style={{ borderColor: "var(--fun-stroke-1)" }}
               >
                 <div>
-                  <h3 className="text-sm sm:text-base font-bold tracking-tight text-[var(--fun-purple)] leading-tight">{t("help.menu.title")}</h3>
+                  <h3 className="text-sm sm:text-base font-bold tracking-tight fun-text leading-tight">{t("help.menu.title")}</h3>
                   <p className="text-[10px] sm:text-xs fun-text-muted mt-0.5">{t("help.menu.desc")}</p>
                 </div>
                 <button
@@ -701,7 +737,11 @@ export default function NexyAssistant() {
                 <div
                   onClick={() => {
                     if (liveUser) {
-                      setSupportView("live_chat");
+                      if (liveMessages.length > 0) {
+                        setSupportView("live_chat");
+                      } else {
+                        setSupportView("live_details");
+                      }
                     } else {
                       setSupportView("live_login");
                     }
@@ -718,6 +758,36 @@ export default function NexyAssistant() {
                     <p className="text-[10px] sm:text-[11px] fun-text-muted mt-1 leading-normal">{t("help.menu.live.desc")}</p>
                   </div>
                 </div>
+
+                {/* Past Sessions History List */}
+                {pastSessions.length > 0 && (
+                  <div className="mt-2 space-y-2 select-none">
+                    <h4 className="text-xs font-bold fun-text px-1">
+                      {lang === "tr" ? "Geçmiş Destek Talepleriniz" : "Your Past Support Tickets"}
+                    </h4>
+                    <div className="max-h-[160px] overflow-y-auto space-y-2 pr-1">
+                      {pastSessions.map((session) => (
+                        <div
+                          key={session.id}
+                          onClick={() => {
+                            setLiveMessages(session.messages);
+                            setIsPastSession(true);
+                            setSupportView("live_chat");
+                          }}
+                          className="p-3 rounded-xl bg-[var(--fun-surface)] border border-[var(--fun-stroke-2)] hover:border-[var(--fun-purple)] transition-colors cursor-pointer flex justify-between items-center text-xs"
+                        >
+                          <div className="min-w-0 flex-1 pr-2">
+                            <p className="font-semibold fun-text truncate">{session.subject}</p>
+                            <p className="text-[10px] fun-text-muted mt-0.5">
+                              {new Date(session.timestamp).toLocaleDateString([], { day: "numeric", month: "short" })} • {session.importance}
+                            </p>
+                          </div>
+                          <ChevronRight className="h-4 w-4 shrink-0 fun-text-muted" />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           ) : supportView === "live_login" ? (
@@ -725,25 +795,73 @@ export default function NexyAssistant() {
               onBack={() => setSupportView("menu")}
               onLoginSuccess={(user) => {
                 setLiveUser(user);
-                setSupportView("live_chat");
+                setSupportView("live_details");
               }}
               lang={lang}
+            />
+          ) : supportView === "live_details" ? (
+            <LiveTicketDetailsView
+              lang={lang}
+              onBack={() => setSupportView("menu")}
+              onSubmit={(details) => {
+                // Save subject & importance to localStorage so they persist for archive saving
+                localStorage.setItem("live_support_subject", details.subject);
+                localStorage.setItem("live_support_importance", details.importance);
+
+                // Pre-populate chat with the compiled ticket details
+                const initialMsg = `*Yeni Canlı Destek Talebi*\n\n📌 *Konu:* ${details.subject}\n⚡ *Önem Seviyesi:* ${details.importance}\n📝 *Açıklama:* ${details.description}`;
+                setLiveMessages([
+                  {
+                    role: "user",
+                    text: initialMsg,
+                    id: Math.random().toString(36).substring(2, 9),
+                    timestamp: Date.now()
+                  }
+                ]);
+                setSupportView("live_chat");
+              }}
             />
           ) : supportView === "live_chat" ? (
             <LiveChatView
               user={liveUser!}
               messages={liveMessages}
               setMessages={setLiveMessages}
-              onBack={() => setSupportView("menu")}
+              onBack={() => {
+                if (isPastSession) {
+                  setIsPastSession(false);
+                  const activeMsgs = localStorage.getItem("live_support_messages");
+                  setLiveMessages(activeMsgs ? JSON.parse(activeMsgs) : []);
+                }
+                setSupportView("menu");
+              }}
               onLogout={() => {
+                // Archive current session on logout
+                if (liveMessages.length > 0 && liveUser) {
+                  const newSession = {
+                    id: Math.random().toString(36).substring(2, 9),
+                    email: liveUser.email,
+                    subject: localStorage.getItem("live_support_subject") || "Destek Talebi",
+                    importance: localStorage.getItem("live_support_importance") || "Orta",
+                    timestamp: Date.now(),
+                    messages: liveMessages,
+                  };
+                  const updatedHistory = [newSession, ...pastSessions];
+                  setPastSessions(updatedHistory);
+                  localStorage.setItem("live_support_history", JSON.stringify(updatedHistory));
+                }
                 setLiveUser(null);
                 setLiveMessages([]);
                 setSupportView("menu");
+                localStorage.removeItem("live_support_messages");
+                localStorage.removeItem("live_support_user");
+                localStorage.removeItem("live_support_subject");
+                localStorage.removeItem("live_support_importance");
               }}
               lang={lang}
               isAgentTyping={liveAgentTyping}
               setIsAgentTyping={setLiveAgentTyping}
               isMaximized={isMaximized}
+              readOnly={isPastSession}
             />
           ) : (
             <>
@@ -984,14 +1102,26 @@ export default function NexyAssistant() {
               >
                 <Mic className="h-4 w-4" />
               </button>
-              <button
-                type="submit"
-                disabled={!userInput.trim() || isThinking}
-                aria-label={t("nexy.aria_send")}
-                className="absolute right-2.5 top-1/2 -translate-y-1/2 h-9 w-9 rounded-xl bg-[var(--fun-purple)] text-white flex items-center justify-center hover:scale-105 active:scale-95 transition-all disabled:opacity-30 disabled:hover:scale-100 shadow-lg shadow-purple-500/30"
-              >
-                <Send className="h-4 w-4" />
-              </button>
+              {isThinking ? (
+                <button
+                  type="button"
+                  onClick={handleStopRequest}
+                  aria-label="Durdur"
+                  title="Durdur"
+                  className="absolute right-2.5 top-1/2 -translate-y-1/2 h-9 w-9 rounded-xl bg-red-500 text-white flex items-center justify-center hover:scale-105 active:scale-95 transition-all shadow-lg shadow-red-500/30"
+                >
+                  <Square className="h-4 w-4 fill-white text-white" />
+                </button>
+              ) : (
+                <button
+                  type="submit"
+                  disabled={!userInput.trim() || isThinking}
+                  aria-label={t("nexy.aria_send")}
+                  className="absolute right-2.5 top-1/2 -translate-y-1/2 h-9 w-9 rounded-xl bg-[var(--fun-purple)] text-white flex items-center justify-center hover:scale-105 active:scale-95 transition-all disabled:opacity-30 disabled:hover:scale-100 shadow-lg shadow-purple-500/30"
+                >
+                  <Send className="h-4 w-4" />
+                </button>
+              )}
             </div>
             <p className="text-[9px] text-center fun-text-muted font-medium opacity-50 px-2 tracking-wide">
               {t("nexy.disclaimer")}

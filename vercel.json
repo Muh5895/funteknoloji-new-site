@@ -10,7 +10,7 @@
     },
     {
       "source": "/api/nexy/(.+)",
-      "destination": "https://text.pollinations.ai/$1"
+      "destination": "/api/nexy?prompt=$1"
     },
     {
       "source": "/api/nexy/",
