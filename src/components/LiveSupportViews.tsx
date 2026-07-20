@@ -679,6 +679,7 @@ export function LiveChatView({
   const [input, setInput] = useState("");
   const [attachedImages, setAttachedImages] = useState<string[]>([]);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [showConfirmClose, setShowConfirmClose] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -832,16 +833,16 @@ export function LiveChatView({
             <h3 className="text-sm sm:text-base font-bold tracking-tight fun-text leading-tight">
               {agentName}
             </h3>
-            <p className="text-[10px] sm:text-xs text-green-500 font-semibold mt-0.5 animate-pulse">
+            <p className={`text-[10px] sm:text-xs font-semibold mt-0.5 ${readOnly ? "text-red-600 dark:text-red-500 font-bold" : "text-green-500 dark:text-green-400"}`}>
               {readOnly ? (lang === "tr" ? "Sonlandırıldı" : "Closed") : getTranslation(lang, "online")}
             </p>
           </div>
         </div>
         {!readOnly && (
           <button
-            onClick={onLogout}
-            title={getTranslation(lang, "logout")}
-            className="h-9 w-9 rounded-full hover:bg-red-500/10 text-red-500 flex items-center justify-center transition-colors"
+            onClick={() => setShowConfirmClose(true)}
+            title={lang === "tr" ? "Görüşmeyi Sonlandır" : "End Session"}
+            className="h-9 w-9 rounded-full hover:bg-red-500/10 text-red-500 flex items-center justify-center transition-colors z-10"
           >
             <LogOut className="h-5 w-5" />
           </button>
@@ -1044,6 +1045,40 @@ export function LiveChatView({
             </div>
           </div>
         </form>
+      )}
+
+      {/* Confirm Close Session Popup / Modal */}
+      {showConfirmClose && (
+        <div className="fixed inset-0 z-[300] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-[var(--fun-card)] border border-[var(--fun-stroke-1)] rounded-2xl p-6 max-w-xs w-full text-center shadow-2xl animate-in zoom-in-95 duration-200">
+            <AlertCircle className="h-10 w-10 text-red-500 mx-auto mb-3" />
+            <h4 className="text-sm font-bold fun-text mb-2">
+              {getTranslation(lang, "live_support.confirm_close_title")}
+            </h4>
+            <p className="text-[11px] fun-text-muted mb-5 leading-normal">
+              {getTranslation(lang, "live_support.confirm_close_desc")}
+            </p>
+            <div className="flex gap-2">
+              <button
+                type="button"
+                onClick={() => setShowConfirmClose(false)}
+                className="flex-1 py-2 px-3 rounded-xl bg-[var(--fun-surface)] hover:bg-[var(--fun-stroke-1)] text-xs font-semibold fun-text transition-colors"
+              >
+                {getTranslation(lang, "live_support.confirm_close_no")}
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setShowConfirmClose(false);
+                  onLogout();
+                }}
+                className="flex-1 py-2 px-3 rounded-xl bg-red-500 hover:bg-red-600 text-white text-xs font-bold transition-colors"
+              >
+                {getTranslation(lang, "live_support.confirm_close_yes")}
+              </button>
+            </div>
+          </div>
+        </div>
       )}
 
       {/* Image zoom modal */}

@@ -118,9 +118,7 @@ export default function NexyAssistant() {
       setShowPopup(false);
       setIsMinimized(false);
       setSupportView("chat");
-      if (chats.length === 0) {
-        createNewChat();
-      }
+      createNewChat();
     };
     window.addEventListener("open-nexy-chat", handleOpenChat);
     return () => window.removeEventListener("open-nexy-chat", handleOpenChat);
@@ -231,6 +229,7 @@ export default function NexyAssistant() {
     };
     setChats((prev) => [newChat, ...prev]);
     setActiveChatId(newId);
+    setIsSidebarOpen(false);
     setIsThinking(true);
     setTimeout(() => {
       setIsThinking(false);
@@ -960,7 +959,7 @@ export default function NexyAssistant() {
                   </button>
                   <button
                     onClick={() => setIsSidebarOpen(true)}
-                    className={`p-2 rounded-lg hover:bg-[var(--fun-stroke-1)] fun-text ${isMaximized ? "md:hidden" : "hidden"}`}
+                    className={`p-2 rounded-lg hover:bg-[var(--fun-stroke-1)] fun-text ${isMaximized ? "md:hidden" : "block"}`}
                   >
                     <Menu className="h-5 w-5" />
                   </button>
@@ -1145,7 +1144,7 @@ export default function NexyAssistant() {
         className={`fixed bottom-6 right-6 z-[100] flex flex-col items-end gap-4 animate-in slide-in-from-right-10 duration-500 transition-transform ${isThinking && !isOpen ? "-translate-y-4" : "translate-y-0"}`}
       >
         {!isOpen && !isMinimized && showPopup && (
-          <div className="relative max-w-[250px] rounded-2xl bg-[var(--fun-card)] border border-[var(--fun-stroke-1)] p-4 shadow-2xl backdrop-blur-md">
+          <div className="relative max-w-[250px] rounded-2xl bg-[var(--fun-card)] border border-[var(--fun-stroke-1)] p-4 shadow-2xl backdrop-blur-md z-[120]">
             <button
               onClick={() => setShowPopup(false)}
               className="absolute -top-2 -right-2 h-6 w-6 rounded-full bg-[var(--fun-surface)] border border-[var(--fun-stroke-1)] flex items-center justify-center text-xs fun-text hover:bg-[var(--fun-stroke-1)] transition-colors shadow-lg"
@@ -1169,9 +1168,10 @@ export default function NexyAssistant() {
               <ChevronRight className="h-5 w-5" />
             )}
           </button>
-          <div className="sp">
+          {/* Use pointer-events-none wrapper or direct classes so particles never block clicks */}
+          <div className="sp pointer-events-none">
             <button
-              className={`sparkle-button ${isOpen ? "--active: 1" : ""} ${isMinimized ? "opacity-50 pointer-events-none" : ""}`}
+              className={`sparkle-button ${isOpen ? "--active: 1" : ""} ${isMinimized ? "opacity-50 pointer-events-none" : ""} pointer-events-auto`}
               onClick={toggleChat}
               aria-label={t("nexy.aria_help")}
               style={isOpen ? ({ "--active": 1 } as any) : {}}

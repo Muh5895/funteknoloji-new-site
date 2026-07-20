@@ -612,6 +612,10 @@ const tr: Dict = {
   "help.menu.live.toast": "Canlı destek ekibimiz şu an çevrimdışı. Lütfen AI Asistanımızı kullanın.",
   "live_support.image_limit_error": "En fazla 5 adet resim yükleyebilirsiniz.",
   "live_support.translation_warning": "Mesajlar otomatik olarak çevrilmektedir ve hatalı olabilir.",
+  "live_support.confirm_close_title": "Görüşmeyi Sonlandır",
+  "live_support.confirm_close_desc": "Mevcut canlı destek görüşmesini sonlandırmak istediğinize emin misiniz?",
+  "live_support.confirm_close_yes": "Evet, Sonlandır",
+  "live_support.confirm_close_no": "İptal",
 };
 
 const en: Dict = {
@@ -1212,6 +1216,10 @@ const en: Dict = {
   "help.menu.live.toast": "Our live support team is currently offline. Please use our AI Assistant.",
   "live_support.image_limit_error": "You can upload a maximum of 5 images.",
   "live_support.translation_warning": "Messages are automatically translated and may contain errors.",
+  "live_support.confirm_close_title": "End Session",
+  "live_support.confirm_close_desc": "Are you sure you want to end this live support session?",
+  "live_support.confirm_close_yes": "Yes, End Session",
+  "live_support.confirm_close_no": "Cancel",
 };
 
 const de: Dict = {
