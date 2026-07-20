@@ -705,12 +705,32 @@ export default function NexyAssistant() {
                   <h3 className="text-sm sm:text-base font-bold tracking-tight fun-text leading-tight">{t("help.menu.title")}</h3>
                   <p className="text-[10px] sm:text-xs fun-text-muted mt-0.5">{t("help.menu.desc")}</p>
                 </div>
-                <button
-                  onClick={() => setIsOpen(false)}
-                  className="h-9 w-9 rounded-full hover:bg-[var(--fun-stroke-1)] flex items-center justify-center fun-text transition-colors"
-                >
-                  <X className="h-5 w-5" />
-                </button>
+                <div className="flex items-center gap-1">
+                  {liveUser && (
+                    <button
+                      onClick={() => {
+                        setLiveUser(null);
+                        setLiveMessages([]);
+                        setSupportView("menu");
+                        localStorage.removeItem("live_support_messages");
+                        localStorage.removeItem("live_support_user");
+                        localStorage.removeItem("live_support_subject");
+                        localStorage.removeItem("live_support_importance");
+                        localStorage.removeItem("live_support_agent_name");
+                      }}
+                      title={lang === "tr" ? "Hesaptan Çıkış Yap" : "Log out"}
+                      className="h-8 w-8 rounded-full hover:bg-red-500/10 text-red-500 flex items-center justify-center transition-colors"
+                    >
+                      <LogOut className="h-4.5 w-4.5" />
+                    </button>
+                  )}
+                  <button
+                    onClick={() => setIsOpen(false)}
+                    className="h-9 w-9 rounded-full hover:bg-[var(--fun-stroke-1)] flex items-center justify-center fun-text transition-colors"
+                  >
+                    <X className="h-5 w-5" />
+                  </button>
+                </div>
               </div>
 
               {/* Menu Body */}
@@ -841,8 +861,8 @@ export default function NexyAssistant() {
                 }
                 setSupportView("menu");
               }}
-              onLogout={() => {
-                // Archive current session on logout
+              onEndSession={() => {
+                // Archive current session on close (keeps account logged in)
                 if (liveMessages.length > 0 && liveUser) {
                   const newSession = {
                     id: Math.random().toString(36).substring(2, 9),
@@ -856,6 +876,14 @@ export default function NexyAssistant() {
                   setPastSessions(updatedHistory);
                   localStorage.setItem("live_support_history", JSON.stringify(updatedHistory));
                 }
+                setLiveMessages([]);
+                setSupportView("menu");
+                localStorage.removeItem("live_support_messages");
+                localStorage.removeItem("live_support_subject");
+                localStorage.removeItem("live_support_importance");
+              }}
+              onLogout={() => {
+                // Log out from the live support account completely
                 setLiveUser(null);
                 setLiveMessages([]);
                 setSupportView("menu");
@@ -863,6 +891,7 @@ export default function NexyAssistant() {
                 localStorage.removeItem("live_support_user");
                 localStorage.removeItem("live_support_subject");
                 localStorage.removeItem("live_support_importance");
+                localStorage.removeItem("live_support_agent_name");
               }}
               lang={lang}
               isAgentTyping={liveAgentTyping}
@@ -957,12 +986,14 @@ export default function NexyAssistant() {
                   >
                     <ChevronLeft className="h-5 w-5" />
                   </button>
-                  <button
-                    onClick={() => setIsSidebarOpen(true)}
-                    className={`p-2 rounded-lg hover:bg-[var(--fun-stroke-1)] fun-text ${isMaximized ? "md:hidden" : "block"}`}
-                  >
-                    <Menu className="h-5 w-5" />
-                  </button>
+                  {isMaximized && (
+                    <button
+                      onClick={() => setIsSidebarOpen(true)}
+                      className="p-2 rounded-lg hover:bg-[var(--fun-stroke-1)] fun-text md:hidden"
+                    >
+                      <Menu className="h-5 w-5" />
+                    </button>
+                  )}
                   <div className="relative">
                     <div className="h-12 w-12 sm:h-14 sm:w-14 rounded-xl overflow-hidden flex items-center justify-center p-1 border border-zinc-800" style={{ backgroundColor: "#000000" }}>
                       <img
@@ -977,11 +1008,6 @@ export default function NexyAssistant() {
                       <p className="fun-text text-lg font-bold leading-none tracking-tight">
                         Nexy
                       </p>
-                      <span
-                        className="rounded-full bg-[var(--fun-purple)] px-2 py-0.5 text-[9px] font-bold uppercase tracking-widest text-white shadow-lg shadow-purple-500/20"
-                      >
-                        {t("nexy.beta_tag")}
-                      </span>
                     </div>
                   </div>
                 </div>
@@ -1208,30 +1234,32 @@ export default function NexyAssistant() {
               </svg>
               <span className="sparkle-text font-bold">{t("nexy.help_button")}</span>
             </button>
-            <div className="particle-pen">
-              {[...Array(20)].map((_, i) => (
-                <svg
-                  key={i}
-                  className="particle"
-                  viewBox="0 0 15 15"
-                  fill="none"
-                  style={
-                    {
-                      "--x": Math.random() * 100,
-                      "--y": Math.random() * 100,
-                      "--size": Math.random() * 0.5 + 0.1,
-                      "--duration": Math.random() * 3 + 2,
-                      "--delay": Math.random() * 5,
-                    } as any
-                  }
-                >
-                  <path
-                    d="M6.937 3.846L7.75 1L8.563 3.846C8.77313 4.58114 9.1671 5.25062 9.70774 5.79126C10.2484 6.3319 10.9179 6.72587 11.653 6.936L14.5 7.75L11.654 8.563C10.9189 8.77313 10.2494 9.1671 9.70874 9.70774C9.1681 10.2484 8.77413 10.9179 8.564 11.653L7.75 14.5L6.937 11.654C6.72687 10.9189 6.3329 10.2494 5.79226 9.70874C5.25162 9.1681 4.58214 8.77413 3.847 8.564L1 7.75L3.846 6.937C4.58114 6.72687 5.25062 6.3329 5.79126 5.79226C6.3319 5.25162 6.72587 4.58214 6.936 3.847L6.937 3.846Z"
-                    fill="currentColor"
-                  ></path>
-                </svg>
-              ))}
-            </div>
+            {!(isThinking || isTyping) && (
+              <div className="particle-pen">
+                {[...Array(20)].map((_, i) => (
+                  <svg
+                    key={i}
+                    className="particle"
+                    viewBox="0 0 15 15"
+                    fill="none"
+                    style={
+                      {
+                        "--x": Math.random() * 100,
+                        "--y": Math.random() * 100,
+                        "--size": Math.random() * 0.5 + 0.1,
+                        "--duration": Math.random() * 3 + 2,
+                        "--delay": Math.random() * 5,
+                      } as any
+                    }
+                  >
+                    <path
+                      d="M6.937 3.846L7.75 1L8.563 3.846C8.77313 4.58114 9.1671 5.25062 9.70774 5.79126C10.2484 6.3319 10.9179 6.72587 11.653 6.936L14.5 7.75L11.654 8.563C10.9189 8.77313 10.2494 9.1671 9.70874 9.70774C9.1681 10.2484 8.77413 10.9179 8.564 11.653L7.75 14.5L6.937 11.654C6.72687 10.9189 6.3329 10.2494 5.79226 9.70874C5.25162 9.1681 4.58214 8.77413 3.847 8.564L1 7.75L3.846 6.937C4.58114 6.72687 5.25062 6.3329 5.79126 5.79226C6.3319 5.25162 6.72587 4.58214 6.936 3.847L6.937 3.846Z"
+                      fill="currentColor"
+                    ></path>
+                  </svg>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </div>

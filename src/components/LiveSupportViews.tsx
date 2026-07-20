@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { X, ArrowLeft, Send, MessageSquare, LogOut, Eye, EyeOff, Bot, Languages, Image as ImageIcon, AlertCircle } from "lucide-react";
+import { X, ArrowLeft, Send, MessageSquare, LogOut, Eye, EyeOff, Bot, Languages, Image as ImageIcon, AlertCircle, Download, Copy, Volume2, VolumeX } from "lucide-react";
 import { supabase } from "../lib/supabase";
 import { toast } from "sonner";
 import { translateText } from "../lib/translate";
@@ -50,6 +50,15 @@ const localTrans: Record<string, any> = {
     onlineAgent: "Destek Temsilcisi",
     typeMessage: "Mesajınızı yazın...",
     logout: "Oturumu Kapat",
+    errorInvalidCredentials: "Hatalı giriş bilgileri. Lütfen e-posta ve şifrenizi kontrol edin.",
+    errorEmailNotConfirmed: "E-posta adresi henüz doğrulanmamış.",
+    errorUserNotFound: "Kullanıcı bulunamadı.",
+    errorNetwork: "Bağlantı hatası oluştu. Lütfen internetinizi kontrol edin.",
+    errorGeneric: "Giriş hatası oluştu.",
+    confirmCloseTitle: "Görüşmeyi Sonlandır",
+    confirmCloseDesc: "Mevcut canlı destek görüşmesini sonlandırmak istediğinize emin misiniz?",
+    confirmCloseYes: "Evet, Sonlandır",
+    confirmCloseNo: "İptal",
   },
   en: {
     loginTitle: "Login to Live Support",
@@ -80,6 +89,15 @@ const localTrans: Record<string, any> = {
     onlineAgent: "Support Agent",
     typeMessage: "Type your message...",
     logout: "Logout",
+    errorInvalidCredentials: "Invalid login credentials. Please check your email and password.",
+    errorEmailNotConfirmed: "Email address has not been verified yet.",
+    errorUserNotFound: "User not found.",
+    errorNetwork: "Network error occurred. Please check your internet connection.",
+    errorGeneric: "An error occurred during login.",
+    confirmCloseTitle: "End Support Session",
+    confirmCloseDesc: "Are you sure you want to end this live support session?",
+    confirmCloseYes: "Yes, End",
+    confirmCloseNo: "Cancel",
   },
   de: {
     loginTitle: "Anmeldung zum Live-Support",
@@ -110,6 +128,15 @@ const localTrans: Record<string, any> = {
     onlineAgent: "Support-Mitarbeiter",
     typeMessage: "Schreiben Sie Ihre Nachricht...",
     logout: "Abmelden",
+    errorInvalidCredentials: "Ungültige Anmeldedaten. Bitte überprüfen Sie E-Mail und Passwort.",
+    errorEmailNotConfirmed: "E-Mail-Adresse wurde noch nicht bestätigt.",
+    errorUserNotFound: "Benutzer nicht gefunden.",
+    errorNetwork: "Netzwerkfehler aufgetreten. Bitte überprüfen Sie Ihre Internetverbindung.",
+    errorGeneric: "Ein Fehler ist bei der Anmeldung aufgetreten.",
+    confirmCloseTitle: "Sitzung beenden",
+    confirmCloseDesc: "Möchten Sie diese Live-Support-Sitzung wirklich beenden?",
+    confirmCloseYes: "Ja, beenden",
+    confirmCloseNo: "Abbrechen",
   },
   fr: {
     loginTitle: "Connexion au support en direct",
@@ -140,6 +167,15 @@ const localTrans: Record<string, any> = {
     onlineAgent: "Agent de support",
     typeMessage: "Tapez votre message...",
     logout: "Se déconnecter",
+    errorInvalidCredentials: "Identifiants de connexion invalides. Veuillez vérifier votre e-mail et mot de passe.",
+    errorEmailNotConfirmed: "L'adresse e-mail n'a pas encore été vérifiée.",
+    errorUserNotFound: "Utilisateur non trouvé.",
+    errorNetwork: "Une erreur réseau est survenue. Veuillez vérifier votre connexion Internet.",
+    errorGeneric: "Une erreur est survenue lors de la connexion.",
+    confirmCloseTitle: "Terminer la session",
+    confirmCloseDesc: "Êtes-vous sûr de vouloir terminer cette session de support en direct ?",
+    confirmCloseYes: "Oui, terminer",
+    confirmCloseNo: "Annuler",
   },
   es: {
     loginTitle: "Iniciar sesión en Soporte en Vivo",
@@ -170,6 +206,15 @@ const localTrans: Record<string, any> = {
     onlineAgent: "Agente de soporte",
     typeMessage: "Escriba su mensaje...",
     logout: "Cerrar sesión",
+    errorInvalidCredentials: "Credenciales de inicio de sesión no válidas. Por favor verifique su correo y contraseña.",
+    errorEmailNotConfirmed: "La dirección de correo electrónico aún no ha sido verificada.",
+    errorUserNotFound: "Usuario no encontrado.",
+    errorNetwork: "Ocurrió un error de red. Por favor verifique su conexión a Internet.",
+    errorGeneric: "Ocurrió un error al iniciar sesión.",
+    confirmCloseTitle: "Finalizar sesión",
+    confirmCloseDesc: "¿Está seguro de que desea finalizar esta sesión de soporte en vivo?",
+    confirmCloseYes: "Sí, finalizar",
+    confirmCloseNo: "Cancelar",
   },
   az: {
     loginTitle: "Canlı Dəstəyə Giriş Edin",
@@ -200,6 +245,15 @@ const localTrans: Record<string, any> = {
     onlineAgent: "Dəstək Nümayəndəsi",
     typeMessage: "Mesajınızı yazın...",
     logout: "Çıxış et",
+    errorInvalidCredentials: "Yanlış giriş məlumatları. Zəhmət olmasa e-poçt və şifrənizi yoxlayın.",
+    errorEmailNotConfirmed: "E-poçt ünvanı hələ təsdiqlənməyib.",
+    errorUserNotFound: "İstifadəçi tapılmadı.",
+    errorNetwork: "Şəbəkə xətası baş verdi. Zəhmət olmasa internet bağlantınızı yoxlayın.",
+    errorGeneric: "Giriş zamanı xəta baş verdi.",
+    confirmCloseTitle: "Görüşü Sonlandır",
+    confirmCloseDesc: "Cari canlı dəstək görüşünü sonlandırmaq istədiyinizə əminsiniz?",
+    confirmCloseYes: "Bəli, Sonlandır",
+    confirmCloseNo: "İmtina",
   },
   ru: {
     loginTitle: "Вход в живую поддержку",
@@ -230,6 +284,15 @@ const localTrans: Record<string, any> = {
     onlineAgent: "Агент поддержки",
     typeMessage: "Введите ваше сообщение...",
     logout: "Выйти",
+    errorInvalidCredentials: "Неверные учетные данные. Пожалуйста, проверьте адрес электронной почты и пароль.",
+    errorEmailNotConfirmed: "Адрес электронной почты еще не подтвержден.",
+    errorUserNotFound: "Пользователь не найден.",
+    errorNetwork: "Произошла сетевая ошибка. Пожалуйста, проверьте подключение к Интернету.",
+    errorGeneric: "Произошла ошибка при входе.",
+    confirmCloseTitle: "Завершить сессию",
+    confirmCloseDesc: "Вы уверены, что хотите завершить эту сессию живой поддержки?",
+    confirmCloseYes: "Да, завершить",
+    confirmCloseNo: "Отмена",
   },
   ar: {
     loginTitle: "تسجيل الدخول إلى الدعم المباشر",
@@ -260,6 +323,15 @@ const localTrans: Record<string, any> = {
     onlineAgent: "وكيل الدعم",
     typeMessage: "اكتب رسالتك...",
     logout: "تسجيل الخروج",
+    errorInvalidCredentials: "بيانات الاعتماد غير صالحة. يرجى التحقق من البريد الإلكتروني وكلمة المرور.",
+    errorEmailNotConfirmed: "لم يتم تأكيد عنوان البريد الإلكتروني بعد.",
+    errorUserNotFound: "المستخدم غير موجود.",
+    errorNetwork: "حدث خطأ في الشبكة. يرجى التحقق من اتصالك بالإنترنت.",
+    errorGeneric: "حدث خطأ أثناء تسجيل الدخول.",
+    confirmCloseTitle: "إنهاء الجلسة",
+    confirmCloseDesc: "هل أنت متأكد أنك تريد إنهاء جلسة الدعم المباشر هذه؟",
+    confirmCloseYes: "نعم، إنهاء",
+    confirmCloseNo: "إلغاء",
   },
   it: {
     loginTitle: "Accedi al Supporto Live",
@@ -290,6 +362,15 @@ const localTrans: Record<string, any> = {
     onlineAgent: "Agente di supporto",
     typeMessage: "Digita il tuo messaggio...",
     logout: "Esci",
+    errorInvalidCredentials: "Credenziali di accesso non valide. Si prega di controllare l'e-mail e la password.",
+    errorEmailNotConfirmed: "L'indirizzo e-mail non è stato ancora verificato.",
+    errorUserNotFound: "Utente non trovato.",
+    errorNetwork: "Si è verificato un errore di rete. Si prega di controllare la connessione Internet.",
+    errorGeneric: "Si è verificato un errore durante l'accesso.",
+    confirmCloseTitle: "Termina sessione",
+    confirmCloseDesc: "Sei sicuro di voler terminare questa sessione di supporto live?",
+    confirmCloseYes: "Sì, termina",
+    confirmCloseNo: "Annulla",
   },
   pt: {
     loginTitle: "Entrar no Suporte ao Vivo",
@@ -320,6 +401,15 @@ const localTrans: Record<string, any> = {
     onlineAgent: "Agente de suporte",
     typeMessage: "Digite sua mensagem...",
     logout: "Sair",
+    errorInvalidCredentials: "Credenciais de login inválidas. Por favor, verifique seu e-mail e senha.",
+    errorEmailNotConfirmed: "O endereço de e-mail ainda não foi verificado.",
+    errorUserNotFound: "Usuário não encontrado.",
+    errorNetwork: "Ocorreu um erro de rede. Por favor, verifique sua conexão com a Internet.",
+    errorGeneric: "Ocorreu um erro durante o login.",
+    confirmCloseTitle: "Encerrar sessão",
+    confirmCloseDesc: "Tem certeza de que deseja encerrar esta sessão de suporte ao vivo?",
+    confirmCloseYes: "Sim, encerrar",
+    confirmCloseNo: "Cancelar",
   },
   ja: {
     loginTitle: "ライブサポートにログイン",
@@ -350,6 +440,15 @@ const localTrans: Record<string, any> = {
     onlineAgent: "サポート担当者",
     typeMessage: "メッセージを入力してください...",
     logout: "ログアウト",
+    errorInvalidCredentials: "ログイン情報が無効です。メールアドレスとパスワードを確認してください。",
+    errorEmailNotConfirmed: "メールアドレスがまだ確認されていません。",
+    errorUserNotFound: "ユーザーが見つかりません。",
+    errorNetwork: "ネットワークエラーが発生しました。インターネット接続を確認してください。",
+    errorGeneric: "ログイン中にエラーが発生しました。",
+    confirmCloseTitle: "セッションを終了",
+    confirmCloseDesc: "このライブサポートセッションを終了してもよろしいですか？",
+    confirmCloseYes: "はい、終了する",
+    confirmCloseNo: "キャンセル",
   },
   zh: {
     loginTitle: "登录在线客服",
@@ -380,6 +479,15 @@ const localTrans: Record<string, any> = {
     onlineAgent: "客服代表",
     typeMessage: "输入您要发送的消息...",
     logout: "退出登录",
+    errorInvalidCredentials: "登录凭证无效。请检查您的电子邮件和密码。",
+    errorEmailNotConfirmed: "电子邮件地址尚未验证。",
+    errorUserNotFound: "找不到该用户。",
+    errorNetwork: "发生网络错误。请检查您的互联网连接。",
+    errorGeneric: "登录时发生错误。",
+    confirmCloseTitle: "结束会话",
+    confirmCloseDesc: "您确定要结束此在线客服会话吗？",
+    confirmCloseYes: "是的，结束",
+    confirmCloseNo: "取消",
   }
 };
 
@@ -405,18 +513,18 @@ export function LiveLoginView({ onBack, onLoginSuccess, lang }: LiveLoginViewPro
   const translateSupabaseError = (msg: string): string => {
     const m = msg.toLowerCase();
     if (m.includes("invalid login credentials") || m.includes("invalid credentials")) {
-      return "Hatalı giriş bilgileri. Lütfen e-posta ve şifrenizi kontrol edin.";
+      return getTranslation(lang, "errorInvalidCredentials");
     }
     if (m.includes("email not confirmed")) {
-      return "E-posta adresi henüz doğrulanmamış.";
+      return getTranslation(lang, "errorEmailNotConfirmed");
     }
     if (m.includes("user not found")) {
-      return "Kullanıcı bulunamadı.";
+      return getTranslation(lang, "errorUserNotFound");
     }
     if (m.includes("network")) {
-      return "Bağlantı hatası oluştu. Lütfen internetinizi kontrol edin.";
+      return getTranslation(lang, "errorNetwork");
     }
-    return msg;
+    return getTranslation(lang, "errorGeneric") || msg;
   };
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -656,6 +764,7 @@ interface LiveChatViewProps {
   messages: { role: "agent" | "user"; text: string; id: string; timestamp: number; images?: string[] }[];
   setMessages: React.Dispatch<React.SetStateAction<{ role: "agent" | "user"; text: string; id: string; timestamp: number; images?: string[] }[]>>;
   onBack: () => void;
+  onEndSession: () => void;
   onLogout: () => void;
   lang: string;
   isAgentTyping: boolean;
@@ -669,6 +778,7 @@ export function LiveChatView({
   messages,
   setMessages,
   onBack,
+  onEndSession,
   onLogout,
   lang,
   isAgentTyping,
@@ -680,8 +790,60 @@ export function LiveChatView({
   const [attachedImages, setAttachedImages] = useState<string[]>([]);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [showConfirmClose, setShowConfirmClose] = useState(false);
+  const [copiedId, setCopiedId] = useState<string | null>(null);
+  const [speakingMessageIndex, setSpeakingMessageIndex] = useState<string | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const copyToClipboard = (text: string, id: string) => {
+    navigator.clipboard.writeText(text);
+    setCopiedId(id);
+    setTimeout(() => setCopiedId(null), 2000);
+    toast.success(lang === "tr" ? "Kopyalandı" : "Copied", {
+      description: lang === "tr" ? "Mesaj panoya kopyalandı." : "Message copied to clipboard.",
+      duration: 3000,
+    });
+  };
+
+  const speak = (text: string, id: string) => {
+    if ("speechSynthesis" in window) {
+      if (speakingMessageIndex === id) {
+        window.speechSynthesis.cancel();
+        setSpeakingMessageIndex(null);
+        return;
+      }
+      window.speechSynthesis.cancel();
+      setSpeakingMessageIndex(id);
+
+      const cleanText = text
+        .replace(/\*\*/g, "") // Remove bold markers
+        .replace(/\*/g, "") // Remove italic markers
+        .trim();
+
+      const ut = new SpeechSynthesisUtterance(cleanText);
+      const langMap: Record<string, string> = {
+        tr: "tr-TR",
+        en: "en-US",
+        de: "de-DE",
+        fr: "fr-FR",
+        es: "es-ES",
+        az: "tr-TR",
+        ru: "ru-RU",
+        ar: "ar-SA",
+        it: "it-IT",
+        pt: "pt-PT",
+        ja: "ja-JP",
+        zh: "zh-CN",
+      };
+      ut.lang = langMap[lang] || "tr-TR";
+      ut.rate = 1.0;
+      ut.pitch = 1.1;
+      ut.onstart = () => setSpeakingMessageIndex(id);
+      ut.onend = () => setSpeakingMessageIndex(null);
+      ut.onerror = () => setSpeakingMessageIndex(null);
+      window.speechSynthesis.speak(ut);
+    }
+  };
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -935,29 +1097,59 @@ export function LiveChatView({
                   </div>
                 </div>
               ) : (
-                <div
-                  className={`max-w-[80%] rounded-2xl px-4 py-2.5 text-xs font-medium leading-relaxed ${m.role === "user" ? "bg-[var(--fun-purple)] text-white rounded-br-none shadow-lg shadow-purple-500/10" : "bg-[var(--fun-surface)] fun-text border border-[var(--fun-stroke-1)] rounded-bl-none shadow-sm"}`}
-                >
-                  {m.text && (
-                    <div className="whitespace-pre-wrap">
-                      {m.role === "user" ? m.text : renderMessageText(m.text)}
-                    </div>
-                  )}
+                <div className={`w-full flex flex-col ${m.role === "user" ? "items-end" : "items-start"}`}>
+                  <div
+                    className={`max-w-[80%] rounded-2xl px-4 py-2.5 text-xs font-medium leading-relaxed ${m.role === "user" ? "bg-[var(--fun-purple)] text-white rounded-br-none shadow-lg shadow-purple-500/10" : "bg-[var(--fun-surface)] fun-text border border-[var(--fun-stroke-1)] rounded-bl-none shadow-sm"}`}
+                  >
+                    {m.text && (
+                      <div className="whitespace-pre-wrap">
+                        {m.role === "user" ? m.text : renderMessageText(m.text)}
+                      </div>
+                    )}
 
-                  {/* Images Grid inside message bubble */}
-                  {m.images && m.images.length > 0 && (
-                    <div className={`grid ${m.images.length === 1 ? "grid-cols-1" : "grid-cols-2 sm:grid-cols-3"} gap-2 mt-2`}>
-                      {m.images.map((img, idx) => (
-                        <div
-                          key={idx}
-                          onClick={() => setSelectedImage(img)}
-                          className="relative h-16 w-16 sm:h-20 sm:w-20 rounded-lg overflow-hidden border border-white/10 shadow-sm cursor-zoom-in hover:scale-105 transition-transform"
-                        >
-                          <img src={img} alt="Uploaded attachment" className="h-full w-full object-cover" />
-                        </div>
-                      ))}
-                    </div>
-                  )}
+                    {/* Images Grid inside message bubble */}
+                    {m.images && m.images.length > 0 && (
+                      <div className={`grid ${m.images.length === 1 ? "grid-cols-1" : "grid-cols-2 sm:grid-cols-3"} gap-2 mt-2`}>
+                        {m.images.map((img, idx) => (
+                          <div
+                            key={idx}
+                            onClick={() => setSelectedImage(img)}
+                            className="relative h-16 w-16 sm:h-20 sm:w-20 rounded-lg overflow-hidden border border-white/10 shadow-sm cursor-zoom-in hover:scale-105 transition-transform"
+                          >
+                            <img src={img} alt="Uploaded attachment" className="h-full w-full object-cover" />
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Message Action Utilities (Copy and TTS reading) */}
+                  <div className={`mt-1.5 flex items-center gap-1.5 px-1 ${m.role === "user" ? "justify-end" : "justify-start"}`}>
+                    <button
+                      onClick={() => copyToClipboard(m.text, m.id)}
+                      className={`h-7 w-7 flex items-center justify-center rounded-full border border-[var(--fun-stroke-1)] bg-[var(--fun-card)] fun-text hover:bg-[var(--fun-purple)] hover:text-white transition-all active:scale-95 ${copiedId === m.id ? "bg-green-500 text-white border-green-500 hover:bg-green-500" : ""}`}
+                      title={lang === "tr" ? "Kopyala" : "Copy"}
+                    >
+                      {copiedId === m.id ? (
+                        <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                        </svg>
+                      ) : (
+                        <Copy className="h-3 w-3" />
+                      )}
+                    </button>
+                    <button
+                      onClick={() => speak(m.text, m.id)}
+                      className={`h-7 w-7 flex items-center justify-center rounded-full border border-[var(--fun-stroke-1)] bg-[var(--fun-card)] fun-text hover:bg-[var(--fun-purple)] hover:text-white transition-all active:scale-95 ${speakingMessageIndex === m.id ? "bg-red-500 text-white border-red-500 hover:bg-red-500" : ""}`}
+                      title={speakingMessageIndex === m.id ? "Durdur" : (lang === "tr" ? "Dinle" : "Speak")}
+                    >
+                      {speakingMessageIndex === m.id ? (
+                        <VolumeX className="h-3 w-3" />
+                      ) : (
+                        <Volume2 className="h-3 w-3" />
+                      )}
+                    </button>
+                  </div>
                 </div>
               )}
               {!isSystemMsg && (
@@ -977,6 +1169,38 @@ export function LiveChatView({
                 <span className="h-2 w-2 rounded-full bg-zinc-400 animate-bounce" style={{ animationDelay: "150ms" }}></span>
                 <span className="h-2 w-2 rounded-full bg-zinc-400 animate-bounce" style={{ animationDelay: "300ms" }}></span>
               </div>
+            </div>
+          </div>
+        )}
+
+        {/* Inline Confirmation Card for End Support Session */}
+        {showConfirmClose && (
+          <div className="rounded-2xl p-4 bg-red-500/5 border border-red-500/20 text-center animate-in slide-in-from-bottom-2 duration-300 my-4 shrink-0 mx-2">
+            <AlertCircle className="h-8 w-8 text-red-500 mx-auto mb-2" />
+            <h4 className="text-xs font-bold fun-text mb-1">
+              {getTranslation(lang, "confirmCloseTitle")}
+            </h4>
+            <p className="text-[10px] fun-text-muted mb-3 leading-relaxed">
+              {getTranslation(lang, "confirmCloseDesc")}
+            </p>
+            <div className="flex gap-2 justify-center max-w-[200px] mx-auto">
+              <button
+                type="button"
+                onClick={() => setShowConfirmClose(false)}
+                className="flex-1 py-1.5 px-3 rounded-lg bg-[var(--fun-surface)] hover:bg-[var(--fun-stroke-1)] text-[10px] font-semibold fun-text transition-colors"
+              >
+                {getTranslation(lang, "confirmCloseNo")}
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setShowConfirmClose(false);
+                  onEndSession();
+                }}
+                className="flex-1 py-1.5 px-3 rounded-xl bg-red-500 hover:bg-red-600 text-white text-[10px] font-bold transition-colors"
+              >
+                {getTranslation(lang, "confirmCloseYes")}
+              </button>
             </div>
           </div>
         )}
@@ -1047,39 +1271,6 @@ export function LiveChatView({
         </form>
       )}
 
-      {/* Confirm Close Session Popup / Modal */}
-      {showConfirmClose && (
-        <div className="fixed inset-0 z-[300] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-[var(--fun-card)] border border-[var(--fun-stroke-1)] rounded-2xl p-6 max-w-xs w-full text-center shadow-2xl animate-in zoom-in-95 duration-200">
-            <AlertCircle className="h-10 w-10 text-red-500 mx-auto mb-3" />
-            <h4 className="text-sm font-bold fun-text mb-2">
-              {getTranslation(lang, "live_support.confirm_close_title")}
-            </h4>
-            <p className="text-[11px] fun-text-muted mb-5 leading-normal">
-              {getTranslation(lang, "live_support.confirm_close_desc")}
-            </p>
-            <div className="flex gap-2">
-              <button
-                type="button"
-                onClick={() => setShowConfirmClose(false)}
-                className="flex-1 py-2 px-3 rounded-xl bg-[var(--fun-surface)] hover:bg-[var(--fun-stroke-1)] text-xs font-semibold fun-text transition-colors"
-              >
-                {getTranslation(lang, "live_support.confirm_close_no")}
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  setShowConfirmClose(false);
-                  onLogout();
-                }}
-                className="flex-1 py-2 px-3 rounded-xl bg-red-500 hover:bg-red-600 text-white text-xs font-bold transition-colors"
-              >
-                {getTranslation(lang, "live_support.confirm_close_yes")}
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* Image zoom modal */}
       {selectedImage && (
@@ -1087,14 +1278,24 @@ export function LiveChatView({
           className="fixed inset-0 z-[300] bg-black/80 backdrop-blur-md flex items-center justify-center p-4"
           onClick={() => setSelectedImage(null)}
         >
-          <div className="relative max-w-full max-h-[85vh] animate-in zoom-in-95 duration-200">
+          <div className="relative max-w-full max-h-[85vh] animate-in zoom-in-95 duration-200" onClick={(e) => e.stopPropagation()}>
             <img src={selectedImage} alt="Fullscreen Attachment" className="max-w-full max-h-[80vh] rounded-2xl object-contain shadow-2xl" />
-            <button
-              onClick={() => setSelectedImage(null)}
-              className="absolute -top-10 right-0 text-white hover:text-zinc-300 font-bold text-sm bg-black/30 px-3 py-1.5 rounded-full backdrop-blur-sm"
-            >
-              ✕ {lang === "tr" ? "Kapat" : "Close"}
-            </button>
+            <div className="absolute -top-12 right-0 flex gap-2">
+              <a
+                href={selectedImage}
+                download="funteknoloji-live-attachment.png"
+                className="text-white hover:text-zinc-300 font-bold text-xs bg-black/45 px-3 py-1.5 rounded-full backdrop-blur-sm flex items-center gap-1.5 transition-colors cursor-pointer"
+              >
+                <Download className="h-3.5 w-3.5" />
+                {lang === "tr" ? "İndir" : "Download"}
+              </a>
+              <button
+                onClick={() => setSelectedImage(null)}
+                className="text-white hover:text-zinc-300 font-bold text-xs bg-black/45 px-3 py-1.5 rounded-full backdrop-blur-sm transition-colors cursor-pointer"
+              >
+                ✕ {lang === "tr" ? "Kapat" : "Close"}
+              </button>
+            </div>
           </div>
         </div>
       )}

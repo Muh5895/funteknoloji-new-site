@@ -201,19 +201,19 @@ const tr: Dict = {
   "home.cta.title": "Bugün kullanmaya başlayın.",
   "home.faq.q1": "Fun Teknoloji nedir?",
   "home.faq.a1":
-    "Fun Teknoloji, yapay zeka, özel yazılım geliştirme ve dijital dönüşüm alanlarında uzmanlaşmış bir teknoloji şirketidir.",
+    "Fun Teknoloji, yapay zeka ve yenilikçi yazılım çözümleri üreten, geleceğin teknolojilerine odaklanmış bir vizyoner teknoloji girişimidir.",
   "home.faq.q2": "Projeleriniz ücretli mi?",
-  "home.faq.a2": "Fun Teknoloji olarak kendi ürünlerimizi geliştiriyoruz. Her ürünümüzün kendine özgü kullanım modelleri ve abonelik seçenekleri bulunmaktadır.",
+  "home.faq.a2": "Fun Teknoloji olarak kendi ürünlerimizi geliştiriyoruz. Her ürünümüzün kendine özgü kullanım modelleri ve esnek abonelik/lisanslama seçenekleri bulunmaktadır.",
   "home.faq.a3":
-    "Projenin kapsamına göre değişmekle birlikte, küçük projeleri 2-4 hafta, kapsamlı projeleri ise 2-4 ay içinde tamamlıyoruz.",
+    "Hayır, dışarıya özel (freelance/fason) işler yapmak yerine, tamamen kendi inovatif ürünlerimizi ve AR-GE projelerimizi tasarlayıp geliştirmeye odaklanıyoruz.",
   "home.faq.a4":
-    "Fiyatlandırma, projenizin karmaşıklığına ve ihtiyaç duyulan özelliklere göre özel olarak belirlenir.",
+    "Evet, laboratuvarımızda yapay zeka, siber güvenlik ve veri analitiği odaklı birçok yeni proje üzerinde çalışmaya devam ediyoruz.",
   "home.faq.a5":
-    "Evet, yapay zeka modellerini mevcut sistemlerinize entegre etme konusunda uzmanız.",
+    "Vizyonumuzu paylaşmak isteyen yatırımcılarla tanışmaya her zaman açığız. Bizimle İletişim sayfamız üzerinden doğrudan irtibata geçebilirsiniz.",
   "home.faq.a6":
-    "Elbette! Proje fikirlerinizi bizimle paylaşabilir, ücretsiz danışmanlık alabilirsiniz.",
+    "Aktif ürünlerimizi Projeler sayfamızdan inceleyebilir ve Nexy gibi asistanlarımızı hemen kullanmaya başlayabilirsiniz.",
   "home.faq.a7":
-    "Evet, hem iOS hem de Android platformları için modern mobil uygulamalar geliştiriyoruz.",
+    "Yetenekli mühendislere ve vizyoner tasarımcılara kapımız her zaman açık. Açık pozisyonlarımızı ve duyurularımızı LinkedIn hesabımızdan takip edebilirsiniz.",
   "home.faq.badge": "SSS",
   "home.faq.desc": "Merak ettiğiniz her şey burada.",
   "home.faq.title": "Sıkça Sorulan Sorular",
@@ -573,7 +573,7 @@ const tr: Dict = {
     "Selamlar! Ben Nexy, Fun Teknoloji'nin yapay zeka asistanıyım. Sizi dinliyorum.",
   "nexy.resp.greeting.2":
     "Hoş geldiniz! Merak ettiğiniz bir şey mi var? Size Fun Teknoloji hakkında her şeyi anlatabilirim.",
-  "nexy.resp.default.0": "Mesajınız için teşekkürler. Size nasıl yardımcı olabilirim?",
+  "nexy.resp.default.0": "Bir hata oluştu. Lütfen daha sonra tekrar deneyin.",
   "nexy.resp.default.1":
     "Bu konuda size daha detaylı yardımcı olabilmemiz için lütfen iletişim formunu doldurun.",
   "nexy.resp.default.2":
@@ -806,13 +806,13 @@ const en: Dict = {
   "home.cta.title": "Get started today.",
   "home.faq.q1": "What is Fun Technology?",
   "home.faq.a1":
-    "Fun Technology is a technology company specializing in artificial intelligence, custom software development and digital transformation.",
+    "Fun Technology is a visionary tech venture focused on building the future of artificial intelligence and innovative software solutions.",
   "home.faq.q2": "Are your projects paid?",
   "home.faq.a2": "As Fun Technology, we develop our own products. Each product has its own usage models and subscription options.",
   "home.faq.a3":
-    "Although it varies depending on the scope of the project, we complete small projects within 2-4 weeks and comprehensive projects within 2-4 months.",
+    "No, rather than doing custom client work (freelance), we focus entirely on designing and developing our own innovative products and R&D projects.",
   "home.faq.a4":
-    "Pricing is specifically determined by the complexity of your project and the features needed.",
+    "Yes, we continue to work on many new projects in our lab focused on AI, cybersecurity, and data analytics.",
   "home.faq.a5": "We are always open to meeting with investors who want to share our vision. You can contact us via our contact page.",
   "home.faq.a6": "You can review our active products on our Projects page and start using them immediately.",
   "home.faq.a7": "We are always open to talented engineers and visionary designers. You can follow our job postings on LinkedIn.",
@@ -1177,7 +1177,7 @@ const en: Dict = {
   "nexy.resp.greeting.1": "Greetings! I'm Nexy, the AI assistant of Fun Technology. I'm listening.",
   "nexy.resp.greeting.2":
     "Welcome! Is there something you're curious about? I can tell you everything about Fun Technology.",
-  "nexy.resp.default.0": "Thanks for your message. How can I help you?",
+  "nexy.resp.default.0": "An error occurred. Please try again later.",
   "nexy.resp.default.1":
     "Please fill out the contact form so we can help you in more detail regarding this matter.",
   "nexy.resp.default.2":

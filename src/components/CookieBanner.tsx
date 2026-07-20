@@ -201,50 +201,50 @@ export default function CookieBanner() {
 
               {/* Analytics */}
               <div
-                className="flex items-center justify-between p-3 rounded-xl bg-[var(--fun-surface)] border border-[var(--fun-stroke-2)] hover:border-[var(--fun-purple)]/30 transition-all cursor-pointer"
+                className="flex items-center justify-between p-3 rounded-xl bg-[var(--fun-surface)] border border-[var(--fun-stroke-2)] hover:border-[var(--fun-purple)]/30 transition-all cursor-pointer select-none"
                 onClick={() => setConsent(prev => ({ ...prev, analytics: !prev.analytics }))}
               >
                 <div className="flex-1 pr-3">
                   <h4 className="text-xs font-bold">{t("cookies.analytics.title")}</h4>
                   <p className="text-[10px] fun-text-muted mt-0.5 leading-normal">{t("cookies.analytics.desc")}</p>
                 </div>
-                <label className="relative inline-flex items-center cursor-pointer shrink-0">
+                <div className="relative inline-flex items-center shrink-0 pointer-events-none">
                   <input
                     type="checkbox"
                     checked={consent.analytics}
-                    onChange={() => {}}
-                    className="sr-only peer"
+                    readOnly
+                    className="sr-only"
                   />
                   <div className={`w-8 h-4.5 rounded-full transition-colors relative after:content-[''] after:absolute after:top-[2px] after:bg-white after:rounded-full after:h-3.5 after:w-3.5 after:transition-all ${
                     consent.analytics
                       ? "bg-[var(--fun-purple)] after:right-[2px]"
                       : "bg-gray-300 dark:bg-zinc-700 after:left-[2px]"
                   }`}></div>
-                </label>
+                </div>
               </div>
 
               {/* Marketing */}
               <div
-                className="flex items-center justify-between p-3 rounded-xl bg-[var(--fun-surface)] border border-[var(--fun-stroke-2)] hover:border-[var(--fun-purple)]/30 transition-all cursor-pointer"
+                className="flex items-center justify-between p-3 rounded-xl bg-[var(--fun-surface)] border border-[var(--fun-stroke-2)] hover:border-[var(--fun-purple)]/30 transition-all cursor-pointer select-none"
                 onClick={() => setConsent(prev => ({ ...prev, marketing: !prev.marketing }))}
               >
                 <div className="flex-1 pr-3">
                   <h4 className="text-xs font-bold">{t("cookies.marketing.title")}</h4>
                   <p className="text-[10px] fun-text-muted mt-0.5 leading-normal">{t("cookies.marketing.desc")}</p>
                 </div>
-                <label className="relative inline-flex items-center cursor-pointer shrink-0">
+                <div className="relative inline-flex items-center shrink-0 pointer-events-none">
                   <input
                     type="checkbox"
                     checked={consent.marketing}
-                    onChange={() => {}}
-                    className="sr-only peer"
+                    readOnly
+                    className="sr-only"
                   />
                   <div className={`w-8 h-4.5 rounded-full transition-colors relative after:content-[''] after:absolute after:top-[2px] after:bg-white after:rounded-full after:h-3.5 after:w-3.5 after:transition-all ${
                     consent.marketing
                       ? "bg-[var(--fun-purple)] after:right-[2px]"
                       : "bg-gray-300 dark:bg-zinc-700 after:left-[2px]"
                   }`}></div>
-                </label>
+                </div>
               </div>
             </div>
 
