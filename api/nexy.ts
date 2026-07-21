@@ -15,21 +15,24 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   // Read body parameters
-  const { prompt, model = "openai" } = req.body || {};
+  const { prompt, model = "gemma-3-1b-it" } = req.body || {};
 
   if (!prompt) {
     return res.status(400).send("Nexy error: Prompt is required");
   }
 
+  // Map older model names to the new active model "gemma-3-1b-it"
+  const activeModel = model === "openai" || model === "pulsar" ? "gemma-3-1b-it" : model;
+
   try {
-    const response = await fetch("https://text.pollinations.ai/", {
+    const response = await fetch("https://ai.funteknoloji.com/v1/chat/completions", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
         messages: [{ role: "user", content: prompt }],
-        model: model,
+        model: activeModel,
       }),
     });
 
@@ -38,15 +41,17 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       throw new Error(`Failed to fetch from backend: ${response.status} ${response.statusText} - ${errText}`);
     }
 
-    let text = await response.text();
+    const data = await response.json() as any;
+    let text = data.choices?.[0]?.message?.content || "";
 
-    // Clean any case-insensitive Pollinations mentions
+    // Clean any case-insensitive Pollinations/Pulsar references
     text = text.replace(/pollinations\.ai/gi, "Nexy");
     text = text.replace(/pollinations/gi, "Nexy");
+    text = text.replace(/pulsar/gi, "Nexy");
 
     return res.status(200).send(text);
   } catch (err: any) {
-    console.error("Backend error calling Pollinations:", err);
+    console.error("Backend error calling Fun Teknoloji AI:", err);
     return res.status(500).send("Nexy error: Bir hata oluştu: " + err.message);
   }
 }

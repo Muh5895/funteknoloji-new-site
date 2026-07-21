@@ -930,7 +930,7 @@ export function LiveChatView({
     const prompt = `System: Sen Fun Teknoloji şirketinin canlı destek ekibinden ${agentName}'sin.
     Giriş yapan kullanıcının e-postası: ${user.email}.
     Sen bir yapay zeka değilsin, gerçek bir canlı destek temsilcisisin. Doğal, dost canlısı, profesyonel, Türkçe konuşacaksın.
-    Cevaplarını kısa tut (maksimum 1-2 cümle) ve Pollinations veya başka servislerin adını geçirme, sadece Fun Teknoloji adına yardımcı ol.
+    Cevaplarını kısa tut (maksimum 1-2 cümle) ve başka servislerin adını geçirme, sadece Fun Teknoloji adına yardımcı ol.
 
     Konuşma Geçmişi:
     ${messages.slice(-6).map(m => `${m.role === "user" ? "User" : `Agent ${agentName}`}: ${m.text}`).join("\n")}
@@ -944,37 +944,30 @@ export function LiveChatView({
         const response = await puter.ai.chat(prompt);
         let text = typeof response === "string" ? response : response?.message?.content || "";
         if (text) {
-          text = text.replace(/pollinations\.ai/gi, "Nexy");
-          text = text.replace(/pollinations/gi, "Nexy");
-          cleanText = text
-            .replace(/---[\s\S]*?Support Pollinations\.AI[\s\S]*?---/gi, "")
-            .replace(/Powered by Pollinations\.AI.*/gi, "")
-            .trim();
+          text = text.replace(/pulsar/gi, "Nexy");
+          cleanText = text.trim();
         }
       } catch (puterErr) {
-        console.warn("Puter AI failed or needs sign-in, falling back to Pollinations:", puterErr);
+        console.warn("Puter AI failed or needs sign-in, falling back to Fun Teknoloji AI:", puterErr);
       }
 
       if (!cleanText) {
         try {
-          const response = await fetch("https://text.pollinations.ai/", {
+          const response = await fetch("/api/nexy", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              messages: [{ role: "user", content: prompt }]
+              prompt: prompt,
+              model: "gemma-3-1b-it"
             }),
           });
           let text = await response.text();
-          text = text.replace(/pollinations\.ai/gi, "Nexy");
-          text = text.replace(/pollinations/gi, "Nexy");
-          cleanText = text
-            .replace(/---[\s\S]*?Support Pollinations\.AI[\s\S]*?---/gi, "")
-            .replace(/Powered by Pollinations\.AI.*/gi, "")
-            .trim();
+          text = text.replace(/pulsar/gi, "Nexy");
+          cleanText = text.trim();
         } catch (err) {
-          console.error("Pollinations fallback failed as well:", err);
+          console.error("Fun Teknoloji AI fallback failed as well:", err);
         }
       }
 

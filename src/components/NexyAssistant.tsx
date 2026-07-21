@@ -312,11 +312,10 @@ export default function NexyAssistant() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ prompt, model: "openai", cache: "false" }),
+        body: JSON.stringify({ prompt, model: "gemma-3-1b-it", cache: "false" }),
       });
       if (response.ok) {
         let title = await response.text();
-        title = title.replace(/---[\s\S]*?Support Pollinations\.AI[\s\S]*?---/gi, "").trim();
         title = title.replace(/^"|"$/g, "").trim();
         if (title && title.length < 50) return title;
       }
@@ -356,7 +355,7 @@ export default function NexyAssistant() {
     Dil: Kullanıcının dilinde (${lang}) cevap ver.
     Tarz: Profesyonel, yardımsever ve samimi ol.
     Önemli: Eğer kullanıcı bir sayfaya gitmek isterse cevabının sonuna [REDIRECT:/sayfa] ekle ve BU REDIRECT'ten önce mutlaka kullanıcıya o sayfaya yönlendirdiğini kendi cümlenle söyle (Örn: Seni fiyatlandırma sayfamıza yönlendiriyorum).
-    Kısa ve öz cevaplar ver. Cevaplarında Pollinations veya başka bir servis reklamı yapma, sadece Nexy olarak konuş.
+    Kısa ve öz cevaplar ver. Sadece Nexy olarak konuş.
 
     Önceki Konuşmalar:
     ${history}
@@ -368,29 +367,22 @@ export default function NexyAssistant() {
       const response = await puter.ai.chat(prompt);
       let text = typeof response === "string" ? response : response?.message?.content || "";
       if (text) {
-        text = text.replace(/pollinations\.ai/gi, "Nexy");
-        text = text.replace(/pollinations/gi, "Nexy");
-        text = text.replace(/---[\s\S]*?Support Pollinations\.AI[\s\S]*?---/gi, "");
-        text = text.replace(/🌸[\s\S]*?Ad[\s\S]*?🌸/gi, "");
-        text = text.replace(/Powered by Pollinations\.AI[\s\S]*?accessible for everyone\./gi, "");
-        text = text.replace(
-          /\[Support our mission\]\(https:\/\/pollinations\.ai\/redirect\/kofi\)/gi,
-          "",
-        );
+        text = text.replace(/pulsar/gi, "Nexy");
         return text.trim();
       }
     } catch (puterErr) {
-      console.warn("Puter AI failed or needs sign-in, falling back to Pollinations:", puterErr);
+      console.warn("Puter AI failed or needs sign-in, falling back to Fun Teknoloji AI:", puterErr);
     }
 
     try {
-      const response = await fetch("https://text.pollinations.ai/", {
+      const response = await fetch("/api/nexy", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          messages: [{ role: "user", content: prompt }]
+          prompt: prompt,
+          model: "gemma-3-1b-it"
         }),
         signal: controller.signal,
       });
@@ -401,16 +393,7 @@ export default function NexyAssistant() {
         throw new Error("Invalid or error response from API proxy: " + text);
       }
 
-      // Filter out Pollinations ads & replace mentions
-      text = text.replace(/pollinations\.ai/gi, "Nexy");
-      text = text.replace(/pollinations/gi, "Nexy");
-      text = text.replace(/---[\s\S]*?Support Pollinations\.AI[\s\S]*?---/gi, "");
-      text = text.replace(/🌸[\s\S]*?Ad[\s\S]*?🌸/gi, "");
-      text = text.replace(/Powered by Pollinations\.AI[\s\S]*?accessible for everyone\./gi, "");
-      text = text.replace(
-        /\[Support our mission\]\(https:\/\/pollinations\.ai\/redirect\/kofi\)/gi,
-        "",
-      );
+      text = text.replace(/pulsar/gi, "Nexy");
 
       return text.trim();
     } catch (err) {
