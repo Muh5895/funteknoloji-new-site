@@ -316,18 +316,23 @@ export default function NexyAssistant() {
     User: ${input}`;
 
     try {
-      const response = await fetch("/api/nexy", {
+      const response = await fetch("https://text.pollinations.ai/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ prompt, model: "openai", cache: "false" }),
+        body: JSON.stringify({
+          messages: [{ role: "user", content: prompt }],
+          model: "openai"
+        }),
         signal: controller.signal,
       });
       if (!response.ok) throw new Error();
       let text = await response.text();
 
-      // Filter out Pollinations ads
+      // Filter out Pollinations ads & replace mentions
+      text = text.replace(/pollinations\.ai/gi, "Nexy");
+      text = text.replace(/pollinations/gi, "Nexy");
       text = text.replace(/---[\s\S]*?Support Pollinations\.AI[\s\S]*?---/gi, "");
       text = text.replace(/🌸[\s\S]*?Ad[\s\S]*?🌸/gi, "");
       text = text.replace(/Powered by Pollinations\.AI[\s\S]*?accessible for everyone\./gi, "");
@@ -706,24 +711,6 @@ export default function NexyAssistant() {
                   <p className="text-[10px] sm:text-xs fun-text-muted mt-0.5">{t("help.menu.desc")}</p>
                 </div>
                 <div className="flex items-center gap-1">
-                  {liveUser && (
-                    <button
-                      onClick={() => {
-                        setLiveUser(null);
-                        setLiveMessages([]);
-                        setSupportView("menu");
-                        localStorage.removeItem("live_support_messages");
-                        localStorage.removeItem("live_support_user");
-                        localStorage.removeItem("live_support_subject");
-                        localStorage.removeItem("live_support_importance");
-                        localStorage.removeItem("live_support_agent_name");
-                      }}
-                      title={lang === "tr" ? "Hesaptan Çıkış Yap" : "Log out"}
-                      className="h-8 w-8 rounded-full hover:bg-red-500/10 text-red-500 flex items-center justify-center transition-colors"
-                    >
-                      <LogOut className="h-4.5 w-4.5" />
-                    </button>
-                  )}
                   <button
                     onClick={() => setIsOpen(false)}
                     className="h-9 w-9 rounded-full hover:bg-[var(--fun-stroke-1)] flex items-center justify-center fun-text transition-colors"

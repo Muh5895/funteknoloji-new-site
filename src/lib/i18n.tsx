@@ -202,7 +202,7 @@ const tr: Dict = {
   "home.faq.q1": "Fun Teknoloji nedir?",
   "home.faq.a1":
     "Fun Teknoloji, yapay zeka ve yenilikçi yazılım çözümleri üreten, geleceğin teknolojilerine odaklanmış bir vizyoner teknoloji girişimidir.",
-  "home.faq.q2": "Projeleriniz ücretli mi?",
+  "home.faq.q2": "Geliştirdiğiniz projeler ve ürünler ücretli mi?",
   "home.faq.a2": "Fun Teknoloji olarak kendi ürünlerimizi geliştiriyoruz. Her ürünümüzün kendine özgü kullanım modelleri ve esnek abonelik/lisanslama seçenekleri bulunmaktadır.",
   "home.faq.a3":
     "Hayır, dışarıya özel (freelance/fason) işler yapmak yerine, tamamen kendi inovatif ürünlerimizi ve AR-GE projelerimizi tasarlayıp geliştirmeye odaklanıyoruz.",
@@ -807,7 +807,7 @@ const en: Dict = {
   "home.faq.q1": "What is Fun Technology?",
   "home.faq.a1":
     "Fun Technology is a visionary tech venture focused on building the future of artificial intelligence and innovative software solutions.",
-  "home.faq.q2": "Are your projects paid?",
+  "home.faq.q2": "Are the projects and products you develop paid?",
   "home.faq.a2": "As Fun Technology, we develop our own products. Each product has its own usage models and subscription options.",
   "home.faq.a3":
     "No, rather than doing custom client work (freelance), we focus entirely on designing and developing our own innovative products and R&D projects.",
@@ -1710,7 +1710,7 @@ const de: Dict = {
   "help.title": "Hilfezentrum",
   "help.popup": "Wie können wir Ihnen helfen?",
   "home.faq.q1": "Was ist Fun Technology?",
-  "home.faq.q2": "Are your projects paid?",
+  "home.faq.q2": "Sind die von Ihnen entwickelten Projekte und Produkte kostenpflichtig?",
               "blog.index.untitled": "Unbenannter Beitrag",
   "blog.index.category_default": "Technologie",
   "nexy.resp.pricing.0":
@@ -2323,7 +2323,7 @@ const fr: Dict = {
   "help.title": "Centre d'aide",
   "help.popup": "Comment pouvons-nous vous aider ?",
   "home.faq.q1": "Qu'est-ce que Fun Technology ?",
-  "home.faq.q2": "Are your projects paid?",
+  "home.faq.q2": "Les projets et produits que vous développez sont-ils payants?",
               "blog.index.untitled": "Article sans titre",
   "blog.index.category_default": "Technologie",
   "nexy.resp.pricing.0":
@@ -2920,7 +2920,7 @@ const es: Dict = {
   "help.title": "Centro de ayuda",
   "help.popup": "¿Cómo podemos ayudarte?",
   "home.faq.q1": "¿Qué es Fun Technology?",
-  "home.faq.q2": "Are your projects paid?",
+  "home.faq.q2": "¿Son de pago los proyectos y productos que desarrolla?",
               "blog.index.untitled": "Publicación sin título",
   "blog.index.category_default": "Tecnología",
   "nexy.resp.pricing.0":
@@ -3510,7 +3510,7 @@ const az: Dict = {
   "help.title": "Yardım Mərkəzi",
   "help.popup": "Sizə necə kömək edə bilərik?",
   "home.faq.q1": "Fun Teknoloji nədir?",
-  "home.faq.q2": "Are your projects paid?",
+  "home.faq.q2": "Hazırladığınız layihə və məhsullar ödənişlidir?",
               "blog.index.untitled": "Adsız Yazı",
   "blog.index.category_default": "Texnologiya",
   "nexy.resp.pricing.0":
@@ -4109,7 +4109,7 @@ const ru: Dict = {
   "help.title": "Центр помощи",
   "help.popup": "Как мы можем вам помочь?",
   "home.faq.q1": "Что такое Fun Technology?",
-  "home.faq.q2": "Are your projects paid?",
+  "home.faq.q2": "Являются ли разрабатываемые вами проекты и продукты платными?",
               "blog.index.untitled": "Без названия",
   "blog.index.category_default": "Технологии",
   "nexy.resp.pricing.0":
@@ -4667,7 +4667,7 @@ const ar: Dict = {
   "help.title": "مركز المساعدة",
   "help.popup": "كيف يمكننا مساعدتك؟",
   "home.faq.q1": "ما هي Fun Technology؟",
-  "home.faq.q2": "Are your projects paid?",
+  "home.faq.q2": "هل المشاريع والمنتجات التي تطورونها مدفوعة الأجر؟",
               "blog.index.untitled": "مقال بدون عنوان",
   "blog.index.category_default": "تكنولوجيا",
   "nexy.resp.pricing.0":
@@ -5261,7 +5261,7 @@ const it: Dict = {
   "help.title": "Centro assistenza",
   "help.popup": "Come possiamo aiutarti?",
   "home.faq.q1": "Cos'è Fun Technology?",
-  "home.faq.q2": "Are your projects paid?",
+  "home.faq.q2": "I progetti e i prodotti che sviluppate sono a pagamento?",
               "blog.index.untitled": "Post senza titolo",
   "blog.index.category_default": "Tecnologia",
   "nexy.resp.pricing.0":
@@ -5858,7 +5858,7 @@ const pt: Dict = {
   "help.title": "Centro de ajuda",
   "help.popup": "Como podemos ajudar?",
   "home.faq.q1": "O que é Fun Technology?",
-  "home.faq.q2": "Are your projects paid?",
+  "home.faq.q2": "Os projetos e produtos que você desenvolve são pagos?",
               "blog.index.untitled": "Post sem título",
   "blog.index.category_default": "Tecnologia",
   "nexy.resp.pricing.0":
@@ -6437,7 +6437,7 @@ const ja: Dict = {
   "help.title": "ヘルプセンター",
   "help.popup": "何かお手伝いしましょうか？",
   "home.faq.q1": "Fun Technologyとは何ですか？",
-  "home.faq.q2": "Are your projects paid?",
+  "home.faq.q2": "開発しているプロジェクトや製品は有料ですか？",
               "blog.index.untitled": "無題の記事",
   "blog.index.category_default": "テクノロジー",
   "nexy.resp.pricing.0":
@@ -6975,7 +6975,7 @@ const zh: Dict = {
   "help.title": "帮助中心",
   "help.popup": "我们能为您提供什么帮助？",
   "home.faq.q1": "什么是趣味科技？",
-  "home.faq.q2": "Are your projects paid?",
+  "home.faq.q2": "您开发的项目和产品是收费的的吗？",
               "blog.index.untitled": "无题文章",
   "blog.index.category_default": "科技",
   "nexy.resp.pricing.0":

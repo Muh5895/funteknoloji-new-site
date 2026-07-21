@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { X, ArrowLeft, Send, MessageSquare, LogOut, Eye, EyeOff, Bot, Languages, Image as ImageIcon, AlertCircle, Download, Copy, Volume2, VolumeX } from "lucide-react";
+import { X, ChevronLeft, ArrowLeft, Send, MessageSquare, LogOut, Eye, EyeOff, Bot, Languages, Image as ImageIcon, AlertCircle, Download, Copy, Volume2, VolumeX, Star } from "lucide-react";
 import { supabase } from "../lib/supabase";
 import { toast } from "sonner";
 import { translateText } from "../lib/translate";
@@ -568,9 +568,10 @@ export function LiveLoginView({ onBack, onLoginSuccess, lang }: LiveLoginViewPro
         <div className="flex items-center gap-3">
           <button
             onClick={onBack}
-            className="h-8 w-8 rounded-full hover:bg-[var(--fun-stroke-1)] flex items-center justify-center fun-text transition-colors"
+            className="p-2 -ml-1 rounded-lg hover:bg-[var(--fun-stroke-1)] fun-text flex items-center justify-center shrink-0"
+            title={lang === "tr" ? "Geri" : "Back"}
           >
-            <ArrowLeft className="h-5 w-5" />
+            <ChevronLeft className="h-5 w-5" />
           </button>
           <div>
             <h3 className="text-sm sm:text-base font-bold tracking-tight fun-text leading-tight">
@@ -680,9 +681,10 @@ export function LiveTicketDetailsView({ lang, onBack, onSubmit }: LiveTicketDeta
         <div className="flex items-center gap-3">
           <button
             onClick={onBack}
-            className="h-8 w-8 rounded-full hover:bg-[var(--fun-stroke-1)] flex items-center justify-center fun-text transition-colors"
+            className="p-2 -ml-1 rounded-lg hover:bg-[var(--fun-stroke-1)] fun-text flex items-center justify-center shrink-0"
+            title={lang === "tr" ? "Geri" : "Back"}
           >
-            <ArrowLeft className="h-5 w-5" />
+            <ChevronLeft className="h-5 w-5" />
           </button>
           <div>
             <h3 className="text-sm sm:text-base font-bold tracking-tight fun-text leading-tight">
@@ -790,6 +792,10 @@ export function LiveChatView({
   const [attachedImages, setAttachedImages] = useState<string[]>([]);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [showConfirmClose, setShowConfirmClose] = useState(false);
+  const [showFeedback, setShowFeedback] = useState(false);
+  const [rating, setRating] = useState(0);
+  const [hoveredRating, setHoveredRating] = useState(0);
+  const [comment, setComment] = useState("");
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [speakingMessageIndex, setSpeakingMessageIndex] = useState<string | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -930,14 +936,19 @@ export function LiveChatView({
     User: ${userTextInTr}`;
 
     try {
-      const response = await fetch("/api/nexy", {
+      const response = await fetch("https://text.pollinations.ai/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ prompt, model: "openai", cache: "false" }),
+        body: JSON.stringify({
+          messages: [{ role: "user", content: prompt }],
+          model: "openai"
+        }),
       });
-      const text = await response.text();
+      let text = await response.text();
+      text = text.replace(/pollinations\.ai/gi, "Nexy");
+      text = text.replace(/pollinations/gi, "Nexy");
       const cleanText = text
         .replace(/---[\s\S]*?Support Pollinations\.AI[\s\S]*?---/gi, "")
         .replace(/Powered by Pollinations\.AI.*/gi, "")
@@ -987,9 +998,10 @@ export function LiveChatView({
         <div className="flex items-center gap-3">
           <button
             onClick={onBack}
-            className="h-8 w-8 rounded-full hover:bg-[var(--fun-stroke-1)] flex items-center justify-center fun-text transition-colors"
+            className="p-2 -ml-1 rounded-lg hover:bg-[var(--fun-stroke-1)] fun-text flex items-center justify-center shrink-0"
+            title={lang === "tr" ? "Geri" : "Back"}
           >
-            <ArrowLeft className="h-5 w-5" />
+            <ChevronLeft className="h-5 w-5" />
           </button>
           <div>
             <h3 className="text-sm sm:text-base font-bold tracking-tight fun-text leading-tight">
@@ -1124,32 +1136,34 @@ export function LiveChatView({
                   </div>
 
                   {/* Message Action Utilities (Copy and TTS reading) */}
-                  <div className={`mt-1.5 flex items-center gap-1.5 px-1 ${m.role === "user" ? "justify-end" : "justify-start"}`}>
-                    <button
-                      onClick={() => copyToClipboard(m.text, m.id)}
-                      className={`h-7 w-7 flex items-center justify-center rounded-full border border-[var(--fun-stroke-1)] bg-[var(--fun-card)] fun-text hover:bg-[var(--fun-purple)] hover:text-white transition-all active:scale-95 ${copiedId === m.id ? "bg-green-500 text-white border-green-500 hover:bg-green-500" : ""}`}
-                      title={lang === "tr" ? "Kopyala" : "Copy"}
-                    >
-                      {copiedId === m.id ? (
-                        <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                        </svg>
-                      ) : (
-                        <Copy className="h-3 w-3" />
-                      )}
-                    </button>
-                    <button
-                      onClick={() => speak(m.text, m.id)}
-                      className={`h-7 w-7 flex items-center justify-center rounded-full border border-[var(--fun-stroke-1)] bg-[var(--fun-card)] fun-text hover:bg-[var(--fun-purple)] hover:text-white transition-all active:scale-95 ${speakingMessageIndex === m.id ? "bg-red-500 text-white border-red-500 hover:bg-red-500" : ""}`}
-                      title={speakingMessageIndex === m.id ? "Durdur" : (lang === "tr" ? "Dinle" : "Speak")}
-                    >
-                      {speakingMessageIndex === m.id ? (
-                        <VolumeX className="h-3 w-3" />
-                      ) : (
-                        <Volume2 className="h-3 w-3" />
-                      )}
-                    </button>
-                  </div>
+                  {m.role === "agent" && (
+                    <div className={`mt-1.5 flex items-center gap-1.5 px-1 ${m.role === "user" ? "justify-end" : "justify-start"}`}>
+                      <button
+                        onClick={() => copyToClipboard(m.text, m.id)}
+                        className={`h-7 w-7 flex items-center justify-center rounded-full border border-[var(--fun-stroke-1)] bg-[var(--fun-card)] fun-text hover:bg-[var(--fun-purple)] hover:text-white transition-all active:scale-95 ${copiedId === m.id ? "bg-green-500 text-white border-green-500 hover:bg-green-500" : ""}`}
+                        title={lang === "tr" ? "Kopyala" : "Copy"}
+                      >
+                        {copiedId === m.id ? (
+                          <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                          </svg>
+                        ) : (
+                          <Copy className="h-3 w-3" />
+                        )}
+                      </button>
+                      <button
+                        onClick={() => speak(m.text, m.id)}
+                        className={`h-7 w-7 flex items-center justify-center rounded-full border border-[var(--fun-stroke-1)] bg-[var(--fun-card)] fun-text hover:bg-[var(--fun-purple)] hover:text-white transition-all active:scale-95 ${speakingMessageIndex === m.id ? "bg-red-500 text-white border-red-500 hover:bg-red-500" : ""}`}
+                        title={speakingMessageIndex === m.id ? "Durdur" : (lang === "tr" ? "Dinle" : "Speak")}
+                      >
+                        {speakingMessageIndex === m.id ? (
+                          <VolumeX className="h-3 w-3" />
+                        ) : (
+                          <Volume2 className="h-3 w-3" />
+                        )}
+                      </button>
+                    </div>
+                  )}
                 </div>
               )}
               {!isSystemMsg && (
@@ -1173,21 +1187,24 @@ export function LiveChatView({
           </div>
         )}
 
-        {/* Inline Confirmation Card for End Support Session */}
-        {showConfirmClose && (
-          <div className="rounded-2xl p-4 bg-red-500/5 border border-red-500/20 text-center animate-in slide-in-from-bottom-2 duration-300 my-4 shrink-0 mx-2">
-            <AlertCircle className="h-8 w-8 text-red-500 mx-auto mb-2" />
-            <h4 className="text-xs font-bold fun-text mb-1">
+      </div>
+
+      {/* Confirmation Close Modal Pop-up */}
+      {showConfirmClose && (
+        <div className="absolute inset-0 z-[250] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-[var(--fun-card)] border border-[var(--fun-stroke-1)] rounded-3xl p-6 text-center shadow-2xl max-w-[340px] w-full animate-in zoom-in-95 duration-200">
+            <AlertCircle className="h-10 w-10 text-red-500 mx-auto mb-3" />
+            <h4 className="text-sm font-bold fun-text mb-2">
               {getTranslation(lang, "confirmCloseTitle")}
             </h4>
-            <p className="text-[10px] fun-text-muted mb-3 leading-relaxed">
+            <p className="text-xs fun-text-muted mb-5 leading-relaxed">
               {getTranslation(lang, "confirmCloseDesc")}
             </p>
-            <div className="flex gap-2 justify-center max-w-[200px] mx-auto">
+            <div className="flex gap-3 justify-center">
               <button
                 type="button"
                 onClick={() => setShowConfirmClose(false)}
-                className="flex-1 py-1.5 px-3 rounded-lg bg-[var(--fun-surface)] hover:bg-[var(--fun-stroke-1)] text-[10px] font-semibold fun-text transition-colors"
+                className="flex-1 py-2.5 px-4 rounded-xl bg-[var(--fun-surface)] hover:bg-[var(--fun-stroke-1)] text-xs font-semibold fun-text transition-colors"
               >
                 {getTranslation(lang, "confirmCloseNo")}
               </button>
@@ -1195,16 +1212,85 @@ export function LiveChatView({
                 type="button"
                 onClick={() => {
                   setShowConfirmClose(false);
-                  onEndSession();
+                  setShowFeedback(true);
                 }}
-                className="flex-1 py-1.5 px-3 rounded-xl bg-red-500 hover:bg-red-600 text-white text-[10px] font-bold transition-colors"
+                className="flex-1 py-2.5 px-4 rounded-xl bg-red-500 hover:bg-red-600 text-white text-xs font-bold transition-colors"
               >
                 {getTranslation(lang, "confirmCloseYes")}
               </button>
             </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
+
+      {/* Rating / Feedback Modal Pop-up */}
+      {showFeedback && (
+        <div className="absolute inset-0 z-[250] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-[var(--fun-card)] border border-[var(--fun-stroke-1)] rounded-3xl p-6 text-center shadow-2xl max-w-[340px] w-full animate-in zoom-in-95 duration-200">
+            <div className="h-12 w-12 rounded-2xl bg-[var(--fun-purple)]/10 text-[var(--fun-purple)] flex items-center justify-center mx-auto mb-3">
+              <MessageSquare className="h-6 w-6" />
+            </div>
+            <h4 className="text-sm font-bold fun-text mb-1">
+              {lang === "tr" ? "Görüşmeyi Değerlendirin" : "Rate the Support Session"}
+            </h4>
+            <p className="text-xs fun-text-muted mb-4 leading-relaxed">
+              {lang === "tr" ? "Hizmet kalitemizi artırmamıza yardımcı olun." : "Help us improve our support quality."}
+            </p>
+
+            {/* Stars */}
+            <div className="flex justify-center gap-1.5 mb-4">
+              {[1, 2, 3, 4, 5].map((star) => (
+                <button
+                  key={star}
+                  type="button"
+                  onClick={() => setRating(star)}
+                  onMouseEnter={() => setHoveredRating(star)}
+                  onMouseLeave={() => setHoveredRating(0)}
+                  className="p-1 focus:outline-none transition-transform active:scale-90"
+                >
+                  <Star
+                    className={`h-7 w-7 transition-colors duration-150 ${
+                      star <= (hoveredRating || rating)
+                        ? "fill-amber-400 text-amber-400"
+                        : "text-zinc-400 dark:text-zinc-600"
+                    }`}
+                  />
+                </button>
+              ))}
+            </div>
+
+            {/* Comment Textarea */}
+            <textarea
+              placeholder={lang === "tr" ? "Yorumunuzu veya değerlendirmenizi buraya yazabilirsiniz..." : "Leave your comments or feedback here..."}
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+              rows={3}
+              className="w-full rounded-xl bg-[var(--fun-surface)] border border-[var(--fun-stroke-2)] px-3 py-2 text-xs outline-none focus:border-[var(--fun-purple)] focus:ring-2 focus:ring-[var(--fun-purple)]/20 transition-all resize-none fun-text mb-4"
+            />
+
+            <button
+              type="button"
+              disabled={rating === 0}
+              onClick={() => {
+                toast.success(
+                  lang === "tr" ? "Değerlendirmeniz Gönderildi" : "Feedback Submitted",
+                  {
+                    description: lang === "tr" ? "Geri bildiriminiz için çok teşekkür ederiz." : "Thank you so much for your feedback.",
+                  }
+                );
+                // Call actual close sequence
+                onEndSession();
+                setShowFeedback(false);
+                setRating(0);
+                setComment("");
+              }}
+              className="w-full py-2.5 px-4 rounded-xl bg-[var(--fun-purple)] text-white font-bold text-xs flex items-center justify-center gap-2 hover:scale-[1.01] transition-all shadow-lg shadow-purple-500/20 active:scale-95 disabled:opacity-50 disabled:hover:scale-100"
+            >
+              {lang === "tr" ? "Gönder ve Sonlandır" : "Submit & End Session"}
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Draft Attached Images previews bar */}
       {attachedImages.length > 0 && (
