@@ -2,7 +2,6 @@ import { useState, useEffect, useRef } from "react";
 import { useLang } from "../lib/i18n";
 import { useNavigate } from "@tanstack/react-router";
 import { LiveLoginView, LiveChatView, LiveTicketDetailsView } from "./LiveSupportViews";
-import { puter } from "@heyputer/puter.js";
 import { KNOWLEDGE_BASE } from "../lib/knowledge";
 import { toast } from "sonner";
 import {
@@ -363,18 +362,6 @@ export default function NexyAssistant() {
     User: ${input}`;
 
     try {
-      // First try Puter AI
-      const response = await puter.ai.chat(prompt);
-      let text = typeof response === "string" ? response : response?.message?.content || "";
-      if (text) {
-        text = text.replace(/pulsar/gi, "Nexy");
-        return text.trim();
-      }
-    } catch (puterErr) {
-      console.warn("Puter AI failed or needs sign-in, falling back to Fun Teknoloji AI:", puterErr);
-    }
-
-    try {
       const response = await fetch("/api/nexy", {
         method: "POST",
         headers: {
@@ -397,7 +384,7 @@ export default function NexyAssistant() {
 
       return text.trim();
     } catch (err) {
-      console.warn("API fallback failed, using local smart responder:", err);
+      console.warn("API call failed, using local smart responder:", err);
       return getLocalFallbackResponse(input, lang);
     }
   };

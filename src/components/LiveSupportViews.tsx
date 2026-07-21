@@ -1,7 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { X, ChevronLeft, ArrowLeft, Send, MessageSquare, LogOut, Eye, EyeOff, Bot, Languages, Image as ImageIcon, AlertCircle, Download, Copy, Volume2, VolumeX, Star } from "lucide-react";
 import { supabase } from "../lib/supabase";
-import { puter } from "@heyputer/puter.js";
 import { toast } from "sonner";
 import { translateText } from "../lib/translate";
 
@@ -940,35 +939,21 @@ export function LiveChatView({
       let cleanText = "";
 
       try {
-        // First try Puter AI
-        const response = await puter.ai.chat(prompt);
-        let text = typeof response === "string" ? response : response?.message?.content || "";
-        if (text) {
-          text = text.replace(/pulsar/gi, "Nexy");
-          cleanText = text.trim();
-        }
-      } catch (puterErr) {
-        console.warn("Puter AI failed or needs sign-in, falling back to Fun Teknoloji AI:", puterErr);
-      }
-
-      if (!cleanText) {
-        try {
-          const response = await fetch("/api/nexy", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              prompt: prompt,
-              model: "gemma-3-1b-it"
-            }),
-          });
-          let text = await response.text();
-          text = text.replace(/pulsar/gi, "Nexy");
-          cleanText = text.trim();
-        } catch (err) {
-          console.error("Fun Teknoloji AI fallback failed as well:", err);
-        }
+        const response = await fetch("/api/nexy", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            prompt: prompt,
+            model: "gemma-3-1b-it"
+          }),
+        });
+        let text = await response.text();
+        text = text.replace(/pulsar/gi, "Nexy");
+        cleanText = text.trim();
+      } catch (err) {
+        console.error("Fun Teknoloji AI request failed:", err);
       }
 
       // Translate Agent's Turkish response to user's local language if not Turkish

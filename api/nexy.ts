@@ -21,8 +21,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(400).send("Nexy error: Prompt is required");
   }
 
-  // Map older model names to the new active model "gemma-3-1b-it"
-  const activeModel = model === "openai" || model === "pulsar" ? "gemma-3-1b-it" : model;
+  // We strictly use the active model "gemma-3-1b-it" for Fun Teknoloji AI
+  const activeModel = "gemma-3-1b-it";
 
   try {
     const response = await fetch("https://ai.funteknoloji.com/v1/chat/completions", {
@@ -44,7 +44,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const data = await response.json() as any;
     let text = data.choices?.[0]?.message?.content || "";
 
-    // Clean any case-insensitive Pollinations/Pulsar references
+    // Clean any legacy service references to keep branding clean
     text = text.replace(/pollinations\.ai/gi, "Nexy");
     text = text.replace(/pollinations/gi, "Nexy");
     text = text.replace(/pulsar/gi, "Nexy");
