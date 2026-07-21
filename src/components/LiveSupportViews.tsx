@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { X, ChevronLeft, ArrowLeft, Send, MessageSquare, LogOut, Eye, EyeOff, Bot, Languages, Image as ImageIcon, AlertCircle, Download, Copy, Volume2, VolumeX, Star } from "lucide-react";
 import { supabase } from "../lib/supabase";
+import { puter } from "@heyputer/puter.js";
 import { toast } from "sonner";
 import { translateText } from "../lib/translate";
 
@@ -936,22 +937,46 @@ export function LiveChatView({
     User: ${userTextInTr}`;
 
     try {
-      const response = await fetch("https://text.pollinations.ai/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          messages: [{ role: "user", content: prompt }]
-        }),
-      });
-      let text = await response.text();
-      text = text.replace(/pollinations\.ai/gi, "Nexy");
-      text = text.replace(/pollinations/gi, "Nexy");
-      const cleanText = text
-        .replace(/---[\s\S]*?Support Pollinations\.AI[\s\S]*?---/gi, "")
-        .replace(/Powered by Pollinations\.AI.*/gi, "")
-        .trim();
+      let cleanText = "";
+
+      try {
+        // First try Puter AI
+        const response = await puter.ai.chat(prompt);
+        let text = typeof response === "string" ? response : response?.message?.content || "";
+        if (text) {
+          text = text.replace(/pollinations\.ai/gi, "Nexy");
+          text = text.replace(/pollinations/gi, "Nexy");
+          cleanText = text
+            .replace(/---[\s\S]*?Support Pollinations\.AI[\s\S]*?---/gi, "")
+            .replace(/Powered by Pollinations\.AI.*/gi, "")
+            .trim();
+        }
+      } catch (puterErr) {
+        console.warn("Puter AI failed or needs sign-in, falling back to Pollinations:", puterErr);
+      }
+
+      if (!cleanText) {
+        try {
+          const response = await fetch("https://text.pollinations.ai/", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              messages: [{ role: "user", content: prompt }]
+            }),
+          });
+          let text = await response.text();
+          text = text.replace(/pollinations\.ai/gi, "Nexy");
+          text = text.replace(/pollinations/gi, "Nexy");
+          cleanText = text
+            .replace(/---[\s\S]*?Support Pollinations\.AI[\s\S]*?---/gi, "")
+            .replace(/Powered by Pollinations\.AI.*/gi, "")
+            .trim();
+        } catch (err) {
+          console.error("Pollinations fallback failed as well:", err);
+        }
+      }
 
       // Translate Agent's Turkish response to user's local language if not Turkish
       let agentText = cleanText || (lang === "tr" ? "Size nasıl yardımcı olabilirim?" : "How can I assist you?");

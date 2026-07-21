@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useLang } from "../lib/i18n";
 import { useNavigate } from "@tanstack/react-router";
 import { LiveLoginView, LiveChatView, LiveTicketDetailsView } from "./LiveSupportViews";
+import { puter } from "@heyputer/puter.js";
 import { KNOWLEDGE_BASE } from "../lib/knowledge";
 import { toast } from "sonner";
 import {
@@ -314,6 +315,26 @@ export default function NexyAssistant() {
     ${history}
 
     User: ${input}`;
+
+    try {
+      // First try Puter AI
+      const response = await puter.ai.chat(prompt);
+      let text = typeof response === "string" ? response : response?.message?.content || "";
+      if (text) {
+        text = text.replace(/pollinations\.ai/gi, "Nexy");
+        text = text.replace(/pollinations/gi, "Nexy");
+        text = text.replace(/---[\s\S]*?Support Pollinations\.AI[\s\S]*?---/gi, "");
+        text = text.replace(/🌸[\s\S]*?Ad[\s\S]*?🌸/gi, "");
+        text = text.replace(/Powered by Pollinations\.AI[\s\S]*?accessible for everyone\./gi, "");
+        text = text.replace(
+          /\[Support our mission\]\(https:\/\/pollinations\.ai\/redirect\/kofi\)/gi,
+          "",
+        );
+        return text.trim();
+      }
+    } catch (puterErr) {
+      console.warn("Puter AI failed or needs sign-in, falling back to Pollinations:", puterErr);
+    }
 
     try {
       const response = await fetch("https://text.pollinations.ai/", {
