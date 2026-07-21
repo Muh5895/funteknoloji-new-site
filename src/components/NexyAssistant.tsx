@@ -37,24 +37,41 @@ interface Chat {
   createdAt: number;
 }
 
+const checkRedirectIntent = (input: string, lang: string): string | null => {
+  const query = input.toLowerCase();
+  if (lang === "tr") {
+    if (query.includes("iletişim") || query.includes("ulaş") || query.includes("mail") || query.includes("telefon") || query.includes("adres") || query.includes("konum") || query.includes("nerede")) {
+      return "Sizi iletişim sayfamıza yönlendiriyorum. Oradan bizimle kolayca iletişime geçebilir, sorularınızı iletebilirsiniz. [REDIRECT:/contact]";
+    }
+    if (query.includes("fiyat") || query.includes("ücret") || query.includes("paralı") || query.includes("abonelik") || query.includes("paket") || query.includes("fiyatlar")) {
+      return "Geliştirdiğimiz ürünlerin fiyatlandırma detaylarını ve esnek lisanslama seçeneklerini fiyatlandırma sayfamızda bulabilirsiniz. Sizi şimdi fiyatlandırma sayfamıza yönlendiriyorum. [REDIRECT:/pricing]";
+    }
+    if (query.includes("proje") || query.includes("ürün") || query.includes("neler yaptınız") || query.includes("çalışmalar")) {
+      return "Fun Teknoloji olarak tamamen kendi inovatif ürünlerimizi geliştiriyoruz. En önemli projelerimiz **Nexy** (Yapay Zeka Asistanı) ve **QuakeSafe** (Deprem Erken Uyarı Platformu)'dir. Detaylar için sizi projeler sayfamıza yönlendiriyorum. [REDIRECT:/projects]";
+    }
+  } else {
+    if (query.includes("contact") || query.includes("reach") || query.includes("email") || query.includes("phone") || query.includes("address") || query.includes("location") || query.includes("where")) {
+      return "I am directing you to our contact page. You can easily get in touch with us there. [REDIRECT:/contact]";
+    }
+    if (query.includes("price") || query.includes("cost") || query.includes("paid") || query.includes("sub") || query.includes("pack") || query.includes("pricing")) {
+      return "You can find pricing details and flexible licensing options on our pricing page. Directing you there now. [REDIRECT:/pricing]";
+    }
+    if (query.includes("project") || query.includes("product") || query.includes("what did you do") || query.includes("works")) {
+      return "At Fun Technology, we develop our own innovative products. Our primary projects are **Nexy** (AI Assistant) and **QuakeSafe** (Earthquake Early Warning). Directing you to our projects page. [REDIRECT:/projects]";
+    }
+  }
+  return null;
+};
+
 const getLocalFallbackResponse = (input: string, lang: string): string => {
   const query = input.toLowerCase();
 
   if (lang === "tr") {
-    if (query.includes("iletişim") || query.includes("ulaş") || query.includes("mail") || query.includes("telefon")) {
-      return "Sizi iletişim sayfamıza yönlendiriyorum. Oradan bizimle kolayca iletişime geçebilir, sorularınızı iletebilirsiniz. [REDIRECT:/contact]";
-    }
-    if (query.includes("fiyat") || query.includes("ücret") || query.includes("paralı") || query.includes("abonelik") || query.includes("paket")) {
-      return "Geliştirdiğimiz ürünlerin fiyatlandırma detaylarını ve esnek lisanslama seçeneklerini fiyatlandırma sayfamızda bulabilirsiniz. Sizi şimdi fiyatlandırma sayfamıza yönlendiriyorum. [REDIRECT:/pricing]";
-    }
     if (query.includes("quakesafe") || query.includes("deprem") || query.includes("afet")) {
       return "**QuakeSafe**, Fun Teknoloji tarafından geliştirilen hayat kurtarıcı bir afet güvenliği projesidir. Yapay zeka ve sensör ağları kullanarak deprem anında erken uyarı verir ve afet sonrası koordinasyonu sağlar.";
     }
     if (query.includes("nexy") || query.includes("asistan") || query.includes("yapay zeka")) {
       return "**Nexy**, Fun Teknoloji'nin amiral gemisi yapay zeka asistanıdır (şu an benimle konuşuyorsunuz!). İşletmelerin ve kullanıcıların her dilde (12+ dil desteği) kesintisiz, akıllı ve hızlı iletişim kurmasını sağlar.";
-    }
-    if (query.includes("proje") || query.includes("ürün")) {
-      return "Fun Teknoloji olarak tamamen kendi inovatif ürünlerimizi geliştiriyoruz. En önemli projelerimiz **Nexy** (Yapay Zeka Asistanı) ve **QuakeSafe** (Deprem Erken Uyarı Platformu)'dir. Detaylar için sizi projeler sayfamıza yönlendiriyorum. [REDIRECT:/projects]";
     }
     if (query.includes("hizmet") || query.includes("yazılım") || query.includes("siber") || query.includes("danışmanlık")) {
       return "Fun Teknoloji olarak sunduğumuz hizmetler:\n\n1. **Yapay Zeka Çözümleri:** İşletmenize özel LLM modelleri ve otonom asistanlar.\n2. **Özel Yazılım Geliştirme:** Modern web ve mobil uygulamalar.\n3. **Siber Güvenlik:** Sızma testleri ve güvenlik denetimleri.\n4. **Teknik Danışmanlık:** Dijital dönüşüm rehberliği.";
@@ -62,20 +79,11 @@ const getLocalFallbackResponse = (input: string, lang: string): string => {
     return "Merhaba! Ben Fun Teknoloji'nin yapay zeka asistanı Nexy. Size Fun Teknoloji, kurucumuz Muhammed Erbay, yenilikçi projelerimiz (Nexy, QuakeSafe) veya sunduğumuz profesyonel yazılım ve yapay zeka hizmetleri hakkında bilgi verebilirim. Ne öğrenmek istersiniz?";
   } else {
     // English default fallback
-    if (query.includes("contact") || query.includes("reach") || query.includes("email") || query.includes("phone")) {
-      return "I am directing you to our contact page. You can easily get in touch with us there. [REDIRECT:/contact]";
-    }
-    if (query.includes("price") || query.includes("cost") || query.includes("paid") || query.includes("sub") || query.includes("pack")) {
-      return "You can find pricing details and flexible licensing options on our pricing page. Directing you there now. [REDIRECT:/pricing]";
-    }
     if (query.includes("quakesafe") || query.includes("earthquake") || query.includes("disaster")) {
       return "**QuakeSafe** is a life-saving disaster safety platform developed by Fun Technology. It utilizes artificial intelligence and sensor networks to provide early warnings and post-disaster coordination.";
     }
     if (query.includes("nexy") || query.includes("assistant") || query.includes("ai")) {
       return "**Nexy** is Fun Technology's flagship AI assistant (the one you are talking to right now!). It offers smart, secure, and multi-lingual (12+ languages) communication for businesses.";
-    }
-    if (query.includes("project") || query.includes("product")) {
-      return "At Fun Technology, we develop our own innovative products. Our primary projects are **Nexy** (AI Assistant) and **QuakeSafe** (Earthquake Early Warning). Directing you to our projects page. [REDIRECT:/projects]";
     }
     if (query.includes("service") || query.includes("software") || query.includes("security") || query.includes("consult")) {
       return "Fun Technology Services:\n\n1. **AI Solutions:** Custom-trained LLM models and autonomous agents.\n2. **Custom Software:** Modern web and mobile development.\n3. **Cyber Security:** Penetration testing and security audits.\n4. **Technical Consulting:** Professional digital transformation guidance.";
@@ -341,25 +349,11 @@ export default function NexyAssistant() {
     const controller = new AbortController();
     abortControllerRef.current = controller;
 
-    const history = chatMessages
-      .slice(-6)
-      .map((m) => `${m.role === "nexy" ? "Assistant" : "User"}: ${m.text}`)
-      .join("\n");
-    const prompt = `System: Sen Fun Teknoloji şirketinin resmi yapay zeka asistanı Nexy'sin.
-    Fun Teknoloji'nin projeleri:
-    1. Nexy: İşletmeler ve kullanıcılar için geliştirilmiş, her dilde hizmet verebilen akıllı dijital asistan (şu an konuştuğun sistem).
-    2. QuakeSafe: Yapay zeka ve sensör ağları ile deprem güvenliği sağlayan, erken uyarı ve afet sonrası koordinasyon platformu.
-
-    Bilgi Bankası: ${KNOWLEDGE_BASE}
-    Dil: Kullanıcının dilinde (${lang}) cevap ver.
-    Tarz: Profesyonel, yardımsever ve samimi ol.
-    Önemli: Eğer kullanıcı bir sayfaya gitmek isterse cevabının sonuna [REDIRECT:/sayfa] ekle ve BU REDIRECT'ten önce mutlaka kullanıcıya o sayfaya yönlendirdiğini kendi cümlenle söyle (Örn: Seni fiyatlandırma sayfamıza yönlendiriyorum).
-    Kısa ve öz cevaplar ver. Sadece Nexy olarak konuş.
-
-    Önceki Konuşmalar:
-    ${history}
-
-    User: ${input}`;
+    // Check for developer-managed client-side redirection intent first
+    const redirectResponse = checkRedirectIntent(input, lang);
+    if (redirectResponse) {
+      return redirectResponse;
+    }
 
     try {
       const response = await fetch("/api/nexy", {
@@ -368,7 +362,7 @@ export default function NexyAssistant() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          prompt: prompt,
+          prompt: input,
           model: "gemma-3-1b-it"
         }),
         signal: controller.signal,

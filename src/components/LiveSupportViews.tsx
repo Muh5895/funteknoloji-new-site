@@ -925,16 +925,6 @@ export function LiveChatView({
       userTextInTr = await translateToTurkish(userText, lang);
     }
 
-    // System instructions with dynamic agent name
-    const prompt = `System: Sen Fun Teknoloji şirketinin canlı destek ekibinden ${agentName}'sin.
-    Giriş yapan kullanıcının e-postası: ${user.email}.
-    Sen bir yapay zeka değilsin, gerçek bir canlı destek temsilcisisin. Doğal, dost canlısı, profesyonel, Türkçe konuşacaksın.
-    Cevaplarını kısa tut (maksimum 1-2 cümle) ve başka servislerin adını geçirme, sadece Fun Teknoloji adına yardımcı ol.
-
-    Konuşma Geçmişi:
-    ${messages.slice(-6).map(m => `${m.role === "user" ? "User" : `Agent ${agentName}`}: ${m.text}`).join("\n")}
-    User: ${userTextInTr}`;
-
     try {
       let cleanText = "";
 
@@ -945,7 +935,7 @@ export function LiveChatView({
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            prompt: prompt,
+            prompt: userTextInTr,
             model: "gemma-3-1b-it"
           }),
         });
