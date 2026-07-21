@@ -942,8 +942,7 @@ export function LiveChatView({
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          messages: [{ role: "user", content: prompt }],
-          model: "openai"
+          messages: [{ role: "user", content: prompt }]
         }),
       });
       let text = await response.text();
