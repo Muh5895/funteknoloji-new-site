@@ -6,7 +6,41 @@ const INTRO_VIDEO_URL = "/assets/intro.mp4";
 export default function IntroSplash() {
   const [show, setShow] = useState(false);
   const [fading, setFading] = useState(false);
+  const [videoSrc, setVideoSrc] = useState(INTRO_VIDEO_URL);
   const videoRef = useRef<HTMLVideoElement>(null);
+
+  // Background caching & offline Blob URL loading
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const loadAndCacheVideo = async () => {
+      if (!("caches" in window)) return;
+      try {
+        const cache = await caches.open("intro-video-cache");
+        const cachedResponse = await cache.match(INTRO_VIDEO_URL);
+
+        if (cachedResponse) {
+          const blob = await cachedResponse.blob();
+          const localUrl = URL.createObjectURL(blob);
+          setVideoSrc(localUrl);
+        } else {
+          // Fetch and cache in background
+          fetch(INTRO_VIDEO_URL).then(async (response) => {
+            if (response.ok) {
+              await cache.put(INTRO_VIDEO_URL, response.clone());
+              const blob = await response.blob();
+              const localUrl = URL.createObjectURL(blob);
+              setVideoSrc(localUrl);
+            }
+          }).catch(() => {});
+        }
+      } catch (err) {
+        console.warn("Intro cache helper failed:", err);
+      }
+    };
+
+    loadAndCacheVideo();
+  }, []);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -83,7 +117,7 @@ export default function IntroSplash() {
     >
       <video
         ref={videoRef}
-        src={INTRO_VIDEO_URL}
+        src={videoSrc}
         muted
         playsInline
         autoPlay

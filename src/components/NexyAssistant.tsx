@@ -397,6 +397,10 @@ export default function NexyAssistant() {
       if (!response.ok) throw new Error();
       let text = await response.text();
 
+      if (!text || text.includes("Nexy error:") || text.includes("Bir hata oluştu") || text.includes("An error occurred")) {
+        throw new Error("Invalid or error response from API proxy: " + text);
+      }
+
       // Filter out Pollinations ads & replace mentions
       text = text.replace(/pollinations\.ai/gi, "Nexy");
       text = text.replace(/pollinations/gi, "Nexy");
