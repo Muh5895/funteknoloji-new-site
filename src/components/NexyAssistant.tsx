@@ -38,6 +38,53 @@ interface Chat {
   createdAt: number;
 }
 
+const getLocalFallbackResponse = (input: string, lang: string): string => {
+  const query = input.toLowerCase();
+
+  if (lang === "tr") {
+    if (query.includes("iletişim") || query.includes("ulaş") || query.includes("mail") || query.includes("telefon")) {
+      return "Sizi iletişim sayfamıza yönlendiriyorum. Oradan bizimle kolayca iletişime geçebilir, sorularınızı iletebilirsiniz. [REDIRECT:/contact]";
+    }
+    if (query.includes("fiyat") || query.includes("ücret") || query.includes("paralı") || query.includes("abonelik") || query.includes("paket")) {
+      return "Geliştirdiğimiz ürünlerin fiyatlandırma detaylarını ve esnek lisanslama seçeneklerini fiyatlandırma sayfamızda bulabilirsiniz. Sizi şimdi fiyatlandırma sayfamıza yönlendiriyorum. [REDIRECT:/pricing]";
+    }
+    if (query.includes("quakesafe") || query.includes("deprem") || query.includes("afet")) {
+      return "**QuakeSafe**, Fun Teknoloji tarafından geliştirilen hayat kurtarıcı bir afet güvenliği projesidir. Yapay zeka ve sensör ağları kullanarak deprem anında erken uyarı verir ve afet sonrası koordinasyonu sağlar.";
+    }
+    if (query.includes("nexy") || query.includes("asistan") || query.includes("yapay zeka")) {
+      return "**Nexy**, Fun Teknoloji'nin amiral gemisi yapay zeka asistanıdır (şu an benimle konuşuyorsunuz!). İşletmelerin ve kullanıcıların her dilde (12+ dil desteği) kesintisiz, akıllı ve hızlı iletişim kurmasını sağlar.";
+    }
+    if (query.includes("proje") || query.includes("ürün")) {
+      return "Fun Teknoloji olarak tamamen kendi inovatif ürünlerimizi geliştiriyoruz. En önemli projelerimiz **Nexy** (Yapay Zeka Asistanı) ve **QuakeSafe** (Deprem Erken Uyarı Platformu)'dir. Detaylar için sizi projeler sayfamıza yönlendiriyorum. [REDIRECT:/projects]";
+    }
+    if (query.includes("hizmet") || query.includes("yazılım") || query.includes("siber") || query.includes("danışmanlık")) {
+      return "Fun Teknoloji olarak sunduğumuz hizmetler:\n\n1. **Yapay Zeka Çözümleri:** İşletmenize özel LLM modelleri ve otonom asistanlar.\n2. **Özel Yazılım Geliştirme:** Modern web ve mobil uygulamalar.\n3. **Siber Güvenlik:** Sızma testleri ve güvenlik denetimleri.\n4. **Teknik Danışmanlık:** Dijital dönüşüm rehberliği.";
+    }
+    return "Merhaba! Ben Fun Teknoloji'nin yapay zeka asistanı Nexy. Size Fun Teknoloji, kurucumuz Muhammed Erbay, yenilikçi projelerimiz (Nexy, QuakeSafe) veya sunduğumuz profesyonel yazılım ve yapay zeka hizmetleri hakkında bilgi verebilirim. Ne öğrenmek istersiniz?";
+  } else {
+    // English default fallback
+    if (query.includes("contact") || query.includes("reach") || query.includes("email") || query.includes("phone")) {
+      return "I am directing you to our contact page. You can easily get in touch with us there. [REDIRECT:/contact]";
+    }
+    if (query.includes("price") || query.includes("cost") || query.includes("paid") || query.includes("sub") || query.includes("pack")) {
+      return "You can find pricing details and flexible licensing options on our pricing page. Directing you there now. [REDIRECT:/pricing]";
+    }
+    if (query.includes("quakesafe") || query.includes("earthquake") || query.includes("disaster")) {
+      return "**QuakeSafe** is a life-saving disaster safety platform developed by Fun Technology. It utilizes artificial intelligence and sensor networks to provide early warnings and post-disaster coordination.";
+    }
+    if (query.includes("nexy") || query.includes("assistant") || query.includes("ai")) {
+      return "**Nexy** is Fun Technology's flagship AI assistant (the one you are talking to right now!). It offers smart, secure, and multi-lingual (12+ languages) communication for businesses.";
+    }
+    if (query.includes("project") || query.includes("product")) {
+      return "At Fun Technology, we develop our own innovative products. Our primary projects are **Nexy** (AI Assistant) and **QuakeSafe** (Earthquake Early Warning). Directing you to our projects page. [REDIRECT:/projects]";
+    }
+    if (query.includes("service") || query.includes("software") || query.includes("security") || query.includes("consult")) {
+      return "Fun Technology Services:\n\n1. **AI Solutions:** Custom-trained LLM models and autonomous agents.\n2. **Custom Software:** Modern web and mobile development.\n3. **Cyber Security:** Penetration testing and security audits.\n4. **Technical Consulting:** Professional digital transformation guidance.";
+    }
+    return "Hello! I am Nexy, the AI assistant of Fun Technology. I can tell you about Fun Technology, our founder Muhammed Erbay, our innovative projects (Nexy, QuakeSafe), or our software services. How can I help you today?";
+  }
+};
+
 export default function NexyAssistant() {
   const { t, lang } = useLang();
   const navigate = useNavigate();
@@ -363,7 +410,8 @@ export default function NexyAssistant() {
 
       return text.trim();
     } catch (err) {
-      return t("nexy.resp.default.0");
+      console.warn("API fallback failed, using local smart responder:", err);
+      return getLocalFallbackResponse(input, lang);
     }
   };
 
