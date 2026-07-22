@@ -927,10 +927,22 @@ export function LiveChatView({
     e.preventDefault();
     if ((!input.trim() && attachedImages.length === 0) || isAgentTyping || readOnly) return;
 
+    // Client-side rate limiting: 1 message per 2 seconds
+    const now = Date.now();
+    if (now - lastSentTimestamp < 2000) {
+      toast.warning(
+        lang === "tr"
+          ? "Çok hızlı mesaj gönderiyorsunuz. Lütfen biraz bekleyin."
+          : "You are sending messages too fast. Please wait a moment."
+      );
+      return;
+    }
+    setLastSentTimestamp(now);
+
     const userText = input.trim();
     const currentAttachedImages = [...attachedImages];
 
-    // Translate user input to English silently in the background
+    // Auto-translate user input to English silently in the background
     const englishInput = await translateAnyText(userText, lang, "en");
 
     const userMsg = {
@@ -947,7 +959,51 @@ export function LiveChatView({
     setAttachedImages([]);
     setIsAgentTyping(true);
 
-    // Prepare system message strictly in English with user account details if available
+    // Dynamic Client-Side OCR on user-attached images using public helloworld key
+    const runOcrOnImage = async (base64Image: string): Promise<string> => {
+      try {
+        const response = await fetch("https://api.ocr.space/parse/image", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          body: new URLSearchParams({
+            apikey: "helloworld",
+            base64image: base64Image,
+            language: "tur"
+          })
+        });
+        if (response.ok) {
+          const data = await response.json() as any;
+          if (data && data.ParsedResults && data.ParsedResults[0]) {
+            return data.ParsedResults[0].ParsedText || "";
+          }
+        }
+      } catch (err) {
+        console.error("OCR extraction failed:", err);
+      }
+      return "";
+    };
+
+    let ocrCombinedText = "";
+    if (currentAttachedImages.length > 0) {
+      try {
+        const ocrResults = await Promise.all(currentAttachedImages.map((img) => runOcrOnImage(img)));
+        const validOcr = ocrResults.filter((text) => text.trim().length > 0);
+        if (validOcr.length > 0) {
+          ocrCombinedText = validOcr.map((text, idx) => `[Uploaded Screenshot/Image #${idx + 1} OCR Text: "${text}"]`).join("\n");
+        }
+      } catch (ocrErr) {
+        console.warn("Background image OCR parsing failed:", ocrErr);
+      }
+    }
+
+    let englishInputWithOcr = englishInput;
+    if (ocrCombinedText) {
+      englishInputWithOcr = `${englishInput}\n\n[USER ATTACHED SCREENSHOT DETAILS]\n${ocrCombinedText}`;
+    }
+
+    // Prepare system message strictly in English for maximum reasoning quality
     let accountContext = "";
     if (userProfile) {
       accountContext = `\n[USER ACCOUNT CONTEXT]\nEmail: ${userProfile.email}\nFull Name: ${userProfile.name}\nAccount Created At: ${userProfile.createdAt ? new Date(userProfile.createdAt).toLocaleString("tr-TR") : "N/A"}\nEmail Verification Status: ${userProfile.emailConfirmed ? "Verified" : "Unverified"}\nLast Sign-In: ${userProfile.lastSignIn ? new Date(userProfile.lastSignIn).toLocaleString("tr-TR") : "N/A"}\n`;
@@ -960,8 +1016,9 @@ export function LiveChatView({
 Fun Technology projects and information:
 ${KNOWLEDGE_BASE}
 ${accountContext}
-Your task is to solve user's support requests in a warm, polite, and professional manner based on the knowledge base and the user account context (if available).
+Your task is to solve user's support requests in a warm, polite, and professional manner based on the knowledge base and user account context (if available).
 If the user asks about their account details, email, registration date, verification status, or name, answer them accurately and beautifully using the provided USER ACCOUNT CONTEXT.
+If they uploaded screenshots/images, you have been provided with OCR-extracted text of those images inside the prompt. Address the text contents naturally.
 Do not mention any third-party services like Pollinations or Pulsar. Respond in English.`,
     });
 
@@ -975,10 +1032,10 @@ Do not mention any third-party services like Pollinations or Pulsar. Respond in 
 
     formattedMessages.push(...historyMessages);
 
-    // Add current user input (already translated to English)
+    // Add current user input (already translated to English, with OCR data appended if present)
     formattedMessages.push({
       role: "user" as const,
-      content: englishInput,
+      content: englishInputWithOcr,
     });
 
     // Helper to ensure messages list starts with user role and strictly alternates user/assistant.
@@ -1069,19 +1126,21 @@ Do not mention any third-party services like Pollinations or Pulsar. Respond in 
         agentText = await translateAnyText(englishResponse, "en", lang);
       }
 
-      setTimeout(() => {
-        setMessages((prev) => [
-          ...prev,
-          {
-            role: "agent" as const,
-            text: agentText,
-            id: Math.random().toString(36).substring(2, 9),
-            timestamp: Date.now(),
-            englishText: englishResponse
-          }
-        ]);
-        setIsAgentTyping(false);
-      }, 1500);
+      const agentMsgId = Math.random().toString(36).substring(2, 9);
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: "agent" as const,
+          text: agentText,
+          id: agentMsgId,
+          timestamp: Date.now(),
+          displayedText: "",
+          englishText: englishResponse
+        }
+      ]);
+      setIsAgentTyping(false);
+      setTimeout(() => typeAgentMessage(agentText, agentMsgId), 50);
+
     } catch (e) {
       setTimeout(() => {
         setMessages((prev) => [
@@ -1225,7 +1284,7 @@ Do not mention any third-party services like Pollinations or Pulsar. Respond in 
                   >
                     {m.text && (
                       <div className="whitespace-pre-wrap">
-                        {m.role === "user" ? m.text : renderMessageText(m.text)}
+                        {m.role === "user" ? m.text : renderMessageText(m.displayedText !== undefined ? m.displayedText : m.text)}
                       </div>
                     )}
 
