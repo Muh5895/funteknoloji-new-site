@@ -568,8 +568,62 @@ export function LiveLoginView({ onBack, onLoginSuccess, lang }: LiveLoginViewPro
     }
   };
 
+  const getAgentThinkingText = () => {
+    const hasFiles = attachedFiles.length > 0;
+    const lastUserMsg = [...messages].reverse().find((m) => m.role === "user");
+    const lastUserText = lastUserMsg?.text?.toLowerCase() || "";
+
+    const hasMsgFiles = lastUserMsg?.files && lastUserMsg.files.length > 0;
+    const mentionsFiles =
+      lastUserText.includes("dosya") ||
+      lastUserText.includes("resim") ||
+      lastUserText.includes("ekledim") ||
+      lastUserText.includes("görsel") ||
+      lastUserText.includes("screenshot") ||
+      lastUserText.includes("file") ||
+      lastUserText.includes("image") ||
+      lastUserText.includes("pdf");
+
+    if (hasFiles || hasMsgFiles || mentionsFiles) {
+      return lang === "tr" ? "Dosya İnceleniyor..." : "Analyzing File...";
+    }
+
+    const mentionsAccount =
+      lastUserText.includes("hesap") ||
+      lastUserText.includes("profil") ||
+      lastUserText.includes("üye") ||
+      lastUserText.includes("giriş") ||
+      lastUserText.includes("e-posta") ||
+      lastUserText.includes("eposta") ||
+      lastUserText.includes("email") ||
+      lastUserText.includes("account") ||
+      lastUserText.includes("profile") ||
+      lastUserText.includes("my name") ||
+      lastUserText.includes("adım") ||
+      lastUserText.includes("kimim");
+
+    if (mentionsAccount) {
+      return lang === "tr" ? "Hesap İnceleniyor..." : "Checking Account Details...";
+    }
+
+    return lang === "tr" ? "Müşteri Temsilcisi Yazıyor..." : "Customer Support is typing...";
+  };
+
   return (
     <div className="flex-1 flex flex-col h-full bg-[var(--fun-card)] select-none animate-in fade-in duration-300">
+      <style>{`
+        @keyframes shimmer {
+          0% { background-position: -200% 0; }
+          100% { background-position: 200% 0; }
+        }
+        .skeleton-shimmer-text {
+          background: linear-gradient(90deg, #a855f7 0%, #e9d5ff 50%, #a855f7 100%);
+          background-size: 200% auto;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          animation: shimmer 1.8s linear infinite;
+        }
+      `}</style>
       {/* Header */}
       <div
         className="p-5 sm:p-6 border-b flex items-center justify-between bg-[var(--fun-surface)] h-20 sm:h-24"
@@ -1099,7 +1153,7 @@ Do not promote any third-party services like Pollinations or Pulsar. Respond in 
     return "";
   };
 
-  // Image Captioning/Visual description using Salesforce BLIP model
+  // Image Captioning/Visual description using Salesforce BLIP Large model
   const describeImage = async (base64Image: string): Promise<string> => {
     try {
       const arr = base64Image.split(",");
@@ -1113,7 +1167,7 @@ Do not promote any third-party services like Pollinations or Pulsar. Respond in 
       const blob = new Blob([u8arr], { type: mime });
 
       const response = await fetch(
-        "https://api-inference.huggingface.co/models/Salesforce/blip-image-captioning-base",
+        "https://api-inference.huggingface.co/models/Salesforce/blip-image-captioning-large",
         {
           method: "POST",
           body: blob,
@@ -1672,12 +1726,24 @@ CRITICAL RULES:
         })}
 
         {isAgentTyping && (
-          <div className="flex flex-col items-start space-y-1">
-            <div className="bg-[var(--fun-surface)] rounded-2xl rounded-bl-none px-4 py-3 border border-[var(--fun-stroke-1)]">
-              <div className="flex gap-1.5 items-center">
-                <span className="h-2 w-2 rounded-full bg-zinc-400 animate-bounce" style={{ animationDelay: "0ms" }}></span>
-                <span className="h-2 w-2 rounded-full bg-zinc-400 animate-bounce" style={{ animationDelay: "150ms" }}></span>
-                <span className="h-2 w-2 rounded-full bg-zinc-400 animate-bounce" style={{ animationDelay: "300ms" }}></span>
+          <div className="flex flex-col items-start space-y-1 animate-in fade-in duration-300">
+            <div className="bg-[var(--fun-surface)] rounded-2xl rounded-bl-none px-4 py-3 border border-[var(--fun-stroke-1)] shadow-sm">
+              <div className="flex items-center gap-3">
+                {/* Shimmering Circular Avatar Placeholder */}
+                <div className="h-6 w-6 rounded-full bg-zinc-200 dark:bg-zinc-800 animate-pulse relative overflow-hidden shrink-0">
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-[shimmer_1.5s_infinite]" />
+                </div>
+                {/* Shimmering Context-Aware Loading Text */}
+                <div className="flex items-center gap-2">
+                  <span className="skeleton-shimmer-text text-xs tracking-tight font-extrabold">
+                    {getAgentThinkingText()}
+                  </span>
+                  <div className="flex gap-1 items-center shrink-0">
+                    <span className="h-1.5 w-1-5 rounded-full bg-zinc-400 animate-bounce" style={{ animationDelay: "0ms" }}></span>
+                    <span className="h-1.5 w-1-5 rounded-full bg-zinc-400 animate-bounce" style={{ animationDelay: "150ms" }}></span>
+                    <span className="h-1.5 w-1-5 rounded-full bg-zinc-400 animate-bounce" style={{ animationDelay: "300ms" }}></span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -1808,8 +1874,12 @@ CRITICAL RULES:
                   <span className="font-bold truncate fun-text leading-tight">{file.name}</span>
                   <span className="fun-text-muted mt-0.5">
                     {file.isAnalyzing ? (
-                      <span className="text-[var(--fun-purple)] font-medium animate-pulse">
-                        {lang === "tr" ? "İnceleniyor..." : "Analyzing..."}
+                      <span className="flex items-center gap-1.5 text-[var(--fun-purple)] font-bold">
+                        <svg className="animate-spin h-3.5 w-3.5 shrink-0" fill="none" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.3 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                        </svg>
+                        <span className="animate-pulse">{lang === "tr" ? "Yükleniyor..." : "Loading..."}</span>
                       </span>
                     ) : (
                       file.size
