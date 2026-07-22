@@ -608,62 +608,8 @@ export function LiveLoginView({ onBack, onLoginSuccess, lang }: LiveLoginViewPro
     }
   };
 
-  const getAgentThinkingText = () => {
-    const hasFiles = attachedFiles.length > 0;
-    const lastUserMsg = [...messages].reverse().find((m) => m.role === "user");
-    const lastUserText = lastUserMsg?.text?.toLowerCase() || "";
-
-    const hasMsgFiles = lastUserMsg?.files && lastUserMsg.files.length > 0;
-    const mentionsFiles =
-      lastUserText.includes("dosya") ||
-      lastUserText.includes("resim") ||
-      lastUserText.includes("ekledim") ||
-      lastUserText.includes("görsel") ||
-      lastUserText.includes("screenshot") ||
-      lastUserText.includes("file") ||
-      lastUserText.includes("image") ||
-      lastUserText.includes("pdf");
-
-    if (hasFiles || hasMsgFiles || mentionsFiles) {
-      return lang === "tr" ? "Dosya İnceleniyor..." : "Analyzing File...";
-    }
-
-    const mentionsAccount =
-      lastUserText.includes("hesap") ||
-      lastUserText.includes("profil") ||
-      lastUserText.includes("üye") ||
-      lastUserText.includes("giriş") ||
-      lastUserText.includes("e-posta") ||
-      lastUserText.includes("eposta") ||
-      lastUserText.includes("email") ||
-      lastUserText.includes("account") ||
-      lastUserText.includes("profile") ||
-      lastUserText.includes("my name") ||
-      lastUserText.includes("adım") ||
-      lastUserText.includes("kimim");
-
-    if (mentionsAccount) {
-      return lang === "tr" ? "Hesap İnceleniyor..." : "Checking Account Details...";
-    }
-
-    return lang === "tr" ? "Müşteri Temsilcisi Yazıyor..." : "Customer Support is typing...";
-  };
-
   return (
     <div className="flex-1 flex flex-col h-full bg-[var(--fun-card)] select-none animate-in fade-in duration-300">
-      <style>{`
-        @keyframes shimmer {
-          0% { background-position: -200% 0; }
-          100% { background-position: 200% 0; }
-        }
-        .skeleton-shimmer-text {
-          background: linear-gradient(90deg, #a855f7 0%, #e9d5ff 50%, #a855f7 100%);
-          background-size: 200% auto;
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          animation: shimmer 1.8s linear infinite;
-        }
-      `}</style>
       {/* Header */}
       <div
         className="p-5 sm:p-6 border-b flex items-center justify-between bg-[var(--fun-surface)] h-20 sm:h-24"
@@ -897,6 +843,47 @@ export function LiveChatView({
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [lastSentTimestamp, setLastSentTimestamp] = useState<number>(0);
   const [isOnline, setIsOnline] = useState<boolean>(typeof window !== "undefined" ? navigator.onLine : true);
+
+  const getAgentThinkingText = () => {
+    const hasFiles = attachedFiles.length > 0;
+    const lastUserMsg = [...messages].reverse().find((m) => m.role === "user");
+    const lastUserText = lastUserMsg?.text?.toLowerCase() || "";
+
+    const hasMsgFiles = lastUserMsg?.files && lastUserMsg.files.length > 0;
+    const mentionsFiles =
+      lastUserText.includes("dosya") ||
+      lastUserText.includes("resim") ||
+      lastUserText.includes("ekledim") ||
+      lastUserText.includes("görsel") ||
+      lastUserText.includes("screenshot") ||
+      lastUserText.includes("file") ||
+      lastUserText.includes("image") ||
+      lastUserText.includes("pdf");
+
+    if (hasFiles || hasMsgFiles || mentionsFiles) {
+      return lang === "tr" ? "Dosya İnceleniyor..." : "Analyzing File...";
+    }
+
+    const mentionsAccount =
+      lastUserText.includes("hesap") ||
+      lastUserText.includes("profil") ||
+      lastUserText.includes("üye") ||
+      lastUserText.includes("giriş") ||
+      lastUserText.includes("e-posta") ||
+      lastUserText.includes("eposta") ||
+      lastUserText.includes("email") ||
+      lastUserText.includes("account") ||
+      lastUserText.includes("profile") ||
+      lastUserText.includes("my name") ||
+      lastUserText.includes("adım") ||
+      lastUserText.includes("kimim");
+
+    if (mentionsAccount) {
+      return lang === "tr" ? "Hesap İnceleniyor..." : "Checking Account Details...";
+    }
+
+    return lang === "tr" ? "Müşteri Temsilcisi Yazıyor..." : "Customer Support is typing...";
+  };
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -1551,6 +1538,19 @@ CRITICAL RULES:
 
   return (
     <div className="flex-1 flex flex-col h-full bg-[var(--fun-card)] select-none animate-in fade-in duration-300">
+      <style>{`
+        @keyframes shimmer {
+          0% { background-position: -200% 0; }
+          100% { background-position: 200% 0; }
+        }
+        .skeleton-shimmer-text {
+          background: linear-gradient(90deg, #a855f7 0%, #e9d5ff 50%, #a855f7 100%);
+          background-size: 200% auto;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          animation: shimmer 1.8s linear infinite;
+        }
+      `}</style>
       {/* Header */}
       <div
         className="p-5 sm:p-6 border-b flex items-center justify-between bg-[var(--fun-surface)] h-20 sm:h-24"
