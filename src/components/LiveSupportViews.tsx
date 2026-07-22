@@ -1031,48 +1031,44 @@ Do not promote any third-party services like Pollinations or Pulsar. Respond in 
       const cleanedMessages = cleanMessagesForAPI(formattedMessages);
 
       try {
+        let agentText = "";
         let englishResponse = "";
         try {
-          const response = await fetch("https://ai.funteknoloji.com/v1/chat/completions", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ messages: cleanedMessages, model: "gemma-3-1b-it" }),
-          });
-          if (response.ok) {
-            const data = await response.json() as any;
-            englishResponse = data.choices?.[0]?.message?.content || "";
-          } else {
-            throw new Error();
-          }
-        } catch {
           const response = await fetch("/api/nexy", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
               messages: cleanedMessages,
               originalMessages: cleanedMessages,
+              lang,
               model: "gemma-3-1b-it"
             }),
           });
           if (response.ok) {
-            englishResponse = await response.text();
+            const data = await response.json();
+            agentText = data.text;
+            englishResponse = data.englishText;
+          } else {
+            throw new Error("Vercel proxy failed");
           }
+        } catch (err) {
+          console.error("Vercel backend proxy call failed in triggerWelcome:", err);
+          agentText = `Hello ${userProfile.name}! I am ${agentName}. How can I assist you today?`;
+          englishResponse = agentText;
         }
 
-        englishResponse = englishResponse.replace(/\[inceliyor\]/gi, "");
-        englishResponse = englishResponse.replace(/\[duraklama\]/gi, "");
-        englishResponse = englishResponse.replace(/\[bekliyor\]/gi, "");
-        englishResponse = englishResponse.replace(/\[düşünüyor\]/gi, "");
-        englishResponse = englishResponse.replace(/\[[^\]]+\]/g, (match) => {
+        agentText = agentText || `Hello ${userProfile.name}! I am ${agentName}. How can I assist you today?`;
+        englishResponse = englishResponse || agentText;
+
+        agentText = agentText.replace(/\[inceliyor\]/gi, "");
+        agentText = agentText.replace(/\[duraklama\]/gi, "");
+        agentText = agentText.replace(/\[bekliyor\]/gi, "");
+        agentText = agentText.replace(/\[düşünüyor\]/gi, "");
+        agentText = agentText.replace(/\[[^\]]+\]/g, (match) => {
           if (match.toLowerCase().startsWith("[redirect:")) return match;
           return "";
         });
-        englishResponse = englishResponse.trim().replace(/pulsar/gi, "Nexy");
-
-        let agentText = englishResponse || `Hello ${userProfile.name}! I am ${agentName}. How can I assist you today?`;
-        if (lang !== "en" && englishResponse) {
-          agentText = await translateAnyText(englishResponse, "en", lang);
-        }
+        agentText = agentText.trim().replace(/pulsar/gi, "Nexy");
 
         const agentMsgId = Math.random().toString(36).substring(2, 9);
         setMessages((prev) => [
@@ -1470,29 +1466,10 @@ CRITICAL RULES:
       const cleanedMessages = cleanMessagesForAPI(formattedMessages);
 
       try {
+        let agentText = "";
         let englishResponse = "";
 
         try {
-          // Route 1: Direct fetch to Fun Teknoloji completions endpoint
-          const response = await fetch("https://ai.funteknoloji.com/v1/chat/completions", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              messages: cleanedMessages,
-              model: "gemma-3-1b-it"
-            }),
-          });
-          if (response.ok) {
-            const data = await response.json() as any;
-            englishResponse = data.choices?.[0]?.message?.content || "";
-          } else {
-            throw new Error("Direct API failed");
-          }
-        } catch (err) {
-          console.warn("Direct API call failed, trying Vercel backend proxy fallback:", err);
-          try {
           // Construct original untranslated messages history
           const originalMessages = messages.map((m) => ({
             role: m.role === "user" ? "user" : "assistant",
@@ -1503,45 +1480,42 @@ CRITICAL RULES:
             content: userText,
           });
 
-            // Route 2: Fallback to Vercel backend proxy /api/nexy
-            const response = await fetch("/api/nexy", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                messages: cleanedMessages,
+          // Route all requests directly to Vercel backend proxy /api/nexy (acts as central fallback orchestrator)
+          const response = await fetch("/api/nexy", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              messages: cleanedMessages,
               originalMessages,
-                model: "gemma-3-1b-it"
-              }),
-            });
-            if (response.ok) {
-              englishResponse = await response.text();
-            } else {
-              throw new Error("Backend proxy failed");
-            }
-          } catch (proxyErr) {
-            console.error("Vercel backend proxy also failed:", proxyErr);
+              lang,
+              model: "gemma-3-1b-it"
+            }),
+          });
+          if (response.ok) {
+            const data = await response.json();
+            agentText = data.text;
+            englishResponse = data.englishText;
+          } else {
+            throw new Error("Backend proxy failed");
           }
+        } catch (proxyErr) {
+          console.error("Vercel backend proxy call failed in handleSend:", proxyErr);
+          agentText = lang === "tr" ? "Bir hata oluştu, lütfen daha sonra tekrar deneyin." : "An error occurred, please try again later.";
+          englishResponse = "An error occurred, please try again later.";
         }
 
-        englishResponse = englishResponse.replace(/\[inceliyor\]/gi, "");
-        englishResponse = englishResponse.replace(/\[duraklama\]/gi, "");
-        englishResponse = englishResponse.replace(/\[bekliyor\]/gi, "");
-        englishResponse = englishResponse.replace(/\[düşünüyor\]/gi, "");
-        englishResponse = englishResponse.replace(/\[[^\]]+\]/g, (match) => {
+        agentText = agentText.replace(/\[inceliyor\]/gi, "");
+        agentText = agentText.replace(/\[duraklama\]/gi, "");
+        agentText = agentText.replace(/\[bekliyor\]/gi, "");
+        agentText = agentText.replace(/\[düşünüyor\]/gi, "");
+        agentText = agentText.replace(/\[[^\]]+\]/g, (match) => {
           if (match.toLowerCase().startsWith("[redirect:")) return match;
           return "";
         });
+        agentText = agentText.trim().replace(/pulsar/gi, "Nexy");
         englishResponse = englishResponse.trim().replace(/pulsar/gi, "Nexy");
-
-        // Auto translate AI's English response back to user's local language
-        let agentText = englishResponse;
-        if (!agentText) {
-          agentText = lang === "tr" ? "Bir hata oluştu, lütfen daha sonra tekrar deneyin." : "An error occurred, please try again later.";
-        } else if (lang !== "en") {
-          agentText = await translateAnyText(englishResponse, "en", lang);
-        }
 
         const agentMsgId = Math.random().toString(36).substring(2, 9);
         setMessages((prev) => [

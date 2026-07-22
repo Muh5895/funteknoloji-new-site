@@ -21,6 +21,20 @@ const isRateLimited = (ip: string): boolean => {
   return false;
 };
 
+const translateTextHelper = async (text: string, source: string, target: string): Promise<string> => {
+  if (!text || source === target) return text;
+  try {
+    const response = await fetch(
+      `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${source}&tl=${target}&dt=t&q=${encodeURIComponent(text)}`
+    );
+    const data = await response.json();
+    return data[0].map((item: any) => item[0]).join("");
+  } catch (error) {
+    console.error("Translation helper error:", error);
+    return text;
+  }
+};
+
 const KNOWLEDGE_BASE = `
 Şirket: Fun Teknoloji
 Kurucu: Muhammed Erbay
@@ -97,8 +111,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(405).send("Nexy error: Sadece POST istekleri kabul edilir.");
   }
 
-  // Read body parameters (accepts both legacy prompt or standard messages array)
-  const { prompt, messages, originalMessages, model = "gemma-3-1b-it" } = req.body || {};
+  // Read body parameters
+  const { prompt, messages, originalMessages, lang = "tr", model = "gemma-3-1b-it" } = req.body || {};
 
   const requestMessages = messages || (prompt ? [{ role: "user", content: prompt }] : null);
 
@@ -107,12 +121,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   // Helper to ensure messages list starts with user role and strictly alternates user/assistant.
-  // Gemma-3-1b-it chat template (Jinja) throws 400 Bad Request if roles do not alternate or start with user.
   const cleanMessagesForAPI = (msgs: any[]) => {
     const systemMsg = msgs.find((m) => m.role === "system");
     const chatMsgs = msgs.filter((m) => m.role !== "system");
 
-    // Remove any starting non-user messages (like assistant greeting)
     while (chatMsgs.length > 0 && chatMsgs[0].role !== "user") {
       chatMsgs.shift();
     }
@@ -141,58 +153,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return finalMsgs;
   };
 
-  const cleanedMessages = cleanMessagesForAPI(requestMessages);
+  const backupApiKey = process.env.Nexy || process.env.NEXY || "";
 
-  if (cleanedMessages.filter((m) => m.role !== "system").length === 0) {
-    return res.status(400).send("Nexy error: No valid user message in history");
-  }
-
-  // We strictly use the active model "gemma-3-1b-it" for Fun Teknoloji AI
-  const activeModel = "gemma-3-1b-it";
-
-  // Attempt Primary Call (Fun Teknoloji AI)
-  try {
-    const response = await fetch("https://ai.funteknoloji.com/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        messages: cleanedMessages,
-        model: activeModel,
-      }),
-    });
-
-    if (!response.ok) {
-      const errText = await response.text();
-      throw new Error(`Failed to fetch from backend: ${response.status} ${response.statusText} - ${errText}`);
-    }
-
-    const data = await response.json() as any;
-    let text = data.choices?.[0]?.message?.content || "";
-
-    // Clean any legacy service references to keep branding clean
-    text = text.replace(/pollinations\.ai/gi, "Nexy");
-    text = text.replace(/pollinations/gi, "Nexy");
-    text = text.replace(/pulsar/gi, "Nexy");
-
-    return res.status(200).send(text);
-  } catch (err: any) {
-    console.warn("Primary Fun Teknoloji AI call failed, falling back to Hack Club AI:", err);
-
-    // Fallback Call (Hack Club AI)
-    const backupApiKey = process.env.Nexy || process.env.NEXY || "";
-    if (!backupApiKey) {
-      console.error("Hack Club AI API key (Nexy/NEXY) is not set in Vercel environment variables.");
-      return res.status(500).send("Nexy error: Bir hata oluştu ve yedek API anahtarı bulunamadı.");
-    }
-
+  // 1. PRIMARY CHOICE: Try Hack Club AI first (gpt-5-mini, no translation layer)
+  if (backupApiKey) {
     try {
-      // Prioritize untranslated originalMessages if provided to avoid any translation layers
       const rawOriginal = originalMessages || messages;
       const cleanedOriginal = cleanMessagesForAPI(rawOriginal);
 
-      // Prepend Hack Club System prompt
       const finalHackClubMessages = [
         { role: "system", content: HACKCLUB_SYSTEM_PROMPT },
         ...cleanedOriginal.filter((m) => m.role !== "system")
@@ -212,13 +180,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
       if (!backupResponse.ok) {
         const backupErrText = await backupResponse.text();
-        throw new Error(`Failed to fetch from Hack Club AI: ${backupResponse.status} ${backupResponse.statusText} - ${backupErrText}`);
+        throw new Error(`Hack Club AI returned status ${backupResponse.status}: ${backupErrText}`);
       }
 
       const backupData = await backupResponse.json() as any;
       let backupText = backupData.choices?.[0]?.message?.content || "";
 
-      // Post-process the final output
+      // Post-process response to strip bracketed tokens
       backupText = backupText.replace(/\[inceliyor\]/gi, "");
       backupText = backupText.replace(/\[duraklama\]/gi, "");
       backupText = backupText.replace(/\[bekliyor\]/gi, "");
@@ -229,10 +197,69 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       });
       backupText = backupText.trim().replace(/pulsar/gi, "Nexy");
 
-      return res.status(200).send(backupText);
+      // Respond directly in JSON
+      return res.status(200).json({
+        text: backupText,
+        englishText: backupText, // Untranslated, so original language acts as English context
+        isTranslated: false
+      });
     } catch (backupErr: any) {
-      console.error("Hack Club AI fallback call also failed:", backupErr);
-      return res.status(500).send("Nexy error: Bir hata oluştu: " + backupErr.message);
+      console.warn("Primary Hack Club AI call failed, falling back to Fun Teknoloji AI:", backupErr);
     }
+  } else {
+    console.warn("Hack Club AI API key (Nexy/NEXY) is not set. Skipping primary choice.");
+  }
+
+  // 2. FALLBACK CHOICE: Fallback to Fun Teknoloji AI (gemma-3-1b-it, with translation layer)
+  try {
+    const cleanedMessages = cleanMessagesForAPI(requestMessages);
+
+    if (cleanedMessages.filter((m) => m.role !== "system").length === 0) {
+      return res.status(400).send("Nexy error: No valid user message in history");
+    }
+
+    const response = await fetch("https://ai.funteknoloji.com/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        messages: cleanedMessages,
+        model: "gemma-3-1b-it",
+      }),
+    });
+
+    if (!response.ok) {
+      const errText = await response.text();
+      throw new Error(`Fun Teknoloji AI returned status ${response.status}: ${errText}`);
+    }
+
+    const data = await response.json() as any;
+    let englishText = data.choices?.[0]?.message?.content || "";
+
+    englishText = englishText.replace(/\[inceliyor\]/gi, "");
+    englishText = englishText.replace(/\[duraklama\]/gi, "");
+    englishText = englishText.replace(/\[bekliyor\]/gi, "");
+    englishText = englishText.replace(/\[düşünüyor\]/gi, "");
+    englishText = englishText.replace(/\[[^\]]+\]/g, (match: string) => {
+      if (match.toLowerCase().startsWith("[redirect:")) return match;
+      return "";
+    });
+    englishText = englishText.trim().replace(/pulsar/gi, "Nexy");
+
+    // Server-side translation back to user's selected local language
+    let text = englishText;
+    if (lang && lang !== "en") {
+      text = await translateTextHelper(englishText, "en", lang);
+    }
+
+    return res.status(200).json({
+      text,
+      englishText,
+      isTranslated: true
+    });
+  } catch (err: any) {
+    console.error("Fallback Fun Teknoloji AI call also failed:", err);
+    return res.status(500).send("Nexy error: Her iki yapay zeka servisi de yanıt vermedi: " + err.message);
   }
 }

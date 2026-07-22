@@ -522,76 +522,42 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
 
     const cleanedMessages = cleanMessagesForAPI(formattedMessages);
 
+    let textResponse = "";
     let englishResponse = "";
+
     try {
-      // Route 1: Call Fun Teknoloji AI directly (fastest, bypasses serverless timeouts)
-      const response = await fetch("https://ai.funteknoloji.com/v1/chat/completions", {
+      // Direct call to Vercel backend proxy /api/nexy (acts as central fallback orchestrator)
+      const response = await fetch("/api/nexy", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
           messages: cleanedMessages,
+          originalMessages,
+          lang,
           model: "gemma-3-1b-it"
         }),
         signal: controller.signal,
       });
+
       if (response.ok) {
-        const data = await response.json() as any;
-        englishResponse = data.choices?.[0]?.message?.content || "";
+        const data = await response.json();
+        textResponse = data.text;
+        englishResponse = data.englishText;
       } else {
-        throw new Error("Direct API call failed");
+        throw new Error("Vercel proxy failed");
       }
     } catch (err) {
-      console.warn("Direct API call failed, falling back to Vercel backend proxy:", err);
-      try {
-        // Route 2: Fallback to Vercel backend proxy /api/nexy
-        const response = await fetch("/api/nexy", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            messages: cleanedMessages,
-            originalMessages,
-            model: "gemma-3-1b-it"
-          }),
-          signal: controller.signal,
-        });
-        if (response.ok) {
-          englishResponse = await response.text();
-        } else {
-          throw new Error("Backend proxy failed");
-        }
-      } catch (proxyErr) {
-        console.warn("Backend proxy also failed:", proxyErr);
-        englishResponse = "An error occurred, please try again later.";
-      }
+      console.warn("Vercel backend proxy call failed, setting fallback text:", err);
+      textResponse = lang === "tr" ? "Bir hata oluştu, lütfen daha sonra tekrar deneyin." : "An error occurred, please try again later.";
+      englishResponse = "An error occurred, please try again later.";
     }
 
+    textResponse = textResponse.trim().replace(/pulsar/gi, "Nexy");
     englishResponse = englishResponse.trim().replace(/pulsar/gi, "Nexy");
 
-    // Protect redirect codes from translation mangling
-    let redirectCode = "";
-    const redirectMatch = englishResponse.match(/\[REDIRECT:([^\]]+)\]/i);
-    if (redirectMatch) {
-      redirectCode = redirectMatch[0];
-      englishResponse = englishResponse.replace(/\[REDIRECT:([^\]]+)\]/gi, "").trim();
-    }
-
-    // Auto translate AI's English response back to user's interface language
-    let translatedResponse = englishResponse;
-    if (lang !== "en" && englishResponse) {
-      translatedResponse = await translateAnyText(englishResponse, "en", lang);
-    }
-
-    // Re-attach redirect code if present
-    if (redirectCode) {
-      translatedResponse = `${translatedResponse} ${redirectCode}`;
-      englishResponse = `${englishResponse} ${redirectCode}`;
-    }
-
-    return { text: translatedResponse, englishText: englishResponse };
+    return { text: textResponse, englishText: englishResponse };
   };
 
   const handleSend = async (e?: React.FormEvent) => {
