@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { X, ChevronLeft, ArrowLeft, Send, MessageSquare, LogOut, Eye, EyeOff, Bot, Languages, Image as ImageIcon, AlertCircle, Download, Copy, Volume2, VolumeX, Star } from "lucide-react";
 import { supabase } from "../lib/supabase";
 import { toast } from "sonner";
-import { translateText } from "../lib/translate";
+import { translateText, translateAnyText } from "../lib/translate";
 import { KNOWLEDGE_BASE } from "../lib/knowledge";
 
 // Translate utility to translate from any language to Turkish
@@ -764,8 +764,8 @@ export function LiveTicketDetailsView({ lang, onBack, onSubmit }: LiveTicketDeta
 // LIVE CHAT VIEW (Supports image sending, auto-translation system, auto-translation warning, read-only session)
 interface LiveChatViewProps {
   user: { email: string };
-  messages: { role: "agent" | "user"; text: string; id: string; timestamp: number; images?: string[] }[];
-  setMessages: React.Dispatch<React.SetStateAction<{ role: "agent" | "user"; text: string; id: string; timestamp: number; images?: string[] }[]>>;
+  messages: { role: "agent" | "user"; text: string; id: string; timestamp: number; images?: string[]; englishText?: string }[];
+  setMessages: React.Dispatch<React.SetStateAction<{ role: "agent" | "user"; text: string; id: string; timestamp: number; images?: string[]; englishText?: string }[]>>;
   onBack: () => void;
   onEndSession: () => void;
   onLogout: () => void;
@@ -792,6 +792,7 @@ export function LiveChatView({
   const [input, setInput] = useState("");
   const [attachedImages, setAttachedImages] = useState<string[]>([]);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [lastSentTimestamp, setLastSentTimestamp] = useState<number>(0);
   const [showConfirmClose, setShowConfirmClose] = useState(false);
   const [showFeedback, setShowFeedback] = useState(false);
   const [rating, setRating] = useState(0);
@@ -907,12 +908,16 @@ export function LiveChatView({
     const userText = input.trim();
     const currentAttachedImages = [...attachedImages];
 
+    // Translate user input to English silently in the background
+    const englishInput = await translateAnyText(userText, lang, "en");
+
     const userMsg = {
       role: "user" as const,
       text: userText,
       id: Math.random().toString(36).substring(2, 9),
       timestamp: Date.now(),
       images: currentAttachedImages,
+      englishText: englishInput
     };
 
     setMessages((prev) => [...prev, userMsg]);
@@ -920,42 +925,35 @@ export function LiveChatView({
     setAttachedImages([]);
     setIsAgentTyping(true);
 
-    // Dynamic dual-translation: Translate user text to Turkish if language is not Turkish
-    let userTextInTr = userText;
-    if (lang !== "tr" && userText) {
-      userTextInTr = await translateToTurkish(userText, lang);
-    }
-
-    // Prepare system message to instruct the AI model correctly as a support agent
+    // Prepare system message strictly in English for maximum reasoning quality
     const formattedMessages = [];
     formattedMessages.push({
       role: "system",
-      content: `Sen Fun Teknoloji şirketinin canlı destek panelinde çalışan profesyonel bir müşteri temsilcisisin. Adın ${agentName}.
-Fun Teknoloji'nin projeleri ve bilgileri:
+      content: `You are ${agentName}, a professional customer support representative working at Fun Teknoloji (Fun Technology).
+Fun Technology projects and information:
 ${KNOWLEDGE_BASE}
 
-Görevin: Kullanıcıların canlı destek taleplerini en samimi, kibar ve profesyonel şekilde Türkçe dilinde çözmektir. Soruları bilgi bankasına göre cevapla.
-Cevaplarında Pollinations, Pulsar veya başka bir servis reklamı yapma, sadece Fun Teknoloji'nin cana yakın müşteri temsilcisi olarak konuş.`,
+Your task is to solve user's support requests in a warm, polite, and professional manner based on the knowledge base.
+Do not mention any third-party services like Pollinations or Pulsar. Respond in English.`,
     });
 
-    // Map live support conversation history into standard OpenAI messages format with a longer, 20-message memory window
+    // Map live support conversation history using stored englishText to keep context strictly in English
     const historyMessages = messages
       .slice(-20)
       .map((m) => ({
         role: (m.role === "user" ? "user" : "assistant") as "user" | "assistant" | "system",
-        content: m.text,
+        content: m.englishText || m.text,
       }));
 
     formattedMessages.push(...historyMessages);
 
-    // Add current user text in Turkish
+    // Add current user input (already translated to English)
     formattedMessages.push({
       role: "user" as const,
-      content: userTextInTr,
+      content: englishInput,
     });
 
     // Helper to ensure messages list starts with user role and strictly alternates user/assistant.
-    // Gemma-3-1b-it chat template (Jinja) throws 400 Bad Request if roles do not alternate or start with user.
     const cleanMessagesForAPI = (msgs: any[]) => {
       const systemMsg = msgs.find((m) => m.role === "system");
       const chatMsgs = msgs.filter((m) => m.role !== "system");
@@ -991,7 +989,7 @@ Cevaplarında Pollinations, Pulsar veya başka bir servis reklamı yapma, sadece
     const cleanedMessages = cleanMessagesForAPI(formattedMessages);
 
     try {
-      let cleanText = "";
+      let englishResponse = "";
 
       try {
         // Route 1: Direct fetch to Fun Teknoloji completions endpoint
@@ -1007,9 +1005,7 @@ Cevaplarında Pollinations, Pulsar veya başka bir servis reklamı yapma, sadece
         });
         if (response.ok) {
           const data = await response.json() as any;
-          let text = data.choices?.[0]?.message?.content || "";
-          text = text.replace(/pulsar/gi, "Nexy");
-          cleanText = text.trim();
+          englishResponse = data.choices?.[0]?.message?.content || "";
         } else {
           throw new Error("Direct API failed");
         }
@@ -1028,8 +1024,7 @@ Cevaplarında Pollinations, Pulsar veya başka bir servis reklamı yapma, sadece
             }),
           });
           if (response.ok) {
-            const text = await response.text();
-            cleanText = text.trim();
+            englishResponse = await response.text();
           } else {
             throw new Error("Backend proxy failed");
           }
@@ -1038,10 +1033,12 @@ Cevaplarında Pollinations, Pulsar veya başka bir servis reklamı yapma, sadece
         }
       }
 
-      // Translate Agent's Turkish response to user's local language if not Turkish
-      let agentText = cleanText || (lang === "tr" ? "Size nasıl yardımcı olabilirim?" : "How can I assist you?");
-      if (lang !== "tr") {
-        agentText = await translateText({ text: agentText, targetLang: lang });
+      englishResponse = englishResponse.trim().replace(/pulsar/gi, "Nexy");
+
+      // Auto translate AI's English response back to user's local language
+      let agentText = englishResponse || "How can I assist you?";
+      if (lang !== "en" && englishResponse) {
+        agentText = await translateAnyText(englishResponse, "en", lang);
       }
 
       setTimeout(() => {
@@ -1051,7 +1048,8 @@ Cevaplarında Pollinations, Pulsar veya başka bir servis reklamı yapma, sadece
             role: "agent" as const,
             text: agentText,
             id: Math.random().toString(36).substring(2, 9),
-            timestamp: Date.now()
+            timestamp: Date.now(),
+            englishText: englishResponse
           }
         ]);
         setIsAgentTyping(false);

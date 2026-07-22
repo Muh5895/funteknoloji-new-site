@@ -1,6 +1,36 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 
+// Lightweight in-memory rate limiter cache to prevent backend abuse/spam.
+// Max 15 requests per minute per IP.
+const ipCache = new Map<string, number[]>();
+
+const isRateLimited = (ip: string): boolean => {
+  const now = Date.now();
+  const windowMs = 60 * 1000; // 1 minute
+  const maxRequests = 15;
+
+  const timestamps = ipCache.get(ip) || [];
+  const activeTimestamps = timestamps.filter((t) => now - t < windowMs);
+
+  if (activeTimestamps.length >= maxRequests) {
+    return true;
+  }
+
+  activeTimestamps.push(now);
+  ipCache.set(ip, activeTimestamps);
+  return false;
+};
+
 export default async function handler(req: VercelRequest, res: VercelResponse) {
+  const ip =
+    (req.headers["x-forwarded-for"] as string) ||
+    (req.headers["x-real-ip"] as string) ||
+    "127.0.0.1";
+
+  if (req.method === "POST" && isRateLimited(ip)) {
+    return res.status(429).send("Nexy error: Çok fazla istek gönderildi. Lütfen daha sonra tekrar deneyin. (Too many requests. Please try again later.)");
+  }
+
   // Allow OPTIONS preflight requests
   if (req.method === "OPTIONS") {
     res.setHeader("Access-Control-Allow-Origin", "*");

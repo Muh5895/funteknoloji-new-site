@@ -4,6 +4,7 @@ import { useNavigate } from "@tanstack/react-router";
 import { LiveLoginView, LiveChatView, LiveTicketDetailsView } from "./LiveSupportViews";
 import { KNOWLEDGE_BASE } from "../lib/knowledge";
 import { toast } from "sonner";
+import { translateAnyText } from "../lib/translate";
 import {
   X,
   Copy,
@@ -33,7 +34,7 @@ import { supabase } from "../lib/supabase";
 interface Chat {
   id: string;
   title: string;
-  messages: { role: "nexy" | "user"; text: string; displayedText?: string }[];
+  messages: { role: "nexy" | "user"; text: string; displayedText?: string; englishText?: string }[];
   createdAt: number;
 }
 
@@ -152,6 +153,7 @@ export default function NexyAssistant() {
   const navigate = useNavigate();
   const [visible, setVisible] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
+  const [lastSentTimestamp, setLastSentTimestamp] = useState<number>(0);
   const [isMaximized, setIsMaximized] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
   const [showPopup, setShowPopup] = useState(true);
@@ -401,51 +403,43 @@ export default function NexyAssistant() {
     setIsTyping(false);
   };
 
-  const getNexyBrainResponse = async (input: string) => {
+  const getNexyBrainResponse = async (englishInput: string) => {
     if (abortControllerRef.current) {
       abortControllerRef.current.abort();
     }
     const controller = new AbortController();
     abortControllerRef.current = controller;
 
-    // Check for developer-managed client-side redirection intent first
-    const redirectResponse = checkRedirectIntent(input, lang);
-    if (redirectResponse) {
-      return redirectResponse;
-    }
-
-    // Prepare system message to instruct the AI model correctly
+    // Prepare system message strictly in English for maximum reasoning quality
     const formattedMessages = [];
     formattedMessages.push({
       role: "system",
-      content: `Sen Fun Teknoloji şirketinin resmi yapay zeka asistanı Nexy'sin.
-Fun Teknoloji'nin projeleri ve bilgileri:
+      content: `You are Nexy, the official AI assistant of Fun Teknoloji (Fun Technology).
+Fun Technology projects and information:
 ${KNOWLEDGE_BASE}
 
-Dil: Kullanıcının dilinde (${lang}) cevap ver.
-Tarz: Profesyonel, yardımsever ve samimi ol.
-Önemli: Eğer kullanıcı bir sayfaya gitmek veya iletişim/fiyatlandırma/projeler gibi bir yere yönlendirilmek isterse, cevabının sonuna mutlaka [REDIRECT:/sayfa] ekle. Örneğin: [REDIRECT:/contact], [REDIRECT:/pricing], [REDIRECT:/projects]. Ve bu yönlendirme kodundan önce mutlaka kullanıcıya o sayfaya yönlendirdiğini kendi cümlenle belirt.
-Cevaplarında Pollinations, Pulsar veya başka bir servis reklamı yapma, sadece Nexy olarak konuş. Soruları bilgi bankasına göre cevapla.`,
+Style: Professional, helpful, friendly, and conversational.
+Redirects: If the user wants to navigate to contact, pricing, or projects, append [REDIRECT:/page] at the end of your response (e.g., [REDIRECT:/contact], [REDIRECT:/pricing], [REDIRECT:/projects]) and mention in your sentence that you are redirecting them.
+Answer questions based on the knowledge base. Do not promote any third-party services like Pollinations or Pulsar. Respond in English.`,
     });
 
-    // Map conversation history into standard OpenAI messages format with a longer, 20-message memory window
+    // Map conversation history using englishText to ensure 100% English context
     const historyMessages = chatMessages
       .slice(-20)
       .map((m) => ({
         role: (m.role === "nexy" ? "assistant" : "user") as "user" | "assistant" | "system",
-        content: m.text,
+        content: m.englishText || m.text,
       }));
 
     formattedMessages.push(...historyMessages);
 
-    // Add current user input to messages
+    // Add current user input (already translated to English)
     formattedMessages.push({
       role: "user" as const,
-      content: input,
+      content: englishInput,
     });
 
     // Helper to ensure messages list starts with user role and strictly alternates user/assistant.
-    // Gemma-3-1b-it chat template (Jinja) throws 400 Bad Request if roles do not alternate or start with user.
     const cleanMessagesForAPI = (msgs: any[]) => {
       const systemMsg = msgs.find((m) => m.role === "system");
       const chatMsgs = msgs.filter((m) => m.role !== "system");
@@ -480,6 +474,7 @@ Cevaplarında Pollinations, Pulsar veya başka bir servis reklamı yapma, sadece
 
     const cleanedMessages = cleanMessagesForAPI(formattedMessages);
 
+    let englishResponse = "";
     try {
       // Route 1: Call Fun Teknoloji AI directly (fastest, bypasses serverless timeouts)
       const response = await fetch("https://ai.funteknoloji.com/v1/chat/completions", {
@@ -495,11 +490,10 @@ Cevaplarında Pollinations, Pulsar veya başka bir servis reklamı yapma, sadece
       });
       if (response.ok) {
         const data = await response.json() as any;
-        let text = data.choices?.[0]?.message?.content || "";
-        text = text.replace(/pulsar/gi, "Nexy");
-        return text.trim();
+        englishResponse = data.choices?.[0]?.message?.content || "";
+      } else {
+        throw new Error("Direct API call failed");
       }
-      throw new Error("Direct API call failed");
     } catch (err) {
       console.warn("Direct API call failed, falling back to Vercel backend proxy:", err);
       try {
@@ -516,31 +510,76 @@ Cevaplarında Pollinations, Pulsar veya başka bir servis reklamı yapma, sadece
           signal: controller.signal,
         });
         if (response.ok) {
-          const text = await response.text();
-          return text.trim();
+          englishResponse = await response.text();
+        } else {
+          throw new Error("Backend proxy failed");
         }
-        throw new Error("Backend proxy failed");
       } catch (proxyErr) {
         console.warn("Backend proxy also failed, using smart local responder:", proxyErr);
-        return getLocalFallbackResponse(input, lang, chatMessages);
+        const fallbackText = getLocalFallbackResponse(englishInput, "en", chatMessages);
+        englishResponse = fallbackText;
       }
     }
+
+    englishResponse = englishResponse.trim().replace(/pulsar/gi, "Nexy");
+
+    // Protect redirect codes from translation mangling
+    let redirectCode = "";
+    const redirectMatch = englishResponse.match(/\[REDIRECT:([^\]]+)\]/i);
+    if (redirectMatch) {
+      redirectCode = redirectMatch[0];
+      englishResponse = englishResponse.replace(/\[REDIRECT:([^\]]+)\]/gi, "").trim();
+    }
+
+    // Auto translate AI's English response back to user's interface language
+    let translatedResponse = englishResponse;
+    if (lang !== "en" && englishResponse) {
+      translatedResponse = await translateAnyText(englishResponse, "en", lang);
+    }
+
+    // Re-attach redirect code if present
+    if (redirectCode) {
+      translatedResponse = `${translatedResponse} ${redirectCode}`;
+      englishResponse = `${englishResponse} ${redirectCode}`;
+    }
+
+    return { text: translatedResponse, englishText: englishResponse };
   };
 
   const handleSend = async (e?: React.FormEvent) => {
     if (e) e.preventDefault();
 
-    // Allow sending if thinking is finished, even if still typing previous response
-    // But prevent double-sending while thinking
     if (!userInput.trim() || isThinking) return;
 
     if (!navigator.onLine) {
       toast.error(t("error.offline") || "İnternet bağlantınız yok.");
       return;
     }
-    const userMsg = { role: "user" as const, text: userInput, displayedText: userInput };
+
+    // Client-side rate limiting: 1 message per 2 seconds
+    const now = Date.now();
+    if (now - lastSentTimestamp < 2000) {
+      toast.warning(
+        lang === "tr"
+          ? "Çok hızlı mesaj gönderiyorsunuz. Lütfen biraz bekleyin."
+          : "You are sending messages too fast. Please wait a moment."
+      );
+      return;
+    }
+    setLastSentTimestamp(now);
 
     const savedInput = userInput;
+
+    // Auto-translate user input to English silently in the background
+    const englishInput = await translateAnyText(savedInput, lang, "en");
+
+    const userMsg = {
+      role: "user" as const,
+      text: savedInput,
+      displayedText: savedInput,
+      englishText: englishInput
+    };
+
     const shouldUpdateTitle = chatMessages.length <= 1;
 
     setChats((prev) =>
@@ -556,7 +595,7 @@ Cevaplarında Pollinations, Pulsar veya başka bir servis reklamı yapma, sadece
     setIsTyping(false);
     setIsThinking(true);
 
-    let response = await getNexyBrainResponse(savedInput);
+    const result = await getNexyBrainResponse(englishInput);
 
     // If request was stopped/cancelled, return immediately
     if (abortControllerRef.current === null) {
@@ -564,11 +603,14 @@ Cevaplarında Pollinations, Pulsar veya başka bir servis reklamı yapma, sadece
     }
     abortControllerRef.current = null;
 
+    let responseText = result.text;
+    const responseEnglish = result.englishText;
+
     // Check for REDIRECT command
-    const redirectMatch = response.match(/\[REDIRECT:(.+)\]/);
+    const redirectMatch = responseText.match(/\[REDIRECT:(.+)\]/i);
     if (redirectMatch) {
       const path = redirectMatch[1];
-      response = response.replace(/\[REDIRECT:.+\]/, "").trim();
+      responseText = responseText.replace(/\[REDIRECT:.+\]/i, "").trim();
 
       setTimeout(() => {
         navigate({ to: path as any });
@@ -579,8 +621,8 @@ Cevaplarında Pollinations, Pulsar veya başka bir servis reklamı yapma, sadece
       prev.map((c) => {
         if (c.id === currentChatId) {
           const nexyMsgIndex = c.messages.length;
-          const updatedMsgs = [...c.messages, { role: "nexy" as const, text: response, displayedText: "" }];
-          setTimeout(() => typeMessage(response, nexyMsgIndex, currentChatId), 10);
+          const updatedMsgs = [...c.messages, { role: "nexy" as const, text: responseText, displayedText: "", englishText: responseEnglish }];
+          setTimeout(() => typeMessage(responseText, nexyMsgIndex, currentChatId), 10);
           return { ...c, messages: updatedMsgs };
         }
         return c;
@@ -588,7 +630,7 @@ Cevaplarında Pollinations, Pulsar veya başka bir servis reklamı yapma, sadece
     );
 
     if (shouldUpdateTitle) {
-      const newTitle = await generateChatTitle(savedInput, response);
+      const newTitle = await generateChatTitle(englishInput, responseEnglish);
       setChats((prev) =>
         prev.map((c) => (c.id === currentChatId ? { ...c, title: newTitle } : c))
       );
