@@ -154,6 +154,24 @@ export default function NexyAssistant() {
   const [visible, setVisible] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
   const [lastSentTimestamp, setLastSentTimestamp] = useState<number>(0);
+  const [isOnline, setIsOnline] = useState<boolean>(typeof window !== "undefined" ? navigator.onLine : true);
+  const isSendingRef = useRef(false);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const handleOnline = () => setIsOnline(true);
+    const handleOffline = () => setIsOnline(false);
+
+    window.addEventListener("online", handleOnline);
+    window.addEventListener("offline", handleOffline);
+
+    return () => {
+      window.removeEventListener("online", handleOnline);
+      window.removeEventListener("offline", handleOffline);
+    };
+  }, []);
+
   const [isMaximized, setIsMaximized] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
   const [showPopup, setShowPopup] = useState(true);
@@ -515,9 +533,8 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
           throw new Error("Backend proxy failed");
         }
       } catch (proxyErr) {
-        console.warn("Backend proxy also failed, using smart local responder:", proxyErr);
-        const fallbackText = getLocalFallbackResponse(englishInput, "en", chatMessages);
-        englishResponse = fallbackText;
+        console.warn("Backend proxy also failed:", proxyErr);
+        englishResponse = "An error occurred, please try again later.";
       }
     }
 
@@ -549,12 +566,7 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
   const handleSend = async (e?: React.FormEvent) => {
     if (e) e.preventDefault();
 
-    if (!userInput.trim() || isThinking) return;
-
-    if (!navigator.onLine) {
-      toast.error(t("error.offline") || "İnternet bağlantınız yok.");
-      return;
-    }
+    if (!userInput.trim() || isThinking || !isOnline) return;
 
     // Client-side rate limiting: 1 message per 2 seconds
     const now = Date.now();
@@ -566,77 +578,84 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
       );
       return;
     }
-    setLastSentTimestamp(now);
 
-    const savedInput = userInput;
+    if (isSendingRef.current) return;
+    isSendingRef.current = true;
 
-    // Auto-translate user input to English silently in the background
-    const englishInput = await translateAnyText(savedInput, lang, "en");
+    try {
+      setLastSentTimestamp(now);
+      const savedInput = userInput;
 
-    const userMsg = {
-      role: "user" as const,
-      text: savedInput,
-      displayedText: savedInput,
-      englishText: englishInput
-    };
+      // Auto-translate user input to English silently in the background
+      const englishInput = await translateAnyText(savedInput, lang, "en");
 
-    const shouldUpdateTitle = chatMessages.length <= 1;
+      const userMsg = {
+        role: "user" as const,
+        text: savedInput,
+        displayedText: savedInput,
+        englishText: englishInput
+      };
 
-    setChats((prev) =>
-      prev.map((c) =>
-        c.id === activeChatId
-          ? { ...c, messages: [...c.messages, userMsg] }
-          : c,
-      ),
-    );
+      const shouldUpdateTitle = chatMessages.length <= 1;
 
-    const currentChatId = activeChatId!;
-    setUserInput("");
-    setIsTyping(false);
-    setIsThinking(true);
-
-    const result = await getNexyBrainResponse(englishInput);
-
-    // If request was stopped/cancelled, return immediately
-    if (abortControllerRef.current === null) {
-      return;
-    }
-    abortControllerRef.current = null;
-
-    let responseText = result.text;
-    const responseEnglish = result.englishText;
-
-    // Check for REDIRECT command
-    const redirectMatch = responseText.match(/\[REDIRECT:(.+)\]/i);
-    if (redirectMatch) {
-      const path = redirectMatch[1];
-      responseText = responseText.replace(/\[REDIRECT:.+\]/i, "").trim();
-
-      setTimeout(() => {
-        navigate({ to: path as any });
-      }, 2500);
-    }
-
-    setChats((prev) =>
-      prev.map((c) => {
-        if (c.id === currentChatId) {
-          const nexyMsgIndex = c.messages.length;
-          const updatedMsgs = [...c.messages, { role: "nexy" as const, text: responseText, displayedText: "", englishText: responseEnglish }];
-          setTimeout(() => typeMessage(responseText, nexyMsgIndex, currentChatId), 10);
-          return { ...c, messages: updatedMsgs };
-        }
-        return c;
-      })
-    );
-
-    if (shouldUpdateTitle) {
-      const newTitle = await generateChatTitle(englishInput, responseEnglish);
       setChats((prev) =>
-        prev.map((c) => (c.id === currentChatId ? { ...c, title: newTitle } : c))
+        prev.map((c) =>
+          c.id === activeChatId
+            ? { ...c, messages: [...c.messages, userMsg] }
+            : c,
+        ),
       );
+
+      const currentChatId = activeChatId!;
+      setUserInput("");
+      setIsTyping(false);
+      setIsThinking(true);
+
+      const result = await getNexyBrainResponse(englishInput);
+
+      // If request was stopped/cancelled, return immediately
+      if (abortControllerRef.current === null) {
+        return;
+      }
+      abortControllerRef.current = null;
+
+      let responseText = result.text;
+      const responseEnglish = result.englishText;
+
+      // Check for REDIRECT command
+      const redirectMatch = responseText.match(/\[REDIRECT:(.+)\]/i);
+      if (redirectMatch) {
+        const path = redirectMatch[1];
+        responseText = responseText.replace(/\[REDIRECT:.+\]/i, "").trim();
+
+        setTimeout(() => {
+          navigate({ to: path as any });
+        }, 2500);
+      }
+
+      setChats((prev) =>
+        prev.map((c) => {
+          if (c.id === currentChatId) {
+            const nexyMsgIndex = c.messages.length;
+            const updatedMsgs = [...c.messages, { role: "nexy" as const, text: responseText, displayedText: "", englishText: responseEnglish }];
+            setTimeout(() => typeMessage(responseText, nexyMsgIndex, currentChatId), 10);
+            return { ...c, messages: updatedMsgs };
+          }
+          return c;
+        })
+      );
+
+      if (shouldUpdateTitle) {
+        const newTitle = await generateChatTitle(englishInput, responseEnglish);
+        setChats((prev) =>
+          prev.map((c) => (c.id === currentChatId ? { ...c, title: newTitle } : c))
+        );
+      }
+      setIsThinking(false);
+      setIsTyping(true);
+    } finally {
+      isSendingRef.current = false;
     }
-    setIsThinking(false);
-    setIsTyping(true);
   };
 
   const startListening = () => {
@@ -1334,13 +1353,15 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
                     handleSend();
                   }
                 }}
-                placeholder={t("nexy.placeholder")}
-                className="w-full rounded-[20px] bg-[var(--fun-surface)] border-2 border-[var(--fun-stroke-1)] py-3 pl-12 pr-14 text-[13px] outline-none focus:border-[var(--fun-purple)] focus:ring-4 focus:ring-[var(--fun-purple)]/10 transition-all fun-text shadow-inner resize-none h-[46px] overflow-y-auto"
+                disabled={!isOnline}
+                placeholder={isOnline ? t("nexy.placeholder") : (lang === "tr" ? "İnternet bağlantısı yok." : "No internet connection.")}
+                className="w-full rounded-[20px] bg-[var(--fun-surface)] border-2 border-[var(--fun-stroke-1)] py-3 pl-12 pr-14 text-[13px] outline-none focus:border-[var(--fun-purple)] focus:ring-4 focus:ring-[var(--fun-purple)]/10 transition-all fun-text shadow-inner resize-none h-[46px] overflow-y-auto disabled:opacity-55 disabled:cursor-not-allowed"
               />
               <button
                 type="button"
+                disabled={!isOnline}
                 onClick={startListening}
-                className={`absolute left-2.5 top-[23px] -translate-y-1/2 h-8 w-8 rounded-full flex items-center justify-center transition-all z-10 ${isListening ? "bg-red-500 text-white scale-110 shadow-lg shadow-red-500/40 animate-pulse" : "fun-text-muted hover:bg-[var(--fun-stroke-1)] hover:text-[var(--fun-purple)]"}`}
+                className={`absolute left-2.5 top-[23px] -translate-y-1/2 h-8 w-8 rounded-full flex items-center justify-center transition-all z-10 disabled:opacity-40 disabled:cursor-not-allowed ${isListening ? "bg-red-500 text-white scale-110 shadow-lg shadow-red-500/40 animate-pulse" : "fun-text-muted hover:bg-[var(--fun-stroke-1)] hover:text-[var(--fun-purple)]"}`}
               >
                 <Mic className="h-4 w-4" />
               </button>
@@ -1357,9 +1378,9 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
               ) : (
                 <button
                   type="submit"
-                  disabled={!userInput.trim() || isThinking}
+                  disabled={!userInput.trim() || isThinking || !isOnline}
                   aria-label={t("nexy.aria_send")}
-                  className="absolute right-2.5 top-[23px] -translate-y-1/2 h-9 w-9 rounded-xl bg-[var(--fun-purple)] text-white flex items-center justify-center hover:scale-105 active:scale-95 transition-all disabled:opacity-30 disabled:hover:scale-100 shadow-lg shadow-purple-500/30 z-10"
+                  className="absolute right-2.5 top-[23px] -translate-y-1/2 h-9 w-9 rounded-xl bg-[var(--fun-purple)] text-white flex items-center justify-center hover:scale-105 active:scale-95 transition-all disabled:opacity-30 disabled:hover:scale-100 disabled:cursor-not-allowed shadow-lg shadow-purple-500/30 z-10"
                 >
                   <Send className="h-4 w-4" />
                 </button>

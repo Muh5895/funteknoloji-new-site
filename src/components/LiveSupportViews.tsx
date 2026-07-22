@@ -793,6 +793,23 @@ export function LiveChatView({
   const [attachedImages, setAttachedImages] = useState<string[]>([]);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [lastSentTimestamp, setLastSentTimestamp] = useState<number>(0);
+  const [isOnline, setIsOnline] = useState<boolean>(typeof window !== "undefined" ? navigator.onLine : true);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const handleOnline = () => setIsOnline(true);
+    const handleOffline = () => setIsOnline(false);
+
+    window.addEventListener("online", handleOnline);
+    window.addEventListener("offline", handleOffline);
+
+    return () => {
+      window.removeEventListener("online", handleOnline);
+      window.removeEventListener("offline", handleOffline);
+    };
+  }, []);
+
   const [userProfile, setUserProfile] = useState<any>(null);
   const [showConfirmClose, setShowConfirmClose] = useState(false);
 
@@ -816,6 +833,154 @@ export function LiveChatView({
     };
     fetchProfile();
   }, []);
+
+  const welcomeTriggeredRef = useRef(false);
+  const typingIntervalRef = useRef<number | null>(null);
+  const isSendingRef = useRef(false);
+
+  const typeAgentMessage = (fullText: string, msgId: string) => {
+    if (typingIntervalRef.current) clearInterval(typingIntervalRef.current);
+
+    let currentText = "";
+    let charIndex = 0;
+    const speed = 25; // 25ms per letter
+
+    typingIntervalRef.current = window.setInterval(() => {
+      if (charIndex < fullText.length) {
+        currentText += fullText[charIndex];
+        setMessages((prev) =>
+          prev.map((m) =>
+            m.id === msgId ? { ...m, displayedText: currentText } : m
+          )
+        );
+        charIndex++;
+      } else {
+        if (typingIntervalRef.current) clearInterval(typingIntervalRef.current);
+      }
+    }, speed);
+  };
+
+  useEffect(() => {
+    return () => {
+      if (typingIntervalRef.current) clearInterval(typingIntervalRef.current);
+    };
+  }, []);
+
+  // Automatic personalized AI representative greeting on chat mount/initialization
+  useEffect(() => {
+    if (!userProfile || messages.length !== 1 || welcomeTriggeredRef.current) return;
+    welcomeTriggeredRef.current = true;
+
+    const triggerWelcome = async () => {
+      setIsAgentTyping(true);
+
+      const ticketSubject = localStorage.getItem("live_support_subject") || "Genel Destek";
+      const ticketImportance = localStorage.getItem("live_support_importance") || "Orta";
+
+      const accountContext = `\n[USER ACCOUNT CONTEXT]\nEmail: ${userProfile.email}\nFull Name: ${userProfile.name}\nAccount Created At: ${userProfile.createdAt ? new Date(userProfile.createdAt).toLocaleString("tr-TR") : "N/A"}\nEmail Verification Status: ${userProfile.emailConfirmed ? "Verified" : "Unverified"}\nLast Sign-In: ${userProfile.lastSignIn ? new Date(userProfile.lastSignIn).toLocaleString("tr-TR") : "N/A"}\n`;
+
+      const formattedMessages = [
+        {
+          role: "system",
+          content: `You are ${agentName}, a professional customer support representative working at Fun Teknoloji (Fun Technology).
+Fun Technology projects and information:
+${KNOWLEDGE_BASE}
+${accountContext}
+Your task is to write a highly personalized, warm, and professional welcome greeting to the user.
+Greet them by their full name (${userProfile.name}) in a warm, helpful way.
+Acknowledge that they are securely logged in under their email address (${userProfile.email}) and that you see they have submitted a support request with subject: "${ticketSubject}" (Importance: ${ticketImportance}).
+Reassure them that they are talking to a human agent, and ask them how you can help resolve their issue today.
+Do not promote any third-party services like Pollinations or Pulsar. Respond in English.`,
+        },
+        {
+          role: "user",
+          content: "Write your welcome message now.",
+        }
+      ];
+
+      const cleanMessagesForAPI = (msgs: any[]) => {
+        const systemMsg = msgs.find((m) => m.role === "system");
+        const chatMsgs = msgs.filter((m) => m.role !== "system");
+        while (chatMsgs.length > 0 && chatMsgs[0].role !== "user") {
+          chatMsgs.shift();
+        }
+        const alternating: any[] = [];
+        for (const msg of chatMsgs) {
+          if (!msg.content || msg.content.trim() === "") continue;
+          if (alternating.length === 0) {
+            alternating.push({ ...msg });
+          } else {
+            const lastMsg = alternating[alternating.length - 1];
+            if (lastMsg.role === msg.role) {
+              lastMsg.content = `${lastMsg.content}\n${msg.content}`;
+            } else {
+              alternating.push({ ...msg });
+            }
+          }
+        }
+        const finalMsgs = [];
+        if (systemMsg) finalMsgs.push(systemMsg);
+        finalMsgs.push(...alternating);
+        return finalMsgs;
+      };
+
+      const cleanedMessages = cleanMessagesForAPI(formattedMessages);
+
+      try {
+        let englishResponse = "";
+        try {
+          const response = await fetch("https://ai.funteknoloji.com/v1/chat/completions", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ messages: cleanedMessages, model: "gemma-3-1b-it" }),
+          });
+          if (response.ok) {
+            const data = await response.json() as any;
+            englishResponse = data.choices?.[0]?.message?.content || "";
+          } else {
+            throw new Error();
+          }
+        } catch {
+          const response = await fetch("/api/nexy", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ messages: cleanedMessages, model: "gemma-3-1b-it" }),
+          });
+          if (response.ok) {
+            englishResponse = await response.text();
+          }
+        }
+
+        englishResponse = englishResponse.trim().replace(/pulsar/gi, "Nexy");
+
+        let agentText = englishResponse || `Hello ${userProfile.name}! I am ${agentName}. How can I assist you today?`;
+        if (lang !== "en" && englishResponse) {
+          agentText = await translateAnyText(englishResponse, "en", lang);
+        }
+
+        const agentMsgId = Math.random().toString(36).substring(2, 9);
+        setMessages((prev) => [
+          ...prev,
+          {
+            role: "agent" as const,
+            text: agentText,
+            id: agentMsgId,
+            timestamp: Date.now(),
+            displayedText: "",
+            englishText: englishResponse
+          }
+        ]);
+        setIsAgentTyping(false);
+        setTimeout(() => typeAgentMessage(agentText, agentMsgId), 50);
+
+      } catch (err) {
+        setIsAgentTyping(false);
+      }
+    };
+
+    triggerWelcome();
+  }, [userProfile]);
+
   const [showFeedback, setShowFeedback] = useState(false);
   const [rating, setRating] = useState(0);
   const [hoveredRating, setHoveredRating] = useState(0);
@@ -937,82 +1102,87 @@ export function LiveChatView({
       );
       return;
     }
-    setLastSentTimestamp(now);
 
-    const userText = input.trim();
-    const currentAttachedImages = [...attachedImages];
+    if (isSendingRef.current) return;
+    isSendingRef.current = true;
 
-    // Auto-translate user input to English silently in the background
-    const englishInput = await translateAnyText(userText, lang, "en");
+    try {
+      setLastSentTimestamp(now);
 
-    const userMsg = {
-      role: "user" as const,
-      text: userText,
-      id: Math.random().toString(36).substring(2, 9),
-      timestamp: Date.now(),
-      images: currentAttachedImages,
-      englishText: englishInput
-    };
+      const userText = input.trim();
+      const currentAttachedImages = [...attachedImages];
 
-    setMessages((prev) => [...prev, userMsg]);
-    setInput("");
-    setAttachedImages([]);
-    setIsAgentTyping(true);
+      // Auto-translate user input to English silently in the background
+      const englishInput = await translateAnyText(userText, lang, "en");
 
-    // Dynamic Client-Side OCR on user-attached images using public helloworld key
-    const runOcrOnImage = async (base64Image: string): Promise<string> => {
-      try {
-        const response = await fetch("https://api.ocr.space/parse/image", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
-          body: new URLSearchParams({
-            apikey: "helloworld",
-            base64image: base64Image,
-            language: "tur"
-          })
-        });
-        if (response.ok) {
-          const data = await response.json() as any;
-          if (data && data.ParsedResults && data.ParsedResults[0]) {
-            return data.ParsedResults[0].ParsedText || "";
+      const userMsg = {
+        role: "user" as const,
+        text: userText,
+        id: Math.random().toString(36).substring(2, 9),
+        timestamp: Date.now(),
+        images: currentAttachedImages,
+        englishText: englishInput
+      };
+
+      setMessages((prev) => [...prev, userMsg]);
+      setInput("");
+      setAttachedImages([]);
+      setIsAgentTyping(true);
+
+      // Dynamic Client-Side OCR on user-attached images using public helloworld key
+      const runOcrOnImage = async (base64Image: string): Promise<string> => {
+        try {
+          const response = await fetch("https://api.ocr.space/parse/image", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded",
+            },
+            body: new URLSearchParams({
+              apikey: "helloworld",
+              base64image: base64Image,
+              language: "tur"
+            })
+          });
+          if (response.ok) {
+            const data = await response.json() as any;
+            if (data && data.ParsedResults && data.ParsedResults[0]) {
+              return data.ParsedResults[0].ParsedText || "";
+            }
           }
+        } catch (err) {
+          console.error("OCR extraction failed:", err);
         }
-      } catch (err) {
-        console.error("OCR extraction failed:", err);
-      }
-      return "";
-    };
+        return "";
+      };
 
-    let ocrCombinedText = "";
-    if (currentAttachedImages.length > 0) {
-      try {
-        const ocrResults = await Promise.all(currentAttachedImages.map((img) => runOcrOnImage(img)));
-        const validOcr = ocrResults.filter((text) => text.trim().length > 0);
-        if (validOcr.length > 0) {
-          ocrCombinedText = validOcr.map((text, idx) => `[Uploaded Screenshot/Image #${idx + 1} OCR Text: "${text}"]`).join("\n");
+      let ocrCombinedText = "";
+      if (currentAttachedImages.length > 0) {
+        try {
+          const ocrResults = await Promise.all(currentAttachedImages.map((img) => runOcrOnImage(img)));
+          const validOcr = ocrResults.filter((text) => text.trim().length > 0);
+          if (validOcr.length > 0) {
+            ocrCombinedText = validOcr.map((text, idx) => `[Uploaded Screenshot/Image #${idx + 1} OCR Text: "${text}"]`).join("\n");
+          }
+        } catch (ocrErr) {
+          console.warn("Background image OCR parsing failed:", ocrErr);
         }
-      } catch (ocrErr) {
-        console.warn("Background image OCR parsing failed:", ocrErr);
       }
-    }
 
-    let englishInputWithOcr = englishInput;
-    if (ocrCombinedText) {
-      englishInputWithOcr = `${englishInput}\n\n[USER ATTACHED SCREENSHOT DETAILS]\n${ocrCombinedText}`;
-    }
+      let englishInputWithOcr = englishInput;
+      if (ocrCombinedText) {
+        englishInputWithOcr = `${englishInput}\n\n[USER ATTACHED SCREENSHOT DETAILS]\n${ocrCombinedText}`;
+      }
 
-    // Prepare system message strictly in English for maximum reasoning quality
-    let accountContext = "";
-    if (userProfile) {
-      accountContext = `\n[USER ACCOUNT CONTEXT]\nEmail: ${userProfile.email}\nFull Name: ${userProfile.name}\nAccount Created At: ${userProfile.createdAt ? new Date(userProfile.createdAt).toLocaleString("tr-TR") : "N/A"}\nEmail Verification Status: ${userProfile.emailConfirmed ? "Verified" : "Unverified"}\nLast Sign-In: ${userProfile.lastSignIn ? new Date(userProfile.lastSignIn).toLocaleString("tr-TR") : "N/A"}\n`;
-    }
+      // Prepare system message strictly in English for maximum reasoning quality
+      let accountContext = "";
+      if (userProfile) {
+        accountContext = `\n[USER ACCOUNT CONTEXT]\nEmail: ${userProfile.email}\nFull Name: ${userProfile.name}\nAccount Created At: ${userProfile.createdAt ? new Date(userProfile.createdAt).toLocaleString("tr-TR") : "N/A"}\nEmail Verification Status: ${userProfile.emailConfirmed ? "Verified" : "Unverified"}\nLast Sign-In: ${userProfile.lastSignIn ? new Date(userProfile.lastSignIn).toLocaleString("tr-TR") : "N/A"}\n`;
+      }
 
-    const formattedMessages = [];
-    formattedMessages.push({
-      role: "system",
-      content: `You are ${agentName}, a professional customer support representative working at Fun Teknoloji (Fun Technology).
+      const formattedMessages = [];
+      formattedMessages.push({
+        role: "system",
+        content: `You are ${agentName}, a professional customer support representative working at Fun Teknoloji (Fun Technology).
 Fun Technology projects and information:
 ${KNOWLEDGE_BASE}
 ${accountContext}
@@ -1020,85 +1190,65 @@ Your task is to solve user's support requests in a warm, polite, and professiona
 If the user asks about their account details, email, registration date, verification status, or name, answer them accurately and beautifully using the provided USER ACCOUNT CONTEXT.
 If they uploaded screenshots/images, you have been provided with OCR-extracted text of those images inside the prompt. Address the text contents naturally.
 Do not mention any third-party services like Pollinations or Pulsar. Respond in English.`,
-    });
+      });
 
-    // Map live support conversation history using stored englishText to keep context strictly in English
-    const historyMessages = messages
-      .slice(-20)
-      .map((m) => ({
-        role: (m.role === "user" ? "user" : "assistant") as "user" | "assistant" | "system",
-        content: m.englishText || m.text,
-      }));
+      // Map live support conversation history using stored englishText to keep context strictly in English
+      const historyMessages = messages
+        .slice(-20)
+        .map((m) => ({
+          role: (m.role === "user" ? "user" : "assistant") as "user" | "assistant" | "system",
+          content: m.englishText || m.text,
+        }));
 
-    formattedMessages.push(...historyMessages);
+      formattedMessages.push(...historyMessages);
 
-    // Add current user input (already translated to English, with OCR data appended if present)
-    formattedMessages.push({
-      role: "user" as const,
-      content: englishInputWithOcr,
-    });
+      // Add current user input (already translated to English, with OCR data appended if present)
+      formattedMessages.push({
+        role: "user" as const,
+        content: englishInputWithOcr,
+      });
 
-    // Helper to ensure messages list starts with user role and strictly alternates user/assistant.
-    const cleanMessagesForAPI = (msgs: any[]) => {
-      const systemMsg = msgs.find((m) => m.role === "system");
-      const chatMsgs = msgs.filter((m) => m.role !== "system");
+      // Helper to ensure messages list starts with user role and strictly alternates user/assistant.
+      const cleanMessagesForAPI = (msgs: any[]) => {
+        const systemMsg = msgs.find((m) => m.role === "system");
+        const chatMsgs = msgs.filter((m) => m.role !== "system");
 
-      while (chatMsgs.length > 0 && chatMsgs[0].role !== "user") {
-        chatMsgs.shift();
-      }
+        while (chatMsgs.length > 0 && chatMsgs[0].role !== "user") {
+          chatMsgs.shift();
+        }
 
-      const alternating: any[] = [];
-      for (const msg of chatMsgs) {
-        if (!msg.content || msg.content.trim() === "") continue;
+        const alternating: any[] = [];
+        for (const msg of chatMsgs) {
+          if (!msg.content || msg.content.trim() === "") continue;
 
-        if (alternating.length === 0) {
-          alternating.push({ ...msg });
-        } else {
-          const lastMsg = alternating[alternating.length - 1];
-          if (lastMsg.role === msg.role) {
-            lastMsg.content = `${lastMsg.content}\n${msg.content}`;
-          } else {
+          if (alternating.length === 0) {
             alternating.push({ ...msg });
+          } else {
+            const lastMsg = alternating[alternating.length - 1];
+            if (lastMsg.role === msg.role) {
+              lastMsg.content = `${lastMsg.content}\n${msg.content}`;
+            } else {
+              alternating.push({ ...msg });
+            }
           }
         }
-      }
 
-      const finalMsgs = [];
-      if (systemMsg) {
-        finalMsgs.push(systemMsg);
-      }
-      finalMsgs.push(...alternating);
-      return finalMsgs;
-    };
+        const finalMsgs = [];
+        if (systemMsg) {
+          finalMsgs.push(systemMsg);
+        }
+        finalMsgs.push(...alternating);
+        return finalMsgs;
+      };
 
-    const cleanedMessages = cleanMessagesForAPI(formattedMessages);
-
-    try {
-      let englishResponse = "";
+      const cleanedMessages = cleanMessagesForAPI(formattedMessages);
 
       try {
-        // Route 1: Direct fetch to Fun Teknoloji completions endpoint
-        const response = await fetch("https://ai.funteknoloji.com/v1/chat/completions", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            messages: cleanedMessages,
-            model: "gemma-3-1b-it"
-          }),
-        });
-        if (response.ok) {
-          const data = await response.json() as any;
-          englishResponse = data.choices?.[0]?.message?.content || "";
-        } else {
-          throw new Error("Direct API failed");
-        }
-      } catch (err) {
-        console.warn("Direct API call failed, trying Vercel backend proxy fallback:", err);
+        let englishResponse = "";
+
         try {
-          // Route 2: Fallback to Vercel backend proxy /api/nexy
-          const response = await fetch("/api/nexy", {
+          // Route 1: Direct fetch to Fun Teknoloji completions endpoint
+          const response = await fetch("https://ai.funteknoloji.com/v1/chat/completions", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -1109,51 +1259,76 @@ Do not mention any third-party services like Pollinations or Pulsar. Respond in 
             }),
           });
           if (response.ok) {
-            englishResponse = await response.text();
+            const data = await response.json() as any;
+            englishResponse = data.choices?.[0]?.message?.content || "";
           } else {
-            throw new Error("Backend proxy failed");
+            throw new Error("Direct API failed");
           }
-        } catch (proxyErr) {
-          console.error("Vercel backend proxy also failed:", proxyErr);
+        } catch (err) {
+          console.warn("Direct API call failed, trying Vercel backend proxy fallback:", err);
+          try {
+            // Route 2: Fallback to Vercel backend proxy /api/nexy
+            const response = await fetch("/api/nexy", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                messages: cleanedMessages,
+                model: "gemma-3-1b-it"
+              }),
+            });
+            if (response.ok) {
+              englishResponse = await response.text();
+            } else {
+              throw new Error("Backend proxy failed");
+            }
+          } catch (proxyErr) {
+            console.error("Vercel backend proxy also failed:", proxyErr);
+          }
         }
-      }
 
-      englishResponse = englishResponse.trim().replace(/pulsar/gi, "Nexy");
+        englishResponse = englishResponse.trim().replace(/pulsar/gi, "Nexy");
 
-      // Auto translate AI's English response back to user's local language
-      let agentText = englishResponse || "How can I assist you?";
-      if (lang !== "en" && englishResponse) {
-        agentText = await translateAnyText(englishResponse, "en", lang);
-      }
-
-      const agentMsgId = Math.random().toString(36).substring(2, 9);
-      setMessages((prev) => [
-        ...prev,
-        {
-          role: "agent" as const,
-          text: agentText,
-          id: agentMsgId,
-          timestamp: Date.now(),
-          displayedText: "",
-          englishText: englishResponse
+        // Auto translate AI's English response back to user's local language
+        let agentText = englishResponse;
+        if (!agentText) {
+          agentText = lang === "tr" ? "Bir hata oluştu, lütfen daha sonra tekrar deneyin." : "An error occurred, please try again later.";
+        } else if (lang !== "en") {
+          agentText = await translateAnyText(englishResponse, "en", lang);
         }
-      ]);
-      setIsAgentTyping(false);
-      setTimeout(() => typeAgentMessage(agentText, agentMsgId), 50);
 
-    } catch (e) {
-      setTimeout(() => {
+        const agentMsgId = Math.random().toString(36).substring(2, 9);
         setMessages((prev) => [
           ...prev,
           {
             role: "agent" as const,
-            text: lang === "tr" ? "Bağlantı hatası oluştu, lütfen tekrar deneyin." : "Connection error, please try again.",
-            id: Math.random().toString(36).substring(2, 9),
-            timestamp: Date.now()
+            text: agentText,
+            id: agentMsgId,
+            timestamp: Date.now(),
+            displayedText: "",
+            englishText: englishResponse
           }
         ]);
         setIsAgentTyping(false);
-      }, 1500);
+        setTimeout(() => typeAgentMessage(agentText, agentMsgId), 50);
+
+      } catch (e) {
+        setTimeout(() => {
+          setMessages((prev) => [
+            ...prev,
+            {
+              role: "agent" as const,
+              text: lang === "tr" ? "Bağlantı hatası oluştu, lütfen tekrar deneyin." : "Connection error, please try again.",
+              id: Math.random().toString(36).substring(2, 9),
+              timestamp: Date.now()
+            }
+          ]);
+          setIsAgentTyping(false);
+        }, 1500);
+      }
+    } finally {
+      isSendingRef.current = false;
     }
   };
 
@@ -1498,10 +1673,10 @@ Do not mention any third-party services like Pollinations or Pulsar. Respond in 
             />
             <button
               type="button"
-              disabled={isAgentTyping}
+              disabled={isAgentTyping || !isOnline}
               onClick={() => fileInputRef.current?.click()}
               title={lang === "tr" ? "Resim Ekle" : "Attach Image"}
-              className="h-10 w-10 shrink-0 rounded-full hover:bg-[var(--fun-stroke-1)] flex items-center justify-center text-zinc-400 hover:text-[var(--fun-purple)] transition-colors disabled:opacity-40"
+              className="h-10 w-10 shrink-0 rounded-full hover:bg-[var(--fun-stroke-1)] flex items-center justify-center text-zinc-400 hover:text-[var(--fun-purple)] transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
             >
               <ImageIcon className="h-5 w-5" />
             </button>
@@ -1517,13 +1692,14 @@ Do not mention any third-party services like Pollinations or Pulsar. Respond in 
                     handleSend(e);
                   }
                 }}
-                placeholder={getTranslation(lang, "typeMessage")}
-                className="w-full rounded-[20px] bg-[var(--fun-surface)] border border-[var(--fun-stroke-2)] py-3 pl-4 pr-12 text-xs outline-none focus:border-[var(--fun-purple)] focus:ring-4 focus:ring-[var(--fun-purple)]/10 transition-all fun-text shadow-inner resize-none h-[42px] overflow-y-auto"
+                disabled={!isOnline}
+                placeholder={isOnline ? getTranslation(lang, "typeMessage") : (lang === "tr" ? "İnternet bağlantısı yok." : "No internet connection.")}
+                className="w-full rounded-[20px] bg-[var(--fun-surface)] border border-[var(--fun-stroke-2)] py-3 pl-4 pr-12 text-xs outline-none focus:border-[var(--fun-purple)] focus:ring-4 focus:ring-[var(--fun-purple)]/10 transition-all fun-text shadow-inner resize-none h-[42px] overflow-y-auto disabled:opacity-55 disabled:cursor-not-allowed"
               />
               <button
                 type="submit"
-                disabled={(!input.trim() && attachedImages.length === 0) || isAgentTyping}
-                className="absolute right-2.5 top-[21px] -translate-y-1/2 h-8 w-8 rounded-xl bg-[var(--fun-purple)] text-white flex items-center justify-center hover:scale-105 active:scale-95 transition-all disabled:opacity-30 disabled:hover:scale-100 shadow-lg shadow-purple-500/30 cursor-pointer z-10"
+                disabled={(!input.trim() && attachedImages.length === 0) || isAgentTyping || !isOnline}
+                className="absolute right-2.5 top-[21px] -translate-y-1/2 h-8 w-8 rounded-xl bg-[var(--fun-purple)] text-white flex items-center justify-center hover:scale-105 active:scale-95 transition-all disabled:opacity-30 disabled:hover:scale-100 disabled:cursor-not-allowed shadow-lg shadow-purple-500/30 cursor-pointer z-10"
               >
                 <Send className="h-3.5 w-3.5" />
               </button>
