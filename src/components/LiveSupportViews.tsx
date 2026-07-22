@@ -1099,6 +1099,38 @@ Do not promote any third-party services like Pollinations or Pulsar. Respond in 
     return "";
   };
 
+  // Image Captioning/Visual description using Salesforce BLIP model
+  const describeImage = async (base64Image: string): Promise<string> => {
+    try {
+      const arr = base64Image.split(",");
+      const mime = arr[0].match(/:(.*?);/)?.[1] || "image/png";
+      const bstr = atob(arr[1]);
+      let n = bstr.length;
+      const u8arr = new Uint8Array(n);
+      while (n--) {
+        u8arr[n] = bstr.charCodeAt(n);
+      }
+      const blob = new Blob([u8arr], { type: mime });
+
+      const response = await fetch(
+        "https://api-inference.huggingface.co/models/Salesforce/blip-image-captioning-base",
+        {
+          method: "POST",
+          body: blob,
+        }
+      );
+      if (response.ok) {
+        const data = await response.json() as any;
+        if (data && data[0] && data[0].generated_text) {
+          return data[0].generated_text;
+        }
+      }
+    } catch (err) {
+      console.error("Image captioning failed:", err);
+    }
+    return "";
+  };
+
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
     if (!files.length) return;
@@ -1130,7 +1162,7 @@ Do not promote any third-party services like Pollinations or Pulsar. Respond in 
 
       fileObj.base64 = base64;
 
-      // Extract text content
+      // Extract content and visual description
       if (file.type.includes("text/plain") || file.name.endsWith(".txt")) {
         const txtContent = await new Promise<string>((resolve) => {
           const reader = new FileReader();
@@ -1139,13 +1171,33 @@ Do not promote any third-party services like Pollinations or Pulsar. Respond in 
         });
         fileObj.extractedText = txtContent;
         fileObj.isAnalyzing = false;
-      } else if (file.type.includes("image") || file.type.includes("pdf") || file.name.endsWith(".pdf")) {
-        // Run OCR in background
+      } else if (file.type.includes("image")) {
+        // Run OCR and Visual Captioning concurrently
+        const [ocrText, visualDesc] = await Promise.all([
+          runOcrOnImage(base64, file.type || file.name),
+          describeImage(base64)
+        ]);
+
+        let combined = "";
+        if (ocrText && ocrText.trim()) {
+          combined += `OCR Extracted Text:\n${ocrText.trim()}`;
+        }
+        if (visualDesc && visualDesc.trim()) {
+          let localizedDesc = visualDesc.trim();
+          if (lang !== "en") {
+            localizedDesc = await translateAnyText(localizedDesc, "en", lang);
+          }
+          combined += (combined ? "\n\n" : "") + `Visual Scene Description: "${localizedDesc}"`;
+        }
+
+        fileObj.extractedText = combined || "[An image file with no readable text]";
+        fileObj.isAnalyzing = false;
+      } else if (file.type.includes("pdf") || file.name.endsWith(".pdf")) {
+        // Run PDF OCR
         const ocrText = await runOcrOnImage(base64, file.type || file.name);
-        fileObj.extractedText = ocrText;
+        fileObj.extractedText = ocrText ? `PDF Extracted Content:\n${ocrText}` : "[An empty PDF document]";
         fileObj.isAnalyzing = false;
       } else {
-        // For other files, set descriptive extracted text placeholder
         fileObj.extractedText = `[File attachment name: ${file.name}]`;
         fileObj.isAnalyzing = false;
       }
@@ -1246,16 +1298,18 @@ Do not promote any third-party services like Pollinations or Pulsar. Respond in 
       const formattedMessages = [];
       formattedMessages.push({
         role: "system",
-        content: `You are ${agentName}, a professional customer support representative working at Fun Teknoloji (Fun Technology).
+        content: `You are ${agentName}, a professional customer support representative working strictly and exclusively for Fun Teknoloji (Fun Technology).
 Fun Technology projects and information:
 ${KNOWLEDGE_BASE}
 ${accountContext}
 ${ticketContext}
-Your task is to solve user's support requests in a warm, polite, and professional manner based on the knowledge base, user account context (if available), and the user's ticket details (subject, description, and importance).
-Always ensure your conversation and help are specifically tailored to resolve the user's issue described in their ticket description ("${ticketDescription}").
-If the user asks about their account details, email, registration date, verification status, or name, answer them accurately and beautifully using the provided USER ACCOUNT CONTEXT.
-If they uploaded screenshots/images, you have been provided with OCR-extracted text of those images inside the prompt. Address the text contents naturally.
-Do not mention any third-party services like Pollinations or Pulsar. Respond in English.`,
+
+CRITICAL RULES:
+1. STRICT CUSTOMER SUPPORT ROLE: You are ONLY allowed to answer questions regarding Fun Teknoloji, our products (Nexy, QuakeSafe), our services, or the user's specific ticket ("${ticketDescription}").
+2. REJECT IRRELEVANT / OFF-TOPIC QUESTIONS: If the user asks about unrelated topics (e.g., writing code, math, history, cooking, general chitchat, or other companies), you must politely refuse to answer. Say: "I am only here to provide support regarding Fun Teknoloji and your specific support ticket. I cannot assist with other unrelated topics." Do not break character under any circumstances.
+3. Solve requests in a warm, polite, and professional manner based on the knowledge base, user account context, and ticket details.
+4. Ensure your help is specifically tailored to resolve the user's described issue ("${ticketDescription}").
+5. Do not mention any third-party services like Pollinations or Pulsar. Respond in English.`,
       });
 
       // Map live support conversation history using stored englishText to keep context strictly in English
