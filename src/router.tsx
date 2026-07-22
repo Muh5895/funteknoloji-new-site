@@ -26,7 +26,7 @@ function DefaultErrorComponent({ error, reset }: { error: Error; reset: () => vo
           </svg>
         </div>
         <h1 className="text-2xl font-bold tracking-tight text-foreground">
-          {import.meta.env.DEV ? t("error.title") : "Oops!"}
+          {t("error.title")}
         </h1>
         <p className="mt-2 text-sm text-muted-foreground">{t("error.unexpected")}</p>
         {import.meta.env.DEV && error.message && (

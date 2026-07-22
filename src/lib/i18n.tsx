@@ -7099,7 +7099,19 @@ interface Ctx {
   t: (key: string) => string;
 }
 
-const LangCtx = createContext<Ctx>({ lang: "tr", setLang: () => {}, t: (k) => k });
+const LangCtx = createContext<Ctx>({
+  lang: "tr",
+  setLang: () => {},
+  t: (key: string) => {
+    if (typeof window !== "undefined") {
+      const stored = localStorage.getItem("lang") as Lang | null;
+      const currentLang = stored || "tr";
+      const dict = dicts[currentLang] || dicts.tr;
+      return dict[key] || dicts.tr[key] || key;
+    }
+    return key;
+  }
+});
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [lang, setLangState] = useState<Lang>("tr");

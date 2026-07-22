@@ -148,6 +148,21 @@ const getLocalFallbackResponse = (input: string, lang: string, chatMessages: any
   }
 };
 
+const cleanLiveMessagesForStorage = (messages: any[]) => {
+  return messages.map((m) => {
+    if (m.files) {
+      return {
+        ...m,
+        files: m.files.map((f: any) => ({
+          ...f,
+          base64: "" // Strip massive base64 string, keep metadata and thumbnail
+        }))
+      };
+    }
+    return m;
+  });
+};
+
 export default function NexyAssistant() {
   const { t, lang } = useLang();
   const navigate = useNavigate();
@@ -219,7 +234,12 @@ export default function NexyAssistant() {
   useEffect(() => {
     if (typeof window !== "undefined") {
       if (liveMessages.length > 0) {
-        localStorage.setItem("live_support_messages", JSON.stringify(liveMessages));
+        try {
+          const cleaned = cleanLiveMessagesForStorage(liveMessages);
+          localStorage.setItem("live_support_messages", JSON.stringify(cleaned));
+        } catch (e) {
+          console.error("Failed to save live support messages to LocalStorage:", e);
+        }
       } else {
         localStorage.removeItem("live_support_messages");
       }
@@ -1093,17 +1113,22 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
               onEndSession={() => {
                 // Archive current session on close (keeps account logged in)
                 if (liveMessages.length > 0 && liveUser) {
+                  const cleanedMessages = cleanLiveMessagesForStorage(liveMessages);
                   const newSession = {
                     id: Math.random().toString(36).substring(2, 9),
                     email: liveUser.email,
                     subject: localStorage.getItem("live_support_subject") || "Destek Talebi",
                     importance: localStorage.getItem("live_support_importance") || "Orta",
                     timestamp: Date.now(),
-                    messages: liveMessages,
+                    messages: cleanedMessages,
                   };
                   const updatedHistory = [newSession, ...pastSessions];
                   setPastSessions(updatedHistory);
-                  localStorage.setItem("live_support_history", JSON.stringify(updatedHistory));
+                  try {
+                    localStorage.setItem("live_support_history", JSON.stringify(updatedHistory));
+                  } catch (e) {
+                    console.error("Failed to save live support history to LocalStorage:", e);
+                  }
                 }
                 setLiveMessages([]);
                 setSupportView("menu");

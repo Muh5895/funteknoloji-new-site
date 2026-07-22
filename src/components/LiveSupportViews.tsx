@@ -10,9 +10,49 @@ export interface AttachedFile {
   type: string;
   size: string;
   base64: string;
+  thumbnail?: string;
   extractedText?: string;
   isAnalyzing?: boolean;
 }
+
+const generateThumbnail = (base64Str: string, maxWidth = 150, maxHeight = 150): Promise<string> => {
+  return new Promise((resolve) => {
+    if (typeof window === "undefined" || !base64Str || !base64Str.startsWith("data:image/")) {
+      resolve("");
+      return;
+    }
+    const img = new Image();
+    img.src = base64Str;
+    img.onload = () => {
+      let width = img.width;
+      let height = img.height;
+
+      if (width > maxWidth || height > maxHeight) {
+        if (width > height) {
+          height = Math.round((height * maxWidth) / width);
+          width = maxWidth;
+        } else {
+          width = Math.round((width * maxHeight) / height);
+          height = maxHeight;
+        }
+      }
+
+      const canvas = document.createElement("canvas");
+      canvas.width = width;
+      canvas.height = height;
+      const ctx = canvas.getContext("2d");
+      if (ctx) {
+        ctx.drawImage(img, 0, 0, width, height);
+        resolve(canvas.toDataURL("image/jpeg", 0.6));
+      } else {
+        resolve("");
+      }
+    };
+    img.onerror = () => {
+      resolve("");
+    };
+  });
+};
 
 // Translate utility to translate from any language to Turkish
 const translateToTurkish = async (text: string, sourceLang: string): Promise<string> => {
@@ -1215,6 +1255,9 @@ Do not promote any third-party services like Pollinations or Pulsar. Respond in 
       });
 
       fileObj.base64 = base64;
+      if (file.type.includes("image")) {
+        fileObj.thumbnail = await generateThumbnail(base64);
+      }
 
       // Extract content and visual description
       if (file.type.includes("text/plain") || file.name.endsWith(".txt")) {
@@ -1642,10 +1685,10 @@ CRITICAL RULES:
                               .map((file, idx) => (
                                 <div
                                   key={idx}
-                                  onClick={() => setSelectedImage(file.base64)}
+                                  onClick={() => setSelectedImage(file.base64 || file.thumbnail || "")}
                                   className="relative h-20 w-20 sm:h-24 sm:w-24 rounded-xl overflow-hidden border border-white/10 shadow-sm cursor-zoom-in hover:scale-[1.03] transition-transform"
                                 >
-                                  <img src={file.base64} alt="Message attachment" className="h-full w-full object-cover" />
+                                  <img src={file.base64 || file.thumbnail} alt="Message attachment" className="h-full w-full object-cover" />
                                 </div>
                               ))}
                           </div>
@@ -1863,7 +1906,7 @@ CRITICAL RULES:
               <div key={idx} className="relative flex items-center gap-2 px-3 py-2 bg-[var(--fun-card)] border border-[var(--fun-stroke-2)] rounded-xl shrink-0 group">
                 {isImg ? (
                   <div className="h-8 w-8 rounded-lg overflow-hidden shrink-0 border">
-                    <img src={file.base64} alt="draft preview" className="h-full w-full object-cover" />
+                    <img src={file.base64 || file.thumbnail} alt="draft preview" className="h-full w-full object-cover" />
                   </div>
                 ) : (
                   <div className="h-8 w-8 rounded-lg bg-[var(--fun-purple)]/10 text-[var(--fun-purple)] flex items-center justify-center shrink-0">
