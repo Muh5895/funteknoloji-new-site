@@ -121,13 +121,26 @@ CRITICAL RULES:
 7. RESPOND IN THE USER'S LANGUAGE: Speak to the user in the language they are communicating with you (e.g. Turkish, English, Spanish, etc.). Do not use any translation layers.`;
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  // 1. CORS Whitelist
+  // 1. CORS Whitelist and Domain-Only Request Enforcement
   const origin = (req.headers.origin as string) || "";
+  const referer = (req.headers.referer as string) || "";
+
   const isAllowedOrigin =
     origin === "http://localhost:8080" ||
     origin === "http://localhost:3000" ||
     origin.endsWith(".funteknoloji.com") ||
     origin === "https://funteknoloji.com";
+
+  const isAllowedReferer =
+    referer.startsWith("http://localhost:8080") ||
+    referer.startsWith("http://localhost:3000") ||
+    referer.includes(".funteknoloji.com") ||
+    referer.startsWith("https://funteknoloji.com");
+
+  // Reject immediately with "Access Denied" if the request is not from our allowed domains
+  if (!isAllowedOrigin && !isAllowedReferer) {
+    return res.status(403).send("Access Denied");
+  }
 
   if (isAllowedOrigin) {
     res.setHeader("Access-Control-Allow-Origin", origin);
@@ -142,6 +155,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(200).end();
   }
 
+  // Reject GET or any method other than POST with generic "Access Denied" response
+  if (req.method !== "POST") {
+    return res.status(403).send("Access Denied");
+  }
+
   // 2. Secure Trusted IP Check (using Vercel trusted headers to mitigate header spoofing risk)
   const ip =
     (req.headers["x-vercel-proxied-for"] as string) ||
@@ -151,13 +169,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   // 3. Redis/KV Rate Limit Check
   const rateLimited = await isRateLimitedServerless(ip);
-  if (req.method === "POST" && rateLimited) {
+  if (rateLimited) {
     return res.status(429).send("Nexy error: Çok fazla istek gönderildi. Lütfen daha sonra tekrar deneyin.");
-  }
-
-  // Reject GET or any method other than POST to prevent users from just typing /api/nexy in the browser
-  if (req.method !== "POST") {
-    return res.status(405).send("Nexy error: Sadece POST istekleri kabul edilir.");
   }
 
   // Read body parameters
