@@ -1048,7 +1048,11 @@ Do not promote any third-party services like Pollinations or Pulsar. Respond in 
           const response = await fetch("/api/nexy", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ messages: cleanedMessages, model: "gemma-3-1b-it" }),
+            body: JSON.stringify({
+              messages: cleanedMessages,
+              originalMessages: cleanedMessages,
+              model: "gemma-3-1b-it"
+            }),
           });
           if (response.ok) {
             englishResponse = await response.text();
@@ -1489,6 +1493,16 @@ CRITICAL RULES:
         } catch (err) {
           console.warn("Direct API call failed, trying Vercel backend proxy fallback:", err);
           try {
+          // Construct original untranslated messages history
+          const originalMessages = messages.map((m) => ({
+            role: m.role === "user" ? "user" : "assistant",
+            content: m.text,
+          }));
+          originalMessages.push({
+            role: "user",
+            content: userText,
+          });
+
             // Route 2: Fallback to Vercel backend proxy /api/nexy
             const response = await fetch("/api/nexy", {
               method: "POST",
@@ -1497,6 +1511,7 @@ CRITICAL RULES:
               },
               body: JSON.stringify({
                 messages: cleanedMessages,
+              originalMessages,
                 model: "gemma-3-1b-it"
               }),
             });

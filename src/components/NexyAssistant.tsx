@@ -441,12 +441,22 @@ export default function NexyAssistant() {
     setIsTyping(false);
   };
 
-  const getNexyBrainResponse = async (englishInput: string) => {
+  const getNexyBrainResponse = async (englishInput: string, originalInput: string) => {
     if (abortControllerRef.current) {
       abortControllerRef.current.abort();
     }
     const controller = new AbortController();
     abortControllerRef.current = controller;
+
+    // Construct original untranslated messages history for backup AI use
+    const originalMessages = chatMessages.slice(-20).map((m) => ({
+      role: (m.role === "nexy" ? "assistant" : "user") as "user" | "assistant" | "system",
+      content: m.text,
+    }));
+    originalMessages.push({
+      role: "user",
+      content: originalInput,
+    });
 
     // Prepare system message strictly in English for maximum reasoning quality
     const formattedMessages = [];
@@ -543,6 +553,7 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
           },
           body: JSON.stringify({
             messages: cleanedMessages,
+            originalMessages,
             model: "gemma-3-1b-it"
           }),
           signal: controller.signal,
@@ -631,7 +642,7 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
       setIsTyping(false);
       setIsThinking(true);
 
-      const result = await getNexyBrainResponse(englishInput);
+      const result = await getNexyBrainResponse(englishInput, savedInput);
 
       // If request was stopped/cancelled, return immediately
       if (abortControllerRef.current === null) {
