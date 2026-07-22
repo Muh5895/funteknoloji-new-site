@@ -1078,11 +1078,35 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
             <LiveTicketDetailsView
               lang={lang}
               onBack={() => setSupportView("menu")}
-              onSubmit={(details) => {
+              onSubmit={async (details) => {
                 // Save subject, importance & description to localStorage so they persist for archive saving and AI context
                 localStorage.setItem("live_support_subject", details.subject);
                 localStorage.setItem("live_support_importance", details.importance);
                 localStorage.setItem("live_support_description", details.description);
+
+                try {
+                  // Translate subject and description to English silently in the background
+                  const subjectEn = await translateAnyText(details.subject, lang, "en");
+                  const descriptionEn = await translateAnyText(details.description, lang, "en");
+
+                  const importanceMap: Record<string, string> = {
+                    "Düşük": "Low",
+                    "Orta": "Medium",
+                    "Yüksek": "High",
+                    "Kritik": "Critical",
+                    "Low": "Low",
+                    "Medium": "Medium",
+                    "High": "High",
+                    "Critical": "Critical"
+                  };
+                  const importanceEn = importanceMap[details.importance] || details.importance;
+
+                  localStorage.setItem("live_support_subject_en", subjectEn);
+                  localStorage.setItem("live_support_importance_en", importanceEn);
+                  localStorage.setItem("live_support_description_en", descriptionEn);
+                } catch (e) {
+                  console.error("Failed to translate ticket details to English:", e);
+                }
 
                 // Pre-populate chat with the compiled ticket details
                 const initialMsg = `**Yeni Canlı Destek Talebi**\n\n📌 **Konu:** ${details.subject}\n⚡ **Önem Seviyesi:** ${details.importance}\n📝 **Açıklama:** ${details.description}`;
@@ -1135,6 +1159,9 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
                 localStorage.removeItem("live_support_messages");
                 localStorage.removeItem("live_support_subject");
                 localStorage.removeItem("live_support_importance");
+                localStorage.removeItem("live_support_subject_en");
+                localStorage.removeItem("live_support_importance_en");
+                localStorage.removeItem("live_support_description_en");
               }}
               onLogout={() => {
                 // Log out from the live support account completely
@@ -1145,6 +1172,9 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
                 localStorage.removeItem("live_support_user");
                 localStorage.removeItem("live_support_subject");
                 localStorage.removeItem("live_support_importance");
+                localStorage.removeItem("live_support_subject_en");
+                localStorage.removeItem("live_support_importance_en");
+                localStorage.removeItem("live_support_description_en");
                 localStorage.removeItem("live_support_agent_name");
               }}
               lang={lang}

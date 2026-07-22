@@ -841,15 +841,18 @@ export function LiveChatView({
   const [input, setInput] = useState("");
   const [attachedFiles, setAttachedFiles] = useState<AttachedFile[]>([]);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [selectedDocument, setSelectedDocument] = useState<AttachedFile | null>(null);
   const [lastSentTimestamp, setLastSentTimestamp] = useState<number>(0);
   const [isOnline, setIsOnline] = useState<boolean>(typeof window !== "undefined" ? navigator.onLine : true);
 
   const getAgentThinkingText = () => {
-    const hasFiles = attachedFiles.length > 0;
     const lastUserMsg = [...messages].reverse().find((m) => m.role === "user");
     const lastUserText = lastUserMsg?.text?.toLowerCase() || "";
-
+    const hasFiles = attachedFiles.length > 0;
     const hasMsgFiles = lastUserMsg?.files && lastUserMsg.files.length > 0;
+
+    const filesCount = attachedFiles.length + (lastUserMsg?.files?.length || 0);
+
     const mentionsFiles =
       lastUserText.includes("dosya") ||
       lastUserText.includes("resim") ||
@@ -861,6 +864,9 @@ export function LiveChatView({
       lastUserText.includes("pdf");
 
     if (hasFiles || hasMsgFiles || mentionsFiles) {
+      if (filesCount > 1) {
+        return lang === "tr" ? "Dosyalar İnceleniyor..." : "Analyzing Files...";
+      }
       return lang === "tr" ? "Dosya İnceleniyor..." : "Analyzing File...";
     }
 
@@ -964,9 +970,9 @@ export function LiveChatView({
     const triggerWelcome = async () => {
       setIsAgentTyping(true);
 
-      const ticketSubject = localStorage.getItem("live_support_subject") || "Genel Destek";
-      const ticketImportance = localStorage.getItem("live_support_importance") || "Orta";
-      const ticketDescription = localStorage.getItem("live_support_description") || "";
+      const ticketSubject = localStorage.getItem("live_support_subject_en") || localStorage.getItem("live_support_subject") || "General Support";
+      const ticketImportance = localStorage.getItem("live_support_importance_en") || localStorage.getItem("live_support_importance") || "Medium";
+      const ticketDescription = localStorage.getItem("live_support_description_en") || localStorage.getItem("live_support_description") || "";
 
       const accountContext = `\n[USER ACCOUNT CONTEXT]\nEmail: ${userProfile.email}\nFull Name: ${userProfile.name}\nAccount Created At: ${userProfile.createdAt ? new Date(userProfile.createdAt).toLocaleString("tr-TR") : "N/A"}\nEmail Verification Status: ${userProfile.emailConfirmed ? "Verified" : "Unverified"}\nLast Sign-In: ${userProfile.lastSignIn ? new Date(userProfile.lastSignIn).toLocaleString("tr-TR") : "N/A"}\n`;
 
@@ -1048,6 +1054,14 @@ Do not promote any third-party services like Pollinations or Pulsar. Respond in 
           }
         }
 
+        englishResponse = englishResponse.replace(/\[inceliyor\]/gi, "");
+        englishResponse = englishResponse.replace(/\[duraklama\]/gi, "");
+        englishResponse = englishResponse.replace(/\[bekliyor\]/gi, "");
+        englishResponse = englishResponse.replace(/\[düşünüyor\]/gi, "");
+        englishResponse = englishResponse.replace(/\[[^\]]+\]/g, (match) => {
+          if (match.toLowerCase().startsWith("[redirect:")) return match;
+          return "";
+        });
         englishResponse = englishResponse.trim().replace(/pulsar/gi, "Nexy");
 
         let agentText = englishResponse || `Hello ${userProfile.name}! I am ${agentName}. How can I assist you today?`;
@@ -1373,27 +1387,28 @@ Do not promote any third-party services like Pollinations or Pulsar. Respond in 
         accountContext = `\n[USER ACCOUNT CONTEXT]\nEmail: ${userProfile.email}\nFull Name: ${userProfile.name}\nAccount Created At: ${userProfile.createdAt ? new Date(userProfile.createdAt).toLocaleString("tr-TR") : "N/A"}\nEmail Verification Status: ${userProfile.emailConfirmed ? "Verified" : "Unverified"}\nLast Sign-In: ${userProfile.lastSignIn ? new Date(userProfile.lastSignIn).toLocaleString("tr-TR") : "N/A"}\n`;
       }
 
-      const ticketSubject = localStorage.getItem("live_support_subject") || "Genel Destek";
-      const ticketImportance = localStorage.getItem("live_support_importance") || "Orta";
-      const ticketDescription = localStorage.getItem("live_support_description") || "";
+      const ticketSubject = localStorage.getItem("live_support_subject_en") || localStorage.getItem("live_support_subject") || "General Support";
+      const ticketImportance = localStorage.getItem("live_support_importance_en") || localStorage.getItem("live_support_importance") || "Medium";
+      const ticketDescription = localStorage.getItem("live_support_description_en") || localStorage.getItem("live_support_description") || "";
 
       let ticketContext = `\n[USER TICKET DETAILS]\nSubject: ${ticketSubject}\nImportance Level: ${ticketImportance}\nUser's Description of the Issue: "${ticketDescription}"\n`;
 
       const formattedMessages = [];
       formattedMessages.push({
         role: "system",
-        content: `You are ${agentName}, a professional customer support representative working strictly and exclusively for Fun Teknoloji (Fun Technology).
+        content: `You are ${agentName}, a professional, warm, and highly capable human customer support representative working strictly for Fun Teknoloji (Fun Technology).
 Fun Technology projects and information:
 ${KNOWLEDGE_BASE}
 ${accountContext}
 ${ticketContext}
 
 CRITICAL RULES:
-1. STRICT CUSTOMER SUPPORT ROLE: You are ONLY allowed to answer questions regarding Fun Teknoloji, our products (Nexy, QuakeSafe), our services, or the user's specific ticket ("${ticketDescription}").
-2. REJECT IRRELEVANT / OFF-TOPIC QUESTIONS: If the user asks about unrelated topics (e.g., writing code, math, history, cooking, general chitchat, or other companies), you must politely refuse to answer. Say: "I am only here to provide support regarding Fun Teknoloji and your specific support ticket. I cannot assist with other unrelated topics." Do not break character under any circumstances.
-3. Solve requests in a warm, polite, and professional manner based on the knowledge base, user account context, and ticket details.
+1. FOCUS ON CUSTOMER SUPPORT: Your main objective is to assist the user with Fun Teknoloji, our products (Nexy, QuakeSafe), our services, or their specific ticket details ("${ticketDescription}").
+2. BE WARM, CONVERSATIONAL AND INTELLIGENT: Talk like a highly empathetic, helpful human agent. Avoid dry, robotic rejections. If the user asks general friendly chitchat or unrelated questions, gently and politely bridge back to how you can help them with Fun Teknoloji or their support ticket.
+3. Solve requests in a polite and professional manner based on the knowledge base, user account context, and ticket details.
 4. Ensure your help is specifically tailored to resolve the user's described issue ("${ticketDescription}").
-5. Do not mention any third-party services like Pollinations or Pulsar. Respond in English.`,
+5. STRICT OUTPUT CONSTRAINT: DO NOT under any circumstances output bracketed tokens like [inceliyor], [duraklama], [düşünüyor] or any similar status tags.
+6. Do not mention any third-party services like Pollinations or Pulsar. Respond in English.`,
       });
 
       // Map live support conversation history using stored englishText to keep context strictly in English
@@ -1492,6 +1507,14 @@ CRITICAL RULES:
           }
         }
 
+        englishResponse = englishResponse.replace(/\[inceliyor\]/gi, "");
+        englishResponse = englishResponse.replace(/\[duraklama\]/gi, "");
+        englishResponse = englishResponse.replace(/\[bekliyor\]/gi, "");
+        englishResponse = englishResponse.replace(/\[düşünüyor\]/gi, "");
+        englishResponse = englishResponse.replace(/\[[^\]]+\]/g, (match) => {
+          if (match.toLowerCase().startsWith("[redirect:")) return match;
+          return "";
+        });
         englishResponse = englishResponse.trim().replace(/pulsar/gi, "Nexy");
 
         // Auto translate AI's English response back to user's local language
@@ -1701,7 +1724,8 @@ CRITICAL RULES:
                               .map((file, idx) => (
                                 <div
                                   key={idx}
-                                  className="flex items-center gap-2.5 p-2 rounded-xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 max-w-[240px]"
+                                  onClick={() => setSelectedDocument(file)}
+                                  className="flex items-center gap-2.5 p-2 rounded-xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 max-w-[240px] cursor-pointer hover:bg-black/10 dark:hover:bg-white/10 transition-colors"
                                 >
                                   <div className="h-8 w-8 rounded-lg bg-[var(--fun-purple)]/10 text-[var(--fun-purple)] flex items-center justify-center shrink-0">
                                     <FileText className="h-4.5 w-4.5" />
@@ -1772,9 +1796,10 @@ CRITICAL RULES:
           <div className="flex flex-col items-start space-y-1 animate-in fade-in duration-300">
             <div className="bg-[var(--fun-surface)] rounded-2xl rounded-bl-none px-4 py-3 border border-[var(--fun-stroke-1)] shadow-sm">
               <div className="flex items-center gap-3">
-                {/* Shimmering Circular Avatar Placeholder */}
-                <div className="h-6 w-6 rounded-full bg-zinc-200 dark:bg-zinc-800 animate-pulse relative overflow-hidden shrink-0">
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-[shimmer_1.5s_infinite]" />
+                {/* Modern Tech Spinning Ring */}
+                <div className="relative h-5 w-5 flex items-center justify-center shrink-0 mr-0.5">
+                  <div className="absolute inset-0 rounded-full border-2 border-[var(--fun-purple)]/20"></div>
+                  <div className="absolute inset-0 rounded-full border-2 border-t-[var(--fun-purple)] animate-spin"></div>
                 </div>
                 {/* Shimmering Context-Aware Loading Text */}
                 <div className="flex items-center gap-2">
@@ -1899,13 +1924,20 @@ CRITICAL RULES:
 
       {/* Draft Attached Files previews bar */}
       {attachedFiles.length > 0 && (
-        <div className="p-3 border-t bg-[var(--fun-surface)]/80 flex items-center gap-3 overflow-x-auto" style={{ borderColor: "var(--fun-stroke-1)" }}>
+        <div className="p-3 border-t bg-[var(--fun-surface)]/80 flex items-center gap-3 overflow-x-auto shrink-0 w-full max-w-full" style={{ borderColor: "var(--fun-stroke-1)" }}>
           {attachedFiles.map((file, idx) => {
             const isImg = file.type.startsWith("image/");
             return (
               <div key={idx} className="relative flex items-center gap-2 px-3 py-2 bg-[var(--fun-card)] border border-[var(--fun-stroke-2)] rounded-xl shrink-0 group">
-                {isImg ? (
-                  <div className="h-8 w-8 rounded-lg overflow-hidden shrink-0 border">
+                {file.isAnalyzing ? (
+                  <div className="h-8 w-8 rounded-lg bg-[var(--fun-purple)]/5 border border-[var(--fun-purple)]/25 flex items-center justify-center shrink-0">
+                    <svg className="animate-spin h-4 w-4 text-[var(--fun-purple)]" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.3 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                    </svg>
+                  </div>
+                ) : isImg ? (
+                  <div className="h-8 w-8 rounded-lg overflow-hidden shrink-0 border border-black/10 dark:border-white/10">
                     <img src={file.base64 || file.thumbnail} alt="draft preview" className="h-full w-full object-cover" />
                   </div>
                 ) : (
@@ -1917,12 +1949,8 @@ CRITICAL RULES:
                   <span className="font-bold truncate fun-text leading-tight">{file.name}</span>
                   <span className="fun-text-muted mt-0.5">
                     {file.isAnalyzing ? (
-                      <span className="flex items-center gap-1.5 text-[var(--fun-purple)] font-bold">
-                        <svg className="animate-spin h-3.5 w-3.5 shrink-0" fill="none" viewBox="0 0 24 24">
-                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.3 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-                        </svg>
-                        <span className="animate-pulse">{lang === "tr" ? "Yükleniyor..." : "Loading..."}</span>
+                      <span className="text-[var(--fun-purple)] font-bold animate-pulse">
+                        {lang === "tr" ? "Yükleniyor..." : "Loading..."}
                       </span>
                     ) : (
                       file.size
@@ -1946,7 +1974,7 @@ CRITICAL RULES:
       {!readOnly && (
         <form
           onSubmit={handleSend}
-          className="p-4 border-t bg-[var(--fun-surface)]/50 backdrop-blur-xl"
+          className="p-4 border-t bg-[var(--fun-surface)]/50 backdrop-blur-xl shrink-0"
           style={{ borderColor: "var(--fun-stroke-1)" }}
         >
           <div className={`flex items-center gap-2 ${isMaximized ? "max-w-4xl mx-auto w-full" : ""}`}>
@@ -2020,6 +2048,85 @@ CRITICAL RULES:
               >
                 ✕ {lang === "tr" ? "Kapat" : "Close"}
               </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Document viewer modal */}
+      {selectedDocument && (
+        <div
+          className="fixed inset-0 z-[300] bg-black/60 backdrop-blur-md flex items-center justify-center p-4 animate-in fade-in duration-200"
+          onClick={() => setSelectedDocument(null)}
+        >
+          <div
+            className="bg-[var(--fun-card)] border border-[var(--fun-stroke-1)] rounded-3xl p-6 shadow-2xl max-w-lg w-full max-h-[80vh] flex flex-col gap-4 animate-in zoom-in-95 duration-200"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Modal Header */}
+            <div className="flex items-center justify-between pb-3 border-b border-[var(--fun-stroke-2)] shrink-0">
+              <div className="flex items-center gap-2.5 min-w-0">
+                <div className="h-9 w-9 rounded-xl bg-[var(--fun-purple)]/10 text-[var(--fun-purple)] flex items-center justify-center shrink-0">
+                  <FileText className="h-5 w-5" />
+                </div>
+                <div className="min-w-0 flex flex-col">
+                  <span className="font-bold truncate text-sm fun-text leading-tight">
+                    {selectedDocument.name}
+                  </span>
+                  <span className="text-[10px] fun-text-muted mt-0.5">
+                    {selectedDocument.size} • {selectedDocument.type}
+                  </span>
+                </div>
+              </div>
+              <button
+                onClick={() => setSelectedDocument(null)}
+                className="h-8 w-8 rounded-full hover:bg-[var(--fun-stroke-1)] flex items-center justify-center fun-text transition-colors"
+              >
+                ✕
+              </button>
+            </div>
+
+            {/* Document Content Scrollable Body */}
+            <div className="flex-1 overflow-y-auto p-4 bg-[var(--fun-surface)] border border-[var(--fun-stroke-2)] rounded-2xl min-h-[150px]">
+              {selectedDocument.extractedText ? (
+                <pre className="text-xs font-mono whitespace-pre-wrap leading-relaxed fun-text break-words">
+                  {selectedDocument.extractedText}
+                </pre>
+              ) : (
+                <div className="h-full flex flex-col items-center justify-center text-center p-4 space-y-2">
+                  <FileText className="h-8 w-8 text-zinc-400 animate-pulse" />
+                  <p className="text-xs fun-text-muted">
+                    {lang === "tr" ? "Bu belgede okunabilir bir metin içeriği bulunamadı." : "No readable text content found in this document."}
+                  </p>
+                </div>
+              )}
+            </div>
+
+            {/* Modal Footer with Copy & Download Button Actions */}
+            <div className="flex gap-3 shrink-0 pt-1">
+              <button
+                onClick={() => {
+                  if (selectedDocument.extractedText) {
+                    navigator.clipboard.writeText(selectedDocument.extractedText);
+                    toast.success(lang === "tr" ? "Kopyalandı" : "Copied", {
+                      description: lang === "tr" ? "Belge içeriği kopyalandı." : "Document content copied to clipboard."
+                    });
+                  }
+                }}
+                disabled={!selectedDocument.extractedText}
+                className="flex-1 py-2.5 px-4 rounded-xl bg-[var(--fun-surface)] hover:bg-[var(--fun-stroke-1)] text-xs font-semibold fun-text transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
+              >
+                <Copy className="h-4 w-4" />
+                {lang === "tr" ? "Metni Kopyala" : "Copy Text"}
+              </button>
+              <a
+                href={selectedDocument.base64}
+                download={selectedDocument.name}
+                className="flex-1 py-2.5 px-4 rounded-xl bg-[var(--fun-purple)] hover:bg-[var(--fun-purple)]/90 text-white text-xs font-bold transition-colors flex items-center justify-center gap-2"
+              >
+                <Download className="h-4 w-4" />
+                {lang === "tr" ? "Dosyayı İndir" : "Download File"}
+              </a>
             </div>
           </div>
         </div>
