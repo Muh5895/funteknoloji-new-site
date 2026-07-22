@@ -72,7 +72,7 @@ const translateToTurkish = async (text: string, sourceLang: string): Promise<str
 // 12-language localized dictionary for the Live Support views
 const localTrans: Record<string, any> = {
   tr: {
-    loginTitle: "Canlı Desteğe Giriş Yap",
+    loginTitle: "Nexy Desteğe Giriş Yap",
     loginDesc: "Devam etmek için oturum açın",
     email: "E-posta",
     password: "Şifre",
@@ -267,7 +267,7 @@ const localTrans: Record<string, any> = {
     confirmCloseNo: "Cancelar",
   },
   az: {
-    loginTitle: "Canlı Dəstəyə Giriş Edin",
+    loginTitle: "Nexy Dəstəyə Giriş Edin",
     loginDesc: "Davam etmək üçün daxil olun",
     email: "E-poçt",
     password: "Şifrə",
@@ -888,7 +888,7 @@ export function LiveChatView({
       return lang === "tr" ? "Hesap İnceleniyor..." : "Checking Account Details...";
     }
 
-    return lang === "tr" ? "Müşteri Temsilcisi Yazıyor..." : "Customer Support is typing...";
+    return lang === "tr" ? "Destek Asistanı Yazıyor..." : "Support Assistant is typing...";
   };
 
   useEffect(() => {
@@ -979,9 +979,10 @@ export function LiveChatView({
       const formattedMessages = [
         {
           role: "system",
-          content: `You are ${agentName}, a professional customer support representative working at Fun Teknoloji (Fun Technology).
+          content: `You are ${agentName}, a highly professional AI support assistant working at Fun Teknoloji (Fun Technology).
 Fun Technology projects and information:
 ${KNOWLEDGE_BASE}
+- Note on FunID: FunID is Fun Teknoloji's unified account, identity verification, and security management platform. If the user's issue relates to updating their profile, verifying emails, or managing account settings, this is handled via FunID.
 ${accountContext}
 
 [USER TICKET DETAILS]
@@ -993,7 +994,7 @@ Your task is to write a highly personalized, warm, and professional welcome gree
 Greet them by their full name (${userProfile.name}) in a warm, helpful way.
 Acknowledge that they are securely logged in under their email address (${userProfile.email}) and that you see they have submitted a support request regarding their issue. Discuss the issue description ("${ticketDescription}") naturally in a conversational sentence.
 CRITICAL OUTPUT CONSTRAINT: Never output any technical ticket fields (like "Subject:", "Konu:", "Importance:", "Severity:", "Açıklama:") as headers, prefixes, or labels in your response. Never write any "Subject:" or "Konu:" prefixes. Do not write any redirection labels, redirect commands, or redirect text in your messages. Just speak naturally.
-Reassure them that they are talking to a human agent, and ask them how you can help resolve their issue today.
+STRICT TOPIC RULE: Focus intensely and intelligently on their actual ticket topic ("${ticketSubject}" and "${ticketDescription}"): do not wander off or try to force every single greeting to talk about unrelated features like QuakeSafe or Nexy features unless their ticket description specifically mentions them. Stay professional, precise, and direct.
 Do not promote any third-party services like Pollinations or Pulsar. Respond in English.`,
         },
         {
@@ -1320,7 +1321,7 @@ Do not promote any third-party services like Pollinations or Pulsar. Respond in 
     setAttachedFiles((prev) => prev.filter((_, i) => i !== index));
   };
 
-  // Dynamically generated professional Turkish support representative name, saved on session mount
+  // Dynamically generated professional Turkish support assistant name, saved on session mount
   const [agentName, setAgentName] = useState(() => {
     if (typeof window !== "undefined") {
       const saved = localStorage.getItem("live_support_agent_name");
@@ -1330,7 +1331,7 @@ Do not promote any third-party services like Pollinations or Pulsar. Respond in 
       localStorage.setItem("live_support_agent_name", chosen);
       return chosen;
     }
-    return "Müşteri Temsilcisi";
+    return "Destek Asistanı";
   });
 
   const handleSend = async (e: React.FormEvent) => {
@@ -1401,15 +1402,16 @@ Do not promote any third-party services like Pollinations or Pulsar. Respond in 
       const formattedMessages = [];
       formattedMessages.push({
         role: "system",
-        content: `You are ${agentName}, a professional, warm, and highly capable human customer support representative working strictly for Fun Teknoloji (Fun Technology).
+        content: `You are ${agentName}, a professional, warm, and highly capable AI support assistant working strictly for Fun Teknoloji (Fun Technology).
 Fun Technology projects and information:
 ${KNOWLEDGE_BASE}
+- Note on FunID: FunID is Fun Teknoloji's unified identity authentication and user account management service. If the user has questions about updating passwords, verifying profiles, or editing account credentials/details, explain how FunID handles this securely.
 ${accountContext}
 ${ticketContext}
 
 CRITICAL RULES:
-1. FOCUS ON CUSTOMER SUPPORT: Your main objective is to assist the user with Fun Teknoloji, our products (Nexy, QuakeSafe), our services, or their specific ticket details ("${ticketDescription}").
-2. BE WARM, CONVERSATIONAL AND INTELLIGENT: Talk like a highly empathetic, helpful human agent. Avoid dry, robotic rejections. If the user asks general friendly chitchat or unrelated questions, gently and politely bridge back to how you can help them with Fun Teknoloji or their support ticket.
+1. FOCUS ON SUPPORT: Your main objective is to assist the user with Fun Teknoloji, our services, or their specific ticket details ("${ticketDescription}"). Do not wander off or divert the conversation to other topics. If the ticket description is about a specific product/setting (like FunID or general questions), address that directly without trying to forcefully connect everything to QuakeSafe or Nexy features. Stay strictly on-topic with the user's inquiry!
+2. BE WARM, CONVERSATIONAL AND INTELLIGENT: Talk like a highly empathetic, helpful AI assistant. Avoid dry, robotic rejections. If the user asks general friendly chitchat or unrelated questions, gently and politely bridge back to how you can help them with Fun Teknoloji or their support ticket.
 3. Solve requests in a polite and professional manner based on the knowledge base, user account context, and ticket details.
 4. Ensure your help is specifically tailored to resolve the user's described issue ("${ticketDescription}").
 5. COGNITIVE DOCUMENT RELEVANCE CHECK: If the user has attached any files or if there is OCR/extracted text from files under [USER ATTACHED FILE DETAILS], you MUST carefully examine whether the contents of these files are genuinely relevant to the user's support ticket subject ("${ticketSubject}") and description ("${ticketDescription}"). If an uploaded file is completely irrelevant or off-topic, politely point this out to the user, explain why it doesn't match the ticket context, and ask them to provide relevant documents so you can investigate their issue properly. Approach everything with maximum intelligence and focus.
@@ -1641,10 +1643,10 @@ CRITICAL RULES:
             </div>
             <div>
               <p className="text-xs font-semibold fun-text">
-                {lang === "tr" ? "Canlı Sohbet Başlatıldı" : "Live Chat Started"}
+                {lang === "tr" ? "Destek Sohbeti Başlatıldı" : "Support Chat Started"}
               </p>
               <p className="text-[10px] sm:text-[11px] fun-text-muted max-w-[200px] mt-1 leading-normal">
-                {lang === "tr" ? `Müşteri temsilcimiz ${agentName} kısa süre içinde size yardımcı olacaktır.` : `Our customer agent ${agentName} will assist you shortly.`}
+                {lang === "tr" ? `Destek asistanımız ${agentName} kısa süre içinde size yardımcı olacaktır.` : `Our support assistant ${agentName} will assist you shortly.`}
               </p>
             </div>
           </div>

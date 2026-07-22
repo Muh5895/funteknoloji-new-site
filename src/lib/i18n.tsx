@@ -606,14 +606,14 @@ const tr: Dict = {
   "help.menu.desc": "Size nasıl yardımcı olabiliriz?",
   "help.menu.ai.title": "Nexy",
   "help.menu.ai.desc": "Yapay zeka asistanımız Nexy ile 7/24 anında sohbet edin.",
-  "help.menu.live.title": "Canlı Destek",
-  "help.menu.live.desc": "Müşteri temsilcilerimizle canlı olarak görüşün.",
+  "help.menu.live.title": "Nexy Destek",
+  "help.menu.live.desc": "Destek asistanımız Nexy ile canlı olarak görüşün.",
   "help.menu.live.status": "Çevrimdışı",
-  "help.menu.live.toast": "Canlı destek ekibimiz şu an çevrimdışı. Lütfen AI Asistanımızı kullanın.",
+  "help.menu.live.toast": "Destek ekibimiz şu an çevrimdışı. Lütfen AI Asistanımızı kullanın.",
   "live_support.image_limit_error": "En fazla 5 adet resim yükleyebilirsiniz.",
   "live_support.translation_warning": "Mesajlar otomatik olarak çevrilmektedir ve hatalı olabilir.",
   "live_support.confirm_close_title": "Görüşmeyi Sonlandır",
-  "live_support.confirm_close_desc": "Mevcut canlı destek görüşmesini sonlandırmak istediğinize emin misiniz?",
+  "live_support.confirm_close_desc": "Mevcut destek görüşmesini sonlandırmak istediğinize emin misiniz?",
   "live_support.confirm_close_yes": "Evet, Sonlandır",
   "live_support.confirm_close_no": "İptal",
 };
@@ -3620,10 +3620,10 @@ const az: Dict = {
   "help.menu.desc": "Sizə necə kömək edə bilərik?",
   "help.menu.ai.title": "Nexy",
   "help.menu.ai.desc": "Süni intellekt assistanımız Nexy ilə 7/24 anında söhbət edin.",
-  "help.menu.live.title": "Canlı Dəstək",
-  "help.menu.live.desc": "Müştəri təmsilçilərimizlə canlı olaraq danışın.",
+  "help.menu.live.title": "Nexy Dəstək",
+  "help.menu.live.desc": "Dəstək assistanımız Nexy ile canlı olaraq danışın.",
   "help.menu.live.status": "Oflayn",
-  "help.menu.live.toast": "Canlı dəstək komandamız hazırda oflayndır. Zəhmət olmasa AI Assistanımızı istifadə edin.",
+  "help.menu.live.toast": "Dəstək komandamız hazırda oflayndır. Zəhmət olmasa AI Assistanımızı istifadə edin.",
 };
 
 const ru: Dict = {

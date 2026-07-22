@@ -19,7 +19,7 @@ function ChangelogPage() {
       desc: t("changelog.item1.desc"),
     },
     {
-      name: "Account",
+      name: "FunID",
       logo: "/assets/logos/Fun Teknoloji Siyah Logo.png",
       desc: t("changelog.item2.desc"),
     },
