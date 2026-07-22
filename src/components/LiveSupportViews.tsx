@@ -3,6 +3,7 @@ import { X, ChevronLeft, ArrowLeft, Send, MessageSquare, LogOut, Eye, EyeOff, Bo
 import { supabase } from "../lib/supabase";
 import { toast } from "sonner";
 import { translateText } from "../lib/translate";
+import { KNOWLEDGE_BASE } from "../lib/knowledge";
 
 // Translate utility to translate from any language to Turkish
 const translateToTurkish = async (text: string, sourceLang: string): Promise<string> => {
@@ -925,13 +926,27 @@ export function LiveChatView({
       userTextInTr = await translateToTurkish(userText, lang);
     }
 
-    // Map live support conversation history into standard OpenAI messages format
-    const formattedMessages = messages
-      .slice(-6)
+    // Prepare system message to instruct the AI model correctly as a support agent
+    const formattedMessages = [];
+    formattedMessages.push({
+      role: "system",
+      content: `Sen Fun Teknoloji şirketinin canlı destek panelinde çalışan profesyonel bir müşteri temsilcisisin. Adın ${agentName}.
+Fun Teknoloji'nin projeleri ve bilgileri:
+${KNOWLEDGE_BASE}
+
+Görevin: Kullanıcıların canlı destek taleplerini en samimi, kibar ve profesyonel şekilde Türkçe dilinde çözmektir. Soruları bilgi bankasına göre cevapla.
+Cevaplarında Pollinations, Pulsar veya başka bir servis reklamı yapma, sadece Fun Teknoloji'nin cana yakın müşteri temsilcisi olarak konuş.`,
+    });
+
+    // Map live support conversation history into standard OpenAI messages format with a longer, 20-message memory window
+    const historyMessages = messages
+      .slice(-20)
       .map((m) => ({
         role: m.role === "user" ? "user" : "assistant",
         content: m.text,
       }));
+
+    formattedMessages.push(...historyMessages);
 
     // Add current user text in Turkish
     formattedMessages.push({
@@ -943,6 +958,7 @@ export function LiveChatView({
       let cleanText = "";
 
       try {
+        // Route 1: Direct fetch to Fun Teknoloji completions endpoint
         const response = await fetch("https://ai.funteknoloji.com/v1/chat/completions", {
           method: "POST",
           headers: {
@@ -953,12 +969,37 @@ export function LiveChatView({
             model: "gemma-3-1b-it"
           }),
         });
-        const data = await response.json() as any;
-        let text = data.choices?.[0]?.message?.content || "";
-        text = text.replace(/pulsar/gi, "Nexy");
-        cleanText = text.trim();
+        if (response.ok) {
+          const data = await response.json() as any;
+          let text = data.choices?.[0]?.message?.content || "";
+          text = text.replace(/pulsar/gi, "Nexy");
+          cleanText = text.trim();
+        } else {
+          throw new Error("Direct API failed");
+        }
       } catch (err) {
-        console.error("Fun Teknoloji AI request failed:", err);
+        console.warn("Direct API call failed, trying Vercel backend proxy fallback:", err);
+        try {
+          // Route 2: Fallback to Vercel backend proxy /api/nexy
+          const response = await fetch("/api/nexy", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              messages: formattedMessages,
+              model: "gemma-3-1b-it"
+            }),
+          });
+          if (response.ok) {
+            const text = await response.text();
+            cleanText = text.trim();
+          } else {
+            throw new Error("Backend proxy failed");
+          }
+        } catch (proxyErr) {
+          console.error("Vercel backend proxy also failed:", proxyErr);
+        }
       }
 
       // Translate Agent's Turkish response to user's local language if not Turkish

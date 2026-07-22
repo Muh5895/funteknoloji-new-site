@@ -63,32 +63,87 @@ const checkRedirectIntent = (input: string, lang: string): string | null => {
   return null;
 };
 
-const getLocalFallbackResponse = (input: string, lang: string): string => {
+const getLocalFallbackResponse = (input: string, lang: string, chatMessages: any[]): string => {
   const query = input.toLowerCase();
 
+  // Simple memory parser: search the conversation for "Benim adım ..." or "My name is ..." or other declarations
+  let userName = "";
+  for (const msg of chatMessages) {
+    if (msg.role === "user") {
+      const text = msg.text.toLowerCase();
+      // Turkish name patterns
+      const trNameMatch = msg.text.match(/(?:adım|ismim)\s+([a-zA-ZçğıöşüÇĞİÖŞÜ]+)/i);
+      if (trNameMatch) {
+        userName = trNameMatch[1];
+      } else if (text.startsWith("ben ") || text.startsWith("benim ")) {
+        const words = msg.text.split(" ");
+        if (words.length === 2 && words[0].toLowerCase() === "ben") {
+          userName = words[1];
+        }
+      }
+      // English name patterns
+      const enNameMatch = msg.text.match(/(?:my name is|i am|call me)\s+([a-zA-Z]+)/i);
+      if (enNameMatch) {
+        userName = enNameMatch[1];
+      }
+    }
+  }
+
+  const nameGreeting = userName ? (lang === "tr" ? `Sevgili ${userName}, ` : `Dear ${userName}, `) : "";
+
   if (lang === "tr") {
+    // If the user is asking "benim adım ne" / "ismim ne"
+    if (query.includes("adım ne") || query.includes("ismim ne") || query.includes("ben kimim")) {
+      if (userName) {
+        return `Konuşmamızdan hatırladığım kadarıyla adınız **${userName}**. Size başka nasıl yardımcı olabilirim?`;
+      } else {
+        return "Henüz adınızı benimle paylaşmadınız. Sahi, adınız nedir?";
+      }
+    }
+
     if (query.includes("quakesafe") || query.includes("deprem") || query.includes("afet")) {
-      return "**QuakeSafe**, Fun Teknoloji tarafından geliştirilen hayat kurtarıcı bir afet güvenliği projesidir. Yapay zeka ve sensör ağları kullanarak deprem anında erken uyarı verir ve afet sonrası koordinasyonu sağlar.";
+      return `${nameGreeting}**QuakeSafe**, Fun Teknoloji tarafından geliştirilen hayat kurtarıcı bir afet güvenliği projesidir. Yapay zeka ve sensör ağları kullanarak deprem anında erken uyarı verir ve afet sonrası koordinasyonu sağlar. Detaylı bilgi için /quakesafe sayfamızı ziyaret edebilirsiniz.`;
     }
     if (query.includes("nexy") || query.includes("asistan") || query.includes("yapay zeka")) {
-      return "**Nexy**, Fun Teknoloji'nin amiral gemisi yapay zeka asistanıdır (şu an benimle konuşuyorsunuz!). İşletmelerin ve kullanıcıların her dilde (12+ dil desteği) kesintisiz, akıllı ve hızlı iletişim kurmasını sağlar.";
+      return `${nameGreeting}**Nexy**, Fun Teknoloji'nin amiral gemisi yapay zeka asistanıdır (şu an benimle konuşuyorsunuz!). İşletmelerin ve kullanıcıların her dilde (12+ dil desteği) kesintisiz, akıllı ve hızlı iletişim kurmasını sağlar. Detaylar için /nexy sayfamıza göz atabilirsiniz.`;
     }
     if (query.includes("hizmet") || query.includes("yazılım") || query.includes("siber") || query.includes("danışmanlık")) {
-      return "Fun Teknoloji olarak sunduğumuz hizmetler:\n\n1. **Yapay Zeka Çözümleri:** İşletmenize özel LLM modelleri ve otonom asistanlar.\n2. **Özel Yazılım Geliştirme:** Modern web ve mobil uygulamalar.\n3. **Siber Güvenlik:** Sızma testleri ve güvenlik denetimleri.\n4. **Teknik Danışmanlık:** Dijital dönüşüm rehberliği.";
+      return `${nameGreeting}Fun Teknoloji olarak sunduğumuz hizmetler:\n\n1. **Yapay Zeka Çözümleri:** İşletmenize özel LLM modelleri ve otonom asistanlar.\n2. **Özel Yazılım Geliştirme:** Modern web ve mobil uygulamalar.\n3. **Siber Güvenlik:** Sızma testleri ve güvenlik denetimleri.\n4. **Teknik Danışmanlık:** Dijital dönüşüm rehberliği. Hangi hizmetimizle ilgileniyorsunuz? Sizi detaylı bilgilendirebilirim.`;
     }
-    return "Merhaba! Ben Fun Teknoloji'nin yapay zeka asistanı Nexy. Size Fun Teknoloji, kurucumuz Muhammed Erbay, yenilikçi projelerimiz (Nexy, QuakeSafe) veya sunduğumuz profesyonel yazılım ve yapay zeka hizmetleri hakkında bilgi verebilirim. Ne öğrenmek istersiniz?";
+
+    // Fallback greetings with local conversational memory variation
+    const greetings = [
+      `Merhaba${userName ? " " + userName : ""}! Ben Fun Teknoloji'nin yapay zeka asistanı Nexy. Size Fun Teknoloji, kurucumuz Muhammed Erbay, yenilikçi projelerimiz (Nexy, QuakeSafe) veya sunduğumuz profesyonel yazılım ve yapay zeka hizmetleri hakkında bilgi verebilirim. Ne öğrenmek istersiniz?`,
+      `Harika bir gün geçirmenizi dilerim${userName ? ", " + userName : ""}! Ben Nexy. Fun Teknoloji hakkında merak ettiğiniz projeleri, hizmetlerimizi veya diğer detayları bana sorabilirsiniz. Size nasıl yardımcı olabilirim?`,
+      `Size yardımcı olmak için buradayım${userName ? ", " + userName : ""}! Fun Teknoloji'nin yapay zeka çözümleri, QuakeSafe afet yönetim platformu veya özel yazılım geliştirme hizmetlerimiz hakkında bilgi almak ister misiniz?`
+    ];
+    return greetings[chatMessages.length % greetings.length];
   } else {
     // English default fallback
+    if (query.includes("my name") || query.includes("what is my name") || query.includes("who am i")) {
+      if (userName) {
+        return `As I recall from our conversation, your name is **${userName}**. How else can I help you?`;
+      } else {
+        return "You haven't shared your name with me yet. What is your name?";
+      }
+    }
+
     if (query.includes("quakesafe") || query.includes("earthquake") || query.includes("disaster")) {
-      return "**QuakeSafe** is a life-saving disaster safety platform developed by Fun Technology. It utilizes artificial intelligence and sensor networks to provide early warnings and post-disaster coordination.";
+      return `${nameGreeting}**QuakeSafe** is a life-saving disaster safety platform developed by Fun Technology. It utilizes artificial intelligence and sensor networks to provide early warnings and post-disaster coordination. Visit /quakesafe for more.`;
     }
     if (query.includes("nexy") || query.includes("assistant") || query.includes("ai")) {
-      return "**Nexy** is Fun Technology's flagship AI assistant (the one you are talking to right now!). It offers smart, secure, and multi-lingual (12+ languages) communication for businesses.";
+      return `${nameGreeting}**Nexy** is Fun Technology's flagship AI assistant (the one you are talking to right now!). It offers smart, secure, and multi-lingual (12+ languages) communication for businesses. See /nexy for details.`;
     }
     if (query.includes("service") || query.includes("software") || query.includes("security") || query.includes("consult")) {
-      return "Fun Technology Services:\n\n1. **AI Solutions:** Custom-trained LLM models and autonomous agents.\n2. **Custom Software:** Modern web and mobile development.\n3. **Cyber Security:** Penetration testing and security audits.\n4. **Technical Consulting:** Professional digital transformation guidance.";
+      return `${nameGreeting}Fun Technology Services:\n\n1. **AI Solutions:** Custom-trained LLM models and autonomous agents.\n2. **Custom Software:** Modern web and mobile development.\n3. **Cyber Security:** Penetration testing and security audits.\n4. **Technical Consulting:** Professional digital transformation guidance. Which service interests you?`;
     }
-    return "Hello! I am Nexy, the AI assistant of Fun Technology. I can tell you about Fun Technology, our founder Muhammed Erbay, our innovative projects (Nexy, QuakeSafe), or our software services. How can I help you today?";
+
+    const enGreetings = [
+      `Hello${userName ? " " + userName : ""}! I am Nexy, the AI assistant of Fun Technology. I can tell you about Fun Technology, our founder Muhammed Erbay, our innovative projects (Nexy, QuakeSafe), or our software services. How can I help you today?`,
+      `Hope you are having a wonderful day${userName ? ", " + userName : ""}! I'm Nexy. You can ask me anything about Fun Technology's products, custom software solutions, or AI capabilities. What would you like to know?`,
+      `I'm here to assist you${userName ? ", " + userName : ""}! Would you like to learn more about our AI assistant Nexy, the QuakeSafe early warning system, or our custom software engineering?`
+    ];
+    return enGreetings[chatMessages.length % enGreetings.length];
   }
 };
 
@@ -359,13 +414,29 @@ export default function NexyAssistant() {
       return redirectResponse;
     }
 
-    // Map conversation history into standard OpenAI messages format
-    const formattedMessages = chatMessages
-      .slice(-6)
+    // Prepare system message to instruct the AI model correctly
+    const formattedMessages = [];
+    formattedMessages.push({
+      role: "system",
+      content: `Sen Fun Teknoloji şirketinin resmi yapay zeka asistanı Nexy'sin.
+Fun Teknoloji'nin projeleri ve bilgileri:
+${KNOWLEDGE_BASE}
+
+Dil: Kullanıcının dilinde (${lang}) cevap ver.
+Tarz: Profesyonel, yardımsever ve samimi ol.
+Önemli: Eğer kullanıcı bir sayfaya gitmek veya iletişim/fiyatlandırma/projeler gibi bir yere yönlendirilmek isterse, cevabının sonuna mutlaka [REDIRECT:/sayfa] ekle. Örneğin: [REDIRECT:/contact], [REDIRECT:/pricing], [REDIRECT:/projects]. Ve bu yönlendirme kodundan önce mutlaka kullanıcıya o sayfaya yönlendirdiğini kendi cümlenle belirt.
+Cevaplarında Pollinations, Pulsar veya başka bir servis reklamı yapma, sadece Nexy olarak konuş. Soruları bilgi bankasına göre cevapla.`,
+    });
+
+    // Map conversation history into standard OpenAI messages format with a longer, 20-message memory window
+    const historyMessages = chatMessages
+      .slice(-20)
       .map((m) => ({
         role: m.role === "nexy" ? "assistant" : "user",
         content: m.text,
       }));
+
+    formattedMessages.push(...historyMessages);
 
     // Add current user input to messages
     formattedMessages.push({
@@ -374,7 +445,7 @@ export default function NexyAssistant() {
     });
 
     try {
-      // Call Fun Teknoloji AI directly to avoid Vercel hobby-tier 10-second timeout 500/504 errors
+      // Route 1: Call Fun Teknoloji AI directly (fastest, bypasses serverless timeouts)
       const response = await fetch("https://ai.funteknoloji.com/v1/chat/completions", {
         method: "POST",
         headers: {
@@ -386,16 +457,37 @@ export default function NexyAssistant() {
         }),
         signal: controller.signal,
       });
-      if (!response.ok) throw new Error();
-      const data = await response.json() as any;
-      let text = data.choices?.[0]?.message?.content || "";
-
-      text = text.replace(/pulsar/gi, "Nexy");
-
-      return text.trim();
+      if (response.ok) {
+        const data = await response.json() as any;
+        let text = data.choices?.[0]?.message?.content || "";
+        text = text.replace(/pulsar/gi, "Nexy");
+        return text.trim();
+      }
+      throw new Error("Direct API call failed");
     } catch (err) {
-      console.warn("API call failed, using local smart responder:", err);
-      return getLocalFallbackResponse(input, lang);
+      console.warn("Direct API call failed, falling back to Vercel backend proxy:", err);
+      try {
+        // Route 2: Fallback to Vercel backend proxy /api/nexy
+        const response = await fetch("/api/nexy", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            messages: formattedMessages,
+            model: "gemma-3-1b-it"
+          }),
+          signal: controller.signal,
+        });
+        if (response.ok) {
+          const text = await response.text();
+          return text.trim();
+        }
+        throw new Error("Backend proxy failed");
+      } catch (proxyErr) {
+        console.warn("Backend proxy also failed, using smart local responder:", proxyErr);
+        return getLocalFallbackResponse(input, lang, chatMessages);
+      }
     }
   };
 
