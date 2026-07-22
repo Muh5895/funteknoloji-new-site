@@ -1,9 +1,18 @@
 import { useState, useRef, useEffect } from "react";
-import { X, ChevronLeft, ArrowLeft, Send, MessageSquare, LogOut, Eye, EyeOff, Bot, Languages, Image as ImageIcon, AlertCircle, Download, Copy, Volume2, VolumeX, Star } from "lucide-react";
+import { X, ChevronLeft, ArrowLeft, Send, MessageSquare, LogOut, Eye, EyeOff, Bot, Languages, Image as ImageIcon, AlertCircle, Download, Copy, Volume2, VolumeX, Star, Paperclip, FileText } from "lucide-react";
 import { supabase } from "../lib/supabase";
 import { toast } from "sonner";
 import { translateText, translateAnyText } from "../lib/translate";
 import { KNOWLEDGE_BASE } from "../lib/knowledge";
+
+export interface AttachedFile {
+  name: string;
+  type: string;
+  size: string;
+  base64: string;
+  extractedText?: string;
+  isAnalyzing?: boolean;
+}
 
 // Translate utility to translate from any language to Turkish
 const translateToTurkish = async (text: string, sourceLang: string): Promise<string> => {
@@ -764,8 +773,8 @@ export function LiveTicketDetailsView({ lang, onBack, onSubmit }: LiveTicketDeta
 // LIVE CHAT VIEW (Supports image sending, auto-translation system, auto-translation warning, read-only session)
 interface LiveChatViewProps {
   user: { email: string };
-  messages: { role: "agent" | "user"; text: string; id: string; timestamp: number; images?: string[]; englishText?: string }[];
-  setMessages: React.Dispatch<React.SetStateAction<{ role: "agent" | "user"; text: string; id: string; timestamp: number; images?: string[]; englishText?: string }[]>>;
+  messages: { role: "agent" | "user"; text: string; id: string; timestamp: number; files?: AttachedFile[]; englishText?: string }[];
+  setMessages: React.Dispatch<React.SetStateAction<{ role: "agent" | "user"; text: string; id: string; timestamp: number; files?: AttachedFile[]; englishText?: string }[]>>;
   onBack: () => void;
   onEndSession: () => void;
   onLogout: () => void;
@@ -790,7 +799,7 @@ export function LiveChatView({
   readOnly = false,
 }: LiveChatViewProps) {
   const [input, setInput] = useState("");
-  const [attachedImages, setAttachedImages] = useState<string[]>([]);
+  const [attachedFiles, setAttachedFiles] = useState<AttachedFile[]>([]);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [lastSentTimestamp, setLastSentTimestamp] = useState<number>(0);
   const [isOnline, setIsOnline] = useState<boolean>(typeof window !== "undefined" ? navigator.onLine : true);
@@ -876,6 +885,7 @@ export function LiveChatView({
 
       const ticketSubject = localStorage.getItem("live_support_subject") || "Genel Destek";
       const ticketImportance = localStorage.getItem("live_support_importance") || "Orta";
+      const ticketDescription = localStorage.getItem("live_support_description") || "";
 
       const accountContext = `\n[USER ACCOUNT CONTEXT]\nEmail: ${userProfile.email}\nFull Name: ${userProfile.name}\nAccount Created At: ${userProfile.createdAt ? new Date(userProfile.createdAt).toLocaleString("tr-TR") : "N/A"}\nEmail Verification Status: ${userProfile.emailConfirmed ? "Verified" : "Unverified"}\nLast Sign-In: ${userProfile.lastSignIn ? new Date(userProfile.lastSignIn).toLocaleString("tr-TR") : "N/A"}\n`;
 
@@ -886,9 +896,15 @@ export function LiveChatView({
 Fun Technology projects and information:
 ${KNOWLEDGE_BASE}
 ${accountContext}
+
+[USER TICKET DETAILS]
+Subject: ${ticketSubject}
+Importance Level: ${ticketImportance}
+User's Description of the Issue: "${ticketDescription}"
+
 Your task is to write a highly personalized, warm, and professional welcome greeting to the user.
 Greet them by their full name (${userProfile.name}) in a warm, helpful way.
-Acknowledge that they are securely logged in under their email address (${userProfile.email}) and that you see they have submitted a support request with subject: "${ticketSubject}" (Importance: ${ticketImportance}).
+Acknowledge that they are securely logged in under their email address (${userProfile.email}) and that you see they have submitted a support request regarding "${ticketSubject}" (Importance: ${ticketImportance}) with description: "${ticketDescription}".
 Reassure them that they are talking to a human agent, and ask them how you can help resolve their issue today.
 Do not promote any third-party services like Pollinations or Pulsar. Respond in English.`,
         },
@@ -1046,33 +1062,107 @@ Do not promote any third-party services like Pollinations or Pulsar. Respond in 
     }
   }, [messages, isAgentTyping]);
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  // OCR helper function for images & PDFs
+  const runOcrOnImage = async (base64Image: string, fileType: string): Promise<string> => {
+    try {
+      let fileTypeParam = "png";
+      const nameLower = fileType.toLowerCase();
+      if (nameLower.includes("pdf") || nameLower.endsWith(".pdf")) {
+        fileTypeParam = "pdf";
+      } else if (nameLower.includes("jpg") || nameLower.includes("jpeg")) {
+        fileTypeParam = "jpg";
+      } else if (nameLower.includes("gif")) {
+        fileTypeParam = "gif";
+      }
+
+      const response = await fetch("https://api.ocr.space/parse/image", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: new URLSearchParams({
+          apikey: "helloworld",
+          base64image: base64Image,
+          filetype: fileTypeParam,
+          language: "tur"
+        })
+      });
+      if (response.ok) {
+        const data = await response.json() as any;
+        if (data && data.ParsedResults && data.ParsedResults[0]) {
+          return data.ParsedResults[0].ParsedText || "";
+        }
+      }
+    } catch (err) {
+      console.error("OCR extraction failed:", err);
+    }
+    return "";
+  };
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
     if (!files.length) return;
 
-    if (attachedImages.length + files.length > 5) {
-      // Correct built-in Sonner warning icon without custom emojis
+    if (attachedFiles.length + files.length > 5) {
       toast.error(getTranslation(lang, "imageLimitError"));
       return;
     }
 
-    files.forEach((file) => {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        if (typeof reader.result === "string") {
-          setAttachedImages((prev) => [...prev, reader.result as string]);
-        }
+    for (const file of files) {
+      const sizeStr = (file.size / 1024).toFixed(1) + " KB";
+      const fileObj: AttachedFile = {
+        name: file.name,
+        type: file.type || "application/octet-stream",
+        size: sizeStr,
+        base64: "",
+        isAnalyzing: true
       };
-      reader.readAsDataURL(file);
-    });
+
+      // Add to list immediately as analyzing placeholder
+      setAttachedFiles((prev) => [...prev, fileObj]);
+
+      // Read as base64
+      const base64 = await new Promise<string>((resolve) => {
+        const reader = new FileReader();
+        reader.onloadend = () => resolve(reader.result as string || "");
+        reader.readAsDataURL(file);
+      });
+
+      fileObj.base64 = base64;
+
+      // Extract text content
+      if (file.type.includes("text/plain") || file.name.endsWith(".txt")) {
+        const txtContent = await new Promise<string>((resolve) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(reader.result as string || "");
+          reader.readAsText(file);
+        });
+        fileObj.extractedText = txtContent;
+        fileObj.isAnalyzing = false;
+      } else if (file.type.includes("image") || file.type.includes("pdf") || file.name.endsWith(".pdf")) {
+        // Run OCR in background
+        const ocrText = await runOcrOnImage(base64, file.type || file.name);
+        fileObj.extractedText = ocrText;
+        fileObj.isAnalyzing = false;
+      } else {
+        // For other files, set descriptive extracted text placeholder
+        fileObj.extractedText = `[File attachment name: ${file.name}]`;
+        fileObj.isAnalyzing = false;
+      }
+
+      // Update state with finalized file details
+      setAttachedFiles((prev) =>
+        prev.map((f) => (f.name === file.name ? { ...fileObj } : f))
+      );
+    }
 
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
   };
 
-  const removeAttachedImage = (index: number) => {
-    setAttachedImages((prev) => prev.filter((_, i) => i !== index));
+  const removeAttachedFile = (index: number) => {
+    setAttachedFiles((prev) => prev.filter((_, i) => i !== index));
   };
 
   // Dynamically generated professional Turkish support representative name, saved on session mount
@@ -1090,7 +1180,7 @@ Do not promote any third-party services like Pollinations or Pulsar. Respond in 
 
   const handleSend = async (e: React.FormEvent) => {
     e.preventDefault();
-    if ((!input.trim() && attachedImages.length === 0) || isAgentTyping || readOnly) return;
+    if ((!input.trim() && attachedFiles.length === 0) || isAgentTyping || readOnly) return;
 
     // Client-side rate limiting: 1 message per 2 seconds
     const now = Date.now();
@@ -1110,7 +1200,7 @@ Do not promote any third-party services like Pollinations or Pulsar. Respond in 
       setLastSentTimestamp(now);
 
       const userText = input.trim();
-      const currentAttachedImages = [...attachedImages];
+    const currentAttachedFiles = [...attachedFiles];
 
       // Auto-translate user input to English silently in the background
       const englishInput = await translateAnyText(userText, lang, "en");
@@ -1120,57 +1210,25 @@ Do not promote any third-party services like Pollinations or Pulsar. Respond in 
         text: userText,
         id: Math.random().toString(36).substring(2, 9),
         timestamp: Date.now(),
-        images: currentAttachedImages,
+      files: currentAttachedFiles,
         englishText: englishInput
       };
 
       setMessages((prev) => [...prev, userMsg]);
       setInput("");
-      setAttachedImages([]);
+    setAttachedFiles([]);
       setIsAgentTyping(true);
 
-      // Dynamic Client-Side OCR on user-attached images using public helloworld key
-      const runOcrOnImage = async (base64Image: string): Promise<string> => {
-        try {
-          const response = await fetch("https://api.ocr.space/parse/image", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/x-www-form-urlencoded",
-            },
-            body: new URLSearchParams({
-              apikey: "helloworld",
-              base64image: base64Image,
-              language: "tur"
-            })
-          });
-          if (response.ok) {
-            const data = await response.json() as any;
-            if (data && data.ParsedResults && data.ParsedResults[0]) {
-              return data.ParsedResults[0].ParsedText || "";
-            }
-          }
-        } catch (err) {
-          console.error("OCR extraction failed:", err);
-        }
-        return "";
-      };
-
+    // Combine any pre-extracted OCR text or plain text content from the attached files
       let ocrCombinedText = "";
-      if (currentAttachedImages.length > 0) {
-        try {
-          const ocrResults = await Promise.all(currentAttachedImages.map((img) => runOcrOnImage(img)));
-          const validOcr = ocrResults.filter((text) => text.trim().length > 0);
-          if (validOcr.length > 0) {
-            ocrCombinedText = validOcr.map((text, idx) => `[Uploaded Screenshot/Image #${idx + 1} OCR Text: "${text}"]`).join("\n");
-          }
-        } catch (ocrErr) {
-          console.warn("Background image OCR parsing failed:", ocrErr);
-        }
+    const filesWithText = currentAttachedFiles.filter((f) => f.extractedText && f.extractedText.trim().length > 0);
+    if (filesWithText.length > 0) {
+      ocrCombinedText = filesWithText.map((f, idx) => `[Attached File #${idx + 1} "${f.name}" Content/OCR Text: "${f.extractedText}"]`).join("\n");
       }
 
       let englishInputWithOcr = englishInput;
       if (ocrCombinedText) {
-        englishInputWithOcr = `${englishInput}\n\n[USER ATTACHED SCREENSHOT DETAILS]\n${ocrCombinedText}`;
+      englishInputWithOcr = `${englishInput}\n\n[USER ATTACHED FILE DETAILS]\n${ocrCombinedText}`;
       }
 
       // Prepare system message strictly in English for maximum reasoning quality
@@ -1179,6 +1237,12 @@ Do not promote any third-party services like Pollinations or Pulsar. Respond in 
         accountContext = `\n[USER ACCOUNT CONTEXT]\nEmail: ${userProfile.email}\nFull Name: ${userProfile.name}\nAccount Created At: ${userProfile.createdAt ? new Date(userProfile.createdAt).toLocaleString("tr-TR") : "N/A"}\nEmail Verification Status: ${userProfile.emailConfirmed ? "Verified" : "Unverified"}\nLast Sign-In: ${userProfile.lastSignIn ? new Date(userProfile.lastSignIn).toLocaleString("tr-TR") : "N/A"}\n`;
       }
 
+      const ticketSubject = localStorage.getItem("live_support_subject") || "Genel Destek";
+      const ticketImportance = localStorage.getItem("live_support_importance") || "Orta";
+      const ticketDescription = localStorage.getItem("live_support_description") || "";
+
+      let ticketContext = `\n[USER TICKET DETAILS]\nSubject: ${ticketSubject}\nImportance Level: ${ticketImportance}\nUser's Description of the Issue: "${ticketDescription}"\n`;
+
       const formattedMessages = [];
       formattedMessages.push({
         role: "system",
@@ -1186,7 +1250,9 @@ Do not promote any third-party services like Pollinations or Pulsar. Respond in 
 Fun Technology projects and information:
 ${KNOWLEDGE_BASE}
 ${accountContext}
-Your task is to solve user's support requests in a warm, polite, and professional manner based on the knowledge base and user account context (if available).
+${ticketContext}
+Your task is to solve user's support requests in a warm, polite, and professional manner based on the knowledge base, user account context (if available), and the user's ticket details (subject, description, and importance).
+Always ensure your conversation and help are specifically tailored to resolve the user's issue described in their ticket description ("${ticketDescription}").
 If the user asks about their account details, email, registration date, verification status, or name, answer them accurately and beautifully using the provided USER ACCOUNT CONTEXT.
 If they uploaded screenshots/images, you have been provided with OCR-extracted text of those images inside the prompt. Address the text contents naturally.
 Do not mention any third-party services like Pollinations or Pulsar. Respond in English.`,
@@ -1457,24 +1523,56 @@ Do not mention any third-party services like Pollinations or Pulsar. Respond in 
                   <div
                     className={`max-w-[80%] rounded-2xl px-4 py-2.5 text-xs font-medium leading-relaxed ${m.role === "user" ? "bg-[var(--fun-purple)] text-white rounded-br-none shadow-lg shadow-purple-500/10" : "bg-[var(--fun-surface)] fun-text border border-[var(--fun-stroke-1)] rounded-bl-none shadow-sm"}`}
                   >
-                    {m.text && (
-                      <div className="whitespace-pre-wrap">
-                        {m.role === "user" ? m.text : renderMessageText(m.displayedText !== undefined ? m.displayedText : m.text)}
+                    {/* Render uploaded files/images strictly ABOVE the text bubble */}
+                    {m.files && m.files.length > 0 && (
+                      <div className="mb-2.5 space-y-2 max-w-full">
+                        {/* Render Images in a Grid */}
+                        {m.files.filter((f) => f.type.startsWith("image/")).length > 0 && (
+                          <div className={`grid ${m.files.filter((f) => f.type.startsWith("image/")).length === 1 ? "grid-cols-1" : "grid-cols-2"} gap-2`}>
+                            {m.files
+                              .filter((f) => f.type.startsWith("image/"))
+                              .map((file, idx) => (
+                                <div
+                                  key={idx}
+                                  onClick={() => setSelectedImage(file.base64)}
+                                  className="relative h-20 w-20 sm:h-24 sm:w-24 rounded-xl overflow-hidden border border-white/10 shadow-sm cursor-zoom-in hover:scale-[1.03] transition-transform"
+                                >
+                                  <img src={file.base64} alt="Message attachment" className="h-full w-full object-cover" />
+                                </div>
+                              ))}
+                          </div>
+                        )}
+                        {/* Render Documents (txt, doc, docx, pdf) as beautifully styled cards */}
+                        {m.files.filter((f) => !f.type.startsWith("image/")).length > 0 && (
+                          <div className="flex flex-col gap-1.5">
+                            {m.files
+                              .filter((f) => !f.type.startsWith("image/"))
+                              .map((file, idx) => (
+                                <div
+                                  key={idx}
+                                  className="flex items-center gap-2.5 p-2 rounded-xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 max-w-[240px]"
+                                >
+                                  <div className="h-8 w-8 rounded-lg bg-[var(--fun-purple)]/10 text-[var(--fun-purple)] flex items-center justify-center shrink-0">
+                                    <FileText className="h-4.5 w-4.5" />
+                                  </div>
+                                  <div className="min-w-0 flex-1 flex flex-col text-[10px]">
+                                    <span className="font-bold truncate text-zinc-800 dark:text-zinc-200 leading-tight">
+                                      {file.name}
+                                    </span>
+                                    <span className="text-zinc-500 dark:text-zinc-400 mt-0.5">
+                                      {file.size}
+                                    </span>
+                                  </div>
+                                </div>
+                              ))}
+                          </div>
+                        )}
                       </div>
                     )}
 
-                    {/* Images Grid inside message bubble */}
-                    {m.images && m.images.length > 0 && (
-                      <div className={`grid ${m.images.length === 1 ? "grid-cols-1" : "grid-cols-2 sm:grid-cols-3"} gap-2 mt-2`}>
-                        {m.images.map((img, idx) => (
-                          <div
-                            key={idx}
-                            onClick={() => setSelectedImage(img)}
-                            className="relative h-16 w-16 sm:h-20 sm:w-20 rounded-lg overflow-hidden border border-white/10 shadow-sm cursor-zoom-in hover:scale-105 transition-transform"
-                          >
-                            <img src={img} alt="Uploaded attachment" className="h-full w-full object-cover" />
-                          </div>
-                        ))}
+                    {m.text && (
+                      <div className="whitespace-pre-wrap">
+                        {m.role === "user" ? m.text : renderMessageText(m.displayedText !== undefined ? m.displayedText : m.text)}
                       </div>
                     )}
                   </div>
@@ -1636,21 +1734,44 @@ Do not mention any third-party services like Pollinations or Pulsar. Respond in 
         </div>
       )}
 
-      {/* Draft Attached Images previews bar */}
-      {attachedImages.length > 0 && (
+      {/* Draft Attached Files previews bar */}
+      {attachedFiles.length > 0 && (
         <div className="p-3 border-t bg-[var(--fun-surface)]/80 flex items-center gap-3 overflow-x-auto" style={{ borderColor: "var(--fun-stroke-1)" }}>
-          {attachedImages.map((img, idx) => (
-            <div key={idx} className="relative h-12 w-12 rounded-lg border border-[var(--fun-stroke-2)] overflow-hidden shrink-0 group">
-              <img src={img} alt="draft preview" className="h-full w-full object-cover" />
-              <button
-                type="button"
-                onClick={() => removeAttachedImage(idx)}
-                className="absolute top-0.5 right-0.5 bg-black/60 hover:bg-black/90 text-white rounded-full h-4 w-4 flex items-center justify-center text-[10px] transition-colors"
-              >
-                ✕
-              </button>
-            </div>
-          ))}
+          {attachedFiles.map((file, idx) => {
+            const isImg = file.type.startsWith("image/");
+            return (
+              <div key={idx} className="relative flex items-center gap-2 px-3 py-2 bg-[var(--fun-card)] border border-[var(--fun-stroke-2)] rounded-xl shrink-0 group">
+                {isImg ? (
+                  <div className="h-8 w-8 rounded-lg overflow-hidden shrink-0 border">
+                    <img src={file.base64} alt="draft preview" className="h-full w-full object-cover" />
+                  </div>
+                ) : (
+                  <div className="h-8 w-8 rounded-lg bg-[var(--fun-purple)]/10 text-[var(--fun-purple)] flex items-center justify-center shrink-0">
+                    <FileText className="h-4 w-4" />
+                  </div>
+                )}
+                <div className="flex flex-col text-[10px] max-w-[120px]">
+                  <span className="font-bold truncate fun-text leading-tight">{file.name}</span>
+                  <span className="fun-text-muted mt-0.5">
+                    {file.isAnalyzing ? (
+                      <span className="text-[var(--fun-purple)] font-medium animate-pulse">
+                        {lang === "tr" ? "İnceleniyor..." : "Analyzing..."}
+                      </span>
+                    ) : (
+                      file.size
+                    )}
+                  </span>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => removeAttachedFile(idx)}
+                  className="bg-black/40 hover:bg-black/70 text-white rounded-full h-5 w-5 flex items-center justify-center text-[10px] transition-colors ml-1 cursor-pointer"
+                >
+                  ✕
+                </button>
+              </div>
+            );
+          })}
         </div>
       )}
 
@@ -1662,12 +1783,12 @@ Do not mention any third-party services like Pollinations or Pulsar. Respond in 
           style={{ borderColor: "var(--fun-stroke-1)" }}
         >
           <div className={`flex items-center gap-2 ${isMaximized ? "max-w-4xl mx-auto w-full" : ""}`}>
-            {/* Image Attachment trigger button */}
+            {/* Generic File Attachment trigger button */}
             <input
               type="file"
               ref={fileInputRef}
-              onChange={handleImageChange}
-              accept="image/*"
+              onChange={handleFileChange}
+              accept=".txt,.pdf,.doc,.docx,image/*"
               multiple
               className="hidden"
             />
@@ -1675,10 +1796,10 @@ Do not mention any third-party services like Pollinations or Pulsar. Respond in 
               type="button"
               disabled={isAgentTyping || !isOnline}
               onClick={() => fileInputRef.current?.click()}
-              title={lang === "tr" ? "Resim Ekle" : "Attach Image"}
+              title={lang === "tr" ? "Dosya Ekle" : "Attach File"}
               className="h-10 w-10 shrink-0 rounded-full hover:bg-[var(--fun-stroke-1)] flex items-center justify-center text-zinc-400 hover:text-[var(--fun-purple)] transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
             >
-              <ImageIcon className="h-5 w-5" />
+              <Paperclip className="h-5 w-5" />
             </button>
 
             <div className="relative flex-1">
@@ -1698,7 +1819,7 @@ Do not mention any third-party services like Pollinations or Pulsar. Respond in 
               />
               <button
                 type="submit"
-                disabled={(!input.trim() && attachedImages.length === 0) || isAgentTyping || !isOnline}
+                disabled={(!input.trim() && attachedFiles.length === 0) || isAgentTyping || !isOnline}
                 className="absolute right-2.5 top-[21px] -translate-y-1/2 h-8 w-8 rounded-xl bg-[var(--fun-purple)] text-white flex items-center justify-center hover:scale-105 active:scale-95 transition-all disabled:opacity-30 disabled:hover:scale-100 disabled:cursor-not-allowed shadow-lg shadow-purple-500/30 cursor-pointer z-10"
               >
                 <Send className="h-3.5 w-3.5" />

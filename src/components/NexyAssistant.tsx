@@ -1059,9 +1059,10 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
               lang={lang}
               onBack={() => setSupportView("menu")}
               onSubmit={(details) => {
-                // Save subject & importance to localStorage so they persist for archive saving
+                // Save subject, importance & description to localStorage so they persist for archive saving and AI context
                 localStorage.setItem("live_support_subject", details.subject);
                 localStorage.setItem("live_support_importance", details.importance);
+                localStorage.setItem("live_support_description", details.description);
 
                 // Pre-populate chat with the compiled ticket details
                 const initialMsg = `**Yeni Canlı Destek Talebi**\n\n📌 **Konu:** ${details.subject}\n⚡ **Önem Seviyesi:** ${details.importance}\n📝 **Açıklama:** ${details.description}`;
