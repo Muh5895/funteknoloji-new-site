@@ -793,7 +793,29 @@ export function LiveChatView({
   const [attachedImages, setAttachedImages] = useState<string[]>([]);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [lastSentTimestamp, setLastSentTimestamp] = useState<number>(0);
+  const [userProfile, setUserProfile] = useState<any>(null);
   const [showConfirmClose, setShowConfirmClose] = useState(false);
+
+  // Fetch Supabase Auth account details on mount
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const { data: { user: sbUser } } = await supabase.auth.getUser();
+        if (sbUser) {
+          setUserProfile({
+            email: sbUser.email,
+            name: sbUser.user_metadata?.full_name || sbUser.user_metadata?.name || sbUser.email?.split("@")[0] || "Değerli Müşterimiz",
+            createdAt: sbUser.created_at,
+            emailConfirmed: !!sbUser.email_confirmed_at,
+            lastSignIn: sbUser.last_sign_in_at,
+          });
+        }
+      } catch (err) {
+        console.error("Failed to fetch user profiles:", err);
+      }
+    };
+    fetchProfile();
+  }, []);
   const [showFeedback, setShowFeedback] = useState(false);
   const [rating, setRating] = useState(0);
   const [hoveredRating, setHoveredRating] = useState(0);
@@ -925,15 +947,21 @@ export function LiveChatView({
     setAttachedImages([]);
     setIsAgentTyping(true);
 
-    // Prepare system message strictly in English for maximum reasoning quality
+    // Prepare system message strictly in English with user account details if available
+    let accountContext = "";
+    if (userProfile) {
+      accountContext = `\n[USER ACCOUNT CONTEXT]\nEmail: ${userProfile.email}\nFull Name: ${userProfile.name}\nAccount Created At: ${userProfile.createdAt ? new Date(userProfile.createdAt).toLocaleString("tr-TR") : "N/A"}\nEmail Verification Status: ${userProfile.emailConfirmed ? "Verified" : "Unverified"}\nLast Sign-In: ${userProfile.lastSignIn ? new Date(userProfile.lastSignIn).toLocaleString("tr-TR") : "N/A"}\n`;
+    }
+
     const formattedMessages = [];
     formattedMessages.push({
       role: "system",
       content: `You are ${agentName}, a professional customer support representative working at Fun Teknoloji (Fun Technology).
 Fun Technology projects and information:
 ${KNOWLEDGE_BASE}
-
-Your task is to solve user's support requests in a warm, polite, and professional manner based on the knowledge base.
+${accountContext}
+Your task is to solve user's support requests in a warm, polite, and professional manner based on the knowledge base and the user account context (if available).
+If the user asks about their account details, email, registration date, verification status, or name, answer them accurately and beautifully using the provided USER ACCOUNT CONTEXT.
 Do not mention any third-party services like Pollinations or Pulsar. Respond in English.`,
     });
 
@@ -1420,17 +1448,23 @@ Do not mention any third-party services like Pollinations or Pulsar. Respond in 
             </button>
 
             <div className="relative flex-1">
-              <input
-                type="text"
+              <textarea
+                rows={1}
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" && !e.shiftKey) {
+                    e.preventDefault();
+                    handleSend(e);
+                  }
+                }}
                 placeholder={getTranslation(lang, "typeMessage")}
-                className="w-full rounded-[20px] bg-[var(--fun-surface)] border border-[var(--fun-stroke-2)] py-3 pl-4 pr-12 text-xs outline-none focus:border-[var(--fun-purple)] focus:ring-4 focus:ring-[var(--fun-purple)]/10 transition-all fun-text shadow-inner"
+                className="w-full rounded-[20px] bg-[var(--fun-surface)] border border-[var(--fun-stroke-2)] py-3 pl-4 pr-12 text-xs outline-none focus:border-[var(--fun-purple)] focus:ring-4 focus:ring-[var(--fun-purple)]/10 transition-all fun-text shadow-inner resize-none h-[42px] overflow-y-auto"
               />
               <button
                 type="submit"
                 disabled={(!input.trim() && attachedImages.length === 0) || isAgentTyping}
-                className="absolute right-2.5 top-1/2 -translate-y-1/2 h-8 w-8 rounded-xl bg-[var(--fun-purple)] text-white flex items-center justify-center hover:scale-105 active:scale-95 transition-all disabled:opacity-30 disabled:hover:scale-100 shadow-lg shadow-purple-500/30 cursor-pointer z-10"
+                className="absolute right-2.5 top-[21px] -translate-y-1/2 h-8 w-8 rounded-xl bg-[var(--fun-purple)] text-white flex items-center justify-center hover:scale-105 active:scale-95 transition-all disabled:opacity-30 disabled:hover:scale-100 shadow-lg shadow-purple-500/30 cursor-pointer z-10"
               >
                 <Send className="h-3.5 w-3.5" />
               </button>

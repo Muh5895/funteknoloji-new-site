@@ -1324,8 +1324,8 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
             style={{ borderColor: "var(--fun-stroke-1)" }}
           >
             <div className={`relative ${isMaximized ? "max-w-4xl mx-auto w-full" : ""}`}>
-              <input
-                type="text"
+              <textarea
+                rows={1}
                 value={userInput}
                 onChange={(e) => setUserInput(e.target.value)}
                 onKeyDown={(e) => {
@@ -1335,12 +1335,12 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
                   }
                 }}
                 placeholder={t("nexy.placeholder")}
-                className="w-full rounded-[20px] bg-[var(--fun-surface)] border-2 border-[var(--fun-stroke-1)] py-3 pl-12 pr-14 text-[13px] outline-none focus:border-[var(--fun-purple)] focus:ring-4 focus:ring-[var(--fun-purple)]/10 transition-all fun-text shadow-inner"
+                className="w-full rounded-[20px] bg-[var(--fun-surface)] border-2 border-[var(--fun-stroke-1)] py-3 pl-12 pr-14 text-[13px] outline-none focus:border-[var(--fun-purple)] focus:ring-4 focus:ring-[var(--fun-purple)]/10 transition-all fun-text shadow-inner resize-none h-[46px] overflow-y-auto"
               />
               <button
                 type="button"
                 onClick={startListening}
-                className={`absolute left-2.5 top-1/2 -translate-y-1/2 h-8 w-8 rounded-full flex items-center justify-center transition-all z-10 ${isListening ? "bg-red-500 text-white scale-110 shadow-lg shadow-red-500/40 animate-pulse" : "fun-text-muted hover:bg-[var(--fun-stroke-1)] hover:text-[var(--fun-purple)]"}`}
+                className={`absolute left-2.5 top-[23px] -translate-y-1/2 h-8 w-8 rounded-full flex items-center justify-center transition-all z-10 ${isListening ? "bg-red-500 text-white scale-110 shadow-lg shadow-red-500/40 animate-pulse" : "fun-text-muted hover:bg-[var(--fun-stroke-1)] hover:text-[var(--fun-purple)]"}`}
               >
                 <Mic className="h-4 w-4" />
               </button>
@@ -1350,7 +1350,7 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
                   onClick={handleStopRequest}
                   aria-label="Durdur"
                   title="Durdur"
-                  className="absolute right-2.5 top-1/2 -translate-y-1/2 h-9 w-9 rounded-xl bg-red-500 text-white flex items-center justify-center hover:scale-105 active:scale-95 transition-all shadow-lg shadow-red-500/30 z-10"
+                  className="absolute right-2.5 top-[23px] -translate-y-1/2 h-9 w-9 rounded-xl bg-red-500 text-white flex items-center justify-center hover:scale-105 active:scale-95 transition-all shadow-lg shadow-red-500/30 z-10"
                 >
                   <Square className="h-4 w-4 fill-white text-white" />
                 </button>
@@ -1359,7 +1359,7 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
                   type="submit"
                   disabled={!userInput.trim() || isThinking}
                   aria-label={t("nexy.aria_send")}
-                  className="absolute right-2.5 top-1/2 -translate-y-1/2 h-9 w-9 rounded-xl bg-[var(--fun-purple)] text-white flex items-center justify-center hover:scale-105 active:scale-95 transition-all disabled:opacity-30 disabled:hover:scale-100 shadow-lg shadow-purple-500/30 z-10"
+                  className="absolute right-2.5 top-[23px] -translate-y-1/2 h-9 w-9 rounded-xl bg-[var(--fun-purple)] text-white flex items-center justify-center hover:scale-105 active:scale-95 transition-all disabled:opacity-30 disabled:hover:scale-100 shadow-lg shadow-purple-500/30 z-10"
                 >
                   <Send className="h-4 w-4" />
                 </button>
