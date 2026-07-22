@@ -991,7 +991,8 @@ User's Description of the Issue: "${ticketDescription}"
 
 Your task is to write a highly personalized, warm, and professional welcome greeting to the user.
 Greet them by their full name (${userProfile.name}) in a warm, helpful way.
-Acknowledge that they are securely logged in under their email address (${userProfile.email}) and that you see they have submitted a support request regarding "${ticketSubject}" (Importance: ${ticketImportance}) with description: "${ticketDescription}".
+Acknowledge that they are securely logged in under their email address (${userProfile.email}) and that you see they have submitted a support request regarding their issue. Discuss the issue description ("${ticketDescription}") naturally in a conversational sentence.
+CRITICAL OUTPUT CONSTRAINT: Never output any technical ticket fields (like "Subject:", "Konu:", "Importance:", "Severity:", "Açıklama:") as headers, prefixes, or labels in your response. Never write any "Subject:" or "Konu:" prefixes. Do not write any redirection labels, redirect commands, or redirect text in your messages. Just speak naturally.
 Reassure them that they are talking to a human agent, and ask them how you can help resolve their issue today.
 Do not promote any third-party services like Pollinations or Pulsar. Respond in English.`,
         },
@@ -1407,8 +1408,10 @@ CRITICAL RULES:
 2. BE WARM, CONVERSATIONAL AND INTELLIGENT: Talk like a highly empathetic, helpful human agent. Avoid dry, robotic rejections. If the user asks general friendly chitchat or unrelated questions, gently and politely bridge back to how you can help them with Fun Teknoloji or their support ticket.
 3. Solve requests in a polite and professional manner based on the knowledge base, user account context, and ticket details.
 4. Ensure your help is specifically tailored to resolve the user's described issue ("${ticketDescription}").
-5. STRICT OUTPUT CONSTRAINT: DO NOT under any circumstances output bracketed tokens like [inceliyor], [duraklama], [düşünüyor] or any similar status tags.
-6. Do not mention any third-party services like Pollinations or Pulsar. Respond in English.`,
+5. COGNITIVE DOCUMENT RELEVANCE CHECK: If the user has attached any files or if there is OCR/extracted text from files under [USER ATTACHED FILE DETAILS], you MUST carefully examine whether the contents of these files are genuinely relevant to the user's support ticket subject ("${ticketSubject}") and description ("${ticketDescription}"). If an uploaded file is completely irrelevant or off-topic, politely point this out to the user, explain why it doesn't match the ticket context, and ask them to provide relevant documents so you can investigate their issue properly. Approach everything with maximum intelligence and focus.
+6. STRICT OUTPUT CONSTRAINT: Never output any technical ticket fields (like "Subject:", "Konu:", "Importance:", "Severity:", "Açıklama:") as headers, prefixes, or labels in your response. Never write any "Subject:" or "Konu:" prefixes. Do not write any redirection labels, redirect commands, or redirect text. Just speak naturally.
+7. STRICT OUTPUT CONSTRAINT: DO NOT under any circumstances output bracketed tokens like [inceliyor], [duraklama], [düşünüyor] or any similar status tags.
+8. Do not mention any third-party services like Pollinations or Pulsar. Respond in English.`,
       });
 
       // Map live support conversation history using stored englishText to keep context strictly in English
@@ -1572,6 +1575,13 @@ CRITICAL RULES:
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           animation: shimmer 1.8s linear infinite;
+        }
+        .no-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+        .no-scrollbar {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
         }
       `}</style>
       {/* Header */}
@@ -1924,30 +1934,30 @@ CRITICAL RULES:
 
       {/* Draft Attached Files previews bar */}
       {attachedFiles.length > 0 && (
-        <div className="p-3 border-t bg-[var(--fun-surface)]/80 flex items-center gap-3 overflow-x-auto shrink-0 w-full max-w-full" style={{ borderColor: "var(--fun-stroke-1)" }}>
+        <div className="h-12 px-3 border-t bg-[var(--fun-surface)]/80 flex items-center gap-2 overflow-x-auto shrink-0 w-full max-w-full no-scrollbar" style={{ borderColor: "var(--fun-stroke-1)" }}>
           {attachedFiles.map((file, idx) => {
             const isImg = file.type.startsWith("image/");
             return (
-              <div key={idx} className="relative flex items-center gap-2 px-3 py-2 bg-[var(--fun-card)] border border-[var(--fun-stroke-2)] rounded-xl shrink-0 group">
+              <div key={idx} className="relative flex items-center gap-1.5 px-2 py-1 bg-[var(--fun-card)] border border-[var(--fun-stroke-2)] rounded-lg shrink-0 h-8 group">
                 {file.isAnalyzing ? (
-                  <div className="h-8 w-8 rounded-lg bg-[var(--fun-purple)]/5 border border-[var(--fun-purple)]/25 flex items-center justify-center shrink-0">
-                    <svg className="animate-spin h-4 w-4 text-[var(--fun-purple)]" fill="none" viewBox="0 0 24 24">
+                  <div className="h-6 w-6 rounded bg-[var(--fun-purple)]/5 border border-[var(--fun-purple)]/25 flex items-center justify-center shrink-0">
+                    <svg className="animate-spin h-3.5 w-3.5 text-[var(--fun-purple)]" fill="none" viewBox="0 0 24 24">
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.3 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                     </svg>
                   </div>
                 ) : isImg ? (
-                  <div className="h-8 w-8 rounded-lg overflow-hidden shrink-0 border border-black/10 dark:border-white/10">
+                  <div className="h-6 w-6 rounded overflow-hidden shrink-0 border border-black/10 dark:border-white/10">
                     <img src={file.base64 || file.thumbnail} alt="draft preview" className="h-full w-full object-cover" />
                   </div>
                 ) : (
-                  <div className="h-8 w-8 rounded-lg bg-[var(--fun-purple)]/10 text-[var(--fun-purple)] flex items-center justify-center shrink-0">
-                    <FileText className="h-4 w-4" />
+                  <div className="h-6 w-6 rounded bg-[var(--fun-purple)]/10 text-[var(--fun-purple)] flex items-center justify-center shrink-0">
+                    <FileText className="h-3.5 w-3.5" />
                   </div>
                 )}
-                <div className="flex flex-col text-[10px] max-w-[120px]">
-                  <span className="font-bold truncate fun-text leading-tight">{file.name}</span>
-                  <span className="fun-text-muted mt-0.5">
+                <div className="flex flex-col text-[9px] max-w-[100px]">
+                  <span className="font-bold truncate fun-text leading-none">{file.name}</span>
+                  <span className="fun-text-muted mt-0.5 text-[8px] leading-none">
                     {file.isAnalyzing ? (
                       <span className="text-[var(--fun-purple)] font-bold animate-pulse">
                         {lang === "tr" ? "Yükleniyor..." : "Loading..."}
@@ -1960,7 +1970,7 @@ CRITICAL RULES:
                 <button
                   type="button"
                   onClick={() => removeAttachedFile(idx)}
-                  className="bg-black/40 hover:bg-black/70 text-white rounded-full h-5 w-5 flex items-center justify-center text-[10px] transition-colors ml-1 cursor-pointer"
+                  className="bg-black/40 hover:bg-black/70 text-white rounded-full h-4.5 w-4.5 flex items-center justify-center text-[8px] transition-colors ml-0.5 cursor-pointer"
                 >
                   ✕
                 </button>
