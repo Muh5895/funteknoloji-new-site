@@ -314,15 +314,19 @@ export default function NexyAssistant() {
   const generateChatTitle = async (userMsg: string, aiResponse: string) => {
     const prompt = `User: ${userMsg}\nAssistant: ${aiResponse}\n\nSystem: Based on the conversation above, determine a short and meaningful title for this chat (max 3-4 words). The title should summarize the topic. DO NOT just repeat the user's message. Response in the user's language. Write ONLY the title, no quotes or extra text.`;
     try {
-      const response = await fetch("/api/nexy", {
+      const response = await fetch("https://ai.funteknoloji.com/v1/chat/completions", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ prompt, model: "gemma-3-1b-it", cache: "false" }),
+        body: JSON.stringify({
+          messages: [{ role: "user", content: prompt }],
+          model: "gemma-3-1b-it"
+        }),
       });
       if (response.ok) {
-        let title = await response.text();
+        const data = await response.json() as any;
+        let title = data.choices?.[0]?.message?.content || "";
         title = title.replace(/^"|"$/g, "").trim();
         if (title && title.length < 50) return title;
       }
@@ -355,24 +359,36 @@ export default function NexyAssistant() {
       return redirectResponse;
     }
 
+    // Map conversation history into standard OpenAI messages format
+    const formattedMessages = chatMessages
+      .slice(-6)
+      .map((m) => ({
+        role: m.role === "nexy" ? "assistant" : "user",
+        content: m.text,
+      }));
+
+    // Add current user input to messages
+    formattedMessages.push({
+      role: "user",
+      content: input,
+    });
+
     try {
-      const response = await fetch("/api/nexy", {
+      // Call Fun Teknoloji AI directly to avoid Vercel hobby-tier 10-second timeout 500/504 errors
+      const response = await fetch("https://ai.funteknoloji.com/v1/chat/completions", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          prompt: input,
+          messages: formattedMessages,
           model: "gemma-3-1b-it"
         }),
         signal: controller.signal,
       });
       if (!response.ok) throw new Error();
-      let text = await response.text();
-
-      if (!text || text.includes("Nexy error:") || text.includes("Bir hata oluştu") || text.includes("An error occurred")) {
-        throw new Error("Invalid or error response from API proxy: " + text);
-      }
+      const data = await response.json() as any;
+      let text = data.choices?.[0]?.message?.content || "";
 
       text = text.replace(/pulsar/gi, "Nexy");
 

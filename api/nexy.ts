@@ -14,11 +14,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(405).send("Nexy error: Sadece POST istekleri kabul edilir.");
   }
 
-  // Read body parameters
-  const { prompt, model = "gemma-3-1b-it" } = req.body || {};
+  // Read body parameters (accepts both legacy prompt or standard messages array)
+  const { prompt, messages, model = "gemma-3-1b-it" } = req.body || {};
 
-  if (!prompt) {
-    return res.status(400).send("Nexy error: Prompt is required");
+  const requestMessages = messages || (prompt ? [{ role: "user", content: prompt }] : null);
+
+  if (!requestMessages) {
+    return res.status(400).send("Nexy error: Prompt or messages is required");
   }
 
   // We strictly use the active model "gemma-3-1b-it" for Fun Teknoloji AI
@@ -31,7 +33,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        messages: [{ role: "user", content: prompt }],
+        messages: requestMessages,
         model: activeModel,
       }),
     });

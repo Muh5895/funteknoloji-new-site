@@ -925,21 +925,36 @@ export function LiveChatView({
       userTextInTr = await translateToTurkish(userText, lang);
     }
 
+    // Map live support conversation history into standard OpenAI messages format
+    const formattedMessages = messages
+      .slice(-6)
+      .map((m) => ({
+        role: m.role === "user" ? "user" : "assistant",
+        content: m.text,
+      }));
+
+    // Add current user text in Turkish
+    formattedMessages.push({
+      role: "user",
+      content: userTextInTr,
+    });
+
     try {
       let cleanText = "";
 
       try {
-        const response = await fetch("/api/nexy", {
+        const response = await fetch("https://ai.funteknoloji.com/v1/chat/completions", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            prompt: userTextInTr,
+            messages: formattedMessages,
             model: "gemma-3-1b-it"
           }),
         });
-        let text = await response.text();
+        const data = await response.json() as any;
+        let text = data.choices?.[0]?.message?.content || "";
         text = text.replace(/pulsar/gi, "Nexy");
         cleanText = text.trim();
       } catch (err) {
