@@ -942,7 +942,7 @@ Cevaplarında Pollinations, Pulsar veya başka bir servis reklamı yapma, sadece
     const historyMessages = messages
       .slice(-20)
       .map((m) => ({
-        role: m.role === "user" ? "user" : "assistant",
+        role: (m.role === "user" ? "user" : "assistant") as "user" | "assistant" | "system",
         content: m.text,
       }));
 
@@ -950,9 +950,45 @@ Cevaplarında Pollinations, Pulsar veya başka bir servis reklamı yapma, sadece
 
     // Add current user text in Turkish
     formattedMessages.push({
-      role: "user",
+      role: "user" as const,
       content: userTextInTr,
     });
+
+    // Helper to ensure messages list starts with user role and strictly alternates user/assistant.
+    // Gemma-3-1b-it chat template (Jinja) throws 400 Bad Request if roles do not alternate or start with user.
+    const cleanMessagesForAPI = (msgs: any[]) => {
+      const systemMsg = msgs.find((m) => m.role === "system");
+      const chatMsgs = msgs.filter((m) => m.role !== "system");
+
+      while (chatMsgs.length > 0 && chatMsgs[0].role !== "user") {
+        chatMsgs.shift();
+      }
+
+      const alternating: any[] = [];
+      for (const msg of chatMsgs) {
+        if (!msg.content || msg.content.trim() === "") continue;
+
+        if (alternating.length === 0) {
+          alternating.push({ ...msg });
+        } else {
+          const lastMsg = alternating[alternating.length - 1];
+          if (lastMsg.role === msg.role) {
+            lastMsg.content = `${lastMsg.content}\n${msg.content}`;
+          } else {
+            alternating.push({ ...msg });
+          }
+        }
+      }
+
+      const finalMsgs = [];
+      if (systemMsg) {
+        finalMsgs.push(systemMsg);
+      }
+      finalMsgs.push(...alternating);
+      return finalMsgs;
+    };
+
+    const cleanedMessages = cleanMessagesForAPI(formattedMessages);
 
     try {
       let cleanText = "";
@@ -965,7 +1001,7 @@ Cevaplarında Pollinations, Pulsar veya başka bir servis reklamı yapma, sadece
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            messages: formattedMessages,
+            messages: cleanedMessages,
             model: "gemma-3-1b-it"
           }),
         });
@@ -987,7 +1023,7 @@ Cevaplarında Pollinations, Pulsar veya başka bir servis reklamı yapma, sadece
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              messages: formattedMessages,
+              messages: cleanedMessages,
               model: "gemma-3-1b-it"
             }),
           });
