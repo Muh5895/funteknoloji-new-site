@@ -448,6 +448,23 @@ export default function NexyAssistant() {
     const controller = new AbortController();
     abortControllerRef.current = controller;
 
+    // Fetch supabase profile if available to enrich context dynamically
+    let userProfile = null;
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        userProfile = {
+          email: user.email,
+          name: user.user_metadata?.full_name || user.user_metadata?.name || user.email?.split("@")[0] || "Değerli Müşterimiz",
+          createdAt: user.created_at,
+          emailConfirmed: !!user.email_confirmed_at,
+          lastSignIn: user.last_sign_in_at,
+        };
+      }
+    } catch (e) {
+      console.error("Failed to fetch supabase user context in NexyAssistant:", e);
+    }
+
     // Construct original untranslated messages history for backup AI use
     const originalMessages = chatMessages.slice(-20).map((m) => ({
       role: (m.role === "nexy" ? "assistant" : "user") as "user" | "assistant" | "system",
@@ -536,6 +553,7 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
           messages: cleanedMessages,
           originalMessages,
           lang,
+          userProfile,
           model: "gemma-3-1b-it"
         }),
         signal: controller.signal,

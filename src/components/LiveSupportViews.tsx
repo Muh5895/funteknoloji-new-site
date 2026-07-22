@@ -1041,6 +1041,10 @@ Do not promote any third-party services like Pollinations or Pulsar. Respond in 
               messages: cleanedMessages,
               originalMessages: cleanedMessages,
               lang,
+              ticketSubject,
+              ticketImportance,
+              ticketDescription,
+              userProfile,
               model: "gemma-3-1b-it"
             }),
           });
@@ -1490,6 +1494,10 @@ CRITICAL RULES:
               messages: cleanedMessages,
               originalMessages,
               lang,
+              ticketSubject,
+              ticketImportance,
+              ticketDescription,
+              userProfile,
               model: "gemma-3-1b-it"
             }),
           });
