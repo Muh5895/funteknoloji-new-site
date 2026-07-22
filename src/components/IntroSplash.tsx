@@ -6,45 +6,11 @@ const INTRO_VIDEO_URL = "/assets/intro.mp4";
 export default function IntroSplash() {
   const [show, setShow] = useState(false);
   const [fading, setFading] = useState(false);
-  const [videoSrc, setVideoSrc] = useState(INTRO_VIDEO_URL);
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  // Background caching & offline Blob URL loading
   useEffect(() => {
     if (typeof window === "undefined") return;
-
-    const loadAndCacheVideo = async () => {
-      if (!("caches" in window)) return;
-      try {
-        const cache = await caches.open("intro-video-cache");
-        const cachedResponse = await cache.match(INTRO_VIDEO_URL);
-
-        if (cachedResponse) {
-          const blob = await cachedResponse.blob();
-          const localUrl = URL.createObjectURL(blob);
-          setVideoSrc(localUrl);
-        } else {
-          // Fetch and cache in background
-          fetch(INTRO_VIDEO_URL).then(async (response) => {
-            if (response.ok) {
-              await cache.put(INTRO_VIDEO_URL, response.clone());
-              const blob = await response.blob();
-              const localUrl = URL.createObjectURL(blob);
-              setVideoSrc(localUrl);
-            }
-          }).catch(() => {});
-        }
-      } catch (err) {
-        console.warn("Intro cache helper failed:", err);
-      }
-    };
-
-    loadAndCacheVideo();
-  }, []);
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    // play once per session
+    // Play once per session to prevent annoyances
     if (sessionStorage.getItem(SKIP_KEY)) {
       window.__introPlaying = false;
       return;
@@ -56,7 +22,7 @@ export default function IntroSplash() {
 
   useEffect(() => {
     if (!show) return;
-    // lock scroll while playing
+    // Lock background page scroll while playing for immersive aesthetic focus
     const originalOverflow = document.body.style.overflow;
     const originalHeight = document.body.style.height;
     document.body.style.overflow = "hidden";
@@ -85,7 +51,7 @@ export default function IntroSplash() {
     const v = videoRef.current;
     if (!v) return;
 
-    // Force 1.5x speed initially if possible
+    // Set high playback rate (1.5x speed) for faster entry flow
     v.playbackRate = 1.5;
 
     const playVideo = async () => {
@@ -100,7 +66,7 @@ export default function IntroSplash() {
 
     playVideo();
 
-    // safety timeout: max 12s
+    // Safety fallback timeout: max 12 seconds
     const t = setTimeout(finish, 12000);
     return () => clearTimeout(t);
   }, [show]);
@@ -117,7 +83,7 @@ export default function IntroSplash() {
     >
       <video
         ref={videoRef}
-        src={videoSrc}
+        src={INTRO_VIDEO_URL}
         muted
         playsInline
         autoPlay
@@ -133,7 +99,7 @@ export default function IntroSplash() {
         }}
         onEnded={finish}
         onError={(e) => {
-          console.error("Video error:", e);
+          console.error("Video playback error occurred:", e);
           finish();
         }}
         onContextMenu={(e) => {
