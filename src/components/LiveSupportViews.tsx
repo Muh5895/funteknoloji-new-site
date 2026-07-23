@@ -724,13 +724,15 @@ export function LiveLoginView({ onBack, onLoginSuccess, lang }: LiveLoginViewPro
 interface LiveTicketDetailsViewProps {
   lang: string;
   onBack: () => void;
-  onSubmit: (details: { subject: string; importance: string; description: string }) => void;
+  onSubmit: (details: { subject: string; importance: string; description: string; rating?: number; evaluation?: string }) => void;
 }
 
 export function LiveTicketDetailsView({ lang, onBack, onSubmit }: LiveTicketDetailsViewProps) {
   const [subject, setSubject] = useState("");
   const [importance, setImportance] = useState("Orta");
   const [description, setDescription] = useState("");
+  const [rating, setRating] = useState<number>(5);
+  const [evaluation, setEvaluation] = useState("");
   const [userName, setUserName] = useState("");
 
   // Retrieve user full name from Supabase auth metadata on mount
@@ -755,7 +757,7 @@ export function LiveTicketDetailsView({ lang, onBack, onSubmit }: LiveTicketDeta
       toast.error(getTranslation(lang, "fillFields"));
       return;
     }
-    onSubmit({ subject, importance, description });
+    onSubmit({ subject, importance, description, rating, evaluation });
   };
 
   return (
@@ -836,6 +838,40 @@ export function LiveTicketDetailsView({ lang, onBack, onSubmit }: LiveTicketDeta
           />
         </div>
 
+        <div className="space-y-1.5">
+          <label className="text-xs font-semibold fun-text">
+            {lang === "tr" ? "Hizmet Puan Değerlendirmesi" : "Service Rating Assessment"}
+          </label>
+          <div className="flex items-center gap-2 px-1">
+            {[1, 2, 3, 4, 5].map((star) => (
+              <button
+                key={star}
+                type="button"
+                onClick={() => setRating(star)}
+                className={`text-2xl transition-transform active:scale-90 ${star <= rating ? "text-amber-500" : "text-zinc-600"}`}
+              >
+                ★
+              </button>
+            ))}
+            <span className="text-xs fun-text-muted ml-2 font-bold">
+              ({rating} / 5)
+            </span>
+          </div>
+        </div>
+
+        <div className="space-y-1.5">
+          <label className="text-xs font-semibold fun-text">
+            {lang === "tr" ? "Geri Bildirim / Değerlendirme" : "Feedback / Evaluation"}
+          </label>
+          <textarea
+            placeholder={lang === "tr" ? "Varsa ek görüşleriniz, önerileriniz..." : "Any additional feedback or evaluation..."}
+            value={evaluation}
+            onChange={(e) => setEvaluation(e.target.value)}
+            rows={3}
+            className="w-full rounded-xl bg-[var(--fun-surface)] border border-[var(--fun-stroke-2)] px-4 py-3 text-xs outline-none focus:border-[var(--fun-purple)] focus:ring-2 focus:ring-[var(--fun-purple)]/20 transition-all resize-none fun-text"
+          />
+        </div>
+
         <button
           type="submit"
           className="w-full py-3 px-4 mt-2 rounded-xl bg-[var(--fun-purple)] text-white font-bold text-xs flex items-center justify-center gap-2 hover:scale-[1.01] transition-all shadow-lg shadow-purple-500/20 active:scale-95"
@@ -906,9 +942,9 @@ export function LiveChatView({
 
     if (hasFiles || hasMsgFiles || mentionsFiles) {
       if (filesCount > 1) {
-        return lang === "tr" ? "Dosyalar İnceleniyor..." : "Analyzing Files...";
+        return lang === "tr" ? "Dosyalarınız Güvenle İnceleniyor..." : "Analyzing your files securely...";
       }
-      return lang === "tr" ? "Dosya İnceleniyor..." : "Analyzing File...";
+      return lang === "tr" ? "Gönderdiğiniz Dosya Güvenle Taranıyor..." : "Scanning uploaded file securely...";
     }
 
     const mentionsAccount =
@@ -926,10 +962,16 @@ export function LiveChatView({
       lastUserText.includes("kimim");
 
     if (mentionsAccount) {
-      return lang === "tr" ? "Hesap İnceleniyor..." : "Checking Account Details...";
+      return lang === "tr" ? "Hesabınız Güvenle İnceleniyor..." : "Reviewing your account securely...";
     }
 
-    return lang === "tr" ? "Destek Asistanı Yazıyor..." : "Support Assistant is typing...";
+    // Checking details fallback
+    const mentionsQuery = lastUserText.includes("öde") || lastUserText.includes("abonelik") || lastUserText.includes("bilet") || lastUserText.includes("ticket") || lastUserText.includes("fatura");
+    if (mentionsQuery) {
+      return lang === "tr" ? "Hesap Bilgileriniz Sorgulanıyor..." : "Sourcing secure account details...";
+    }
+
+    return lang === "tr" ? "Nexy Canlı Destek Temsilcisi Yazıyor..." : "Nexy Support Representative is writing...";
   };
 
   useEffect(() => {
@@ -1003,18 +1045,18 @@ export function LiveChatView({
     };
   }, []);
 
-  // 10-minute Inactivity Timer
+  // 5-minute Inactivity Timer
   useEffect(() => {
     if (readOnly) return;
 
     const inactivityTimeout = setTimeout(() => {
       toast.info(
         lang === "tr"
-          ? "Görüşme 10 dakika boyunca hareketsiz kaldığı için otomatik olarak sonlandırıldı."
-          : "Session was automatically closed due to 10 minutes of inactivity."
+          ? "Görüşme 5 dakika boyunca hareketsiz kaldığı için otomatik olarak sonlandırıldı."
+          : "Session was automatically closed due to 5 minutes of inactivity."
       );
       forceSupportLogout();
-    }, 10 * 60 * 1000);
+    }, 5 * 60 * 1000);
 
     return () => {
       clearTimeout(inactivityTimeout);
@@ -1030,6 +1072,15 @@ export function LiveChatView({
       e.returnValue = lang === "tr"
         ? "Canlı destek görüşmeniz devam ediyor. Ayrılmak istediğinize emin misiniz? Çıkarsanız görüşmeniz sonlandırılacaktır."
         : "Your live support session is active. Are you sure you want to leave? Your session will be terminated.";
+
+      // Synchronously clear localStorage to ensure session is dead on refresh/re-entry
+      localStorage.removeItem("live_support_messages");
+      localStorage.removeItem("live_support_user");
+      localStorage.removeItem("live_support_subject");
+      localStorage.removeItem("live_support_importance");
+      localStorage.removeItem("live_support_subject_en");
+      localStorage.removeItem("live_support_importance_en");
+      localStorage.removeItem("live_support_description_en");
 
       supabase.auth.signOut().catch(() => {});
       return e.returnValue;

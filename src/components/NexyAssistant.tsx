@@ -172,6 +172,54 @@ export default function NexyAssistant() {
   const [isOnline, setIsOnline] = useState<boolean>(typeof window !== "undefined" ? navigator.onLine : true);
   const isSendingRef = useRef(false);
 
+  const [systemStatus, setSystemStatus] = useState<"on" | "off" | "maintenance">("on");
+  const [maintenanceReason, setMaintenanceReason] = useState("");
+  const [estimatedEndTime, setEstimatedEndTime] = useState("");
+
+  useEffect(() => {
+    const fetchSystemStatus = async () => {
+      try {
+        const { data, error } = await supabase
+          .from("system_status")
+          .select("status, maintenance_reason, estimated_end_time")
+          .eq("app_name", "Nexy")
+          .single();
+        if (data && !error) {
+          setSystemStatus(data.status || "on");
+          setMaintenanceReason(data.maintenance_reason || "");
+          setEstimatedEndTime(data.estimated_end_time || "");
+        }
+      } catch (e) {
+        console.error("Failed to fetch system_status:", e);
+      }
+    };
+
+    fetchSystemStatus();
+
+    const channel = supabase
+      .channel("system_status_realtime")
+      .on(
+        "postgres_changes",
+        {
+          event: "*",
+          schema: "public",
+          table: "system_status",
+          filter: "app_name=eq.Nexy",
+        },
+        (payload: any) => {
+          const newData = payload.new || {};
+          setSystemStatus(newData.status || "on");
+          setMaintenanceReason(newData.maintenance_reason || "");
+          setEstimatedEndTime(newData.estimated_end_time || "");
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel).catch(() => {});
+    };
+  }, []);
+
   useEffect(() => {
     if (typeof window === "undefined") return;
 
@@ -409,19 +457,19 @@ export default function NexyAssistant() {
   const generateChatTitle = async (userMsg: string, aiResponse: string) => {
     const prompt = `User: ${userMsg}\nAssistant: ${aiResponse}\n\nSystem: Based on the conversation above, determine a short and meaningful title for this chat (max 3-4 words). The title should summarize the topic. DO NOT just repeat the user's message. Response in the user's language. Write ONLY the title, no quotes or extra text.`;
     try {
-      const response = await fetch("/api/nexy", {
+      const response = await fetch("https://ai.funteknoloji.com/v1/chat/completions", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          prompt,
-          lang
+          messages: [{ role: "user", content: prompt }],
+          model: "gemma-3-1b-it"
         }),
       });
       if (response.ok) {
         const data = await response.json() as any;
-        let title = data.text || "";
+        let title = data.choices?.[0]?.message?.content || "";
         title = title.replace(/^"|"$/g, "").trim();
         if (title && title.length < 50) return title;
       }
@@ -441,27 +489,67 @@ export default function NexyAssistant() {
     setIsTyping(false);
   };
 
-  const getNexyBrainResponse = async (originalInput: string) => {
+  const getNexyBrainResponse = async (englishInput: string, originalInput: string) => {
     if (abortControllerRef.current) {
       abortControllerRef.current.abort();
     }
     const controller = new AbortController();
     abortControllerRef.current = controller;
 
-    // Map conversation history using original native text
+    // Fetch supabase profile if available to enrich context dynamically
+    let userProfile = null;
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        userProfile = {
+          email: user.email,
+          name: user.user_metadata?.full_name || user.user_metadata?.name || user.email?.split("@")[0] || "Değerli Müşterimiz",
+          createdAt: user.created_at,
+          emailConfirmed: !!user.email_confirmed_at,
+          lastSignIn: user.last_sign_in_at,
+        };
+      }
+    } catch (e) {
+      console.error("Failed to fetch supabase user context in NexyAssistant:", e);
+    }
+
+    // Construct original untranslated messages history for backup AI use
+    const originalMessages = chatMessages.slice(-20).map((m) => ({
+      role: (m.role === "nexy" ? "assistant" : "user") as "user" | "assistant" | "system",
+      content: m.text,
+    }));
+    originalMessages.push({
+      role: "user",
+      content: originalInput,
+    });
+
+    // Prepare system message strictly in English for maximum reasoning quality
+    const formattedMessages = [];
+    formattedMessages.push({
+      role: "system",
+      content: `You are Nexy, the official AI assistant of Fun Teknoloji (Fun Technology).
+Fun Technology projects and information:
+${KNOWLEDGE_BASE}
+
+Style: Professional, helpful, friendly, and conversational.
+Redirects: If the user wants to navigate to contact, pricing, or projects, append [REDIRECT:/page] at the end of your response (e.g., [REDIRECT:/contact], [REDIRECT:/pricing], [REDIRECT:/projects]) and mention in your sentence that you are redirecting them.
+Answer questions based on the knowledge base. Do not promote any third-party services like Pollinations or Pulsar. Respond in English.`,
+    });
+
+    // Map conversation history using englishText to ensure 100% English context
     const historyMessages = chatMessages
       .slice(-20)
       .map((m) => ({
         role: (m.role === "nexy" ? "assistant" : "user") as "user" | "assistant" | "system",
-        content: m.text,
+        content: m.englishText || m.text,
       }));
 
-    const formattedMessages = [...historyMessages];
+    formattedMessages.push(...historyMessages);
 
-    // Add current user input directly without pre-translation
+    // Add current user input (already translated to English)
     formattedMessages.push({
       role: "user" as const,
-      content: originalInput,
+      content: englishInput,
     });
 
     // Helper to ensure messages list starts with user role and strictly alternates user/assistant.
@@ -503,23 +591,17 @@ export default function NexyAssistant() {
     let englishResponse = "";
 
     try {
-      // Get the active Supabase session token securely if logged in
-      let token = "";
-      try {
-        const { data: { session } } = await supabase.auth.getSession();
-        token = session?.access_token || "";
-      } catch (e) {}
-
       // Direct call to Vercel backend proxy /api/nexy (acts as central fallback orchestrator)
       const response = await fetch("/api/nexy", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          ...(token ? { "Authorization": `Bearer ${token}` } : {})
         },
         body: JSON.stringify({
           messages: cleanedMessages,
+          originalMessages,
           lang,
+          userProfile,
           model: "gemma-3-1b-it"
         }),
         signal: controller.signal,
@@ -567,10 +649,14 @@ export default function NexyAssistant() {
       setLastSentTimestamp(now);
       const savedInput = userInput;
 
+      // Auto-translate user input to English silently in the background
+      const englishInput = await translateAnyText(savedInput, lang, "en");
+
       const userMsg = {
         role: "user" as const,
         text: savedInput,
         displayedText: savedInput,
+        englishText: englishInput
       };
 
       const shouldUpdateTitle = chatMessages.length <= 1;
@@ -588,7 +674,7 @@ export default function NexyAssistant() {
       setIsTyping(false);
       setIsThinking(true);
 
-      const result = await getNexyBrainResponse(savedInput);
+      const result = await getNexyBrainResponse(englishInput, savedInput);
 
       // If request was stopped/cancelled, return immediately
       if (abortControllerRef.current === null) {
@@ -614,7 +700,7 @@ export default function NexyAssistant() {
         prev.map((c) => {
           if (c.id === currentChatId) {
             const nexyMsgIndex = c.messages.length;
-            const updatedMsgs = [...c.messages, { role: "nexy" as const, text: responseText, displayedText: "" }];
+            const updatedMsgs = [...c.messages, { role: "nexy" as const, text: responseText, displayedText: "", englishText: responseEnglish }];
             setTimeout(() => typeMessage(responseText, nexyMsgIndex, currentChatId), 10);
             return { ...c, messages: updatedMsgs };
           }
@@ -623,7 +709,7 @@ export default function NexyAssistant() {
       );
 
       if (shouldUpdateTitle) {
-        const newTitle = await generateChatTitle(savedInput, responseText);
+        const newTitle = await generateChatTitle(englishInput, responseEnglish);
         setChats((prev) =>
           prev.map((c) => (c.id === currentChatId ? { ...c, title: newTitle } : c))
         );
@@ -744,8 +830,7 @@ export default function NexyAssistant() {
         .replace(/\|/g, " ") // Remove remaining pipes
         .replace(/#{1,6}\s/g, " ") // Remove markdown headers
         .replace(/\*\*/g, "") // Remove bold markers
-        .replace(/\*\s/g, " ") // Remove bullet points safely
-        .replace(/-\s/g, " ") // Remove dashes safely
+        .replace(/\*/g, "") // Remove italic markers
         .replace(/-{2,}/g, " ") // Remove multiple dashes (the main issue)
         .replace(/(\s-){2,}/g, " ") // Remove repeating space-dash patterns
         .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1") // Replace links [text](url) with just text
@@ -918,6 +1003,46 @@ export default function NexyAssistant() {
         <div
           className={`${isMaximized ? "fixed inset-0 z-[200] rounded-none" : "fixed bottom-24 right-6 w-[320px] sm:w-[420px] h-[550px] z-[100] rounded-[32px]"} bg-[var(--fun-card)] border border-[var(--fun-stroke-1)] shadow-2xl flex flex-row overflow-hidden animate-in fade-in zoom-in-95 duration-500 origin-bottom-right transition-all`}
         >
+          {systemStatus !== "on" && (
+            <div className="absolute inset-0 bg-black/90 backdrop-blur-md z-[999] flex flex-col items-center justify-center p-6 text-center select-none animate-in fade-in duration-300">
+              <div className="h-16 w-16 rounded-2xl bg-zinc-900 border border-zinc-800 flex items-center justify-center p-2 mb-4">
+                <img
+                  src="/nexy-kafa-buyuk.png"
+                  alt="Nexy"
+                  className="h-full w-full object-contain"
+                />
+              </div>
+              <h3 className="text-lg font-bold text-white mb-2">
+                {systemStatus === "maintenance" ? "Sistemimiz Bakımdadır" : "Sistem Geçici Olarak Kapalıdır"}
+              </h3>
+              <p className="text-xs text-zinc-400 max-w-[280px] leading-relaxed mb-4">
+                {systemStatus === "maintenance"
+                  ? "Sizlere daha iyi hizmet verebilmek için planlı bakım çalışması yapıyoruz."
+                  : "Nexy Yapay Zeka Asistanı ve Canlı Destek hizmetleri geçici olarak kullanılamamaktadır."}
+              </p>
+              {systemStatus === "maintenance" && (
+                <div className="w-full bg-zinc-900/80 border border-zinc-850 rounded-xl p-3 text-left space-y-2 text-[11px] max-w-[280px]">
+                  {maintenanceReason && (
+                    <p className="text-zinc-300">
+                      <strong className="text-[var(--fun-purple)]">Bakım Nedeni:</strong> {maintenanceReason}
+                    </p>
+                  )}
+                  {estimatedEndTime && (
+                    <p className="text-zinc-300">
+                      <strong className="text-[var(--fun-purple)]">Tahmini Bitiş:</strong> {estimatedEndTime}
+                    </p>
+                  )}
+                </div>
+              )}
+              <button
+                onClick={() => setIsOpen(false)}
+                className="mt-6 py-2.5 px-6 rounded-xl bg-zinc-850 hover:bg-zinc-800 text-white font-bold text-xs transition-all active:scale-95"
+              >
+                Kapat
+              </button>
+            </div>
+          )}
+
           {supportView === "menu" ? (
             <div className="flex-1 flex flex-col h-full bg-[var(--fun-card)] select-none animate-in fade-in duration-300">
               {/* Menu Header */}
@@ -941,15 +1066,30 @@ export default function NexyAssistant() {
 
               {/* Menu Body */}
               <div className="flex-1 overflow-y-auto p-5 sm:p-6 flex flex-col justify-start gap-4 pt-8">
+                {systemStatus !== "on" && (
+                  <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-500 text-xs text-left leading-relaxed">
+                    <strong>{systemStatus === "maintenance" ? "Sistemimiz Bakımdadır" : "Sistem Kapalıdır"}</strong>
+                    {systemStatus === "maintenance" && (
+                      <>
+                        {maintenanceReason && <p className="mt-1 font-semibold">Neden: {maintenanceReason}</p>}
+                        {estimatedEndTime && <p className="mt-0.5 opacity-80">Bitiş Süresi: {estimatedEndTime}</p>}
+                      </>
+                    )}
+                  </div>
+                )}
                 {/* AI Assistant Card */}
                 <div
                   onClick={() => {
+                    if (systemStatus !== "on") {
+                      toast.error(lang === "tr" ? "Sistem şu anda kapalı veya bakımdadır." : "System is currently offline or under maintenance.");
+                      return;
+                    }
                     setSupportView("chat");
                     if (chats.length === 0) {
                       createNewChat();
                     }
                   }}
-                  className="group p-4 sm:p-5 rounded-2xl bg-[var(--fun-surface)] border border-[var(--fun-stroke-2)] hover:border-[var(--fun-purple)]/50 transition-all duration-300 cursor-pointer hover:scale-[1.02] shadow-sm flex items-start gap-4"
+                  className={`group p-4 sm:p-5 rounded-2xl bg-[var(--fun-surface)] border border-[var(--fun-stroke-2)] hover:border-[var(--fun-purple)]/50 transition-all duration-300 cursor-pointer hover:scale-[1.02] shadow-sm flex items-start gap-4 ${systemStatus !== "on" ? "opacity-50 cursor-not-allowed" : ""}`}
                 >
                   <div className="h-10 w-10 sm:h-11 sm:w-11 rounded-xl bg-[var(--fun-purple)]/10 text-[var(--fun-purple)] flex items-center justify-center shrink-0 group-hover:scale-110 transition-all overflow-hidden relative">
                     <img
@@ -969,6 +1109,10 @@ export default function NexyAssistant() {
                 {/* Live Support Card */}
                 <div
                   onClick={() => {
+                    if (systemStatus !== "on") {
+                      toast.error(lang === "tr" ? "Sistem şu anda kapalı veya bakımdadır." : "System is currently offline or under maintenance.");
+                      return;
+                    }
                     if (liveUser) {
                       if (liveMessages.length > 0) {
                         setSupportView("live_chat");
@@ -979,7 +1123,7 @@ export default function NexyAssistant() {
                       setSupportView("live_login");
                     }
                   }}
-                  className="group p-4 sm:p-5 rounded-2xl bg-[var(--fun-surface)] border border-[var(--fun-stroke-2)] hover:border-[var(--fun-purple)]/50 transition-all duration-300 cursor-pointer hover:scale-[1.02] shadow-sm flex items-start gap-4"
+                  className={`group p-4 sm:p-5 rounded-2xl bg-[var(--fun-surface)] border border-[var(--fun-stroke-2)] hover:border-[var(--fun-purple)]/50 transition-all duration-300 cursor-pointer hover:scale-[1.02] shadow-sm flex items-start gap-4 ${systemStatus !== "on" ? "opacity-50 cursor-not-allowed" : ""}`}
                 >
                   <div className="h-10 w-10 sm:h-11 sm:w-11 rounded-xl bg-[var(--fun-purple)]/10 text-[var(--fun-purple)] flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
                     <MessageSquare className="h-5 w-5" />
@@ -1042,6 +1186,25 @@ export default function NexyAssistant() {
                 localStorage.setItem("live_support_importance", details.importance);
                 localStorage.setItem("live_support_description", details.description);
 
+                // Securely save the ticket details, rating, and feedback directly into the database
+                try {
+                  const { data: { user } } = await supabase.auth.getUser();
+                  if (user) {
+                    await supabase.from("support_tickets_feedback").insert([
+                      {
+                        user_id: user.id,
+                        subject: details.subject,
+                        description: details.description,
+                        importance: details.importance,
+                        rating: details.rating || 5,
+                        evaluation: details.evaluation || ""
+                      }
+                    ]);
+                  }
+                } catch (dbErr) {
+                  console.error("Failed to save support ticket feedback to database:", dbErr);
+                }
+
                 try {
                   // Translate subject and description to English silently in the background
                   const subjectEn = await translateAnyText(details.subject, lang, "en");
@@ -1067,7 +1230,13 @@ export default function NexyAssistant() {
                 }
 
                 // Pre-populate chat with the compiled ticket details
-                const initialMsg = `**Yeni Canlı Destek Talebi**\n\n📌 **Konu:** ${details.subject}\n⚡ **Önem Seviyesi:** ${details.importance}\n📝 **Açıklama:** ${details.description}`;
+                let initialMsg = `**Yeni Canlı Destek Talebi**\n\n📌 **Konu:** ${details.subject}\n⚡ **Önem Seviyesi:** ${details.importance}\n📝 **Açıklama:** ${details.description}`;
+                if (details.rating) {
+                  initialMsg += `\n⭐️ **Puan:** ${details.rating} / 5`;
+                }
+                if (details.evaluation) {
+                  initialMsg += `\n💬 **Geri Bildirim:** ${details.evaluation}`;
+                }
                 setLiveMessages([
                   {
                     role: "user",
@@ -1123,7 +1292,6 @@ export default function NexyAssistant() {
               }}
               onLogout={() => {
                 // Log out from the live support account completely
-                supabase.auth.signOut().catch(() => {});
                 setLiveUser(null);
                 setLiveMessages([]);
                 setSupportView("menu");
@@ -1140,7 +1308,6 @@ export default function NexyAssistant() {
               isAgentTyping={liveAgentTyping}
               setIsAgentTyping={setLiveAgentTyping}
               isMaximized={isMaximized}
-              setIsMaximized={setIsMaximized}
               readOnly={isPastSession}
             />
           ) : (
@@ -1515,10 +1682,31 @@ export default function NexyAssistant() {
 
 function TypingIndicator() {
   return (
-    <div className="flex items-center gap-1.5 py-1 px-1.5 justify-center">
-      <div className="h-2 w-2 rounded-full bg-current animate-bounce [animation-delay:-0.3s]"></div>
-      <div className="h-2 w-2 rounded-full bg-current animate-bounce [animation-delay:-0.15s]"></div>
-      <div className="h-2 w-2 rounded-full bg-current animate-bounce"></div>
+    <div className="loader">
+      <svg id="pegtopone" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+        <g>
+          <path
+            d="M63,37c-6.7-4-4-27-13-27s-6.3,23-13,27-27,4-27,13,20.3,9,27,13,4,27,13,27,6.3-23,13-27,27-4,27-13-20.3-9-27-13Z"
+            fill="currentColor"
+          ></path>
+        </g>
+      </svg>
+      <svg id="pegtoptwo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+        <g>
+          <path
+            d="M63,37c-6.7-4-4-27-13-27s-6.3,23-13,27-27,4-27,13,20.3,9,27,13,4,27,13,27,6.3-23,13-27,27-4,27-13-20.3-9-27-13Z"
+            fill="currentColor"
+          ></path>
+        </g>
+      </svg>
+      <svg id="pegtopthree" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+        <g>
+          <path
+            d="M63,37c-6.7-4-4-27-13-27s-6.3,23-13,27-27,4-27,13,20.3,9,27,13,4,27,13,27,6.3-23,13-27,27-4,27-13-20.3-9-27-13Z"
+            fill="currentColor"
+          ></path>
+        </g>
+      </svg>
     </div>
   );
 }
