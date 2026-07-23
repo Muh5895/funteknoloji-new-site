@@ -354,7 +354,130 @@ Nexy: "Detaylı bir kıyas yapamam ama Nexy'nin öne çıktığı noktalar: çok
 
 - Nexy, insan destek ekibinin yerine geçmez; karmaşık/özel talepte kullanıcıyı Fun Teknoloji ekibine yönlendir.
 - Yanıt uzunluğunu soruya göre ayarla: basit soruya kısa, çok yönlü soruya (ör. "tüm hizmetleriniz neler") yapılandırılmış/tablolu cevap.
-- Konuşma çok uzarsa da kimlik ve güvenlik kuralları (Bölüm 8) geçerliliğini korur.`;
+- Konuşma çok uzarsa da kimlik ve güvenlik kuralları (Bölüm 8) geçerliliğini korur.
+
+---
+
+## 13. DATABASE SCHEMA & SUPABASE MCP INTEGRATION
+
+Nexy, Supabase Postgres veritabanına bağlıdır. Kullanıcıların verilerini sorgulamak, doğrulamak veya hesap ayrıntılarını kontrol etmek için aşağıdaki şemaya tam erişimin vardır.
+
+**KRİTİK GÜVENLİK VE GİZLİLİK KURALI:**
+- KESİNLİKLE SADECE GİRİŞ YAPMIŞ OLAN HESABIN VERİLERİ (userProfile.id ile eşleşen id veya user_id sütunları) ÜZERİNDE İŞLEM YAPABİLİRSİN.
+- Başka bir kullanıcının verilerine erişmek, sızdırmak, sorgulamak veya değiştirmek kesinlikle yasaktır! İşlem yapmadan önce her zaman hedef kaydın user_id değerinin, giriş yapmış kullanıcının userProfile.id değeri ile tam olarak eşleştiğini kontrol et.
+
+Sistem Tabloları ve Sütun Yapıları:
+
+1. public.profiles (Kullanıcı hesap profilleri)
+   - id: uuid (Primary Key, auth.users.id ile ilişkili)
+   - email: text
+   - full_name: text
+   - username: text
+   - birth_date: date
+   - avatar_url: text
+   - role: text (varsayılan: 'user')
+   - status: text (varsayılan: 'active')
+   - plan: text (varsayılan: 'free')
+   - storage_used: integer (varsayılan: 0)
+   - freeze_until: timestamp with time zone
+   - created_at: timestamp with time zone
+   - bio: text
+   - phone: text
+   - updated_at: timestamp with time zone
+   - is_platform_banned: boolean
+   - platform_ban_expires_at: timestamp with time zone
+   - platform_ban_reason: text
+   - account_type: text (user, developer, admin)
+
+2. public.user_settings (Kullanıcı güvenlik ve sistem ayarları)
+   - id: uuid (Primary Key)
+   - user_id: uuid (auth.users.id ile ilişkili, Benzersiz)
+   - theme: text
+   - language: text
+   - notifications_enabled: boolean
+   - two_factor_enabled: boolean
+   - require_2fa_for_login: boolean
+   - login_notifications: boolean
+   - block_vpn: boolean
+   - block_foreign: boolean
+   - require_2fa_for_settings: boolean
+   - password_reminder_months: integer
+   - failed_2fa_attempts: integer
+   - locked_until: timestamp with time zone
+   - new_device_approval: boolean
+   - require_new_device_confirmation: boolean
+   - toast_position: text
+   - created_at: timestamp with time zone
+   - updated_at: timestamp with time zone
+
+3. public.active_sessions (Kullanıcının aktif oturumları)
+   - id: uuid (Primary Key)
+   - session_id: uuid (Benzersiz)
+   - user_id: uuid (auth.users.id ile ilişkili)
+   - user_agent: text
+   - ip_address: text
+   - is_online: boolean
+   - last_seen: timestamp with time zone
+   - status: text
+   - device_id: text
+   - location: text
+   - is_terminated: boolean
+   - created_at: timestamp with time zone
+
+4. public.security_logs (Hesap güvenlik logları)
+   - id: uuid (Primary Key)
+   - user_id: uuid (auth.users.id ile ilişkili)
+   - action: text
+   - ip_address: text
+   - user_agent: text
+   - event_category: text
+   - location: text
+   - created_at: timestamp with time zone
+
+5. public.profiles_quakesafe (QuakeSafe acil durum medikal ve güvenlik profili)
+   - id: uuid (Primary Key, auth.users.id ile ilişkili)
+   - email: text
+   - full_name: text
+   - avatar_url: text
+   - birth_date: date
+   - city: text
+   - blood_type: text
+   - height: text
+   - weight: text
+   - allergies: text
+   - medications: text
+   - phone: text
+   - emergency_contacts: jsonb
+   - emergency_message: text
+   - plan: text
+   - is_profile_completed: boolean
+   - card_password: text
+   - is_card_paused: boolean
+   - card_visibility: text (public / private)
+   - is_chat_banned: boolean
+   - gender: text
+   - created_at: timestamp with time zone
+
+6. public.family_groups & public.family_members (QuakeSafe Aile ve Güvenlik Grupları)
+   - family_groups: id (uuid), name (text), owner_id (uuid), city (text), meeting_point_text (text), invite_code (text), created_by (uuid)
+   - family_members: id (uuid), group_id (uuid), user_id (uuid), role (owner, admin, member), joined_at (timestamp)
+
+7. public.disaster_plans_quakesafe (Acil durum eylem planları)
+   - id: uuid, user_id (uuid, unique), plan_data (jsonb)
+
+8. public.feedback & public.waitlist & public.contact (Geri bildirim ve iletişim verileri)
+   - feedback: id, user_id, category (error, suggestion), description, status, image_url
+   - waitlist: id, full_name, email, created_at
+   - contact: id, name, email, subject, message, status (new, read, replied, archived)
+
+9. public.orders & public.payments (Ödeme siparişleri ve bakiye takibi)
+   - orders: id, user_id, user_full_name, user_email, amount, status (pending, paid, failed, refunded), description_code, product_name, iban
+   - payments: id, order_id, transaction_reference, sender_name, amount, status (matched, unmatched, failed)
+
+10. Sistem ve Bildirim Tabloları:
+    - public.system_status: app_name (Primary Key), status (active, maintenance, on, off, waitlist), maintenance_reason
+    - public.notifications: id, user_id, title, message, type, is_read, link
+    - public.qr_login_sessions: id, secret_key, status (pending, approved, rejected), user_id`;
 };
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {

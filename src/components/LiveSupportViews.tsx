@@ -1321,18 +1321,8 @@ Do not promote any third-party services like Pollinations or Pulsar. Respond in 
     setAttachedFiles((prev) => prev.filter((_, i) => i !== index));
   };
 
-  // Dynamically generated professional Turkish support assistant name, saved on session mount
-  const [agentName, setAgentName] = useState(() => {
-    if (typeof window !== "undefined") {
-      const saved = localStorage.getItem("live_support_agent_name");
-      if (saved) return saved;
-      const names = ["Emre", "Ahmet", "Yiğit", "Elif", "Burak", "Kaan", "Ceren", "Selin", "Mert", "Deniz"];
-      const chosen = names[Math.floor(Math.random() * names.length)];
-      localStorage.setItem("live_support_agent_name", chosen);
-      return chosen;
-    }
-    return "Destek Asistanı";
-  });
+  // Support assistant name is always Nexy
+  const [agentName, setAgentName] = useState("Nexy");
 
   const handleSend = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -1600,8 +1590,8 @@ CRITICAL RULES:
             <h3 className="text-sm sm:text-base font-bold tracking-tight fun-text leading-tight">
               {agentName}
             </h3>
-            <p className={`text-[10px] sm:text-xs font-semibold mt-0.5 ${readOnly ? "text-red-600 dark:text-red-500 font-bold" : "text-green-500 dark:text-green-400"}`}>
-              {readOnly ? (lang === "tr" ? "Sonlandırıldı" : "Closed") : getTranslation(lang, "online")}
+            <p className={`text-[10px] sm:text-xs font-semibold mt-0.5 ${readOnly ? "text-red-600 dark:text-red-500 font-bold" : "fun-text-muted"}`}>
+              {readOnly ? (lang === "tr" ? "Sonlandırıldı" : "Closed") : (lang === "tr" ? "Destek Asistanı" : "Support Assistant")}
             </p>
           </div>
         </div>
