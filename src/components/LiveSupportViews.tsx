@@ -724,15 +724,13 @@ export function LiveLoginView({ onBack, onLoginSuccess, lang }: LiveLoginViewPro
 interface LiveTicketDetailsViewProps {
   lang: string;
   onBack: () => void;
-  onSubmit: (details: { subject: string; importance: string; description: string; rating?: number; evaluation?: string }) => void;
+  onSubmit: (details: { subject: string; importance: string; description: string }) => void;
 }
 
 export function LiveTicketDetailsView({ lang, onBack, onSubmit }: LiveTicketDetailsViewProps) {
   const [subject, setSubject] = useState("");
   const [importance, setImportance] = useState("Orta");
   const [description, setDescription] = useState("");
-  const [rating, setRating] = useState<number>(5);
-  const [evaluation, setEvaluation] = useState("");
   const [userName, setUserName] = useState("");
 
   // Retrieve user full name from Supabase auth metadata on mount
@@ -757,7 +755,7 @@ export function LiveTicketDetailsView({ lang, onBack, onSubmit }: LiveTicketDeta
       toast.error(getTranslation(lang, "fillFields"));
       return;
     }
-    onSubmit({ subject, importance, description, rating, evaluation });
+    onSubmit({ subject, importance, description });
   };
 
   return (
@@ -835,40 +833,6 @@ export function LiveTicketDetailsView({ lang, onBack, onSubmit }: LiveTicketDeta
             rows={4}
             className="w-full rounded-xl bg-[var(--fun-surface)] border border-[var(--fun-stroke-2)] px-4 py-3 text-xs outline-none focus:border-[var(--fun-purple)] focus:ring-2 focus:ring-[var(--fun-purple)]/20 transition-all resize-none fun-text"
             required
-          />
-        </div>
-
-        <div className="space-y-1.5">
-          <label className="text-xs font-semibold fun-text">
-            {lang === "tr" ? "Hizmet Puan Değerlendirmesi" : "Service Rating Assessment"}
-          </label>
-          <div className="flex items-center gap-2 px-1">
-            {[1, 2, 3, 4, 5].map((star) => (
-              <button
-                key={star}
-                type="button"
-                onClick={() => setRating(star)}
-                className={`text-2xl transition-transform active:scale-90 ${star <= rating ? "text-amber-500" : "text-zinc-600"}`}
-              >
-                ★
-              </button>
-            ))}
-            <span className="text-xs fun-text-muted ml-2 font-bold">
-              ({rating} / 5)
-            </span>
-          </div>
-        </div>
-
-        <div className="space-y-1.5">
-          <label className="text-xs font-semibold fun-text">
-            {lang === "tr" ? "Geri Bildirim / Değerlendirme" : "Feedback / Evaluation"}
-          </label>
-          <textarea
-            placeholder={lang === "tr" ? "Varsa ek görüşleriniz, önerileriniz..." : "Any additional feedback or evaluation..."}
-            value={evaluation}
-            onChange={(e) => setEvaluation(e.target.value)}
-            rows={3}
-            className="w-full rounded-xl bg-[var(--fun-surface)] border border-[var(--fun-stroke-2)] px-4 py-3 text-xs outline-none focus:border-[var(--fun-purple)] focus:ring-2 focus:ring-[var(--fun-purple)]/20 transition-all resize-none fun-text"
           />
         </div>
 
@@ -2104,7 +2068,30 @@ CRITICAL RULES:
             <button
               type="button"
               disabled={rating === 0}
-              onClick={() => {
+              onClick={async () => {
+                // Securely save the ticket details, rating, and feedback directly into the database on session end
+                try {
+                  const { data: { user } } = await supabase.auth.getUser();
+                  if (user) {
+                    const ticketSubject = localStorage.getItem("live_support_subject") || "Destek Talebi";
+                    const ticketImportance = localStorage.getItem("live_support_importance") || "Orta";
+                    const ticketDescription = localStorage.getItem("live_support_description") || "";
+
+                    await supabase.from("support_tickets_feedback").insert([
+                      {
+                        user_id: user.id,
+                        subject: ticketSubject,
+                        description: ticketDescription,
+                        importance: ticketImportance,
+                        rating: rating,
+                        evaluation: comment || ""
+                      }
+                    ]);
+                  }
+                } catch (dbErr) {
+                  console.error("Failed to save support ticket feedback to database:", dbErr);
+                }
+
                 toast.success(
                   lang === "tr" ? "Değerlendirmeniz Gönderildi" : "Feedback Submitted",
                   {

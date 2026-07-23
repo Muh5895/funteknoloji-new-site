@@ -28,8 +28,30 @@ import {
   EyeOff,
   LogOut,
   Square,
+  Wrench,
+  ShieldAlert,
 } from "lucide-react";
 import { supabase } from "../lib/supabase";
+
+const formatEstimatedEndTime = (isoStr: string, lang: string): string => {
+  if (!isoStr) return "";
+  try {
+    const date = new Date(isoStr);
+    if (isNaN(date.getTime())) return isoStr; // Fallback to raw if invalid
+
+    // Format beautifully: "12 Şubat 2025 14:00"
+    const options: Intl.DateTimeFormatOptions = {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit"
+    };
+    return date.toLocaleString(lang === "tr" ? "tr-TR" : "en-US", options);
+  } catch (e) {
+    return isoStr;
+  }
+};
 
 interface Chat {
   id: string;
@@ -196,6 +218,7 @@ export default function NexyAssistant() {
 
     fetchSystemStatus();
 
+    // Subscribe to all changes on the system_status table and filter on the client side for absolute reliability
     const channel = supabase
       .channel("system_status_realtime")
       .on(
@@ -204,13 +227,16 @@ export default function NexyAssistant() {
           event: "*",
           schema: "public",
           table: "system_status",
-          filter: "app_name=eq.Nexy",
         },
         (payload: any) => {
+          const oldData = payload.old || {};
           const newData = payload.new || {};
-          setSystemStatus(newData.status || "on");
-          setMaintenanceReason(newData.maintenance_reason || "");
-          setEstimatedEndTime(newData.estimated_end_time || "");
+          const row = payload.eventType === "DELETE" ? oldData : newData;
+          if (row.app_name === "Nexy") {
+            setSystemStatus(row.status || "on");
+            setMaintenanceReason(row.maintenance_reason || "");
+            setEstimatedEndTime(row.estimated_end_time || "");
+          }
         }
       )
       .subscribe();
@@ -1005,12 +1031,12 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
         >
           {systemStatus !== "on" && (
             <div className="absolute inset-0 bg-black/90 backdrop-blur-md z-[999] flex flex-col items-center justify-center p-6 text-center select-none animate-in fade-in duration-300">
-              <div className="h-16 w-16 rounded-2xl bg-zinc-900 border border-zinc-800 flex items-center justify-center p-2 mb-4">
-                <img
-                  src="/nexy-kafa-buyuk.png"
-                  alt="Nexy"
-                  className="h-full w-full object-contain"
-                />
+              <div className="h-16 w-16 rounded-2xl bg-zinc-900 border border-zinc-800 flex items-center justify-center p-2 mb-4 text-[var(--fun-purple)]">
+                {systemStatus === "maintenance" ? (
+                  <Wrench className="h-8 w-8 animate-pulse" />
+                ) : (
+                  <ShieldAlert className="h-8 w-8 text-red-500 animate-bounce" />
+                )}
               </div>
               <h3 className="text-lg font-bold text-white mb-2">
                 {systemStatus === "maintenance" ? "Sistemimiz Bakımdadır" : "Sistem Geçici Olarak Kapalıdır"}
@@ -1029,7 +1055,7 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
                   )}
                   {estimatedEndTime && (
                     <p className="text-zinc-300">
-                      <strong className="text-[var(--fun-purple)]">Tahmini Bitiş:</strong> {estimatedEndTime}
+                      <strong className="text-[var(--fun-purple)]">Tahmini Bitiş:</strong> {formatEstimatedEndTime(estimatedEndTime, lang)}
                     </p>
                   )}
                 </div>
@@ -1072,7 +1098,7 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
                     {systemStatus === "maintenance" && (
                       <>
                         {maintenanceReason && <p className="mt-1 font-semibold">Neden: {maintenanceReason}</p>}
-                        {estimatedEndTime && <p className="mt-0.5 opacity-80">Bitiş Süresi: {estimatedEndTime}</p>}
+                        {estimatedEndTime && <p className="mt-0.5 opacity-80">Bitiş Süresi: {formatEstimatedEndTime(estimatedEndTime, lang)}</p>}
                       </>
                     )}
                   </div>
@@ -1186,25 +1212,6 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
                 localStorage.setItem("live_support_importance", details.importance);
                 localStorage.setItem("live_support_description", details.description);
 
-                // Securely save the ticket details, rating, and feedback directly into the database
-                try {
-                  const { data: { user } } = await supabase.auth.getUser();
-                  if (user) {
-                    await supabase.from("support_tickets_feedback").insert([
-                      {
-                        user_id: user.id,
-                        subject: details.subject,
-                        description: details.description,
-                        importance: details.importance,
-                        rating: details.rating || 5,
-                        evaluation: details.evaluation || ""
-                      }
-                    ]);
-                  }
-                } catch (dbErr) {
-                  console.error("Failed to save support ticket feedback to database:", dbErr);
-                }
-
                 try {
                   // Translate subject and description to English silently in the background
                   const subjectEn = await translateAnyText(details.subject, lang, "en");
@@ -1230,13 +1237,7 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
                 }
 
                 // Pre-populate chat with the compiled ticket details
-                let initialMsg = `**Yeni Canlı Destek Talebi**\n\n📌 **Konu:** ${details.subject}\n⚡ **Önem Seviyesi:** ${details.importance}\n📝 **Açıklama:** ${details.description}`;
-                if (details.rating) {
-                  initialMsg += `\n⭐️ **Puan:** ${details.rating} / 5`;
-                }
-                if (details.evaluation) {
-                  initialMsg += `\n💬 **Geri Bildirim:** ${details.evaluation}`;
-                }
+                const initialMsg = `**Yeni Canlı Destek Talebi**\n\n📌 **Konu:** ${details.subject}\n⚡ **Önem Seviyesi:** ${details.importance}\n📝 **Açıklama:** ${details.description}`;
                 setLiveMessages([
                   {
                     role: "user",

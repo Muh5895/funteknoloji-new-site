@@ -833,10 +833,16 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         });
         backupText = backupText.trim().replace(/pulsar/gi, "Nexy");
 
+        // Translate the final GPT-5 response directly to target language to prevent mixed English outputs
+        let text = backupText;
+        if (lang && lang !== "en") {
+          text = await translateTextHelper(backupText, "en", lang);
+        }
+
         return res.status(200).json({
-          text: backupText,
+          text: text,
           englishText: backupText,
-          isTranslated: false
+          isTranslated: lang && lang !== "en"
         });
 
       } catch (backupErr: any) {
