@@ -116,7 +116,7 @@ const getLocalFallbackResponse = (input: string, lang: string, chatMessages: any
     const greetings = [
       `Merhaba${userName ? " " + userName : ""}! Ben Fun Teknoloji'nin yapay zeka asistanı Nexy. Size Fun Teknoloji, kurucumuz Muhammed Erbay, yenilikçi projelerimiz (Nexy, QuakeSafe) veya sunduğumuz profesyonel yazılım ve yapay zeka hizmetleri hakkında bilgi verebilirim. Ne öğrenmek istersiniz?`,
       `Harika bir gün geçirmenizi dilerim${userName ? ", " + userName : ""}! Ben Nexy. Fun Teknoloji hakkında merak ettiğiniz projeleri, hizmetlerimizi veya diğer detayları bana sorabilirsiniz. Size nasıl yardımcı olabilirim?`,
-      `Size yardımcı olmak için buradayım${userName ? ", " + userName : ""}! Fun Teknoloji'nin yapay zeka çözümleri, QuakeSafe afet yönetim platformu veya özel yazılım geliştirme hizmetlerimiz hakkında bilgi almak ister misiniz?`
+      `Size yardımcı olmak için burayım${userName ? ", " + userName : ""}! Fun Teknoloji'nin yapay zeka çözümleri, QuakeSafe afet yönetim platformu veya özel yazılım geliştirme hizmetlerimiz hakkında bilgi almak ister misiniz?`
     ];
     return greetings[chatMessages.length % greetings.length];
   } else {
@@ -1176,6 +1176,7 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
               isAgentTyping={liveAgentTyping}
               setIsAgentTyping={setLiveAgentTyping}
               isMaximized={isMaximized}
+              setIsMaximized={setIsMaximized}
               readOnly={isPastSession}
             />
           ) : (

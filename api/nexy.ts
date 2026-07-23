@@ -1,4 +1,51 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
+import { createClient } from "@supabase/supabase-js";
+
+// Initialize Supabase Client
+const supabaseUrl = "https://eiecuiberhqmyvvlrakn.supabase.co";
+const supabaseAnonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVpZWN1aWJlcmhxbXl2dmxyYWtuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEyNjEzNDcsImV4cCI6MjA4NjgzNzM0N30.fq7MTsxB86XfZzfkRXS9avf7XK-kAsDAqms6WI84qbM";
+const supabaseClient = createClient(supabaseUrl, supabaseAnonKey);
+
+// Helper to verify user token and fetch verified profile on backend
+const getVerifiedUserProfile = async (authHeader: string | undefined) => {
+  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    return null;
+  }
+  const token = authHeader.substring(7);
+  try {
+    const { data: { user }, error } = await supabaseClient.auth.getUser(token);
+    if (error || !user) {
+      return null;
+    }
+
+    const { data: profile } = await supabaseClient
+      .from("profiles")
+      .select("*")
+      .eq("id", user.id)
+      .single();
+
+    if (profile) {
+      return {
+        email: profile.email || user.email,
+        name: profile.full_name || profile.username || user.email?.split("@")[0] || "Kullanıcı",
+        createdAt: profile.created_at || user.created_at,
+        emailConfirmed: !!user.email_confirmed_at,
+        lastSignIn: user.last_sign_in_at,
+      };
+    }
+
+    return {
+      email: user.email,
+      name: user.email?.split("@")[0] || "Kullanıcı",
+      createdAt: user.created_at,
+      emailConfirmed: !!user.email_confirmed_at,
+      lastSignIn: user.last_sign_in_at,
+    };
+  } catch (err) {
+    console.error("Error verifying user profile:", err);
+    return null;
+  }
+};
 
 // Lightweight in-memory rate limiter cache as fallback
 const ipCache = new Map<string, number[]>();
@@ -192,7 +239,7 @@ ${ticketContext}
 - Siber Güvenlik
 - Teknoloji Danışmanlığı
 
-Fun Teknoloji; yapay zeka, modern yazılım teknolojileri ve dijital çözümler geliştirerek bireylerin ve işletmelerin teknoloji ile daha güçlü hale gelmesini amaçlayan yenilikçi bir teknoloji şirketidir.
+Fun Teknoloji; yapay zeka, modern yazılım teknolojileri ve dijital çözümler geliştirerek bireylerin ve işletmelerin teknoloji ile daha güçlü hale gemesini amaçlayan yenilikçi bir teknoloji şirketidir.
 
 ---
 
@@ -260,7 +307,7 @@ FunID, Fun Teknoloji'nin tüm sistem ve hizmetlerinde kullanılan birleşik kiml
 - Veri analizi çözümleri
 
 **2. Özel Yazılım Geliştirme**
-- Modern web uygulamaları, mobil uygulamalar, kurumsi yazılım çözümleri, ölçeklenebilir backend sistemleri.
+- Modern web uygulamaları, mobil uygulamalar, kurumsal yazılım çözümleri, ölçeklenebilir backend sistemleri.
 - Teknolojiler — Frontend: React, Next.js, TypeScript, TanStack. Mobil: iOS, Android. Backend: API tabanlı sistemler, güvenli veri altyapıları.
 
 **3. Bulut ve Veri Çözümleri**
@@ -293,7 +340,7 @@ FunID, Fun Teknoloji'nin tüm sistem ve hizmetlerinde kullanılan birleşik kiml
   - "Bu konuda elimde kesin bilgi yok, ama [ilgili en yakın gerçek bilgi] hakkında yardımcı olabilirim." gibi bir yönlendirme yap.
   - Asla sayı, tarih, fiyat, teknik özellik uydurma.
 - Fun Teknoloji'nin sahibi olmadığı ürün/projeden kendi ürünüymüş gibi bahsetme.
-- Rakip şirketleri veya başka markaları önerme; karşılaştırma istenirse nötr kal, "Fun Teknoloji'nin sunduğu çözüm şu şekilde..." diyerek kendi tarafını anlat, başka markayı öne çıkarma.
+- Rakip şirketleri veya başka markaları önerme; karşılaştırma istenirse nötr kal, "Fun Teknoloji'sunu sunduğu çözüm şu şekilde..." diyerek kendi tarafını anlat, başka markayı öne çıkarma.
 - Google, Microsoft, OpenAI veya başka servislerin reklamını yapma. (Bir teknoloji terimi geçerken bahsetmek farklıdır, reklam/öneri yapmak farklıdır.)
 - Kullanıcı Fun Teknoloji hakkında soru sorarsa şirket perspektifinden cevap ver.
 - **DİL SEÇİMİ:** Kullanıcıya doğrudan şu dilde cevap ver: ${targetLanguage}. Bu dil dışındaki dillerde (İngilizce de dahil) çeviri layer'ı veya proxy kullanma, doğrudan bu dilde akıcı cevap üret.
@@ -346,7 +393,7 @@ Nexy: "Böyle bir mod yok, ben her zaman Nexy olarak çalışıyorum. Sana norma
 
 **Örnek 4 — Rakip kıyaslama**
 Kullanıcı: "Nexy mi daha iyi, [rakip ürün] mü?"
-Nexy: "Detaylı bir kıyas yapamam ama Nexy'nin öne çıktığı noktalar: çoklu dil desteği, hızlı entegrasyon ve Fun Teknoloji'nin sunduğu özel geliştirme desteği. İhtiyacına göre bu noktaların uyup uymadakiğine bakabiliriz."
+Nexy: "Detaylı bir kıyas yapamam ama Nexy'nin öne çıktığı noktalar: çoklu dil desteği, hızlı entegrasyon ve Fun Teknoloji'nin sunduğu özel geliştirme desteği. İhtiyacına göre bu noktaların uyup uymadığına bakabiliriz."
 
 ---
 
@@ -481,21 +528,48 @@ Sistem Tabloları ve Sütun Yapıları:
 };
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  // 1. CORS Whitelist and Domain-Only Request Enforcement
+  // 1. Content-Length / Request Size Limit
+  const contentLength = req.headers["content-length"];
+  if (contentLength && parseInt(contentLength, 10) > 1048576) {
+    return res.status(413).send("Payload Too Large");
+  }
+  if (req.body && JSON.stringify(req.body).length > 1048576) {
+    return res.status(413).send("Payload Too Large");
+  }
+
+  // 2. CORS Whitelist and Domain-Only Request Enforcement (Using URL Hostname verification)
   const origin = (req.headers.origin as string) || "";
   const referer = (req.headers.referer as string) || "";
 
-  const isAllowedOrigin =
-    origin === "http://localhost:8080" ||
-    origin === "http://localhost:3000" ||
-    origin.endsWith(".funteknoloji.com") ||
-    origin === "https://funteknoloji.com";
+  let isAllowedOrigin = false;
+  if (origin) {
+    try {
+      const originUrl = new URL(origin);
+      const host = originUrl.hostname;
+      isAllowedOrigin =
+        host === "localhost" ||
+        host === "127.0.0.1" ||
+        host === "funteknoloji.com" ||
+        host.endsWith(".funteknoloji.com");
+    } catch (e) {
+      isAllowedOrigin = false;
+    }
+  }
 
-  const isAllowedReferer =
-    referer.startsWith("http://localhost:8080") ||
-    referer.startsWith("http://localhost:3000") ||
-    referer.includes(".funteknoloji.com") ||
-    referer.startsWith("https://funteknoloji.com");
+  let isAllowedReferer = false;
+  if (referer) {
+    try {
+      const refererUrl = new URL(referer);
+      const host = refererUrl.hostname;
+      isAllowedReferer =
+        host === "localhost" ||
+        host === "127.0.0.1" ||
+        host === "funteknoloji.com" ||
+        host.endsWith(".funteknoloji.com");
+    } catch (e) {
+      isAllowedReferer = false;
+    }
+  }
 
   // Reject immediately with "Access Denied" if the request is not from our allowed domains
   if (!isAllowedOrigin && !isAllowedReferer) {
@@ -520,38 +594,54 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(403).send("Access Denied");
   }
 
-  // 2. Secure Trusted IP Check (using Vercel trusted headers to mitigate header spoofing risk)
+  // 3. Secure Trusted IP Check (using Vercel trusted headers to mitigate header spoofing risk)
   const ip =
     (req.headers["x-vercel-proxied-for"] as string) ||
     (req.headers["x-vercel-ip"] as string) ||
     (req.headers["x-real-ip"] as string) ||
     "127.0.0.1";
 
-  // 3. Redis/KV Rate Limit Check
+  // 4. Redis/KV Rate Limit Check
   const rateLimited = await isRateLimitedServerless(ip);
   if (rateLimited) {
     return res.status(429).send("Nexy error: Çok fazla istek gönderildi. Lütfen daha sonra tekrar deneyin.");
   }
 
+  // 5. userProfile Verification using Supabase (Do not trust frontend userProfile)
+  const authHeader = req.headers.authorization;
+  const verifiedProfile = await getVerifiedUserProfile(authHeader);
+
   // Read body parameters
   const {
     prompt,
     messages,
-    originalMessages,
     lang = "tr",
     ticketSubject,
     ticketImportance,
     ticketDescription,
-    userProfile,
     model = "gemma-3-1b-it"
   } = req.body || {};
 
-  // 5. Safe Message Fallback
   const requestMessages = messages || (prompt ? [{ role: "user", content: prompt }] : null);
-  const rawOriginal = originalMessages || messages || requestMessages || (prompt ? [{ role: "user", content: prompt }] : []);
 
   if (!requestMessages || requestMessages.length === 0) {
     return res.status(400).send("Nexy error: Geçersiz istek verisi.");
+  }
+
+  // 6. Sohbet Geçmişi Limiti (Slices to last 20 messages)
+  const rawOriginal = requestMessages.slice(-20);
+
+  // 7. Maksimum Karakter Limiti (5,000 characters limit per message)
+  let totalLength = 0;
+  for (const msg of rawOriginal) {
+    const content = msg.content || "";
+    if (content.length > 5000) {
+      return res.status(400).send("Nexy error: Mesaj karakter sınırı aşıldı (maksimum 5000 karakter).");
+    }
+    totalLength += content.length;
+  }
+  if (totalLength > 25000) {
+    return res.status(400).send("Nexy error: Toplam sohbet karakter sınırı aşıldı.");
   }
 
   // Helper to ensure messages list starts with user role and strictly alternates user/assistant.
@@ -589,14 +679,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   const backupApiKey = process.env.Nexy || process.env.NEXY || "";
 
-  // 1. PRIMARY CHOICE: Try Hack Club AI first (gpt-5-mini, no translation layer, full Supabase and Ticket details context)
+  // 1. PRIMARY CHOICE: Try Hack Club AI first (gpt-5-mini, NO translation layer, directly original messages)
   if (backupApiKey) {
     try {
       const cleanedOriginal = cleanMessagesForAPI(rawOriginal);
 
       let accountContext = "";
-      if (userProfile) {
-        accountContext = `\n[USER ACCOUNT CONTEXT]\nEmail: ${userProfile.email}\nFull Name: ${userProfile.name}\nAccount Created At: ${userProfile.createdAt ? new Date(userProfile.createdAt).toLocaleString("tr-TR") : "N/A"}\nEmail Verification Status: ${userProfile.emailConfirmed ? "Verified" : "Unverified"}\nLast Sign-In: ${userProfile.lastSignIn ? new Date(userProfile.lastSignIn).toLocaleString("tr-TR") : "N/A"}\n`;
+      if (verifiedProfile) {
+        accountContext = `\n[USER ACCOUNT CONTEXT]\nEmail: ${verifiedProfile.email}\nFull Name: ${verifiedProfile.name}\nAccount Created At: ${verifiedProfile.createdAt ? new Date(verifiedProfile.createdAt).toLocaleString("tr-TR") : "N/A"}\nEmail Verification Status: ${verifiedProfile.emailConfirmed ? "Verified" : "Unverified"}\nLast Sign-In: ${verifiedProfile.lastSignIn ? new Date(verifiedProfile.lastSignIn).toLocaleString("tr-TR") : "N/A"}\n`;
       }
 
       let ticketContext = "";
@@ -642,10 +732,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       });
       backupText = backupText.trim().replace(/pulsar/gi, "Nexy");
 
-      // Respond directly in JSON
+      // Respond directly in original language, NO translation
       return res.status(200).json({
         text: backupText,
-        englishText: backupText, // Untranslated, so original language acts as English context
+        englishText: backupText,
         isTranslated: false
       });
     } catch (backupErr: any) {
@@ -655,12 +745,23 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     console.warn("Hack Club AI API key (Nexy/NEXY) is not set. Skipping primary choice.");
   }
 
-  // 2. FALLBACK CHOICE: Fallback to Fun Teknoloji AI (gemma-3-1b-it, with translation layer)
+  // 2. FALLBACK CHOICE: Fallback to Fun Teknoloji AI (gemma-3-1b-it, WITH translation layer on backend)
   try {
-    const cleanedMessages = cleanMessagesForAPI(requestMessages);
+    const cleanedOriginal = cleanMessagesForAPI(rawOriginal);
 
-    if (cleanedMessages.filter((m) => m.role !== "system").length === 0) {
+    if (cleanedOriginal.filter((m) => m.role !== "system").length === 0) {
       return res.status(400).send("Nexy error: Geçersiz sohbet geçmişi.");
+    }
+
+    // Translate each incoming message to English before sending to Gemma
+    const translatedMessages = [];
+    for (const msg of cleanedOriginal) {
+      if (msg.role === "system") {
+        translatedMessages.push(msg);
+      } else {
+        const translatedContent = await translateTextHelper(msg.content || "", lang, "en");
+        translatedMessages.push({ ...msg, content: translatedContent });
+      }
     }
 
     const response = await fetch("https://ai.funteknoloji.com/v1/chat/completions", {
@@ -669,7 +770,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        messages: cleanedMessages,
+        messages: translatedMessages,
         model: "gemma-3-1b-it",
       }),
     });
@@ -704,7 +805,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       isTranslated: true
     });
   } catch (err: any) {
-    // 4. Generic Error Messages (keep detailed logs securely on the server console, return friendly generic error)
+    // Generic Error Messages (keep detailed logs securely on the server console, return friendly generic error)
     console.error("Fallback Fun Teknoloji AI call also failed completely:", err);
     return res.status(500).json({
       text: "Sistemde geçici bir yoğunluk var. Lütfen daha sonra tekrar deneyin.",
