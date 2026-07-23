@@ -250,7 +250,24 @@ const executeDynamicDatabaseQuery = async (action: string, authHeader: string | 
       if (data && data.length > 0) {
         resultContext += `\n[Sistem ve Hizmet Durumları]\n`;
         data.forEach((s: any) => {
-          resultContext += `- Hizmet Adı (app_name): ${s.app_name}\n  Durum (status): ${s.status}\n  Bakım Nedeni (maintenance_reason): ${s.maintenance_reason || "Bakım Yok"}\n  Tahmini Bitiş (estimated_end_time): ${s.estimated_end_time || "N/A"}\n\n`;
+          const rawStatus = (s.status || "").toLowerCase();
+          let statusText = "Açık";
+          if (rawStatus === "off") {
+            statusText = "Kapalı";
+          } else if (rawStatus === "maintenance") {
+            statusText = "Bakımda";
+          }
+
+          resultContext += `- Hizmet Adı (app_name): ${s.app_name}\n  Durum (status): ${statusText}\n`;
+          if (rawStatus === "maintenance") {
+            if (s.maintenance_reason) {
+              resultContext += `  Bakım Nedeni (maintenance_reason): ${s.maintenance_reason}\n`;
+            }
+            if (s.estimated_end_time) {
+              resultContext += `  Tahmini Bitiş (estimated_end_time): ${s.estimated_end_time}\n`;
+            }
+          }
+          resultContext += `\n`;
         });
       } else {
         resultContext += `Sistem durumu bilgisi bulunamadı.\n`;
@@ -478,7 +495,7 @@ STRICT AND ABSOLUTE RESOLUTION RULES:
 4. **READ-ONLY PROTECTION (NO WRITE ACCESS):** You are strictly a READ-ONLY assistant.
    - Do NOT proactively mention your "read-only constraints", "no write access", "cannot change statuses", or any "maintenance requests" to the user when they are simply asking for the status of services or general friendly queries.
    - ONLY mention this constraint if the user directly and explicitly commands you to modify, write, update, open, or close a service or status (e.g. "turn off maintenance mode", "change service status to active").
-   - There is no such thing as "maintenance requests" (bakım talebi) in our system. Do not refer to or invent any "maintenance requests" or say you cannot create them. Just list the statuses cleanly, concisely, and naturally.
+   - There is no such thing as a "maintenance request", "maintenance ticket", or "maintenance request draft" (bakım talebi taslağı) in our system. Do NOT ever offer to create, draft, or write a maintenance request or ask if they want to create one. Simply output the status as "Açık", "Kapalı", or "Bakımda" cleanly, concisely, and naturally.
 
 ---
 
@@ -611,7 +628,7 @@ Execute DB_QUERY commands only when directly requested or absolutely necessary t
 - **READ-ONLY PROTECTION (NO WRITE ACCESS):** You are strictly a READ-ONLY assistant.
    - Do NOT proactively mention your "read-only constraints", "no write access", "cannot change statuses", or any "maintenance requests" to the user when they are simply asking for the status of services or general friendly queries.
    - ONLY mention this constraint if the user directly and explicitly commands you to modify, write, update, open, or close a service or status (e.g. "turn off maintenance mode", "change service status to active").
-   - There is no such thing as "maintenance requests" (bakım talebi) in our system. Do not refer to or invent any "maintenance requests" or say you cannot create them. Just list the statuses cleanly, concisely, and naturally.
+   - There is no such thing as a "maintenance request", "maintenance ticket", or "maintenance request draft" (bakım talebi taslağı) in our system. Do NOT ever offer to create, draft, or write a maintenance request or ask if they want to create one. Simply output the status as "Açık", "Kapalı", or "Bakımda" cleanly, concisely, and naturally.
 - **LANGUAGE DIRECTIVE:** Respond strictly in English inside your thought loop, but note that the final user response is automatically translated to ${targetLanguage}. Keep your syntax clean and natural.
 `;
 };
@@ -639,6 +656,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         host === "localhost" ||
         host === "127.0.0.1" ||
         host === "funteknoloji.com" ||
+        host === "nexy.funteknoloji.com" ||
         host.endsWith(".funteknoloji.com");
     } catch (e) {
       isAllowedOrigin = false;
@@ -654,6 +672,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         host === "localhost" ||
         host === "127.0.0.1" ||
         host === "funteknoloji.com" ||
+        host === "nexy.funteknoloji.com" ||
         host.endsWith(".funteknoloji.com");
     } catch (e) {
       isAllowedReferer = false;
@@ -668,7 +687,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (isAllowedOrigin) {
     res.setHeader("Access-Control-Allow-Origin", origin);
   } else {
-    res.setHeader("Access-Control-Allow-Origin", "https://funteknoloji.com");
+    res.setHeader("Access-Control-Allow-Origin", "https://nexy.funteknoloji.com");
   }
   res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
