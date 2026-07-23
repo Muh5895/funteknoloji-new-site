@@ -350,13 +350,7 @@ export default function NexyAssistant() {
   const [liveAgentTyping, setLiveAgentTyping] = useState(false);
   const [isPastSession, setIsPastSession] = useState(false);
   const abortControllerRef = useRef<AbortController | null>(null);
-  const [pastSessions, setPastSessions] = useState<any[]>(() => {
-    if (typeof window !== "undefined") {
-      const saved = localStorage.getItem("live_support_history");
-      return saved ? JSON.parse(saved) : [];
-    }
-    return [];
-  });
+  const [pastSessions, setPastSessions] = useState<any[]>([]);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -1339,11 +1333,6 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
                   };
                   const updatedHistory = [newSession, ...pastSessions];
                   setPastSessions(updatedHistory);
-                  try {
-                    localStorage.setItem("live_support_history", JSON.stringify(updatedHistory));
-                  } catch (e) {
-                    console.error("Failed to save live support history to LocalStorage:", e);
-                  }
 
                   // Also securely save to Supabase past_support_tickets table if authenticated
                   (async () => {
