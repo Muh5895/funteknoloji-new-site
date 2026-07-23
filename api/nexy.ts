@@ -97,17 +97,45 @@ const fetchRealDatabaseContext = async (authHeader: string | undefined) => {
       return { context: "", error: "Invalid or expired session token", isAuthError: true };
     }
 
-    // 2. Fetch User Profiles and settings concurrently
-    const [
-      profileRes,
-      settingsRes,
-      quakesafeRes,
-      sessionsRes
-    ] = await Promise.all([
-      client.from("profiles").select("*").eq("id", user.id).single(),
-      client.from("user_settings").select("*").eq("user_id", user.id).single(),
-      client.from("profiles_quakesafe").select("*").eq("id", user.id).single(),
-      client.from("active_sessions").select("*").eq("user_id", user.id).eq("is_terminated", false)
+    // 2. Fetch User Profiles and settings concurrently with safe individual try-catch blocks
+    let profileData: any = null;
+    let settingsData: any = null;
+    let quakesafeData: any = null;
+    let sessionsData: any = null;
+
+    await Promise.all([
+      (async () => {
+        try {
+          const { data } = await client.from("profiles").select("*").eq("id", user.id).single();
+          profileData = data;
+        } catch (e) {
+          console.warn("Failed to fetch profiles table:", e);
+        }
+      })(),
+      (async () => {
+        try {
+          const { data } = await client.from("user_settings").select("*").eq("user_id", user.id).single();
+          settingsData = data;
+        } catch (e) {
+          console.warn("Failed to fetch user_settings table:", e);
+        }
+      })(),
+      (async () => {
+        try {
+          const { data } = await client.from("profiles_quakesafe").select("*").eq("id", user.id).single();
+          quakesafeData = data;
+        } catch (e) {
+          console.warn("Failed to fetch profiles_quakesafe table:", e);
+        }
+      })(),
+      (async () => {
+        try {
+          const { data } = await client.from("active_sessions").select("*").eq("user_id", user.id).eq("is_terminated", false);
+          sessionsData = data;
+        } catch (e) {
+          console.warn("Failed to fetch active_sessions table:", e);
+        }
+      })()
     ]);
 
     let context = `[REAL-TIME VERIFIED USER DATABASE CONTEXT]\n`;
@@ -116,8 +144,8 @@ const fetchRealDatabaseContext = async (authHeader: string | undefined) => {
     context += `Email Confirmed: ${user.email_confirmed_at ? "Evet (Confirmed)" : "Hayır (Unconfirmed)"}\n`;
 
     // Append profile details
-    if (profileRes.data) {
-      const p = profileRes.data;
+    if (profileData) {
+      const p = profileData;
       context += `Full Name: ${p.full_name || "N/A"}\n`;
       context += `Username: ${p.username || "N/A"}\n`;
       context += `Birth Date: ${p.birth_date || "N/A"}\n`;
@@ -132,8 +160,8 @@ const fetchRealDatabaseContext = async (authHeader: string | undefined) => {
     }
 
     // Append system/security settings
-    if (settingsRes.data) {
-      const s = settingsRes.data;
+    if (settingsData) {
+      const s = settingsData;
       context += `Theme Preference: ${s.theme || "dark"}\n`;
       context += `Selected Language: ${s.language || "tr"}\n`;
       context += `Notifications Enabled: ${s.notifications_enabled ? "Evet" : "Hayır"}\n`;
@@ -145,8 +173,8 @@ const fetchRealDatabaseContext = async (authHeader: string | undefined) => {
     }
 
     // Append QuakeSafe medical profile
-    if (quakesafeRes.data) {
-      const q = quakesafeRes.data;
+    if (quakesafeData) {
+      const q = quakesafeData;
       context += `QuakeSafe Medikal/Güvenlik Profili: Tamamlanmış mı? ${q.is_profile_completed ? "Evet" : "Hayır"}\n`;
       context += `QuakeSafe Blood Type: ${q.blood_type || "N/A"}\n`;
       context += `QuakeSafe Emergency Contacts: ${JSON.stringify(q.emergency_contacts || {})}\n`;
@@ -155,9 +183,9 @@ const fetchRealDatabaseContext = async (authHeader: string | undefined) => {
     }
 
     // Append active sessions
-    if (sessionsRes.data && sessionsRes.data.length > 0) {
+    if (sessionsData && sessionsData.length > 0) {
       context += `Aktif Oturumlar:\n`;
-      sessionsRes.data.forEach((s: any, index: number) => {
+      sessionsData.forEach((s: any, index: number) => {
         context += `- Oturum #${index + 1}: IP: ${s.ip_address || "N/A"}, Tarayıcı/Cihaz: ${s.user_agent || "N/A"}, Konum: ${s.location || "N/A"}, Çevrimiçi mi? ${s.is_online ? "Evet" : "Hayır"}\n`;
       });
     } else {
@@ -168,6 +196,114 @@ const fetchRealDatabaseContext = async (authHeader: string | undefined) => {
   } catch (err: any) {
     console.error("Database querying failed in handler:", err);
     return { context: "", error: err.message };
+  }
+};
+
+// Execute targeted, dynamic query requested by the AI Database Agent loop
+const executeDynamicDatabaseQuery = async (action: string, authHeader: string | undefined): Promise<string> => {
+  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    return "Hata: Kullanıcı oturumu doğrulanmadı (Eksik Token). Lütfen giriş yapın.";
+  }
+  const client = getSupabaseClient();
+  if (!client) {
+    return "Hata: Veritabanı bağlantısı kurulamadı.";
+  }
+
+  const token = authHeader.substring(7);
+  try {
+    const { data: { user }, error: authError } = await client.auth.getUser(token);
+    if (authError || !user) {
+      return "Hata: Oturum süreniz dolmuş veya geçersiz.";
+    }
+
+    let resultContext = `[REAL-TIME DATABASE QUERY RESPONSE FOR USER ${user.email}]\n`;
+
+    if (action === "get_profile") {
+      try {
+        const { data, error } = await client.from("profiles").select("*").eq("id", user.id).single();
+        if (error) throw error;
+        resultContext += `İsim Soyisim: ${data?.full_name || "N/A"}\nPlan: ${data?.plan || "free"}\nDurum: ${data?.status || "active"}\nKullanılan Depolama: ${data?.storage_used || 0} bytes\n`;
+      } catch (e: any) {
+        resultContext += `Profil Tablo Hatası: ${e.message || "Failed to retrieve profiles."}\n`;
+      }
+    }
+    else if (action === "get_user_settings") {
+      try {
+        const { data, error } = await client.from("user_settings").select("*").eq("user_id", user.id).single();
+        if (error) throw error;
+        resultContext += `Dil Tercihi: ${data?.language || "tr"}\nTema: ${data?.theme || "dark"}\n2FA Aktif mi: ${data?.two_factor_enabled ? "Evet" : "Hayır"}\nVPN Engelleme: ${data?.block_vpn ? "Evet" : "Hayır"}\n`;
+      } catch (e: any) {
+        resultContext += `Kullanıcı Ayarları Tablo Hatası: ${e.message || "Failed to retrieve user settings."}\n`;
+      }
+    }
+    else if (action === "get_quakesafe_profile") {
+      try {
+        const { data, error } = await client.from("profiles_quakesafe").select("*").eq("id", user.id).single();
+        if (error) throw error;
+        resultContext += `QuakeSafe Profil Tamamlandı mı: ${data?.is_profile_completed ? "Evet" : "Hayır"}\nKan Grubu: ${data?.blood_type || "N/A"}\nAcil Durum Kişileri: ${JSON.stringify(data?.emergency_contacts || {})}\n`;
+      } catch (e: any) {
+        resultContext += `QuakeSafe Tablo Hatası: ${e.message || "Failed to retrieve QuakeSafe profile."}\n`;
+      }
+    }
+    else if (action === "get_active_sessions") {
+      try {
+        const { data, error } = await client.from("active_sessions").select("*").eq("user_id", user.id).eq("is_terminated", false);
+        if (error) throw error;
+        if (data && data.length > 0) {
+          data.forEach((s: any, i: number) => {
+            resultContext += `Oturum #${i + 1}: IP: ${s.ip_address || "N/A"}, Cihaz: ${s.user_agent || "N/A"}, Konum: ${s.location || "N/A"}, Aktif mi: ${s.is_online ? "Evet" : "Hayır"}\n`;
+          });
+        } else {
+          resultContext += `Aktif oturum bulunamadı.\n`;
+        }
+      } catch (e: any) {
+        resultContext += `Aktif Oturumlar Tablo Hatası: ${e.message || "Failed to retrieve active sessions."}\n`;
+      }
+    }
+    else if (action === "get_payments") {
+      const potentialTables = ["payments", "transactions", "orders", "subscriptions"];
+      let retrieved = false;
+      for (const tableName of potentialTables) {
+        try {
+          const { data, error } = await client.from(tableName).select("*").eq(tableName === "subscriptions" ? "user_id" : "user_id", user.id).order("created_at", { ascending: false }).limit(5);
+          if (!error && data && data.length > 0) {
+            resultContext += `\n[Tablo: ${tableName} Verileri]\n`;
+            data.forEach((item: any, i: number) => {
+              resultContext += `- Ödeme/İşlem #${i + 1}: Tutar: ${item.amount || item.price || "N/A"}, Durum: ${item.status || "N/A"}, Tarih: ${item.created_at || item.date || "N/A"}\n`;
+            });
+            retrieved = true;
+          }
+        } catch (e) {}
+      }
+      if (!retrieved) {
+        resultContext += `Ödeme ve Fatura Bilgisi: Herhangi bir ödeme veya sipariş kaydı bulunamadı.\n`;
+      }
+    }
+    else if (action === "get_support_tickets") {
+      const potentialTables = ["support_tickets", "tickets"];
+      let retrieved = false;
+      for (const tableName of potentialTables) {
+        try {
+          const { data, error } = await client.from(tableName).select("*").eq(tableName === "tickets" ? "user_id" : "user_id", user.id).order("created_at", { ascending: false }).limit(5);
+          if (!error && data && data.length > 0) {
+            resultContext += `\n[Tablo: ${tableName} Verileri]\n`;
+            data.forEach((item: any, i: number) => {
+              resultContext += `- Bilet #${i + 1}: Konu: ${item.subject || "N/A"}, Durum: ${item.status || "N/A"}, Önem: ${item.priority || item.importance || "N/A"}, Tarih: ${item.created_at || "N/A"}\n`;
+            });
+            retrieved = true;
+          }
+        } catch (e) {}
+      }
+      if (!retrieved) {
+        resultContext += `Destek Talepleri Bilgisi: Aktif destek biletiniz veya kaydınız bulunamadı.\n`;
+      }
+    } else {
+      resultContext += `Bilinmeyen sorgu eylemi: ${action}\n`;
+    }
+
+    return resultContext;
+  } catch (err: any) {
+    return `Veritabanı Sorgu Hatası: ${err.message || "Failed to execute query safely."}`;
   }
 };
 
@@ -251,6 +387,25 @@ Görevlerin:
 
 ${accountContext}
 ${ticketContext}
+
+---
+
+## 1.5. YAPAY ZEKA VERİTABANI AJANI (DINAMIK TOOL/FUNCTION CALLING)
+
+Kullanıcının hesabı, ödemeleri, son siparişleri, aktif oturumları veya destek talepleri gibi canlı verileri okuma yeteneğine sahipsin.
+Eğer kullanıcı sana kendi hesabıyla ilgili bir soru sorarsa (örneğin "son ödemem", "aktif aboneliğim", "destek biletlerim", "aktif oturumlarım", "kan grubum"), KESİNLİKLE uydurma cevap verme. Bunun yerine, aşağıda belirtilen özel sorgu komutlarından uygun olanını **mesajında tek başına** çıktı olarak ver. Sistem arka planda bu sorguyu çalıştırıp veriyi sana sağlayacaktır.
+
+Kullanabileceğin Canlı Sorgu Komutları:
+- Son Ödemeler / Faturalar / Siparişler için: [DB_QUERY: {"action": "get_payments"}]
+- Destek Kayıtları / Biletleri için: [DB_QUERY: {"action": "get_support_tickets"}]
+- Aktif Oturumlar / Güvenlik Ayarları için: [DB_QUERY: {"action": "get_active_sessions"}]
+- Temel Profil Bilgileri için: [DB_QUERY: {"action": "get_profile"}]
+- Kullanıcı Sistem Ayarları için: [DB_QUERY: {"action": "get_user_settings"}]
+- QuakeSafe Medikal Profil / Kan Grubu için: [DB_QUERY: {"action": "get_quakesafe_profile"}]
+
+ÖNEMLİ KURALLAR:
+1. Eğer kullanıcının sorusuna cevap vermek için veritabanı verisine ihtiyacın varsa, mesajında SADECE bu komut tokenini yaz (örneğin '[DB_QUERY: {"action": "get_payments"}]'). Öncesinde veya sonrasında açıklama ya da başka bir kelime yazma.
+2. Sistem veriyi getirdiğinde, sana '[DATABASE RESPONSE FOR ...]' şeklinde bir veri sunacaktır. O veriyi okuduktan sonra kullanıcıya doğal ve akıcı bir şekilde yanıt ver.
 
 ---
 
@@ -440,6 +595,7 @@ Aynı cümleyi ezbere tekrarlamak yerine bağlama göre seç:
 - Yanıt uzunluğunu soruya göre ayarla: basit soruya kısa, çok yönlü soruya (ör. "tüm hizmetleriniz neler") yapılandırılmış/tablolu cevap.
 - Konuşma çok uzarsa da kimlik ve güvenlik kuralları (Bölüm 8) geçerliliğini korur.
 `;
+};
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   // 1. Content-Length and Request Size Limit (Content-Length and body string validation)
@@ -608,134 +764,178 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   };
 
   const backupApiKey = process.env.Nexy || process.env.NEXY || "";
+  let loopCount = 0;
+  const maxLoops = 3;
+  let useFallbackChoice = false;
 
-  // 1. PRIMARY CHOICE: Try Hack Club AI first (gpt-5-mini, NO translation layer, directly original messages)
-  if (backupApiKey) {
+  while (loopCount < maxLoops) {
+    let ticketContext = "";
+    if (ticketSubject || ticketDescription) {
+      ticketContext = `\n[USER TICKET DETAILS]\nSubject: ${ticketSubject || "Genel Destek"}\nImportance Level: ${ticketImportance || "Orta"}\nUser's Description of the Issue: "${ticketDescription || ""}"\n`;
+    }
+
+    const dynamicSystemPrompt = buildSystemPrompt(lang, dbContextResult.context, ticketContext);
+
+    if (!useFallbackChoice && backupApiKey) {
+      try {
+        const cleanedOriginal = cleanMessagesForAPI(rawOriginal);
+        const finalHackClubMessages = [
+          { role: "system", content: dynamicSystemPrompt },
+          ...cleanedOriginal.filter((m) => m.role !== "system")
+        ];
+
+        const backupResponse = await fetch("https://ai.hackclub.com/proxy/v1/chat/completions", {
+          method: "POST",
+          headers: {
+            "Authorization": `Bearer ${backupApiKey}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            model: "gpt-5-mini",
+            messages: finalHackClubMessages
+          }),
+        });
+
+        if (!backupResponse.ok) {
+          const backupErrText = await backupResponse.text();
+          throw new Error(`Hack Club AI returned status ${backupResponse.status}: ${backupErrText}`);
+        }
+
+        const backupData = await backupResponse.json() as any;
+        let backupText = backupData.choices?.[0]?.message?.content || "";
+
+        // Check if response has DB_QUERY
+        const queryMatch = backupText.match(/\[DB_QUERY:\s*({[^}]+})\s*\]/);
+        if (queryMatch) {
+          let queryAction = "";
+          try {
+            const parsed = JSON.parse(queryMatch[1]);
+            queryAction = parsed.action;
+          } catch (e) {}
+
+          if (queryAction) {
+            const queryResponseText = await executeDynamicDatabaseQuery(queryAction, authHeader);
+            rawOriginal.push({ role: "assistant", content: `[DB_QUERY: {"action": "${queryAction}"}]` });
+            rawOriginal.push({ role: "user", content: `[DATABASE RESPONSE FOR ${queryAction}]:\n${queryResponseText}` });
+            loopCount++;
+            continue; // re-run loop
+          }
+        }
+
+        backupText = backupText.replace(/\[inceliyor\]/gi, "");
+        backupText = backupText.replace(/\[duraklama\]/gi, "");
+        backupText = backupText.replace(/\[bekliyor\]/gi, "");
+        backupText = backupText.replace(/\[düşünüyor\]/gi, "");
+        backupText = backupText.replace(/\[[^\]]+\]/g, (match: string) => {
+          if (match.toLowerCase().startsWith("[redirect:")) return match;
+          return "";
+        });
+        backupText = backupText.trim().replace(/pulsar/gi, "Nexy");
+
+        return res.status(200).json({
+          text: backupText,
+          englishText: backupText,
+          isTranslated: false
+        });
+
+      } catch (backupErr: any) {
+        console.warn("Primary Hack Club AI call failed inside loop, switching to fallback:", backupErr);
+        useFallbackChoice = true;
+      }
+    }
+
+    // Fallback path
     try {
       const cleanedOriginal = cleanMessagesForAPI(rawOriginal);
-
-      let ticketContext = "";
-      if (ticketSubject || ticketDescription) {
-        ticketContext = `\n[USER TICKET DETAILS]\nSubject: ${ticketSubject || "Genel Destek"}\nImportance Level: ${ticketImportance || "Orta"}\nUser's Description of the Issue: "${ticketDescription || ""}"\n`;
+      if (cleanedOriginal.filter((m) => m.role !== "system").length === 0) {
+        return res.status(400).send("Nexy error: Geçersiz sohbet geçmişi.");
       }
 
-      const dynamicSystemPrompt = buildSystemPrompt(lang, dbContextResult.context, ticketContext);
+      const translatedMessages = [];
+      for (const msg of cleanedOriginal) {
+        if (msg.role === "system") {
+          translatedMessages.push(msg);
+        } else {
+          const translatedContent = await translateTextHelper(msg.content || "", lang, "en");
+          translatedMessages.push({ ...msg, content: translatedContent });
+        }
+      }
 
-      const finalHackClubMessages = [
+      const finalGemmaMessages = [
         { role: "system", content: dynamicSystemPrompt },
-        ...cleanedOriginal.filter((m) => m.role !== "system")
+        ...translatedMessages.filter((m) => m.role !== "system")
       ];
 
-      const backupResponse = await fetch("https://ai.hackclub.com/proxy/v1/chat/completions", {
+      const response = await fetch("https://ai.funteknoloji.com/v1/chat/completions", {
         method: "POST",
         headers: {
-          "Authorization": `Bearer ${backupApiKey}`,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          model: "gpt-5-mini",
-          messages: finalHackClubMessages
+          messages: finalGemmaMessages,
+          model: "gemma-3-1b-it",
         }),
       });
 
-      if (!backupResponse.ok) {
-        const backupErrText = await backupResponse.text();
-        throw new Error(`Hack Club AI returned status ${backupResponse.status}: ${backupErrText}`);
+      if (!response.ok) {
+        const errText = await response.text();
+        throw new Error(`Fun Teknoloji AI returned status ${response.status}: ${errText}`);
       }
 
-      const backupData = await backupResponse.json() as any;
-      let backupText = backupData.choices?.[0]?.message?.content || "";
+      const data = await response.json() as any;
+      let englishText = data.choices?.[0]?.message?.content || "";
 
-      // Post-process response to strip bracketed tokens
-      backupText = backupText.replace(/\[inceliyor\]/gi, "");
-      backupText = backupText.replace(/\[duraklama\]/gi, "");
-      backupText = backupText.replace(/\[bekliyor\]/gi, "");
-      backupText = backupText.replace(/\[düşünüyor\]/gi, "");
-      backupText = backupText.replace(/\[[^\]]+\]/g, (match: string) => {
+      const queryMatch = englishText.match(/\[DB_QUERY:\s*({[^}]+})\s*\]/);
+      if (queryMatch) {
+        let queryAction = "";
+        try {
+          const parsed = JSON.parse(queryMatch[1]);
+          queryAction = parsed.action;
+        } catch (e) {}
+
+        if (queryAction) {
+          const queryResponseText = await executeDynamicDatabaseQuery(queryAction, authHeader);
+          rawOriginal.push({ role: "assistant", content: `[DB_QUERY: {"action": "${queryAction}"}]` });
+          rawOriginal.push({ role: "user", content: `[DATABASE RESPONSE FOR ${queryAction}]:\n${queryResponseText}` });
+          loopCount++;
+          continue; // re-run loop
+        }
+      }
+
+      englishText = englishText.replace(/\[inceliyor\]/gi, "");
+      englishText = englishText.replace(/\[duraklama\]/gi, "");
+      englishText = englishText.replace(/\[bekliyor\]/gi, "");
+      englishText = englishText.replace(/\[düşünüyor\]/gi, "");
+      englishText = englishText.replace(/\[[^\]]+\]/g, (match: string) => {
         if (match.toLowerCase().startsWith("[redirect:")) return match;
         return "";
       });
-      backupText = backupText.trim().replace(/pulsar/gi, "Nexy");
+      englishText = englishText.trim().replace(/pulsar/gi, "Nexy");
 
-      // Respond directly in original language, NO translation
+      let text = englishText;
+      if (lang && lang !== "en") {
+        text = await translateTextHelper(englishText, "en", lang);
+      }
+
       return res.status(200).json({
-        text: backupText,
-        englishText: backupText,
+        text,
+        englishText,
+        isTranslated: true
+      });
+
+    } catch (err: any) {
+      console.error("Gemma fallback choice failed completely inside loop:", err);
+      return res.status(500).json({
+        text: "Sistemde geçici bir yoğunluk var. Lütfen daha sonra tekrar deneyin.",
+        englishText: "A temporary system congestion occurred. Please try again later.",
         isTranslated: false
       });
-    } catch (backupErr: any) {
-      console.warn("Primary Hack Club AI call failed, falling back to Fun Teknoloji AI:", backupErr);
     }
-  } else {
-    console.warn("Hack Club AI API key (Nexy/NEXY) is not set. Skipping primary choice.");
   }
 
-  // 2. FALLBACK CHOICE: Fallback to Fun Teknoloji AI (gemma-3-1b-it, with translation layer ON BACKEND ONLY)
-  try {
-    const cleanedOriginal = cleanMessagesForAPI(rawOriginal);
-
-    if (cleanedOriginal.filter((m) => m.role !== "system").length === 0) {
-      return res.status(400).send("Nexy error: Geçersiz sohbet geçmişi.");
-    }
-
-    // Translate each incoming message to English before sending to Gemma (Centralized backend translation)
-    const translatedMessages = [];
-    for (const msg of cleanedOriginal) {
-      if (msg.role === "system") {
-        translatedMessages.push(msg);
-      } else {
-        const translatedContent = await translateTextHelper(msg.content || "", lang, "en");
-        translatedMessages.push({ ...msg, content: translatedContent });
-      }
-    }
-
-    const response = await fetch("https://ai.funteknoloji.com/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        messages: translatedMessages,
-        model: "gemma-3-1b-it",
-      }),
-    });
-
-    if (!response.ok) {
-      const errText = await response.text();
-      throw new Error(`Fun Teknoloji AI returned status ${response.status}: ${errText}`);
-    }
-
-    const data = await response.json() as any;
-    let englishText = data.choices?.[0]?.message?.content || "";
-
-    englishText = englishText.replace(/\[inceliyor\]/gi, "");
-    englishText = englishText.replace(/\[duraklama\]/gi, "");
-    englishText = englishText.replace(/\[bekliyor\]/gi, "");
-    englishText = englishText.replace(/\[düşünüyor\]/gi, "");
-    englishText = englishText.replace(/\[[^\]]+\]/g, (match: string) => {
-      if (match.toLowerCase().startsWith("[redirect:")) return match;
-      return "";
-    });
-    englishText = englishText.trim().replace(/pulsar/gi, "Nexy");
-
-    // Server-side translation back to user's selected local language
-    let text = englishText;
-    if (lang && lang !== "en") {
-      text = await translateTextHelper(englishText, "en", lang);
-    }
-
-    return res.status(200).json({
-      text,
-      englishText,
-      isTranslated: true
-    });
-  } catch (err: any) {
-    // Generic Error Messages (keep detailed logs securely on the server console, return friendly generic error)
-    console.error("Fallback Fun Teknoloji AI call also failed completely:", err);
-    return res.status(500).json({
-      text: "Sistemde geçici bir yoğunluk var. Lütfen daha sonra tekrar deneyin.",
-      englishText: "A temporary system congestion occurred. Please try again later.",
-      isTranslated: false
-    });
-  }
+  return res.status(200).json({
+    text: "Sorgunuz işlenirken bir hata oluştu. Lütfen tekrar deneyin.",
+    englishText: "An error occurred while processing your query. Please try again.",
+    isTranslated: false
+  });
 }

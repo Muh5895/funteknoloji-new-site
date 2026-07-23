@@ -979,6 +979,7 @@ export function LiveChatView({
   }, []);
 
   const forceSupportLogout = () => {
+    supabase.auth.signOut().catch(() => {});
     onLogout();
     toast.error(
       lang === "tr"
