@@ -1371,7 +1371,7 @@ export default function NexyAssistant() {
                 }}
                 disabled={!isOnline}
                 placeholder={isOnline ? t("nexy.placeholder") : (lang === "tr" ? "İnternet bağlantısı yok." : "No internet connection.")}
-                className="w-full rounded-[20px] bg-[var(--fun-surface)] border-2 border-[var(--fun-stroke-1)] py-3 pl-12 pr-14 text-[13px] outline-none focus:border-[var(--fun-purple)] focus:ring-4 focus:ring-[var(--fun-purple)]/10 transition-all fun-text shadow-inner resize-none h-[46px] overflow-y-auto disabled:opacity-55 disabled:cursor-not-allowed"
+                className="w-full rounded-[20px] bg-[var(--fun-surface)] border-2 border-[var(--fun-stroke-1)] py-3 pl-12 pr-14 text-[13px] outline-none focus:border-[var(--fun-purple)] focus:ring-4 focus:ring-[var(--fun-purple)]/10 transition-all fun-text shadow-inner resize-none h-[46px] overflow-hidden disabled:opacity-55 disabled:cursor-not-allowed"
               />
               <button
                 type="button"
@@ -1515,31 +1515,10 @@ export default function NexyAssistant() {
 
 function TypingIndicator() {
   return (
-    <div className="loader">
-      <svg id="pegtopone" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-        <g>
-          <path
-            d="M63,37c-6.7-4-4-27-13-27s-6.3,23-13,27-27,4-27,13,20.3,9,27,13,4,27,13,27,6.3-23,13-27,27-4,27-13-20.3-9-27-13Z"
-            fill="currentColor"
-          ></path>
-        </g>
-      </svg>
-      <svg id="pegtoptwo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-        <g>
-          <path
-            d="M63,37c-6.7-4-4-27-13-27s-6.3,23-13,27-27,4-27,13,20.3,9,27,13,4,27,13,27,6.3-23,13-27,27-4,27-13-20.3-9-27-13Z"
-            fill="currentColor"
-          ></path>
-        </g>
-      </svg>
-      <svg id="pegtopthree" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-        <g>
-          <path
-            d="M63,37c-6.7-4-4-27-13-27s-6.3,23-13,27-27,4-27,13,20.3,9,27,13,4,27,13,27,6.3-23,13-27,27-4,27-13-20.3-9-27-13Z"
-            fill="currentColor"
-          ></path>
-        </g>
-      </svg>
+    <div className="flex items-center gap-1.5 py-1 px-1.5 justify-center">
+      <div className="h-2 w-2 rounded-full bg-current animate-bounce [animation-delay:-0.3s]"></div>
+      <div className="h-2 w-2 rounded-full bg-current animate-bounce [animation-delay:-0.15s]"></div>
+      <div className="h-2 w-2 rounded-full bg-current animate-bounce"></div>
     </div>
   );
 }

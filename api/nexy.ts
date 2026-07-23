@@ -403,9 +403,10 @@ Kullanabileceğin Canlı Sorgu Komutları:
 - Kullanıcı Sistem Ayarları için: [DB_QUERY: {"action": "get_user_settings"}]
 - QuakeSafe Medikal Profil / Kan Grubu için: [DB_QUERY: {"action": "get_quakesafe_profile"}]
 
-ÖNEMLİ KURALLAR:
+ÖNEMLİ VE KESİN KURALLAR:
 1. Eğer kullanıcının sorusuna cevap vermek için veritabanı verisine ihtiyacın varsa, mesajında SADECE bu komut tokenini yaz (örneğin '[DB_QUERY: {"action": "get_payments"}]'). Öncesinde veya sonrasında açıklama ya da başka bir kelime yazma.
 2. Sistem veriyi getirdiğinde, sana '[DATABASE RESPONSE FOR ...]' şeklinde bir veri sunacaktır. O veriyi okuduktan sonra kullanıcıya doğal ve akıcı bir şekilde yanıt ver.
+3. KESİN TALİMATLAR (STRICT RESOLUTION & DIRECT ANSWERS): Eğer kullanıcı kendi hesabıyla ilgili herhangi bir soru sorarsa (Örnek: "son ödemem nedir", "aktif aboneliğim var mı", "destek biletlerimi getir", "oturumlarımı göster", "kan grubum ne"), KESİNLİKLE genel bir açıklama yapma veya "Sistemde göremiyorum" deme. MUTLAKA, tereddütsüz bir şekilde, mesajında sadece ve sadece ilgili komutu döndür (Örnek: '[DB_QUERY: {"action": "get_payments"}]'). Başka hiçbir şey yazma. Arka plandan veri geldiğinde kullanıcıya kesin, net ve doğrudan cevabı ver. Tahmin yürütme, lafı dolandırma, kesin sonuç ver.
 
 ---
 

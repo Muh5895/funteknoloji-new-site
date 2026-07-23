@@ -683,13 +683,38 @@ export function LiveLoginView({ onBack, onLoginSuccess, lang }: LiveLoginViewPro
           </div>
         </div>
 
+        <div className="flex justify-end -mt-2">
+          <a
+            href="https://account.funteknoloji.com/forgot-password"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[11px] font-semibold text-[var(--fun-purple)] hover:underline"
+          >
+            {lang === "tr" ? "Şifremi Unuttum" : "Forgot Password?"}
+          </a>
+        </div>
+
         <button
           type="submit"
           disabled={loading}
-          className="w-full py-3 px-4 mt-2 rounded-xl bg-[var(--fun-purple)] text-white font-bold text-xs flex items-center justify-center gap-2 hover:scale-[1.01] transition-all shadow-lg shadow-purple-500/20 active:scale-95 disabled:opacity-50"
+          className="w-full py-3 px-4 mt-1 rounded-xl bg-[var(--fun-purple)] text-white font-bold text-xs flex items-center justify-center gap-2 hover:scale-[1.01] transition-all shadow-lg shadow-purple-500/20 active:scale-95 disabled:opacity-50"
         >
           {loading ? getTranslation(lang, "loggingIn") : getTranslation(lang, "loginBtn")}
         </button>
+
+        <div className="text-center mt-1">
+          <span className="text-[11px] fun-text-muted">
+            {lang === "tr" ? "Hesabınız Yok mu? " : "Don't have an account? "}
+            <a
+              href="https://account.funteknoloji.com/register"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-bold text-[var(--fun-purple)] hover:underline"
+            >
+              {lang === "tr" ? "Oluşturun" : "Create one"}
+            </a>
+          </span>
+        </div>
       </form>
     </div>
   );
@@ -977,6 +1002,45 @@ export function LiveChatView({
       if (typingIntervalRef.current) clearInterval(typingIntervalRef.current);
     };
   }, []);
+
+  // 10-minute Inactivity Timer
+  useEffect(() => {
+    if (readOnly) return;
+
+    const inactivityTimeout = setTimeout(() => {
+      toast.info(
+        lang === "tr"
+          ? "Görüşme 10 dakika boyunca hareketsiz kaldığı için otomatik olarak sonlandırıldı."
+          : "Session was automatically closed due to 10 minutes of inactivity."
+      );
+      forceSupportLogout();
+    }, 10 * 60 * 1000);
+
+    return () => {
+      clearTimeout(inactivityTimeout);
+    };
+  }, [messages, readOnly, lang]);
+
+  // Tab/Window close confirmation and sync termination
+  useEffect(() => {
+    if (readOnly) return;
+
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      e.preventDefault();
+      e.returnValue = lang === "tr"
+        ? "Canlı destek görüşmeniz devam ediyor. Ayrılmak istediğinize emin misiniz? Çıkarsanız görüşmeniz sonlandırılacaktır."
+        : "Your live support session is active. Are you sure you want to leave? Your session will be terminated.";
+
+      supabase.auth.signOut().catch(() => {});
+      return e.returnValue;
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, [readOnly, lang]);
 
   const forceSupportLogout = () => {
     supabase.auth.signOut().catch(() => {});
