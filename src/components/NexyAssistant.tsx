@@ -1123,6 +1123,7 @@ export default function NexyAssistant() {
               }}
               onLogout={() => {
                 // Log out from the live support account completely
+                supabase.auth.signOut().catch(() => {});
                 setLiveUser(null);
                 setLiveMessages([]);
                 setSupportView("menu");

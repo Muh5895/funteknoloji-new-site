@@ -825,8 +825,8 @@ export function LiveTicketDetailsView({ lang, onBack, onSubmit }: LiveTicketDeta
 // LIVE CHAT VIEW (Supports image sending, auto-translation system, auto-translation warning, read-only session)
 interface LiveChatViewProps {
   user: { email: string };
-  messages: { role: "agent" | "user"; text: string; id: string; timestamp: number; files?: AttachedFile[]; englishText?: string }[];
-  setMessages: React.Dispatch<React.SetStateAction<{ role: "agent" | "user"; text: string; id: string; timestamp: number; files?: AttachedFile[]; englishText?: string }[]>>;
+  messages: { role: "agent" | "user"; text: string; id: string; timestamp: number; files?: AttachedFile[]; englishText?: string; displayedText?: string }[];
+  setMessages: React.Dispatch<React.SetStateAction<{ role: "agent" | "user"; text: string; id: string; timestamp: number; files?: AttachedFile[]; englishText?: string; displayedText?: string }[]>>;
   onBack: () => void;
   onEndSession: () => void;
   onLogout: () => void;
@@ -1020,7 +1020,7 @@ Greet them by their full name (${userProfile.name}) in a warm, helpful way.
 Acknowledge that they are securely logged in under their email address (${userProfile.email}) and that you see they have submitted a support request regarding their issue. Discuss the issue description ("${ticketDescription}") naturally in a conversational sentence.
 CRITICAL OUTPUT CONSTRAINT: Never output any technical ticket fields (like "Subject:", "Konu:", "Importance:", "Severity:", "Açıklama:") as headers, prefixes, or labels in your response. Never write any "Subject:" or "Konu:" prefixes. Do not write any redirection labels, redirect commands, or redirect text in your messages. Just speak naturally.
 STRICT TOPIC RULE: Focus intensely and intelligently on their actual ticket topic ("${ticketSubject}" and "${ticketDescription}"): do not wander off or try to force every single greeting to talk about unrelated features like QuakeSafe or Nexy features unless their ticket description specifically mentions them. Stay professional, precise, and direct.
-Do not promote any third-party services like Pollinations or Pulsar. Respond in English.`,
+Do not promote any third-party services like Pollinations or Pulsar. Respond directly in the language of the chat: ${lang}.`,
         },
         {
           role: "user",
@@ -1443,7 +1443,7 @@ CRITICAL RULES:
 5. COGNITIVE DOCUMENT RELEVANCE CHECK: If the user has attached any files or if there is OCR/extracted text from files under [USER ATTACHED FILE DETAILS], you MUST carefully examine whether the contents of these files are genuinely relevant to the user's support ticket subject ("${ticketSubject}") and description ("${ticketDescription}"). If an uploaded file is completely irrelevant or off-topic, politely point this out to the user, explain why it doesn't match the ticket context, and ask them to provide relevant documents so you can investigate their issue properly. Approach everything with maximum intelligence and focus.
 6. STRICT OUTPUT CONSTRAINT: Never output any technical ticket fields (like "Subject:", "Konu:", "Importance:", "Severity:", "Açıklama:") as headers, prefixes, or labels in your response. Never write any "Subject:" or "Konu:" prefixes. Do not write any redirection labels, redirect commands, or redirect text. Just speak naturally.
 7. STRICT OUTPUT CONSTRAINT: DO NOT under any circumstances output bracketed tokens like [inceliyor], [duraklama], [düşünüyor] or any similar status tags.
-8. Do not mention any third-party services like Pollinations or Pulsar. Respond in English.`,
+8. Do not mention any third-party services like Pollinations or Pulsar. Respond directly in the language of the chat: ${lang}.`,
       });
 
       // Map live support conversation history
@@ -1841,7 +1841,7 @@ CRITICAL RULES:
 
                   {/* Message Action Utilities (Copy and TTS reading) */}
                   {m.role === "agent" && (
-                    <div className={`mt-1.5 flex items-center gap-1.5 px-1 ${m.role === "user" ? "justify-end" : "justify-start"}`}>
+                    <div className="mt-1.5 flex items-center gap-1.5 px-1 justify-start">
                       <button
                         onClick={() => copyToClipboard(m.text, m.id)}
                         className={`h-7 w-7 flex items-center justify-center rounded-full border border-[var(--fun-stroke-1)] bg-[var(--fun-card)] fun-text hover:bg-[var(--fun-purple)] hover:text-white transition-all active:scale-95 ${copiedId === m.id ? "bg-green-500 text-white border-green-500 hover:bg-green-500" : ""}`}
