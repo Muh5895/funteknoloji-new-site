@@ -260,27 +260,40 @@ const executeDynamicDatabaseQuery = async (action: string, authHeader: string | 
         resultContext += `Aktif Oturumlar Tablo Hatası: ${e.message || "Failed to retrieve active sessions."}\n`;
       }
     }
-    else if (action === "get_payments") {
-      const potentialTables = ["payments", "transactions", "orders", "subscriptions"];
-      let retrieved = false;
-      for (const tableName of potentialTables) {
-        try {
-          const { data, error } = await client.from(tableName).select("*").eq(tableName === "subscriptions" ? "user_id" : "user_id", user.id).order("created_at", { ascending: false }).limit(5);
-          if (!error && data && data.length > 0) {
-            resultContext += `\n[Tablo: ${tableName} Verileri]\n`;
-            data.forEach((item: any, i: number) => {
-              resultContext += `- Ödeme/İşlem #${i + 1}: Tutar: ${item.amount || item.price || "N/A"}, Durum: ${item.status || "N/A"}, Tarih: ${item.created_at || item.date || "N/A"}\n`;
-            });
-            retrieved = true;
-          }
-        } catch (e) {}
+    else if (action === "get_contact_messages") {
+      try {
+        const { data, error } = await client.from("contact").select("*").eq("email", user.email).order("created_at", { ascending: false }).limit(5);
+        if (error) throw error;
+        if (data && data.length > 0) {
+          resultContext += `\n[Contact Tablosu Verileri]\n`;
+          data.forEach((item: any, i: number) => {
+            resultContext += `- Mesaj #${i + 1}: Konu: ${item.subject || "N/A"}, Mesaj: ${item.message || "N/A"}, Tarih: ${item.created_at || "N/A"}\n`;
+          });
+        } else {
+          resultContext += `İletişim mesajı kaydı bulunamadı.\n`;
+        }
+      } catch (e: any) {
+        resultContext += `Contact Tablo Hatası: ${e.message || "Failed to retrieve contact messages."}\n`;
       }
-      if (!retrieved) {
-        resultContext += `Ödeme ve Fatura Bilgisi: Herhangi bir ödeme veya sipariş kaydı bulunamadı.\n`;
+    }
+    else if (action === "get_system_status") {
+      try {
+        const { data, error } = await client.from("system_status").select("app_name, status, maintenance_reason, estimated_end_time");
+        if (error) throw error;
+        if (data && data.length > 0) {
+          resultContext += `\n[Sistem ve Hizmet Durumları]\n`;
+          data.forEach((s: any) => {
+            resultContext += `- Hizmet Adı (app_name): ${s.app_name}\n  Durum (status): ${s.status}\n  Bakım Nedeni (maintenance_reason): ${s.maintenance_reason || "Bakım Yok"}\n  Tahmini Bitiş (estimated_end_time): ${s.estimated_end_time || "N/A"}\n\n`;
+          });
+        } else {
+          resultContext += `Sistem durumu bilgisi bulunamadı.\n`;
+        }
+      } catch (e: any) {
+        resultContext += `Sistem Durumu Sorgu Hatası: ${e.message}\n`;
       }
     }
     else if (action === "get_support_tickets") {
-      const potentialTables = ["support_tickets", "tickets"];
+      const potentialTables = ["support_tickets_feedback", "support_tickets", "tickets"];
       let retrieved = false;
       for (const tableName of potentialTables) {
         try {
@@ -396,17 +409,18 @@ Kullanıcının hesabı, ödemeleri, son siparişleri, aktif oturumları veya de
 Eğer kullanıcı sana kendi hesabıyla ilgili bir soru sorarsa (örneğin "son ödemem", "aktif aboneliğim", "destek biletlerim", "aktif oturumlarım", "kan grubum"), KESİNLİKLE uydurma cevap verme. Bunun yerine, aşağıda belirtilen özel sorgu komutlarından uygun olanını **mesajında tek başına** çıktı olarak ver. Sistem arka planda bu sorguyu çalıştırıp veriyi sana sağlayacaktır.
 
 Kullanabileceğin Canlı Sorgu Komutları:
-- Son Ödemeler / Faturalar / Siparişler için: [DB_QUERY: {"action": "get_payments"}]
+- İletişim / Contact Mesajları için: [DB_QUERY: {"action": "get_contact_messages"}]
 - Destek Kayıtları / Biletleri için: [DB_QUERY: {"action": "get_support_tickets"}]
 - Aktif Oturumlar / Güvenlik Ayarları için: [DB_QUERY: {"action": "get_active_sessions"}]
 - Temel Profil Bilgileri için: [DB_QUERY: {"action": "get_profile"}]
 - Kullanıcı Sistem Ayarları için: [DB_QUERY: {"action": "get_user_settings"}]
 - QuakeSafe Medikal Profil / Kan Grubu için: [DB_QUERY: {"action": "get_quakesafe_profile"}]
+- Hizmet / Sistem Aktiflik ve Bakım Durumları için: [DB_QUERY: {"action": "get_system_status"}]
 
 ÖNEMLİ VE KESİN KURALLAR:
-1. Eğer kullanıcının sorusuna cevap vermek için veritabanı verisine ihtiyacın varsa, mesajında SADECE bu komut tokenini yaz (örneğin '[DB_QUERY: {"action": "get_payments"}]'). Öncesinde veya sonrasında açıklama ya da başka bir kelime yazma.
+1. Eğer kullanıcının sorusuna cevap vermek için veritabanı verisine ihtiyacın varsa, mesajında SADECE bu komut tokenini yaz (örneğin '[DB_QUERY: {"action": "get_support_tickets"}]'). Öncesinde veya sonrasında açıklama ya da başka bir kelime yazma.
 2. Sistem veriyi getirdiğinde, sana '[DATABASE RESPONSE FOR ...]' şeklinde bir veri sunacaktır. O veriyi okuduktan sonra kullanıcıya doğal ve akıcı bir şekilde yanıt ver.
-3. KESİN TALİMATLAR (STRICT RESOLUTION & DIRECT ANSWERS): Eğer kullanıcı kendi hesabıyla ilgili herhangi bir soru sorarsa (Örnek: "son ödemem nedir", "aktif aboneliğim var mı", "destek biletlerimi getir", "oturumlarımı göster", "kan grubum ne"), KESİNLİKLE genel bir açıklama yapma veya "Sistemde göremiyorum" deme. MUTLAKA, tereddütsüz bir şekilde, mesajında sadece ve sadece ilgili komutu döndür (Örnek: '[DB_QUERY: {"action": "get_payments"}]'). Başka hiçbir şey yazma. Arka plandan veri geldiğinde kullanıcıya kesin, net ve doğrudan cevabı ver. Tahmin yürütme, lafı dolandırma, kesin sonuç ver.
+3. KESİN TALİMATLAR (STRICT RESOLUTION & DIRECT ANSWERS): Eğer kullanıcı kendi hesabıyla, iletişim mesajlarıyla, veya hizmetlerin aktiflik/bakım durumlarıyla ilgili herhangi bir soru sorarsa (Örnek: "hizmetleriniz aktif mi", "Nexy aktif mi", "hizmet bakımda mı", "iletişim mesajlarım", "destek biletlerimi getir", "oturumlarımı göster", "kan grubum ne"), KESİNLİKLE genel bir açıklama yapma veya "Sistemde göremiyorum" deme. MUTLAKA, tereddütsüz bir şekilde, mesajında sadece ve sadece ilgili komutu döndür (Örnek: '[DB_QUERY: {"action": "get_system_status"}]' veya '[DB_QUERY: {"action": "get_support_tickets"}]'). Başka hiçbir şey yazma. Arka plandan veri geldiğinde kullanıcıya kesin, net ve doğrudan cevabı ver. Tahmin yürütme, lafı dolandırma, kesin sonuç ver.
 
 ---
 
