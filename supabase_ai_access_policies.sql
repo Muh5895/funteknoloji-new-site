@@ -3,6 +3,8 @@
 -- ==============================================================================================
 -- KURAL: Giriş yapan aktif kullanıcı sadece kendi verilerine erişebilir. Diğer e-postalara ve
 -- hesaplara ait verilere müdahale kesinlikle engellenmiştir!
+-- GÜNCELLEME: Tüm UUID ve TEXT eşleşme hatalarını (ERROR: 42883) önlemek için açık tür dönüşümleri
+-- (::text cast) eklenmiştir. Bu sayede kolon türü uuid veya text olsa bile hatasız çalışır.
 -- ==============================================================================================
 
 -- 1. YENİ TABLO OLUŞTURMA: 'support_tickets_feedback'
@@ -40,111 +42,111 @@ ALTER TABLE user_settings ENABLE ROW LEVEL SECURITY;
 
 
 -- 3. 'Ai Erişimi' RLS Güvenlik Politikalarını Tanımla
--- (Giriş yapılan kullanıcıların verilerini 'user_id' veya 'id' üzerinden eşleştirerek sınırlandırır)
+-- (Giriş yapılan kullanıcıların verilerini 'user_id' veya 'id' üzerinden ::text dönüşümüyle güvenle eşleştirir)
 
--- support_tickets_feedback (user_id bulunuyor)
+-- support_tickets_feedback
 CREATE POLICY "Ai Erişimi" ON support_tickets_feedback
 FOR ALL TO authenticated
-USING (user_id = auth.uid())
-WITH CHECK (user_id = auth.uid());
+USING (user_id::text = auth.uid()::text)
+WITH CHECK (user_id::text = auth.uid()::text);
 
--- active_sessions (user_id bulunuyor)
+-- active_sessions
 CREATE POLICY "Ai Erişimi" ON active_sessions
 FOR ALL TO authenticated
-USING (user_id = auth.uid())
-WITH CHECK (user_id = auth.uid());
+USING (user_id::text = auth.uid()::text)
+WITH CHECK (user_id::text = auth.uid()::text);
 
--- audit_logs_quakesafe (user_id bulunuyor)
+-- audit_logs_quakesafe
 CREATE POLICY "Ai Erişimi" ON audit_logs_quakesafe
 FOR ALL TO authenticated
-USING (user_id = auth.uid())
-WITH CHECK (user_id = auth.uid());
+USING (user_id::text = auth.uid()::text)
+WITH CHECK (user_id::text = auth.uid()::text);
 
--- city_presence_quakesafe (user_id bulunuyor)
+-- city_presence_quakesafe
 CREATE POLICY "Ai Erişimi" ON city_presence_quakesafe
 FOR ALL TO authenticated
-USING (user_id = auth.uid())
-WITH CHECK (user_id = auth.uid());
+USING (user_id::text = auth.uid()::text)
+WITH CHECK (user_id::text = auth.uid()::text);
 
--- contact (user_id bulunmuyor, yetkili kullanıcının email adresi auth.users tablosundan çekilerek sorgulanır)
+-- contact (Giriş yapan kullanıcının doğrulanmış email adresi auth.users tablosundan çekilerek eşleştirilir)
 CREATE POLICY "Ai Erişimi" ON contact
 FOR ALL TO authenticated
-USING (email = (SELECT email FROM auth.users WHERE id = auth.uid()))
-WITH CHECK (email = (SELECT email FROM auth.users WHERE id = auth.uid()));
+USING (email = (SELECT email FROM auth.users WHERE id::text = auth.uid()::text))
+WITH CHECK (email = (SELECT email FROM auth.users WHERE id::text = auth.uid()::text));
 
--- developer_profiles (user_id bulunuyor)
+-- developer_profiles
 CREATE POLICY "Ai Erişimi" ON developer_profiles
 FOR ALL TO authenticated
-USING (user_id = auth.uid())
-WITH CHECK (user_id = auth.uid());
+USING (user_id::text = auth.uid()::text)
+WITH CHECK (user_id::text = auth.uid()::text);
 
--- device_approvals (user_id bulunuyor)
+-- device_approvals
 CREATE POLICY "Ai Erişimi" ON device_approvals
 FOR ALL TO authenticated
-USING (user_id = auth.uid())
-WITH CHECK (user_id = auth.uid());
+USING (user_id::text = auth.uid()::text)
+WITH CHECK (user_id::text = auth.uid()::text);
 
--- disaster_plans_quakesafe (user_id bulunuyor)
+-- disaster_plans_quakesafe
 CREATE POLICY "Ai Erişimi" ON disaster_plans_quakesafe
 FOR ALL TO authenticated
-USING (user_id = auth.uid())
-WITH CHECK (user_id = auth.uid());
+USING (user_id::text = auth.uid()::text)
+WITH CHECK (user_id::text = auth.uid()::text);
 
--- feedback (user_id bulunuyor)
+-- feedback
 CREATE POLICY "Ai Erişimi" ON feedback
 FOR ALL TO authenticated
-USING (user_id = auth.uid())
-WITH CHECK (user_id = auth.uid());
+USING (user_id::text = auth.uid()::text)
+WITH CHECK (user_id::text = auth.uid()::text);
 
--- login_requests (user_id bulunuyor)
+-- login_requests
 CREATE POLICY "Ai Erişimi" ON login_requests
 FOR ALL TO authenticated
-USING (user_id = auth.uid())
-WITH CHECK (user_id = auth.uid());
+USING (user_id::text = auth.uid()::text)
+WITH CHECK (user_id::text = auth.uid()::text);
 
--- notifications (user_id bulunuyor)
+-- notifications
 CREATE POLICY "Ai Erişimi" ON notifications
 FOR ALL TO authenticated
-USING (user_id = auth.uid())
-WITH CHECK (user_id = auth.uid());
+USING (user_id::text = auth.uid()::text)
+WITH CHECK (user_id::text = auth.uid()::text);
 
--- orders (user_id bulunuyor)
+-- orders
 CREATE POLICY "Ai Erişimi" ON orders
 FOR ALL TO authenticated
-USING (user_id = auth.uid())
-WITH CHECK (user_id = auth.uid());
+USING (user_id::text = auth.uid()::text)
+WITH CHECK (user_id::text = auth.uid()::text);
 
--- profiles (sütun adı id'dir, user_id değil)
+-- profiles
 CREATE POLICY "Ai Erişimi" ON profiles
 FOR ALL TO authenticated
-USING (id = auth.uid())
-WITH CHECK (id = auth.uid());
+USING (id::text = auth.uid()::text)
+WITH CHECK (id::text = auth.uid()::text);
 
--- profiles_quakesafe (sütun adı id'dir, user_id değil)
+-- profiles_quakesafe
 CREATE POLICY "Ai Erişimi" ON profiles_quakesafe
 FOR ALL TO authenticated
-USING (id = auth.uid())
-WITH CHECK (id = auth.uid());
+USING (id::text = auth.uid()::text)
+WITH CHECK (id::text = auth.uid()::text);
 
--- security_logs (user_id bulunuyor)
+-- security_logs
 CREATE POLICY "Ai Erişimi" ON security_logs
 FOR ALL TO authenticated
-USING (user_id = auth.uid())
-WITH CHECK (user_id = auth.uid());
+USING (user_id::text = auth.uid()::text)
+WITH CHECK (user_id::text = auth.uid()::text);
 
--- support_tickets_quakesafe (user_id bulunuyor)
+-- support_tickets_quakesafe
 CREATE POLICY "Ai Erişimi" ON support_tickets_quakesafe
 FOR ALL TO authenticated
-USING (user_id = auth.uid())
-WITH CHECK (user_id = auth.uid());
+USING (user_id::text = auth.uid()::text)
+WITH CHECK (user_id::text = auth.uid()::text);
 
--- system_status (Sadece okumaya / SELECT izni verilir, değiştirmeye izin verilmez)
+-- system_status (Yalnızca SELECT okuma yetkisi verilir, güncelleme ve silme kesinlikle engellenmiştir)
 CREATE POLICY "Ai Erişimi" ON system_status
 FOR SELECT TO authenticated
 USING (true);
 
--- user_settings (user_id bulunuyor)
+-- user_settings
 CREATE POLICY "Ai Erişimi" ON user_settings
 FOR ALL TO authenticated
-USING (user_id = auth.uid())
-WITH CHECK (user_id = auth.uid());
+USING (user_id::text = auth.uid()::text)
+WITH CHECK (user_id::text = auth.uid()::text);
