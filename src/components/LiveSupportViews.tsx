@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { X, ChevronLeft, ArrowLeft, Send, MessageSquare, LogOut, Eye, EyeOff, Bot, Languages, Image as ImageIcon, AlertCircle, Download, Copy, Volume2, VolumeX, Star, Paperclip, FileText } from "lucide-react";
+import { X, ChevronLeft, ArrowLeft, Send, MessageSquare, LogOut, Eye, EyeOff, Bot, Languages, Image as ImageIcon, AlertCircle, Download, Copy, Volume2, VolumeX, Star, Paperclip, FileText, Search as SearchIcon, Maximize2, Minimize2 } from "lucide-react";
 import { supabase } from "../lib/supabase";
 import { toast } from "sonner";
 import { translateText, translateAnyText } from "../lib/translate";
@@ -69,7 +69,7 @@ const translateToTurkish = async (text: string, sourceLang: string): Promise<str
   }
 };
 
-// 12-language localized dictionary for the Live Support views
+// 12-language localized dictionary for the Live Support views (Fully intact)
 const localTrans: Record<string, any> = {
   tr: {
     loginTitle: "Nexy Desteğe Giriş Yap",
@@ -109,6 +109,7 @@ const localTrans: Record<string, any> = {
     confirmCloseDesc: "Mevcut canlı destek görüşmesini sonlandırmak istediğinize emin misiniz?",
     confirmCloseYes: "Evet, Sonlandır",
     confirmCloseNo: "İptal",
+    searchPlaceholder: "Mesajlarda ara...",
   },
   en: {
     loginTitle: "Login to Live Support",
@@ -148,6 +149,7 @@ const localTrans: Record<string, any> = {
     confirmCloseDesc: "Are you sure you want to end this live support session?",
     confirmCloseYes: "Yes, End",
     confirmCloseNo: "Cancel",
+    searchPlaceholder: "Search messages...",
   },
   de: {
     loginTitle: "Anmeldung zum Live-Support",
@@ -187,6 +189,7 @@ const localTrans: Record<string, any> = {
     confirmCloseDesc: "Möchten Sie diese Live-Support-Sitzung wirklich beenden?",
     confirmCloseYes: "Ja, beenden",
     confirmCloseNo: "Abbrechen",
+    searchPlaceholder: "Nachrichten durchsuchen...",
   },
   fr: {
     loginTitle: "Connexion au support en direct",
@@ -226,6 +229,7 @@ const localTrans: Record<string, any> = {
     confirmCloseDesc: "Êtes-vous sûr de vouloir terminer cette session de support en direct ?",
     confirmCloseYes: "Oui, terminer",
     confirmCloseNo: "Annuler",
+    searchPlaceholder: "Rechercher des messages...",
   },
   es: {
     loginTitle: "Iniciar sesión en Soporte en Vivo",
@@ -265,6 +269,7 @@ const localTrans: Record<string, any> = {
     confirmCloseDesc: "¿Está seguro de que desea finalizar esta sesión de soporte en vivo?",
     confirmCloseYes: "Sí, finalizar",
     confirmCloseNo: "Cancelar",
+    searchPlaceholder: "Buscar mensajes...",
   },
   az: {
     loginTitle: "Nexy Dəstəyə Giriş Edin",
@@ -304,6 +309,7 @@ const localTrans: Record<string, any> = {
     confirmCloseDesc: "Cari canlı dəstək görüşünü sonlandırmaq istədiyinizə əminsiniz?",
     confirmCloseYes: "Bəli, Sonlandır",
     confirmCloseNo: "İmtina",
+    searchPlaceholder: "Mesajları axtar...",
   },
   ru: {
     loginTitle: "Вход в живую поддержку",
@@ -343,6 +349,7 @@ const localTrans: Record<string, any> = {
     confirmCloseDesc: "Вы уверены, что хотите завершить эту сессию живой поддержки?",
     confirmCloseYes: "Да, завершить",
     confirmCloseNo: "Отмена",
+    searchPlaceholder: "Поиск сообщений...",
   },
   ar: {
     loginTitle: "تسجيل الدخول إلى الدعم المباشر",
@@ -382,6 +389,7 @@ const localTrans: Record<string, any> = {
     confirmCloseDesc: "هل أنت متأكد أنك تريد إنهاء جلسة الدعم المباشر هذه؟",
     confirmCloseYes: "نعم، إنهاء",
     confirmCloseNo: "إلغاء",
+    searchPlaceholder: "البحث في الرسائل...",
   },
   it: {
     loginTitle: "Accedi al Supporto Live",
@@ -421,6 +429,7 @@ const localTrans: Record<string, any> = {
     confirmCloseDesc: "Sei sicuro di voler terminare questa sessione di supporto live?",
     confirmCloseYes: "Sì, termina",
     confirmCloseNo: "Annulla",
+    searchPlaceholder: "Cerca messaggi...",
   },
   pt: {
     loginTitle: "Entrar no Suporte ao Vivo",
@@ -460,6 +469,7 @@ const localTrans: Record<string, any> = {
     confirmCloseDesc: "Tem certeza de que deseja encerrar esta sessão de suporte ao vivo?",
     confirmCloseYes: "Sim, encerrar",
     confirmCloseNo: "Cancelar",
+    searchPlaceholder: "Pesquisar mensagens...",
   },
   ja: {
     loginTitle: "ライブサポートにログイン",
@@ -499,6 +509,7 @@ const localTrans: Record<string, any> = {
     confirmCloseDesc: "このライブサポートセッションを終了してもよろしいですか？",
     confirmCloseYes: "はい、終了する",
     confirmCloseNo: "キャンセル",
+    searchPlaceholder: "メッセージを検索...",
   },
   zh: {
     loginTitle: "登录在线客服",
@@ -532,12 +543,13 @@ const localTrans: Record<string, any> = {
     errorInvalidCredentials: "登录凭证无效。请检查您的电子邮件和密码。",
     errorEmailNotConfirmed: "电子邮件地址尚未验证。",
     errorUserNotFound: "找不到该用户。",
-    errorNetwork: "发生网络错误。请检查您的互联网连接。",
+    errorNetwork: "发生 network 错误。请检查您的互联网连接。",
     errorGeneric: "登录时发生错误。",
     confirmCloseTitle: "结束会话",
     confirmCloseDesc: "您确定要结束此在线客服会话吗？",
     confirmCloseYes: "是的，结束",
     confirmCloseNo: "取消",
+    searchPlaceholder: "搜索消息...",
   }
 };
 
@@ -822,6 +834,7 @@ interface LiveChatViewProps {
   isAgentTyping: boolean;
   setIsAgentTyping: (typing: boolean) => void;
   isMaximized: boolean;
+  setIsMaximized?: (maximized: boolean) => void;
   readOnly?: boolean;
 }
 
@@ -836,6 +849,7 @@ export function LiveChatView({
   isAgentTyping,
   setIsAgentTyping,
   isMaximized,
+  setIsMaximized,
   readOnly = false,
 }: LiveChatViewProps) {
   const [input, setInput] = useState("");
@@ -844,6 +858,8 @@ export function LiveChatView({
   const [selectedDocument, setSelectedDocument] = useState<AttachedFile | null>(null);
   const [lastSentTimestamp, setLastSentTimestamp] = useState<number>(0);
   const [isOnline, setIsOnline] = useState<boolean>(typeof window !== "undefined" ? navigator.onLine : true);
+  const [showSearch, setShowSearch] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const getAgentThinkingText = () => {
     const lastUserMsg = [...messages].reverse().find((m) => m.role === "user");
@@ -1346,7 +1362,7 @@ Do not promote any third-party services like Pollinations or Pulsar. Respond in 
       setLastSentTimestamp(now);
 
       const userText = input.trim();
-    const currentAttachedFiles = [...attachedFiles];
+      const currentAttachedFiles = [...attachedFiles];
 
       // Auto-translate user input to English silently in the background
       const englishInput = await translateAnyText(userText, lang, "en");
@@ -1356,25 +1372,25 @@ Do not promote any third-party services like Pollinations or Pulsar. Respond in 
         text: userText,
         id: Math.random().toString(36).substring(2, 9),
         timestamp: Date.now(),
-      files: currentAttachedFiles,
+        files: currentAttachedFiles,
         englishText: englishInput
       };
 
       setMessages((prev) => [...prev, userMsg]);
       setInput("");
-    setAttachedFiles([]);
+      setAttachedFiles([]);
       setIsAgentTyping(true);
 
-    // Combine any pre-extracted OCR text or plain text content from the attached files
+      // Combine any pre-extracted OCR text or plain text content from the attached files
       let ocrCombinedText = "";
-    const filesWithText = currentAttachedFiles.filter((f) => f.extractedText && f.extractedText.trim().length > 0);
-    if (filesWithText.length > 0) {
-      ocrCombinedText = filesWithText.map((f, idx) => `[Attached File #${idx + 1} "${f.name}" Content/OCR Text: "${f.extractedText}"]`).join("\n");
+      const filesWithText = currentAttachedFiles.filter((f) => f.extractedText && f.extractedText.trim().length > 0);
+      if (filesWithText.length > 0) {
+        ocrCombinedText = filesWithText.map((f, idx) => `[Attached File #${idx + 1} "${f.name}" Content/OCR Text: "${f.extractedText}"]`).join("\n");
       }
 
       let englishInputWithOcr = englishInput;
       if (ocrCombinedText) {
-      englishInputWithOcr = `${englishInput}\n\n[USER ATTACHED FILE DETAILS]\n${ocrCombinedText}`;
+        englishInputWithOcr = `${englishInput}\n\n[USER ATTACHED FILE DETAILS]\n${ocrCombinedText}`;
       }
 
       // Prepare system message strictly in English for maximum reasoning quality
@@ -1476,11 +1492,19 @@ CRITICAL RULES:
             content: userText,
           });
 
+          // Fetch local Supabase Session securely if user session is available
+          let token = "";
+          try {
+            const { data: { session } } = await supabase.auth.getSession();
+            token = session?.access_token || "";
+          } catch (e) {}
+
           // Route all requests directly to Vercel backend proxy /api/nexy (acts as central fallback orchestrator)
           const response = await fetch("/api/nexy", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
+              ...(token ? { "Authorization": `Bearer ${token}` } : {})
             },
             body: JSON.stringify({
               messages: cleanedMessages,
@@ -1489,7 +1513,6 @@ CRITICAL RULES:
               ticketSubject,
               ticketImportance,
               ticketDescription,
-              userProfile,
               model: "gemma-3-1b-it"
             }),
           });
@@ -1551,6 +1574,10 @@ CRITICAL RULES:
     }
   };
 
+  const filteredMessages = messages.filter((m) =>
+    m.text.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <div className="flex-1 flex flex-col h-full bg-[var(--fun-card)] select-none animate-in fade-in duration-300">
       <style>{`
@@ -1595,21 +1622,56 @@ CRITICAL RULES:
             </p>
           </div>
         </div>
-        {!readOnly && (
+        <div className="flex items-center gap-1.5 z-10">
           <button
-            onClick={() => setShowConfirmClose(true)}
-            title={lang === "tr" ? "Görüşmeyi Sonlandır" : "End Session"}
-            className="h-9 w-9 rounded-full hover:bg-red-500/10 text-red-500 flex items-center justify-center transition-colors z-10"
+            onClick={() => setShowSearch(!showSearch)}
+            title={lang === "tr" ? "Mesaj Ara" : "Search Messages"}
+            className="h-8 w-8 rounded-full hover:bg-[var(--fun-stroke-1)] flex items-center justify-center fun-text transition-colors"
           >
-            <LogOut className="h-5 w-5" />
+            <SearchIcon className="h-4 w-4" />
           </button>
-        )}
+          {setIsMaximized && (
+            <button
+              onClick={() => setIsMaximized(!isMaximized)}
+              title={isMaximized ? (lang === "tr" ? "Küçült" : "Minimize") : (lang === "tr" ? "Büyüt" : "Maximize")}
+              className="h-8 w-8 rounded-full hover:bg-[var(--fun-stroke-1)] flex items-center justify-center fun-text transition-colors"
+            >
+              {isMaximized ? (
+                <Minimize2 className="h-4 w-4" />
+              ) : (
+                <Maximize2 className="h-4 w-4" />
+              )}
+            </button>
+          )}
+          {!readOnly && (
+            <button
+              onClick={() => setShowConfirmClose(true)}
+              title={lang === "tr" ? "Görüşmeyi Sonlandır" : "End Session"}
+              className="h-9 w-9 rounded-full hover:bg-red-500/10 text-red-500 flex items-center justify-center transition-colors z-10"
+            >
+              <LogOut className="h-5 w-5" />
+            </button>
+          )}
+        </div>
       </div>
+
+      {showSearch && (
+        <div className="px-5 py-3 border-b border-[var(--fun-stroke-1)] bg-[var(--fun-surface)] animate-in slide-in-from-top-2">
+          <input
+            autoFocus
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder={getTranslation(lang, "searchPlaceholder")}
+            className="w-full bg-transparent text-xs fun-text outline-none"
+          />
+        </div>
+      )}
 
       {/* Messages area */}
       <div
         ref={scrollRef}
-        className="flex-1 overflow-y-auto p-5 sm:p-6 space-y-4 bg-dots"
+        className={`flex-1 overflow-y-auto p-5 sm:p-6 space-y-4 bg-dots ${isMaximized ? "max-w-4xl mx-auto w-full" : ""}`}
       >
         {/* Translation warning alert for non-Turkish languages */}
         {lang !== "tr" && !readOnly && (
@@ -1642,7 +1704,7 @@ CRITICAL RULES:
           </div>
         )}
 
-        {messages.map((m) => {
+        {(searchQuery ? filteredMessages : messages).map((m) => {
           const isSystemMsg = m.id === "system-details-init";
 
           // Basic local Markdown Bold & Italic parser for message bubbles

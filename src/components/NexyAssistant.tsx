@@ -116,7 +116,7 @@ const getLocalFallbackResponse = (input: string, lang: string, chatMessages: any
     const greetings = [
       `Merhaba${userName ? " " + userName : ""}! Ben Fun Teknoloji'nin yapay zeka asistanı Nexy. Size Fun Teknoloji, kurucumuz Muhammed Erbay, yenilikçi projelerimiz (Nexy, QuakeSafe) veya sunduğumuz profesyonel yazılım ve yapay zeka hizmetleri hakkında bilgi verebilirim. Ne öğrenmek istersiniz?`,
       `Harika bir gün geçirmenizi dilerim${userName ? ", " + userName : ""}! Ben Nexy. Fun Teknoloji hakkında merak ettiğiniz projeleri, hizmetlerimizi veya diğer detayları bana sorabilirsiniz. Size nasıl yardımcı olabilirim?`,
-      `Size yardımcı olmak için burayım${userName ? ", " + userName : ""}! Fun Teknoloji'nin yapay zeka çözümleri, QuakeSafe afet yönetim platformu veya özel yazılım geliştirme hizmetlerimiz hakkında bilgi almak ister misiniz?`
+      `Size yardımcı olmak için buradayım${userName ? ", " + userName : ""}! Fun Teknoloji'nin yapay zeka çözümleri, QuakeSafe afet yönetim platformu veya özel yazılım geliştirme hizmetlerimiz hakkında bilgi almak ister misiniz?`
     ];
     return greetings[chatMessages.length % greetings.length];
   } else {
@@ -409,19 +409,19 @@ export default function NexyAssistant() {
   const generateChatTitle = async (userMsg: string, aiResponse: string) => {
     const prompt = `User: ${userMsg}\nAssistant: ${aiResponse}\n\nSystem: Based on the conversation above, determine a short and meaningful title for this chat (max 3-4 words). The title should summarize the topic. DO NOT just repeat the user's message. Response in the user's language. Write ONLY the title, no quotes or extra text.`;
     try {
-      const response = await fetch("https://ai.funteknoloji.com/v1/chat/completions", {
+      const response = await fetch("/api/nexy", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          messages: [{ role: "user", content: prompt }],
-          model: "gemma-3-1b-it"
+          prompt,
+          lang
         }),
       });
       if (response.ok) {
         const data = await response.json() as any;
-        let title = data.choices?.[0]?.message?.content || "";
+        let title = data.text || "";
         title = title.replace(/^"|"$/g, "").trim();
         if (title && title.length < 50) return title;
       }
@@ -448,34 +448,7 @@ export default function NexyAssistant() {
     const controller = new AbortController();
     abortControllerRef.current = controller;
 
-    // Fetch supabase profile if available to enrich context dynamically
-    let userProfile = null;
-    try {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (user) {
-        userProfile = {
-          email: user.email,
-          name: user.user_metadata?.full_name || user.user_metadata?.name || user.email?.split("@")[0] || "Değerli Müşterimiz",
-          createdAt: user.created_at,
-          emailConfirmed: !!user.email_confirmed_at,
-          lastSignIn: user.last_sign_in_at,
-        };
-      }
-    } catch (e) {
-      console.error("Failed to fetch supabase user context in NexyAssistant:", e);
-    }
-
-    // Construct original untranslated messages history for backup AI use
-    const originalMessages = chatMessages.slice(-20).map((m) => ({
-      role: (m.role === "nexy" ? "assistant" : "user") as "user" | "assistant" | "system",
-      content: m.text,
-    }));
-    originalMessages.push({
-      role: "user",
-      content: originalInput,
-    });
-
-    // Prepare system message strictly in English for maximum reasoning quality
+    // Prepare system message strictly in English for maximum quality
     const formattedMessages = [];
     formattedMessages.push({
       role: "system",
@@ -551,9 +524,7 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
         },
         body: JSON.stringify({
           messages: cleanedMessages,
-          originalMessages,
           lang,
-          userProfile,
           model: "gemma-3-1b-it"
         }),
         signal: controller.signal,
@@ -782,7 +753,8 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
         .replace(/\|/g, " ") // Remove remaining pipes
         .replace(/#{1,6}\s/g, " ") // Remove markdown headers
         .replace(/\*\*/g, "") // Remove bold markers
-        .replace(/\*/g, "") // Remove italic markers
+        .replace(/\*\s/g, " ") // Remove bullet points safely
+        .replace(/-\s/g, " ") // Remove dashes safely
         .replace(/-{2,}/g, " ") // Remove multiple dashes (the main issue)
         .replace(/(\s-){2,}/g, " ") // Remove repeating space-dash patterns
         .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1") // Replace links [text](url) with just text
