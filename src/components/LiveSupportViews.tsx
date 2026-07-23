@@ -1036,17 +1036,6 @@ export function LiveChatView({
       e.returnValue = lang === "tr"
         ? "Canlı destek görüşmeniz devam ediyor. Ayrılmak istediğinize emin misiniz? Çıkarsanız görüşmeniz sonlandırılacaktır."
         : "Your live support session is active. Are you sure you want to leave? Your session will be terminated.";
-
-      // Synchronously clear localStorage to ensure session is dead on refresh/re-entry
-      localStorage.removeItem("live_support_messages");
-      localStorage.removeItem("live_support_user");
-      localStorage.removeItem("live_support_subject");
-      localStorage.removeItem("live_support_importance");
-      localStorage.removeItem("live_support_subject_en");
-      localStorage.removeItem("live_support_importance_en");
-      localStorage.removeItem("live_support_description_en");
-
-      supabase.auth.signOut().catch(() => {});
       return e.returnValue;
     };
 

@@ -275,6 +275,69 @@ export default function NexyAssistant() {
     }
     return null;
   });
+
+  // Sync Supabase Auth session with Live Support session
+  useEffect(() => {
+    const checkActiveSession = async () => {
+      try {
+        const { data: { user } } = await supabase.auth.getUser();
+        if (user && user.email) {
+          setLiveUser({ email: user.email });
+          // Fetch past support tickets from DB securely
+          const { data: dbTickets, error } = await supabase
+            .from("past_support_tickets")
+            .select("*")
+            .order("created_at", { ascending: false });
+          if (dbTickets && !error) {
+            const formatted = dbTickets.map(t => ({
+              id: t.id,
+              email: user.email,
+              subject: t.subject,
+              importance: t.importance,
+              timestamp: new Date(t.created_at).getTime(),
+              messages: t.messages
+            }));
+            setPastSessions(formatted);
+          }
+        }
+      } catch (e) {
+        console.warn("Failed to retrieve active session on mount:", e);
+      }
+    };
+    checkActiveSession();
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      if (session?.user?.email) {
+        setLiveUser({ email: session.user.email });
+        // Fetch past support tickets from DB securely on state change
+        supabase
+          .from("past_support_tickets")
+          .select("*")
+          .order("created_at", { ascending: false })
+          .then(({ data: dbTickets, error }) => {
+            if (dbTickets && !error) {
+              const formatted = dbTickets.map(t => ({
+                id: t.id,
+                email: session.user.email,
+                subject: t.subject,
+                importance: t.importance,
+                timestamp: new Date(t.created_at).getTime(),
+                messages: t.messages
+              }));
+              setPastSessions(formatted);
+            }
+          });
+      } else if (event === "SIGNED_OUT") {
+        setLiveUser(null);
+        setPastSessions([]);
+      }
+    });
+
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, []);
+
   const [liveEmail, setLiveEmail] = useState("");
   const [livePassword, setLivePassword] = useState("");
   const [liveMessages, setLiveMessages] = useState<{ role: "agent" | "user"; text: string; id: string; timestamp: number; images?: string[] }[]>(() => {
@@ -1281,6 +1344,26 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
                   } catch (e) {
                     console.error("Failed to save live support history to LocalStorage:", e);
                   }
+
+                  // Also securely save to Supabase past_support_tickets table if authenticated
+                  (async () => {
+                    try {
+                      const { data: { user } } = await supabase.auth.getUser();
+                      if (user) {
+                        await supabase.from("past_support_tickets").insert([
+                          {
+                            user_id: user.id,
+                            subject: localStorage.getItem("live_support_subject") || "Destek Talebi",
+                            importance: localStorage.getItem("live_support_importance") || "Orta",
+                            description: localStorage.getItem("live_support_description") || "",
+                            messages: cleanedMessages
+                          }
+                        ]);
+                      }
+                    } catch (dbErr) {
+                      console.error("Failed to save support ticket to database:", dbErr);
+                    }
+                  })();
                 }
                 setLiveMessages([]);
                 setSupportView("menu");
