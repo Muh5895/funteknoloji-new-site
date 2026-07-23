@@ -1033,9 +1033,9 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
             <div className="absolute inset-0 bg-black/90 backdrop-blur-md z-[999] flex flex-col items-center justify-center p-6 text-center select-none animate-in fade-in duration-300">
               <div className="h-16 w-16 rounded-2xl bg-zinc-900 border border-zinc-800 flex items-center justify-center p-2 mb-4 text-[var(--fun-purple)]">
                 {systemStatus === "maintenance" ? (
-                  <Wrench className="h-8 w-8 animate-pulse" />
+                  <Wrench className="h-8 w-8" />
                 ) : (
-                  <ShieldAlert className="h-8 w-8 text-red-500 animate-bounce" />
+                  <ShieldAlert className="h-8 w-8 text-red-500" />
                 )}
               </div>
               <h3 className="text-lg font-bold text-white mb-2">

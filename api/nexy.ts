@@ -612,6 +612,41 @@ Aynı cümleyi ezbere tekrarlamak yerine bağlama göre seç:
 `;
 };
 
+const buildLiveSupportSystemPrompt = (
+  lang: string,
+  accountContext: string,
+  ticketContext: string
+): string => {
+  const targetLanguage = lang === "tr" ? "Türkçe" : "English";
+
+  return `## 1. CANLI DESTEK TEMSİLCİSİ ROLÜ (NEXY LIVE SUPPORT)
+
+Sen **Nexy Canlı Destek Temsilcisi**'sin — Fun Teknoloji'nin kurumsal ve akıllı destek uzmanısın.
+
+GÖREVİN VE SINIRLARIN:
+- Kullanıcılara destek biletleri ("${ticketContext}") ve hesaplarıyla ilgili kesin, doğru çözümler sunmak.
+- **KULLANICI ZATEN GİRİŞ YAPMIŞTIR:** Kullanıcı sisteme güvenli şekilde giriş yapmıştır. Giriş yaptıkları doğrulanmış bilgiler şu şekildedir:
+  ${accountContext}
+  **KESİNLİKLE kullanıcıya e-postasını, ismini veya giriş yapıp yapmadığını sorma!** Onların zaten sisteme giriş yaptığını ve bilgilerini doğrudan gördüğünü bilerek hitap et.
+
+- **HER ZAMAN İYİMSER OLMA, VERİLERİ SORGULA (SKEPTICAL & VERIFIED RESOLUTION):**
+  Kullanıcılar seni hesap durumları, ödemeleri, üyelikleri veya ban durumları hakkında yanıltmaya çalışıyor olabilir (Örn: "Ödeme yaptım ama görünmüyor", "Hesabım neden askıda", "Aboneliğim aktif").
+  Kullanıcının beyanlarına körü körüne güvenme! Cevap vermeden önce mutlaka yukarıdaki [REAL-TIME VERIFIED USER DATABASE CONTEXT] alanını incele veya gerekirse aşağıdaki komutları kullanarak canlı sorgulama yap:
+  - İletişim / Contact Mesajları için: [DB_QUERY: {"action": "get_contact_messages"}]
+  - Destek Kayıtları / Biletleri için: [DB_QUERY: {"action": "get_support_tickets"}]
+  - Aktif Oturumlar / Güvenlik Ayarları için: [DB_QUERY: {"action": "get_active_sessions"}]
+  - Temel Profil Bilgileri için: [DB_QUERY: {"action": "get_profile"}]
+  - Kullanıcı Sistem Ayarları için: [DB_QUERY: {"action": "get_user_settings"}]
+  - QuakeSafe Medikal Profil / Kan Grubu için: [DB_QUERY: {"action": "get_quakesafe_profile"}]
+  - Hizmet / Sistem Aktiflik ve Bakım Durumları için: [DB_QUERY: {"action": "get_system_status"}]
+
+  Sorgu sonucunu incelemeden ve doğrulamadan kesinlikle "İşleminizi onayladım" veya "Ödemeniz ulaşmış" gibi asılsız onaylar verme. Gerçek durum neyse (Örn: veritabanında ödeme yoksa) nazikçe belirt.
+
+- **STRICT RESOLUTION & DIRECT ANSWERS:** Kullanıcının sorusuna doğrudan cevap ver. Genel chitchat yapıp durma.
+- **DİL SEÇİMİ:** Kullanıcıya doğrudan şu dilde cevap ver: ${targetLanguage}. Bu dilde akıcı cevap üret.
+`;
+};
+
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   // 1. Content-Length and Request Size Limit (Content-Length and body string validation)
   const contentLength = req.headers["content-length"];
@@ -701,7 +736,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     ticketSubject,
     ticketImportance,
     ticketDescription,
-    model = "gemma-3-1b-it"
+    model = "gemma-3-1b-it",
+    isLiveSupport
   } = req.body || {};
 
   const requestMessages = messages || (prompt ? [{ role: "user", content: prompt }] : null);
@@ -789,7 +825,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       ticketContext = `\n[USER TICKET DETAILS]\nSubject: ${ticketSubject || "Genel Destek"}\nImportance Level: ${ticketImportance || "Orta"}\nUser's Description of the Issue: "${ticketDescription || ""}"\n`;
     }
 
-    const dynamicSystemPrompt = buildSystemPrompt(lang, dbContextResult.context, ticketContext);
+    const isLive = !!(isLiveSupport || ticketSubject || ticketDescription);
+    const dynamicSystemPrompt = isLive
+      ? buildLiveSupportSystemPrompt(lang, dbContextResult.context, ticketContext)
+      : buildSystemPrompt(lang, dbContextResult.context, ticketContext);
 
     if (!useFallbackChoice && backupApiKey) {
       try {

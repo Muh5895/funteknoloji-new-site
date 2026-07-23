@@ -906,9 +906,9 @@ export function LiveChatView({
 
     if (hasFiles || hasMsgFiles || mentionsFiles) {
       if (filesCount > 1) {
-        return lang === "tr" ? "Dosyalarınız Güvenle İnceleniyor..." : "Analyzing your files securely...";
+        return lang === "tr" ? "Dosyalar İnceleniyor..." : "Analyzing Files...";
       }
-      return lang === "tr" ? "Gönderdiğiniz Dosya Güvenle Taranıyor..." : "Scanning uploaded file securely...";
+      return lang === "tr" ? "Dosya İnceleniyor..." : "Analyzing File...";
     }
 
     const mentionsAccount =
@@ -926,7 +926,7 @@ export function LiveChatView({
       lastUserText.includes("kimim");
 
     if (mentionsAccount) {
-      return lang === "tr" ? "Hesabınız Güvenle İnceleniyor..." : "Reviewing your account securely...";
+      return lang === "tr" ? "Hesabınız İnceleniyor..." : "Reviewing your account securely...";
     }
 
     // Checking details fallback
@@ -935,7 +935,7 @@ export function LiveChatView({
       return lang === "tr" ? "Hesap Bilgileriniz Sorgulanıyor..." : "Sourcing secure account details...";
     }
 
-    return lang === "tr" ? "Nexy Canlı Destek Temsilcisi Yazıyor..." : "Nexy Support Representative is writing...";
+    return lang === "tr" ? "Nexy Yazıyor..." : "Nexy is typing...";
   };
 
   useEffect(() => {
@@ -1160,7 +1160,8 @@ Do not promote any third-party services like Pollinations or Pulsar. Respond dir
               ticketSubject,
               ticketImportance,
               ticketDescription,
-              model: "gemma-3-1b-it"
+              model: "gemma-3-1b-it",
+              isLiveSupport: true
             }),
           });
 
@@ -1613,7 +1614,8 @@ CRITICAL RULES:
               ticketSubject,
               ticketImportance,
               ticketDescription,
-              model: "gemma-3-1b-it"
+              model: "gemma-3-1b-it",
+              isLiveSupport: true
             }),
           });
 
@@ -2077,7 +2079,7 @@ CRITICAL RULES:
                     const ticketImportance = localStorage.getItem("live_support_importance") || "Orta";
                     const ticketDescription = localStorage.getItem("live_support_description") || "";
 
-                    await supabase.from("support_tickets_feedback").insert([
+                    await supabase.from("ai_support_feedback").insert([
                       {
                         user_id: user.id,
                         subject: ticketSubject,
