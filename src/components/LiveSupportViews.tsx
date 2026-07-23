@@ -253,7 +253,7 @@ const localTrans: Record<string, any> = {
     description: "Descripción",
     descriptionPlaceholder: "Por favor describa su problema en detalle...",
     startChat: "Iniciar chat",
-    translationWarning: "Los mensajes se traducen automáticamente y pueden contener errores.",
+    translationWarning: "Los messages se traducen automáticamente y pueden contener errores.",
     imageLimitError: "Puede subir un máximo de 5 imágenes.",
     archivedWarning: "Este chat ha finalizado. No se pueden enviar mensajes nuevos.",
     online: "En línea",
@@ -318,7 +318,7 @@ const localTrans: Record<string, any> = {
     password: "Пароль",
     loginBtn: "Войти",
     loggingIn: "Вход...",
-    fillFields: "Пожалуйста, заполните все поля.",
+    fillFields: "Пожалуйста, заполнитe все поля.",
     validEmail: "Введите действительный адрес электронной почты.",
     loginSuccess: "Вход выполнен успешно!",
     detailsTitle: "Создать тикет поддержки",
@@ -978,6 +978,15 @@ export function LiveChatView({
     };
   }, []);
 
+  const forceSupportLogout = () => {
+    onLogout();
+    toast.error(
+      lang === "tr"
+        ? "Oturum süreniz doldu veya geçersiz. Güvenliğiniz için tekrar giriş yapın."
+        : "Session expired or invalid. Please log in again for your security."
+    );
+  };
+
   // Automatic personalized AI representative greeting on chat mount/initialization
   useEffect(() => {
     if (!userProfile || messages.length !== 1 || welcomeTriggeredRef.current) return;
@@ -1051,9 +1060,19 @@ Do not promote any third-party services like Pollinations or Pulsar. Respond in 
         let agentText = "";
         let englishResponse = "";
         try {
+          // Fetch local Supabase Session securely if user session is available
+          let token = "";
+          try {
+            const { data: { session } } = await supabase.auth.getSession();
+            token = session?.access_token || "";
+          } catch (e) {}
+
           const response = await fetch("/api/nexy", {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: {
+              "Content-Type": "application/json",
+              ...(token ? { "Authorization": `Bearer ${token}` } : {})
+            },
             body: JSON.stringify({
               messages: cleanedMessages,
               originalMessages: cleanedMessages,
@@ -1061,10 +1080,15 @@ Do not promote any third-party services like Pollinations or Pulsar. Respond in 
               ticketSubject,
               ticketImportance,
               ticketDescription,
-              userProfile,
               model: "gemma-3-1b-it"
             }),
           });
+
+          if (response.status === 401) {
+            forceSupportLogout();
+            return;
+          }
+
           if (response.ok) {
             const data = await response.json();
             agentText = data.text;
@@ -1364,16 +1388,12 @@ Do not promote any third-party services like Pollinations or Pulsar. Respond in 
       const userText = input.trim();
       const currentAttachedFiles = [...attachedFiles];
 
-      // Auto-translate user input to English silently in the background
-      const englishInput = await translateAnyText(userText, lang, "en");
-
       const userMsg = {
         role: "user" as const,
         text: userText,
         id: Math.random().toString(36).substring(2, 9),
         timestamp: Date.now(),
-        files: currentAttachedFiles,
-        englishText: englishInput
+        files: currentAttachedFiles
       };
 
       setMessages((prev) => [...prev, userMsg]);
@@ -1388,9 +1408,9 @@ Do not promote any third-party services like Pollinations or Pulsar. Respond in 
         ocrCombinedText = filesWithText.map((f, idx) => `[Attached File #${idx + 1} "${f.name}" Content/OCR Text: "${f.extractedText}"]`).join("\n");
       }
 
-      let englishInputWithOcr = englishInput;
+      let userTextWithOcr = userText;
       if (ocrCombinedText) {
-        englishInputWithOcr = `${englishInput}\n\n[USER ATTACHED FILE DETAILS]\n${ocrCombinedText}`;
+        userTextWithOcr = `${userText}\n\n[USER ATTACHED FILE DETAILS]\n${ocrCombinedText}`;
       }
 
       // Prepare system message strictly in English for maximum reasoning quality
@@ -1426,20 +1446,20 @@ CRITICAL RULES:
 8. Do not mention any third-party services like Pollinations or Pulsar. Respond in English.`,
       });
 
-      // Map live support conversation history using stored englishText to keep context strictly in English
+      // Map live support conversation history
       const historyMessages = messages
         .slice(-20)
         .map((m) => ({
           role: (m.role === "user" ? "user" : "assistant") as "user" | "assistant" | "system",
-          content: m.englishText || m.text,
+          content: m.text,
         }));
 
       formattedMessages.push(...historyMessages);
 
-      // Add current user input (already translated to English, with OCR data appended if present)
+      // Add current user input
       formattedMessages.push({
         role: "user" as const,
-        content: englishInputWithOcr,
+        content: userTextWithOcr,
       });
 
       // Helper to ensure messages list starts with user role and strictly alternates user/assistant.
@@ -1516,6 +1536,12 @@ CRITICAL RULES:
               model: "gemma-3-1b-it"
             }),
           });
+
+          if (response.status === 401) {
+            forceSupportLogout();
+            return;
+          }
+
           if (response.ok) {
             const data = await response.json();
             agentText = data.text;

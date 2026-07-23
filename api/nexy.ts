@@ -7,7 +7,7 @@ const ipCache = new Map<string, number[]>();
 const isRateLimitedInMemory = (ip: string): boolean => {
   const now = Date.now();
   const windowMs = 60 * 1000; // 1 minute
-  const maxRequests = 15;
+  const maxRequests = 25;
 
   const timestamps = ipCache.get(ip) || [];
   const activeTimestamps = timestamps.filter((t) => now - t < windowMs);
@@ -32,7 +32,6 @@ const isRateLimitedServerless = async (ip: string): Promise<boolean> => {
 
   const key = `rate_limit:${ip.replace(/:/g, "_")}`;
   try {
-    // Increment the request count in Redis
     const response = await fetch(`${kvUrl}/incr/${key}`, {
       headers: { Authorization: `Bearer ${kvToken}` },
     });
@@ -41,13 +40,12 @@ const isRateLimitedServerless = async (ip: string): Promise<boolean> => {
     const count = Number(data.result);
 
     if (count === 1) {
-      // Set TTL to 60 seconds on the first request
       await fetch(`${kvUrl}/expire/${key}/60`, {
         headers: { Authorization: `Bearer ${kvToken}` },
       });
     }
 
-    return count > 15; // Max 15 requests per minute
+    return count > 25; // Max 25 requests per minute
   } catch (e) {
     console.error("Serverless KV rate limit error, falling back to in-memory:", e);
     return isRateLimitedInMemory(ip);
@@ -68,61 +66,108 @@ const translateTextHelper = async (text: string, source: string, target: string)
   }
 };
 
-// Lazy initialization of Supabase client to avoid connecting unless we genuinely need it
+// Supabase client lazy initializer using Vercel Environment Variables
 let supabaseClient: any = null;
 const getSupabaseClient = () => {
   if (supabaseClient) return supabaseClient;
   const supabaseUrl = process.env.SUPABASE_URL;
   const supabaseAnonKey = process.env.SUPABASE_ANON_KEY;
   if (!supabaseUrl || !supabaseAnonKey) {
-    console.warn("Supabase credentials are not set in Environment Variables.");
     return null;
   }
   supabaseClient = createClient(supabaseUrl, supabaseAnonKey);
   return supabaseClient;
 };
 
-// Securely verify profile using Supabase auth token backend-side
-const getVerifiedUserProfile = async (authHeader: string | undefined) => {
+// Fully retrieve actual, real-time database context on the server side using the bearer JWT token
+const fetchRealDatabaseContext = async (authHeader: string | undefined) => {
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
-    return null;
+    return { context: "", error: "Missing token" };
   }
   const client = getSupabaseClient();
-  if (!client) return null;
+  if (!client) {
+    return { context: "", error: "Supabase client not initialized" };
+  }
 
   const token = authHeader.substring(7);
   try {
-    const { data: { user }, error } = await client.auth.getUser(token);
-    if (error || !user) {
-      return null;
+    // 1. Authenticate the user token securely via Supabase Auth
+    const { data: { user }, error: authError } = await client.auth.getUser(token);
+    if (authError || !user) {
+      return { context: "", error: "Invalid or expired session token", isAuthError: true };
     }
 
-    const { data: profile } = await client
-      .from("profiles")
-      .select("*")
-      .eq("id", user.id)
-      .single();
+    // 2. Fetch User Profiles and settings concurrently
+    const [
+      profileRes,
+      settingsRes,
+      quakesafeRes,
+      sessionsRes
+    ] = await Promise.all([
+      client.from("profiles").select("*").eq("id", user.id).single(),
+      client.from("user_settings").select("*").eq("user_id", user.id).single(),
+      client.from("profiles_quakesafe").select("*").eq("id", user.id).single(),
+      client.from("active_sessions").select("*").eq("user_id", user.id).eq("is_terminated", false)
+    ]);
 
-    if (profile) {
-      return {
-        email: profile.email || user.email,
-        name: profile.full_name || profile.username || user.email?.split("@")[0] || "Kullanıcı",
-        createdAt: profile.created_at || user.created_at,
-        emailConfirmed: !!user.email_confirmed_at,
-        lastSignIn: user.last_sign_in_at,
-      };
+    let context = `[REAL-TIME VERIFIED USER DATABASE CONTEXT]\n`;
+    context += `User Auth ID: ${user.id}\n`;
+    context += `Auth Email: ${user.email}\n`;
+    context += `Email Confirmed: ${user.email_confirmed_at ? "Evet (Confirmed)" : "Hayır (Unconfirmed)"}\n`;
+
+    // Append profile details
+    if (profileRes.data) {
+      const p = profileRes.data;
+      context += `Full Name: ${p.full_name || "N/A"}\n`;
+      context += `Username: ${p.username || "N/A"}\n`;
+      context += `Birth Date: ${p.birth_date || "N/A"}\n`;
+      context += `Account Role: ${p.role || "user"}\n`;
+      context += `Account Status: ${p.status || "active"}\n`;
+      context += `Active Plan: ${p.plan || "free"}\n`;
+      context += `Storage Used: ${p.storage_used || 0} bytes\n`;
+      context += `Freeze Status: ${p.freeze_until ? "Dondurulmuş" : "Aktif"}\n`;
+      context += `Platform Banned: ${p.is_platform_banned ? "Evet (Banned)" : "Hayır"}\n`;
+      context += `Bio: ${p.bio || "N/A"}\n`;
+      context += `Phone: ${p.phone || "N/A"}\n`;
     }
 
-    return {
-      email: user.email,
-      name: user.email?.split("@")[0] || "Kullanıcı",
-      createdAt: user.created_at,
-      emailConfirmed: !!user.email_confirmed_at,
-      lastSignIn: user.last_sign_in_at,
-    };
-  } catch (err) {
-    console.error("Error verifying user profile:", err);
-    return null;
+    // Append system/security settings
+    if (settingsRes.data) {
+      const s = settingsRes.data;
+      context += `Theme Preference: ${s.theme || "dark"}\n`;
+      context += `Selected Language: ${s.language || "tr"}\n`;
+      context += `Notifications Enabled: ${s.notifications_enabled ? "Evet" : "Hayır"}\n`;
+      context += `Two-Factor Auth (2FA) Enabled: ${s.two_factor_enabled ? "Evet" : "Hayır"}\n`;
+      context += `Require 2FA for Login: ${s.require_2fa_for_login ? "Evet" : "Hayır"}\n`;
+      context += `Login Notifications Alert: ${s.login_notifications ? "Evet" : "Hayır"}\n`;
+      context += `Block VPN: ${s.block_vpn ? "Evet" : "Hayır"}\n`;
+      context += `Block Foreign IP: ${s.block_foreign ? "Evet" : "Hayır"}\n`;
+    }
+
+    // Append QuakeSafe medical profile
+    if (quakesafeRes.data) {
+      const q = quakesafeRes.data;
+      context += `QuakeSafe Medikal/Güvenlik Profili: Tamamlanmış mı? ${q.is_profile_completed ? "Evet" : "Hayır"}\n`;
+      context += `QuakeSafe Blood Type: ${q.blood_type || "N/A"}\n`;
+      context += `QuakeSafe Emergency Contacts: ${JSON.stringify(q.emergency_contacts || {})}\n`;
+      context += `QuakeSafe Emergency Message: ${q.emergency_message || "N/A"}\n`;
+      context += `QuakeSafe Card visibility: ${q.card_visibility || "private"}\n`;
+    }
+
+    // Append active sessions
+    if (sessionsRes.data && sessionsRes.data.length > 0) {
+      context += `Aktif Oturumlar:\n`;
+      sessionsRes.data.forEach((s: any, index: number) => {
+        context += `- Oturum #${index + 1}: IP: ${s.ip_address || "N/A"}, Tarayıcı/Cihaz: ${s.user_agent || "N/A"}, Konum: ${s.location || "N/A"}, Çevrimiçi mi? ${s.is_online ? "Evet" : "Hayır"}\n`;
+      });
+    } else {
+      context += `Aktif Oturum Bilgisi: Bulunamadı.\n`;
+    }
+
+    return { context, error: null };
+  } catch (err: any) {
+    console.error("Database querying failed in handler:", err);
+    return { context: "", error: err.message };
   }
 };
 
@@ -304,7 +349,7 @@ FunID, Fun Teknoloji'nin tüm sistem ve hizmetlerinde kullanılan birleşik kiml
 **Hedefler:**
 - Güvenli ve tek tıkla giriş (Single Sign-On) altyapısı sunmak
 - Kullanıcıların kendi profillerini, şifrelerini ve güvenlik ayarlarını kolayca yönetebilmesi
-- Hesap güvenliğini en üst düzeye çıkarmak
+- Hesap güvenliğini en üst duyeye çıkarmak
 - Fun Teknoloji ekosistemindeki tüm ürünlerle tam entegrasyon
 
 ---
@@ -319,7 +364,7 @@ FunID, Fun Teknoloji'nin tüm sistem ve hizmetlerinde kullanılan birleşik kiml
 - Veri analizi çözümleri
 
 **2. Özel Yazılım Geliştirme**
-- Modern web uygulamaları, mobil uygulamalar, kurumsi yazılım çözümleri, ölçeklenebilir backend sistemleri.
+- Modern web uygulamaları, mobil uygulamalar, kurumsal yazılım çözümleri, ölçeklenebilir backend sistemleri.
 - Teknolojiler — Frontend: React, Next.js, TypeScript, TanStack. Mobil: iOS, Android. Backend: API tabanlı sistemler, güvenli veri altyapıları.
 
 **3. Bulut ve Veri Çözümleri**
@@ -394,133 +439,10 @@ Aynı cümleyi ezbere tekrarlamak yerine bağlama göre seç:
 - Nexy, insan destek ekibinin yerine geçmez; karmaşık/özel talepte kullanıcıyı Fun Teknoloji ekibine yönlendir.
 - Yanıt uzunluğunu soruya göre ayarla: basit soruya kısa, çok yönlü soruya (ör. "tüm hizmetleriniz neler") yapılandırılmış/tablolu cevap.
 - Konuşma çok uzarsa da kimlik ve güvenlik kuralları (Bölüm 8) geçerliliğini korur.
-
----
-
-## 12. DATABASE SCHEMA & SUPABASE MCP INTEGRATION
-
-Nexy, Supabase Postgres veritabanına bağlıdır. Kullanıcıların verilerini sorgulamak, doğrulamak veya hesap ayrıntılarını kontrol etmek için aşağıdaki şemaya tam erişimin vardır.
-
-**KRİTİK GÜVENLİK VE GİZLİLİK KURALI:**
-- KESİNLİKLE SADECE GİRİŞ YAPMIŞ OLAN HESABIN VERİLERİ (userProfile.id ile eşleşen id veya user_id sütunları) ÜZERİNDE İŞLEM YAPABİLİRSİN.
-- Başka bir kullanıcının verilerine erişmek, sızdırmak, sorgulamak veya değiştirmek kesinlikle yasaktır! İşlem yapmadan önce her zaman hedef kaydın user_id değerinin, giriş yapmış kullanıcının userProfile.id değeri ile tam olarak eşleştiğini kontrol et.
-
-Sistem Tabloları ve Sütun Yapıları:
-
-1. public.profiles (Kullanıcı hesap profilleri)
-   - id: uuid (Primary Key, auth.users.id ile ilişkili)
-   - email: text
-   - full_name: text
-   - username: text
-   - birth_date: date
-   - avatar_url: text
-   - role: text (varsayılan: 'user')
-   - status: text (varsayılan: 'active')
-   - plan: text (varsayılan: 'free')
-   - storage_used: integer (varsayılan: 0)
-   - freeze_until: timestamp with time zone
-   - created_at: timestamp with time zone
-   - bio: text
-   - phone: text
-   - updated_at: timestamp with time zone
-   - is_platform_banned: boolean
-   - platform_ban_expires_at: timestamp with time zone
-   - platform_ban_reason: text
-   - account_type: text (user, developer, admin)
-
-2. public.user_settings (Kullanıcı güvenlik ve sistem ayarları)
-   - id: uuid (Primary Key)
-   - user_id: uuid (auth.users.id ile ilişkili, Benzersiz)
-   - theme: text
-   - language: text
-   - notifications_enabled: boolean
-   - two_factor_enabled: boolean
-   - require_2fa_for_login: boolean
-   - login_notifications: boolean
-   - block_vpn: boolean
-   - block_foreign: boolean
-   - require_2fa_for_settings: boolean
-   - password_reminder_months: integer
-   - failed_2fa_attempts: integer
-   - locked_until: timestamp with time zone
-   - new_device_approval: boolean
-   - require_new_device_confirmation: boolean
-   - toast_position: text
-   - created_at: timestamp with time zone
-   - updated_at: timestamp with time zone
-
-3. public.active_sessions (Kullanıcının aktif oturumları)
-   - id: uuid (Primary Key)
-   - session_id: uuid (Benzersiz)
-   - user_id: uuid (auth.users.id ile ilişkili)
-   - user_agent: text
-   - ip_address: text
-   - is_online: boolean
-   - last_seen: timestamp with time zone
-   - status: text
-   - device_id: text
-   - location: text
-   - is_terminated: boolean
-   - created_at: timestamp with time zone
-
-4. public.security_logs (Hesap güvenlik logları)
-   - id: uuid (Primary Key)
-   - user_id: uuid (auth.users.id ile ilişkili)
-   - action: text
-   - ip_address: text
-   - user_agent: text
-   - event_category: text
-   - location: text
-   - created_at: timestamp with time zone
-
-5. public.profiles_quakesafe (QuakeSafe acil durum medikal ve güvenlik profili)
-   - id: uuid (Primary Key, auth.users.id ile ilişkili)
-   - email: text
-   - full_name: text
-   - avatar_url: text
-   - birth_date: date
-   - city: text
-   - blood_type: text
-   - height: text
-   - weight: text
-   - allergies: text
-   - medications: text
-   - phone: text
-   - emergency_contacts: jsonb
-   - emergency_message: text
-   - plan: text
-   - is_profile_completed: boolean
-   - card_password: text
-   - is_card_paused: boolean
-   - card_visibility: text (public / private)
-   - is_chat_banned: boolean
-   - gender: text
-   - created_at: timestamp with time zone
-
-6. public.family_groups & public.family_members (QuakeSafe Aile ve Güvenlik Grupları)
-   - family_groups: id (uuid), name (text), owner_id (uuid), city (text), meeting_point_text (text), invite_code (text), created_by (uuid)
-   - family_members: id (uuid), group_id (uuid), user_id (uuid), role (owner, admin, member), joined_at (timestamp)
-
-7. public.disaster_plans_quakesafe (Acil durum eylem planları)
-   - id: uuid, user_id (uuid, unique), plan_data (jsonb)
-
-8. public.feedback & public.waitlist & public.contact (Geri bildirim ve iletişim verileri)
-   - feedback: id, user_id, category (error, suggestion), description, status, image_url
-   - waitlist: id, full_name, email, created_at
-   - contact: id, name, email, subject, message, status (new, read, replied, archived)
-
-9. public.orders & public.payments (Ödeme siparişleri ve bakiye takibi)
-   - orders: id, user_id, user_full_name, user_email, amount, status (pending, paid, failed, refunded), description_code, product_name, iban
-   - payments: id, order_id, transaction_reference, sender_name, amount, status (matched, unmatched, failed)
-
-10. Sistem ve Bildirim Tabloları:
-    - public.system_status: app_name (Primary Key), status (active, maintenance, on, off, waitlist), maintenance_reason
-    - public.notifications: id, user_id, title, message, type, is_read, link
-    - public.qr_login_sessions: id, secret_key, status (pending, approved, rejected), user_id`;
-};
+`;
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  // 1. Request Body Size Limit Check (Content-Length and body string validation)
+  // 1. Content-Length and Request Size Limit (Content-Length and body string validation)
   const contentLength = req.headers["content-length"];
   if (contentLength && parseInt(contentLength, 10) > 1048576) {
     return res.status(413).send("Payload Too Large");
@@ -529,7 +451,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(413).send("Payload Too Large");
   }
 
-  // 2. CORS Whitelist and Domain-Only Request Enforcement (Secure hostname validation)
+  // 2. CORS Whitelist and Domain-Only Request Enforcement (Using URL hostname matching)
   const origin = (req.headers.origin as string) || "";
   const referer = (req.headers.referer as string) || "";
 
@@ -633,12 +555,23 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(400).send("Nexy error: Toplam sohbet karakter sınırı aşıldı.");
   }
 
-  // 7. userProfile Verification: Connect to Supabase ONLY if ticket details are present (i.e. we are in a Live Support session)
-  // Save database connections/resources on normal Nexy chats.
-  let verifiedProfile = null;
+  // 7. userProfile Real-Time Verification using Auth Token (Connects ONLY if ticketSubject/ticketDescription or active Authorization header is provided)
+  let dbContextResult = { context: "", error: null as any, isAuthError: false };
   const authHeader = req.headers.authorization;
-  if (ticketSubject || ticketDescription) {
-    verifiedProfile = await getVerifiedUserProfile(authHeader);
+  if (ticketSubject || ticketDescription || authHeader) {
+    const dbContext = await fetchRealDatabaseContext(authHeader);
+    if (dbContext.isAuthError) {
+      // Return 401 Unauthorized securely if token is expired, invalid, or query failed due to invalid authentication
+      return res.status(401).json({
+        error: "Session expired",
+        message: "Oturum süreniz dolmuş veya geçersiz. Lütfen tekrar giriş yapın."
+      });
+    }
+    dbContextResult = {
+      context: dbContext.context || "",
+      error: dbContext.error,
+      isAuthError: false
+    };
   }
 
   // Helper to ensure messages list starts with user role and strictly alternates user/assistant.
@@ -681,17 +614,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     try {
       const cleanedOriginal = cleanMessagesForAPI(rawOriginal);
 
-      let accountContext = "";
-      if (verifiedProfile) {
-        accountContext = `\n[USER ACCOUNT CONTEXT]\nEmail: ${verifiedProfile.email}\nFull Name: ${verifiedProfile.name}\nAccount Created At: ${verifiedProfile.createdAt ? new Date(verifiedProfile.createdAt).toLocaleString("tr-TR") : "N/A"}\nEmail Verification Status: ${verifiedProfile.emailConfirmed ? "Verified" : "Unverified"}\nLast Sign-In: ${verifiedProfile.lastSignIn ? new Date(verifiedProfile.lastSignIn).toLocaleString("tr-TR") : "N/A"}\n`;
-      }
-
       let ticketContext = "";
       if (ticketSubject || ticketDescription) {
         ticketContext = `\n[USER TICKET DETAILS]\nSubject: ${ticketSubject || "Genel Destek"}\nImportance Level: ${ticketImportance || "Orta"}\nUser's Description of the Issue: "${ticketDescription || ""}"\n`;
       }
 
-      const dynamicSystemPrompt = buildSystemPrompt(lang, accountContext, ticketContext);
+      const dynamicSystemPrompt = buildSystemPrompt(lang, dbContextResult.context, ticketContext);
 
       const finalHackClubMessages = [
         { role: "system", content: dynamicSystemPrompt },
@@ -802,7 +730,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       isTranslated: true
     });
   } catch (err: any) {
-    // 4. Generic Error Messages (keep detailed logs securely on the server console, return friendly generic error)
+    // Generic Error Messages (keep detailed logs securely on the server console, return friendly generic error)
     console.error("Fallback Fun Teknoloji AI call also failed completely:", err);
     return res.status(500).json({
       text: "Sistemde geçici bir yoğunluk var. Lütfen daha sonra tekrar deneyin.",

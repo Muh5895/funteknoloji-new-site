@@ -441,40 +441,27 @@ export default function NexyAssistant() {
     setIsTyping(false);
   };
 
-  const getNexyBrainResponse = async (englishInput: string, originalInput: string) => {
+  const getNexyBrainResponse = async (originalInput: string) => {
     if (abortControllerRef.current) {
       abortControllerRef.current.abort();
     }
     const controller = new AbortController();
     abortControllerRef.current = controller;
 
-    // Prepare system message strictly in English for maximum quality
-    const formattedMessages = [];
-    formattedMessages.push({
-      role: "system",
-      content: `You are Nexy, the official AI assistant of Fun Teknoloji (Fun Technology).
-Fun Technology projects and information:
-${KNOWLEDGE_BASE}
-
-Style: Professional, helpful, friendly, and conversational.
-Redirects: If the user wants to navigate to contact, pricing, or projects, append [REDIRECT:/page] at the end of your response (e.g., [REDIRECT:/contact], [REDIRECT:/pricing], [REDIRECT:/projects]) and mention in your sentence that you are redirecting them.
-Answer questions based on the knowledge base. Do not promote any third-party services like Pollinations or Pulsar. Respond in English.`,
-    });
-
-    // Map conversation history using englishText to ensure 100% English context
+    // Map conversation history using original native text
     const historyMessages = chatMessages
       .slice(-20)
       .map((m) => ({
         role: (m.role === "nexy" ? "assistant" : "user") as "user" | "assistant" | "system",
-        content: m.englishText || m.text,
+        content: m.text,
       }));
 
-    formattedMessages.push(...historyMessages);
+    const formattedMessages = [...historyMessages];
 
-    // Add current user input (already translated to English)
+    // Add current user input directly without pre-translation
     formattedMessages.push({
       role: "user" as const,
-      content: englishInput,
+      content: originalInput,
     });
 
     // Helper to ensure messages list starts with user role and strictly alternates user/assistant.
@@ -516,11 +503,19 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
     let englishResponse = "";
 
     try {
+      // Get the active Supabase session token securely if logged in
+      let token = "";
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+        token = session?.access_token || "";
+      } catch (e) {}
+
       // Direct call to Vercel backend proxy /api/nexy (acts as central fallback orchestrator)
       const response = await fetch("/api/nexy", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          ...(token ? { "Authorization": `Bearer ${token}` } : {})
         },
         body: JSON.stringify({
           messages: cleanedMessages,
@@ -572,14 +567,10 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
       setLastSentTimestamp(now);
       const savedInput = userInput;
 
-      // Auto-translate user input to English silently in the background
-      const englishInput = await translateAnyText(savedInput, lang, "en");
-
       const userMsg = {
         role: "user" as const,
         text: savedInput,
         displayedText: savedInput,
-        englishText: englishInput
       };
 
       const shouldUpdateTitle = chatMessages.length <= 1;
@@ -597,7 +588,7 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
       setIsTyping(false);
       setIsThinking(true);
 
-      const result = await getNexyBrainResponse(englishInput, savedInput);
+      const result = await getNexyBrainResponse(savedInput);
 
       // If request was stopped/cancelled, return immediately
       if (abortControllerRef.current === null) {
@@ -623,7 +614,7 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
         prev.map((c) => {
           if (c.id === currentChatId) {
             const nexyMsgIndex = c.messages.length;
-            const updatedMsgs = [...c.messages, { role: "nexy" as const, text: responseText, displayedText: "", englishText: responseEnglish }];
+            const updatedMsgs = [...c.messages, { role: "nexy" as const, text: responseText, displayedText: "" }];
             setTimeout(() => typeMessage(responseText, nexyMsgIndex, currentChatId), 10);
             return { ...c, messages: updatedMsgs };
           }
@@ -632,7 +623,7 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
       );
 
       if (shouldUpdateTitle) {
-        const newTitle = await generateChatTitle(englishInput, responseEnglish);
+        const newTitle = await generateChatTitle(savedInput, responseText);
         setChats((prev) =>
           prev.map((c) => (c.id === currentChatId ? { ...c, title: newTitle } : c))
         );
