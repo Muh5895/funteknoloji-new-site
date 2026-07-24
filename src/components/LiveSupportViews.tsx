@@ -920,14 +920,184 @@ export function LiveChatView({
   const [isOnline, setIsOnline] = useState<boolean>(typeof window !== "undefined" ? navigator.onLine : true);
   const [showSearch, setShowSearch] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [thinkingStage, setThinkingStage] = useState<"checking" | "typing">("checking");
+  const [pendingOfflineInput, setPendingOfflineInput] = useState<string>("");
+
+  // Resilient Offline auto-resending trigger when connection returns
+  useEffect(() => {
+    if (isOnline && pendingOfflineInput && !isAgentTyping && !readOnly) {
+      const resendMessage = async () => {
+        const textToResend = pendingOfflineInput;
+        setPendingOfflineInput(""); // clear immediately to prevent loops
+
+        // Remove any previous temporary system offline warning messages from the thread for aesthetic elegance
+        setMessages((prev) => prev.filter((m) => !m.id.startsWith("system-offline-warn-")));
+
+        setIsAgentTyping(true);
+        setThinkingStage("checking");
+
+        let accountContext = "";
+        if (userProfile) {
+          accountContext = `\n[USER ACCOUNT CONTEXT]\nEmail: ${userProfile.email}\nFull Name: ${userProfile.name}\nAccount Created At: ${userProfile.createdAt ? new Date(userProfile.createdAt).toLocaleString("tr-TR") : "N/A"}\nEmail Verification Status: ${userProfile.emailConfirmed ? "Verified" : "Unverified"}\nLast Sign-In: ${userProfile.lastSignIn ? new Date(userProfile.lastSignIn).toLocaleString("tr-TR") : "N/A"}\n`;
+        }
+
+        const ticketSubject = localStorage.getItem("live_support_subject_en") || localStorage.getItem("live_support_subject") || "General Support";
+        const ticketImportance = localStorage.getItem("live_support_importance_en") || localStorage.getItem("live_support_importance") || "Medium";
+        const ticketDescription = localStorage.getItem("live_support_description_en") || localStorage.getItem("live_support_description") || "";
+
+        let ticketContext = `\n[USER TICKET DETAILS]\nSubject: ${ticketSubject}\nImportance Level: ${ticketImportance}\nUser's Description of the Issue: "${ticketDescription}"\n`;
+
+        const formattedMessages = [
+          {
+            role: "system",
+            content: `You are ${agentName}, a professional, warm, and highly capable AI support assistant working strictly for Fun Teknoloji (Fun Technology).
+Fun Technology projects and information:
+${KNOWLEDGE_BASE}
+${accountContext}
+${ticketContext}
+Do not mention any third-party services like Pollinations or Pulsar. Respond directly in the language of the chat: ${lang}.`,
+          }
+        ];
+
+        const historyMessages = messages
+          .filter((m) => !m.id.startsWith("system-offline-warn-"))
+          .slice(-20)
+          .map((m) => ({
+            role: (m.role === "user" ? "user" : "assistant") as "user" | "assistant" | "system",
+            content: m.text,
+          }));
+
+        formattedMessages.push(...historyMessages);
+
+        const cleanMessagesForAPI = (msgs: any[]) => {
+          const systemMsg = msgs.find((m) => m.role === "system");
+          const chatMsgs = msgs.filter((m) => m.role !== "system");
+          while (chatMsgs.length > 0 && chatMsgs[0].role !== "user") {
+            chatMsgs.shift();
+          }
+          const alternating: any[] = [];
+          for (const msg of chatMsgs) {
+            if (!msg.content || msg.content.trim() === "") continue;
+            if (alternating.length === 0) {
+              alternating.push({ ...msg });
+            } else {
+              const lastMsg = alternating[alternating.length - 1];
+              if (lastMsg.role === msg.role) {
+                lastMsg.content = `${lastMsg.content}\n${msg.content}`;
+              } else {
+                alternating.push({ ...msg });
+              }
+            }
+          }
+          const finalMsgs = [];
+          if (systemMsg) finalMsgs.push(systemMsg);
+          finalMsgs.push(...alternating);
+          return finalMsgs;
+        };
+
+        const cleanedMessages = cleanMessagesForAPI(formattedMessages);
+
+        try {
+          let agentText = "";
+          let englishResponse = "";
+          let token = "";
+          try {
+            const { data: { session } } = await supabase.auth.getSession();
+            token = session?.access_token || "";
+          } catch (e) {}
+
+          const response = await fetch("/api/nexy/helper", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              ...(token ? { "Authorization": `Bearer ${token}` } : {})
+            },
+            body: JSON.stringify({
+              messages: cleanedMessages,
+              originalMessages: cleanedMessages,
+              lang,
+              ticketSubject,
+              ticketImportance,
+              ticketDescription,
+              model: "gemma-3-1b-it",
+              isLiveSupport: true
+            }),
+          });
+
+          if (response.ok) {
+            const data = await response.json();
+            agentText = data.text;
+            englishResponse = data.englishText;
+          } else {
+            throw new Error("Backend query failed");
+          }
+
+          agentText = agentText.replace(/\[inceliyor\]/gi, "");
+          agentText = agentText.replace(/\[duraklama\]/gi, "");
+          agentText = agentText.replace(/\[bekliyor\]/gi, "");
+          agentText = agentText.replace(/\[düşünüyor\]/gi, "");
+          agentText = agentText.replace(/\[[^\]]+\]/g, (match) => {
+            if (match.toLowerCase().startsWith("[redirect:")) return match;
+            return "";
+          });
+          agentText = agentText.trim().replace(/pulsar/gi, "Nexy");
+          englishResponse = englishResponse.trim().replace(/pulsar/gi, "Nexy");
+
+          const agentMsgId = Math.random().toString(36).substring(2, 9);
+          setMessages((prev) => [
+            ...prev,
+            {
+              role: "agent" as const,
+              text: agentText,
+              id: agentMsgId,
+              timestamp: Date.now(),
+              displayedText: "",
+              englishText: englishResponse
+            }
+          ]);
+
+          setThinkingStage("typing");
+          setTimeout(() => {
+            setIsAgentTyping(false);
+            setTimeout(() => typeAgentMessage(agentText, agentMsgId), 50);
+          }, 800);
+
+        } catch (err) {
+          setIsAgentTyping(false);
+          setPendingOfflineInput(textToResend);
+        }
+      };
+
+      resendMessage();
+    }
+  }, [isOnline, pendingOfflineInput]);
 
   const getAgentThinkingText = () => {
+    if (thinkingStage === "typing") {
+      return lang === "tr" ? "Nexy Yazıyor..." : "Nexy is typing...";
+    }
+
     const lastUserMsg = [...messages].reverse().find((m) => m.role === "user");
     const lastUserText = lastUserMsg?.text?.toLowerCase() || "";
     const hasFiles = attachedFiles.length > 0;
     const hasMsgFiles = lastUserMsg?.files && lastUserMsg.files.length > 0;
 
     const filesCount = attachedFiles.length + (lastUserMsg?.files?.length || 0);
+
+    const isCreatingFile =
+      lastUserText.includes("csv") ||
+      lastUserText.includes("json") ||
+      lastUserText.includes("dosya oluştur") ||
+      lastUserText.includes("oluştur") ||
+      lastUserText.includes("indir") ||
+      lastUserText.includes("excel") ||
+      lastUserText.includes("export") ||
+      lastUserText.includes("create") ||
+      lastUserText.includes("file");
+
+    if (isCreatingFile) {
+      return lang === "tr" ? "Dosya Oluşturuluyor..." : "Generating File...";
+    }
 
     const mentionsFiles =
       lastUserText.includes("dosya") ||
@@ -970,7 +1140,7 @@ export function LiveChatView({
       return lang === "tr" ? "Hesap Bilgileriniz Sorgulanıyor..." : "Sourcing secure account details...";
     }
 
-    return lang === "tr" ? "Nexy Yazıyor..." : "Nexy is typing...";
+    return lang === "tr" ? "Düşünüyor..." : "Thinking...";
   };
 
   useEffect(() => {
@@ -1107,6 +1277,7 @@ export function LiveChatView({
     welcomeTriggeredRef.current = true;
 
     const triggerWelcome = async () => {
+      setThinkingStage("checking");
       setIsAgentTyping(true);
 
       const ticketSubject = localStorage.getItem("live_support_subject_en") || localStorage.getItem("live_support_subject") || "General Support";
@@ -1242,8 +1413,13 @@ Do not promote any third-party services like Pollinations or Pulsar. Respond dir
             englishText: englishResponse
           }
         ]);
-        setIsAgentTyping(false);
-        setTimeout(() => typeAgentMessage(agentText, agentMsgId), 50);
+
+        // Transition stage to typing with organic delay
+        setThinkingStage("typing");
+        setTimeout(() => {
+          setIsAgentTyping(false);
+          setTimeout(() => typeAgentMessage(agentText, agentMsgId), 50);
+        }, 800);
 
       } catch (err) {
         setIsAgentTyping(false);
@@ -1503,6 +1679,34 @@ Do not promote any third-party services like Pollinations or Pulsar. Respond dir
       const userText = input.trim();
       const currentAttachedFiles = [...attachedFiles];
 
+      // Handle offline state dynamically with a direct warning bubble and saved input
+      if (!isOnline) {
+        const offlineMsg = {
+          role: "user" as const,
+          text: userText,
+          id: Math.random().toString(36).substring(2, 9),
+          timestamp: Date.now(),
+          files: currentAttachedFiles
+        };
+
+        const systemWarnMsg = {
+          role: "agent" as const,
+          text: lang === "tr"
+            ? "⚠️ **İnternet Bağlantısı Yok.** Bağlantınız geri geldiğinde sorunuz otomatik olarak iletilecek ve yanıtlanacaktır."
+            : "⚠️ **No Internet Connection.** Your question will be automatically forwarded and answered once connection is restored.",
+          id: "system-offline-warn-" + Math.random().toString(36).substring(2, 5),
+          timestamp: Date.now()
+        };
+
+        setMessages((prev) => [...prev, offlineMsg, systemWarnMsg]);
+        setInput("");
+        setAttachedFiles([]);
+        setPendingOfflineInput(userText);
+        setIsAgentTyping(false);
+        isSendingRef.current = false;
+        return;
+      }
+
       const userMsg = {
         role: "user" as const,
         text: userText,
@@ -1514,6 +1718,7 @@ Do not promote any third-party services like Pollinations or Pulsar. Respond dir
       setMessages((prev) => [...prev, userMsg]);
       setInput("");
       setAttachedFiles([]);
+      setThinkingStage("checking");
       setIsAgentTyping(true);
 
       // Combine any pre-extracted OCR text or plain text content from the attached files
@@ -1694,8 +1899,13 @@ CRITICAL RULES:
             englishText: englishResponse
           }
         ]);
-        setIsAgentTyping(false);
-        setTimeout(() => typeAgentMessage(agentText, agentMsgId), 50);
+
+        // Transition stage to typing with organic delay
+        setThinkingStage("typing");
+        setTimeout(() => {
+          setIsAgentTyping(false);
+          setTimeout(() => typeAgentMessage(agentText, agentMsgId), 50);
+        }, 800);
 
       } catch (e) {
         setTimeout(() => {
@@ -1849,16 +2059,20 @@ CRITICAL RULES:
         {(searchQuery ? filteredMessages : messages).map((m) => {
           const isSystemMsg = m.id === "system-details-init";
 
-          // Basic local Markdown Bold & Italic parser for message bubbles
+          // Clean, full Markdown & HTML Table renderer for Live Support message bubbles
           const renderMessageText = (text: string) => {
             if (!text) return null;
             const lines = text.split("\n");
-            return lines.map((line, idx) => {
+            const result: React.ReactNode[] = [];
+            let currentTable: string[][] = [];
+            let inTable = false;
+
+            const processLine = (line: string, key: string | number) => {
               const parts = line.split(/(\*\*.*?\*\*)/g);
-              const content = parts.map((part, pi) => {
+              return parts.map((part, pi) => {
                 if (part.startsWith("**") && part.endsWith("**")) {
                   return (
-                    <strong key={pi} className="font-extrabold text-[var(--fun-purple)] dark:text-purple-300">
+                    <strong key={`${key}-${pi}`} className="font-extrabold text-[var(--fun-purple)] dark:text-purple-300">
                       {part.slice(2, -2)}
                     </strong>
                   );
@@ -1867,7 +2081,7 @@ CRITICAL RULES:
                 return italicParts.map((iPart, ji) => {
                   if (iPart.startsWith("*") && iPart.endsWith("*")) {
                     return (
-                      <em key={ji} className="italic opacity-90">
+                      <em key={`${key}-${pi}-${ji}`} className="italic opacity-90">
                         {iPart.slice(1, -1)}
                       </em>
                     );
@@ -1875,12 +2089,87 @@ CRITICAL RULES:
                   return iPart;
                 });
               });
+            };
+
+            const renderTable = (tableData: string[][], tableKey: string | number) => {
+              if (tableData.length === 0) return null;
+              const headers = tableData[0];
+              const rows = tableData.slice(1);
+
               return (
-                <div key={idx} className={line === "" ? "h-2" : "mb-1"}>
-                  {content}
+                <div
+                  key={`table-wrapper-${tableKey}`}
+                  className="overflow-x-auto my-3 border rounded-xl border-[var(--fun-stroke-1)] bg-[var(--fun-card)] shadow-sm"
+                >
+                  <table className="w-full text-xs text-left border-collapse">
+                    <thead className="bg-[var(--fun-surface)] text-[var(--fun-purple)] font-bold">
+                      <tr>
+                        {headers.map((cell, idx) => (
+                          <th
+                            key={idx}
+                            className="p-2.5 border-b border-[var(--fun-stroke-1)] whitespace-nowrap"
+                          >
+                            {processLine(cell, `th-${idx}`)}
+                          </th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {rows.map((row, rowIdx) => (
+                        <tr key={rowIdx} className="hover:bg-[var(--fun-surface)]/50 transition-colors">
+                          {row.map((cell, cellIdx) => (
+                            <td key={cellIdx} className="p-2.5 border-t border-[var(--fun-stroke-1)]">
+                              {processLine(cell, `td-${rowIdx}-${cellIdx}`)}
+                            </td>
+                          ))}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
                 </div>
               );
-            });
+            };
+
+            for (let i = 0; i < lines.length; i++) {
+              const line = lines[i].trim();
+
+              if (line.startsWith("|") && line.includes("|")) {
+                const cells = line
+                  .split("|")
+                  .filter((_, idx, arr) => idx > 0 && idx < arr.length - 1)
+                  .map((c) => c.trim());
+
+                if (cells.every((c) => c.match(/^[ \-:]+$/))) {
+                  continue;
+                }
+
+                if (!inTable) {
+                  inTable = true;
+                  currentTable = [cells];
+                } else {
+                  currentTable.push(cells);
+                }
+              } else {
+                if (inTable) {
+                  result.push(renderTable(currentTable, i));
+                  currentTable = [];
+                  inTable = false;
+                }
+                if (line || lines[i] === "") {
+                  result.push(
+                    <p key={i} className={lines[i] === "" ? "h-2" : "mb-1 leading-relaxed"}>
+                      {processLine(lines[i], i)}
+                    </p>,
+                  );
+                }
+              }
+            }
+
+            if (inTable) {
+              result.push(renderTable(currentTable, "end"));
+            }
+
+            return result;
           };
 
           return (
