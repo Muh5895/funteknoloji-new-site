@@ -110,6 +110,22 @@ const cleanLeadingDashes = (text: string): string => {
   return lines.join("\n").trim();
 };
 
+const fetchWithTimeout = async (url: string, options: any, timeoutMs: number): Promise<Response> => {
+  const controller = new AbortController();
+  const id = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    const response = await fetch(url, {
+      ...options,
+      signal: controller.signal
+    });
+    clearTimeout(id);
+    return response;
+  } catch (error: any) {
+    clearTimeout(id);
+    throw error;
+  }
+};
+
 // Supabase client lazy initializer using Vercel Environment Variables
 let supabaseClient: any = null;
 const getSupabaseClient = () => {
@@ -892,10 +908,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     let aiText = "";
 
-    // Try Hack Club First
+    // Try Hack Club First (with a strict 8-second timeout to prevent hanging)
     if (backupApiKey) {
       try {
-        const backupResponse = await fetch("https://ai.hackclub.com/proxy/v1/chat/completions", {
+        const backupResponse = await fetchWithTimeout("https://ai.hackclub.com/proxy/v1/chat/completions", {
           method: "POST",
           headers: {
             "Authorization": `Bearer ${backupApiKey}`,
@@ -905,7 +921,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             model: "google/gemma-2-27b-it:free",
             messages: finalMessages
           }),
-        });
+        }, 8000);
 
         if (backupResponse.ok) {
           const backupData = await backupResponse.json() as any;
@@ -919,10 +935,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       }
     }
 
-    // Unconditional Fallback to Fun Teknoloji if Hack Club failed or was skipped
+    // Unconditional Fallback to Fun Teknoloji if Hack Club failed or was skipped (with a long 45-second timeout for slower response)
     if (!aiText) {
       try {
-        const response = await fetch("https://ai.funteknoloji.com/v1/chat/completions", {
+        const response = await fetchWithTimeout("https://ai.funteknoloji.com/v1/chat/completions", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -933,7 +949,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             messages: finalMessages,
             model: "gemma-3-1b-it",
           }),
-        });
+        }, 45000);
 
         if (!response.ok) {
           const errText = await response.text();
