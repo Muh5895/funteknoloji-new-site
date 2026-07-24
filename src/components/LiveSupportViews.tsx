@@ -1136,7 +1136,7 @@ Do not promote any third-party services like Pollinations or Pulsar. Respond dir
             token = session?.access_token || "";
           } catch (e) {}
 
-          const response = await fetch("/api/nexy", {
+          const response = await fetch("/api/nexy/helper", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -1589,8 +1589,8 @@ CRITICAL RULES:
             token = session?.access_token || "";
           } catch (e) {}
 
-          // Route all requests directly to Vercel backend proxy /api/nexy (acts as central fallback orchestrator)
-          const response = await fetch("/api/nexy", {
+          // Route all requests directly to Vercel backend proxy /api/nexy/helper (acts as central fallback orchestrator)
+          const response = await fetch("/api/nexy/helper", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",

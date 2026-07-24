@@ -9,6 +9,10 @@
       "destination": "https://eiecuiberhqmyvvlrakn.supabase.co/auth/v1/$1"
     },
     {
+      "source": "/api/nexy/helper",
+      "destination": "api/helper"
+    },
+    {
       "source": "/api/nexy",
       "destination": "api/nexy"
     },
