@@ -218,31 +218,12 @@ export default function NexyAssistant() {
 
     fetchSystemStatus();
 
-    // Subscribe to all changes on the system_status table and filter on the client side for absolute reliability
-    const channel = supabase
-      .channel("system_status_realtime")
-      .on(
-        "postgres_changes",
-        {
-          event: "*",
-          schema: "public",
-          table: "system_status",
-        },
-        (payload: any) => {
-          const oldData = payload.old || {};
-          const newData = payload.new || {};
-          const row = payload.eventType === "DELETE" ? oldData : newData;
-          if (row.app_name === "Nexy") {
-            setSystemStatus(row.status || "on");
-            setMaintenanceReason(row.maintenance_reason || "");
-            setEstimatedEndTime(row.estimated_end_time || "");
-          }
-        }
-      )
-      .subscribe();
+    // Prevent direct WebSocket exposing of API endpoints in client logs.
+    // Replace raw realtime websockets with secure, proxied REST polling every 30 seconds.
+    const interval = setInterval(fetchSystemStatus, 30000);
 
     return () => {
-      supabase.removeChannel(channel).catch(() => {});
+      clearInterval(interval);
     };
   }, []);
 

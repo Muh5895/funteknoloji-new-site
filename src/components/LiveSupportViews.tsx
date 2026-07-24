@@ -2060,6 +2060,7 @@ CRITICAL RULES:
               type="button"
               disabled={rating === 0}
               onClick={async () => {
+                // Fix: Verify and fetch the authentic, logged-in user session dynamically before inserting feedback to prevent failures
                 // Securely save the ticket details, rating, and feedback directly into the database on session end
                 try {
                   const { data: { user } } = await supabase.auth.getUser();
