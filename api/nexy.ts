@@ -71,6 +71,25 @@ const translateTextHelper = async (text: string, source: string, target: string)
   }
 };
 
+const translateTextWithCodeBlocks = async (text: string, source: string, target: string): Promise<string> => {
+  if (!text || source === target) return text;
+
+  const parts = text.split(/(```[\s\S]*?```)/g);
+  const translatedParts = [];
+
+  for (const part of parts) {
+    if (part.startsWith("```")) {
+      // Keep code blocks 100% intact to prevent CSV/JSON schema corruption
+      translatedParts.push(part);
+    } else {
+      const translated = await translateTextHelper(part, source, target);
+      translatedParts.push(translated);
+    }
+  }
+
+  return translatedParts.join("");
+};
+
 const cleanLeadingDashes = (text: string): string => {
   if (!text) return text;
   let lines = text.split("\n");
@@ -549,7 +568,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         // Translate the final GPT-5 response directly to target language to prevent mixed English outputs
         let text = backupText;
         if (lang && lang !== "en") {
-          text = await translateTextHelper(backupText, "en", lang);
+          text = await translateTextWithCodeBlocks(backupText, "en", lang);
         }
 
         text = cleanLeadingDashes(text);
@@ -637,7 +656,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
       let text = englishText;
       if (lang && lang !== "en") {
-        text = await translateTextHelper(englishText, "en", lang);
+        text = await translateTextWithCodeBlocks(englishText, "en", lang);
       }
 
       text = cleanLeadingDashes(text);

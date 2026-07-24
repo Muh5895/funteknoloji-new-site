@@ -1090,11 +1090,14 @@ Do not mention any third-party services like Pollinations or Pulsar. Respond dir
       lastUserText.includes("json") ||
       lastUserText.includes("dosya oluştur") ||
       lastUserText.includes("oluştur") ||
+      lastUserText.includes("tablo") ||
       lastUserText.includes("indir") ||
       lastUserText.includes("excel") ||
       lastUserText.includes("export") ||
       lastUserText.includes("create") ||
-      lastUserText.includes("file");
+      lastUserText.includes("file") ||
+      lastUserText.includes("table") ||
+      lastUserText.includes("list");
 
     if (isCreatingFile) {
       return lang === "tr" ? "Dosya Oluşturuluyor..." : "Generating File...";
@@ -2066,6 +2069,14 @@ CRITICAL RULES:
 
             // Clean up raw CSV/JSON blocks from the main visible text bubble to prevent clutters
             let cleanedText = text;
+            const csvIdx = cleanedText.indexOf("```csv");
+            if (csvIdx !== -1) {
+              cleanedText = cleanedText.substring(0, csvIdx);
+            }
+            const jsonIdx = cleanedText.indexOf("```json");
+            if (jsonIdx !== -1) {
+              cleanedText = cleanedText.substring(0, jsonIdx);
+            }
             cleanedText = cleanedText.replace(/```json[\s\S]*?```/gi, "");
             cleanedText = cleanedText.replace(/```csv[\s\S]*?```/gi, "");
             if (cleanedText.trim().startsWith("[") && cleanedText.trim().endsWith("]")) {

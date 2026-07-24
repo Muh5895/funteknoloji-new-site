@@ -71,6 +71,25 @@ const translateTextHelper = async (text: string, source: string, target: string)
   }
 };
 
+const translateTextWithCodeBlocks = async (text: string, source: string, target: string): Promise<string> => {
+  if (!text || source === target) return text;
+
+  const parts = text.split(/(```[\s\S]*?```)/g);
+  const translatedParts = [];
+
+  for (const part of parts) {
+    if (part.startsWith("```")) {
+      // Keep code blocks 100% intact to prevent CSV/JSON schema corruption
+      translatedParts.push(part);
+    } else {
+      const translated = await translateTextHelper(part, source, target);
+      translatedParts.push(translated);
+    }
+  }
+
+  return translatedParts.join("");
+};
+
 const cleanLeadingDashes = (text: string): string => {
   if (!text) return text;
   let lines = text.split("\n");
@@ -565,7 +584,9 @@ FunID is Fun Teknoloji's unified identity, authentication, and secure account ma
 - NEVER promote or mention any competitor products or third-party AI interfaces like Pulsar or Pollinations.ai.
 - Do not prefix sentences or paragraphs with dashes (-).
 - **CONCISENESS MANDATE:** Keep your answers extremely short, concise, and direct to the point. Avoid verbose descriptions, lectures, or lengthy filler paragraphs. Speak very directly.
-- **CSV/JSON FILE GENERATION MANDATE:** If the user requests a CSV or JSON file (e.g., "bana CSV ver", "CSV dosyası istiyorum", "bana CSV oluştur", "JSON olarak ver"), you MUST generate the actual formatted data inside a clean markdown code block (starting with '\`\`\`csv' or '\`\`\`json'). Do NOT just list table names or make excuses. Write the actual CSV rows or JSON array so the client-side download button can let them download it immediately!
+- **CSV/JSON FILE GENERATION MANDATE:** If the user requests a CSV or JSON file (e.g., "bana CSV ver", "CSV dosyası istiyorum", "bana CSV oluştur", "JSON olarak ver"), you MUST generate the actual formatted data inside a clean markdown code block (starting with '\`\`\`csv' or '\`\`\`json') IMMEDIATELY.
+  - NEVER ask unnecessary confirmation or verification questions like "Would you like me to generate this file?", "Do you want to download this CSV?", or "Should I create the JSON?".
+  - Simply output the complete formatted data instantly inside code blocks. The user has already decided to download it. Just generate it directly without any introductory or stalling questions.
 - **SYSTEM STATUS TABLE & TRANSLATION RULES:** When reporting system status, uptime, or active services, you MUST present them as a clean, beautifully aligned Markdown Table with columns:
   | Hizmet Adı | Durum | Detay |
   In the 'Durum' column, you must strictly and exclusively map states as:
@@ -914,7 +935,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         // Translate the final GPT-5 response directly to target language to prevent mixed English outputs
         let text = backupText;
         if (lang && lang !== "en") {
-          text = await translateTextHelper(backupText, "en", lang);
+          text = await translateTextWithCodeBlocks(backupText, "en", lang);
         }
 
         text = cleanLeadingDashes(text);
@@ -1002,7 +1023,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
       let text = englishText;
       if (lang && lang !== "en") {
-        text = await translateTextHelper(englishText, "en", lang);
+        text = await translateTextWithCodeBlocks(englishText, "en", lang);
       }
 
       text = cleanLeadingDashes(text);
