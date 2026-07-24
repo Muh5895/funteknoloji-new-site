@@ -873,6 +873,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         for (const msg of cleanedOriginal) {
           if (msg.role === "system") {
             translatedMessages.push(msg);
+          } else if (msg.content && (msg.content.startsWith("[DATABASE RESPONSE") || msg.content.startsWith("[DB_QUERY:"))) {
+            // Keep database queries and responses 100% raw and untranslated to prevent corruption
+            translatedMessages.push(msg);
           } else {
             const translatedContent = await translateTextHelper(msg.content || "", lang, "en");
             translatedMessages.push({ ...msg, content: translatedContent });
@@ -891,7 +894,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            model: "gpt-5-mini",
+            model: "google/gemma-4-31b-it:free",
             messages: finalHackClubMessages
           }),
         });
@@ -963,6 +966,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       const translatedMessages = [];
       for (const msg of cleanedOriginal) {
         if (msg.role === "system") {
+          translatedMessages.push(msg);
+        } else if (msg.content && (msg.content.startsWith("[DATABASE RESPONSE") || msg.content.startsWith("[DB_QUERY:"))) {
+          // Keep database queries and responses 100% raw and untranslated to prevent corruption
           translatedMessages.push(msg);
         } else {
           const translatedContent = await translateTextHelper(msg.content || "", lang, "en");
