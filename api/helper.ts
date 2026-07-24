@@ -852,7 +852,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const backupApiKey = process.env.Nexy || process.env.NEXY || "";
   let loopCount = 0;
   const maxLoops = 3;
-  let useFallbackChoice = false;
 
   while (loopCount < maxLoops) {
     let ticketContext = "";
@@ -865,28 +864,37 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       ? buildLiveSupportSystemPrompt(lang, dbContextResult.context, ticketContext)
       : buildSystemPrompt(lang, dbContextResult.context, ticketContext);
 
-    if (!useFallbackChoice && backupApiKey) {
+    const cleanedOriginal = cleanMessagesForAPI(rawOriginal);
+
+    if (cleanedOriginal.filter((m) => m.role !== "system").length === 0) {
+      return res.status(400).send("Nexy error: Geçersiz sohbet geçmişi.");
+    }
+
+    // 1. Prepare translated messages
+    const translatedMessages = [];
+    for (const msg of cleanedOriginal) {
+      if (msg.role === "system") {
+        translatedMessages.push(msg);
+      } else if (msg.content && (msg.content.startsWith("[DATABASE RESPONSE") || msg.content.startsWith("[DB_QUERY:"))) {
+        // Keep database queries and responses 100% raw and untranslated to prevent corruption
+        translatedMessages.push(msg);
+      } else {
+        const contentStr = typeof msg.content === "string" ? msg.content : "";
+        const translatedContent = await translateTextHelper(contentStr, lang, "en");
+        translatedMessages.push({ ...msg, content: translatedContent });
+      }
+    }
+
+    const finalMessages = [
+      { role: "system", content: dynamicSystemPrompt },
+      ...translatedMessages.filter((m) => m.role !== "system")
+    ];
+
+    let aiText = "";
+
+    // Try Hack Club First
+    if (backupApiKey) {
       try {
-        const cleanedOriginal = cleanMessagesForAPI(rawOriginal);
-
-        const translatedMessages = [];
-        for (const msg of cleanedOriginal) {
-          if (msg.role === "system") {
-            translatedMessages.push(msg);
-          } else if (msg.content && (msg.content.startsWith("[DATABASE RESPONSE") || msg.content.startsWith("[DB_QUERY:"))) {
-            // Keep database queries and responses 100% raw and untranslated to prevent corruption
-            translatedMessages.push(msg);
-          } else {
-            const translatedContent = await translateTextHelper(msg.content || "", lang, "en");
-            translatedMessages.push({ ...msg, content: translatedContent });
-          }
-        }
-
-        const finalHackClubMessages = [
-          { role: "system", content: dynamicSystemPrompt },
-          ...translatedMessages.filter((m) => m.role !== "system")
-        ];
-
         const backupResponse = await fetch("https://ai.hackclub.com/proxy/v1/chat/completions", {
           method: "POST",
           headers: {
@@ -895,160 +903,96 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           },
           body: JSON.stringify({
             model: "google/gemma-2-27b-it:free",
-            messages: finalHackClubMessages
+            messages: finalMessages
           }),
         });
 
-        if (!backupResponse.ok) {
-          const backupErrText = await backupResponse.text();
-          throw new Error(`Hack Club AI returned status ${backupResponse.status}: ${backupErrText}`);
-        }
-
-        const backupData = await backupResponse.json() as any;
-        let backupText = backupData.choices?.[0]?.message?.content || "";
-
-        // Check if response has DB_QUERY
-        const queryMatch = backupText.match(/\[DB_QUERY:\s*({[^}]+})\s*\]/);
-        if (queryMatch) {
-          let queryAction = "";
-          try {
-            const parsed = JSON.parse(queryMatch[1]);
-            queryAction = parsed.action;
-          } catch (e) {}
-
-          if (queryAction) {
-            const queryResponseText = await executeDynamicDatabaseQuery(queryAction, authHeader);
-            rawOriginal.push({ role: "assistant", content: `[DB_QUERY: {"action": "${queryAction}"}]` });
-            rawOriginal.push({ role: "user", content: `[DATABASE RESPONSE FOR ${queryAction}]:\n${queryResponseText}` });
-            loopCount++;
-            continue; // re-run loop
-          }
-        }
-
-        backupText = backupText.replace(/\[inceliyor\]/gi, "");
-        backupText = backupText.replace(/\[duraklama\]/gi, "");
-        backupText = backupText.replace(/\[bekliyor\]/gi, "");
-        backupText = backupText.replace(/\[düşünüyor\]/gi, "");
-        backupText = backupText.replace(/\[[^\]]+\]/g, (match: string) => {
-          if (match.toLowerCase().startsWith("[redirect:")) return match;
-          return "";
-        });
-        backupText = backupText.trim().replace(/pulsar/gi, "Nexy");
-
-        // Translate the final GPT-5 response directly to target language to prevent mixed English outputs
-        let text = backupText;
-        if (lang && lang !== "en") {
-          text = await translateTextWithCodeBlocks(backupText, "en", lang);
-        }
-
-        text = cleanLeadingDashes(text);
-        backupText = cleanLeadingDashes(backupText);
-
-        return res.status(200).json({
-          text: text,
-          englishText: backupText,
-          isTranslated: lang && lang !== "en"
-        });
-
-      } catch (backupErr: any) {
-        console.warn("Primary Hack Club AI call failed inside loop, switching to fallback:", backupErr);
-        useFallbackChoice = true;
-      }
-    }
-
-    // Fallback path
-    try {
-      const cleanedOriginal = cleanMessagesForAPI(rawOriginal);
-      if (cleanedOriginal.filter((m) => m.role !== "system").length === 0) {
-        return res.status(400).send("Nexy error: Geçersiz sohbet geçmişi.");
-      }
-
-      const translatedMessages = [];
-      for (const msg of cleanedOriginal) {
-        if (msg.role === "system") {
-          translatedMessages.push(msg);
-        } else if (msg.content && (msg.content.startsWith("[DATABASE RESPONSE") || msg.content.startsWith("[DB_QUERY:"))) {
-          // Keep database queries and responses 100% raw and untranslated to prevent corruption
-          translatedMessages.push(msg);
+        if (backupResponse.ok) {
+          const backupData = await backupResponse.json() as any;
+          aiText = backupData.choices?.[0]?.message?.content || "";
         } else {
-          const translatedContent = await translateTextHelper(msg.content || "", lang, "en");
-          translatedMessages.push({ ...msg, content: translatedContent });
+          const backupErrText = await backupResponse.text();
+          console.warn(`Primary Hack Club AI returned non-OK status ${backupResponse.status}: ${backupErrText}`);
         }
+      } catch (backupErr: any) {
+        console.warn("Primary Hack Club AI fetch thrown exception:", backupErr);
       }
-
-      const finalGemmaMessages = [
-        { role: "system", content: dynamicSystemPrompt },
-        ...translatedMessages.filter((m) => m.role !== "system")
-      ];
-
-      const response = await fetch("https://ai.funteknoloji.com/v1/chat/completions", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          messages: finalGemmaMessages,
-          model: "gemma-3-1b-it",
-        }),
-      });
-
-      if (!response.ok) {
-        const errText = await response.text();
-        throw new Error(`Fun Teknoloji AI returned status ${response.status}: ${errText}`);
-      }
-
-      const data = await response.json() as any;
-      let englishText = data.choices?.[0]?.message?.content || "";
-
-      const queryMatch = englishText.match(/\[DB_QUERY:\s*({[^}]+})\s*\]/);
-      if (queryMatch) {
-        let queryAction = "";
-        try {
-          const parsed = JSON.parse(queryMatch[1]);
-          queryAction = parsed.action;
-        } catch (e) {}
-
-        if (queryAction) {
-          const queryResponseText = await executeDynamicDatabaseQuery(queryAction, authHeader);
-          rawOriginal.push({ role: "assistant", content: `[DB_QUERY: {"action": "${queryAction}"}]` });
-          rawOriginal.push({ role: "user", content: `[DATABASE RESPONSE FOR ${queryAction}]:\n${queryResponseText}` });
-          loopCount++;
-          continue; // re-run loop
-        }
-      }
-
-      englishText = englishText.replace(/\[inceliyor\]/gi, "");
-      englishText = englishText.replace(/\[duraklama\]/gi, "");
-      englishText = englishText.replace(/\[bekliyor\]/gi, "");
-      englishText = englishText.replace(/\[düşünüyor\]/gi, "");
-      englishText = englishText.replace(/\[[^\]]+\]/g, (match: string) => {
-        if (match.toLowerCase().startsWith("[redirect:")) return match;
-        return "";
-      });
-      englishText = englishText.trim().replace(/pulsar/gi, "Nexy");
-
-      let text = englishText;
-      if (lang && lang !== "en") {
-        text = await translateTextWithCodeBlocks(englishText, "en", lang);
-      }
-
-      text = cleanLeadingDashes(text);
-      englishText = cleanLeadingDashes(englishText);
-
-      return res.status(200).json({
-        text,
-        englishText,
-        isTranslated: true
-      });
-
-    } catch (err: any) {
-      console.error("Gemma fallback choice failed completely inside loop:", err);
-      return res.status(500).json({
-        text: "Sistemde geçici bir yoğunluk var. Lütfen daha sonra tekrar deneyin.",
-        englishText: "A temporary system congestion occurred. Please try again later.",
-        isTranslated: false
-      });
     }
+
+    // Unconditional Fallback to Fun Teknoloji if Hack Club failed or was skipped
+    if (!aiText) {
+      try {
+        const response = await fetch("https://ai.funteknoloji.com/v1/chat/completions", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
+            "Accept": "application/json"
+          },
+          body: JSON.stringify({
+            messages: finalMessages,
+            model: "gemma-3-1b-it",
+          }),
+        });
+
+        if (!response.ok) {
+          const errText = await response.text();
+          throw new Error(`Fun Teknoloji AI returned status ${response.status}: ${errText}`);
+        }
+
+        const data = await response.json() as any;
+        aiText = data.choices?.[0]?.message?.content || "";
+      } catch (err: any) {
+        console.error("Fun Teknoloji AI fallback completely failed:", err);
+        return res.status(200).json({
+          text: "Şu an sistemlerimizde geçici bir yoğunluk var. Lütfen biraz sonra tekrar deneyiniz.",
+          englishText: "A temporary system congestion occurred. Please try again in a moment.",
+          isTranslated: false
+        });
+      }
+    }
+
+    // Process the returned AI text (aiText)
+    const queryMatch = aiText.match(/\[DB_QUERY:\s*({[^}]+})\s*\]/);
+    if (queryMatch) {
+      let queryAction = "";
+      try {
+        const parsed = JSON.parse(queryMatch[1]);
+        queryAction = parsed.action;
+      } catch (e) {}
+
+      if (queryAction) {
+        const queryResponseText = await executeDynamicDatabaseQuery(queryAction, authHeader);
+        rawOriginal.push({ role: "assistant", content: `[DB_QUERY: {"action": "${queryAction}"}]` });
+        rawOriginal.push({ role: "user", content: `[DATABASE RESPONSE FOR ${queryAction}]:\n${queryResponseText}` });
+        loopCount++;
+        continue; // re-run loop
+      }
+    }
+
+    aiText = aiText.replace(/\[inceliyor\]/gi, "");
+    aiText = aiText.replace(/\[duraklama\]/gi, "");
+    aiText = aiText.replace(/\[bekliyor\]/gi, "");
+    aiText = aiText.replace(/\[düşünüyor\]/gi, "");
+    aiText = aiText.replace(/\[[^\]]+\]/g, (match: string) => {
+      if (match.toLowerCase().startsWith("[redirect:")) return match;
+      return "";
+    });
+    aiText = aiText.trim().replace(/pulsar/gi, "Nexy");
+
+    let translatedResponse = aiText;
+    if (lang && lang !== "en") {
+      translatedResponse = await translateTextWithCodeBlocks(aiText, "en", lang);
+    }
+
+    translatedResponse = cleanLeadingDashes(translatedResponse);
+    aiText = cleanLeadingDashes(aiText);
+
+    return res.status(200).json({
+      text: translatedResponse,
+      englishText: aiText,
+      isTranslated: lang && lang !== "en"
+    });
   }
 
   return res.status(200).json({
