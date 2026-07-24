@@ -126,6 +126,36 @@ const fetchWithTimeout = async (url: string, options: any, timeoutMs: number): P
   }
 };
 
+const isValidAIResponse = (text: string): boolean => {
+  if (!text || text.trim() === "") return false;
+  const lower = text.toLowerCase();
+
+  const indicators = [
+    "rate limit",
+    "overloaded",
+    "exceeded",
+    "error:",
+    "meşgul",
+    "yoğunluk",
+    "try again later",
+    "temporary congestion",
+    "too many requests",
+    "quota exceeded"
+  ];
+
+  for (const indicator of indicators) {
+    if (lower.includes(indicator)) {
+      return false;
+    }
+  }
+
+  if (text.trim().length < 40 && (lower.includes("hata") || lower.includes("hizmet dışı") || lower.includes("aktif değil"))) {
+    return false;
+  }
+
+  return true;
+};
+
 // Supabase client lazy initializer using Vercel Environment Variables
 let supabaseClient: any = null;
 const getSupabaseClient = () => {
@@ -557,7 +587,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
         if (backupResponse.ok) {
           const backupData = await backupResponse.json() as any;
-          aiText = backupData.choices?.[0]?.message?.content || "";
+          const textCandidate = backupData.choices?.[0]?.message?.content || "";
+          if (isValidAIResponse(textCandidate)) {
+            aiText = textCandidate;
+          } else {
+            console.warn("Primary Hack Club AI returned an invalid or rate-limited response, discarding to force fallback:", textCandidate);
+          }
         } else {
           const backupErrText = await backupResponse.text();
           console.warn(`Primary Hack Club AI returned non-OK status ${backupResponse.status}: ${backupErrText}`);
@@ -567,7 +602,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       }
     }
 
-    // Unconditional Fallback to Fun Teknoloji if Hack Club failed or was skipped (with a long 45-second timeout for slower response)
+    // Unconditional Fallback to Fun Teknoloji if Hack Club failed or was skipped (with a long 55-second timeout for slower response)
     if (!aiText) {
       try {
         const response = await fetchWithTimeout("https://ai.funteknoloji.com/v1/chat/completions", {
@@ -581,7 +616,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             messages: finalMessages,
             model: "gemma-3-1b-it",
           }),
-        }, 45000);
+        }, 55000);
 
         if (!response.ok) {
           const errText = await response.text();
