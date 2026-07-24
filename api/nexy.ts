@@ -59,7 +59,12 @@ const translateTextHelper = async (text: string, source: string, target: string)
       `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${source}&tl=${target}&dt=t&q=${encodeURIComponent(text)}`
     );
     const data = await response.json();
-    return data[0].map((item: any) => item[0]).join("");
+    let result = data[0].map((item: any) => item[0]).join("");
+
+    // Protect "FunID" from being translated to "Eğlence Kimliği"
+    result = result.replace(/Eğlence Kimliği/gi, "FunID");
+    result = result.replace(/Eğlence kimliği/gi, "FunID");
+    return result;
   } catch (error) {
     console.error("Translation helper error:", error);
     return text;

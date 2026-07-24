@@ -922,6 +922,7 @@ export function LiveChatView({
   const [searchQuery, setSearchQuery] = useState("");
   const [thinkingStage, setThinkingStage] = useState<"checking" | "typing">("checking");
   const [pendingOfflineInput, setPendingOfflineInput] = useState<string>("");
+  const [downloadedMessages, setDownloadedMessages] = useState<Record<string, boolean>>({});
 
   // Resilient Offline auto-resending trigger when connection returns
   useEffect(() => {
@@ -2062,7 +2063,21 @@ CRITICAL RULES:
           // Clean, full Markdown & HTML Table renderer for Live Support message bubbles
           const renderMessageText = (text: string) => {
             if (!text) return null;
-            const lines = text.split("\n");
+
+            // Clean up raw CSV/JSON blocks from the main visible text bubble to prevent clutters
+            let cleanedText = text;
+            cleanedText = cleanedText.replace(/```json[\s\S]*?```/gi, "");
+            cleanedText = cleanedText.replace(/```csv[\s\S]*?```/gi, "");
+            if (cleanedText.trim().startsWith("[") && cleanedText.trim().endsWith("]")) {
+              cleanedText = "";
+            }
+            cleanedText = cleanedText.trim();
+
+            if (!cleanedText && extractDownloadableData(text)) {
+              return <p className="italic text-zinc-400 dark:text-zinc-500">{lang === "tr" ? "Dosyanız başarıyla oluşturuldu:" : "Your file was successfully generated:"}</p>;
+            }
+
+            const lines = cleanedText.split("\n");
             const result: React.ReactNode[] = [];
             let currentTable: string[][] = [];
             let inTable = false;
@@ -2187,7 +2202,7 @@ CRITICAL RULES:
               ) : (
                 <div className={`w-full flex flex-col ${m.role === "user" ? "items-end" : "items-start"}`}>
                   <div
-                    className={`max-w-[80%] rounded-2xl px-4 py-2.5 text-xs font-medium leading-relaxed ${m.role === "user" ? "bg-[var(--fun-purple)] text-white rounded-br-none shadow-lg shadow-purple-500/10" : "bg-[var(--fun-surface)] fun-text border border-[var(--fun-stroke-1)] rounded-bl-none shadow-sm"}`}
+                    className={`max-w-[80%] rounded-2xl px-4 py-2.5 text-xs font-medium leading-relaxed break-words overflow-hidden ${m.role === "user" ? "bg-[var(--fun-purple)] text-white rounded-br-none shadow-lg shadow-purple-500/10" : "bg-[var(--fun-surface)] fun-text border border-[var(--fun-stroke-1)] rounded-bl-none shadow-sm"}`}
                   >
                     {/* Render uploaded files/images strictly ABOVE the text bubble */}
                     {m.files && m.files.length > 0 && (
@@ -2240,6 +2255,54 @@ CRITICAL RULES:
                     {m.text && (
                       <div className="whitespace-pre-wrap">
                         {m.role === "user" ? m.text : renderMessageText(m.displayedText !== undefined ? m.displayedText : m.text)}
+
+                        {/* Beautiful One-Time File Download Card directly inside the message bubble */}
+                        {(() => {
+                          const downloadable = extractDownloadableData(m.text);
+                          if (downloadable) {
+                            const isDownloaded = downloadedMessages[m.id];
+                            const extension = downloadable.type;
+                            return (
+                              <div className="mt-3 p-3 rounded-xl border border-dashed border-purple-500/30 bg-purple-500/5 flex flex-col gap-2 max-w-[280px] text-zinc-800 dark:text-zinc-200">
+                                <div className="flex items-center gap-2">
+                                  <div className="h-8 w-8 rounded-lg bg-[var(--fun-purple)]/10 text-[var(--fun-purple)] flex items-center justify-center shrink-0">
+                                    <FileText className="h-4.5 w-4.5" />
+                                  </div>
+                                  <div className="min-w-0 flex-1 flex flex-col">
+                                    <span className="font-bold truncate text-[11px] leading-tight text-zinc-800 dark:text-zinc-200">
+                                      funteknoloji-veri.{extension}
+                                    </span>
+                                    <span className="text-[9px] text-zinc-500 dark:text-zinc-400 mt-0.5">
+                                      {lang === "tr" ? "Tek Seferlik İndirme" : "One-Time Download Link"}
+                                    </span>
+                                  </div>
+                                </div>
+                                {isDownloaded ? (
+                                  <button
+                                    type="button"
+                                    disabled
+                                    className="w-full py-1.5 px-3 rounded-lg bg-zinc-200 dark:bg-zinc-850 text-zinc-400 dark:text-zinc-500 text-[10px] font-bold flex items-center justify-center gap-1 cursor-not-allowed"
+                                  >
+                                    <span>{lang === "tr" ? "İndirildi (Süresi Doldu)" : "Downloaded (Expired)"}</span>
+                                  </button>
+                                ) : (
+                                  <button
+                                    type="button"
+                                    onClick={() => {
+                                      triggerDataDownload(downloadable.data, downloadable.type);
+                                      setDownloadedMessages((prev) => ({ ...prev, [m.id]: true }));
+                                    }}
+                                    className="w-full py-1.5 px-3 rounded-lg bg-[var(--fun-purple)] hover:bg-[var(--fun-purple)]/90 text-white text-[10px] font-bold flex items-center justify-center gap-1.5 transition-all active:scale-95"
+                                  >
+                                    <Download className="h-3 w-3" />
+                                    <span>{lang === "tr" ? "Şimdi İndir" : "Download Now"}</span>
+                                  </button>
+                                )}
+                              </div>
+                            );
+                          }
+                          return null;
+                        })()}
                       </div>
                     )}
                   </div>

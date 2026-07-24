@@ -1369,6 +1369,7 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
               isAgentTyping={liveAgentTyping}
               setIsAgentTyping={setLiveAgentTyping}
               isMaximized={isMaximized}
+              setIsMaximized={setIsMaximized}
               readOnly={isPastSession}
             />
           ) : (
@@ -1532,7 +1533,7 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
                   className={`flex flex-col ${m.role === "user" ? "items-end" : "items-start"} ${isMsgTyping ? "" : "animate-in fade-in slide-in-from-bottom-4 duration-500"}`}
                 >
                   <div
-                    className={`relative group/msg max-w-[85%] sm:max-w-[75%] p-3.5 sm:p-4 rounded-2xl sm:rounded-3xl text-[13px] leading-relaxed ${m.role === "user" ? "bg-gradient-to-br from-[var(--fun-purple)] to-[#8E78FF] text-white rounded-br-none shadow-xl" : "bg-[var(--fun-surface)] fun-text rounded-bl-none border border-[var(--fun-stroke-1)] shadow-md"}`}
+                    className={`relative group/msg max-w-[85%] sm:max-w-[75%] p-3.5 sm:p-4 rounded-2xl sm:rounded-3xl text-[13px] leading-relaxed break-words overflow-hidden ${m.role === "user" ? "bg-gradient-to-br from-[var(--fun-purple)] to-[#8E78FF] text-white rounded-br-none shadow-xl" : "bg-[var(--fun-surface)] fun-text rounded-bl-none border border-[var(--fun-stroke-1)] shadow-md"}`}
                   >
                     {formatText(m.displayedText || "")}
                   </div>
