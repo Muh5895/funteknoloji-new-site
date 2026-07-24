@@ -492,11 +492,18 @@ export default function NexyAssistant() {
     setChats((prev) => [newChat, ...prev]);
     setActiveChatId(newId);
     setIsSidebarOpen(false);
+    setIsThinking(false);
+    setIsTyping(false);
+  };
+
+  const startChatSession = () => {
+    if (!activeChatId) return;
+    const initialText = t("nexy.msg1");
     setIsThinking(true);
     setTimeout(() => {
       setIsThinking(false);
       setIsTyping(true);
-      typeMessage(initialText, 0, newId);
+      typeMessage(initialText, 0, activeChatId);
     }, 1000);
   };
 
@@ -1574,59 +1581,77 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
               </div>
             )}
           </div>
-          <form
-            onSubmit={handleSend}
-            className={`p-4 sm:p-6 border-t space-y-2 bg-[var(--fun-surface)]/50 backdrop-blur-xl ${isMaximized ? "rounded-none sm:rounded-b-[32px]" : "rounded-b-[32px]"}`}
-            style={{ borderColor: "var(--fun-stroke-1)" }}
-          >
-            <div className={`relative ${isMaximized ? "max-w-4xl mx-auto w-full" : ""}`}>
-              <textarea
-                rows={1}
-                value={userInput}
-                onChange={(e) => setUserInput(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" && !e.shiftKey) {
-                    e.preventDefault();
-                    handleSend();
-                  }
-                }}
-                disabled={!isOnline}
-                placeholder={isOnline ? t("nexy.placeholder") : (lang === "tr" ? "İnternet bağlantısı yok." : "No internet connection.")}
-                className="w-full rounded-[20px] bg-[var(--fun-surface)] border-2 border-[var(--fun-stroke-1)] py-3 pl-12 pr-14 text-[13px] outline-none focus:border-[var(--fun-purple)] focus:ring-4 focus:ring-[var(--fun-purple)]/10 transition-all fun-text shadow-inner resize-none h-[46px] overflow-hidden disabled:opacity-55 disabled:cursor-not-allowed"
-              />
+          {chatMessages.length === 1 && chatMessages[0].displayedText === "" ? (
+            <div
+              className={`p-6 border-t flex flex-col items-center justify-center bg-[var(--fun-surface)]/50 backdrop-blur-xl ${isMaximized ? "rounded-none sm:rounded-b-[32px]" : "rounded-b-[32px]"}`}
+              style={{ borderColor: "var(--fun-stroke-1)" }}
+            >
               <button
                 type="button"
-                disabled={!isOnline}
-                onClick={startListening}
-                className={`absolute left-2.5 top-[23px] -translate-y-1/2 h-8 w-8 rounded-full flex items-center justify-center transition-all z-10 disabled:opacity-40 disabled:cursor-not-allowed ${isListening ? "bg-red-500 text-white scale-110 shadow-lg shadow-red-500/40 animate-pulse" : "fun-text-muted hover:bg-[var(--fun-stroke-1)] hover:text-[var(--fun-purple)]"}`}
+                onClick={startChatSession}
+                className="py-3.5 px-12 rounded-2xl bg-[var(--fun-purple)] hover:bg-[var(--fun-purple)]/90 text-white font-extrabold text-sm flex items-center justify-center gap-2 hover:scale-[1.05] transition-all shadow-xl shadow-purple-500/30 active:scale-95"
               >
-                <Mic className="h-4 w-4" />
+                <span>{lang === "tr" ? "Başla (Sohbeti Başlat)" : "Start (Start Chat)"}</span>
               </button>
-              {isThinking ? (
+              <p className="text-[9px] text-center fun-text-muted font-medium opacity-50 px-2 mt-4 tracking-wide">
+                {t("nexy.disclaimer")}
+              </p>
+            </div>
+          ) : (
+            <form
+              onSubmit={handleSend}
+              className={`p-4 sm:p-6 border-t space-y-2 bg-[var(--fun-surface)]/50 backdrop-blur-xl ${isMaximized ? "rounded-none sm:rounded-b-[32px]" : "rounded-b-[32px]"}`}
+              style={{ borderColor: "var(--fun-stroke-1)" }}
+            >
+              <div className={`relative ${isMaximized ? "max-w-4xl mx-auto w-full" : ""}`}>
+                <textarea
+                  rows={1}
+                  value={userInput}
+                  onChange={(e) => setUserInput(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" && !e.shiftKey) {
+                      e.preventDefault();
+                      handleSend();
+                    }
+                  }}
+                  disabled={!isOnline}
+                  placeholder={isOnline ? t("nexy.placeholder") : (lang === "tr" ? "İnternet bağlantısı yok." : "No internet connection.")}
+                  className="w-full rounded-[20px] bg-[var(--fun-surface)] border-2 border-[var(--fun-stroke-1)] py-3 pl-12 pr-14 text-[13px] outline-none focus:border-[var(--fun-purple)] focus:ring-4 focus:ring-[var(--fun-purple)]/10 transition-all fun-text shadow-inner resize-none h-[46px] overflow-hidden disabled:opacity-55 disabled:cursor-not-allowed"
+                />
                 <button
                   type="button"
-                  onClick={handleStopRequest}
-                  aria-label="Durdur"
-                  title="Durdur"
-                  className="absolute right-2.5 top-[23px] -translate-y-1/2 h-9 w-9 rounded-xl bg-red-500 text-white flex items-center justify-center hover:scale-105 active:scale-95 transition-all shadow-lg shadow-red-500/30 z-10"
+                  disabled={!isOnline}
+                  onClick={startListening}
+                  className={`absolute left-2.5 top-[23px] -translate-y-1/2 h-8 w-8 rounded-full flex items-center justify-center transition-all z-10 disabled:opacity-40 disabled:cursor-not-allowed ${isListening ? "bg-red-500 text-white scale-110 shadow-lg shadow-red-500/40 animate-pulse" : "fun-text-muted hover:bg-[var(--fun-stroke-1)] hover:text-[var(--fun-purple)]"}`}
                 >
-                  <Square className="h-4 w-4 fill-white text-white" />
+                  <Mic className="h-4 w-4" />
                 </button>
-              ) : (
-                <button
-                  type="submit"
-                  disabled={!userInput.trim() || isThinking || !isOnline}
-                  aria-label={t("nexy.aria_send")}
-                  className="absolute right-2.5 top-[23px] -translate-y-1/2 h-9 w-9 rounded-xl bg-[var(--fun-purple)] text-white flex items-center justify-center hover:scale-105 active:scale-95 transition-all disabled:opacity-30 disabled:hover:scale-100 disabled:cursor-not-allowed shadow-lg shadow-purple-500/30 z-10"
-                >
-                  <Send className="h-4 w-4" />
-                </button>
-              )}
-            </div>
-            <p className="text-[9px] text-center fun-text-muted font-medium opacity-50 px-2 tracking-wide">
-              {t("nexy.disclaimer")}
-            </p>
-          </form>
+                {isThinking ? (
+                  <button
+                    type="button"
+                    onClick={handleStopRequest}
+                    aria-label="Durdur"
+                    title="Durdur"
+                    className="absolute right-2.5 top-[23px] -translate-y-1/2 h-9 w-9 rounded-xl bg-red-500 text-white flex items-center justify-center hover:scale-105 active:scale-95 transition-all shadow-lg shadow-red-500/30 z-10"
+                  >
+                    <Square className="h-4 w-4 fill-white text-white" />
+                  </button>
+                ) : (
+                  <button
+                    type="submit"
+                    disabled={!userInput.trim() || isThinking || !isOnline}
+                    aria-label={t("nexy.aria_send")}
+                    className="absolute right-2.5 top-[23px] -translate-y-1/2 h-9 w-9 rounded-xl bg-[var(--fun-purple)] text-white flex items-center justify-center hover:scale-105 active:scale-95 transition-all disabled:opacity-30 disabled:hover:scale-100 disabled:cursor-not-allowed shadow-lg shadow-purple-500/30 z-10"
+                  >
+                    <Send className="h-4 w-4" />
+                  </button>
+                )}
+              </div>
+              <p className="text-[9px] text-center fun-text-muted font-medium opacity-50 px-2 tracking-wide">
+                {t("nexy.disclaimer")}
+              </p>
+            </form>
+          )}
           </div>
           </>
           )}

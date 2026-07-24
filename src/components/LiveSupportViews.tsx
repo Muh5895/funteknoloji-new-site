@@ -863,6 +863,41 @@ interface LiveChatViewProps {
   readOnly?: boolean;
 }
 
+const extractDownloadableData = (text: string): { type: "csv" | "json"; data: string } | null => {
+  if (!text) return null;
+  const jsonMatch = text.match(/```json\s*([\s\S]*?)\s*```/i);
+  if (jsonMatch && jsonMatch[1]) {
+    return { type: "json", data: jsonMatch[1].trim() };
+  }
+  const csvMatch = text.match(/```csv\s*([\s\S]*?)\s*```/i);
+  if (csvMatch && csvMatch[1]) {
+    return { type: "csv", data: csvMatch[1].trim() };
+  }
+  if (text.trim().startsWith("[") && text.trim().endsWith("]")) {
+    return { type: "json", data: text.trim() };
+  }
+  return null;
+};
+
+const triggerDataDownload = (data: string, type: "csv" | "json", filename = "funteknoloji-data") => {
+  try {
+    const mimeType = type === "json" ? "application/json" : "text/csv";
+    const extension = type === "json" ? "json" : "csv";
+    const blob = new Blob([data], { type: `${mimeType};charset=utf-8;` });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.setAttribute("href", url);
+    link.setAttribute("download", `${filename}.${extension}`);
+    link.style.visibility = "hidden";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    toast.success(type === "json" ? "JSON dosyası indirildi!" : "CSV dosyası indirildi!");
+  } catch (err) {
+    console.error("Failed to download file:", err);
+  }
+};
+
 export function LiveChatView({
   user,
   messages,
@@ -1009,7 +1044,7 @@ export function LiveChatView({
     };
   }, []);
 
-  // 5-minute Inactivity Timer
+  // 5-minute Inactivity Timer (Closes the active chat session safely on inactivity timeout)
   useEffect(() => {
     if (readOnly) return;
 
@@ -1019,7 +1054,8 @@ export function LiveChatView({
           ? "Görüşme 5 dakika boyunca hareketsiz kaldığı için otomatik olarak sonlandırıldı."
           : "Session was automatically closed due to 5 minutes of inactivity."
       );
-      forceSupportLogout();
+      // Cleanly end support session rather than completely signing out of the entire account
+      onEndSession();
     }, 5 * 60 * 1000);
 
     return () => {
@@ -1032,6 +1068,15 @@ export function LiveChatView({
     if (readOnly) return;
 
     const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      // Synchronously clear localStorage support details on tab/browser close to ensure session is completely terminated
+      localStorage.removeItem("live_support_messages");
+      localStorage.removeItem("live_support_subject");
+      localStorage.removeItem("live_support_importance");
+      localStorage.removeItem("live_support_subject_en");
+      localStorage.removeItem("live_support_importance_en");
+      localStorage.removeItem("live_support_description_en");
+      localStorage.removeItem("live_support_agent_name");
+
       e.preventDefault();
       e.returnValue = lang === "tr"
         ? "Canlı destek görüşmeniz devam ediyor. Ayrılmak istediğinize emin misiniz? Çıkarsanız görüşmeniz sonlandırılacaktır."
@@ -1937,6 +1982,22 @@ CRITICAL RULES:
                           <Volume2 className="h-3 w-3" />
                         )}
                       </button>
+                      {(() => {
+                        const downloadable = extractDownloadableData(m.text);
+                        if (downloadable) {
+                          return (
+                            <button
+                              onClick={() => triggerDataDownload(downloadable.data, downloadable.type)}
+                              className="h-7 px-2.5 flex items-center justify-center gap-1 rounded-full border border-[var(--fun-stroke-1)] bg-[var(--fun-card)] fun-text hover:bg-[var(--fun-purple)] hover:text-white text-[10px] font-bold transition-all active:scale-95"
+                              title={lang === "tr" ? "Dosyayı İndir" : "Download File"}
+                            >
+                              <Download className="h-3 w-3" />
+                              <span>{downloadable.type.toUpperCase() === "JSON" ? "JSON İndir" : "CSV İndir"}</span>
+                            </button>
+                          );
+                        }
+                        return null;
+                      })()}
                     </div>
                   )}
                 </div>
