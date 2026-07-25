@@ -3,7 +3,7 @@ import { useLang } from "../lib/i18n";
 import { useState, useEffect, useRef, useTransition } from "react";
 import ScrollReveal from "../components/ScrollReveal";
 import { translateText } from "../lib/translate";
-import { Search, Copy, Volume2, VolumeX, Share2, AlertTriangle, Check, BookOpen } from "lucide-react";
+import { Search, Copy, Volume2, VolumeX, Share2, AlertTriangle, BookOpen } from "lucide-react";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/docs")({
@@ -51,7 +51,7 @@ Hesabınızın güvenliğini en üst düzeye çıkarmak için iki adımlı doğr
     content: `Nexy, Fun Teknoloji tarafından sıfırdan geliştirilen, 12'den fazla dilde akıcı iletişim kurabilen ve veritabanı sorguları yapabilen akıllı yapay zeka asistanınızdır.
 
 ### Doğal Dil Entegrasyonu
-Nexy sadece sohbet etmekle kalmaz; yetkilendirilmiş kullanıcıların hesap dondurma, aktif oturumları inceleme veya sistem çalışma sürelerini (uptime) sorgulama isteklerini saniyeler içinde veritabanı üzerinden doğrular.
+Nexy sadece sohbet etmekle kalmaz; yetkilendirilmiş kullanıcıların hesap dondurma veya aktif oturumları inceleme isteklerini saniyeler içinde veritabanı üzerinden doğrular.
 
 ### Çalışma Prensibi ve Akış
 - **Sorgu Algılama:** Gönderdiğiniz mesajda veritabanı erişimi gerektiren bir durum tespit edilirse, Nexy otomatik bir sorgu tetikler.
@@ -101,8 +101,89 @@ QuakeSafe medikal güvenlik kartınızı oluşturduktan sonra, görünürlüğü
 
 type ArticleKey = keyof typeof MASTER_ARTICLES;
 
+// Localized translation warning dictionary for all 11 supported languages
+const WARNING_DICT: Record<string, string> = {
+  tr: "Bu dokümantasyon yapay zeka ile otomatik olarak çevrilmiştir. Bazı terimler hatalı çevrilmiş olabilir.",
+  en: "This documentation has been automatically translated by AI. Some terms may be mistranslated.",
+  az: "Bu sənədlər süni intellekt tərəfindən avtomatik tərcümə edilmişdir. Bəzi terminlər səhv tərcümə oluna bilər.",
+  de: "Diese Dokumentation wurde automatisch von KI übersetzt. Einige Begriffe sind möglicherweise falsch übersetzt.",
+  fr: "Cette documentation a été traduite automatiquement par l'IA. Certains termes peuvent être mal traduits.",
+  es: "Esta documentación ha sido traducida automáticamente por IA. Algunos términos pueden estar mal traducidos.",
+  ru: "Эта документация была автоматически переведена ИИ. Некоторые термины могут быть переведены неправильно.",
+  ar: "تمت ترجمة هذه المستندات تلقائيًا بواسطة الذكاء الاصطناعي. قد يتم ترجمة بعض المصطلحات بشكل غير صحيح.",
+  it: "Questa documentazione è stata tradotta automaticamente dall'IA. Alcuni termini potrebbero essere tradotti in modo errato.",
+  pt: "Esta documentação foi traduzida automaticamente por IA. Alguns termos podem estar incorretamente traduzidos.",
+  ja: "このドキュメントは AI によって自動的に翻訳されています。一部の用語が誤って翻訳されている可能性があります。",
+  zh: "本文件由人工智能自动翻译。某些术语可能会被错误翻译。"
+};
+
+const parseInlineMarkdown = (text: string) => {
+  const parts = text.split(/(\*\*.*?\*\*|`.*?`)/g);
+  return parts.map((part, idx) => {
+    if (part.startsWith("**") && part.endsWith("**")) {
+      return <strong key={idx} className="font-bold text-foreground">{part.slice(2, -2)}</strong>;
+    }
+    if (part.startsWith("`") && part.endsWith("`")) {
+      return <code key={idx} className="bg-[var(--fun-surface)] border border-[var(--fun-stroke-1)] px-2 py-0.5 rounded font-mono text-xs text-[var(--fun-purple)]">{part.slice(1, -1)}</code>;
+    }
+    return part;
+  });
+};
+
+const renderMarkdownContent = (text: string) => {
+  if (!text) return null;
+  const lines = text.split("\n");
+
+  return lines.map((line, idx) => {
+    const trimmed = line.trim();
+
+    if (trimmed.startsWith("### ")) {
+      return (
+        <h3 key={idx} className="text-xl font-bold mt-8 mb-3 text-foreground">
+          {parseInlineMarkdown(trimmed.substring(4))}
+        </h3>
+      );
+    }
+
+    if (trimmed.startsWith("## ")) {
+      return (
+        <h2 key={idx} className="text-2xl font-bold mt-10 mb-4 text-foreground border-b border-[var(--fun-stroke-1)] pb-2">
+          {parseInlineMarkdown(trimmed.substring(3))}
+        </h2>
+      );
+    }
+
+    if (trimmed.startsWith("- ") || trimmed.startsWith("* ")) {
+      return (
+        <li key={idx} className="list-disc pl-2 ml-6 mb-2 text-muted-foreground text-sm leading-relaxed">
+          {parseInlineMarkdown(trimmed.substring(2))}
+        </li>
+      );
+    }
+
+    if (/^\d+\.\s/.test(trimmed)) {
+      const content = trimmed.replace(/^\d+\.\s/, "");
+      return (
+        <li key={idx} className="list-decimal pl-2 ml-6 mb-2 text-muted-foreground text-sm leading-relaxed">
+          {parseInlineMarkdown(content)}
+        </li>
+      );
+    }
+
+    if (trimmed === "") {
+      return <div key={idx} className="h-3" />;
+    }
+
+    return (
+      <p key={idx} className="mb-4 text-sm text-muted-foreground leading-relaxed">
+        {parseInlineMarkdown(line)}
+      </p>
+    );
+  });
+};
+
 function DocsPage() {
-  const { lang, t } = useLang();
+  const { lang } = useLang();
   const [activeTab, setActiveTab] = useState<ArticleKey>("intro");
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -166,7 +247,6 @@ function DocsPage() {
     const ttsText = `${translatedTitle}. ${translatedContent.replace(/[#*`_-]/g, "")}`;
     const utterance = new SpeechSynthesisUtterance(ttsText);
 
-    // Set appropriate language locale for speech voice
     const localeMap: Record<string, string> = {
       tr: "tr-TR",
       en: "en-US",
@@ -257,7 +337,7 @@ function DocsPage() {
                 placeholder={lang === "tr" ? "Dokümanlarda ara..." : "Search documentation..."}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 text-xs rounded-xl bg-[var(--fun-surface)] border border-[var(--fun-stroke-1)] outline-none focus:border-[var(--fun-purple)] focus:ring-2 focus:ring-[var(--fun-purple)]/10 transition-all fun-text"
+                className="w-full pl-10 pr-4 py-2 text-xs rounded-xl bg-[var(--fun-surface)] border border-[var(--fun-stroke-1)] outline-none focus:border-[var(--fun-purple)] focus:ring-2 focus:ring-[var(--fun-purple)]/10 transition-all fun-text animate-none"
               />
               <Search className="absolute left-3.5 top-2.5 h-3.5 w-3.5 text-muted-foreground" />
             </div>
@@ -303,9 +383,7 @@ function DocsPage() {
               <div className="mb-6 flex items-center gap-3 p-4 bg-amber-500/10 border border-amber-500/20 rounded-2xl text-amber-500 animate-in fade-in duration-300">
                 <AlertTriangle className="h-5 w-5 shrink-0" />
                 <span className="text-xs font-semibold leading-relaxed">
-                  {lang === "tr"
-                    ? "Bu dokümantasyon yapay zeka ile otomatik olarak çevrilmiştir. Bazı terimler hatalı çevrilmiş olabilir."
-                    : "This documentation has been automatically translated by AI. Some terms may be mistranslated."}
+                  {WARNING_DICT[lang] || WARNING_DICT["en"]}
                 </span>
               </div>
             )}
@@ -364,25 +442,7 @@ function DocsPage() {
                     {translatedTitle}
                   </h1>
                   <div className="text-muted-foreground text-sm leading-relaxed whitespace-pre-wrap selection:bg-[var(--fun-purple)] selection:text-white">
-                    {translatedContent}
-                  </div>
-
-                  {/* Buttons row at the end of the text */}
-                  <div className="mt-8 pt-6 border-t border-[var(--fun-stroke-1)] flex items-center justify-end gap-3">
-                    <button
-                      onClick={handleReadAloud}
-                      className={`h-9 px-4 rounded-xl border border-[var(--fun-stroke-1)] text-xs font-semibold flex items-center gap-2 transition-all cursor-pointer ${isReading ? "bg-red-500/10 text-red-500 border-red-500/20 animate-pulse" : "bg-[var(--fun-surface)] hover:bg-[var(--fun-stroke-2)] text-foreground"}`}
-                    >
-                      {isReading ? <VolumeX className="h-4 w-4" /> : <Volume2 className="h-4 w-4" />}
-                      <span>{isReading ? (lang === "tr" ? "Durdur" : "Stop") : (lang === "tr" ? "Metni Dinle" : "Listen")}</span>
-                    </button>
-                    <button
-                      onClick={handleCopy}
-                      className="h-9 px-4 rounded-xl border border-[var(--fun-stroke-1)] bg-[var(--fun-surface)] hover:bg-[var(--fun-stroke-2)] text-foreground text-xs font-semibold flex items-center gap-2 transition-all cursor-pointer"
-                    >
-                      <Copy className="h-4 w-4" />
-                      <span>{lang === "tr" ? "Metni Kopyala" : "Copy Text"}</span>
-                    </button>
+                    {renderMarkdownContent(translatedContent)}
                   </div>
                 </>
               )}

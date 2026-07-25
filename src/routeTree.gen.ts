@@ -29,10 +29,6 @@ import { Route as BlogRouteImport } from './routes/blog'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as BlogIndexRouteImport } from './routes/blog.index'
-import { Route as ChangelogQuakesafeRouteImport } from './routes/changelog.quakesafe'
-import { Route as ChangelogFunteknolojiRouteImport } from './routes/changelog.funteknoloji'
-import { Route as ChangelogFunidRouteImport } from './routes/changelog.funid'
-import { Route as ChangelogDeveloperRouteImport } from './routes/changelog.developer'
 import { Route as BlogPostIdRouteImport } from './routes/blog.$postId'
 
 const TeamRoute = TeamRouteImport.update({
@@ -135,26 +131,6 @@ const BlogIndexRoute = BlogIndexRouteImport.update({
   path: '/',
   getParentRoute: () => BlogRoute,
 } as any)
-const ChangelogQuakesafeRoute = ChangelogQuakesafeRouteImport.update({
-  id: '/quakesafe',
-  path: '/quakesafe',
-  getParentRoute: () => ChangelogRoute,
-} as any)
-const ChangelogFunteknolojiRoute = ChangelogFunteknolojiRouteImport.update({
-  id: '/funteknoloji',
-  path: '/funteknoloji',
-  getParentRoute: () => ChangelogRoute,
-} as any)
-const ChangelogFunidRoute = ChangelogFunidRouteImport.update({
-  id: '/funid',
-  path: '/funid',
-  getParentRoute: () => ChangelogRoute,
-} as any)
-const ChangelogDeveloperRoute = ChangelogDeveloperRouteImport.update({
-  id: '/developer',
-  path: '/developer',
-  getParentRoute: () => ChangelogRoute,
-} as any)
 const BlogPostIdRoute = BlogPostIdRouteImport.update({
   id: '/$postId',
   path: '/$postId',
@@ -166,7 +142,7 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/blog': typeof BlogRouteWithChildren
   '/brand-kit': typeof BrandKitRoute
-  '/changelog': typeof ChangelogRouteWithChildren
+  '/changelog': typeof ChangelogRoute
   '/contact': typeof ContactRoute
   '/docs': typeof DocsRoute
   '/faq': typeof FaqRoute
@@ -182,17 +158,13 @@ export interface FileRoutesByFullPath {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/team': typeof TeamRoute
   '/blog/$postId': typeof BlogPostIdRoute
-  '/changelog/developer': typeof ChangelogDeveloperRoute
-  '/changelog/funid': typeof ChangelogFunidRoute
-  '/changelog/funteknoloji': typeof ChangelogFunteknolojiRoute
-  '/changelog/quakesafe': typeof ChangelogQuakesafeRoute
   '/blog/': typeof BlogIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/brand-kit': typeof BrandKitRoute
-  '/changelog': typeof ChangelogRouteWithChildren
+  '/changelog': typeof ChangelogRoute
   '/contact': typeof ContactRoute
   '/docs': typeof DocsRoute
   '/faq': typeof FaqRoute
@@ -208,10 +180,6 @@ export interface FileRoutesByTo {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/team': typeof TeamRoute
   '/blog/$postId': typeof BlogPostIdRoute
-  '/changelog/developer': typeof ChangelogDeveloperRoute
-  '/changelog/funid': typeof ChangelogFunidRoute
-  '/changelog/funteknoloji': typeof ChangelogFunteknolojiRoute
-  '/changelog/quakesafe': typeof ChangelogQuakesafeRoute
   '/blog': typeof BlogIndexRoute
 }
 export interface FileRoutesById {
@@ -220,7 +188,7 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/blog': typeof BlogRouteWithChildren
   '/brand-kit': typeof BrandKitRoute
-  '/changelog': typeof ChangelogRouteWithChildren
+  '/changelog': typeof ChangelogRoute
   '/contact': typeof ContactRoute
   '/docs': typeof DocsRoute
   '/faq': typeof FaqRoute
@@ -236,10 +204,6 @@ export interface FileRoutesById {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/team': typeof TeamRoute
   '/blog/$postId': typeof BlogPostIdRoute
-  '/changelog/developer': typeof ChangelogDeveloperRoute
-  '/changelog/funid': typeof ChangelogFunidRoute
-  '/changelog/funteknoloji': typeof ChangelogFunteknolojiRoute
-  '/changelog/quakesafe': typeof ChangelogQuakesafeRoute
   '/blog/': typeof BlogIndexRoute
 }
 export interface FileRouteTypes {
@@ -265,10 +229,6 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/team'
     | '/blog/$postId'
-    | '/changelog/developer'
-    | '/changelog/funid'
-    | '/changelog/funteknoloji'
-    | '/changelog/quakesafe'
     | '/blog/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -291,10 +251,6 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/team'
     | '/blog/$postId'
-    | '/changelog/developer'
-    | '/changelog/funid'
-    | '/changelog/funteknoloji'
-    | '/changelog/quakesafe'
     | '/blog'
   id:
     | '__root__'
@@ -318,10 +274,6 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/team'
     | '/blog/$postId'
-    | '/changelog/developer'
-    | '/changelog/funid'
-    | '/changelog/funteknoloji'
-    | '/changelog/quakesafe'
     | '/blog/'
   fileRoutesById: FileRoutesById
 }
@@ -330,7 +282,7 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   BlogRoute: typeof BlogRouteWithChildren
   BrandKitRoute: typeof BrandKitRoute
-  ChangelogRoute: typeof ChangelogRouteWithChildren
+  ChangelogRoute: typeof ChangelogRoute
   ContactRoute: typeof ContactRoute
   DocsRoute: typeof DocsRoute
   FaqRoute: typeof FaqRoute
@@ -489,34 +441,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BlogIndexRouteImport
       parentRoute: typeof BlogRoute
     }
-    '/changelog/quakesafe': {
-      id: '/changelog/quakesafe'
-      path: '/quakesafe'
-      fullPath: '/changelog/quakesafe'
-      preLoaderRoute: typeof ChangelogQuakesafeRouteImport
-      parentRoute: typeof ChangelogRoute
-    }
-    '/changelog/funteknoloji': {
-      id: '/changelog/funteknoloji'
-      path: '/funteknoloji'
-      fullPath: '/changelog/funteknoloji'
-      preLoaderRoute: typeof ChangelogFunteknolojiRouteImport
-      parentRoute: typeof ChangelogRoute
-    }
-    '/changelog/funid': {
-      id: '/changelog/funid'
-      path: '/funid'
-      fullPath: '/changelog/funid'
-      preLoaderRoute: typeof ChangelogFunidRouteImport
-      parentRoute: typeof ChangelogRoute
-    }
-    '/changelog/developer': {
-      id: '/changelog/developer'
-      path: '/developer'
-      fullPath: '/changelog/developer'
-      preLoaderRoute: typeof ChangelogDeveloperRouteImport
-      parentRoute: typeof ChangelogRoute
-    }
     '/blog/$postId': {
       id: '/blog/$postId'
       path: '/$postId'
@@ -539,30 +463,12 @@ const BlogRouteChildren: BlogRouteChildren = {
 
 const BlogRouteWithChildren = BlogRoute._addFileChildren(BlogRouteChildren)
 
-interface ChangelogRouteChildren {
-  ChangelogDeveloperRoute: typeof ChangelogDeveloperRoute
-  ChangelogFunidRoute: typeof ChangelogFunidRoute
-  ChangelogFunteknolojiRoute: typeof ChangelogFunteknolojiRoute
-  ChangelogQuakesafeRoute: typeof ChangelogQuakesafeRoute
-}
-
-const ChangelogRouteChildren: ChangelogRouteChildren = {
-  ChangelogDeveloperRoute: ChangelogDeveloperRoute,
-  ChangelogFunidRoute: ChangelogFunidRoute,
-  ChangelogFunteknolojiRoute: ChangelogFunteknolojiRoute,
-  ChangelogQuakesafeRoute: ChangelogQuakesafeRoute,
-}
-
-const ChangelogRouteWithChildren = ChangelogRoute._addFileChildren(
-  ChangelogRouteChildren,
-)
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   BlogRoute: BlogRouteWithChildren,
   BrandKitRoute: BrandKitRoute,
-  ChangelogRoute: ChangelogRouteWithChildren,
+  ChangelogRoute: ChangelogRoute,
   ContactRoute: ContactRoute,
   DocsRoute: DocsRoute,
   FaqRoute: FaqRoute,
