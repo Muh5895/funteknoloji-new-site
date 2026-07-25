@@ -198,7 +198,7 @@ const tr: Dict = {
   "home.cta.desc":
     "Herhangi bir sorunuz veya yardıma ihtiyacınız olursa destek ekibimizle iletişime geçin.",
   "home.cta.more": "Daha Fazlasını Keşfet",
-  "home.cta.title": "Bugün kullanmaya başlayın.",
+  "home.cta.title": "Hizmetlerimizi Bugün Kullanmaya Başlayın.",
   "home.faq.q1": "Fun Teknoloji nedir?",
   "home.faq.a1":
     "Fun Teknoloji, yapay zeka ve yenilikçi yazılım çözümleri üreten, geleceğin teknolojilerine odaklanmış bir vizyoner teknoloji girişimidir.",
@@ -219,15 +219,15 @@ const tr: Dict = {
   "home.faq.title": "Sıkça Sorulan Sorular",
   "home.features.badge": "Özellikler",
   "home.features.card1.desc":
-    "En son LLM ve derin öğrenme modellerini kullanarak işinizi otomatize ediyoruz.",
-  "home.features.card1.title": "Gelişmiş Yapay Zeka",
+    "Yalnızca kendi geliştirdiğimiz ve tüm ayrıntılarına sahip olduğumuz yapay zeka ve afet teknolojisi ekosistemini sunuyoruz.",
+  "home.features.card1.title": "Kendi İnovatif Ürünlerimiz",
   "home.features.card2.desc":
-    "Dünya genelinde düşük gecikme süresiyle çalışan ölçeklenebilir sistemler.",
-  "home.features.card2.title": "Küresel Altyapı",
+    "Dışarıya veya üçüncü şahıslara özel yazılım geliştirmiyoruz; tüm Ar-Ge gücümüzü kendi teknolojilerimizi mükemmelleştirmeye harcıyoruz.",
+  "home.features.card2.title": "Bağımsız Ekosistem",
   "home.features.card3.desc":
-    "AES-256 şifreleme ve gelişmiş güvenlik protokolleri ile verileriniz güvende.",
-  "home.features.card3.title": "Tam Güvenlik",
-  "home.features.desc": "İşinizi bir üst seviyeye taşıyacak en modern teknolojileri sunuyoruz.",
+    "Yüksek performans, kesintisiz çalışma performansı ve sıfır hata prensibi ile ürünlerimizi sıfırdan kendi bünyemizde inşa ediyoruz.",
+  "home.features.card3.title": "Kusursuz Mühendislik",
+  "home.features.desc": "Geleceğin teknolojilerini kendi bağımsız ve güvenli ekosistemimizde sıfırdan inşa ediyoruz.",
   "home.features.title": "Neden Bizi Seçmelisiniz?",
   "home.hero.badge": "Türkiye'nin Yenilikçi Teknoloji Şirketi",
   "home.hero.desc":
@@ -235,18 +235,18 @@ const tr: Dict = {
   "home.hero.explore": "Projeleri Keşfet",
   "home.hero.start": "Bekleme Listesine Katıl",
   "home.hero.title": "Geleceğin Teknolojileri Bugün Bizimle",
-  "home.howitworks.badge": "Süreç",
-  "home.howitworks.desc": "Projenizi nasıl hayata geçirdiğimizi adım adım keşfedin.",
+  "home.howitworks.badge": "Geliştirme Döngümüz",
+  "home.howitworks.desc": "Geleceğin tescilli teknolojilerini sıfırdan nasıl hayata geçirdiğimizi keşfedin.",
   "home.howitworks.step1.desc":
-    "İhtiyaçlarınızı analiz ediyor ve en uygun teknoloji yığınını belirliyoruz.",
-  "home.howitworks.step1.title": "Analiz ve Planlama",
+    "Yenilikçi fikirleri derinlemesine analiz ediyor, Ar-Ge süreçleri ile geleceğin teknolojisini planlıyoruz.",
+  "home.howitworks.step1.title": "Fikir ve Ar-Ge",
   "home.howitworks.step2.desc":
-    "Modern tasarım ilkeleriyle kullanıcı dostu arayüzler ve güçlü backend yapıları kuruyoruz.",
-  "home.howitworks.step2.title": "Geliştirme ve Test",
+    "Kendi mühendislerimizle modern, yüksek performanslı tescilli algoritmalar ve güçlü arayüzler kodluyoruz.",
+  "home.howitworks.step2.title": "Geliştirme ve Optimizasyon",
   "home.howitworks.step3.desc":
-    "Projenizi yayına alıyor ve kesintisiz destek sunmaya devam ediyoruz.",
-  "home.howitworks.step3.title": "Lansman ve Destek",
-  "home.howitworks.title": "Nasıl Çalışıyoruz?",
+    "Ürünlerimizi küresel çapta yayına alıyor, sürekli güncellemeler ve kesintisiz ekosistem entegrasyonu sağlıyoruz.",
+  "home.howitworks.step3.title": "Lansman ve Ekosistem",
+  "home.howitworks.title": "İnovasyon Yolculuğumuz",
   "home.services.badge": "Teknolojilerimiz",
   "home.services.desc":
     "Dijital dünyada fark yaratan, kendi bünyemizde geliştirdiğimiz yenilikçi teknoloji çözümleri.",
@@ -803,7 +803,7 @@ const en: Dict = {
   "home.cta.button": "Contact Us",
   "home.cta.desc": "If you have any questions or need help, contact our support team.",
   "home.cta.more": "Discover More",
-  "home.cta.title": "Get started today.",
+  "home.cta.title": "Start Using Our Services Today.",
   "home.faq.q1": "What is Fun Technology?",
   "home.faq.a1":
     "Fun Technology is a visionary tech venture focused on building the future of artificial intelligence and innovative software solutions.",
@@ -821,15 +821,16 @@ const en: Dict = {
   "home.faq.title": "Frequently Asked Questions",
   "home.features.badge": "Features",
   "home.features.card1.desc":
-    "We automate your work using the latest LLM and deep learning models.",
-  "home.features.card1.title": "Advanced Artificial Intelligence",
-  "home.features.card2.desc": "Scalable systems that operate with low latency around the world.",
-  "home.features.card2.title": "Global Infrastructure",
+    "We offer only next-generation AI and safety products (like Nexy, QuakeSafe, FunID) developed entirely by us, with every detail being ours.",
+  "home.features.card1.title": "Our Own Innovative Products",
+  "home.features.card2.desc":
+    "We do not develop custom software/projects for external parties; we spend all our R&D power perfecting our own proprietary technologies.",
+  "home.features.card2.title": "Independent Ecosystem",
   "home.features.card3.desc":
-    "Your data is safe with AES-256 encryption and advanced security protocols.",
-  "home.features.card3.title": "Full Security",
+    "We build our products internally from scratch with the highest security standards, seamless uptime performance, and zero-error principle.",
+  "home.features.card3.title": "Flawless Engineering",
   "home.features.desc":
-    "We offer the most modern technologies that will take your business to the next level.",
+    "We build the technologies of the future from scratch in our own independent and secure ecosystem.",
   "home.features.title": "Why Should You Choose Us?",
   "home.hero.badge": "Türkiye's Innovative Technology Company",
   "home.hero.desc":
@@ -837,18 +838,18 @@ const en: Dict = {
   "home.hero.explore": "Discover Projects",
   "home.hero.start": "Join the Waitlist",
   "home.hero.title": "Technologies of the Future Are With Us Today",
-  "home.howitworks.badge": "Period",
-  "home.howitworks.desc": "Discover step by step how we bring your project to life.",
+  "home.howitworks.badge": "Our Development Cycle",
+  "home.howitworks.desc": "Discover how we conceptualize, develop, and deploy pioneering proprietary technologies from scratch.",
   "home.howitworks.step1.desc":
-    "We analyze your needs and determine the most suitable technology stack.",
-  "home.howitworks.step1.title": "Analysis and Planning",
+    "We deeply analyze innovative ideas and plan the technology of the future through extensive R&D processes.",
+  "home.howitworks.step1.title": "Idea and R&D",
   "home.howitworks.step2.desc":
-    "We establish user-friendly interfaces and strong backend structures with modern design principles.",
-  "home.howitworks.step2.title": "Development and Testing",
+    "We write modern, high-performance proprietary algorithms and robust interfaces with our own engineers.",
+  "home.howitworks.step2.title": "Development and Optimization",
   "home.howitworks.step3.desc":
-    "We publish your project and continue to provide uninterrupted support.",
-  "home.howitworks.step3.title": "Launch and Support",
-  "home.howitworks.title": "How Do We Work?",
+    "We deploy our products globally, offering continuous updates and seamless ecosystem integration.",
+  "home.howitworks.step3.title": "Launch and Ecosystem",
+  "home.howitworks.title": "Our Innovation Journey",
   "home.services.badge": "Our Technologies",
   "home.services.desc":
     "Innovative technology solutions developed in-house that make a difference in the digital world.",

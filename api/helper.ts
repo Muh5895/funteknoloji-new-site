@@ -55,15 +55,60 @@ const isRateLimitedServerless = async (ip: string): Promise<boolean> => {
 const translateTextHelper = async (text: string, source: string, target: string): Promise<string> => {
   if (!text || source === target) return text;
   try {
+    const placeholders: string[] = [];
+    let processedText = text;
+
+    // 1. Protect custom REDIRECT tags: [REDIRECT:/path]
+    processedText = processedText.replace(/\[REDIRECT:[^\]]+\]/gi, (match) => {
+      const ph = `__REDIRECT_PH_${placeholders.length}__`;
+      placeholders.push(match);
+      return ph;
+    });
+
+    // 2. Protect database query tags: [DB_QUERY:...]
+    processedText = processedText.replace(/\[DB_QUERY:[^\]]+\]/gi, (match) => {
+      const ph = `__DBQUERY_PH_${placeholders.length}__`;
+      placeholders.push(match);
+      return ph;
+    });
+
+    // 3. Protect code blocks: `...`
+    processedText = processedText.replace(/`[^`]+`/g, (match) => {
+      const ph = `__CODE_PH_${placeholders.length}__`;
+      placeholders.push(match);
+      return ph;
+    });
+
+    // 4. Protect specific brand terms: FunID, QuakeSafe, Nexy, Fun Teknoloji
+    const brandTerms = ["FunID", "QuakeSafe", "Nexy", "Fun Teknoloji"];
+    for (const term of brandTerms) {
+      const regex = new RegExp(term, "g");
+      processedText = processedText.replace(regex, (match) => {
+        const ph = `__BRAND_PH_${placeholders.length}__`;
+        placeholders.push(match);
+        return ph;
+      });
+    }
+
     const response = await fetch(
-      `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${source}&tl=${target}&dt=t&q=${encodeURIComponent(text)}`
+      `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${source}&tl=${target}&dt=t&q=${encodeURIComponent(processedText)}`
     );
     const data = await response.json();
     let result = data[0].map((item: any) => item[0]).join("");
 
-    // Protect "FunID" from being translated to "Eğlence Kimliği"
-    result = result.replace(/Eğlence Kimliği/gi, "FunID");
-    result = result.replace(/Eğlence kimliği/gi, "FunID");
+    // Restore protected tags in reverse order
+    for (let i = placeholders.length - 1; i >= 0; i--) {
+      const regexRedirect = new RegExp("__\\s*REDIRECT_PH_\\s*" + i + "\\s*__", "gi");
+      const regexDb = new RegExp("__\\s*DBQUERY_PH_\\s*" + i + "\\s*__", "gi");
+      const regexCode = new RegExp("__\\s*CODE_PH_\\s*" + i + "\\s*__", "gi");
+      const regexBrand = new RegExp("__\\s*BRAND_PH_\\s*" + i + "\\s*__", "gi");
+
+      result = result.replace(regexRedirect, placeholders[i]);
+      result = result.replace(regexDb, placeholders[i]);
+      result = result.replace(regexCode, placeholders[i]);
+      result = result.replace(regexBrand, placeholders[i]);
+    }
+
     return result;
   } catch (error) {
     console.error("Translation helper error:", error);
@@ -469,17 +514,15 @@ Kurucu: Muhammed Erbay
 Misyon: Geleceğin teknolojilerini bugünden sunmak.
 Kuruluş: 2025
 
-Projelerimiz:
+Projelerimiz ve Ürünlerimiz:
 1. Nexy: Fun Teknoloji'nin amiral gemisi yapay zeka asistanı. İşletmelerin ve kullanıcıların her dilde (12+ dil desteği) iletişim kurmasını sağlayan, akıllı, hızlı ve güvenli bir dijital asistan. (Şu an kullanıcıyla konuşan sensin!)
 2. QuakeSafe: Afet güvenliği teknolojisinde devrim. Yapay zeka ve sensör ağları kullanarak deprem anında erken uyarı veren ve afet sonrası koordinasyonu sağlayan hayat kurtarıcı bir platform.
 3. FunID: Fun Teknoloji'nin tüm sistemlerinde kullanılan birleşik kimlik doğrulama, hesap yönetimi ve kullanıcı güvenliği platformu. Kullanıcıların profillerini, şifrelerini, 2FA güvenlik ayarlarını ve hesaplarını tek bir merkezden yönetmesini sağlar.
 
-Hizmetler:
-1. Yapay Zeka Çözümleri: İşletmenize özel eğitilmiş LLM modelleri, otonom yapay zeka destek asistanları (Nexy gibi) ve ileri seviye veri analitiği.
-2. Özel Yazılım Geliştirme: Modern web uygulamaları (React, Next.js, TanStack), yüksek performanslı mobil uygulamalar (iOS, Android) ve ölçeklenebilir backend sistemleri.
-3. Bulut ve Veri: Bulut altyapı yönetimi, veritabanı optimizasyonu ve güvenli veri depolama çözümleri.
-4. Siber Güvenlik: Sistem zafiyet analizleri, sızma testleri ve tam kapsamlı güvenlik denetimleri.
-5. Teknik Danışmanlık: Dijital dönüşüm yolculuğunuzda profesyonel rehberlik ve strateji geliştirme.
+Sunduğumuz Tescilli Ürün Ekosistemi:
+1. Yapay Zeka Çözümleri: Kendi geliştirdiğimiz ve tescillediğimiz LLM modelleri ve otonom yapay zeka destek asistanları (Nexy gibi).
+2. Güvenli Afet Sistemleri: Deprem anında hayat kurtaran QuakeSafe altyapısı ve sensör entegrasyonu.
+3. Güvenlik ve Kimlik Doğrulama: FunID birleşik kimlik doğrulama altyapısı.
 
 Sayfalar ve Yönlendirme Komutları:
 - Ana Sayfa: /
@@ -498,7 +541,10 @@ Sayfalar ve Yönlendirme Komutları:
 - Marka Kiti: /brand-kit
 
 Önemli Notlar:
-- Sen sadece Fun Teknoloji projelerini ve hizmetlerini biliyorsun. Sahibi olmadığımız projelerden bahsetme.
+- BİZ KESİNLİKLE DIŞARIYA/ÜÇÜNCÜ ŞAHISLARA ÖZEL PROJE VEYA ÖZEL YAZILIM GELİŞTİRME HİZMETİ SUNMUYORUZ.
+- Biz sadece kendi uygulamalarımızı ve inovatif ürünlerimizi (Nexy, QuakeSafe, FunID gibi) geliştirip sunuyoruz.
+- Eğer bir kullanıcı "bize özel yazılım yapar mısınız?", "özel proje geliştiriyor musunuz?" veya "sipariş üzerine web sitesi/mobil uygulama yapar mısınız?" gibi şeyler sorarsa, KESİNLİKLE reddet. Bizim dışarıya hizmet sunmadığımızı, yalnızca kendi tescilli ürün ekosistemimizi mükemmelleştirdiğimizi polite ve net bir şekilde açıkla.
+- Sen sadece Fun Teknoloji projelerini ve ürünlerini biliyorsun. Sahibi olmadığımız projelerden bahsetme.
 - Eğer kullanıcı "beni iletişim sayfasına götür" veya "sizinle nasıl çalışabilirim?" gibi bir şey söylerse, cevabının sonuna mutlaka [REDIRECT:/contact] ekle.
 - Tablolu cevaplar verebilirsin (Markdown formatında).
 - Cevaplarında asla Pollinations.ai reklamı yapma.

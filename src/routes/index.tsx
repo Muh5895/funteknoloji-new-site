@@ -220,9 +220,6 @@ function FeaturesSection({ t }: { t: (k: string) => string }) {
               className="rounded-[32px] p-8 md:p-10 relative overflow-hidden group border border-[var(--fun-stroke-1)] hover:border-[var(--fun-purple)] transition-all duration-500"
               style={{ backgroundColor: "var(--fun-card)" }}
             >
-              <div className="absolute top-0 right-0 p-10 opacity-5">
-                <Cpu className="h-40 w-40" />
-              </div>
               <div className="h-16 w-16 rounded-2xl bg-[var(--fun-purple)]/10 flex items-center justify-center text-[var(--fun-purple)] mb-8 group-hover:bg-[var(--fun-purple)] group-hover:text-white transition-colors duration-500">
                 <Cpu className="h-8 w-8" />
               </div>
@@ -234,9 +231,6 @@ function FeaturesSection({ t }: { t: (k: string) => string }) {
               className="rounded-[32px] p-8 md:p-10 relative overflow-hidden group border border-[var(--fun-stroke-1)] hover:border-[var(--fun-purple)] transition-all duration-500"
               style={{ backgroundColor: "var(--fun-card)" }}
             >
-              <div className="absolute top-0 right-0 p-10 opacity-5">
-                <Globe className="h-40 w-40" />
-              </div>
               <div className="h-16 w-16 rounded-2xl bg-[var(--fun-purple)]/10 flex items-center justify-center text-[var(--fun-purple)] mb-8 group-hover:bg-[var(--fun-purple)] group-hover:text-white transition-colors duration-500">
                 <Globe className="h-8 w-8" />
               </div>
@@ -248,9 +242,6 @@ function FeaturesSection({ t }: { t: (k: string) => string }) {
               className="rounded-[32px] p-8 md:p-10 relative overflow-hidden group border border-[var(--fun-stroke-1)] hover:border-[var(--fun-purple)] transition-all duration-500"
               style={{ backgroundColor: "var(--fun-card)" }}
             >
-              <div className="absolute top-0 right-0 p-10 opacity-5">
-                <ShieldCheck className="h-40 w-40" />
-              </div>
               <div className="h-16 w-16 rounded-2xl bg-[var(--fun-purple)]/10 flex items-center justify-center text-[var(--fun-purple)] mb-8 group-hover:bg-[var(--fun-purple)] group-hover:text-white transition-colors duration-500">
                 <ShieldCheck className="h-8 w-8" />
               </div>

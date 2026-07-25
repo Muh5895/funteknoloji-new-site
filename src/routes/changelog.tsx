@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useLang } from "../lib/i18n";
 import ScrollReveal from "../components/ScrollReveal";
 
@@ -10,38 +10,35 @@ export const Route = createFileRoute("/changelog")({
 });
 
 function ChangelogPage() {
-  const { t, lang } = useLang();
+  const { t } = useLang();
+  const navigate = useNavigate();
 
   const categories = [
     {
       name: "Fun Teknoloji",
       logo: "/assets/logos/Fun Teknoloji Siyah Logo.png",
       desc: t("changelog.item1.desc"),
+      path: "/about",
     },
     {
       name: "FunID",
       logo: "/assets/logos/Fun Teknoloji Siyah Logo.png",
       desc: t("changelog.item2.desc"),
+      path: "/services",
     },
     {
       name: "Developer",
       logo: "/assets/logos/Fun Teknoloji Siyah Logo.png",
       desc: t("changelog.item3.desc"),
+      path: "/docs",
     },
     {
       name: "QuakeSafe",
       logo: "/assets/logos/quakesafe_seffaf.png",
       desc: t("changelog.item4.desc"),
+      path: "/quakesafe",
     },
   ];
-
-  const handleSoon = () => {
-    import("sonner").then(({ toast }) => {
-      toast.info(t("changelog.coming_soon"), {
-        description: t("changelog.details_soon"),
-      });
-    });
-  };
 
   return (
     <main className="pt-32 pb-20 px-4 lg:px-5">
@@ -78,12 +75,12 @@ function ChangelogPage() {
                     <h2 className="text-2xl md:text-3xl font-bold fun-text">{cat.name}</h2>
                   </div>
                   <div className="flex items-center justify-between gap-6 flex-wrap">
-                    <p className="text-sm font-medium fun-text-muted">
-                      {t("changelog.last_update")}
+                    <p className="text-sm font-medium fun-text-muted leading-relaxed max-w-xl">
+                      {cat.desc}
                     </p>
                     <button
-                      onClick={handleSoon}
-                      className="h-12 w-12 rounded-full flex items-center justify-center transition-all bg-[var(--fun-text)] hover:bg-[var(--fun-purple)] ring-8 ring-[var(--fun-card)] group/btn"
+                      onClick={() => navigate({ to: cat.path as any })}
+                      className="h-12 w-12 rounded-full flex items-center justify-center transition-all bg-[var(--fun-text)] hover:bg-[var(--fun-purple)] ring-8 ring-[var(--fun-card)] group/btn cursor-pointer"
                     >
                       <svg
                         className="h-5 w-5 text-[var(--fun-card)] transition-transform group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1"
