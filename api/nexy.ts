@@ -580,7 +580,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            model: "google/gemma-2-27b-it:free",
+            model: "gpt-5-mini",
             messages: finalMessages
           }),
         }, 8000);

@@ -784,8 +784,9 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
         }
       } catch (directErr) {
         console.error("Direct frontend fallback also failed:", directErr);
-        textResponse = lang === "tr" ? "Bir hata oluştu, lütfen daha sonra tekrar deneyin." : "An error occurred, please try again later.";
-        englishResponse = "An error occurred, please try again later.";
+        const fallbackErrMsg = "A temporary system congestion occurred. Please try again in a moment.";
+        textResponse = await translateTextHelper(fallbackErrMsg, "en", lang);
+        englishResponse = fallbackErrMsg;
       }
     }
 
