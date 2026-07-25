@@ -377,7 +377,7 @@ export default function NexyAssistant() {
   const [livePassword, setLivePassword] = useState("");
   const [liveMessages, setLiveMessages] = useState<{ role: "agent" | "user"; text: string; id: string; timestamp: number; images?: string[] }[]>(() => {
     if (typeof window !== "undefined") {
-      const saved = localStorage.getItem("live_support_messages");
+      const saved = sessionStorage.getItem("live_support_messages");
       return saved ? JSON.parse(saved) : [];
     }
     return [];
@@ -390,9 +390,9 @@ export default function NexyAssistant() {
   useEffect(() => {
     if (typeof window !== "undefined") {
       if (liveUser) {
-        localStorage.setItem("live_support_user", JSON.stringify(liveUser));
+        sessionStorage.setItem("live_support_user", JSON.stringify(liveUser));
       } else {
-        localStorage.removeItem("live_support_user");
+        sessionStorage.removeItem("live_support_user");
       }
     }
   }, [liveUser]);
@@ -402,12 +402,12 @@ export default function NexyAssistant() {
       if (liveMessages.length > 0) {
         try {
           const cleaned = cleanLiveMessagesForStorage(liveMessages);
-          localStorage.setItem("live_support_messages", JSON.stringify(cleaned));
+          sessionStorage.setItem("live_support_messages", JSON.stringify(cleaned));
         } catch (e) {
-          console.error("Failed to save live support messages to LocalStorage:", e);
+          console.error("Failed to save live support messages to SessionStorage:", e);
         }
       } else {
-        localStorage.removeItem("live_support_messages");
+        sessionStorage.removeItem("live_support_messages");
       }
     }
   }, [liveMessages]);
@@ -482,7 +482,7 @@ export default function NexyAssistant() {
       requestAnimationFrame(scroll);
       setTimeout(scroll, 100); // Fallback for slower rendering
     }
-  }, [chatMessages, isThinking, isTyping]);
+  }, [chatMessages, isThinking, isTyping, isOpen, activeChatId]);
 
   // Prevent background scroll when maximized
   useEffect(() => {
@@ -1356,10 +1356,10 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
               lang={lang}
               onBack={() => setSupportView("menu")}
               onSubmit={async (details) => {
-                // Save subject, importance & description to localStorage so they persist for archive saving and AI context
-                localStorage.setItem("live_support_subject", details.subject);
-                localStorage.setItem("live_support_importance", details.importance);
-                localStorage.setItem("live_support_description", details.description);
+                // Save subject, importance & description to sessionStorage so they persist for archive saving and AI context
+                sessionStorage.setItem("live_support_subject", details.subject);
+                sessionStorage.setItem("live_support_importance", details.importance);
+                sessionStorage.setItem("live_support_description", details.description);
 
                 try {
                   // Translate subject and description to English silently in the background
@@ -1378,9 +1378,9 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
                   };
                   const importanceEn = importanceMap[details.importance] || details.importance;
 
-                  localStorage.setItem("live_support_subject_en", subjectEn);
-                  localStorage.setItem("live_support_importance_en", importanceEn);
-                  localStorage.setItem("live_support_description_en", descriptionEn);
+                  sessionStorage.setItem("live_support_subject_en", subjectEn);
+                  sessionStorage.setItem("live_support_importance_en", importanceEn);
+                  sessionStorage.setItem("live_support_description_en", descriptionEn);
                 } catch (e) {
                   console.error("Failed to translate ticket details to English:", e);
                 }

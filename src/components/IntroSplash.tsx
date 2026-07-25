@@ -73,6 +73,9 @@ export default function IntroSplash() {
 
   if (!show) return null;
 
+  const lang = typeof window !== "undefined" ? (localStorage.getItem("fun_lang") || "tr") : "tr";
+  const skipText = lang === "tr" ? "Atla" : "Skip";
+
   return (
     <div
       className={`fixed inset-0 z-[9999] flex items-center justify-center bg-black transition-opacity duration-500 ${fading ? "opacity-0" : "opacity-100"}`}
@@ -108,6 +111,27 @@ export default function IntroSplash() {
         }}
         className="h-full w-full object-cover pointer-events-none select-none"
       />
+      {/* Immersive glassmorphism Skip button placed elegantly at the bottom right */}
+      <button
+        type="button"
+        onClick={(e) => {
+          e.stopPropagation();
+          finish();
+        }}
+        className="absolute bottom-8 right-8 z-[10000] px-6 py-2.5 bg-black/40 hover:bg-black/60 backdrop-blur-md text-white text-sm font-medium rounded-full border border-white/20 hover:border-white/40 transition-all active:scale-95 duration-200 cursor-pointer flex items-center gap-1.5 shadow-lg"
+      >
+        <span>{skipText}</span>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-4 w-4"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          strokeWidth={2.5}
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" d="M13 5l7 7-7 7M5 5l7 7-7 7" />
+        </svg>
+      </button>
     </div>
   );
 }

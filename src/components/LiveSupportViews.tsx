@@ -996,9 +996,9 @@ export function LiveChatView({
           accountContext = `\n[USER ACCOUNT CONTEXT]\nEmail: ${userProfile.email}\nFull Name: ${userProfile.name}\nAccount Created At: ${userProfile.createdAt ? new Date(userProfile.createdAt).toLocaleString("tr-TR") : "N/A"}\nEmail Verification Status: ${userProfile.emailConfirmed ? "Verified" : "Unverified"}\nLast Sign-In: ${userProfile.lastSignIn ? new Date(userProfile.lastSignIn).toLocaleString("tr-TR") : "N/A"}\n`;
         }
 
-        const ticketSubject = localStorage.getItem("live_support_subject_en") || localStorage.getItem("live_support_subject") || "General Support";
-        const ticketImportance = localStorage.getItem("live_support_importance_en") || localStorage.getItem("live_support_importance") || "Medium";
-        const ticketDescription = localStorage.getItem("live_support_description_en") || localStorage.getItem("live_support_description") || "";
+        const ticketSubject = sessionStorage.getItem("live_support_subject_en") || sessionStorage.getItem("live_support_subject") || "General Support";
+        const ticketImportance = sessionStorage.getItem("live_support_importance_en") || sessionStorage.getItem("live_support_importance") || "Medium";
+        const ticketDescription = sessionStorage.getItem("live_support_description_en") || sessionStorage.getItem("live_support_description") || "";
 
         let ticketContext = `\n[USER TICKET DETAILS]\nSubject: ${ticketSubject}\nImportance Level: ${ticketImportance}\nUser's Description of the Issue: "${ticketDescription}"\n`;
 
@@ -1297,6 +1297,15 @@ Do not mention any third-party services like Pollinations or Pulsar. Respond dir
 
     const handleBeforeUnload = (e: BeforeUnloadEvent) => {
       // Synchronously clear localStorage support details on tab/browser close to ensure session is completely terminated
+      sessionStorage.removeItem("live_support_messages");
+      sessionStorage.removeItem("live_support_subject");
+      sessionStorage.removeItem("live_support_importance");
+      sessionStorage.removeItem("live_support_subject_en");
+      sessionStorage.removeItem("live_support_importance_en");
+      sessionStorage.removeItem("live_support_description_en");
+      sessionStorage.removeItem("live_support_agent_name");
+      sessionStorage.removeItem("live_support_user");
+
       localStorage.removeItem("live_support_messages");
       localStorage.removeItem("live_support_subject");
       localStorage.removeItem("live_support_importance");
@@ -1304,6 +1313,7 @@ Do not mention any third-party services like Pollinations or Pulsar. Respond dir
       localStorage.removeItem("live_support_importance_en");
       localStorage.removeItem("live_support_description_en");
       localStorage.removeItem("live_support_agent_name");
+      localStorage.removeItem("live_support_user");
 
       e.preventDefault();
       e.returnValue = lang === "tr"
@@ -1338,9 +1348,9 @@ Do not mention any third-party services like Pollinations or Pulsar. Respond dir
       setThinkingStage("checking");
       setIsAgentTyping(true);
 
-      const ticketSubject = localStorage.getItem("live_support_subject_en") || localStorage.getItem("live_support_subject") || "General Support";
-      const ticketImportance = localStorage.getItem("live_support_importance_en") || localStorage.getItem("live_support_importance") || "Medium";
-      const ticketDescription = localStorage.getItem("live_support_description_en") || localStorage.getItem("live_support_description") || "";
+      const ticketSubject = sessionStorage.getItem("live_support_subject_en") || sessionStorage.getItem("live_support_subject") || "General Support";
+      const ticketImportance = sessionStorage.getItem("live_support_importance_en") || sessionStorage.getItem("live_support_importance") || "Medium";
+      const ticketDescription = sessionStorage.getItem("live_support_description_en") || sessionStorage.getItem("live_support_description") || "";
 
       const accountContext = `\n[USER ACCOUNT CONTEXT]\nEmail: ${userProfile.email}\nFull Name: ${userProfile.name}\nAccount Created At: ${userProfile.createdAt ? new Date(userProfile.createdAt).toLocaleString("tr-TR") : "N/A"}\nEmail Verification Status: ${userProfile.emailConfirmed ? "Verified" : "Unverified"}\nLast Sign-In: ${userProfile.lastSignIn ? new Date(userProfile.lastSignIn).toLocaleString("tr-TR") : "N/A"}\n`;
 
@@ -1797,9 +1807,9 @@ Do not promote any third-party services like Pollinations or Pulsar. Respond dir
         accountContext = `\n[USER ACCOUNT CONTEXT]\nEmail: ${userProfile.email}\nFull Name: ${userProfile.name}\nAccount Created At: ${userProfile.createdAt ? new Date(userProfile.createdAt).toLocaleString("tr-TR") : "N/A"}\nEmail Verification Status: ${userProfile.emailConfirmed ? "Verified" : "Unverified"}\nLast Sign-In: ${userProfile.lastSignIn ? new Date(userProfile.lastSignIn).toLocaleString("tr-TR") : "N/A"}\n`;
       }
 
-      const ticketSubject = localStorage.getItem("live_support_subject_en") || localStorage.getItem("live_support_subject") || "General Support";
-      const ticketImportance = localStorage.getItem("live_support_importance_en") || localStorage.getItem("live_support_importance") || "Medium";
-      const ticketDescription = localStorage.getItem("live_support_description_en") || localStorage.getItem("live_support_description") || "";
+      const ticketSubject = sessionStorage.getItem("live_support_subject_en") || sessionStorage.getItem("live_support_subject") || "General Support";
+      const ticketImportance = sessionStorage.getItem("live_support_importance_en") || sessionStorage.getItem("live_support_importance") || "Medium";
+      const ticketDescription = sessionStorage.getItem("live_support_description_en") || sessionStorage.getItem("live_support_description") || "";
 
       let ticketContext = `\n[USER TICKET DETAILS]\nSubject: ${ticketSubject}\nImportance Level: ${ticketImportance}\nUser's Description of the Issue: "${ticketDescription}"\n`;
 
@@ -2610,9 +2620,9 @@ CRITICAL RULES:
                 try {
                   const { data: { user } } = await supabase.auth.getUser();
                   if (user) {
-                    const ticketSubject = localStorage.getItem("live_support_subject") || "Destek Talebi";
-                    const ticketImportance = localStorage.getItem("live_support_importance") || "Orta";
-                    const ticketDescription = localStorage.getItem("live_support_description") || "";
+                    const ticketSubject = sessionStorage.getItem("live_support_subject") || "Destek Talebi";
+                    const ticketImportance = sessionStorage.getItem("live_support_importance") || "Orta";
+                    const ticketDescription = sessionStorage.getItem("live_support_description") || "";
 
                     await supabase.from("ai_support_feedback").insert([
                       {
