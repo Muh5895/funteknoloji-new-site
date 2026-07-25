@@ -1410,16 +1410,11 @@ const de: Dict = {
     "Fun Technology ist ein Technologieunternehmen, das sich auf künstliche Intelligenz, kundenspezifische Softwareentwicklung und digitale Transformation spezialisiert hat.",
   "home.faq.a2":
     "Ja, wir bieten rund um die Uhr technischen Support und Wartungsdienste für Ihre Projekte.",
-  "home.faq.a3":
-    "Obwohl es je nach Projektumfang unterschiedlich ist, schließen wir kleine Projekte innerhalb von 2-4 Wochen und umfassende Projekte innerhalb von 2-4 Monaten ab.",
-  "home.faq.a4":
-    "Die Preisgestaltung richtet sich speziell nach der Komplexität Ihres Projekts und den benötigten Funktionen.",
-  "home.faq.a5":
-    "Ja, wir sind auf die Integration von KI-Modellen in Ihre bestehenden Systeme spezialisiert.",
-  "home.faq.a6":
-    "Sicherlich! Sie können Ihre Projektideen mit uns teilen und sich kostenlos beraten lassen.",
-  "home.faq.a7":
-    "Ja, wir entwickeln moderne mobile Anwendungen sowohl für iOS- als auch für Android-Plattformen.",
+  "home.faq.a3": "Nein, anstatt freiberuflich/ausgelagert zu arbeiten, konzentrieren wir uns ausschließlich auf die Gestaltung und Entwicklung unserer eigenen innovativen Produkte und F&E-Projekte.",
+  "home.faq.a4": "Ja, wir arbeiten in unserem Labor weiterhin an vielen neuen Projekten mit den Schwerpunkten Künstliche Intelligenz, Cybersicherheit und Datenanalyse.",
+  "home.faq.a5": "Wir sind immer offen für Treffen mit Investoren, die unsere Vision teilen möchten. Sie können uns direkt über unsere Kontaktseite kontaktieren.",
+  "home.faq.a6": "Sie können unsere aktiven Produkte auf unserer Projektseite überprüfen und sofort mit der Nutzung unserer Assistenten wie Nexy beginnen.",
+  "home.faq.a7": "Unsere Tür steht talentierten Ingenieuren und visionären Designern immer offen. Sie können unsere offenen Stellen und Ankündigungen auf unserem LinkedIn-Konto verfolgen.",
   "home.faq.badge": "FAQ",
   "home.faq.desc": "Alles, was Sie sich wundern, finden Sie hier.",
   "home.faq.title": "Häufig gestellte Fragen",
@@ -1789,11 +1784,11 @@ const de: Dict = {
   "service.feature.visualization": "Görselleştirme",
   "nav.explore_platform": "Platformu Keşfet",
   "nav.open_platform": "Platformu Aç",
-  "home.faq.q3": "Do you do client work?",
-  "home.faq.q4": "Are there other projects besides Nexy and QuakeSafe?",
-  "home.faq.q5": "Do you accept investors?",
-  "home.faq.q6": "How can I use your products?",
-  "home.faq.q7": "How can I join your team?",
+  "home.faq.q3": "Arbeiten Sie draußen?",
+  "home.faq.q4": "Gibt es neben Nexy und QuakeSafe noch andere Projekte?",
+  "home.faq.q5": "Akzeptieren Sie Investoren?",
+  "home.faq.q6": "Wie kann ich Ihre Produkte verwenden?",
+  "home.faq.q7": "Wie kann ich Ihrem Team beitreten?",
 
   "nav.mobile.open": "Menü öffnen",
   "nav.mobile.close": "Menü schließen",
@@ -2018,16 +2013,11 @@ const fr: Dict = {
     "Fun Technology est une entreprise technologique spécialisée dans l'intelligence artificielle, le développement de logiciels personnalisés et la transformation numérique.",
   "home.faq.a2":
     "Oui, nous proposons des services d'assistance technique et de maintenance 24h/24 et 7j/7 pour vos projets.",
-  "home.faq.a3":
-    "Bien que cela varie en fonction de la portée du projet, nous réalisons de petits projets en 2 à 4 semaines et des projets complets en 2 à 4 mois.",
-  "home.faq.a4":
-    "Le prix est spécifiquement déterminé par la complexité de votre projet et les fonctionnalités nécessaires.",
-  "home.faq.a5":
-    "Oui, nous sommes spécialisés dans l’intégration de modèles d’IA dans vos systèmes existants.",
-  "home.faq.a6":
-    "Certainement ! Vous pouvez partager vos idées de projets avec nous et bénéficier de conseils gratuits.",
-  "home.faq.a7":
-    "Oui, nous développons des applications mobiles modernes pour les plateformes iOS and Android.",
+  "home.faq.a3": "Non, au lieu de faire du travail indépendant/externalisé, nous nous concentrons entièrement sur la conception et le développement de nos propres produits innovants et projets de R&D.",
+  "home.faq.a4": "Oui, nous continuons à travailler sur de nombreux nouveaux projets axés sur l'intelligence artificielle, la cybersécurité et l'analyse de données dans notre laboratoire.",
+  "home.faq.a5": "Nous sommes toujours ouverts à rencontrer des investisseurs qui souhaitent partager notre vision. Vous pouvez nous contacter directement via notre page Contact.",
+  "home.faq.a6": "Vous pouvez consulter nos produits actifs sur notre page Projets et commencer immédiatement à utiliser nos assistants tels que Nexy.",
+  "home.faq.a7": "Notre porte est toujours ouverte aux ingénieurs talentueux et aux designers visionnaires. Vous pouvez suivre nos postes vacants et nos annonces sur notre compte LinkedIn.",
   "home.faq.badge": "FAQ",
   "home.faq.desc": "Tout ce que vous vous demandez est ici.",
   "home.faq.title": "Foire aux questions",
@@ -2402,11 +2392,11 @@ const fr: Dict = {
   "service.feature.visualization": "Görselleştirme",
   "nav.explore_platform": "Platformu Keşfet",
   "nav.open_platform": "Platformu Aç",
-  "home.faq.q3": "Do you do client work?",
-  "home.faq.q4": "Are there other projects besides Nexy and QuakeSafe?",
-  "home.faq.q5": "Do you accept investors?",
-  "home.faq.q6": "How can I use your products?",
-  "home.faq.q7": "How can I join your team?",
+  "home.faq.q3": "Travaillez-vous à l'extérieur ?",
+  "home.faq.q4": "Existe-t-il d'autres projets que Nexy et QuakeSafe ?",
+  "home.faq.q5": "Acceptez-vous les investisseurs ?",
+  "home.faq.q6": "Comment puis-je utiliser vos produits ?",
+  "home.faq.q7": "Comment puis-je rejoindre votre équipe ?",
 
   "nav.mobile.open": "Ouvrir le menu",
   "nav.mobile.close": "Fermer le menu",
@@ -2624,15 +2614,11 @@ const es: Dict = {
   "home.faq.a1":
     "Fun Technology es una empresa de tecnología especializada en inteligencia artificial, desarrollo de software personalizado y transformación digital.",
   "home.faq.a2": "As Fun Technology, we develop our own products. Each product has its own usage models and subscription options.",
-  "home.faq.a3":
-    "Aunque varía según el alcance del proyecto, completamos proyectos pequeños en 2-4 semanas y proyectos integrales en 2-4 meses.",
-  "home.faq.a4":
-    "El precio se determina específicamente por la complejidad de su proyecto y las características necesarias.",
-  "home.faq.a5": "We are always open to meeting with investors who want to share our vision. You can contact us via our contact page.",
-  "home.faq.a6":
-    "¡Ciertamente! Puede compartir sus ideas de proyectos con nosotros y obtener consultoría gratuita.",
-  "home.faq.a7":
-    "Sí, desarrollamos aplicaciones móviles modernas para plataformas iOS and Android.",
+  "home.faq.a3": "No, en lugar de trabajar como autónomos o subcontratados, nos centramos por completo en diseñar y desarrollar nuestros propios productos innovadores y proyectos de I+D.",
+  "home.faq.a4": "Sí, seguimos trabajando en muchos proyectos nuevos centrados en inteligencia artificial, ciberseguridad y análisis de datos en nuestro laboratorio.",
+  "home.faq.a5": "Siempre estamos abiertos a conocer inversores que quieran compartir nuestra visión. Puede contactarnos directamente a través de nuestra página de Contacto.",
+  "home.faq.a6": "Puede revisar nuestros productos activos en nuestra página de Proyectos y comenzar a utilizar nuestros asistentes como Nexy de inmediato.",
+  "home.faq.a7": "Nuestra puerta siempre está abierta a ingenieros talentosos y diseñadores visionarios. Puede seguir nuestras posiciones abiertas y anuncios en nuestra cuenta de LinkedIn.",
   "home.faq.badge": "Preguntas frecuentes",
   "home.faq.desc": "Todo lo que te preguntas está aquí.",
   "home.faq.title": "Preguntas frecuentes",
@@ -2999,11 +2985,11 @@ const es: Dict = {
   "service.feature.visualization": "Görselleştirme",
   "nav.explore_platform": "Platformu Keşfet",
   "nav.open_platform": "Platformu Aç",
-  "home.faq.q3": "Do you do client work?",
-  "home.faq.q4": "Are there other projects besides Nexy and QuakeSafe?",
-  "home.faq.q5": "Do you accept investors?",
-  "home.faq.q6": "How can I use your products?",
-  "home.faq.q7": "How can I join your team?",
+  "home.faq.q3": "¿Haces algún trabajo afuera?",
+  "home.faq.q4": "¿Hay otros proyectos además de Nexy y QuakeSafe?",
+  "home.faq.q5": "¿Aceptan inversores?",
+  "home.faq.q6": "¿Cómo puedo utilizar sus productos?",
+  "home.faq.q7": "¿Cómo puedo unirme a tu equipo?",
 
   "nav.mobile.open": "Abrir menú",
   "nav.mobile.close": "Cerrar menú",
@@ -3222,15 +3208,11 @@ const az: Dict = {
   "home.faq.a1":
     "Fun Teknoloji, süni intellekt, xüsusi proqram təminatının hazırlanması və rəqəmsal transformasiya sahələrində ixtisaslaşmış bir texnologiya şirkətidir.",
   "home.faq.a2": "As Fun Technology, we develop our own products. Each product has its own usage models and subscription options.",
-  "home.faq.a3":
-    "Layihənin əhatə dairəsindən asılı olaraq dəyişsə də, kiçik layihələri 2-4 həftə, geniş layihələri isə 2-4 ay ərzində tamamlayırıq.",
-  "home.faq.a4":
-    "Qiymətlər layihənizin mürəkkəbliyinə və lazım olan xüsusiyyətlərə görə xüsusi olaraq müəyyən edilir.",
-  "home.faq.a5":
-    "Bəli, süni intellekt modellərini mövcud sistemlərinizə inteqrasiya etmək sahəsində mütəxəssisik.",
-  "home.faq.a6": "You can review our active products on our Projects page and start using them immediately.",
-  "home.faq.a7":
-    "Bəli, həm iOS, həm də Android platformaları üçün müasir mobil proqramlar hazırlayırıq.",
+  "home.faq.a3": "Xeyr, frilanser/outsorsing işi yerinə yetirmək əvəzinə, biz bütün diqqətimizi öz innovativ məhsullarımızı və Ar-Ge layihələrimizi dizayn və inkişaf etdirməyə yönəldirik.",
+  "home.faq.a4": "Bəli, biz laboratoriyamızda süni intellekt, kibertəhlükəsizlik və məlumat analitikasına yönəlmiş bir çox yeni layihələr üzərində işləməyə davam edirik.",
+  "home.faq.a5": "Vizyonumuzu bölüşmək istəyən investorlarla görüşə hər zaman açığıq. Bizimlə birbaşa Əlaqə səhifəmiz vasitəsilə əlaqə saxlaya bilərsiniz.",
+  "home.faq.a6": "Layihələr səhifəmizdə aktiv məhsullarımızı nəzərdən keçirə və dərhal Nexy kimi köməkçilərimizdən istifadə etməyə başlaya bilərsiniz.",
+  "home.faq.a7": "Qapımız hər zaman istedadlı mühəndislərə və uzaqgörən dizaynerlərə açıqdır. Açıq mövqelərimizi və elanlarımızı LinkedIn hesabımızda izləyə bilərsiniz.",
   "home.faq.badge": "Tez-tez verilən suallar",
   "home.faq.desc": "Sizi maraqlandıran hər şey buradadır.",
   "home.faq.title": "Tez-tez verilən suallar",
@@ -3589,11 +3571,11 @@ const az: Dict = {
   "service.feature.visualization": "Görselleştirme",
   "nav.explore_platform": "Platformu Keşfet",
   "nav.open_platform": "Platformu Aç",
-  "home.faq.q3": "Do you do client work?",
-  "home.faq.q4": "Are there other projects besides Nexy and QuakeSafe?",
-  "home.faq.q5": "Do you accept investors?",
-  "home.faq.q6": "How can I use your products?",
-  "home.faq.q7": "How can I join your team?",
+  "home.faq.q3": "Çöldə hər hansı bir iş görürsən?",
+  "home.faq.q4": "Nexy və QuakeSafe-dən başqa başqa layihələr varmı?",
+  "home.faq.q5": "İnvestorları qəbul edirsiniz?",
+  "home.faq.q6": "Məhsullarınızı necə istifadə edə bilərəm?",
+  "home.faq.q7": "Komandanıza necə qoşula bilərəm?",
 
   "nav.mobile.open": "Menyunu aç",
   "nav.mobile.close": "Menyunu bağla",
@@ -3812,15 +3794,11 @@ const ru: Dict = {
     "Fun Technology — это технологическая компания, специализирующаяся на искусственном интеллекте, разработке программного обеспечения на заказ и цифровой трансформации.",
   "home.faq.a2":
     "Да, мы предлагаем круглосуточную техническую поддержку и обслуживание ваших проектов.",
-  "home.faq.a3":
-    "Хотя сроки зависят от масштаба проекта, мы завершаем небольшие проекты за 2–4 недели, а комплексные — за 2–4 месяца.",
-  "home.faq.a4":
-    "Цена определяется индивидуально в зависимости от сложности вашего проекта и необходимых функций.",
-  "home.faq.a5": "We are always open to meeting with investors who want to share our vision. You can contact us via our contact page.",
-  "home.faq.a6":
-    "Конечно! Вы можете поделиться с нами своими идеями и получить бесплатную консультацию.",
-  "home.faq.a7":
-    "Да, мы разрабатываем современные мобильные приложения для платформ iOS and Android.",
+  "home.faq.a3": "Нет, вместо того, чтобы выполнять внештатную/аутсорсинговую работу, мы полностью сосредотачиваемся на проектировании и разработке наших собственных инновационных продуктов и проектов исследований и разработок.",
+  "home.faq.a4": "Да, мы продолжаем работать над многими новыми проектами, ориентированными на искусственный интеллект, кибербезопасность и анализ данных в нашей лаборатории.",
+  "home.faq.a5": "Мы всегда открыты для встреч с инвесторами, которые хотят разделить наше видение. Вы можете связаться с нами напрямую через нашу страницу контактов.",
+  "home.faq.a6": "Вы можете просмотреть наши активные продукты на странице «Проекты» и сразу же начать использовать наших помощников, таких как Nexy.",
+  "home.faq.a7": "Наши двери всегда открыты для талантливых инженеров и дальновидных дизайнеров. Вы можете следить за нашими открытыми вакансиями и объявлениями в нашей учетной записи LinkedIn.",
   "home.faq.badge": "Часто задаваемые вопросы",
   "home.faq.desc": "Все, что вам интересно, здесь.",
   "home.faq.title": "Часто задаваемые вопросы",
@@ -4188,11 +4166,11 @@ const ru: Dict = {
   "service.feature.visualization": "Görselleştirme",
   "nav.explore_platform": "Platformu Keşfet",
   "nav.open_platform": "Platformu Aç",
-  "home.faq.q3": "Do you do client work?",
-  "home.faq.q4": "Are there other projects besides Nexy and QuakeSafe?",
-  "home.faq.q5": "Do you accept investors?",
-  "home.faq.q6": "How can I use your products?",
-  "home.faq.q7": "How can I join your team?",
+  "home.faq.q3": "Вы делаете какую-нибудь работу на улице?",
+  "home.faq.q4": "Есть ли еще какие-нибудь проекты, кроме Nexy и QuakeSafe?",
+  "home.faq.q5": "Вы принимаете инвесторов?",
+  "home.faq.q6": "Как я могу использовать вашу продукцию?",
+  "home.faq.q7": "Как я могу присоединиться к вашей команде?",
 
   "nav.mobile.open": "Открыть меню",
   "nav.mobile.close": "Закрыть меню",
@@ -4402,12 +4380,11 @@ const ar: Dict = {
   "home.faq.a1":
     "Fun Technology هي شركة تقنية متخصصة في الذكاء الاصطناعي وتطوير البرمجيات المخصصة والتحول الرقمي.",
   "home.faq.a2": "As Fun Technology, we develop our own products. Each product has its own usage models and subscription options.",
-  "home.faq.a3":
-    "على الرغم من أنها تختلف حسب نطاق المشروع، إلا أننا نكمل المشاريع الصغيرة في غضون 2-4 أسابيع، والمشاريع الشاملة في غضون 2-4 أشهر.",
-  "home.faq.a4": "Yes, we continue to work on many new projects in our lab focused on AI, cybersecurity, and data analytics.",
-  "home.faq.a5": "We are always open to meeting with investors who want to share our vision. You can contact us via our contact page.",
-  "home.faq.a6": "You can review our active products on our Projects page and start using them immediately.",
-  "home.faq.a7": "We are always open to talented engineers and visionary designers. You can follow our job postings on LinkedIn.",
+  "home.faq.a3": "لا، بدلاً من القيام بالعمل المستقل أو الاستعانة بمصادر خارجية، فإننا نركز بشكل كامل على تصميم وتطوير منتجاتنا المبتكرة ومشاريع البحث والتطوير.",
+  "home.faq.a4": "نعم، نواصل العمل على العديد من المشاريع الجديدة التي تركز على الذكاء الاصطناعي والأمن السيبراني وتحليل البيانات في مختبرنا.",
+  "home.faq.a5": "نحن منفتحون دائمًا على مقابلة المستثمرين الذين يرغبون في مشاركة رؤيتنا. يمكنكم التواصل معنا مباشرة عبر صفحة اتصل بنا.",
+  "home.faq.a6": "يمكنك مراجعة منتجاتنا النشطة على صفحة المشاريع لدينا والبدء في استخدام مساعدينا مثل Nexy على الفور.",
+  "home.faq.a7": "بابنا مفتوح دائمًا للمهندسين الموهوبين والمصممين ذوي الرؤية. يمكنكم متابعة مناصبنا وإعلاناتنا المفتوحة على حسابنا على LinkedIn.",
   "home.faq.badge": "التعليمات",
   "home.faq.desc": "كل ما تتساءل عنه موجود هنا.",
   "home.faq.title": "الأسئلة المتداولة",
@@ -4746,11 +4723,11 @@ const ar: Dict = {
   "service.feature.visualization": "Görselleştirme",
   "nav.explore_platform": "Platformu Keşfet",
   "nav.open_platform": "Platformu Aç",
-  "home.faq.q3": "Do you do client work?",
-  "home.faq.q4": "Are there other projects besides Nexy and QuakeSafe?",
-  "home.faq.q5": "Do you accept investors?",
-  "home.faq.q6": "How can I use your products?",
-  "home.faq.q7": "How can I join your team?",
+  "home.faq.q3": "هل تقوم بأي عمل بالخارج؟",
+  "home.faq.q4": "هل هناك أي مشاريع أخرى إلى جانب Nexy وQuakeSafe؟",
+  "home.faq.q5": "هل تقبلون المستثمرين؟",
+  "home.faq.q6": "كيف يمكنني استخدام منتجاتكم؟",
+  "home.faq.q7": "كيف يمكنني الانضمام لفريقكم؟",
 
   "nav.mobile.open": "فتح القائمة",
   "nav.mobile.close": "إغلاق القائمة",
@@ -4966,15 +4943,11 @@ const it: Dict = {
   "home.faq.a1":
     "Fun Technology è un'azienda tecnologica specializzata in intelligenza artificiale, sviluppo software personalizzato e trasformazione digitale.",
   "home.faq.a2": "As Fun Technology, we develop our own products. Each product has its own usage models and subscription options.",
-  "home.faq.a3":
-    "Sebbene vari in base alla portata del progetto, completiamo i piccoli progetti in 2-4 settimane e i progetti complessi in 2-4 mesi.",
-  "home.faq.a4":
-    "Il prezzo è determinato specificamente dalla complessità del progetto e dalle funzionalità richieste.",
-  "home.faq.a5":
-    "Sì, siamo specializzati nell'integrazione di modelli di IA nei vostri sistemi esistenti.",
-  "home.faq.a6":
-    "Certamente! Potete condividere le vostre idee di progetto con noi e ricevere una consulenza gratuita.",
-  "home.faq.a7": "We are always open to talented engineers and visionary designers. You can follow our job postings on LinkedIn.",
+  "home.faq.a3": "No, invece di svolgere lavoro freelance/in outsourcing, ci concentriamo interamente sulla progettazione e sullo sviluppo dei nostri prodotti innovativi e progetti di ricerca e sviluppo.",
+  "home.faq.a4": "Sì, continuiamo a lavorare su tanti nuovi progetti incentrati su intelligenza artificiale, sicurezza informatica e analisi dei dati nel nostro laboratorio.",
+  "home.faq.a5": "Siamo sempre aperti a incontrare investitori che desiderano condividere la nostra visione. Puoi contattarci direttamente tramite la nostra pagina Contatti.",
+  "home.faq.a6": "Puoi rivedere i nostri prodotti attivi sulla nostra pagina Progetti e iniziare subito a utilizzare i nostri assistenti come Nexy.",
+  "home.faq.a7": "La nostra porta è sempre aperta a ingegneri di talento e designer visionari. Puoi seguire le nostre posizioni aperte e gli annunci sul nostro account LinkedIn.",
   "home.faq.badge": "Domande frequenti",
   "home.faq.desc": "Tutto ciò che ti chiedi è qui.",
   "home.faq.title": "Domande frequenti",
@@ -5340,11 +5313,11 @@ const it: Dict = {
   "service.feature.visualization": "Görselleştirme",
   "nav.explore_platform": "Platformu Keşfet",
   "nav.open_platform": "Platformu Aç",
-  "home.faq.q3": "Do you do client work?",
-  "home.faq.q4": "Are there other projects besides Nexy and QuakeSafe?",
-  "home.faq.q5": "Do you accept investors?",
-  "home.faq.q6": "How can I use your products?",
-  "home.faq.q7": "How can I join your team?",
+  "home.faq.q3": "Svolgi qualche lavoro fuori?",
+  "home.faq.q4": "Ci sono altri progetti oltre a Nexy e QuakeSafe?",
+  "home.faq.q5": "Accettate investitori?",
+  "home.faq.q6": "Come posso utilizzare i vostri prodotti?",
+  "home.faq.q7": "Come posso unirmi alla tua squadra?",
 
   "nav.mobile.open": "Apri menu",
   "nav.mobile.close": "Chiudi menu",
@@ -5562,16 +5535,11 @@ const pt: Dict = {
   "home.faq.a1":
     "A Fun Technology è uma empresa de tecnologia especializada em inteligência artificial, desenvolvimento de software personalizado e transformação digital.",
   "home.faq.a2": "As Fun Technology, we develop our own products. Each product has its own usage models and subscription options.",
-  "home.faq.a3":
-    "Embora varie dependendo do escopo do projeto, concluímos projetos pequenos em 2-4 semanas e projetos abrangentes em 2-4 meses.",
-  "home.faq.a4":
-    "O preço è determinado especificamente pela complexidade do seu projeto e pelos recursos necessários.",
-  "home.faq.a5":
-    "Sim, somos especialistas na integração de modelos de IA nos seus sistemas existentes.",
-  "home.faq.a6":
-    "Certamente! Você pode compartilhar suas ideias de projeto conosco e obter consultoria gratuita.",
-  "home.faq.a7":
-    "Sim, desenvolvemos aplicações móveis modernas para as plataformas iOS and Android.",
+  "home.faq.a3": "Não, em vez de fazer trabalho freelance/terceirizado, nos concentramos inteiramente em projetar e desenvolver nossos próprios produtos inovadores e projetos de P&D.",
+  "home.faq.a4": "Sim, continuamos trabalhando em muitos novos projetos focados em inteligência artificial, segurança cibernética e análise de dados em nosso laboratório.",
+  "home.faq.a5": "Estamos sempre abertos a conhecer investidores que queiram compartilhar nossa visão. Você pode entrar em contato conosco diretamente através da nossa página de contato.",
+  "home.faq.a6": "Você pode revisar nossos produtos ativos em nossa página Projetos e começar a usar nossos assistentes como o Nexy imediatamente.",
+  "home.faq.a7": "Nossa porta está sempre aberta para engenheiros talentosos e designers visionários. Você pode acompanhar nossas vagas abertas e anúncios em nossa conta do LinkedIn.",
   "home.faq.badge": "Perguntas frequentes",
   "home.faq.desc": "Tudo o que você quer saber está aqui.",
   "home.faq.title": "Perguntas frequentes",
@@ -5937,11 +5905,11 @@ const pt: Dict = {
   "service.feature.visualization": "Görselleştirme",
   "nav.explore_platform": "Platformu Keşfet",
   "nav.open_platform": "Platformu Aç",
-  "home.faq.q3": "Do you do client work?",
-  "home.faq.q4": "Are there other projects besides Nexy and QuakeSafe?",
-  "home.faq.q5": "Do you accept investors?",
-  "home.faq.q6": "How can I use your products?",
-  "home.faq.q7": "How can I join your team?",
+  "home.faq.q3": "Você faz algum trabalho fora?",
+  "home.faq.q4": "Existem outros projetos além de Nexy e QuakeSafe?",
+  "home.faq.q5": "Você aceita investidores?",
+  "home.faq.q6": "Como posso usar seus produtos?",
+  "home.faq.q7": "Como posso entrar na sua equipe?",
 
   "nav.mobile.open": "Abrir menu",
   "nav.mobile.close": "Fechar menu",
@@ -6160,14 +6128,11 @@ const ja: Dict = {
     "Fun Technologyは、人工知能、カスタムソフトウェア開発、デジタルトランスフォーメーションを専門とするテクノロジー企業です。",
   "home.faq.a2":
     "はい、お客様のプロジェクトに対して24時間年中無休のテクニカルサポートとメンテナンスサービスを提供しています。",
-  "home.faq.a3":
-    "プロジェクトの規模により異なりますが、小規模なプロジェクトは2〜4週間、包括的なプロジェクトは2〜4ヶ月で完了します。",
-  "home.faq.a4": "Yes, we continue to work on many new projects in our lab focused on AI, cybersecurity, and data analytics.",
-  "home.faq.a5": "We are always open to meeting with investors who want to share our vision. You can contact us via our contact page.",
-  "home.faq.a6":
-    "もちろんです！プロジェクトのアイデアを共有していただければ、無料のコンサルティングを提供いたします。",
-  "home.faq.a7":
-    "はい、iOSとAndroidの両方のプラットフォーム向けに最新のモバイルアプリケーションを開発しています。",
+  "home.faq.a3": "いいえ、フリーランス/外部委託の仕事をする代わりに、私たちは独自の革新的な製品と研究開発プロジェクトの設計と開発に専念しています。",
+  "home.faq.a4": "はい、私たちは研究室で人工知能、サイバーセキュリティ、データ分析に焦点を当てた多くの新しいプロジェクトに取り組み続けています。",
+  "home.faq.a5": "私たちは、私たちのビジョンを共有したい投資家との出会いをいつでも歓迎しています。お問い合わせページから直接ご連絡いただけます。",
+  "home.faq.a6": "プロジェクト ページでアクティブな製品を確認し、Nexy などのアシスタントをすぐに使い始めることができます。",
+  "home.faq.a7": "私たちの門戸は、才能あるエンジニアや先見の明のあるデザイナーに対して常に開かれています。 LinkedIn アカウントで募集中のポジションやお知らせをフォローできます。",
   "home.faq.badge": "よくある質問",
   "home.faq.desc": "あなたが疑問に思うすべてがここにあります。",
   "home.faq.title": "よくある質問",
@@ -6516,11 +6481,11 @@ const ja: Dict = {
   "service.feature.visualization": "Görselleştirme",
   "nav.explore_platform": "Platformu Keşfet",
   "nav.open_platform": "Platformu Aç",
-  "home.faq.q3": "Do you do client work?",
-  "home.faq.q4": "Are there other projects besides Nexy and QuakeSafe?",
-  "home.faq.q5": "Do you accept investors?",
-  "home.faq.q6": "How can I use your products?",
-  "home.faq.q7": "How can I join your team?",
+  "home.faq.q3": "外で何か仕事をしていますか？",
+  "home.faq.q4": "Nexy と QuakeSafe 以外にもプロジェクトはありますか?",
+  "home.faq.q5": "投資家を受け入れますか?",
+  "home.faq.q6": "御社の製品をどのように使用できますか?",
+  "home.faq.q7": "どうすればあなたのチームに参加できますか?",
 
   "nav.mobile.open": "メニューを開く",
   "nav.mobile.close": "メニューを閉じる",
@@ -6722,12 +6687,11 @@ const zh: Dict = {
   "home.faq.a1":
     "趣味科技（Fun Technology）是一家专注于人工智能、定制软件开发和数字化转型的科技公司。",
   "home.faq.a2": "As Fun Technology, we develop our own products. Each product has its own usage models and subscription options.",
-  "home.faq.a3":
-    "虽然取决于项目范围，但我们通常在 2-4 周内完成小型项目，在 2-4 个月内完成综合项目。",
-  "home.faq.a4": "Yes, we continue to work on many new projects in our lab focused on AI, cybersecurity, and data analytics.",
-  "home.faq.a5": "We are always open to meeting with investors who want to share our vision. You can contact us via our contact page.",
-  "home.faq.a6": "You can review our active products on our Projects page and start using them immediately.",
-  "home.faq.a7": "We are always open to talented engineers and visionary designers. You can follow our job postings on LinkedIn.",
+  "home.faq.a3": "不，我们不做自由职业/外包工作，而是完全专注于设计和开发我们自己的创新产品和研发项目。",
+  "home.faq.a4": "是的，我们实验室继续致力于许多专注于人工智能、网络安全和数据分析的新项目。",
+  "home.faq.a5": "我们始终愿意与愿意分享我们愿景的投资者会面。您可以通过我们的联系页面直接联系我们。",
+  "home.faq.a6": "您可以在我们的项目页面上查看我们的活跃产品，并立即开始使用我们的助手，例如 Nexy。",
+  "home.faq.a7": "我们的大门始终向有才华的工程师和有远见的设计师敞开。您可以在我们的 LinkedIn 帐户上关注我们的空缺职位和公告。",
   "home.faq.badge": "常问问题",
   "home.faq.desc": "你想知道的一切都在这里。",
   "home.faq.title": "常见问题解答",
@@ -7054,11 +7018,11 @@ const zh: Dict = {
   "service.feature.visualization": "Görselleştirme",
   "nav.explore_platform": "Platformu Keşfet",
   "nav.open_platform": "Platformu Aç",
-  "home.faq.q3": "Do you do client work?",
-  "home.faq.q4": "Are there other projects besides Nexy and QuakeSafe?",
-  "home.faq.q5": "Do you accept investors?",
-  "home.faq.q6": "How can I use your products?",
-  "home.faq.q7": "How can I join your team?",
+  "home.faq.q3": "你在外面做任何工作吗？",
+  "home.faq.q4": "除了 Nexy 和 QuakeSafe 之外还有其他项目吗？",
+  "home.faq.q5": "你们接受投资者吗？",
+  "home.faq.q6": "我怎样才能使用你们的产品？",
+  "home.faq.q7": "我怎样才能加入你们的团队？",
 
   "nav.mobile.open": "打开菜单",
   "nav.mobile.close": "关闭菜单",

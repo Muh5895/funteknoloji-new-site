@@ -1793,10 +1793,10 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
       )}
 
       <div
-        className={`fixed bottom-6 right-6 z-[100] flex flex-col items-end gap-4 animate-in slide-in-from-right-10 duration-500 transition-transform ${isThinking && !isOpen ? "-translate-y-4" : "translate-y-0"}`}
+        className={`fixed bottom-6 right-6 z-[100] flex flex-col items-end gap-4 animate-in slide-in-from-right-10 duration-500 transition-transform ${isThinking && !isOpen ? "-translate-y-4" : "translate-y-0"} pointer-events-none`}
       >
         {!isOpen && !isMinimized && showPopup && (
-          <div className="relative max-w-[250px] rounded-2xl bg-[var(--fun-card)] border border-[var(--fun-stroke-1)] p-4 shadow-2xl backdrop-blur-md z-[120]">
+          <div className="relative max-w-[250px] rounded-2xl bg-[var(--fun-card)] border border-[var(--fun-stroke-1)] p-4 shadow-2xl backdrop-blur-md z-[120] pointer-events-auto">
             <button
               onClick={() => setShowPopup(false)}
               className="absolute -top-2 -right-2 h-6 w-6 rounded-full bg-[var(--fun-surface)] border border-[var(--fun-stroke-1)] flex items-center justify-center text-xs fun-text hover:bg-[var(--fun-stroke-1)] transition-colors shadow-lg"
@@ -1808,7 +1808,7 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
           </div>
         )}
         <div
-          className={`flex items-center gap-2 transition-all duration-500 ${isMinimized ? "translate-x-[calc(100%-40px)]" : ""}`}
+          className={`flex items-center gap-2 transition-all duration-500 ${isMinimized ? "translate-x-[calc(100%-40px)]" : ""} pointer-events-auto`}
         >
           <button
             onClick={() => setIsMinimized(!isMinimized)}
