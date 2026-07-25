@@ -5,6 +5,60 @@ import { toast } from "sonner";
 import { translateText, translateAnyText } from "../lib/translate";
 import { KNOWLEDGE_BASE } from "../lib/knowledge";
 
+const translateTextHelper = async (text: string, source: string, target: string): Promise<string> => {
+  if (!text || source === target) return text;
+  try {
+    const response = await fetch(
+      `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${source}&tl=${target}&dt=t&q=${encodeURIComponent(text)}`
+    );
+    const data = await response.json();
+    let result = data[0].map((item: any) => item[0]).join("");
+    result = result.replace(/Eğlence Kimliği/gi, "FunID");
+    result = result.replace(/Eğlence kimliği/gi, "FunID");
+    return result;
+  } catch (error) {
+    console.error("Translation helper error:", error);
+    return text;
+  }
+};
+
+const translateTextWithCodeBlocks = async (text: string, source: string, target: string): Promise<string> => {
+  if (!text || source === target) return text;
+
+  const parts = text.split(/(```[\s\S]*?```)/g);
+  const translatedParts = [];
+
+  for (const part of parts) {
+    if (part.startsWith("```")) {
+      translatedParts.push(part);
+    } else {
+      const translated = await translateTextHelper(part, source, target);
+      translatedParts.push(translated);
+    }
+  }
+
+  return translatedParts.join("");
+};
+
+const cleanLeadingDashes = (text: string): string => {
+  if (!text) return text;
+  let lines = text.split("\n");
+  const isMultiItemList = lines.filter(l => l.trim().startsWith("-")).length > 1;
+  if (!isMultiItemList) {
+    lines = lines.map(line => {
+      const trimmed = line.trim();
+      if (trimmed.startsWith("- ") && !trimmed.startsWith("- -")) {
+        return trimmed.substring(2);
+      }
+      if (trimmed.startsWith("-") && !trimmed.startsWith("--") && !trimmed.match(/^-[0-9]/)) {
+        return trimmed.substring(1);
+      }
+      return line;
+    });
+  }
+  return lines.join("\n").trim();
+};
+
 export interface AttachedFile {
   name: string;
   type: string;
@@ -1881,6 +1935,18 @@ CRITICAL RULES:
         } catch (proxyErr) {
           console.error("Vercel backend proxy call failed in handleSend, attempting direct fallback:", proxyErr);
           try {
+            // 1. Translate user messages to English before sending to Gemma
+            const englishMessages = [];
+            for (const msg of cleanedMessages) {
+              if (msg.role === "system") {
+                englishMessages.push(msg);
+              } else {
+                const contentStr = typeof msg.content === "string" ? msg.content : "";
+                const translatedContent = await translateTextHelper(contentStr, lang, "en");
+                englishMessages.push({ ...msg, content: translatedContent });
+              }
+            }
+
             // Direct frontend fallback call
             const directResponse = await fetch("https://ai.funteknoloji.com/v1/chat/completions", {
               method: "POST",
@@ -1888,15 +1954,27 @@ CRITICAL RULES:
                 "Content-Type": "application/json",
               },
               body: JSON.stringify({
-                messages: cleanedMessages,
+                messages: englishMessages,
                 model: "gemma-3-1b-it"
               }),
             });
 
             if (directResponse.ok) {
               const directData = await directResponse.json();
-              agentText = directData.choices?.[0]?.message?.content || "";
-              englishResponse = agentText;
+              const rawText = directData.choices?.[0]?.message?.content || "";
+
+              englishResponse = rawText;
+
+              // 2. Translate response back to user's target language
+              let translatedText = rawText;
+              if (lang && lang !== "en") {
+                translatedText = await translateTextWithCodeBlocks(rawText, "en", lang);
+              }
+
+              translatedText = cleanLeadingDashes(translatedText);
+              englishResponse = cleanLeadingDashes(englishResponse);
+
+              agentText = translatedText;
             } else {
               throw new Error(`Direct fallback failed with status ${directResponse.status}`);
             }
