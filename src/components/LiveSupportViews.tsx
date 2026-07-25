@@ -1869,15 +1869,42 @@ CRITICAL RULES:
 
           if (response.ok) {
             const data = await response.json();
-            agentText = data.text;
-            englishResponse = data.englishText;
+            const textCandidate = data.text || "";
+            if (textCandidate.includes("geçici bir yoğunluk") || textCandidate.includes("temporary system congestion") || textCandidate.includes("meşgul") || textCandidate.includes("Sorgunuz işlenirken bir hata oluştu")) {
+              throw new Error("Backend returned a congestion/error response, forcing direct frontend fallback");
+            }
+            agentText = textCandidate;
+            englishResponse = data.englishText || agentText;
           } else {
             throw new Error("Backend proxy failed");
           }
         } catch (proxyErr) {
-          console.error("Vercel backend proxy call failed in handleSend:", proxyErr);
-          agentText = lang === "tr" ? "Bir hata oluştu, lütfen daha sonra tekrar deneyin." : "An error occurred, please try again later.";
-          englishResponse = "An error occurred, please try again later.";
+          console.error("Vercel backend proxy call failed in handleSend, attempting direct fallback:", proxyErr);
+          try {
+            // Direct frontend fallback call
+            const directResponse = await fetch("https://ai.funteknoloji.com/v1/chat/completions", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                messages: cleanedMessages,
+                model: "gemma-3-1b-it"
+              }),
+            });
+
+            if (directResponse.ok) {
+              const directData = await directResponse.json();
+              agentText = directData.choices?.[0]?.message?.content || "";
+              englishResponse = agentText;
+            } else {
+              throw new Error(`Direct fallback failed with status ${directResponse.status}`);
+            }
+          } catch (directErr) {
+            console.error("Direct frontend fallback also failed in helper:", directErr);
+            agentText = lang === "tr" ? "Bir hata oluştu, lütfen daha sonra tekrar deneyin." : "An error occurred, please try again later.";
+            englishResponse = "An error occurred, please try again later.";
+          }
         }
 
         agentText = agentText.replace(/\[inceliyor\]/gi, "");

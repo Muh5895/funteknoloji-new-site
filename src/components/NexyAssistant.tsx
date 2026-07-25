@@ -673,15 +673,42 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
 
       if (response.ok) {
         const data = await response.json();
-        textResponse = data.text;
-        englishResponse = data.englishText;
+        const textCandidate = data.text || "";
+        if (textCandidate.includes("geçici bir yoğunluk") || textCandidate.includes("temporary system congestion") || textCandidate.includes("meşgul") || textCandidate.includes("Sorgunuz işlenirken bir hata oluştu")) {
+          throw new Error("Backend returned a congestion/error response, forcing direct frontend fallback");
+        }
+        textResponse = textCandidate;
+        englishResponse = data.englishText || textResponse;
       } else {
-        throw new Error("Vercel proxy failed");
+        throw new Error("Vercel proxy returned non-OK status");
       }
     } catch (err) {
-      console.warn("Vercel backend proxy call failed, setting fallback text:", err);
-      textResponse = lang === "tr" ? "Bir hata oluştu, lütfen daha sonra tekrar deneyin." : "An error occurred, please try again later.";
-      englishResponse = "An error occurred, please try again later.";
+      console.warn("Vercel backend proxy call failed, attempting direct frontend fallback to Fun Teknoloji AI:", err);
+      try {
+        const directResponse = await fetch("https://ai.funteknoloji.com/v1/chat/completions", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            messages: cleanedMessages,
+            model: "gemma-3-1b-it"
+          }),
+          signal: controller.signal,
+        });
+
+        if (directResponse.ok) {
+          const directData = await directResponse.json();
+          textResponse = directData.choices?.[0]?.message?.content || "";
+          englishResponse = textResponse;
+        } else {
+          throw new Error(`Direct fallback failed with status ${directResponse.status}`);
+        }
+      } catch (directErr) {
+        console.error("Direct frontend fallback also failed:", directErr);
+        textResponse = lang === "tr" ? "Bir hata oluştu, lütfen daha sonra tekrar deneyin." : "An error occurred, please try again later.";
+        englishResponse = "An error occurred, please try again later.";
+      }
     }
 
     textResponse = textResponse.trim().replace(/pulsar/gi, "Nexy");
