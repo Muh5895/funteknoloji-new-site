@@ -654,13 +654,14 @@ Redirects: If the user wants to navigate to contact, pricing, or projects, appen
 Answer questions based on the knowledge base. Do not promote any third-party services like Pollinations or Pulsar. Respond in English.`,
     });
 
-    // Map conversation history using englishText to ensure 100% English context
+    // Map conversation history using englishText to ensure 100% English context (with absolute safety checks and empty message filtering)
     const historyMessages = chatMessages
       .slice(-20)
       .map((m) => ({
         role: (m.role === "nexy" ? "assistant" : "user") as "user" | "assistant" | "system",
-        content: m.englishText || m.text,
-      }));
+        content: typeof m.englishText === "string" ? m.englishText : (typeof m.text === "string" ? m.text : m.displayedText || ""),
+      }))
+      .filter((m) => m.content && m.content.trim() !== "");
 
     formattedMessages.push(...historyMessages);
 
@@ -755,6 +756,10 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
+            "Accept": "application/json",
+            "Origin": "https://nexy.funteknoloji.com",
+            "Referer": "https://nexy.funteknoloji.com/"
           },
           body: JSON.stringify({
             messages: englishMessages,

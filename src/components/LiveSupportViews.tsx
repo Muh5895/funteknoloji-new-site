@@ -1834,13 +1834,14 @@ CRITICAL RULES:
 - ALWAYS VERIFY VIA DATABASE FIRST: Carefully examine the verified account database context. If the records do not match the user's claims, politely and skeptically point this out.`,
       });
 
-      // Map live support conversation history
+      // Map live support conversation history (with absolute safety checks and empty message filtering)
       const historyMessages = messages
         .slice(-20)
         .map((m) => ({
           role: (m.role === "user" ? "user" : "assistant") as "user" | "assistant" | "system",
-          content: m.text,
-        }));
+          content: typeof m.text === "string" ? m.text : m.displayedText || "",
+        }))
+        .filter((m) => m.content && m.content.trim() !== "");
 
       formattedMessages.push(...historyMessages);
 
@@ -1962,6 +1963,10 @@ CRITICAL RULES:
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
+                "Accept": "application/json",
+                "Origin": "https://nexy.funteknoloji.com",
+                "Referer": "https://nexy.funteknoloji.com/"
               },
               body: JSON.stringify({
                 messages: englishMessages,
