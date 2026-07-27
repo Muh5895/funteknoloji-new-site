@@ -4,6 +4,7 @@ import { submitContactForm } from "../lib/engine";
 import { toast } from "sonner";
 import { useLang } from "../lib/i18n";
 import ScrollReveal from "../components/ScrollReveal";
+import { Mail } from "lucide-react";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -286,7 +287,7 @@ function ContactPage() {
                 <h3 className="text-heading-6 font-medium mb-6">{t("contact.info.title")}</h3>
                 <div className="space-y-6">
                   <ContactInfoItem
-                    icon="📧"
+                    icon={<Mail className="h-5 w-5 text-white/80" />}
                     title={t("contact.info.email")}
                     value="support@funteknoloji.com"
                     href="mailto:support@funteknoloji.com"
@@ -389,14 +390,14 @@ function ContactInfoItem({
   value,
   href,
 }: {
-  icon: string;
+  icon: React.ReactNode;
   title: string;
   value: string;
   href?: string;
 }) {
   return (
     <div className="flex items-start gap-4">
-      <span className="text-xl">{icon}</span>
+      <div className="shrink-0 mt-1">{icon}</div>
       <div>
         <p className="text-sm text-white/40 mb-1">{title}</p>
         {href ? (

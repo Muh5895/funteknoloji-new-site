@@ -1362,7 +1362,7 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
                 {pastSessions.length > 0 && (
                   <div className="mt-2 space-y-2 select-none">
                     <h4 className="text-xs font-bold fun-text px-1">
-                      {lang === "tr" ? "Geçmiş Destek Talepleriniz" : "Your Past Support Tickets"}
+                      {t("help.past_tickets")}
                     </h4>
                     <div className="max-h-[160px] overflow-y-auto space-y-2 pr-1">
                       {pastSessions.map((session) => (

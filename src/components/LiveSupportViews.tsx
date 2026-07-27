@@ -210,6 +210,12 @@ const localTrans: Record<string, any> = {
     confirmCloseDesc: "Mevcut canlı destek görüşmesini sonlandırmak istediğinize emin misiniz?",
     confirmCloseYes: "Evet, Sonlandır",
     confirmCloseNo: "İptal",
+    forgotPassword: "Şifremi Unuttum",
+    dontHaveAccount: "Hesabınız Yok mu? ",
+    createOne: "Oluşturun",
+    activeProfile: "Aktif Profil: ",
+    statusClosed: "Kapalı",
+    statusOpen: "Açık",
     searchPlaceholder: "Mesajlarda ara...",
   },
   en: {
@@ -250,6 +256,12 @@ const localTrans: Record<string, any> = {
     confirmCloseDesc: "Are you sure you want to end this live support session?",
     confirmCloseYes: "Yes, End",
     confirmCloseNo: "Cancel",
+    forgotPassword: "Forgot Password?",
+    dontHaveAccount: "Don't have an account? ",
+    createOne: "Create one",
+    activeProfile: "Active Profile: ",
+    statusClosed: "Closed",
+    statusOpen: "Open",
     searchPlaceholder: "Search messages...",
   },
   de: {
@@ -290,6 +302,12 @@ const localTrans: Record<string, any> = {
     confirmCloseDesc: "Möchten Sie diese Live-Support-Sitzung wirklich beenden?",
     confirmCloseYes: "Ja, beenden",
     confirmCloseNo: "Abbrechen",
+    forgotPassword: "Passwort vergessen?",
+    dontHaveAccount: "Haben Sie kein Konto? ",
+    createOne: "Erstellen Sie eines",
+    activeProfile: "Aktives Profil: ",
+    statusClosed: "Geschlossen",
+    statusOpen: "Offen",
     searchPlaceholder: "Nachrichten durchsuchen...",
   },
   fr: {
@@ -330,6 +348,12 @@ const localTrans: Record<string, any> = {
     confirmCloseDesc: "Êtes-vous sûr de vouloir terminer cette session de support en direct ?",
     confirmCloseYes: "Oui, terminer",
     confirmCloseNo: "Annuler",
+    forgotPassword: "Mot de passe oublié ?",
+    dontHaveAccount: "Vous n'avez pas de compte ? ",
+    createOne: "Créer un compte",
+    activeProfile: "Profil actif : ",
+    statusClosed: "Fermé",
+    statusOpen: "Ouvert",
     searchPlaceholder: "Rechercher des messages...",
   },
   es: {
@@ -370,6 +394,12 @@ const localTrans: Record<string, any> = {
     confirmCloseDesc: "¿Está seguro de que desea finalizar esta sesión de soporte en vivo?",
     confirmCloseYes: "Sí, finalizar",
     confirmCloseNo: "Cancelar",
+    forgotPassword: "¿Olvidó su contraseña?",
+    dontHaveAccount: "¿No tiene una cuenta? ",
+    createOne: "Crear una",
+    activeProfile: "Perfil activo: ",
+    statusClosed: "Cerrado",
+    statusOpen: "Abierto",
     searchPlaceholder: "Buscar mensajes...",
   },
   az: {
@@ -410,6 +440,12 @@ const localTrans: Record<string, any> = {
     confirmCloseDesc: "Cari canlı dəstək görüşünü sonlandırmaq istədiyinizə əminsiniz?",
     confirmCloseYes: "Bəli, Sonlandır",
     confirmCloseNo: "İmtina",
+    forgotPassword: "Şifrəmi Unutdum",
+    dontHaveAccount: "Hesabınız Yoxdur? ",
+    createOne: "Yaradın",
+    activeProfile: "Aktiv Profil: ",
+    statusClosed: "Bağlı",
+    statusOpen: "Açıq",
     searchPlaceholder: "Mesajları axtar...",
   },
   ru: {
@@ -450,6 +486,12 @@ const localTrans: Record<string, any> = {
     confirmCloseDesc: "Вы уверены, что хотите завершить эту сессию живой поддержки?",
     confirmCloseYes: "Да, завершить",
     confirmCloseNo: "Отмена",
+    forgotPassword: "Забыли пароль?",
+    dontHaveAccount: "Нет аккаунта? ",
+    createOne: "Создать",
+    activeProfile: "Активный профиль: ",
+    statusClosed: "Закрыто",
+    statusOpen: "Открыто",
     searchPlaceholder: "Поиск сообщений...",
   },
   ar: {
@@ -490,6 +532,12 @@ const localTrans: Record<string, any> = {
     confirmCloseDesc: "هل أنت متأكد أنك تريد إنهاء جلسة الدعم المباشر هذه؟",
     confirmCloseYes: "نعم، إنهاء",
     confirmCloseNo: "إلغاء",
+    forgotPassword: "هل نسيت كلمة المرور؟",
+    dontHaveAccount: "ليس لديك حساب؟ ",
+    createOne: "إنشاء حساب",
+    activeProfile: "الملف الشخصي النشط: ",
+    statusClosed: "مغلق",
+    statusOpen: "مفتوح",
     searchPlaceholder: "البحث في الرسائل...",
   },
   it: {
@@ -530,6 +578,12 @@ const localTrans: Record<string, any> = {
     confirmCloseDesc: "Sei sicuro di voler terminare questa sessione di supporto live?",
     confirmCloseYes: "Sì, termina",
     confirmCloseNo: "Annulla",
+    forgotPassword: "Password dimenticata?",
+    dontHaveAccount: "Non hai un account? ",
+    createOne: "Creane uno",
+    activeProfile: "Profilo attivo: ",
+    statusClosed: "Chiuso",
+    statusOpen: "Aperto",
     searchPlaceholder: "Cerca messaggi...",
   },
   pt: {
@@ -570,6 +624,12 @@ const localTrans: Record<string, any> = {
     confirmCloseDesc: "Tem certeza de que deseja encerrar esta sessão de suporte ao vivo?",
     confirmCloseYes: "Sim, encerrar",
     confirmCloseNo: "Cancelar",
+    forgotPassword: "Esqueceu a senha?",
+    dontHaveAccount: "Não tem uma conta? ",
+    createOne: "Crie uma",
+    activeProfile: "Perfil ativo: ",
+    statusClosed: "Fechado",
+    statusOpen: "Aberto",
     searchPlaceholder: "Pesquisar mensagens...",
   },
   ja: {
@@ -610,6 +670,12 @@ const localTrans: Record<string, any> = {
     confirmCloseDesc: "このライブサポートセッションを終了してもよろしいですか？",
     confirmCloseYes: "はい、終了する",
     confirmCloseNo: "キャンセル",
+    forgotPassword: "パスワードをお忘れですか？",
+    dontHaveAccount: "アカウントをお持ちでないですか？ ",
+    createOne: "アカウント作成",
+    activeProfile: "アクティブなプロフィール: ",
+    statusClosed: "終了",
+    statusOpen: "オープン",
     searchPlaceholder: "メッセージを検索...",
   },
   zh: {
@@ -650,6 +716,12 @@ const localTrans: Record<string, any> = {
     confirmCloseDesc: "您确定要结束此在线客服会话吗？",
     confirmCloseYes: "是的，结束",
     confirmCloseNo: "取消",
+    forgotPassword: "忘记密码？",
+    dontHaveAccount: "没有账号？ ",
+    createOne: "注册一个",
+    activeProfile: "当前登录： ",
+    statusClosed: "已关闭",
+    statusOpen: "已开启",
     searchPlaceholder: "搜索消息...",
   }
 };
@@ -791,7 +863,7 @@ export function LiveLoginView({ onBack, onLoginSuccess, lang }: LiveLoginViewPro
             rel="noopener noreferrer"
             className="text-[11px] font-semibold text-[var(--fun-purple)] hover:underline"
           >
-            {lang === "tr" ? "Şifremi Unuttum" : "Forgot Password?"}
+            {getTranslation(lang, "forgotPassword")}
           </a>
         </div>
 
@@ -805,14 +877,14 @@ export function LiveLoginView({ onBack, onLoginSuccess, lang }: LiveLoginViewPro
 
         <div className="text-center mt-1">
           <span className="text-[11px] fun-text-muted">
-            {lang === "tr" ? "Hesabınız Yok mu? " : "Don't have an account? "}
+            {getTranslation(lang, "dontHaveAccount")}
             <a
               href="https://account.funteknoloji.com/register"
               target="_blank"
               rel="noopener noreferrer"
               className="font-bold text-[var(--fun-purple)] hover:underline"
             >
-              {lang === "tr" ? "Oluşturun" : "Create one"}
+              {getTranslation(lang, "createOne")}
             </a>
           </span>
         </div>
@@ -889,7 +961,7 @@ export function LiveTicketDetailsView({ lang, onBack, onSubmit }: LiveTicketDeta
       <form onSubmit={handleSubmit} className="flex-1 p-5 sm:p-6 flex flex-col gap-4 overflow-y-auto">
         {userName && (
           <div className="text-[11px] sm:text-xs text-[var(--fun-purple)] font-bold px-1">
-            {lang === "tr" ? `Aktif Profil: ${userName}` : `Active Profile: ${userName}`}
+            {`${getTranslation(lang, "activeProfile")}${userName}`}
           </div>
         )}
 
@@ -2152,7 +2224,7 @@ CRITICAL RULES:
               {agentName}
             </h3>
             <p className={`text-[10px] sm:text-xs font-semibold mt-0.5 ${readOnly ? "text-red-600 dark:text-red-500 font-bold" : "fun-text-muted"}`}>
-              {readOnly ? (lang === "tr" ? "Sonlandırıldı" : "Closed") : (lang === "tr" ? "Destek Asistanı" : "Support Assistant")}
+              {readOnly ? getTranslation(lang, "statusClosed") : getTranslation(lang, "statusOpen")}
             </p>
           </div>
         </div>
