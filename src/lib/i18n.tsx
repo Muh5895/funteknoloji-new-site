@@ -16,7 +16,11 @@ export type Lang =
 
 type Dict = Record<string, string>;
 
-const tr: Dict = {  "help.past_tickets": "Geçmiş Destek Talepleriniz",
+const tr: Dict = {  "theme.system_short": "Sistem",
+  "theme.dark_short": "Koyu",
+  "theme.light_short": "Açık",
+  "intro.skip": "Atla",
+  "help.past_tickets": "Geçmiş Destek Talepleriniz",
 
   "404.desc": "Görünüşe göre bir şeyler ters gitti veya sayfa taşınmış olabilir.",
   "404.home": "Ana Sayfaya Dön",
@@ -618,7 +622,11 @@ const tr: Dict = {  "help.past_tickets": "Geçmiş Destek Talepleriniz",
   "live_support.confirm_close_no": "İptal",
 };
 
-const en: Dict = {  "help.past_tickets": "Your Past Support Tickets",
+const en: Dict = {  "theme.system_short": "System",
+  "theme.dark_short": "Dark",
+  "theme.light_short": "Light",
+  "intro.skip": "Skip",
+  "help.past_tickets": "Your Past Support Tickets",
 
   "404.desc": "It looks like something went wrong or the page may have been moved.",
   "404.home": "Return to Home Page",
@@ -1223,7 +1231,11 @@ const en: Dict = {  "help.past_tickets": "Your Past Support Tickets",
   "live_support.confirm_close_no": "Cancel",
 };
 
-const de: Dict = {  "help.past_tickets": "Ihre bisherigen Support-Tickets",
+const de: Dict = {  "theme.system_short": "System",
+  "theme.dark_short": "Dunkel",
+  "theme.light_short": "Hell",
+  "intro.skip": "Überspringen",
+  "help.past_tickets": "Ihre bisherigen Support-Tickets",
 
   "404.desc": "Offenbar ist ein Fehler aufgetreten oder die Seite wurde möglicherweise verschoben.",
   "404.home": "Zurück zur Startseite",
@@ -1822,7 +1834,11 @@ const de: Dict = {  "help.past_tickets": "Ihre bisherigen Support-Tickets",
   "help.menu.live.toast": "Unser Live-Support-Team ist derzeit offline. Bitte nutzen Sie unseren KI-Assistenten.",
 };
 
-const fr: Dict = {  "help.past_tickets": "Vos anciennes demandes de support",
+const fr: Dict = {  "theme.system_short": "Système",
+  "theme.dark_short": "Sombre",
+  "theme.light_short": "Clair",
+  "intro.skip": "Passer",
+  "help.past_tickets": "Vos anciennes demandes de support",
 
   "404.desc": "Il semble que quelque chose s'est mal passé ou que la page a été déplacée.",
   "404.home": "Retour à la page d'accueil",
@@ -2430,7 +2446,11 @@ const fr: Dict = {  "help.past_tickets": "Vos anciennes demandes de support",
   "help.menu.live.toast": "Notre équipe de support en direct est actuellement hors ligne. Veuillez utiliser notre assistant IA.",
 };
 
-const es: Dict = {  "help.past_tickets": "Sus solicitudes de soporte anteriores",
+const es: Dict = {  "theme.system_short": "Sistema",
+  "theme.dark_short": "Oscuro",
+  "theme.light_short": "Claro",
+  "intro.skip": "Saltar",
+  "help.past_tickets": "Sus solicitudes de soporte anteriores",
 
   "404.desc": "Parece que algo salió mal o es posible que se haya movido la página.",
   "404.home": "Volver a la página de inicio",
@@ -3023,7 +3043,11 @@ const es: Dict = {  "help.past_tickets": "Sus solicitudes de soporte anteriores"
   "help.menu.live.toast": "Nuestro equipo de soporte en vivo está desconectado. Por favor, usa nuestro asistente de IA.",
 };
 
-const az: Dict = {  "help.past_tickets": "Keçmiş Dəstək Sorğularınız",
+const az: Dict = {  "theme.system_short": "Sistem",
+  "theme.dark_short": "Qaranlıq",
+  "theme.light_short": "Açıq",
+  "intro.skip": "Keç",
+  "help.past_tickets": "Keçmiş Dəstək Sorğularınız",
 
   "404.desc": "Deyəsən nəsə xəta baş verib və ya səhifə köçürülüb.",
   "404.home": "Əsas səhifəyə qayıt",
@@ -3609,7 +3633,11 @@ const az: Dict = {  "help.past_tickets": "Keçmiş Dəstək Sorğularınız",
   "help.menu.live.toast": "Dəstək komandamız hazırda oflayndır. Zəhmət olmasa AI Assistanımızı istifadə edin.",
 };
 
-const ru: Dict = {  "help.past_tickets": "Ваши прошлые запросы в поддержку",
+const ru: Dict = {  "theme.system_short": "Система",
+  "theme.dark_short": "Темная",
+  "theme.light_short": "Светлая",
+  "intro.skip": "Пропустить",
+  "help.past_tickets": "Ваши прошлые запросы в поддержку",
 
   "404.desc": "Похоже, что-то пошло не так или страница была перемещена.",
   "404.home": "Вернуться на главную страницу",
@@ -4204,7 +4232,11 @@ const ru: Dict = {  "help.past_tickets": "Ваши прошлые запросы
   "help.menu.live.toast": "Наша команда живой поддержки сейчас офлайн. Пожалуйста, используйте ИИ-ассистента.",
 };
 
-const ar: Dict = {  "help.past_tickets": "تذاكر الدعم السابقة الخاصة بك",
+const ar: Dict = {  "theme.system_short": "النظام",
+  "theme.dark_short": "داكن",
+  "theme.light_short": "فاتح",
+  "intro.skip": "تخطى",
+  "help.past_tickets": "تذاكر الدعم السابقة الخاصة بك",
 
   "404.desc": "يبدو أنه حدث خطأ ما أو ربما تم نقل الصفحة.",
   "404.home": "العودة إلى الصفحة الرئيسية",
@@ -4761,7 +4793,11 @@ const ar: Dict = {  "help.past_tickets": "تذاكر الدعم السابقة �
   "help.menu.live.toast": "فريق الدعم المباشر لدينا غير متصل حاليًا. يرجى استخدام مساعد الذكاء الاصطناعي.",
 };
 
-const it: Dict = {  "help.past_tickets": "I tuoi ticket di supporto precedenti",
+const it: Dict = {  "theme.system_short": "Sistema",
+  "theme.dark_short": "Scuro",
+  "theme.light_short": "Chiaro",
+  "intro.skip": "Salta",
+  "help.past_tickets": "I tuoi ticket di supporto precedenti",
 
   "404.desc": "Sembra che qualcosa sia andato storto o che la pagina sia stata spostata.",
   "404.home": "Ritorna alla pagina iniziale",
@@ -5351,7 +5387,11 @@ const it: Dict = {  "help.past_tickets": "I tuoi ticket di supporto precedenti",
   "help.menu.live.toast": "Il nostro team di supporto dal vivo è offline. Ti preghiamo di usare il nostro assistente IA.",
 };
 
-const pt: Dict = {  "help.past_tickets": "Seus tickets de suporte anteriores",
+const pt: Dict = {  "theme.system_short": "Sistema",
+  "theme.dark_short": "Escuro",
+  "theme.light_short": "Claro",
+  "intro.skip": "Pular",
+  "help.past_tickets": "Seus tickets de suporte anteriores",
 
   "404.desc": "Parece que algo deu errado ou a página pode ter sido movida.",
   "404.home": "Retornar à página inicial",
@@ -5943,7 +5983,11 @@ const pt: Dict = {  "help.past_tickets": "Seus tickets de suporte anteriores",
   "help.menu.live.toast": "Nossa equipe de suporte ao vivo está offline. Por favor, use nosso assistente de IA.",
 };
 
-const ja: Dict = {  "help.past_tickets": "過去のサポートチケット",
+const ja: Dict = {  "theme.system_short": "システム",
+  "theme.dark_short": "ダーク",
+  "theme.light_short": "ライト",
+  "intro.skip": "スキップ",
+  "help.past_tickets": "過去のサポートチケット",
 
   "404.desc": "何か問題が発生したか、ページが移動された可能性があります。",
   "404.home": "ホームページに戻る",
@@ -6519,7 +6563,11 @@ const ja: Dict = {  "help.past_tickets": "過去のサポートチケット",
   "help.menu.live.toast": "現在ライブサポートチームはオフラインです。AIアシスタントをご利用ください。",
 };
 
-const zh: Dict = {  "help.past_tickets": "您历史提交的工单",
+const zh: Dict = {  "theme.system_short": "系统",
+  "theme.dark_short": "深色",
+  "theme.light_short": "浅色",
+  "intro.skip": "跳过",
+  "help.past_tickets": "您历史提交的工单",
 
   "404.desc": "看起来出了点问题或者页面可能已被移动。",
   "404.home": "返回首页",

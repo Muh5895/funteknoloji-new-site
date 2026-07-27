@@ -83,7 +83,7 @@ export const Route = createRootRoute({
           sameAs: [
             "https://www.instagram.com/funteknoloji/",
             "https://www.youtube.com/@FunTeknoloji",
-            "https://www.linkedin.com/company/funteknoloji",
+            "https://www.linkedin.com/company/fun-teknoloji",
             "https://x.com/funteknoloji_",
           ],
         }),
