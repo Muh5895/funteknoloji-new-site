@@ -2064,50 +2064,74 @@ CRITICAL RULES:
           const agentMsgId = Math.random().toString(36).substring(2, 9);
 
           if (response.ok) {
-            const reader = response.body?.getReader();
-            if (!reader) throw new Error("No body reader on helper response");
+            const contentType = response.headers.get("content-type") || "";
+            if (contentType.includes("text/event-stream")) {
+              const reader = response.body?.getReader();
+              if (!reader) throw new Error("No body reader on helper response");
 
-            const decoder = new TextDecoder();
-            let done = false;
-            let buffer = "";
-            let accumulatedText = "";
+              const decoder = new TextDecoder();
+              let done = false;
+              let buffer = "";
+              let accumulatedText = "";
 
-            // Transition stage to typing immediately
-            setThinkingStage("typing");
-            setIsAgentTyping(false);
+              // Transition stage to typing immediately
+              setThinkingStage("typing");
+              setIsAgentTyping(false);
 
-            setMessages((prev) => [
-              ...prev,
-              {
-                role: "agent" as const,
-                text: "",
-                id: agentMsgId,
-                timestamp: Date.now(),
-                displayedText: "",
-                englishText: ""
+              setMessages((prev) => [
+                ...prev,
+                {
+                  role: "agent" as const,
+                  text: "",
+                  id: agentMsgId,
+                  timestamp: Date.now(),
+                  displayedText: "",
+                  englishText: ""
+                }
+              ]);
+
+              while (!done) {
+                const { value, done: doneReading } = await reader.read();
+                done = doneReading;
+                if (value) {
+                  buffer += decoder.decode(value, { stream: !done });
+                  const lines = buffer.split("\n");
+                  buffer = lines.pop() || "";
+
+                  for (const line of lines) {
+                    const trimmed = line.trim();
+                    if (!trimmed) continue;
+                    if (trimmed.startsWith("data: ")) {
+                      const dataStr = trimmed.slice(6).trim();
+                      if (dataStr === "[DONE]") continue;
+                      try {
+                        const parsed = JSON.parse(dataStr);
+                        const chunkContent = parsed.content || "";
+                        accumulatedText += chunkContent;
+
+                        // Update in real-time
+                        setMessages((prev) =>
+                          prev.map((m) =>
+                            m.id === agentMsgId
+                              ? { ...m, text: accumulatedText, displayedText: accumulatedText, englishText: accumulatedText }
+                              : m
+                          )
+                        );
+                      } catch (e) {}
+                    }
+                  }
+                }
               }
-            ]);
 
-            while (!done) {
-              const { value, done: doneReading } = await reader.read();
-              done = doneReading;
-              if (value) {
-                buffer += decoder.decode(value, { stream: !done });
-                const lines = buffer.split("\n");
-                buffer = lines.pop() || "";
-
-                for (const line of lines) {
-                  const trimmed = line.trim();
-                  if (!trimmed) continue;
-                  if (trimmed.startsWith("data: ")) {
-                    const dataStr = trimmed.slice(6).trim();
-                    if (dataStr === "[DONE]") continue;
+              if (buffer) {
+                const trimmed = buffer.trim();
+                if (trimmed.startsWith("data: ")) {
+                  const dataStr = trimmed.slice(6).trim();
+                  if (dataStr !== "[DONE]") {
                     try {
                       const parsed = JSON.parse(dataStr);
                       const chunkContent = parsed.content || "";
                       accumulatedText += chunkContent;
-
-                      // Update in real-time
                       setMessages((prev) =>
                         prev.map((m) =>
                           m.id === agentMsgId
@@ -2119,31 +2143,34 @@ CRITICAL RULES:
                   }
                 }
               }
-            }
 
-            if (buffer) {
-              const trimmed = buffer.trim();
-              if (trimmed.startsWith("data: ")) {
-                const dataStr = trimmed.slice(6).trim();
-                if (dataStr !== "[DONE]") {
-                  try {
-                    const parsed = JSON.parse(dataStr);
-                    const chunkContent = parsed.content || "";
-                    accumulatedText += chunkContent;
-                    setMessages((prev) =>
-                      prev.map((m) =>
-                        m.id === agentMsgId
-                          ? { ...m, text: accumulatedText, displayedText: accumulatedText, englishText: accumulatedText }
-                          : m
-                      )
-                    );
-                  } catch (e) {}
-                }
+              agentText = accumulatedText;
+              englishResponse = accumulatedText;
+            } else {
+              // Standard JSON response
+              const data = await response.json();
+              const textCandidate = data.text || "";
+              if (textCandidate.includes("geçici bir yoğunluk") || textCandidate.includes("temporary system congestion") || textCandidate.includes("meşgul") || textCandidate.includes("Sorgunuz işlenirken bir hata oluştu")) {
+                throw new Error("Backend returned a congestion/error response, forcing direct frontend fallback");
               }
-            }
+              agentText = textCandidate;
+              englishResponse = data.englishText || agentText;
 
-            agentText = accumulatedText;
-            englishResponse = accumulatedText;
+              setThinkingStage("typing");
+              setIsAgentTyping(false);
+
+              setMessages((prev) => [
+                ...prev,
+                {
+                  role: "agent" as const,
+                  text: agentText,
+                  id: agentMsgId,
+                  timestamp: Date.now(),
+                  displayedText: agentText,
+                  englishText: englishResponse
+                }
+              ]);
+            }
           } else {
             throw new Error("Backend proxy failed");
           }

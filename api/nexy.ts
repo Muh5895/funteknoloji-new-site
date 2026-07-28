@@ -615,6 +615,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     ];
 
     let aiText = "";
+    let isFallbackResponse = false;
 
     // Try Hack Club First (with a strict 8-second timeout to prevent hanging)
     if (backupApiKey) {
@@ -651,6 +652,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     // Unconditional Fallback to Fun Teknoloji if Hack Club failed or was skipped (with a long 55-second timeout for slower response)
     if (!aiText) {
       try {
+        isFallbackResponse = true;
         const response = await fetchWithTimeout("https://ai.funteknoloji.com/v1/chat/completions", {
           method: "POST",
           headers: {
@@ -672,7 +674,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           throw new Error(`Fun Teknoloji AI returned status ${response.status}: ${errText}`);
         }
 
-        // Parse chunked SSE stream
         const reader = response.body?.getReader();
         if (!reader) {
           throw new Error("No response body reader available for streaming");
@@ -768,36 +769,34 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     translatedResponse = cleanLeadingDashes(translatedResponse);
     aiText = cleanLeadingDashes(aiText);
 
-    res.writeHead(200, {
-      "Content-Type": "text/event-stream",
-      "Cache-Control": "no-cache",
-      "Connection": "keep-alive",
-    });
+    if (isFallbackResponse) {
+      res.writeHead(200, {
+        "Content-Type": "text/event-stream",
+        "Cache-Control": "no-cache",
+        "Connection": "keep-alive",
+      });
 
-    const words = translatedResponse.split(" ");
-    for (let i = 0; i < words.length; i++) {
-      const chunk = words[i] + (i === words.length - 1 ? "" : " ");
-      res.write(`data: ${JSON.stringify({ content: chunk })}\n\n`);
-      await new Promise((resolve) => setTimeout(resolve, 25));
+      const words = translatedResponse.split(" ");
+      for (let i = 0; i < words.length; i++) {
+        const chunk = words[i] + (i === words.length - 1 ? "" : " ");
+        res.write(`data: ${JSON.stringify({ content: chunk })}\n\n`);
+        await new Promise((resolve) => setTimeout(resolve, 25));
+      }
+      res.write("data: [DONE]\n\n");
+      res.end();
+      return;
+    } else {
+      return res.status(200).json({
+        text: translatedResponse,
+        englishText: aiText,
+        isTranslated: lang && lang !== "en"
+      });
     }
-    res.write("data: [DONE]\n\n");
-    res.end();
-    return;
   }
 
-  res.writeHead(200, {
-    "Content-Type": "text/event-stream",
-    "Cache-Control": "no-cache",
-    "Connection": "keep-alive",
+  return res.status(200).json({
+    text: "Sorgunuz işlenirken bir hata oluştu. Lütfen tekrar deneyin.",
+    englishText: "An error occurred while processing your query. Please try again.",
+    isTranslated: false
   });
-  const errMsg = lang === "tr" ? "Sorgunuz işlenirken bir hata oluştu. Lütfen tekrar deneyin." : "An error occurred while processing your query. Please try again.";
-  const errWords = errMsg.split(" ");
-  for (let i = 0; i < errWords.length; i++) {
-    const chunk = errWords[i] + (i === errWords.length - 1 ? "" : " ");
-    res.write(`data: ${JSON.stringify({ content: chunk })}\n\n`);
-    await new Promise((resolve) => setTimeout(resolve, 25));
-  }
-  res.write("data: [DONE]\n\n");
-  res.end();
-  return;
 }

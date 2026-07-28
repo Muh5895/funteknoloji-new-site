@@ -778,28 +778,46 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
       });
 
       if (response.ok) {
-        const reader = response.body?.getReader();
-        if (!reader) throw new Error("No reader");
+        const contentType = response.headers.get("content-type") || "";
+        if (contentType.includes("text/event-stream")) {
+          const reader = response.body?.getReader();
+          if (!reader) throw new Error("No reader");
 
-        const decoder = new TextDecoder();
-        let done = false;
-        let buffer = "";
-        let accumulatedText = "";
+          const decoder = new TextDecoder();
+          let done = false;
+          let buffer = "";
+          let accumulatedText = "";
 
-        while (!done) {
-          const { value, done: doneReading } = await reader.read();
-          done = doneReading;
-          if (value) {
-            buffer += decoder.decode(value, { stream: !done });
-            const lines = buffer.split("\n");
-            buffer = lines.pop() || "";
+          while (!done) {
+            const { value, done: doneReading } = await reader.read();
+            done = doneReading;
+            if (value) {
+              buffer += decoder.decode(value, { stream: !done });
+              const lines = buffer.split("\n");
+              buffer = lines.pop() || "";
 
-            for (const line of lines) {
-              const trimmed = line.trim();
-              if (!trimmed) continue;
-              if (trimmed.startsWith("data: ")) {
-                const dataStr = trimmed.slice(6).trim();
-                if (dataStr === "[DONE]") continue;
+              for (const line of lines) {
+                const trimmed = line.trim();
+                if (!trimmed) continue;
+                if (trimmed.startsWith("data: ")) {
+                  const dataStr = trimmed.slice(6).trim();
+                  if (dataStr === "[DONE]") continue;
+                  try {
+                    const parsed = JSON.parse(dataStr);
+                    const chunkContent = parsed.content || "";
+                    accumulatedText += chunkContent;
+                    onChunk(accumulatedText, accumulatedText);
+                  } catch (e) {}
+                }
+              }
+            }
+          }
+
+          if (buffer) {
+            const trimmed = buffer.trim();
+            if (trimmed.startsWith("data: ")) {
+              const dataStr = trimmed.slice(6).trim();
+              if (dataStr !== "[DONE]") {
                 try {
                   const parsed = JSON.parse(dataStr);
                   const chunkContent = parsed.content || "";
@@ -809,25 +827,20 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
               }
             }
           }
-        }
 
-        if (buffer) {
-          const trimmed = buffer.trim();
-          if (trimmed.startsWith("data: ")) {
-            const dataStr = trimmed.slice(6).trim();
-            if (dataStr !== "[DONE]") {
-              try {
-                const parsed = JSON.parse(dataStr);
-                const chunkContent = parsed.content || "";
-                accumulatedText += chunkContent;
-                onChunk(accumulatedText, accumulatedText);
-              } catch (e) {}
-            }
+          textResponse = accumulatedText;
+          englishResponse = accumulatedText;
+        } else {
+          // Standard JSON response
+          const data = await response.json();
+          const textCandidate = data.text || "";
+          if (textCandidate.includes("geçici bir yoğunluk") || textCandidate.includes("temporary system congestion") || textCandidate.includes("meşgul") || textCandidate.includes("Sorgunuz işlenirken bir hata oluştu")) {
+            throw new Error("Backend returned a congestion/error response, forcing direct frontend fallback");
           }
+          textResponse = textCandidate;
+          englishResponse = data.englishText || textResponse;
+          onChunk(textResponse, englishResponse);
         }
-
-        textResponse = accumulatedText;
-        englishResponse = accumulatedText;
       } else {
         throw new Error("Vercel proxy returned non-OK status");
       }
