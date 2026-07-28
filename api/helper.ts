@@ -994,7 +994,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            model: "gpt-5-mini",
+            model: "gpt-4o-mini",
             messages: finalMessages
           }),
         }, 8000);
@@ -1136,16 +1136,36 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     translatedResponse = cleanLeadingDashes(translatedResponse);
     aiText = cleanLeadingDashes(aiText);
 
-    return res.status(200).json({
-      text: translatedResponse,
-      englishText: aiText,
-      isTranslated: lang && lang !== "en"
+    res.writeHead(200, {
+      "Content-Type": "text/event-stream",
+      "Cache-Control": "no-cache",
+      "Connection": "keep-alive",
     });
+
+    const words = translatedResponse.split(" ");
+    for (let i = 0; i < words.length; i++) {
+      const chunk = words[i] + (i === words.length - 1 ? "" : " ");
+      res.write(`data: ${JSON.stringify({ content: chunk })}\n\n`);
+      await new Promise((resolve) => setTimeout(resolve, 25));
+    }
+    res.write("data: [DONE]\n\n");
+    res.end();
+    return;
   }
 
-  return res.status(200).json({
-    text: "Sorgunuz işlenirken bir hata oluştu. Lütfen tekrar deneyin.",
-    englishText: "An error occurred while processing your query. Please try again.",
-    isTranslated: false
+  res.writeHead(200, {
+    "Content-Type": "text/event-stream",
+    "Cache-Control": "no-cache",
+    "Connection": "keep-alive",
   });
+  const errMsg = lang === "tr" ? "Sorgunuz işlenirken bir hata oluştu. Lütfen tekrar deneyin." : "An error occurred while processing your query. Please try again.";
+  const errWords = errMsg.split(" ");
+  for (let i = 0; i < errWords.length; i++) {
+    const chunk = errWords[i] + (i === errWords.length - 1 ? "" : " ");
+    res.write(`data: ${JSON.stringify({ content: chunk })}\n\n`);
+    await new Promise((resolve) => setTimeout(resolve, 25));
+  }
+  res.write("data: [DONE]\n\n");
+  res.end();
+  return;
 }

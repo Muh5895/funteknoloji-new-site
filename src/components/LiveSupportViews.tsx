@@ -2061,14 +2061,89 @@ CRITICAL RULES:
             return;
           }
 
+          const agentMsgId = Math.random().toString(36).substring(2, 9);
+
           if (response.ok) {
-            const data = await response.json();
-            const textCandidate = data.text || "";
-            if (textCandidate.includes("geçici bir yoğunluk") || textCandidate.includes("temporary system congestion") || textCandidate.includes("meşgul") || textCandidate.includes("Sorgunuz işlenirken bir hata oluştu")) {
-              throw new Error("Backend returned a congestion/error response, forcing direct frontend fallback");
+            const reader = response.body?.getReader();
+            if (!reader) throw new Error("No body reader on helper response");
+
+            const decoder = new TextDecoder();
+            let done = false;
+            let buffer = "";
+            let accumulatedText = "";
+
+            // Transition stage to typing immediately
+            setThinkingStage("typing");
+            setIsAgentTyping(false);
+
+            setMessages((prev) => [
+              ...prev,
+              {
+                role: "agent" as const,
+                text: "",
+                id: agentMsgId,
+                timestamp: Date.now(),
+                displayedText: "",
+                englishText: ""
+              }
+            ]);
+
+            while (!done) {
+              const { value, done: doneReading } = await reader.read();
+              done = doneReading;
+              if (value) {
+                buffer += decoder.decode(value, { stream: !done });
+                const lines = buffer.split("\n");
+                buffer = lines.pop() || "";
+
+                for (const line of lines) {
+                  const trimmed = line.trim();
+                  if (!trimmed) continue;
+                  if (trimmed.startsWith("data: ")) {
+                    const dataStr = trimmed.slice(6).trim();
+                    if (dataStr === "[DONE]") continue;
+                    try {
+                      const parsed = JSON.parse(dataStr);
+                      const chunkContent = parsed.content || "";
+                      accumulatedText += chunkContent;
+
+                      // Update in real-time
+                      setMessages((prev) =>
+                        prev.map((m) =>
+                          m.id === agentMsgId
+                            ? { ...m, text: accumulatedText, displayedText: accumulatedText, englishText: accumulatedText }
+                            : m
+                        )
+                      );
+                    } catch (e) {}
+                  }
+                }
+              }
             }
-            agentText = textCandidate;
-            englishResponse = data.englishText || agentText;
+
+            if (buffer) {
+              const trimmed = buffer.trim();
+              if (trimmed.startsWith("data: ")) {
+                const dataStr = trimmed.slice(6).trim();
+                if (dataStr !== "[DONE]") {
+                  try {
+                    const parsed = JSON.parse(dataStr);
+                    const chunkContent = parsed.content || "";
+                    accumulatedText += chunkContent;
+                    setMessages((prev) =>
+                      prev.map((m) =>
+                        m.id === agentMsgId
+                          ? { ...m, text: accumulatedText, displayedText: accumulatedText, englishText: accumulatedText }
+                          : m
+                      )
+                    );
+                  } catch (e) {}
+                }
+              }
+            }
+
+            agentText = accumulatedText;
+            englishResponse = accumulatedText;
           } else {
             throw new Error("Backend proxy failed");
           }
@@ -2166,6 +2241,36 @@ CRITICAL RULES:
               englishResponse = cleanLeadingDashes(englishResponse);
 
               agentText = translatedText;
+
+              // Transition stage to typing
+              setThinkingStage("typing");
+              setIsAgentTyping(false);
+
+              setMessages((prev) => [
+                ...prev,
+                {
+                  role: "agent" as const,
+                  text: "",
+                  id: agentMsgId,
+                  timestamp: Date.now(),
+                  displayedText: "",
+                  englishText: englishResponse
+                }
+              ]);
+
+              const words = agentText.split(" ");
+              let tempText = "";
+              for (let i = 0; i < words.length; i++) {
+                tempText += words[i] + (i === words.length - 1 ? "" : " ");
+                setMessages((prev) =>
+                  prev.map((m) =>
+                    m.id === agentMsgId
+                      ? { ...m, text: tempText, displayedText: tempText }
+                      : m
+                  )
+                );
+                await new Promise((resolve) => setTimeout(resolve, 25));
+              }
             } else {
               throw new Error(`Direct fallback failed with status ${directResponse.status}`);
             }
@@ -2174,39 +2279,42 @@ CRITICAL RULES:
             const fallbackErrMsg = "A temporary system congestion occurred. Please try again in a moment.";
             agentText = await translateTextHelper(fallbackErrMsg, "en", lang);
             englishResponse = fallbackErrMsg;
+
+            setMessages((prev) => [
+              ...prev,
+              {
+                role: "agent" as const,
+                text: agentText,
+                id: agentMsgId,
+                timestamp: Date.now(),
+                displayedText: agentText,
+                englishText: englishResponse
+              }
+            ]);
+            setThinkingStage("typing");
+            setIsAgentTyping(false);
           }
         }
 
-        agentText = agentText.replace(/\[inceliyor\]/gi, "");
-        agentText = agentText.replace(/\[duraklama\]/gi, "");
-        agentText = agentText.replace(/\[bekliyor\]/gi, "");
-        agentText = agentText.replace(/\[düşünüyor\]/gi, "");
-        agentText = agentText.replace(/\[[^\]]+\]/g, (match) => {
-          if (match.toLowerCase().startsWith("[redirect:")) return match;
-          return "";
-        });
-        agentText = agentText.trim().replace(/pulsar/gi, "Nexy");
-        englishResponse = englishResponse.trim().replace(/pulsar/gi, "Nexy");
-
-        const agentMsgId = Math.random().toString(36).substring(2, 9);
-        setMessages((prev) => [
-          ...prev,
-          {
-            role: "agent" as const,
-            text: agentText,
-            id: agentMsgId,
-            timestamp: Date.now(),
-            displayedText: "",
-            englishText: englishResponse
-          }
-        ]);
-
-        // Transition stage to typing with organic delay
-        setThinkingStage("typing");
-        setTimeout(() => {
-          setIsAgentTyping(false);
-          setTimeout(() => typeAgentMessage(agentText, agentMsgId), 50);
-        }, 800);
+        // Clean-up and final styling updates
+        setMessages((prev) =>
+          prev.map((m) => {
+            if (m.id === agentMsgId) {
+              let cleaned = m.text;
+              cleaned = cleaned.replace(/\[inceliyor\]/gi, "");
+              cleaned = cleaned.replace(/\[duraklama\]/gi, "");
+              cleaned = cleaned.replace(/\[bekliyor\]/gi, "");
+              cleaned = cleaned.replace(/\[düşünüyor\]/gi, "");
+              cleaned = cleaned.replace(/\[[^\]]+\]/g, (match) => {
+                if (match.toLowerCase().startsWith("[redirect:")) return match;
+                return "";
+              });
+              cleaned = cleaned.trim().replace(/pulsar/gi, "Nexy");
+              return { ...m, text: cleaned, displayedText: cleaned };
+            }
+            return m;
+          })
+        );
 
       } catch (e) {
         setTimeout(() => {
