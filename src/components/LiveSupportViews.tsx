@@ -2166,10 +2166,14 @@ CRITICAL RULES:
                   text: agentText,
                   id: agentMsgId,
                   timestamp: Date.now(),
-                  displayedText: agentText,
+                  displayedText: "",
                   englishText: englishResponse
                 }
               ]);
+
+              setTimeout(() => {
+                typeAgentMessage(agentText, agentMsgId);
+              }, 10);
             }
           } else {
             throw new Error("Backend proxy failed");

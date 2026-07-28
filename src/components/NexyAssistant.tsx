@@ -759,6 +759,7 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
 
     let textResponse = "";
     let englishResponse = "";
+    let isStream = false;
 
     try {
       // Direct call to Vercel backend proxy /api/nexy (acts as central fallback orchestrator)
@@ -780,6 +781,7 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
       if (response.ok) {
         const contentType = response.headers.get("content-type") || "";
         if (contentType.includes("text/event-stream")) {
+          isStream = true;
           const reader = response.body?.getReader();
           if (!reader) throw new Error("No reader");
 
@@ -832,6 +834,7 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
           englishResponse = accumulatedText;
         } else {
           // Standard JSON response
+          isStream = false;
           const data = await response.json();
           const textCandidate = data.text || "";
           if (textCandidate.includes("geçici bir yoğunluk") || textCandidate.includes("temporary system congestion") || textCandidate.includes("meşgul") || textCandidate.includes("Sorgunuz işlenirken bir hata oluştu")) {
@@ -877,6 +880,7 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
         });
 
         if (directResponse.ok) {
+          isStream = true;
           const reader = directResponse.body?.getReader();
           if (!reader) {
             throw new Error("No body reader on direct fallback");
@@ -961,7 +965,7 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
     textResponse = textResponse.trim().replace(/pulsar/gi, "Nexy");
     englishResponse = englishResponse.trim().replace(/pulsar/gi, "Nexy");
 
-    return { text: textResponse, englishText: englishResponse };
+    return { text: textResponse, englishText: englishResponse, isStream };
   };
 
   const handleSend = async (e?: React.FormEvent) => {
@@ -1058,6 +1062,30 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
         return;
       }
       abortControllerRef.current = null;
+
+      responseText = result.text;
+      responseEnglish = result.englishText;
+
+      if (!result.isStream) {
+        // Trigger character-by-character typewriter effect for JSON
+        setChats((prev) =>
+          prev.map((c) => {
+            if (c.id === currentChatId) {
+              const nexyMsgIndex = c.messages.length - 1;
+              setTimeout(() => typeMessage(responseText, nexyMsgIndex, currentChatId), 10);
+              return {
+                ...c,
+                messages: c.messages.map((m, idx) =>
+                  idx === c.messages.length - 1
+                    ? { ...m, text: responseText, displayedText: "", englishText: responseEnglish }
+                    : m
+                )
+              };
+            }
+            return c;
+          })
+        );
+      }
 
       // Check for REDIRECT command
       const redirectMatch = responseText.match(/\[REDIRECT:(.+)\]/i);
