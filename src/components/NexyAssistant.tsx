@@ -499,23 +499,27 @@ export default function NexyAssistant() {
         setChats(formatted);
         if (formatted.length > 0) {
           setActiveChatId(formatted[0].id);
+        } else {
+          createNewChat();
         }
-      } catch (e) {}
+      } catch (e) {
+        createNewChat();
+      }
+    } else {
+      createNewChat();
     }
   }, []);
 
   useEffect(() => {
-    if (chats.length > 0) {
-      localStorage.setItem(
-        "nexy_chats_v2",
-        JSON.stringify(
-          chats.map((c) => ({
-            ...c,
-            messages: c.messages.map(({ role, text }) => ({ role, text })),
-          })),
-        ),
-      );
-    }
+    localStorage.setItem(
+      "nexy_chats_v2",
+      JSON.stringify(
+        chats.map((c) => ({
+          ...c,
+          messages: c.messages.map(({ role, text }) => ({ role, text })),
+        })),
+      ),
+    );
   }, [chats]);
 
   useEffect(() => {
@@ -899,15 +903,27 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
 
       const shouldUpdateTitle = chatMessages.length <= 1;
 
-      setChats((prev) =>
-        prev.map((c) =>
-          c.id === activeChatId
-            ? { ...c, messages: [...c.messages, userMsg] }
-            : c,
-        ),
-      );
+      let currentChatId = activeChatId;
+      if (!currentChatId || chats.length === 0) {
+        currentChatId = Math.random().toString(36).substring(2, 9);
+        const newChat: Chat = {
+          id: currentChatId,
+          title: savedInput.length > 25 ? savedInput.slice(0, 22) + "..." : savedInput,
+          messages: [userMsg],
+          createdAt: Date.now(),
+        };
+        setChats([newChat]);
+        setActiveChatId(currentChatId);
+      } else {
+        setChats((prev) =>
+          prev.map((c) =>
+            c.id === currentChatId
+              ? { ...c, messages: [...c.messages, userMsg] }
+              : c,
+          ),
+        );
+      }
 
-      const currentChatId = activeChatId!;
       setUserInput("");
       setIsTyping(false);
       setIsThinking(true);
