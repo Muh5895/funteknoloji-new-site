@@ -626,7 +626,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            model: "gpt-5-mini",
+            model: "gpt-4o-mini",
             messages: finalMessages
           }),
         }, 8000);
@@ -648,40 +648,15 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       }
     }
 
-    // Unconditional Fallback to Fun Teknoloji if Hack Club failed or was skipped (with a long 55-second timeout for slower response)
     if (!aiText) {
-      try {
-        const response = await fetchWithTimeout("https://ai.funteknoloji.com/v1/chat/completions", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
-            "Accept": "application/json",
-            "Origin": "https://nexy.funteknoloji.com",
-            "Referer": "https://nexy.funteknoloji.com/"
-          },
-          body: JSON.stringify({
-            messages: finalMessages,
-            model: "gemma-3-1b-it",
-          }),
-        }, 55000);
-
-        if (!response.ok) {
-          const errText = await response.text();
-          throw new Error(`Fun Teknoloji AI returned status ${response.status}: ${errText}`);
-        }
-
-        const data = await response.json() as any;
-        aiText = data.choices?.[0]?.message?.content || "";
-      } catch (err: any) {
-        console.error("Fun Teknoloji AI fallback completely failed:", err);
-        return res.status(200).json({
-          text: "Şu an sistemlerimizde geçici bir yoğunluk var. Lütfen biraz sonra tekrar deneyiniz.",
-          englishText: "A temporary system congestion occurred. Please try again in a moment.",
-          isTranslated: false
-        });
-      }
+      return res.status(200).json({
+        text: "Şu an sistemlerimizde geçici bir yoğunluk var. Lütfen biraz sonra tekrar deneyiniz.",
+        englishText: "A temporary system congestion occurred. Please try again in a moment.",
+        isTranslated: false
+      });
     }
+
+
 
     // Process the returned AI text (aiText)
     const queryMatch = aiText.match(/\[DB_QUERY:\s*({[^}]+})\s*\]/);

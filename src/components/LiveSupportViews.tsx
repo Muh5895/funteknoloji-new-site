@@ -210,6 +210,12 @@ const localTrans: Record<string, any> = {
     confirmCloseDesc: "Mevcut canlı destek görüşmesini sonlandırmak istediğinize emin misiniz?",
     confirmCloseYes: "Evet, Sonlandır",
     confirmCloseNo: "İptal",
+    forgotPassword: "Şifremi Unuttum",
+    dontHaveAccount: "Hesabınız Yok mu? ",
+    createOne: "Oluşturun",
+    activeProfile: "Aktif Profil: ",
+    statusClosed: "Kapalı",
+    statusOpen: "Açık",
     searchPlaceholder: "Mesajlarda ara...",
   },
   en: {
@@ -250,6 +256,12 @@ const localTrans: Record<string, any> = {
     confirmCloseDesc: "Are you sure you want to end this live support session?",
     confirmCloseYes: "Yes, End",
     confirmCloseNo: "Cancel",
+    forgotPassword: "Forgot Password?",
+    dontHaveAccount: "Don't have an account? ",
+    createOne: "Create one",
+    activeProfile: "Active Profile: ",
+    statusClosed: "Closed",
+    statusOpen: "Open",
     searchPlaceholder: "Search messages...",
   },
   de: {
@@ -290,6 +302,12 @@ const localTrans: Record<string, any> = {
     confirmCloseDesc: "Möchten Sie diese Live-Support-Sitzung wirklich beenden?",
     confirmCloseYes: "Ja, beenden",
     confirmCloseNo: "Abbrechen",
+    forgotPassword: "Passwort vergessen?",
+    dontHaveAccount: "Haben Sie kein Konto? ",
+    createOne: "Erstellen Sie eines",
+    activeProfile: "Aktives Profil: ",
+    statusClosed: "Geschlossen",
+    statusOpen: "Offen",
     searchPlaceholder: "Nachrichten durchsuchen...",
   },
   fr: {
@@ -330,6 +348,12 @@ const localTrans: Record<string, any> = {
     confirmCloseDesc: "Êtes-vous sûr de vouloir terminer cette session de support en direct ?",
     confirmCloseYes: "Oui, terminer",
     confirmCloseNo: "Annuler",
+    forgotPassword: "Mot de passe oublié ?",
+    dontHaveAccount: "Vous n'avez pas de compte ? ",
+    createOne: "Créer un compte",
+    activeProfile: "Profil actif : ",
+    statusClosed: "Fermé",
+    statusOpen: "Ouvert",
     searchPlaceholder: "Rechercher des messages...",
   },
   es: {
@@ -370,6 +394,12 @@ const localTrans: Record<string, any> = {
     confirmCloseDesc: "¿Está seguro de que desea finalizar esta sesión de soporte en vivo?",
     confirmCloseYes: "Sí, finalizar",
     confirmCloseNo: "Cancelar",
+    forgotPassword: "¿Olvidó su contraseña?",
+    dontHaveAccount: "¿No tiene una cuenta? ",
+    createOne: "Crear una",
+    activeProfile: "Perfil activo: ",
+    statusClosed: "Cerrado",
+    statusOpen: "Abierto",
     searchPlaceholder: "Buscar mensajes...",
   },
   az: {
@@ -410,6 +440,12 @@ const localTrans: Record<string, any> = {
     confirmCloseDesc: "Cari canlı dəstək görüşünü sonlandırmaq istədiyinizə əminsiniz?",
     confirmCloseYes: "Bəli, Sonlandır",
     confirmCloseNo: "İmtina",
+    forgotPassword: "Şifrəmi Unutdum",
+    dontHaveAccount: "Hesabınız Yoxdur? ",
+    createOne: "Yaradın",
+    activeProfile: "Aktiv Profil: ",
+    statusClosed: "Bağlı",
+    statusOpen: "Açıq",
     searchPlaceholder: "Mesajları axtar...",
   },
   ru: {
@@ -450,6 +486,12 @@ const localTrans: Record<string, any> = {
     confirmCloseDesc: "Вы уверены, что хотите завершить эту сессию живой поддержки?",
     confirmCloseYes: "Да, завершить",
     confirmCloseNo: "Отмена",
+    forgotPassword: "Забыли пароль?",
+    dontHaveAccount: "Нет аккаунта? ",
+    createOne: "Создать",
+    activeProfile: "Активный профиль: ",
+    statusClosed: "Закрыто",
+    statusOpen: "Открыто",
     searchPlaceholder: "Поиск сообщений...",
   },
   ar: {
@@ -490,6 +532,12 @@ const localTrans: Record<string, any> = {
     confirmCloseDesc: "هل أنت متأكد أنك تريد إنهاء جلسة الدعم المباشر هذه؟",
     confirmCloseYes: "نعم، إنهاء",
     confirmCloseNo: "إلغاء",
+    forgotPassword: "هل نسيت كلمة المرور؟",
+    dontHaveAccount: "ليس لديك حساب؟ ",
+    createOne: "إنشاء حساب",
+    activeProfile: "الملف الشخصي النشط: ",
+    statusClosed: "مغلق",
+    statusOpen: "مفتوح",
     searchPlaceholder: "البحث في الرسائل...",
   },
   it: {
@@ -530,6 +578,12 @@ const localTrans: Record<string, any> = {
     confirmCloseDesc: "Sei sicuro di voler terminare questa sessione di supporto live?",
     confirmCloseYes: "Sì, termina",
     confirmCloseNo: "Annulla",
+    forgotPassword: "Password dimenticata?",
+    dontHaveAccount: "Non hai un account? ",
+    createOne: "Creane uno",
+    activeProfile: "Profilo attivo: ",
+    statusClosed: "Chiuso",
+    statusOpen: "Aperto",
     searchPlaceholder: "Cerca messaggi...",
   },
   pt: {
@@ -570,6 +624,12 @@ const localTrans: Record<string, any> = {
     confirmCloseDesc: "Tem certeza de que deseja encerrar esta sessão de suporte ao vivo?",
     confirmCloseYes: "Sim, encerrar",
     confirmCloseNo: "Cancelar",
+    forgotPassword: "Esqueceu a senha?",
+    dontHaveAccount: "Não tem uma conta? ",
+    createOne: "Crie uma",
+    activeProfile: "Perfil ativo: ",
+    statusClosed: "Fechado",
+    statusOpen: "Aberto",
     searchPlaceholder: "Pesquisar mensagens...",
   },
   ja: {
@@ -610,6 +670,12 @@ const localTrans: Record<string, any> = {
     confirmCloseDesc: "このライブサポートセッションを終了してもよろしいですか？",
     confirmCloseYes: "はい、終了する",
     confirmCloseNo: "キャンセル",
+    forgotPassword: "パスワードをお忘れですか？",
+    dontHaveAccount: "アカウントをお持ちでないですか？ ",
+    createOne: "アカウント作成",
+    activeProfile: "アクティブなプロフィール: ",
+    statusClosed: "終了",
+    statusOpen: "オープン",
     searchPlaceholder: "メッセージを検索...",
   },
   zh: {
@@ -650,6 +716,12 @@ const localTrans: Record<string, any> = {
     confirmCloseDesc: "您确定要结束此在线客服会话吗？",
     confirmCloseYes: "是的，结束",
     confirmCloseNo: "取消",
+    forgotPassword: "忘记密码？",
+    dontHaveAccount: "没有账号？ ",
+    createOne: "注册一个",
+    activeProfile: "当前登录： ",
+    statusClosed: "已关闭",
+    statusOpen: "已开启",
     searchPlaceholder: "搜索消息...",
   }
 };
@@ -791,7 +863,7 @@ export function LiveLoginView({ onBack, onLoginSuccess, lang }: LiveLoginViewPro
             rel="noopener noreferrer"
             className="text-[11px] font-semibold text-[var(--fun-purple)] hover:underline"
           >
-            {lang === "tr" ? "Şifremi Unuttum" : "Forgot Password?"}
+            {getTranslation(lang, "forgotPassword")}
           </a>
         </div>
 
@@ -805,14 +877,14 @@ export function LiveLoginView({ onBack, onLoginSuccess, lang }: LiveLoginViewPro
 
         <div className="text-center mt-1">
           <span className="text-[11px] fun-text-muted">
-            {lang === "tr" ? "Hesabınız Yok mu? " : "Don't have an account? "}
+            {getTranslation(lang, "dontHaveAccount")}
             <a
               href="https://account.funteknoloji.com/register"
               target="_blank"
               rel="noopener noreferrer"
               className="font-bold text-[var(--fun-purple)] hover:underline"
             >
-              {lang === "tr" ? "Oluşturun" : "Create one"}
+              {getTranslation(lang, "createOne")}
             </a>
           </span>
         </div>
@@ -889,7 +961,7 @@ export function LiveTicketDetailsView({ lang, onBack, onSubmit }: LiveTicketDeta
       <form onSubmit={handleSubmit} className="flex-1 p-5 sm:p-6 flex flex-col gap-4 overflow-y-auto">
         {userName && (
           <div className="text-[11px] sm:text-xs text-[var(--fun-purple)] font-bold px-1">
-            {lang === "tr" ? `Aktif Profil: ${userName}` : `Active Profile: ${userName}`}
+            {`${getTranslation(lang, "activeProfile")}${userName}`}
           </div>
         )}
 
@@ -1989,105 +2061,165 @@ CRITICAL RULES:
             return;
           }
 
+          const agentMsgId = Math.random().toString(36).substring(2, 9);
+
           if (response.ok) {
-            const data = await response.json();
-            const textCandidate = data.text || "";
-            if (textCandidate.includes("geçici bir yoğunluk") || textCandidate.includes("temporary system congestion") || textCandidate.includes("meşgul") || textCandidate.includes("Sorgunuz işlenirken bir hata oluştu")) {
-              throw new Error("Backend returned a congestion/error response, forcing direct frontend fallback");
+            const contentType = response.headers.get("content-type") || "";
+            if (contentType.includes("text/event-stream")) {
+              const reader = response.body?.getReader();
+              if (!reader) throw new Error("No body reader on helper response");
+
+              const decoder = new TextDecoder();
+              let done = false;
+              let buffer = "";
+              let accumulatedText = "";
+
+              // Transition stage to typing immediately
+              setThinkingStage("typing");
+              setIsAgentTyping(false);
+
+              setMessages((prev) => [
+                ...prev,
+                {
+                  role: "agent" as const,
+                  text: "",
+                  id: agentMsgId,
+                  timestamp: Date.now(),
+                  displayedText: "",
+                  englishText: ""
+                }
+              ]);
+
+              while (!done) {
+                const { value, done: doneReading } = await reader.read();
+                done = doneReading;
+                if (value) {
+                  buffer += decoder.decode(value, { stream: !done });
+                  const lines = buffer.split("\n");
+                  buffer = lines.pop() || "";
+
+                  for (const line of lines) {
+                    const trimmed = line.trim();
+                    if (!trimmed) continue;
+                    if (trimmed.startsWith("data: ")) {
+                      const dataStr = trimmed.slice(6).trim();
+                      if (dataStr === "[DONE]") continue;
+                      try {
+                        const parsed = JSON.parse(dataStr);
+                        const chunkContent = parsed.content || "";
+                        accumulatedText += chunkContent;
+
+                        // Update in real-time
+                        setMessages((prev) =>
+                          prev.map((m) =>
+                            m.id === agentMsgId
+                              ? { ...m, text: accumulatedText, displayedText: accumulatedText, englishText: accumulatedText }
+                              : m
+                          )
+                        );
+                      } catch (e) {}
+                    }
+                  }
+                }
+              }
+
+              if (buffer) {
+                const trimmed = buffer.trim();
+                if (trimmed.startsWith("data: ")) {
+                  const dataStr = trimmed.slice(6).trim();
+                  if (dataStr !== "[DONE]") {
+                    try {
+                      const parsed = JSON.parse(dataStr);
+                      const chunkContent = parsed.content || "";
+                      accumulatedText += chunkContent;
+                      setMessages((prev) =>
+                        prev.map((m) =>
+                          m.id === agentMsgId
+                            ? { ...m, text: accumulatedText, displayedText: accumulatedText, englishText: accumulatedText }
+                            : m
+                        )
+                      );
+                    } catch (e) {}
+                  }
+                }
+              }
+
+              agentText = accumulatedText;
+              englishResponse = accumulatedText;
+            } else {
+              // Standard JSON response
+              const data = await response.json();
+              const textCandidate = data.text || "";
+              if (textCandidate.includes("geçici bir yoğunluk") || textCandidate.includes("temporary system congestion") || textCandidate.includes("meşgul") || textCandidate.includes("Sorgunuz işlenirken bir hata oluştu")) {
+                throw new Error("Backend returned a congestion/error response, forcing direct frontend fallback");
+              }
+              agentText = textCandidate;
+              englishResponse = data.englishText || agentText;
+
+              setThinkingStage("typing");
+              setIsAgentTyping(false);
+
+              setMessages((prev) => [
+                ...prev,
+                {
+                  role: "agent" as const,
+                  text: agentText,
+                  id: agentMsgId,
+                  timestamp: Date.now(),
+                  displayedText: "",
+                  englishText: englishResponse
+                }
+              ]);
+
+              setTimeout(() => {
+                typeAgentMessage(agentText, agentMsgId);
+              }, 10);
             }
-            agentText = textCandidate;
-            englishResponse = data.englishText || agentText;
           } else {
             throw new Error("Backend proxy failed");
           }
         } catch (proxyErr) {
-          console.error("Vercel backend proxy call failed in handleSend, attempting direct fallback:", proxyErr);
-          try {
-            // 1. Translate user messages to English before sending to Gemma
-            const englishMessages = [];
-            for (const msg of cleanedMessages) {
-              if (msg.role === "system") {
-                englishMessages.push(msg);
-              } else {
-                const contentStr = typeof msg.content === "string" ? msg.content : "";
-                const translatedContent = await translateTextHelper(contentStr, lang, "en");
-                englishMessages.push({ ...msg, content: translatedContent });
-              }
+          console.error("Vercel backend proxy call failed in handleSend:", proxyErr);
+          const fallbackErrMsg = "Şu an sistemlerimizde geçici bir yoğunluk var. Lütfen biraz sonra tekrar deneyiniz.";
+          const englishErrMsg = "A temporary system congestion occurred. Please try again in a moment.";
+          const translatedMsg = lang === "tr" ? fallbackErrMsg : await translateTextHelper(fallbackErrMsg, "en", lang);
+          agentText = translatedMsg;
+          englishResponse = englishErrMsg;
+
+          setMessages((prev) => [
+            ...prev,
+            {
+              role: "agent" as const,
+              text: agentText,
+              id: agentMsgId,
+              timestamp: Date.now(),
+              displayedText: agentText,
+              englishText: englishResponse
             }
-
-            // Direct frontend fallback call
-            const directResponse = await fetch("https://ai.funteknoloji.com/v1/chat/completions", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
-                "Accept": "application/json",
-                "Origin": "https://nexy.funteknoloji.com",
-                "Referer": "https://nexy.funteknoloji.com/"
-              },
-              body: JSON.stringify({
-                messages: englishMessages,
-                model: "gemma-3-1b-it"
-              }),
-            });
-
-            if (directResponse.ok) {
-              const directData = await directResponse.json();
-              const rawText = directData.choices?.[0]?.message?.content || "";
-
-              englishResponse = rawText;
-
-              // 2. Translate response back to user's target language
-              let translatedText = rawText;
-              if (lang && lang !== "en") {
-                translatedText = await translateTextWithCodeBlocks(rawText, "en", lang);
-              }
-
-              translatedText = cleanLeadingDashes(translatedText);
-              englishResponse = cleanLeadingDashes(englishResponse);
-
-              agentText = translatedText;
-            } else {
-              throw new Error(`Direct fallback failed with status ${directResponse.status}`);
-            }
-          } catch (directErr) {
-            console.error("Direct frontend fallback also failed in helper:", directErr);
-            const fallbackErrMsg = "A temporary system congestion occurred. Please try again in a moment.";
-            agentText = await translateTextHelper(fallbackErrMsg, "en", lang);
-            englishResponse = fallbackErrMsg;
-          }
+          ]);
+          setThinkingStage("typing");
+          setIsAgentTyping(false);
         }
 
-        agentText = agentText.replace(/\[inceliyor\]/gi, "");
-        agentText = agentText.replace(/\[duraklama\]/gi, "");
-        agentText = agentText.replace(/\[bekliyor\]/gi, "");
-        agentText = agentText.replace(/\[düşünüyor\]/gi, "");
-        agentText = agentText.replace(/\[[^\]]+\]/g, (match) => {
-          if (match.toLowerCase().startsWith("[redirect:")) return match;
-          return "";
-        });
-        agentText = agentText.trim().replace(/pulsar/gi, "Nexy");
-        englishResponse = englishResponse.trim().replace(/pulsar/gi, "Nexy");
-
-        const agentMsgId = Math.random().toString(36).substring(2, 9);
-        setMessages((prev) => [
-          ...prev,
-          {
-            role: "agent" as const,
-            text: agentText,
-            id: agentMsgId,
-            timestamp: Date.now(),
-            displayedText: "",
-            englishText: englishResponse
-          }
-        ]);
-
-        // Transition stage to typing with organic delay
-        setThinkingStage("typing");
-        setTimeout(() => {
-          setIsAgentTyping(false);
-          setTimeout(() => typeAgentMessage(agentText, agentMsgId), 50);
-        }, 800);
+        // Clean-up and final styling updates
+        setMessages((prev) =>
+          prev.map((m) => {
+            if (m.id === agentMsgId) {
+              let cleaned = m.text;
+              cleaned = cleaned.replace(/\[inceliyor\]/gi, "");
+              cleaned = cleaned.replace(/\[duraklama\]/gi, "");
+              cleaned = cleaned.replace(/\[bekliyor\]/gi, "");
+              cleaned = cleaned.replace(/\[düşünüyor\]/gi, "");
+              cleaned = cleaned.replace(/\[[^\]]+\]/g, (match) => {
+                if (match.toLowerCase().startsWith("[redirect:")) return match;
+                return "";
+              });
+              cleaned = cleaned.trim().replace(/pulsar/gi, "Nexy");
+              return { ...m, text: cleaned, displayedText: cleaned };
+            }
+            return m;
+          })
+        );
 
       } catch (e) {
         setTimeout(() => {
@@ -2152,7 +2284,7 @@ CRITICAL RULES:
               {agentName}
             </h3>
             <p className={`text-[10px] sm:text-xs font-semibold mt-0.5 ${readOnly ? "text-red-600 dark:text-red-500 font-bold" : "fun-text-muted"}`}>
-              {readOnly ? (lang === "tr" ? "Sonlandırıldı" : "Closed") : (lang === "tr" ? "Destek Asistanı" : "Support Assistant")}
+              {readOnly ? getTranslation(lang, "statusClosed") : getTranslation(lang, "statusOpen")}
             </p>
           </div>
         </div>

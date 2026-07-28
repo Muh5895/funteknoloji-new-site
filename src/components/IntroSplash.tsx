@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { useLang } from "../lib/i18n";
 
 const SKIP_KEY = "fun_intro_played";
 const INTRO_VIDEO_URL = "/assets/intro.mp4";
@@ -71,10 +72,9 @@ export default function IntroSplash() {
     return () => clearTimeout(t);
   }, [show]);
 
-  if (!show) return null;
+  const { t } = useLang();
 
-  const lang = typeof window !== "undefined" ? (localStorage.getItem("fun_lang") || "tr") : "tr";
-  const skipText = lang === "tr" ? "Atla" : "Skip";
+  if (!show) return null;
 
   return (
     <div
@@ -120,7 +120,7 @@ export default function IntroSplash() {
         }}
         className="absolute bottom-8 right-8 z-[10000] px-6 py-2.5 bg-black/40 hover:bg-black/60 backdrop-blur-md text-white text-sm font-medium rounded-full border border-white/20 hover:border-white/40 transition-all active:scale-95 duration-200 cursor-pointer flex items-center gap-1.5 shadow-lg"
       >
-        <span>{skipText}</span>
+        <span>{t("intro.skip")}</span>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="h-4 w-4"

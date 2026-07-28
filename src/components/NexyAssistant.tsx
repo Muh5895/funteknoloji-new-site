@@ -622,19 +622,19 @@ export default function NexyAssistant() {
   const generateChatTitle = async (userMsg: string, aiResponse: string) => {
     const prompt = `User: ${userMsg}\nAssistant: ${aiResponse}\n\nSystem: Based on the conversation above, determine a short and meaningful title for this chat (max 3-4 words). The title should summarize the topic. DO NOT just repeat the user's message. Response in the user's language. Write ONLY the title, no quotes or extra text.`;
     try {
-      const response = await fetch("https://ai.funteknoloji.com/v1/chat/completions", {
+      const response = await fetch("/api/nexy", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
           messages: [{ role: "user", content: prompt }],
-          model: "gemma-3-1b-it"
+          lang
         }),
       });
       if (response.ok) {
         const data = await response.json() as any;
-        let title = data.choices?.[0]?.message?.content || "";
+        let title = data.text || "";
         title = title.replace(/^"|"$/g, "").trim();
         if (title && title.length < 50) return title;
       }
@@ -654,7 +654,11 @@ export default function NexyAssistant() {
     setIsTyping(false);
   };
 
-  const getNexyBrainResponse = async (englishInput: string, originalInput: string) => {
+  const getNexyBrainResponse = async (
+    englishInput: string,
+    originalInput: string,
+    onChunk: (text: string, englishText: string) => void
+  ) => {
     if (abortControllerRef.current) {
       abortControllerRef.current.abort();
     }
@@ -755,6 +759,7 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
 
     let textResponse = "";
     let englishResponse = "";
+    let isStream = false;
 
     try {
       // Direct call to Vercel backend proxy /api/nexy (acts as central fallback orchestrator)
@@ -774,78 +779,89 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
       });
 
       if (response.ok) {
-        const data = await response.json();
-        const textCandidate = data.text || "";
-        if (textCandidate.includes("geçici bir yoğunluk") || textCandidate.includes("temporary system congestion") || textCandidate.includes("meşgul") || textCandidate.includes("Sorgunuz işlenirken bir hata oluştu")) {
-          throw new Error("Backend returned a congestion/error response, forcing direct frontend fallback");
+        const contentType = response.headers.get("content-type") || "";
+        if (contentType.includes("text/event-stream")) {
+          isStream = true;
+          const reader = response.body?.getReader();
+          if (!reader) throw new Error("No reader");
+
+          const decoder = new TextDecoder();
+          let done = false;
+          let buffer = "";
+          let accumulatedText = "";
+
+          while (!done) {
+            const { value, done: doneReading } = await reader.read();
+            done = doneReading;
+            if (value) {
+              buffer += decoder.decode(value, { stream: !done });
+              const lines = buffer.split("\n");
+              buffer = lines.pop() || "";
+
+              for (const line of lines) {
+                const trimmed = line.trim();
+                if (!trimmed) continue;
+                if (trimmed.startsWith("data: ")) {
+                  const dataStr = trimmed.slice(6).trim();
+                  if (dataStr === "[DONE]") continue;
+                  try {
+                    const parsed = JSON.parse(dataStr);
+                    const chunkContent = parsed.content || "";
+                    accumulatedText += chunkContent;
+                    onChunk(accumulatedText, accumulatedText);
+                  } catch (e) {}
+                }
+              }
+            }
+          }
+
+          if (buffer) {
+            const trimmed = buffer.trim();
+            if (trimmed.startsWith("data: ")) {
+              const dataStr = trimmed.slice(6).trim();
+              if (dataStr !== "[DONE]") {
+                try {
+                  const parsed = JSON.parse(dataStr);
+                  const chunkContent = parsed.content || "";
+                  accumulatedText += chunkContent;
+                  onChunk(accumulatedText, accumulatedText);
+                } catch (e) {}
+              }
+            }
+          }
+
+          textResponse = accumulatedText;
+          englishResponse = accumulatedText;
+        } else {
+          // Standard JSON response
+          isStream = false;
+          const data = await response.json();
+          const textCandidate = data.text || "";
+          if (textCandidate.includes("geçici bir yoğunluk") || textCandidate.includes("temporary system congestion") || textCandidate.includes("meşgul") || textCandidate.includes("Sorgunuz işlenirken bir hata oluştu")) {
+            throw new Error("Backend returned a congestion/error response, forcing direct frontend fallback");
+          }
+          textResponse = textCandidate;
+          englishResponse = data.englishText || textResponse;
+          onChunk(textResponse, englishResponse);
         }
-        textResponse = textCandidate;
-        englishResponse = data.englishText || textResponse;
       } else {
         throw new Error("Vercel proxy returned non-OK status");
       }
     } catch (err) {
-      console.warn("Vercel backend proxy call failed, attempting direct frontend fallback to Fun Teknoloji AI:", err);
-      try {
-        // 1. Translate user messages to English before sending to Gemma
-        const englishMessages = [];
-        for (const msg of cleanedMessages) {
-          if (msg.role === "system") {
-            englishMessages.push(msg);
-          } else {
-            const contentStr = typeof msg.content === "string" ? msg.content : "";
-            const translatedContent = await translateTextHelper(contentStr, lang, "en");
-            englishMessages.push({ ...msg, content: translatedContent });
-          }
-        }
-
-        const directResponse = await fetch("https://ai.funteknoloji.com/v1/chat/completions", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
-            "Accept": "application/json",
-            "Origin": "https://nexy.funteknoloji.com",
-            "Referer": "https://nexy.funteknoloji.com/"
-          },
-          body: JSON.stringify({
-            messages: englishMessages,
-            model: "gemma-3-1b-it"
-          }),
-          signal: controller.signal,
-        });
-
-        if (directResponse.ok) {
-          const directData = await directResponse.json();
-          const rawText = directData.choices?.[0]?.message?.content || "";
-
-          englishResponse = rawText;
-
-          // 2. Translate response back to user's target language
-          let translatedText = rawText;
-          if (lang && lang !== "en") {
-            translatedText = await translateTextWithCodeBlocks(rawText, "en", lang);
-          }
-
-          translatedText = cleanLeadingDashes(translatedText);
-          englishResponse = cleanLeadingDashes(englishResponse);
-
-          textResponse = translatedText;
-        } else {
-          throw new Error(`Direct fallback failed with status ${directResponse.status}`);
-        }
-      } catch (directErr) {
-        console.error("Direct frontend fallback also failed:", directErr);
-        const fallbackErrMsg = "A temporary system congestion occurred. Please try again in a moment.";
-        textResponse = await translateTextHelper(fallbackErrMsg, "en", lang);
-        englishResponse = fallbackErrMsg;
-      }
+      console.error("Vercel backend proxy call failed:", err);
+      const fallbackErrMsg = "Şu an sistemlerimizde geçici bir yoğunluk var. Lütfen biraz sonra tekrar deneyiniz.";
+      const englishErrMsg = "A temporary system congestion occurred. Please try again in a moment.";
+      const translatedMsg = lang === "tr" ? fallbackErrMsg : await translateTextHelper(fallbackErrMsg, "en", lang);
+      textResponse = translatedMsg;
+      englishResponse = englishErrMsg;
+      isStream = false;
+      onChunk(textResponse, englishResponse);
     }
 
     textResponse = textResponse.trim().replace(/pulsar/gi, "Nexy");
     englishResponse = englishResponse.trim().replace(/pulsar/gi, "Nexy");
 
-    return { text: textResponse, englishText: englishResponse };
+    return { text: textResponse, englishText: englishResponse, isStream };
   };
 
   const handleSend = async (e?: React.FormEvent) => {
@@ -896,7 +912,46 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
       setIsTyping(false);
       setIsThinking(true);
 
-      const result = await getNexyBrainResponse(englishInput, savedInput);
+      // Append an empty assistant message first to stream into
+      setChats((prev) =>
+        prev.map((c) => {
+          if (c.id === currentChatId) {
+            return {
+              ...c,
+              messages: [
+                ...c.messages,
+                { role: "nexy" as const, text: "", displayedText: "", englishText: "" }
+              ]
+            };
+          }
+          return c;
+        })
+      );
+
+      let responseText = "";
+      let responseEnglish = "";
+
+      const result = await getNexyBrainResponse(englishInput, savedInput, (text, englishText) => {
+        responseText = text;
+        responseEnglish = englishText;
+
+        // Update the last message in real-time
+        setChats((prev) =>
+          prev.map((c) => {
+            if (c.id === currentChatId) {
+              return {
+                ...c,
+                messages: c.messages.map((m, idx) =>
+                  idx === c.messages.length - 1
+                    ? { ...m, text: text, displayedText: text, englishText: englishText }
+                    : m
+                )
+              };
+            }
+            return c;
+          })
+        );
+      });
 
       // If request was stopped/cancelled, return immediately
       if (abortControllerRef.current === null) {
@@ -904,31 +959,56 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
       }
       abortControllerRef.current = null;
 
-      let responseText = result.text;
-      const responseEnglish = result.englishText;
+      responseText = result.text;
+      responseEnglish = result.englishText;
+
+      if (!result.isStream) {
+        // Trigger character-by-character typewriter effect for JSON
+        setChats((prev) =>
+          prev.map((c) => {
+            if (c.id === currentChatId) {
+              const nexyMsgIndex = c.messages.length - 1;
+              setTimeout(() => typeMessage(responseText, nexyMsgIndex, currentChatId), 10);
+              return {
+                ...c,
+                messages: c.messages.map((m, idx) =>
+                  idx === c.messages.length - 1
+                    ? { ...m, text: responseText, displayedText: "", englishText: responseEnglish }
+                    : m
+                )
+              };
+            }
+            return c;
+          })
+        );
+      }
 
       // Check for REDIRECT command
       const redirectMatch = responseText.match(/\[REDIRECT:(.+)\]/i);
       if (redirectMatch) {
         const path = redirectMatch[1];
-        responseText = responseText.replace(/\[REDIRECT:.+\]/i, "").trim();
+        const cleanedText = responseText.replace(/\[REDIRECT:.+\]/i, "").trim();
+
+        setChats((prev) =>
+          prev.map((c) => {
+            if (c.id === currentChatId) {
+              return {
+                ...c,
+                messages: c.messages.map((m, idx) =>
+                  idx === c.messages.length - 1
+                    ? { ...m, text: cleanedText, displayedText: cleanedText }
+                    : m
+                )
+              };
+            }
+            return c;
+          })
+        );
 
         setTimeout(() => {
           navigate({ to: path as any });
         }, 2500);
       }
-
-      setChats((prev) =>
-        prev.map((c) => {
-          if (c.id === currentChatId) {
-            const nexyMsgIndex = c.messages.length;
-            const updatedMsgs = [...c.messages, { role: "nexy" as const, text: responseText, displayedText: "", englishText: responseEnglish }];
-            setTimeout(() => typeMessage(responseText, nexyMsgIndex, currentChatId), 10);
-            return { ...c, messages: updatedMsgs };
-          }
-          return c;
-        })
-      );
 
       if (shouldUpdateTitle) {
         const newTitle = await generateChatTitle(englishInput, responseEnglish);
@@ -1362,7 +1442,7 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
                 {pastSessions.length > 0 && (
                   <div className="mt-2 space-y-2 select-none">
                     <h4 className="text-xs font-bold fun-text px-1">
-                      {lang === "tr" ? "Geçmiş Destek Talepleriniz" : "Your Past Support Tickets"}
+                      {t("help.past_tickets")}
                     </h4>
                     <div className="max-h-[160px] overflow-y-auto space-y-2 pr-1">
                       {pastSessions.map((session) => (
