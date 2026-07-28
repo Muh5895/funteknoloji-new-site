@@ -848,118 +848,14 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
         throw new Error("Vercel proxy returned non-OK status");
       }
     } catch (err) {
-      console.warn("Vercel backend proxy call failed, attempting direct frontend fallback to Fun Teknoloji AI:", err);
-      try {
-        // 1. Translate user messages to English before sending to Gemma
-        const englishMessages = [];
-        for (const msg of cleanedMessages) {
-          if (msg.role === "system") {
-            englishMessages.push(msg);
-          } else {
-            const contentStr = typeof msg.content === "string" ? msg.content : "";
-            const translatedContent = await translateTextHelper(contentStr, lang, "en");
-            englishMessages.push({ ...msg, content: translatedContent });
-          }
-        }
-
-        const directResponse = await fetch("https://ai.funteknoloji.com/v1/chat/completions", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
-            "Accept": "text/event-stream",
-            "Origin": "https://nexy.funteknoloji.com",
-            "Referer": "https://nexy.funteknoloji.com/"
-          },
-          body: JSON.stringify({
-            messages: englishMessages,
-            model: "gemma-3-1b-it",
-            stream: true
-          }),
-          signal: controller.signal,
-        });
-
-        if (directResponse.ok) {
-          isStream = true;
-          const reader = directResponse.body?.getReader();
-          if (!reader) {
-            throw new Error("No body reader on direct fallback");
-          }
-          const decoder = new TextDecoder();
-          let done = false;
-          let buffer = "";
-          let streamedText = "";
-
-          while (!done) {
-            const { value, done: doneReading } = await reader.read();
-            done = doneReading;
-            if (value) {
-              buffer += decoder.decode(value, { stream: !done });
-              const lines = buffer.split("\n");
-              buffer = lines.pop() || "";
-
-              for (const line of lines) {
-                const trimmed = line.trim();
-                if (!trimmed) continue;
-                if (trimmed.startsWith("data: ")) {
-                  const dataStr = trimmed.slice(6).trim();
-                  if (dataStr === "[DONE]") continue;
-                  try {
-                    const parsed = JSON.parse(dataStr);
-                    const content = parsed.choices?.[0]?.delta?.content || "";
-                    streamedText += content;
-                  } catch (e) {
-                    // ignore chunk parse errors
-                  }
-                }
-              }
-            }
-          }
-          if (buffer) {
-            const trimmed = buffer.trim();
-            if (trimmed.startsWith("data: ")) {
-              const dataStr = trimmed.slice(6).trim();
-              if (dataStr !== "[DONE]") {
-                try {
-                  const parsed = JSON.parse(dataStr);
-                  const content = parsed.choices?.[0]?.delta?.content || "";
-                  streamedText += content;
-                } catch (e) {}
-              }
-            }
-          }
-
-          const rawText = streamedText;
-          englishResponse = rawText;
-
-          // 2. Translate response back to user's target language
-          let translatedText = rawText;
-          if (lang && lang !== "en") {
-            translatedText = await translateTextWithCodeBlocks(rawText, "en", lang);
-          }
-
-          translatedText = cleanLeadingDashes(translatedText);
-          englishResponse = cleanLeadingDashes(englishResponse);
-
-          textResponse = translatedText;
-
-          const words = textResponse.split(" ");
-          let tempText = "";
-          for (let i = 0; i < words.length; i++) {
-            tempText += words[i] + (i === words.length - 1 ? "" : " ");
-            onChunk(tempText, englishResponse);
-            await new Promise((resolve) => setTimeout(resolve, 25));
-          }
-        } else {
-          throw new Error(`Direct fallback failed with status ${directResponse.status}`);
-        }
-      } catch (directErr) {
-        console.error("Direct frontend fallback also failed:", directErr);
-        const fallbackErrMsg = "A temporary system congestion occurred. Please try again in a moment.";
-        textResponse = await translateTextHelper(fallbackErrMsg, "en", lang);
-        englishResponse = fallbackErrMsg;
-        onChunk(textResponse, englishResponse);
-      }
+      console.error("Vercel backend proxy call failed:", err);
+      const fallbackErrMsg = "Şu an sistemlerimizde geçici bir yoğunluk var. Lütfen biraz sonra tekrar deneyiniz.";
+      const englishErrMsg = "A temporary system congestion occurred. Please try again in a moment.";
+      const translatedMsg = lang === "tr" ? fallbackErrMsg : await translateTextHelper(fallbackErrMsg, "en", lang);
+      textResponse = translatedMsg;
+      englishResponse = englishErrMsg;
+      isStream = false;
+      onChunk(textResponse, englishResponse);
     }
 
     textResponse = textResponse.trim().replace(/pulsar/gi, "Nexy");
