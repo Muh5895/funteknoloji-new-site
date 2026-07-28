@@ -2093,20 +2093,67 @@ CRITICAL RULES:
               headers: {
                 "Content-Type": "application/json",
                 "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
-                "Accept": "application/json",
+                "Accept": "text/event-stream",
                 "Origin": "https://nexy.funteknoloji.com",
                 "Referer": "https://nexy.funteknoloji.com/"
               },
               body: JSON.stringify({
                 messages: englishMessages,
-                model: "gemma-3-1b-it"
+                model: "gemma-3-1b-it",
+                stream: true
               }),
             });
 
             if (directResponse.ok) {
-              const directData = await directResponse.json();
-              const rawText = directData.choices?.[0]?.message?.content || "";
+              const reader = directResponse.body?.getReader();
+              if (!reader) {
+                throw new Error("No body reader on direct fallback");
+              }
+              const decoder = new TextDecoder();
+              let done = false;
+              let buffer = "";
+              let streamedText = "";
 
+              while (!done) {
+                const { value, done: doneReading } = await reader.read();
+                done = doneReading;
+                if (value) {
+                  buffer += decoder.decode(value, { stream: !done });
+                  const lines = buffer.split("\n");
+                  buffer = lines.pop() || "";
+
+                  for (const line of lines) {
+                    const trimmed = line.trim();
+                    if (!trimmed) continue;
+                    if (trimmed.startsWith("data: ")) {
+                      const dataStr = trimmed.slice(6).trim();
+                      if (dataStr === "[DONE]") continue;
+                      try {
+                        const parsed = JSON.parse(dataStr);
+                        const content = parsed.choices?.[0]?.delta?.content || "";
+                        streamedText += content;
+                      } catch (e) {
+                        // ignore chunk parse errors
+                      }
+                    }
+                  }
+                }
+              }
+              if (buffer) {
+                const trimmed = buffer.trim();
+                if (trimmed.startsWith("data: ")) {
+                  const dataStr = trimmed.slice(6).trim();
+                  if (dataStr !== "[DONE]") {
+                    try {
+                      const parsed = JSON.parse(dataStr);
+                      const content = parsed.choices?.[0]?.delta?.content || "";
+                      streamedText += content;
+                    } catch (e) {}
+                  }
+                }
+              }
+
+              const rawText = streamedText;
               englishResponse = rawText;
 
               // 2. Translate response back to user's target language

@@ -1024,13 +1024,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           headers: {
             "Content-Type": "application/json",
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
-            "Accept": "application/json",
+            "Accept": "text/event-stream",
             "Origin": "https://nexy.funteknoloji.com",
             "Referer": "https://nexy.funteknoloji.com/"
           },
           body: JSON.stringify({
             messages: finalMessages,
             model: "gemma-3-1b-it",
+            stream: true,
           }),
         }, 55000);
 
@@ -1039,8 +1040,56 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           throw new Error(`Fun Teknoloji AI returned status ${response.status}: ${errText}`);
         }
 
-        const data = await response.json() as any;
-        aiText = data.choices?.[0]?.message?.content || "";
+        // Parse chunked SSE stream
+        const reader = response.body?.getReader();
+        if (!reader) {
+          throw new Error("No response body reader available for streaming");
+        }
+        const decoder = new TextDecoder();
+        let done = false;
+        let buffer = "";
+        let streamedText = "";
+
+        while (!done) {
+          const { value, done: doneReading } = await reader.read();
+          done = doneReading;
+          if (value) {
+            buffer += decoder.decode(value, { stream: !done });
+            const lines = buffer.split("\n");
+            buffer = lines.pop() || "";
+
+            for (const line of lines) {
+              const trimmed = line.trim();
+              if (!trimmed) continue;
+              if (trimmed.startsWith("data: ")) {
+                const dataStr = trimmed.slice(6).trim();
+                if (dataStr === "[DONE]") continue;
+                try {
+                  const parsed = JSON.parse(dataStr);
+                  const content = parsed.choices?.[0]?.delta?.content || "";
+                  streamedText += content;
+                } catch (e) {
+                  // Partial chunk, wait
+                }
+              }
+            }
+          }
+        }
+        if (buffer) {
+          const trimmed = buffer.trim();
+          if (trimmed.startsWith("data: ")) {
+            const dataStr = trimmed.slice(6).trim();
+            if (dataStr !== "[DONE]") {
+              try {
+                const parsed = JSON.parse(dataStr);
+                const content = parsed.choices?.[0]?.delta?.content || "";
+                streamedText += content;
+              } catch (e) {}
+            }
+          }
+        }
+
+        aiText = streamedText;
       } catch (err: any) {
         console.error("Fun Teknoloji AI fallback completely failed:", err);
         return res.status(200).json({
