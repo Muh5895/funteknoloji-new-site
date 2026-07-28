@@ -2073,61 +2073,12 @@ CRITICAL RULES:
             throw new Error("Backend proxy failed");
           }
         } catch (proxyErr) {
-          console.error("Vercel backend proxy call failed in handleSend, attempting direct fallback:", proxyErr);
-          try {
-            // 1. Translate user messages to English before sending to Gemma
-            const englishMessages = [];
-            for (const msg of cleanedMessages) {
-              if (msg.role === "system") {
-                englishMessages.push(msg);
-              } else {
-                const contentStr = typeof msg.content === "string" ? msg.content : "";
-                const translatedContent = await translateTextHelper(contentStr, lang, "en");
-                englishMessages.push({ ...msg, content: translatedContent });
-              }
-            }
-
-            // Direct frontend fallback call
-            const directResponse = await fetch("https://ai.funteknoloji.com/v1/chat/completions", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
-                "Accept": "application/json",
-                "Origin": "https://nexy.funteknoloji.com",
-                "Referer": "https://nexy.funteknoloji.com/"
-              },
-              body: JSON.stringify({
-                messages: englishMessages,
-                model: "gemma-3-1b-it"
-              }),
-            });
-
-            if (directResponse.ok) {
-              const directData = await directResponse.json();
-              const rawText = directData.choices?.[0]?.message?.content || "";
-
-              englishResponse = rawText;
-
-              // 2. Translate response back to user's target language
-              let translatedText = rawText;
-              if (lang && lang !== "en") {
-                translatedText = await translateTextWithCodeBlocks(rawText, "en", lang);
-              }
-
-              translatedText = cleanLeadingDashes(translatedText);
-              englishResponse = cleanLeadingDashes(englishResponse);
-
-              agentText = translatedText;
-            } else {
-              throw new Error(`Direct fallback failed with status ${directResponse.status}`);
-            }
-          } catch (directErr) {
-            console.error("Direct frontend fallback also failed in helper:", directErr);
-            const fallbackErrMsg = "A temporary system congestion occurred. Please try again in a moment.";
-            agentText = await translateTextHelper(fallbackErrMsg, "en", lang);
-            englishResponse = fallbackErrMsg;
-          }
+          console.error("Vercel backend proxy call failed in handleSend:", proxyErr);
+          const fallbackErrMsg = "Şu an sistemlerimizde geçici bir yoğunluk var. Lütfen biraz sonra tekrar deneyiniz.";
+          const englishErrMsg = "A temporary system congestion occurred. Please try again in a moment.";
+          const translatedMsg = lang === "tr" ? fallbackErrMsg : await translateTextHelper(fallbackErrMsg, "en", lang);
+          agentText = translatedMsg;
+          englishResponse = englishErrMsg;
         }
 
         agentText = agentText.replace(/\[inceliyor\]/gi, "");

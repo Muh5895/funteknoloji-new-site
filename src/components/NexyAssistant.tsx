@@ -350,13 +350,7 @@ export default function NexyAssistant() {
   const [isThinking, setIsThinking] = useState(false);
   const [speakingMessageIndex, setSpeakingMessageIndex] = useState<number | null>(null);
   const [supportView, setSupportView] = useState<"menu" | "chat" | "live_login" | "live_details" | "live_chat">("menu");
-  const [liveUser, setLiveUser] = useState<{ email: string } | null>(() => {
-    if (typeof window !== "undefined") {
-      const saved = localStorage.getItem("live_support_user");
-      return saved ? JSON.parse(saved) : null;
-    }
-    return null;
-  });
+  const [liveUser, setLiveUser] = useState<{ email: string } | null>(null);
 
   // Sync Supabase Auth session with Live Support session
   useEffect(() => {
@@ -433,16 +427,6 @@ export default function NexyAssistant() {
   const [isPastSession, setIsPastSession] = useState(false);
   const abortControllerRef = useRef<AbortController | null>(null);
   const [pastSessions, setPastSessions] = useState<any[]>([]);
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      if (liveUser) {
-        sessionStorage.setItem("live_support_user", JSON.stringify(liveUser));
-      } else {
-        sessionStorage.removeItem("live_support_user");
-      }
-    }
-  }, [liveUser]);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
