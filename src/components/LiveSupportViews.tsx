@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { X, ChevronLeft, ArrowLeft, Send, MessageSquare, LogOut, Eye, EyeOff, Bot, Languages, Image as ImageIcon, AlertCircle, Download, Copy, Volume2, VolumeX, Star, Paperclip, FileText, Search as SearchIcon, Maximize2, Minimize2, LogIn, ShieldAlert } from "lucide-react";
+import { X, ChevronLeft, ArrowLeft, Send, MessageSquare, LogOut, Eye, EyeOff, Bot, Languages, Image as ImageIcon, AlertCircle, Download, Copy, Volume2, VolumeX, Star, Paperclip, FileText, Search as SearchIcon, Maximize2, Minimize2, LogIn, ShieldCheck } from "lucide-react";
 import { supabase } from "../lib/supabase";
 import { toast } from "sonner";
 import { translateText, translateAnyText } from "../lib/translate";
@@ -741,9 +741,11 @@ interface LiveLoginViewProps {
 
 export function LiveLoginView({ onBack, onLoginSuccess, lang }: LiveLoginViewProps) {
   const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const loginWithOAuthId = async (id: string) => {
     setLoading(true);
+    setErrorMessage(null);
     try {
       // 1. Save ID in localStorage to keep user logged in across page reloads
       localStorage.setItem("oauth_logged_in_id", id);
@@ -777,13 +779,18 @@ export function LiveLoginView({ onBack, onLoginSuccess, lang }: LiveLoginViewPro
       }
     } catch (err) {
       console.error("OAuth login failed:", err);
-      toast.error(lang === "tr" ? "Giriş başarısız oldu." : "Login failed.");
+      setErrorMessage(
+        lang === "tr"
+          ? "Giriş başarısız oldu. Lütfen tekrar deneyin."
+          : "Login failed. Please try again."
+      );
     } finally {
       setLoading(false);
     }
   };
 
   const handleOAuthLogin = () => {
+    setErrorMessage(null);
     // 1. Set active oauth state in sessionStorage to authorize the callback
     sessionStorage.setItem("oauth_state_active", "true");
 
@@ -800,7 +807,7 @@ export function LiveLoginView({ onBack, onLoginSuccess, lang }: LiveLoginViewPro
     );
 
     if (!popup) {
-      toast.error(
+      setErrorMessage(
         lang === "tr"
           ? "Pop-up engelleyiciyi kaldırıp tekrar deneyin."
           : "Please disable your pop-up blocker and try again."
@@ -835,7 +842,11 @@ export function LiveLoginView({ onBack, onLoginSuccess, lang }: LiveLoginViewPro
               loginWithOAuthId(id);
             } else {
               setLoading(false);
-              toast.error("Security state validation failed.");
+              setErrorMessage(
+                lang === "tr"
+                  ? "Kimlik doğrulama durumu doğrulaması başarısız oldu."
+                  : "Security state validation failed."
+              );
             }
           }
         }
@@ -869,7 +880,7 @@ export function LiveLoginView({ onBack, onLoginSuccess, lang }: LiveLoginViewPro
     <div className="flex-1 flex flex-col h-full bg-[var(--fun-card)] select-none animate-in fade-in duration-300">
       {/* Header */}
       <div
-        className="p-5 sm:p-6 border-b flex items-center justify-between bg-[var(--fun-surface)] h-20 sm:h-24"
+        className="p-5 sm:p-6 border-b flex items-center justify-between bg-[var(--fun-surface)] h-20 sm:h-24 justify-center"
         style={{ borderColor: "var(--fun-stroke-1)" }}
       >
         <div className="flex items-center gap-3">
@@ -884,11 +895,6 @@ export function LiveLoginView({ onBack, onLoginSuccess, lang }: LiveLoginViewPro
             <h3 className="text-sm sm:text-base font-bold tracking-tight fun-text leading-tight">
               {lang === "tr" ? "FunID ile Giriş Yap" : "Login with FunID"}
             </h3>
-            <p className="text-[10px] sm:text-xs fun-text-muted mt-0.5">
-              {lang === "tr"
-                ? "Güvenli canlı destek başlatmak için FunID hesabınızla oturum açın."
-                : "Sign in with your FunID account to start secure live support."}
-            </p>
           </div>
         </div>
       </div>
@@ -896,7 +902,7 @@ export function LiveLoginView({ onBack, onLoginSuccess, lang }: LiveLoginViewPro
       {/* Modern Pop-up Login trigger view */}
       <div className="flex-1 p-6 flex flex-col items-center justify-center text-center gap-6">
         <div className="w-16 h-16 rounded-3xl bg-[var(--fun-purple)]/10 flex items-center justify-center border border-[var(--fun-purple)]/20 shadow-inner">
-          <ShieldAlert className="h-8 w-8 text-[var(--fun-purple)] animate-pulse" />
+          <ShieldCheck className="h-8 w-8 text-[var(--fun-purple)] animate-pulse" />
         </div>
 
         <div className="space-y-2 max-w-sm">
@@ -927,6 +933,12 @@ export function LiveLoginView({ onBack, onLoginSuccess, lang }: LiveLoginViewPro
             </>
           )}
         </button>
+
+        {errorMessage && (
+          <div className="text-[11px] text-red-500 font-semibold max-w-xs leading-normal animate-in fade-in duration-200">
+            {errorMessage}
+          </div>
+        )}
 
         <div className="text-[10px] fun-text-muted max-w-xs leading-normal">
           {lang === "tr"
