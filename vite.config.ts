@@ -58,6 +58,11 @@ export default defineConfig({
                       res.end(text);
                       return vercelRes;
                     },
+                    json(data: any) {
+                      res.setHeader("Content-Type", "application/json");
+                      res.end(JSON.stringify(data));
+                      return vercelRes;
+                    },
                     end() {
                       res.end();
                       return vercelRes;

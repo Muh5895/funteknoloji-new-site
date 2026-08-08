@@ -958,8 +958,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     const cleanedOriginal = cleanMessagesForAPI(rawOriginal);
 
-    if (cleanedOriginal.filter((m) => m.role !== "system").length === 0) {
+    if (!isLive && cleanedOriginal.filter((m) => m.role !== "system").length === 0) {
       return res.status(400).send("Nexy error: Geçersiz sohbet geçmişi.");
+    }
+    if (cleanedOriginal.length === 0) {
+      return res.status(400).send("Nexy error: Geçersiz istek verisi.");
     }
 
     // 1. Prepare translated messages

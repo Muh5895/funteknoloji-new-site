@@ -18,11 +18,11 @@
     },
     {
       "source": "/api/nexy/helper",
-      "destination": "api/helper"
+      "destination": "/api/helper"
     },
     {
       "source": "/api/nexy",
-      "destination": "api/nexy"
+      "destination": "/api/nexy"
     },
     {
       "source": "/api/nexy/",
