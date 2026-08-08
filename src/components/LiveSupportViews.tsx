@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { X, ChevronLeft, ArrowLeft, Send, MessageSquare, LogOut, Eye, EyeOff, Bot, Languages, Image as ImageIcon, AlertCircle, Download, Copy, Volume2, VolumeX, Star, Paperclip, FileText, Search as SearchIcon, Maximize2, Minimize2, LogIn, ShieldCheck } from "lucide-react";
+import { X, ChevronLeft, ArrowLeft, Send, MessageSquare, LogOut, Eye, EyeOff, Bot, Languages, Image as ImageIcon, AlertCircle, Download, Copy, Volume2, VolumeX, Star, Paperclip, FileText, Search as SearchIcon, Maximize2, Minimize2, LogIn, ShieldCheck, IdCard } from "lucide-react";
 import { supabase } from "../lib/supabase";
 import { toast } from "sonner";
 import { translateText, translateAnyText } from "../lib/translate";
@@ -880,7 +880,7 @@ export function LiveLoginView({ onBack, onLoginSuccess, lang }: LiveLoginViewPro
     <div className="flex-1 flex flex-col h-full bg-[var(--fun-card)] select-none animate-in fade-in duration-300">
       {/* Header */}
       <div
-        className="p-5 sm:p-6 border-b flex items-center justify-between bg-[var(--fun-surface)] h-20 sm:h-24 justify-center"
+        className="p-5 sm:p-6 border-b flex items-center justify-between bg-[var(--fun-surface)] h-20 sm:h-24"
         style={{ borderColor: "var(--fun-stroke-1)" }}
       >
         <div className="flex items-center gap-3">
@@ -902,7 +902,7 @@ export function LiveLoginView({ onBack, onLoginSuccess, lang }: LiveLoginViewPro
       {/* Modern Pop-up Login trigger view */}
       <div className="flex-1 p-6 flex flex-col items-center justify-center text-center gap-6">
         <div className="w-16 h-16 rounded-3xl bg-[var(--fun-purple)]/10 flex items-center justify-center border border-[var(--fun-purple)]/20 shadow-inner">
-          <ShieldCheck className="h-8 w-8 text-[var(--fun-purple)] animate-pulse" />
+          <IdCard className="h-8 w-8 text-[var(--fun-purple)]" />
         </div>
 
         <div className="space-y-2 max-w-sm">
