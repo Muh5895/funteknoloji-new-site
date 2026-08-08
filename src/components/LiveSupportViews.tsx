@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { X, ChevronLeft, ArrowLeft, Send, MessageSquare, LogOut, Eye, EyeOff, Bot, Languages, Image as ImageIcon, AlertCircle, Download, Copy, Volume2, VolumeX, Star, Paperclip, FileText, Search as SearchIcon, Maximize2, Minimize2 } from "lucide-react";
+import { X, ChevronLeft, ArrowLeft, Send, MessageSquare, LogOut, Eye, EyeOff, Bot, Languages, Image as ImageIcon, AlertCircle, Download, Copy, Volume2, VolumeX, Star, Paperclip, FileText, Search as SearchIcon, Maximize2, Minimize2, LogIn, ShieldAlert } from "lucide-react";
 import { supabase } from "../lib/supabase";
 import { toast } from "sonner";
 import { translateText, translateAnyText } from "../lib/translate";
@@ -740,58 +740,130 @@ interface LiveLoginViewProps {
 }
 
 export function LiveLoginView({ onBack, onLoginSuccess, lang }: LiveLoginViewProps) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
 
-  const translateSupabaseError = (msg: string): string => {
-    const m = msg.toLowerCase();
-    if (m.includes("invalid login credentials") || m.includes("invalid credentials")) {
-      return getTranslation(lang, "errorInvalidCredentials");
-    }
-    if (m.includes("email not confirmed")) {
-      return getTranslation(lang, "errorEmailNotConfirmed");
-    }
-    if (m.includes("user not found")) {
-      return getTranslation(lang, "errorUserNotFound");
-    }
-    if (m.includes("network")) {
-      return getTranslation(lang, "errorNetwork");
-    }
-    return getTranslation(lang, "errorGeneric") || msg;
-  };
-
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!email || !password) {
-      toast.error(getTranslation(lang, "fillFields"));
-      return;
-    }
-    if (!email.includes("@")) {
-      toast.error(getTranslation(lang, "validEmail"));
-      return;
-    }
-
+  const loginWithOAuthId = async (id: string) => {
     setLoading(true);
     try {
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
+      // 1. Save ID in localStorage to keep user logged in across page reloads
+      localStorage.setItem("oauth_logged_in_id", id);
 
-      if (error) {
-        toast.error(translateSupabaseError(error.message));
-      } else if (data?.user) {
-        toast.success(getTranslation(lang, "loginSuccess"));
-        onLoginSuccess({ email: data.user.email || email });
+      // 2. Fetch profile from Supabase profiles table
+      const { data: profile, error } = await supabase
+        .from("profiles")
+        .select("*")
+        .eq("id", id)
+        .single();
+
+      if (profile && !error) {
+        const userObj = {
+          email: profile.email || `${profile.username || "kullanici"}@funteknoloji.com`,
+          name: profile.full_name || profile.username || "Kullanıcı",
+          id: id
+        };
+        localStorage.setItem("oauth_user_profile", JSON.stringify(userObj));
+        toast.success(lang === "tr" ? "Giriş yapıldı!" : "Logged in successfully!");
+        onLoginSuccess({ email: userObj.email });
+      } else {
+        // Fallback profile if Supabase profile cannot be queried
+        const fallbackUser = {
+          email: `${id.substring(0, 8)}@funteknoloji.com`,
+          name: "Değerli Müşterimiz",
+          id: id
+        };
+        localStorage.setItem("oauth_user_profile", JSON.stringify(fallbackUser));
+        toast.success(lang === "tr" ? "Giriş yapıldı!" : "Logged in successfully!");
+        onLoginSuccess({ email: fallbackUser.email });
       }
-    } catch (err: any) {
-      toast.error(translateSupabaseError(err.message || "Login error"));
+    } catch (err) {
+      console.error("OAuth login failed:", err);
+      toast.error(lang === "tr" ? "Giriş başarısız oldu." : "Login failed.");
     } finally {
       setLoading(false);
     }
   };
+
+  const handleOAuthLogin = () => {
+    // 1. Set active oauth state in sessionStorage to authorize the callback
+    sessionStorage.setItem("oauth_state_active", "true");
+
+    // 2. Open login popup
+    const width = 520;
+    const height = 620;
+    const left = window.screen.width / 2 - width / 2;
+    const top = window.screen.height / 2 - height / 2;
+
+    const popup = window.open(
+      "https://auth.funteknoloji.com/oauth/login/nexy",
+      "FunID_OAuth_Login",
+      `width=${width},height=${height},left=${left},top=${top},status=no,resizable=yes,scrollbars=yes`
+    );
+
+    if (!popup) {
+      toast.error(
+        lang === "tr"
+          ? "Pop-up engelleyiciyi kaldırıp tekrar deneyin."
+          : "Please disable your pop-up blocker and try again."
+      );
+      return;
+    }
+
+    setLoading(true);
+
+    // 3. Poll the popup URL to detect authentication completion
+    const interval = setInterval(() => {
+      if (!popup || popup.closed) {
+        clearInterval(interval);
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const popupUrl = popup.location.href;
+        if (popupUrl && (popupUrl.includes("id=") || popupUrl.includes("status=success"))) {
+          const urlObj = new URL(popupUrl);
+          const id = urlObj.searchParams.get("id");
+          const status = urlObj.searchParams.get("status");
+
+          if (status === "success" && id) {
+            clearInterval(interval);
+            popup.close();
+
+            const oauthStateActive = sessionStorage.getItem("oauth_state_active") === "true";
+            if (oauthStateActive) {
+              sessionStorage.removeItem("oauth_state_active");
+              loginWithOAuthId(id);
+            } else {
+              setLoading(false);
+              toast.error("Security state validation failed.");
+            }
+          }
+        }
+      } catch (e) {
+        // Expected cross-origin error until redirect matches our domain
+      }
+    }, 500);
+  };
+
+  // Listen to direct redirects as an alternative/robust fail-safe
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const id = urlParams.get("id");
+    const status = urlParams.get("status");
+
+    if (status === "success" && id) {
+      const oauthStateActive = sessionStorage.getItem("oauth_state_active") === "true";
+      if (oauthStateActive) {
+        sessionStorage.removeItem("oauth_state_active");
+
+        // Clean URL params for beauty and security
+        const cleanUrl = window.location.origin + window.location.pathname;
+        window.history.replaceState({}, document.title, cleanUrl);
+
+        loginWithOAuthId(id);
+      }
+    }
+  }, []);
 
   return (
     <div className="flex-1 flex flex-col h-full bg-[var(--fun-card)] select-none animate-in fade-in duration-300">
@@ -810,85 +882,58 @@ export function LiveLoginView({ onBack, onLoginSuccess, lang }: LiveLoginViewPro
           </button>
           <div>
             <h3 className="text-sm sm:text-base font-bold tracking-tight fun-text leading-tight">
-              {getTranslation(lang, "loginTitle")}
+              {lang === "tr" ? "FunID ile Giriş Yap" : "Login with FunID"}
             </h3>
             <p className="text-[10px] sm:text-xs fun-text-muted mt-0.5">
-              {getTranslation(lang, "loginDesc")}
+              {lang === "tr"
+                ? "Güvenli canlı destek başlatmak için FunID hesabınızla oturum açın."
+                : "Sign in with your FunID account to start secure live support."}
             </p>
           </div>
         </div>
       </div>
 
-      {/* Form - Top Aligned for proper aesthetic spacing and symmetry */}
-      <form onSubmit={handleLogin} className="flex-1 p-5 sm:p-6 flex flex-col justify-start pt-6 gap-4">
-        <div className="space-y-1.5">
-          <label className="text-xs font-semibold fun-text">
-            {getTranslation(lang, "email")}
-          </label>
-          <input
-            type="email"
-            placeholder="ornek@funteknoloji.com"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="w-full rounded-xl bg-[var(--fun-surface)] border border-[var(--fun-stroke-2)] px-4 py-3 text-xs outline-none focus:border-[var(--fun-purple)] focus:ring-2 focus:ring-[var(--fun-purple)]/20 transition-all fun-text"
-          />
+      {/* Modern Pop-up Login trigger view */}
+      <div className="flex-1 p-6 flex flex-col items-center justify-center text-center gap-6">
+        <div className="w-16 h-16 rounded-3xl bg-[var(--fun-purple)]/10 flex items-center justify-center border border-[var(--fun-purple)]/20 shadow-inner">
+          <ShieldAlert className="h-8 w-8 text-[var(--fun-purple)] animate-pulse" />
         </div>
 
-        <div className="space-y-1.5 relative">
-          <label className="text-xs font-semibold fun-text">
-            {getTranslation(lang, "password")}
-          </label>
-          <div className="relative">
-            <input
-              type={showPassword ? "text" : "password"}
-              placeholder="••••••••"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full rounded-xl bg-[var(--fun-surface)] border border-[var(--fun-stroke-2)] pl-4 pr-10 py-3 text-xs outline-none focus:border-[var(--fun-purple)] focus:ring-2 focus:ring-[var(--fun-purple)]/20 transition-all fun-text"
-            />
-            <button
-              type="button"
-              onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-200 transition-colors"
-            >
-              {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-            </button>
-          </div>
-        </div>
-
-        <div className="flex justify-end -mt-2">
-          <a
-            href="https://account.funteknoloji.com/forgot-password"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-[11px] font-semibold text-[var(--fun-purple)] hover:underline"
-          >
-            {getTranslation(lang, "forgotPassword")}
-          </a>
+        <div className="space-y-2 max-w-sm">
+          <h4 className="text-sm font-bold fun-text">
+            {lang === "tr" ? "Güvenli Kimlik Doğrulama" : "Secure Authentication"}
+          </h4>
+          <p className="text-xs fun-text-muted leading-relaxed">
+            {lang === "tr"
+              ? "Canlı destek sistemimiz FunID tescilli ekosistemiyle korunmaktadır. Lütfen aşağıdaki butona tıklayarak giriş yapın."
+              : "Our live support system is secured by the FunID proprietary ecosystem. Please click the button below to sign in."}
+          </p>
         </div>
 
         <button
-          type="submit"
+          onClick={handleOAuthLogin}
           disabled={loading}
-          className="w-full py-3 px-4 mt-1 rounded-xl bg-[var(--fun-purple)] text-white font-bold text-xs flex items-center justify-center gap-2 hover:scale-[1.01] transition-all shadow-lg shadow-purple-500/20 active:scale-95 disabled:opacity-50"
+          className="w-full max-w-xs py-3.5 px-6 rounded-xl bg-[var(--fun-purple)] text-white font-bold text-xs flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-95 transition-all shadow-lg shadow-purple-500/25 disabled:opacity-50"
         >
-          {loading ? getTranslation(lang, "loggingIn") : getTranslation(lang, "loginBtn")}
+          {loading ? (
+            <>
+              <div className="h-4 w-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+              <span>{lang === "tr" ? "Bağlanıyor..." : "Connecting..."}</span>
+            </>
+          ) : (
+            <>
+              <LogIn className="h-4 w-4" />
+              <span>{lang === "tr" ? "FunID ile Giriş Yap" : "Log In with FunID"}</span>
+            </>
+          )}
         </button>
 
-        <div className="text-center mt-1">
-          <span className="text-[11px] fun-text-muted">
-            {getTranslation(lang, "dontHaveAccount")}
-            <a
-              href="https://account.funteknoloji.com/register"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-bold text-[var(--fun-purple)] hover:underline"
-            >
-              {getTranslation(lang, "createOne")}
-            </a>
-          </span>
+        <div className="text-[10px] fun-text-muted max-w-xs leading-normal">
+          {lang === "tr"
+            ? "Giriş yaptıktan sonra bu pencere otomatik olarak kapanacak ve canlı destek ekranına yönlendirileceksiniz."
+            : "After logging in, this window will automatically close and you will be redirected to live support."}
         </div>
-      </form>
+      </div>
     </div>
   );
 }
@@ -1341,6 +1386,22 @@ Do not mention any third-party services like Pollinations or Pulsar. Respond dir
   // Fetch Supabase Auth account details on mount
   useEffect(() => {
     const fetchProfile = async () => {
+      // 1. Check if there is an OAuth user session first
+      const savedProfile = localStorage.getItem("oauth_user_profile");
+      if (savedProfile) {
+        try {
+          const parsed = JSON.parse(savedProfile);
+          setUserProfile({
+            email: parsed.email,
+            name: parsed.name,
+            createdAt: new Date().toISOString(),
+            emailConfirmed: true,
+            lastSignIn: new Date().toISOString(),
+          });
+          return;
+        } catch (e) {}
+      }
+
       try {
         const { data: { user: sbUser } } = await supabase.auth.getUser();
         if (sbUser) {

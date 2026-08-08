@@ -980,8 +980,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       }
     }
 
+    const originalSystemMsg = cleanedOriginal.find((m) => m.role === "system");
+    let combinedSystemPrompt = dynamicSystemPrompt;
+    if (originalSystemMsg && originalSystemMsg.content) {
+      combinedSystemPrompt = `${dynamicSystemPrompt}\n\n---\n\n## FRONTEND ADDITIONAL INSTRUCTIONS\n${originalSystemMsg.content}`;
+    }
+
     const finalMessages = [
-      { role: "system", content: dynamicSystemPrompt },
+      { role: "system", content: combinedSystemPrompt },
       ...translatedMessages.filter((m) => m.role !== "system")
     ];
 

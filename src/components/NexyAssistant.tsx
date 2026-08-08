@@ -355,6 +355,16 @@ export default function NexyAssistant() {
   // Sync Supabase Auth session with Live Support session
   useEffect(() => {
     const checkActiveSession = async () => {
+      // Check if there is an OAuth session first
+      const savedProfile = localStorage.getItem("oauth_user_profile");
+      if (savedProfile) {
+        try {
+          const parsed = JSON.parse(savedProfile);
+          setLiveUser({ email: parsed.email });
+          return;
+        } catch (e) {}
+      }
+
       try {
         const { data: { user } } = await supabase.auth.getUser();
         if (user && user.email) {
@@ -1581,6 +1591,8 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
                 localStorage.removeItem("live_support_subject_en");
                 localStorage.removeItem("live_support_importance_en");
                 localStorage.removeItem("live_support_description_en");
+                localStorage.removeItem("oauth_logged_in_id");
+                localStorage.removeItem("oauth_user_profile");
               }}
               onLogout={() => {
                 // Log out from the live support account completely
@@ -1595,6 +1607,8 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
                 localStorage.removeItem("live_support_importance_en");
                 localStorage.removeItem("live_support_description_en");
                 localStorage.removeItem("live_support_agent_name");
+                localStorage.removeItem("oauth_logged_in_id");
+                localStorage.removeItem("oauth_user_profile");
               }}
               lang={lang}
               isAgentTyping={liveAgentTyping}
