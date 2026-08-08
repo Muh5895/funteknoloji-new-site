@@ -856,6 +856,30 @@ export function LiveLoginView({ onBack, onLoginSuccess, lang }: LiveLoginViewPro
     }, 500);
   };
 
+  // Listen to secure postMessage from popup window
+  useEffect(() => {
+    const handleOAuthMessage = (event: MessageEvent) => {
+      // Only accept same-origin messages
+      if (event.origin !== window.location.origin) return;
+
+      if (event.data && event.data.type === "OAUTH_LOGIN_SUCCESS") {
+        const { id } = event.data;
+        if (id) {
+          const oauthStateActive = sessionStorage.getItem("oauth_state_active") === "true";
+          if (oauthStateActive) {
+            sessionStorage.removeItem("oauth_state_active");
+            loginWithOAuthId(id);
+          }
+        }
+      }
+    };
+
+    window.addEventListener("message", handleOAuthMessage);
+    return () => {
+      window.removeEventListener("message", handleOAuthMessage);
+    };
+  }, []);
+
   // Listen to direct redirects as an alternative/robust fail-safe
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);

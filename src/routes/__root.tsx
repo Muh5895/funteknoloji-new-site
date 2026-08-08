@@ -132,6 +132,28 @@ function RootComponent() {
     inject();
   }, []);
 
+  // Listen for OAuth completion inside the popup window itself and send the postMessage back to the parent window
+  useEffect(() => {
+    if (typeof window !== "undefined" && window.opener) {
+      try {
+        const urlParams = new URLSearchParams(window.location.search);
+        const id = urlParams.get("id");
+        const status = urlParams.get("status");
+        if (status === "success" && id) {
+          // Send message back to opener
+          window.opener.postMessage(
+            { type: "OAUTH_LOGIN_SUCCESS", id },
+            window.location.origin
+          );
+          // Close the popup window
+          window.close();
+        }
+      } catch (e) {
+        console.error("Popup communication error:", e);
+      }
+    }
+  }, []);
+
   return (
     <LanguageProvider>
       <RTLAndLangHandler>
