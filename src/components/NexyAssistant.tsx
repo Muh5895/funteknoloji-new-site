@@ -435,6 +435,51 @@ export default function NexyAssistant() {
   });
   const [liveAgentTyping, setLiveAgentTyping] = useState(false);
   const [isPastSession, setIsPastSession] = useState(false);
+
+  // Global direct redirect checking hook to handle OAuth redirect safely
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const urlParams = new URLSearchParams(window.location.search);
+      const id = urlParams.get("id");
+      const status = urlParams.get("status");
+
+      if (status === "success" && id) {
+        const oauthStateActive = sessionStorage.getItem("oauth_state_active") === "true";
+        if (oauthStateActive) {
+          sessionStorage.removeItem("oauth_state_active");
+
+          // Clean URL params for beauty and security
+          const cleanUrl = window.location.origin + window.location.pathname;
+          window.history.replaceState({}, document.title, cleanUrl);
+
+          // Authenticate and open nexy directly!
+          (async () => {
+            try {
+              localStorage.setItem("oauth_logged_in_id", id);
+              const { data: profile } = await supabase
+                .from("profiles")
+                .select("*")
+                .eq("id", id)
+                .single();
+
+              const userObj = {
+                email: (profile && profile.email) || `${(profile && profile.username) || "kullanici"}@funteknoloji.com`,
+                name: (profile && profile.full_name) || (profile && profile.username) || "Kullanıcı",
+                id: id
+              };
+              localStorage.setItem("oauth_user_profile", JSON.stringify(userObj));
+              setLiveUser({ email: userObj.email });
+              setSupportView("live_details");
+              setIsOpen(true); // Open the widget directly!
+              toast.success(lang === "tr" ? "Giriş yapıldı!" : "Logged in successfully!");
+            } catch (err) {
+              console.error("Direct OAuth login failed:", err);
+            }
+          })();
+        }
+      }
+    }
+  }, [lang]);
   const abortControllerRef = useRef<AbortController | null>(null);
   const [pastSessions, setPastSessions] = useState<any[]>([]);
 
@@ -1485,6 +1530,7 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
               onLoginSuccess={(user) => {
                 setLiveUser(user);
                 setSupportView("live_details");
+                setIsOpen(true); // Open the widget directly!
               }}
               lang={lang}
             />

@@ -991,6 +991,31 @@ export function LiveTicketDetailsView({ lang, onBack, onSubmit }: LiveTicketDeta
   useEffect(() => {
     const fetchUser = async () => {
       try {
+        // 1. First, check if there is an OAuth session in localStorage
+        const savedProfile = localStorage.getItem("oauth_user_profile");
+        if (savedProfile) {
+          const parsed = JSON.parse(savedProfile);
+          if (parsed.name) {
+            setUserName(parsed.name);
+          }
+          // Fetch real-time from Supabase profiles table as well to make it highly accurate
+          if (parsed.id) {
+            const { data: dbProfile } = await supabase
+              .from("profiles")
+              .select("full_name, username")
+              .eq("id", parsed.id)
+              .single();
+            if (dbProfile) {
+              const name = dbProfile.full_name || dbProfile.username || parsed.name;
+              setUserName(name);
+              // Update localStorage cached profile with the fresh fetched name
+              parsed.name = name;
+              localStorage.setItem("oauth_user_profile", JSON.stringify(parsed));
+            }
+          }
+          return;
+        }
+
         const { data: { user } } = await supabase.auth.getUser();
         if (user) {
           const fullName = user.user_metadata?.full_name || user.user_metadata?.name || user.email?.split("@")[0] || "Müşteri";
@@ -1042,7 +1067,7 @@ export function LiveTicketDetailsView({ lang, onBack, onSubmit }: LiveTicketDeta
       <form onSubmit={handleSubmit} className="flex-1 p-5 sm:p-6 flex flex-col gap-4 overflow-y-auto">
         {userName && (
           <div className="text-[11px] sm:text-xs text-[var(--fun-purple)] font-bold px-1">
-            {`${getTranslation(lang, "activeProfile")}${userName}`}
+            {lang === "tr" ? `Aktif Oturum: ${userName}` : `Active Session: ${userName}`}
           </div>
         )}
 
