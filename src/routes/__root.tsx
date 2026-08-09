@@ -141,10 +141,7 @@ function RootComponent() {
         const status = urlParams.get("status");
         if (status === "success" && id) {
           // Send message back to opener
-          window.opener.postMessage(
-            { type: "OAUTH_LOGIN_SUCCESS", id },
-            window.location.origin
-          );
+          window.opener.postMessage({ type: "OAUTH_LOGIN_SUCCESS", id }, window.location.origin);
           // Close the popup window
           window.close();
         }

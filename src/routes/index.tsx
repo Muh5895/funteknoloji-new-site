@@ -22,20 +22,48 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "Fun Teknoloji - Geleceğin Yapay Zeka ve Yazılım Çözümleri" },
-      { name: "description", content: "Fun Teknoloji; yapay zeka, özel yazılım geliştirme, mobil uygulama ve siber güvenlik odaklı yenilikçi ve öncü dijital çözümler sunar." },
-      { name: "keywords", content: "yapay zeka, yazılım geliştirme, mobil uygulama, siber güvenlik, bulut teknolojileri, Fun Teknoloji, Nexy, QuakeSafe" },
+      {
+        name: "description",
+        content:
+          "Fun Teknoloji; yapay zeka, özel yazılım geliştirme, mobil uygulama ve siber güvenlik odaklı yenilikçi ve öncü dijital çözümler sunar.",
+      },
+      {
+        name: "keywords",
+        content:
+          "yapay zeka, yazılım geliştirme, mobil uygulama, siber güvenlik, bulut teknolojileri, Fun Teknoloji, Nexy, QuakeSafe",
+      },
       { name: "robots", content: "index, follow" },
-      { property: "og:title", content: "Fun Teknoloji - Geleceğin Yapay Zeka ve Yazılım Çözümleri" },
-      { property: "og:description", content: "yapay zeka, özel yazılım geliştirme, mobil uygulama ve siber güvenlik odaklı yenilikçi ve öncü dijital çözümler." },
+      {
+        property: "og:title",
+        content: "Fun Teknoloji - Geleceğin Yapay Zeka ve Yazılım Çözümleri",
+      },
+      {
+        property: "og:description",
+        content:
+          "yapay zeka, özel yazılım geliştirme, mobil uygulama ve siber güvenlik odaklı yenilikçi ve öncü dijital çözümler.",
+      },
       { property: "og:url", content: "https://funteknoloji.com/" },
       { property: "og:type", content: "website" },
-      { property: "og:image", content: "https://funteknoloji.com/assets/logos/Fun%20Teknoloji%20Siyah%20Logo.png" },
+      {
+        property: "og:image",
+        content: "https://funteknoloji.com/assets/logos/Fun%20Teknoloji%20Siyah%20Logo.png",
+      },
       { property: "og:site_name", content: "Fun Teknoloji" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@funteknoloji_" },
-      { name: "twitter:title", content: "Fun Teknoloji - Geleceğin Yapay Zeka ve Yazılım Çözümleri" },
-      { name: "twitter:description", content: "Yapay zeka asistanı Nexy ve afet güvenliği QuakeSafe gibi yenilikçi projelerle geleceği bugünden inşa edin." },
-      { name: "twitter:image", content: "https://funteknoloji.com/assets/logos/Fun%20Teknoloji%20Siyah%20Logo.png" },
+      {
+        name: "twitter:title",
+        content: "Fun Teknoloji - Geleceğin Yapay Zeka ve Yazılım Çözümleri",
+      },
+      {
+        name: "twitter:description",
+        content:
+          "Yapay zeka asistanı Nexy ve afet güvenliği QuakeSafe gibi yenilikçi projelerle geleceği bugünden inşa edin.",
+      },
+      {
+        name: "twitter:image",
+        content: "https://funteknoloji.com/assets/logos/Fun%20Teknoloji%20Siyah%20Logo.png",
+      },
     ],
     links: [{ rel: "canonical", href: "https://funteknoloji.com/" }],
   }),
@@ -147,7 +175,9 @@ function StatsSection({ t }: { t: (k: string) => string }) {
       <div className="main-container">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
           <div>
-            <div className="text-4xl md:text-5xl font-bold fun-text mb-2">{t("home.stats.users_count")}</div>
+            <div className="text-4xl md:text-5xl font-bold fun-text mb-2">
+              {t("home.stats.users_count")}
+            </div>
             <div className="text-sm fun-text-muted uppercase tracking-wider">
               {t("home.stats.users")}
             </div>
@@ -436,7 +466,9 @@ function ServicesSection({ t }: { t: (k: string) => string }) {
                     <h3 className="text-heading-5 md:text-heading-3 font-bold fun-text tracking-tight leading-tight">
                       {service.title}
                     </h3>
-                    <p className="text-tagline-1 lg:text-base fun-text-muted leading-relaxed">{service.desc}</p>
+                    <p className="text-tagline-1 lg:text-base fun-text-muted leading-relaxed">
+                      {service.desc}
+                    </p>
                   </div>
                   <div className="flex justify-start pt-2">
                     <Link
@@ -463,7 +495,9 @@ function ServicesSection({ t }: { t: (k: string) => string }) {
                 </aside>
 
                 {/* Desktop: Image block - Placed first for LEFT side on desktop, adjusted to be larger, perfectly centered, and styled elegantly */}
-                <div className={`${i === 0 ? "md:col-span-3 md:justify-start md:pl-2" : "md:col-span-5"} hidden md:flex items-center justify-center md:order-1`}>
+                <div
+                  className={`${i === 0 ? "md:col-span-3 md:justify-start md:pl-2" : "md:col-span-5"} hidden md:flex items-center justify-center md:order-1`}
+                >
                   <div
                     className={`rounded-[32px] overflow-hidden ${i === 0 ? "h-[220px] w-[220px]" : "h-[180px] w-[180px]"} transition-transform duration-500 relative border border-[var(--fun-stroke-1)] shadow-2xl flex items-center justify-center bg-black/5 dark:bg-white/5`}
                   >

@@ -27,7 +27,7 @@ Klasik yazılım şirketlerinin veya fason ajansların aksine, biz dışarıya �
 ### Ürün ve Hizmet Ekosistemimiz
 - **Nexy:** Gelişmiş yapay zeka asistanı ve akıllı veritabanı sorgu motoru.
 - **QuakeSafe:** IoT destekli afet koordinasyonu ve erken uyarı hayat kurtarma platformu.
-- **FunID:** Tüm sistemlerimizi birbirine bağlayan güvenli ve tescilli birleşik kimlik doğrulama portalı.`
+- **FunID:** Tüm sistemlerimizi birbirine bağlayan güvenli ve tescilli birleşik kimlik doğrulama portalı.`,
   },
   funid: {
     title: "FunID Hesap Kurulumu",
@@ -42,7 +42,7 @@ Hesabınızın güvenliğini en üst düzeye çıkarmak için iki adımlı doğr
 1. Sağ üstteki profil ikonuna tıklayarak profil sayfanıza gidin.
 2. "Güvenlik Ayarları" sekmesini açın.
 3. İki Adımlı Doğrulama (2FA) butonunu aktif hale getirin ve kimlik doğrulama uygulamanızla (Authenticator) QR kodu taratın.
-4. Dilerseniz VPN engelleme ve yabancı ülke IP kısıtlamalarını etkinleştirerek tam koruma sağlayın.`
+4. Dilerseniz VPN engelleme ve yabancı ülke IP kısıtlamalarını etkinleştirerek tam koruma sağlayın.`,
   },
   nexy_intro: {
     title: "Nexy Nedir ve Nasıl Çalışır?",
@@ -56,7 +56,7 @@ Nexy sadece sohbet etmekle kalmaz; yetkilendirilmiş kullanıcıların hesap don
 ### Çalışma Prensibi ve Akış
 - **Sorgu Algılama:** Gönderdiğiniz mesajda veritabanı erişimi gerektiren bir durum tespit edilirse, Nexy otomatik bir sorgu tetikler.
 - **Güvenli Sorgulama:** Sorgu tetiklendiğinde Supabase altyapısı güvenli kimlik doğrulaması gerçekleştirerek doğrulanmış verileri getirir.
-- **Doğrulama ve Cevap:** Veritabanından gelen doğrulanmış veriler Nexy'nin bağlamına aktarılır ve Nexy size en doğru cevabı üretir.`
+- **Doğrulama ve Cevap:** Veritabanından gelen doğrulanmış veriler Nexy'nin bağlamına aktarılır ve Nexy size en doğru cevabı üretir.`,
   },
   nexy_engine: {
     title: "Akıllı Sorgu Komutları",
@@ -69,7 +69,7 @@ Herhangi bir kod yazmadan veya ayar aramadan, doğrudan doğal dil kullanarak ş
 
 - *"Hizmetler aktif mi?"* veya *"Hangi hizmet bakımda?"* (Sistem durum tablosundan real-time verileri listeler)
 - *"Hesabımın durumu nedir?"* veya *"Aktif oturumlarımı göster"* (Profil ve aktif oturum listesini getirir)
-- *"QuakeSafe medikal profilimi göster"* (Acil durum kart bilgilerinizi listeler)`
+- *"QuakeSafe medikal profilimi göster"* (Acil durum kart bilgilerinizi listeler)`,
   },
   quakesafe_intro: {
     title: "QuakeSafe Nedir?",
@@ -80,7 +80,7 @@ Herhangi bir kod yazmadan veya ayar aramadan, doğrudan doğal dil kullanarak ş
 ### Platform Özellikleri
 - **Erken Uyarı Sensörleri:** Depremin yıkıcı dalgaları ulaşmadan önce saniyeler kazandıran mikro-vibrasyon bildirimleri.
 - **Medikal Profil Entegrasyonu:** Afet anında acil ekiplerin bilmesi gereken kan grubu, alerji ve acil durum kişilerinizin bir arada tutulduğu tescilli medikal kart.
-- **İletişim ve Güvenlik:** GSM hatları koptuğunda dahi koordinasyon sağlayan yedekli ağ protokolleri.`
+- **İletişim ve Güvenlik:** GSM hatları koptuğunda dahi koordinasyon sağlayan yedekli ağ protokolleri.`,
   },
   quakesafe_card: {
     title: "Medikal Güvenlik Kartı",
@@ -95,8 +95,8 @@ QuakeSafe medikal güvenlik kartınızı oluşturduktan sonra, görünürlüğü
 1. Profil sayfanıza gidin ve "QuakeSafe Profili" bölümünü açın.
 2. Kan grubunuzu, alerjilerinizi ve en az bir acil durum yakın kişinin telefon numarasını girin.
 3. "Kaydet" butonuna basın.
-4. "Kart Görünürlüğü" seçeneğini dilediğiniz gibi ayarlayın (Public yapılması acil durumlarda ilk müdahale ekiplerinin işini kolaylaştırır).`
-  }
+4. "Kart Görünürlüğü" seçeneğini dilediğiniz gibi ayarlayın (Public yapılması acil durumlarda ilk müdahale ekiplerinin işini kolaylaştırır).`,
+  },
 };
 
 type ArticleKey = keyof typeof MASTER_ARTICLES;
@@ -114,17 +114,28 @@ const WARNING_DICT: Record<string, string> = {
   it: "Questa documentazione è stata tradotta automaticamente dall'IA. Alcuni termini potrebbero essere tradotti in modo errato.",
   pt: "Esta documentação foi traduzida automaticamente por IA. Alguns termos podem estar incorretamente traduzidos.",
   ja: "このドキュメントは AI によって自動的に翻訳されています。一部の用語が誤って翻訳されている可能性があります。",
-  zh: "本文件由人工智能自动翻译。某些术语可能会被错误翻译。"
+  zh: "本文件由人工智能自动翻译。某些术语可能会被错误翻译。",
 };
 
 const parseInlineMarkdown = (text: string) => {
   const parts = text.split(/(\*\*.*?\*\*|`.*?`)/g);
   return parts.map((part, idx) => {
     if (part.startsWith("**") && part.endsWith("**")) {
-      return <strong key={idx} className="font-bold text-foreground">{part.slice(2, -2)}</strong>;
+      return (
+        <strong key={idx} className="font-bold text-foreground">
+          {part.slice(2, -2)}
+        </strong>
+      );
     }
     if (part.startsWith("`") && part.endsWith("`")) {
-      return <code key={idx} className="bg-[var(--fun-surface)] border border-[var(--fun-stroke-1)] px-2 py-0.5 rounded font-mono text-xs text-[var(--fun-purple)]">{part.slice(1, -1)}</code>;
+      return (
+        <code
+          key={idx}
+          className="bg-[var(--fun-surface)] border border-[var(--fun-stroke-1)] px-2 py-0.5 rounded font-mono text-xs text-[var(--fun-purple)]"
+        >
+          {part.slice(1, -1)}
+        </code>
+      );
     }
     return part;
   });
@@ -147,7 +158,10 @@ const renderMarkdownContent = (text: string) => {
 
     if (trimmed.startsWith("## ")) {
       return (
-        <h2 key={idx} className="text-2xl font-bold mt-10 mb-4 text-foreground border-b border-[var(--fun-stroke-1)] pb-2">
+        <h2
+          key={idx}
+          className="text-2xl font-bold mt-10 mb-4 text-foreground border-b border-[var(--fun-stroke-1)] pb-2"
+        >
           {parseInlineMarkdown(trimmed.substring(3))}
         </h2>
       );
@@ -155,7 +169,10 @@ const renderMarkdownContent = (text: string) => {
 
     if (trimmed.startsWith("- ") || trimmed.startsWith("* ")) {
       return (
-        <li key={idx} className="list-disc pl-2 ml-6 mb-2 text-muted-foreground text-sm leading-relaxed">
+        <li
+          key={idx}
+          className="list-disc pl-2 ml-6 mb-2 text-muted-foreground text-sm leading-relaxed"
+        >
           {parseInlineMarkdown(trimmed.substring(2))}
         </li>
       );
@@ -164,7 +181,10 @@ const renderMarkdownContent = (text: string) => {
     if (/^\d+\.\s/.test(trimmed)) {
       const content = trimmed.replace(/^\d+\.\s/, "");
       return (
-        <li key={idx} className="list-decimal pl-2 ml-6 mb-2 text-muted-foreground text-sm leading-relaxed">
+        <li
+          key={idx}
+          className="list-decimal pl-2 ml-6 mb-2 text-muted-foreground text-sm leading-relaxed"
+        >
           {parseInlineMarkdown(content)}
         </li>
       );
@@ -258,7 +278,7 @@ function DocsPage() {
       pt: "pt-PT",
       ja: "ja-JP",
       zh: "zh-CN",
-      az: "tr-TR"
+      az: "tr-TR",
     };
     utterance.lang = localeMap[lang] || "en-US";
 
@@ -280,9 +300,12 @@ function DocsPage() {
 
   // Share (Paylaş) function
   const handleShare = () => {
-    const shareUrl = typeof window !== "undefined" ? `${window.location.origin}/docs?tab=${activeTab}` : "";
+    const shareUrl =
+      typeof window !== "undefined" ? `${window.location.origin}/docs?tab=${activeTab}` : "";
     navigator.clipboard.writeText(shareUrl).then(() => {
-      toast.success(lang === "tr" ? "Dokümantasyon linki kopyalandı!" : "Documentation link copied!");
+      toast.success(
+        lang === "tr" ? "Dokümantasyon linki kopyalandı!" : "Documentation link copied!",
+      );
     });
   };
 
@@ -292,37 +315,43 @@ function DocsPage() {
       categoryKey: "getting_started",
       items: [
         { id: "intro", label: lang === "tr" ? "Giriş" : "Introduction" },
-        { id: "funid", label: lang === "tr" ? "FunID Hesap Kurulumu" : "FunID Account Setup" }
-      ]
+        { id: "funid", label: lang === "tr" ? "FunID Hesap Kurulumu" : "FunID Account Setup" },
+      ],
     },
     {
       category: lang === "tr" ? "NEXY YAPAY ZEKA" : "NEXY AI",
       categoryKey: "nexy_ai",
       items: [
         { id: "nexy_intro", label: lang === "tr" ? "Nexy Nedir?" : "What is Nexy?" },
-        { id: "nexy_engine", label: lang === "tr" ? "Akıllı Sorgu Motoru" : "Intelligent Query" }
-      ]
+        { id: "nexy_engine", label: lang === "tr" ? "Akıllı Sorgu Motoru" : "Intelligent Query" },
+      ],
     },
     {
       category: lang === "tr" ? "QUAKESAFE" : "QUAKESAFE",
       categoryKey: "quakesafe",
       items: [
         { id: "quakesafe_intro", label: lang === "tr" ? "QuakeSafe Nedir?" : "What is QuakeSafe?" },
-        { id: "quakesafe_card", label: lang === "tr" ? "Medikal Güvenlik Kartı" : "Medical Safety Card" }
-      ]
-    }
+        {
+          id: "quakesafe_card",
+          label: lang === "tr" ? "Medikal Güvenlik Kartı" : "Medical Safety Card",
+        },
+      ],
+    },
   ];
 
   // Perform search across both Title and Content of ALL master Turkish articles (with fallback-insensitive search matching)
-  const filteredMenu = menu.map(cat => {
-    const filteredItems = cat.items.filter(item => {
-      const masterArt = MASTER_ARTICLES[item.id as ArticleKey];
-      const matchSearch = masterArt.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                          masterArt.content.toLowerCase().includes(searchQuery.toLowerCase());
-      return matchSearch;
-    });
-    return { ...cat, items: filteredItems };
-  }).filter(cat => cat.items.length > 0);
+  const filteredMenu = menu
+    .map((cat) => {
+      const filteredItems = cat.items.filter((item) => {
+        const masterArt = MASTER_ARTICLES[item.id as ArticleKey];
+        const matchSearch =
+          masterArt.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          masterArt.content.toLowerCase().includes(searchQuery.toLowerCase());
+        return matchSearch;
+      });
+      return { ...cat, items: filteredItems };
+    })
+    .filter((cat) => cat.items.length > 0);
 
   return (
     <main className="pt-32 pb-20 px-4 lg:px-5 min-h-[calc(100vh-200px)] flex flex-col bg-background">

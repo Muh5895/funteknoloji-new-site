@@ -52,7 +52,11 @@ const isRateLimitedServerless = async (ip: string): Promise<boolean> => {
   }
 };
 
-const translateTextHelper = async (text: string, source: string, target: string): Promise<string> => {
+const translateTextHelper = async (
+  text: string,
+  source: string,
+  target: string,
+): Promise<string> => {
   if (!text || source === target) return text;
   try {
     const placeholders: string[] = [];
@@ -91,7 +95,7 @@ const translateTextHelper = async (text: string, source: string, target: string)
     }
 
     const response = await fetch(
-      `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${source}&tl=${target}&dt=t&q=${encodeURIComponent(processedText)}`
+      `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${source}&tl=${target}&dt=t&q=${encodeURIComponent(processedText)}`,
     );
     const data = await response.json();
     let result = data[0].map((item: any) => item[0]).join("");
@@ -116,7 +120,11 @@ const translateTextHelper = async (text: string, source: string, target: string)
   }
 };
 
-const translateTextWithCodeBlocks = async (text: string, source: string, target: string): Promise<string> => {
+const translateTextWithCodeBlocks = async (
+  text: string,
+  source: string,
+  target: string,
+): Promise<string> => {
   if (!text || source === target) return text;
 
   const parts = text.split(/(```[\s\S]*?```)/g);
@@ -139,9 +147,9 @@ const cleanLeadingDashes = (text: string): string => {
   if (!text) return text;
   let lines = text.split("\n");
   // Check if it is a real multi-item list (more than one line starting with a dash)
-  const isMultiItemList = lines.filter(l => l.trim().startsWith("-")).length > 1;
+  const isMultiItemList = lines.filter((l) => l.trim().startsWith("-")).length > 1;
   if (!isMultiItemList) {
-    lines = lines.map(line => {
+    lines = lines.map((line) => {
       const trimmed = line.trim();
       if (trimmed.startsWith("- ") && !trimmed.startsWith("- -")) {
         return trimmed.substring(2);
@@ -155,13 +163,17 @@ const cleanLeadingDashes = (text: string): string => {
   return lines.join("\n").trim();
 };
 
-const fetchWithTimeout = async (url: string, options: any, timeoutMs: number): Promise<Response> => {
+const fetchWithTimeout = async (
+  url: string,
+  options: any,
+  timeoutMs: number,
+): Promise<Response> => {
   const controller = new AbortController();
   const id = setTimeout(() => controller.abort(), timeoutMs);
   try {
     const response = await fetch(url, {
       ...options,
-      signal: controller.signal
+      signal: controller.signal,
     });
     clearTimeout(id);
     return response;
@@ -185,7 +197,7 @@ const isValidAIResponse = (text: string): boolean => {
     "try again later",
     "temporary congestion",
     "too many requests",
-    "quota exceeded"
+    "quota exceeded",
   ];
 
   for (const indicator of indicators) {
@@ -194,7 +206,10 @@ const isValidAIResponse = (text: string): boolean => {
     }
   }
 
-  if (text.trim().length < 40 && (lower.includes("hata") || lower.includes("hizmet dışı") || lower.includes("aktif değil"))) {
+  if (
+    text.trim().length < 40 &&
+    (lower.includes("hata") || lower.includes("hizmet dışı") || lower.includes("aktif değil"))
+  ) {
     return false;
   }
 
@@ -227,7 +242,10 @@ const fetchRealDatabaseContext = async (authHeader: string | undefined) => {
   const token = authHeader.substring(7);
   try {
     // 1. Authenticate the user token securely via Supabase Auth
-    const { data: { user }, error: authError } = await client.auth.getUser(token);
+    const {
+      data: { user },
+      error: authError,
+    } = await client.auth.getUser(token);
     if (authError || !user) {
       return { context: "", error: "Invalid or expired session token", isAuthError: true };
     }
@@ -249,7 +267,11 @@ const fetchRealDatabaseContext = async (authHeader: string | undefined) => {
       })(),
       (async () => {
         try {
-          const { data } = await client.from("user_settings").select("*").eq("user_id", user.id).single();
+          const { data } = await client
+            .from("user_settings")
+            .select("*")
+            .eq("user_id", user.id)
+            .single();
           settingsData = data;
         } catch (e) {
           console.warn("Failed to fetch user_settings table:", e);
@@ -257,7 +279,11 @@ const fetchRealDatabaseContext = async (authHeader: string | undefined) => {
       })(),
       (async () => {
         try {
-          const { data } = await client.from("profiles_quakesafe").select("*").eq("id", user.id).single();
+          const { data } = await client
+            .from("profiles_quakesafe")
+            .select("*")
+            .eq("id", user.id)
+            .single();
           quakesafeData = data;
         } catch (e) {
           console.warn("Failed to fetch profiles_quakesafe table:", e);
@@ -265,12 +291,16 @@ const fetchRealDatabaseContext = async (authHeader: string | undefined) => {
       })(),
       (async () => {
         try {
-          const { data } = await client.from("active_sessions").select("*").eq("user_id", user.id).eq("is_terminated", false);
+          const { data } = await client
+            .from("active_sessions")
+            .select("*")
+            .eq("user_id", user.id)
+            .eq("is_terminated", false);
           sessionsData = data;
         } catch (e) {
           console.warn("Failed to fetch active_sessions table:", e);
         }
-      })()
+      })(),
     ]);
 
     let context = `[REAL-TIME VERIFIED USER DATABASE CONTEXT]\n`;
@@ -335,7 +365,10 @@ const fetchRealDatabaseContext = async (authHeader: string | undefined) => {
 };
 
 // Execute targeted, dynamic query requested by the AI Database Agent loop
-const executeDynamicDatabaseQuery = async (action: string, authHeader: string | undefined): Promise<string> => {
+const executeDynamicDatabaseQuery = async (
+  action: string,
+  authHeader: string | undefined,
+): Promise<string> => {
   const client = getSupabaseClient();
   if (!client) {
     return "Hata: Veritabanı bağlantısı kurulamadı.";
@@ -349,7 +382,7 @@ const executeDynamicDatabaseQuery = async (action: string, authHeader: string | 
     "get_active_sessions",
     "get_contact_messages",
     "get_system_status",
-    "get_support_tickets"
+    "get_support_tickets",
   ];
 
   if (!SAFE_ACTIONS.includes(action)) {
@@ -360,7 +393,9 @@ const executeDynamicDatabaseQuery = async (action: string, authHeader: string | 
   if (action === "get_system_status") {
     let resultContext = `[REAL-TIME SYSTEM STATUS QUERY RESPONSE]\n`;
     try {
-      const { data, error } = await client.from("system_status").select("app_name, status, maintenance_reason, estimated_end_time");
+      const { data, error } = await client
+        .from("system_status")
+        .select("app_name, status, maintenance_reason, estimated_end_time");
       if (error) throw error;
       if (data && data.length > 0) {
         resultContext += `\n[Sistem ve Hizmet Durumları]\n`;
@@ -399,7 +434,10 @@ const executeDynamicDatabaseQuery = async (action: string, authHeader: string | 
 
   const token = authHeader.substring(7);
   try {
-    const { data: { user }, error: authError } = await client.auth.getUser(token);
+    const {
+      data: { user },
+      error: authError,
+    } = await client.auth.getUser(token);
     if (authError || !user) {
       return "Hata: Oturum süreniz dolmuş veya geçersiz.";
     }
@@ -408,34 +446,47 @@ const executeDynamicDatabaseQuery = async (action: string, authHeader: string | 
 
     if (action === "get_profile") {
       try {
-        const { data, error } = await client.from("profiles").select("*").eq("id", user.id).single();
+        const { data, error } = await client
+          .from("profiles")
+          .select("*")
+          .eq("id", user.id)
+          .single();
         if (error) throw error;
         resultContext += `İsim Soyisim: ${data?.full_name || "N/A"}\nPlan: ${data?.plan || "free"}\nDurum: ${data?.status || "active"}\nKullanılan Depolama: ${data?.storage_used || 0} bytes\n`;
       } catch (e: any) {
         resultContext += `Profil Tablo Hatası: ${e.message || "Failed to retrieve profiles."}\n`;
       }
-    }
-    else if (action === "get_user_settings") {
+    } else if (action === "get_user_settings") {
       try {
-        const { data, error } = await client.from("user_settings").select("*").eq("user_id", user.id).single();
+        const { data, error } = await client
+          .from("user_settings")
+          .select("*")
+          .eq("user_id", user.id)
+          .single();
         if (error) throw error;
         resultContext += `Dil Tercihi: ${data?.language || "tr"}\nTema: ${data?.theme || "dark"}\n2FA Aktif mi: ${data?.two_factor_enabled ? "Evet" : "Hayır"}\nVPN Engelleme: ${data?.block_vpn ? "Evet" : "Hayır"}\n`;
       } catch (e: any) {
         resultContext += `Kullanıcı Ayarları Tablo Hatası: ${e.message || "Failed to retrieve user settings."}\n`;
       }
-    }
-    else if (action === "get_quakesafe_profile") {
+    } else if (action === "get_quakesafe_profile") {
       try {
-        const { data, error } = await client.from("profiles_quakesafe").select("*").eq("id", user.id).single();
+        const { data, error } = await client
+          .from("profiles_quakesafe")
+          .select("*")
+          .eq("id", user.id)
+          .single();
         if (error) throw error;
         resultContext += `QuakeSafe Profil Tamamlandı mı: ${data?.is_profile_completed ? "Evet" : "Hayır"}\nKan Grubu: ${data?.blood_type || "N/A"}\nAcil Durum Kişileri: ${JSON.stringify(data?.emergency_contacts || {})}\n`;
       } catch (e: any) {
         resultContext += `QuakeSafe Tablo Hatası: ${e.message || "Failed to retrieve QuakeSafe profile."}\n`;
       }
-    }
-    else if (action === "get_active_sessions") {
+    } else if (action === "get_active_sessions") {
       try {
-        const { data, error } = await client.from("active_sessions").select("*").eq("user_id", user.id).eq("is_terminated", false);
+        const { data, error } = await client
+          .from("active_sessions")
+          .select("*")
+          .eq("user_id", user.id)
+          .eq("is_terminated", false);
         if (error) throw error;
         if (data && data.length > 0) {
           data.forEach((s: any, i: number) => {
@@ -447,10 +498,14 @@ const executeDynamicDatabaseQuery = async (action: string, authHeader: string | 
       } catch (e: any) {
         resultContext += `Aktif Oturumlar Tablo Hatası: ${e.message || "Failed to retrieve active sessions."}\n`;
       }
-    }
-    else if (action === "get_contact_messages") {
+    } else if (action === "get_contact_messages") {
       try {
-        const { data, error } = await client.from("contact").select("*").eq("email", user.email).order("created_at", { ascending: false }).limit(5);
+        const { data, error } = await client
+          .from("contact")
+          .select("*")
+          .eq("email", user.email)
+          .order("created_at", { ascending: false })
+          .limit(5);
         if (error) throw error;
         if (data && data.length > 0) {
           resultContext += `\n[Contact Tablosu Verileri]\n`;
@@ -463,10 +518,11 @@ const executeDynamicDatabaseQuery = async (action: string, authHeader: string | 
       } catch (e: any) {
         resultContext += `Contact Tablo Hatası: ${e.message || "Failed to retrieve contact messages."}\n`;
       }
-    }
-    else if (action === "get_system_status") {
+    } else if (action === "get_system_status") {
       try {
-        const { data, error } = await client.from("system_status").select("app_name, status, maintenance_reason, estimated_end_time");
+        const { data, error } = await client
+          .from("system_status")
+          .select("app_name, status, maintenance_reason, estimated_end_time");
         if (error) throw error;
         if (data && data.length > 0) {
           resultContext += `\n[Sistem ve Hizmet Durumları]\n`;
@@ -479,13 +535,17 @@ const executeDynamicDatabaseQuery = async (action: string, authHeader: string | 
       } catch (e: any) {
         resultContext += `Sistem Durumu Sorgu Hatası: ${e.message}\n`;
       }
-    }
-    else if (action === "get_support_tickets") {
+    } else if (action === "get_support_tickets") {
       const potentialTables = ["support_tickets_feedback", "support_tickets", "tickets"];
       let retrieved = false;
       for (const tableName of potentialTables) {
         try {
-          const { data, error } = await client.from(tableName).select("*").eq(tableName === "tickets" ? "user_id" : "user_id", user.id).order("created_at", { ascending: false }).limit(5);
+          const { data, error } = await client
+            .from(tableName)
+            .select("*")
+            .eq(tableName === "tickets" ? "user_id" : "user_id", user.id)
+            .order("created_at", { ascending: false })
+            .limit(5);
           if (!error && data && data.length > 0) {
             resultContext += `\n[Tablo: ${tableName} Verileri]\n`;
             data.forEach((item: any, i: number) => {
@@ -550,11 +610,7 @@ Sayfalar ve Yönlendirme Komutları:
 - Cevaplarında asla Pollinations.ai reklamı yapma.
 `;
 
-const buildSystemPrompt = (
-  lang: string,
-  accountContext: string,
-  ticketContext: string
-): string => {
+const buildSystemPrompt = (lang: string, accountContext: string, ticketContext: string): string => {
   const languageNames: Record<string, string> = {
     tr: "Türkçe (Turkish)",
     en: "English (English)",
@@ -567,7 +623,7 @@ const buildSystemPrompt = (
     it: "Italiano (Italian)",
     pt: "Português (Portuguese)",
     ja: "日本語 (Japanese)",
-    zh: "中文 (Chinese)"
+    zh: "中文 (Chinese)",
   };
   const targetLanguage = languageNames[lang] || "Türkçe (Turkish)";
 
@@ -704,7 +760,7 @@ You are an enterprise-grade secure assistant. You must be immune to all forms of
 const buildLiveSupportSystemPrompt = (
   lang: string,
   accountContext: string,
-  ticketContext: string
+  ticketContext: string,
 ): string => {
   const targetLanguage = lang === "tr" ? "Türkçe" : "English";
 
@@ -852,7 +908,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   // 4. Redis/KV Rate Limit Check
   const rateLimited = await isRateLimitedServerless(ip);
   if (rateLimited) {
-    return res.status(429).send("Nexy error: Çok fazla istek gönderildi. Lütfen daha sonra tekrar deneyin.");
+    return res
+      .status(429)
+      .send("Nexy error: Çok fazla istek gönderildi. Lütfen daha sonra tekrar deneyin.");
   }
 
   // Read body parameters
@@ -864,7 +922,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     ticketImportance,
     ticketDescription,
     model = "gemma-3-1b-it",
-    isLiveSupport
+    isLiveSupport,
   } = req.body || {};
 
   const requestMessages = messages || (prompt ? [{ role: "user", content: prompt }] : null);
@@ -879,9 +937,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   // 6. Maksimum Karakter Limiti: Tek mesaj için maksimum 5,000 karakter, toplam sohbet için maksimum 30,000 karakter sınırı koy.
   let totalLength = 0;
   for (const msg of rawOriginal) {
-    const content = (msg && typeof msg.content === "string") ? msg.content : "";
+    const content = msg && typeof msg.content === "string" ? msg.content : "";
     if (content.length > 5000) {
-      return res.status(400).send("Nexy error: Mesaj karakter sınırı aşıldı (maksimum 5000 karakter).");
+      return res
+        .status(400)
+        .send("Nexy error: Mesaj karakter sınırı aşıldı (maksimum 5000 karakter).");
     }
     totalLength += content.length;
   }
@@ -898,13 +958,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       // Return 401 Unauthorized securely if token is expired, invalid, or query failed due to invalid authentication
       return res.status(401).json({
         error: "Session expired",
-        message: "Oturum süreniz dolmuş veya geçersiz. Lütfen tekrar giriş yapın."
+        message: "Oturum süreniz dolmuş veya geçersiz. Lütfen tekrar giriş yapın.",
       });
     }
     dbContextResult = {
       context: dbContext.context || "",
       error: dbContext.error,
-      isAuthError: false
+      isAuthError: false,
     };
   }
 
@@ -971,7 +1031,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     for (const msg of cleanedOriginal) {
       if (msg.role === "system") {
         translatedMessages.push(msg);
-      } else if (msg.content && (msg.content.startsWith("[DATABASE RESPONSE") || msg.content.startsWith("[DB_QUERY:"))) {
+      } else if (
+        msg.content &&
+        (msg.content.startsWith("[DATABASE RESPONSE") || msg.content.startsWith("[DB_QUERY:"))
+      ) {
         // Keep database queries and responses 100% raw and untranslated to prevent corruption
         translatedMessages.push(msg);
       } else {
@@ -989,7 +1052,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     const finalMessages = [
       { role: "system", content: combinedSystemPrompt },
-      ...translatedMessages.filter((m) => m.role !== "system")
+      ...translatedMessages.filter((m) => m.role !== "system"),
     ];
 
     let aiText = "";
@@ -997,29 +1060,38 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     // Try Hack Club First (with a strict 8-second timeout to prevent hanging)
     if (backupApiKey) {
       try {
-        const backupResponse = await fetchWithTimeout("https://ai.hackclub.com/proxy/v1/chat/completions", {
-          method: "POST",
-          headers: {
-            "Authorization": `Bearer ${backupApiKey}`,
-            "Content-Type": "application/json",
+        const backupResponse = await fetchWithTimeout(
+          "https://ai.hackclub.com/proxy/v1/chat/completions",
+          {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${backupApiKey}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              model: "gpt-4o-mini",
+              messages: finalMessages,
+            }),
           },
-          body: JSON.stringify({
-            model: "gpt-4o-mini",
-            messages: finalMessages
-          }),
-        }, 8000);
+          8000,
+        );
 
         if (backupResponse.ok) {
-          const backupData = await backupResponse.json() as any;
+          const backupData = (await backupResponse.json()) as any;
           const textCandidate = backupData.choices?.[0]?.message?.content || "";
           if (isValidAIResponse(textCandidate)) {
             aiText = textCandidate;
           } else {
-            console.warn("Primary Hack Club AI returned an invalid or rate-limited response, discarding to force fallback:", textCandidate);
+            console.warn(
+              "Primary Hack Club AI returned an invalid or rate-limited response, discarding to force fallback:",
+              textCandidate,
+            );
           }
         } else {
           const backupErrText = await backupResponse.text();
-          console.warn(`Primary Hack Club AI returned non-OK status ${backupResponse.status}: ${backupErrText}`);
+          console.warn(
+            `Primary Hack Club AI returned non-OK status ${backupResponse.status}: ${backupErrText}`,
+          );
         }
       } catch (backupErr: any) {
         console.warn("Primary Hack Club AI fetch thrown exception:", backupErr);
@@ -1030,11 +1102,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.status(200).json({
         text: "Şu an sistemlerimizde geçici bir yoğunluk var. Lütfen biraz sonra tekrar deneyiniz.",
         englishText: "A temporary system congestion occurred. Please try again in a moment.",
-        isTranslated: false
+        isTranslated: false,
       });
     }
-
-
 
     // Process the returned AI text (aiText)
     const queryMatch = aiText.match(/\[DB_QUERY:\s*({[^}]+})\s*\]/);
@@ -1047,8 +1117,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
       if (queryAction) {
         const queryResponseText = await executeDynamicDatabaseQuery(queryAction, authHeader);
-        rawOriginal.push({ role: "assistant", content: `[DB_QUERY: {"action": "${queryAction}"}]` });
-        rawOriginal.push({ role: "user", content: `[DATABASE RESPONSE FOR ${queryAction}]:\n${queryResponseText}` });
+        rawOriginal.push({
+          role: "assistant",
+          content: `[DB_QUERY: {"action": "${queryAction}"}]`,
+        });
+        rawOriginal.push({
+          role: "user",
+          content: `[DATABASE RESPONSE FOR ${queryAction}]:\n${queryResponseText}`,
+        });
         loopCount++;
         continue; // re-run loop
       }
@@ -1075,13 +1151,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(200).json({
       text: translatedResponse,
       englishText: aiText,
-      isTranslated: lang && lang !== "en"
+      isTranslated: lang && lang !== "en",
     });
   }
 
   return res.status(200).json({
     text: "Sorgunuz işlenirken bir hata oluştu. Lütfen tekrar deneyin.",
     englishText: "An error occurred while processing your query. Please try again.",
-    isTranslated: false
+    isTranslated: false,
   });
 }

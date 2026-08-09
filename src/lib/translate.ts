@@ -25,7 +25,7 @@ export const translateText = async (payload: {
 export const translateAnyText = async (
   text: string,
   sourceLang: string,
-  targetLang: string
+  targetLang: string,
 ): Promise<string> => {
   if (!text || sourceLang === targetLang) return text;
 
@@ -37,7 +37,7 @@ export const translateAnyText = async (
 
   try {
     const response = await fetch(
-      `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${source}&tl=${target}&dt=t&q=${encodeURIComponent(text)}`
+      `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${source}&tl=${target}&dt=t&q=${encodeURIComponent(text)}`,
     );
     const data = await response.json();
     return data[0].map((item: any) => item[0]).join("");

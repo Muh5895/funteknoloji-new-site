@@ -45,7 +45,7 @@ const formatEstimatedEndTime = (isoStr: string, lang: string): string => {
       month: "long",
       year: "numeric",
       hour: "2-digit",
-      minute: "2-digit"
+      minute: "2-digit",
     };
     return date.toLocaleString(lang === "tr" ? "tr-TR" : "en-US", options);
   } catch (e) {
@@ -63,30 +63,74 @@ interface Chat {
 const checkRedirectIntent = (input: string, lang: string): string | null => {
   const query = input.toLowerCase();
   if (lang === "tr") {
-    if (query.includes("iletişim") || query.includes("ulaş") || query.includes("mail") || query.includes("telefon") || query.includes("adres") || query.includes("konum") || query.includes("nerede")) {
+    if (
+      query.includes("iletişim") ||
+      query.includes("ulaş") ||
+      query.includes("mail") ||
+      query.includes("telefon") ||
+      query.includes("adres") ||
+      query.includes("konum") ||
+      query.includes("nerede")
+    ) {
       return "Sizi iletişim sayfamıza yönlendiriyorum. Oradan bizimle kolayca iletişime geçebilir, sorularınızı iletebilirsiniz. [REDIRECT:/contact]";
     }
-    if (query.includes("fiyat") || query.includes("ücret") || query.includes("paralı") || query.includes("abonelik") || query.includes("paket") || query.includes("fiyatlar")) {
+    if (
+      query.includes("fiyat") ||
+      query.includes("ücret") ||
+      query.includes("paralı") ||
+      query.includes("abonelik") ||
+      query.includes("paket") ||
+      query.includes("fiyatlar")
+    ) {
       return "Geliştirdiğimiz ürünlerin fiyatlandırma detaylarını ve esnek lisanslama seçeneklerini fiyatlandırma sayfamızda bulabilirsiniz. Sizi şimdi fiyatlandırma sayfamıza yönlendiriyorum. [REDIRECT:/pricing]";
     }
-    if (query.includes("proje") || query.includes("ürün") || query.includes("neler yaptınız") || query.includes("çalışmalar")) {
+    if (
+      query.includes("proje") ||
+      query.includes("ürün") ||
+      query.includes("neler yaptınız") ||
+      query.includes("çalışmalar")
+    ) {
       return "Fun Teknoloji olarak tamamen kendi inovatif ürünlerimizi geliştiriyoruz. En önemli projelerimiz **Nexy** (Yapay Zeka Asistanı) ve **QuakeSafe** (Deprem Erken Uyarı Platformu)'dir. Detaylar için sizi projeler sayfamıza yönlendiriyorum. [REDIRECT:/projects]";
     }
   } else {
-    if (query.includes("contact") || query.includes("reach") || query.includes("email") || query.includes("phone") || query.includes("address") || query.includes("location") || query.includes("where")) {
+    if (
+      query.includes("contact") ||
+      query.includes("reach") ||
+      query.includes("email") ||
+      query.includes("phone") ||
+      query.includes("address") ||
+      query.includes("location") ||
+      query.includes("where")
+    ) {
       return "I am directing you to our contact page. You can easily get in touch with us there. [REDIRECT:/contact]";
     }
-    if (query.includes("price") || query.includes("cost") || query.includes("paid") || query.includes("sub") || query.includes("pack") || query.includes("pricing")) {
+    if (
+      query.includes("price") ||
+      query.includes("cost") ||
+      query.includes("paid") ||
+      query.includes("sub") ||
+      query.includes("pack") ||
+      query.includes("pricing")
+    ) {
       return "You can find pricing details and flexible licensing options on our pricing page. Directing you there now. [REDIRECT:/pricing]";
     }
-    if (query.includes("project") || query.includes("product") || query.includes("what did you do") || query.includes("works")) {
+    if (
+      query.includes("project") ||
+      query.includes("product") ||
+      query.includes("what did you do") ||
+      query.includes("works")
+    ) {
       return "At Fun Technology, we develop our own innovative products. Our primary projects are **Nexy** (AI Assistant) and **QuakeSafe** (Earthquake Early Warning). Directing you to our projects page. [REDIRECT:/projects]";
     }
   }
   return null;
 };
 
-const translateTextHelper = async (text: string, source: string, target: string): Promise<string> => {
+const translateTextHelper = async (
+  text: string,
+  source: string,
+  target: string,
+): Promise<string> => {
   if (!text || source === target) return text;
   try {
     const placeholders: string[] = [];
@@ -125,7 +169,7 @@ const translateTextHelper = async (text: string, source: string, target: string)
     }
 
     const response = await fetch(
-      `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${source}&tl=${target}&dt=t&q=${encodeURIComponent(processedText)}`
+      `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${source}&tl=${target}&dt=t&q=${encodeURIComponent(processedText)}`,
     );
     const data = await response.json();
     let result = data[0].map((item: any) => item[0]).join("");
@@ -150,7 +194,11 @@ const translateTextHelper = async (text: string, source: string, target: string)
   }
 };
 
-const translateTextWithCodeBlocks = async (text: string, source: string, target: string): Promise<string> => {
+const translateTextWithCodeBlocks = async (
+  text: string,
+  source: string,
+  target: string,
+): Promise<string> => {
   if (!text || source === target) return text;
 
   const parts = text.split(/(```[\s\S]*?```)/g);
@@ -171,9 +219,9 @@ const translateTextWithCodeBlocks = async (text: string, source: string, target:
 const cleanLeadingDashes = (text: string): string => {
   if (!text) return text;
   let lines = text.split("\n");
-  const isMultiItemList = lines.filter(l => l.trim().startsWith("-")).length > 1;
+  const isMultiItemList = lines.filter((l) => l.trim().startsWith("-")).length > 1;
   if (!isMultiItemList) {
-    lines = lines.map(line => {
+    lines = lines.map((line) => {
       const trimmed = line.trim();
       if (trimmed.startsWith("- ") && !trimmed.startsWith("- -")) {
         return trimmed.substring(2);
@@ -213,7 +261,11 @@ const getLocalFallbackResponse = (input: string, lang: string, chatMessages: any
     }
   }
 
-  const nameGreeting = userName ? (lang === "tr" ? `Sevgili ${userName}, ` : `Dear ${userName}, `) : "";
+  const nameGreeting = userName
+    ? lang === "tr"
+      ? `Sevgili ${userName}, `
+      : `Dear ${userName}, `
+    : "";
 
   if (lang === "tr") {
     // If the user is asking "benim adım ne" / "ismim ne"
@@ -231,7 +283,12 @@ const getLocalFallbackResponse = (input: string, lang: string, chatMessages: any
     if (query.includes("nexy") || query.includes("asistan") || query.includes("yapay zeka")) {
       return `${nameGreeting}**Nexy**, Fun Teknoloji'nin amiral gemisi yapay zeka asistanıdır (şu an benimle konuşuyorsunuz!). İşletmelerin ve kullanıcıların her dilde (12+ dil desteği) kesintisiz, akıllı ve hızlı iletişim kurmasını sağlar. Detaylar için /nexy sayfamıza göz atabilirsiniz.`;
     }
-    if (query.includes("hizmet") || query.includes("yazılım") || query.includes("siber") || query.includes("danışmanlık")) {
+    if (
+      query.includes("hizmet") ||
+      query.includes("yazılım") ||
+      query.includes("siber") ||
+      query.includes("danışmanlık")
+    ) {
       return `${nameGreeting}Fun Teknoloji olarak sunduğumuz hizmetler:\n\n1. **Yapay Zeka Çözümleri:** İşletmenize özel LLM modelleri ve otonom asistanlar.\n2. **Özel Yazılım Geliştirme:** Modern web ve mobil uygulamalar.\n3. **Siber Güvenlik:** Sızma testleri ve güvenlik denetimleri.\n4. **Teknik Danışmanlık:** Dijital dönüşüm rehberliği. Hangi hizmetimizle ilgileniyorsunuz? Sizi detaylı bilgilendirebilirim.`;
     }
 
@@ -239,12 +296,16 @@ const getLocalFallbackResponse = (input: string, lang: string, chatMessages: any
     const greetings = [
       `Merhaba${userName ? " " + userName : ""}! Ben Fun Teknoloji'nin yapay zeka asistanı Nexy. Size Fun Teknoloji, kurucumuz Muhammed Erbay, yenilikçi projelerimiz (Nexy, QuakeSafe) veya sunduğumuz profesyonel yazılım ve yapay zeka hizmetleri hakkında bilgi verebilirim. Ne öğrenmek istersiniz?`,
       `Harika bir gün geçirmenizi dilerim${userName ? ", " + userName : ""}! Ben Nexy. Fun Teknoloji hakkında merak ettiğiniz projeleri, hizmetlerimizi veya diğer detayları bana sorabilirsiniz. Size nasıl yardımcı olabilirim?`,
-      `Size yardımcı olmak için buradayım${userName ? ", " + userName : ""}! Fun Teknoloji'nin yapay zeka çözümleri, QuakeSafe afet yönetim platformu veya özel yazılım geliştirme hizmetlerimiz hakkında bilgi almak ister misiniz?`
+      `Size yardımcı olmak için buradayım${userName ? ", " + userName : ""}! Fun Teknoloji'nin yapay zeka çözümleri, QuakeSafe afet yönetim platformu veya özel yazılım geliştirme hizmetlerimiz hakkında bilgi almak ister misiniz?`,
     ];
     return greetings[chatMessages.length % greetings.length];
   } else {
     // English default fallback
-    if (query.includes("my name") || query.includes("what is my name") || query.includes("who am i")) {
+    if (
+      query.includes("my name") ||
+      query.includes("what is my name") ||
+      query.includes("who am i")
+    ) {
       if (userName) {
         return `As I recall from our conversation, your name is **${userName}**. How else can I help you?`;
       } else {
@@ -258,14 +319,19 @@ const getLocalFallbackResponse = (input: string, lang: string, chatMessages: any
     if (query.includes("nexy") || query.includes("assistant") || query.includes("ai")) {
       return `${nameGreeting}**Nexy** is Fun Technology's flagship AI assistant (the one you are talking to right now!). It offers smart, secure, and multi-lingual (12+ languages) communication for businesses. See /nexy for details.`;
     }
-    if (query.includes("service") || query.includes("software") || query.includes("security") || query.includes("consult")) {
+    if (
+      query.includes("service") ||
+      query.includes("software") ||
+      query.includes("security") ||
+      query.includes("consult")
+    ) {
       return `${nameGreeting}Fun Technology Services:\n\n1. **AI Solutions:** Custom-trained LLM models and autonomous agents.\n2. **Custom Software:** Modern web and mobile development.\n3. **Cyber Security:** Penetration testing and security audits.\n4. **Technical Consulting:** Professional digital transformation guidance. Which service interests you?`;
     }
 
     const enGreetings = [
       `Hello${userName ? " " + userName : ""}! I am Nexy, the AI assistant of Fun Technology. I can tell you about Fun Technology, our founder Muhammed Erbay, our innovative projects (Nexy, QuakeSafe), or our software services. How can I help you today?`,
       `Hope you are having a wonderful day${userName ? ", " + userName : ""}! I'm Nexy. You can ask me anything about Fun Technology's products, custom software solutions, or AI capabilities. What would you like to know?`,
-      `I'm here to assist you${userName ? ", " + userName : ""}! Would you like to learn more about our AI assistant Nexy, the QuakeSafe early warning system, or our custom software engineering?`
+      `I'm here to assist you${userName ? ", " + userName : ""}! Would you like to learn more about our AI assistant Nexy, the QuakeSafe early warning system, or our custom software engineering?`,
     ];
     return enGreetings[chatMessages.length % enGreetings.length];
   }
@@ -278,8 +344,8 @@ const cleanLiveMessagesForStorage = (messages: any[]) => {
         ...m,
         files: m.files.map((f: any) => ({
           ...f,
-          base64: "" // Strip massive base64 string, keep metadata and thumbnail
-        }))
+          base64: "", // Strip massive base64 string, keep metadata and thumbnail
+        })),
       };
     }
     return m;
@@ -292,7 +358,9 @@ export default function NexyAssistant() {
   const [visible, setVisible] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
   const [lastSentTimestamp, setLastSentTimestamp] = useState<number>(0);
-  const [isOnline, setIsOnline] = useState<boolean>(typeof window !== "undefined" ? navigator.onLine : true);
+  const [isOnline, setIsOnline] = useState<boolean>(
+    typeof window !== "undefined" ? navigator.onLine : true,
+  );
   const isSendingRef = useRef(false);
 
   const [systemStatus, setSystemStatus] = useState<"on" | "off" | "maintenance">("on");
@@ -349,7 +417,9 @@ export default function NexyAssistant() {
   const [isTyping, setIsTyping] = useState(false);
   const [isThinking, setIsThinking] = useState(false);
   const [speakingMessageIndex, setSpeakingMessageIndex] = useState<number | null>(null);
-  const [supportView, setSupportView] = useState<"menu" | "chat" | "live_login" | "live_details" | "live_chat">("menu");
+  const [supportView, setSupportView] = useState<
+    "menu" | "chat" | "live_login" | "live_details" | "live_chat"
+  >("menu");
   const [liveUser, setLiveUser] = useState<{ email: string } | null>(null);
 
   // Sync Supabase Auth session with Live Support session
@@ -366,7 +436,9 @@ export default function NexyAssistant() {
       }
 
       try {
-        const { data: { user } } = await supabase.auth.getUser();
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
         if (user && user.email) {
           setLiveUser({ email: user.email });
           // Fetch past support tickets from DB securely
@@ -375,13 +447,13 @@ export default function NexyAssistant() {
             .select("*")
             .order("created_at", { ascending: false });
           if (dbTickets && !error) {
-            const formatted = dbTickets.map(t => ({
+            const formatted = dbTickets.map((t) => ({
               id: t.id,
               email: user.email,
               subject: t.subject,
               importance: t.importance,
               timestamp: new Date(t.created_at).getTime(),
-              messages: t.messages
+              messages: t.messages,
             }));
             setPastSessions(formatted);
           }
@@ -392,7 +464,9 @@ export default function NexyAssistant() {
     };
     checkActiveSession();
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((event, session) => {
       if (session?.user?.email) {
         setLiveUser({ email: session.user.email });
         // Fetch past support tickets from DB securely on state change
@@ -402,13 +476,13 @@ export default function NexyAssistant() {
           .order("created_at", { ascending: false })
           .then(({ data: dbTickets, error }) => {
             if (dbTickets && !error) {
-              const formatted = dbTickets.map(t => ({
+              const formatted = dbTickets.map((t) => ({
                 id: t.id,
                 email: session.user.email,
                 subject: t.subject,
                 importance: t.importance,
                 timestamp: new Date(t.created_at).getTime(),
-                messages: t.messages
+                messages: t.messages,
               }));
               setPastSessions(formatted);
             }
@@ -426,7 +500,9 @@ export default function NexyAssistant() {
 
   const [liveEmail, setLiveEmail] = useState("");
   const [livePassword, setLivePassword] = useState("");
-  const [liveMessages, setLiveMessages] = useState<{ role: "agent" | "user"; text: string; id: string; timestamp: number; images?: string[] }[]>(() => {
+  const [liveMessages, setLiveMessages] = useState<
+    { role: "agent" | "user"; text: string; id: string; timestamp: number; images?: string[] }[]
+  >(() => {
     if (typeof window !== "undefined") {
       const saved = sessionStorage.getItem("live_support_messages");
       return saved ? JSON.parse(saved) : [];
@@ -463,9 +539,12 @@ export default function NexyAssistant() {
                 .single();
 
               const userObj = {
-                email: (profile && profile.email) || `${(profile && profile.username) || "kullanici"}@funteknoloji.com`,
-                name: (profile && profile.full_name) || (profile && profile.username) || "Kullanıcı",
-                id: id
+                email:
+                  (profile && profile.email) ||
+                  `${(profile && profile.username) || "kullanici"}@funteknoloji.com`,
+                name:
+                  (profile && profile.full_name) || (profile && profile.username) || "Kullanıcı",
+                id: id,
               };
               localStorage.setItem("oauth_user_profile", JSON.stringify(userObj));
               setLiveUser({ email: userObj.email });
@@ -672,11 +751,11 @@ export default function NexyAssistant() {
         },
         body: JSON.stringify({
           messages: [{ role: "user", content: prompt }],
-          lang
+          lang,
         }),
       });
       if (response.ok) {
-        const data = await response.json() as any;
+        const data = (await response.json()) as any;
         let title = data.text || "";
         title = title.replace(/^"|"$/g, "").trim();
         if (title && title.length < 50) return title;
@@ -700,7 +779,7 @@ export default function NexyAssistant() {
   const getNexyBrainResponse = async (
     englishInput: string,
     originalInput: string,
-    onChunk: (text: string, englishText: string) => void
+    onChunk: (text: string, englishText: string) => void,
   ) => {
     if (abortControllerRef.current) {
       abortControllerRef.current.abort();
@@ -711,11 +790,17 @@ export default function NexyAssistant() {
     // Fetch supabase profile if available to enrich context dynamically
     let userProfile = null;
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (user) {
         userProfile = {
           email: user.email,
-          name: user.user_metadata?.full_name || user.user_metadata?.name || user.email?.split("@")[0] || "Değerli Müşterimiz",
+          name:
+            user.user_metadata?.full_name ||
+            user.user_metadata?.name ||
+            user.email?.split("@")[0] ||
+            "Değerli Müşterimiz",
           createdAt: user.created_at,
           emailConfirmed: !!user.email_confirmed_at,
           lastSignIn: user.last_sign_in_at,
@@ -753,7 +838,12 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
       .slice(-20)
       .map((m) => ({
         role: (m.role === "nexy" ? "assistant" : "user") as "user" | "assistant" | "system",
-        content: typeof m.englishText === "string" ? m.englishText : (typeof m.text === "string" ? m.text : m.displayedText || ""),
+        content:
+          typeof m.englishText === "string"
+            ? m.englishText
+            : typeof m.text === "string"
+              ? m.text
+              : m.displayedText || "",
       }))
       .filter((m) => m.content && m.content.trim() !== "");
 
@@ -816,7 +906,7 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
           originalMessages,
           lang,
           userProfile,
-          model: "gemma-3-1b-it"
+          model: "gemma-3-1b-it",
         }),
         signal: controller.signal,
       });
@@ -880,8 +970,15 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
           isStream = false;
           const data = await response.json();
           const textCandidate = data.text || "";
-          if (textCandidate.includes("geçici bir yoğunluk") || textCandidate.includes("temporary system congestion") || textCandidate.includes("meşgul") || textCandidate.includes("Sorgunuz işlenirken bir hata oluştu")) {
-            throw new Error("Backend returned a congestion/error response, forcing direct frontend fallback");
+          if (
+            textCandidate.includes("geçici bir yoğunluk") ||
+            textCandidate.includes("temporary system congestion") ||
+            textCandidate.includes("meşgul") ||
+            textCandidate.includes("Sorgunuz işlenirken bir hata oluştu")
+          ) {
+            throw new Error(
+              "Backend returned a congestion/error response, forcing direct frontend fallback",
+            );
           }
           textResponse = textCandidate;
           englishResponse = data.englishText || textResponse;
@@ -892,9 +989,11 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
       }
     } catch (err) {
       console.error("Vercel backend proxy call failed:", err);
-      const fallbackErrMsg = "Şu an sistemlerimizde geçici bir yoğunluk var. Lütfen biraz sonra tekrar deneyiniz.";
+      const fallbackErrMsg =
+        "Şu an sistemlerimizde geçici bir yoğunluk var. Lütfen biraz sonra tekrar deneyiniz.";
       const englishErrMsg = "A temporary system congestion occurred. Please try again in a moment.";
-      const translatedMsg = lang === "tr" ? fallbackErrMsg : await translateTextHelper(fallbackErrMsg, "en", lang);
+      const translatedMsg =
+        lang === "tr" ? fallbackErrMsg : await translateTextHelper(fallbackErrMsg, "en", lang);
       textResponse = translatedMsg;
       englishResponse = englishErrMsg;
       isStream = false;
@@ -918,7 +1017,7 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
       toast.warning(
         lang === "tr"
           ? "Çok hızlı mesaj gönderiyorsunuz. Lütfen biraz bekleyin."
-          : "You are sending messages too fast. Please wait a moment."
+          : "You are sending messages too fast. Please wait a moment.",
       );
       return;
     }
@@ -937,7 +1036,7 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
         role: "user" as const,
         text: savedInput,
         displayedText: savedInput,
-        englishText: englishInput
+        englishText: englishInput,
       };
 
       const shouldUpdateTitle = chatMessages.length <= 1;
@@ -956,9 +1055,7 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
       } else {
         setChats((prev) =>
           prev.map((c) =>
-            c.id === currentChatId
-              ? { ...c, messages: [...c.messages, userMsg] }
-              : c,
+            c.id === currentChatId ? { ...c, messages: [...c.messages, userMsg] } : c,
           ),
         );
       }
@@ -975,12 +1072,12 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
               ...c,
               messages: [
                 ...c.messages,
-                { role: "nexy" as const, text: "", displayedText: "", englishText: "" }
-              ]
+                { role: "nexy" as const, text: "", displayedText: "", englishText: "" },
+              ],
             };
           }
           return c;
-        })
+        }),
       );
 
       let responseText = "";
@@ -999,12 +1096,12 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
                 messages: c.messages.map((m, idx) =>
                   idx === c.messages.length - 1
                     ? { ...m, text: text, displayedText: text, englishText: englishText }
-                    : m
-                )
+                    : m,
+                ),
               };
             }
             return c;
-          })
+          }),
         );
       });
 
@@ -1029,12 +1126,12 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
                 messages: c.messages.map((m, idx) =>
                   idx === c.messages.length - 1
                     ? { ...m, text: responseText, displayedText: "", englishText: responseEnglish }
-                    : m
-                )
+                    : m,
+                ),
               };
             }
             return c;
-          })
+          }),
         );
       }
 
@@ -1052,12 +1149,12 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
                 messages: c.messages.map((m, idx) =>
                   idx === c.messages.length - 1
                     ? { ...m, text: cleanedText, displayedText: cleanedText }
-                    : m
-                )
+                    : m,
+                ),
               };
             }
             return c;
-          })
+          }),
         );
 
         setTimeout(() => {
@@ -1068,7 +1165,7 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
       if (shouldUpdateTitle) {
         const newTitle = await generateChatTitle(englishInput, responseEnglish);
         setChats((prev) =>
-          prev.map((c) => (c.id === currentChatId ? { ...c, title: newTitle } : c))
+          prev.map((c) => (c.id === currentChatId ? { ...c, title: newTitle } : c)),
         );
       }
       setIsThinking(false);
@@ -1175,8 +1272,7 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
           // Skip empty lines
           if (!trimmed) return false;
           // Skip table separator lines (e.g., |---| or :---:)
-          if (trimmed.includes("|") && trimmed.replace(/[|:\s-]/g, "").length === 0)
-            return false;
+          if (trimmed.includes("|") && trimmed.replace(/[|:\s-]/g, "").length === 0) return false;
           // Skip lines that are just dashes or hyphens (often used in tables or separators)
           if (trimmed.replace(/[\s-]/g, "").length === 0) return false;
           // Skip code block start/end
@@ -1370,7 +1466,9 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
                 )}
               </div>
               <h3 className="text-lg font-bold text-white mb-2">
-                {systemStatus === "maintenance" ? "Sistemimiz Bakımdadır" : "Sistem Geçici Olarak Kapalıdır"}
+                {systemStatus === "maintenance"
+                  ? "Sistemimiz Bakımdadır"
+                  : "Sistem Geçici Olarak Kapalıdır"}
               </h3>
               <p className="text-xs text-zinc-400 max-w-[280px] leading-relaxed mb-4">
                 {systemStatus === "maintenance"
@@ -1381,12 +1479,14 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
                 <div className="w-full bg-zinc-900/80 border border-zinc-850 rounded-xl p-3 text-left space-y-2 text-[11px] max-w-[280px]">
                   {maintenanceReason && (
                     <p className="text-zinc-300">
-                      <strong className="text-[var(--fun-purple)]">Bakım Nedeni:</strong> {maintenanceReason}
+                      <strong className="text-[var(--fun-purple)]">Bakım Nedeni:</strong>{" "}
+                      {maintenanceReason}
                     </p>
                   )}
                   {estimatedEndTime && (
                     <p className="text-zinc-300">
-                      <strong className="text-[var(--fun-purple)]">Tahmini Bitiş:</strong> {formatEstimatedEndTime(estimatedEndTime, lang)}
+                      <strong className="text-[var(--fun-purple)]">Tahmini Bitiş:</strong>{" "}
+                      {formatEstimatedEndTime(estimatedEndTime, lang)}
                     </p>
                   )}
                 </div>
@@ -1408,8 +1508,12 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
                 style={{ borderColor: "var(--fun-stroke-1)" }}
               >
                 <div>
-                  <h3 className="text-sm sm:text-base font-bold tracking-tight fun-text leading-tight">{t("help.menu.title")}</h3>
-                  <p className="text-[10px] sm:text-xs fun-text-muted mt-0.5">{t("help.menu.desc")}</p>
+                  <h3 className="text-sm sm:text-base font-bold tracking-tight fun-text leading-tight">
+                    {t("help.menu.title")}
+                  </h3>
+                  <p className="text-[10px] sm:text-xs fun-text-muted mt-0.5">
+                    {t("help.menu.desc")}
+                  </p>
                 </div>
                 <div className="flex items-center gap-1">
                   <button
@@ -1425,11 +1529,21 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
               <div className="flex-1 overflow-y-auto p-5 sm:p-6 flex flex-col justify-start gap-4 pt-8">
                 {systemStatus !== "on" && (
                   <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-500 text-xs text-left leading-relaxed">
-                    <strong>{systemStatus === "maintenance" ? "Sistemimiz Bakımdadır" : "Sistem Kapalıdır"}</strong>
+                    <strong>
+                      {systemStatus === "maintenance"
+                        ? "Sistemimiz Bakımdadır"
+                        : "Sistem Kapalıdır"}
+                    </strong>
                     {systemStatus === "maintenance" && (
                       <>
-                        {maintenanceReason && <p className="mt-1 font-semibold">Neden: {maintenanceReason}</p>}
-                        {estimatedEndTime && <p className="mt-0.5 opacity-80">Bitiş Süresi: {formatEstimatedEndTime(estimatedEndTime, lang)}</p>}
+                        {maintenanceReason && (
+                          <p className="mt-1 font-semibold">Neden: {maintenanceReason}</p>
+                        )}
+                        {estimatedEndTime && (
+                          <p className="mt-0.5 opacity-80">
+                            Bitiş Süresi: {formatEstimatedEndTime(estimatedEndTime, lang)}
+                          </p>
+                        )}
                       </>
                     )}
                   </div>
@@ -1438,7 +1552,11 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
                 <div
                   onClick={() => {
                     if (systemStatus !== "on") {
-                      toast.error(lang === "tr" ? "Sistem şu anda kapalı veya bakımdadır." : "System is currently offline or under maintenance.");
+                      toast.error(
+                        lang === "tr"
+                          ? "Sistem şu anda kapalı veya bakımdadır."
+                          : "System is currently offline or under maintenance.",
+                      );
                       return;
                     }
                     setSupportView("chat");
@@ -1457,9 +1575,13 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between">
-                      <h4 className="text-xs sm:text-sm font-bold fun-text tracking-tight">{t("help.menu.ai.title")}</h4>
+                      <h4 className="text-xs sm:text-sm font-bold fun-text tracking-tight">
+                        {t("help.menu.ai.title")}
+                      </h4>
                     </div>
-                    <p className="text-[10px] sm:text-[11px] fun-text-muted mt-1 leading-normal">{t("help.menu.ai.desc")}</p>
+                    <p className="text-[10px] sm:text-[11px] fun-text-muted mt-1 leading-normal">
+                      {t("help.menu.ai.desc")}
+                    </p>
                   </div>
                 </div>
 
@@ -1467,7 +1589,11 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
                 <div
                   onClick={() => {
                     if (systemStatus !== "on") {
-                      toast.error(lang === "tr" ? "Sistem şu anda kapalı veya bakımdadır." : "System is currently offline or under maintenance.");
+                      toast.error(
+                        lang === "tr"
+                          ? "Sistem şu anda kapalı veya bakımdadır."
+                          : "System is currently offline or under maintenance.",
+                      );
                       return;
                     }
                     if (liveUser) {
@@ -1487,18 +1613,20 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between gap-2">
-                      <h4 className="text-xs sm:text-sm font-bold fun-text tracking-tight">{t("help.menu.live.title")}</h4>
+                      <h4 className="text-xs sm:text-sm font-bold fun-text tracking-tight">
+                        {t("help.menu.live.title")}
+                      </h4>
                     </div>
-                    <p className="text-[10px] sm:text-[11px] fun-text-muted mt-1 leading-normal">{t("help.menu.live.desc")}</p>
+                    <p className="text-[10px] sm:text-[11px] fun-text-muted mt-1 leading-normal">
+                      {t("help.menu.live.desc")}
+                    </p>
                   </div>
                 </div>
 
                 {/* Past Sessions History List */}
                 {pastSessions.length > 0 && (
                   <div className="mt-2 space-y-2 select-none">
-                    <h4 className="text-xs font-bold fun-text px-1">
-                      {t("help.past_tickets")}
-                    </h4>
+                    <h4 className="text-xs font-bold fun-text px-1">{t("help.past_tickets")}</h4>
                     <div className="max-h-[160px] overflow-y-auto space-y-2 pr-1">
                       {pastSessions.map((session) => (
                         <div
@@ -1513,7 +1641,11 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
                           <div className="min-w-0 flex-1 pr-2">
                             <p className="font-semibold fun-text truncate">{session.subject}</p>
                             <p className="text-[10px] fun-text-muted mt-0.5">
-                              {new Date(session.timestamp).toLocaleDateString([], { day: "numeric", month: "short" })} • {session.importance}
+                              {new Date(session.timestamp).toLocaleDateString([], {
+                                day: "numeric",
+                                month: "short",
+                              })}{" "}
+                              • {session.importance}
                             </p>
                           </div>
                           <ChevronRight className="h-4 w-4 shrink-0 fun-text-muted" />
@@ -1550,14 +1682,14 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
                   const descriptionEn = await translateAnyText(details.description, lang, "en");
 
                   const importanceMap: Record<string, string> = {
-                    "Düşük": "Low",
-                    "Orta": "Medium",
-                    "Yüksek": "High",
-                    "Kritik": "Critical",
-                    "Low": "Low",
-                    "Medium": "Medium",
-                    "High": "High",
-                    "Critical": "Critical"
+                    Düşük: "Low",
+                    Orta: "Medium",
+                    Yüksek: "High",
+                    Kritik: "Critical",
+                    Low: "Low",
+                    Medium: "Medium",
+                    High: "High",
+                    Critical: "Critical",
                   };
                   const importanceEn = importanceMap[details.importance] || details.importance;
 
@@ -1575,8 +1707,8 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
                     role: "user",
                     text: initialMsg,
                     id: "system-details-init",
-                    timestamp: Date.now()
-                  }
+                    timestamp: Date.now(),
+                  },
                 ]);
                 setSupportView("live_chat");
               }}
@@ -1612,16 +1744,19 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
                   // Also securely save to Supabase past_support_tickets table if authenticated
                   (async () => {
                     try {
-                      const { data: { user } } = await supabase.auth.getUser();
+                      const {
+                        data: { user },
+                      } = await supabase.auth.getUser();
                       if (user) {
                         await supabase.from("past_support_tickets").insert([
                           {
                             user_id: user.id,
-                            subject: localStorage.getItem("live_support_subject") || "Destek Talebi",
+                            subject:
+                              localStorage.getItem("live_support_subject") || "Destek Talebi",
                             importance: localStorage.getItem("live_support_importance") || "Orta",
                             description: localStorage.getItem("live_support_description") || "",
-                            messages: cleanedMessages
-                          }
+                            messages: cleanedMessages,
+                          },
                         ]);
                       }
                     } catch (dbErr) {
@@ -1697,7 +1832,11 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
                       <div className="flex items-center gap-3 overflow-hidden flex-1">
                         <MessageSquare className="h-4 w-4 flex-shrink-0" />
                         {editingChatId === chat.id ? (
-                          <form onSubmit={saveTitle} className="flex-1 min-w-0" onClick={e => e.stopPropagation()}>
+                          <form
+                            onSubmit={saveTitle}
+                            className="flex-1 min-w-0"
+                            onClick={(e) => e.stopPropagation()}
+                          >
                             <input
                               autoFocus
                               value={editingTitle}
@@ -1738,196 +1877,209 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
               </div>
 
               <div className="flex-1 flex flex-col min-w-0 animate-in fade-in duration-300">
-              <div
-                className={`p-2 sm:p-3 border-b flex items-center bg-[var(--fun-surface)] ${isMaximized ? "rounded-none" : "rounded-t-[32px]"} h-20 sm:h-24`}
-                style={{ borderColor: "var(--fun-stroke-1)" }}
-              >
-                <div className="flex flex-1 items-center gap-2">
-                  <button
-                    onClick={() => setSupportView("menu")}
-                    className="p-2 -ml-1 rounded-lg hover:bg-[var(--fun-stroke-1)] fun-text flex items-center justify-center shrink-0"
-                    title={t("cookies.cancel")}
-                  >
-                    <ChevronLeft className="h-5 w-5" />
-                  </button>
-                  {isMaximized && (
-                    <button
-                      onClick={() => setIsSidebarOpen(true)}
-                      className="p-2 rounded-lg hover:bg-[var(--fun-stroke-1)] fun-text md:hidden"
-                    >
-                      <Menu className="h-5 w-5" />
-                    </button>
-                  )}
-                  <div className="relative">
-                    <div className="h-12 w-12 sm:h-14 sm:w-14 rounded-xl overflow-hidden flex items-center justify-center p-1 border border-zinc-800" style={{ backgroundColor: "#000000" }}>
-                      <img
-                        src="/nexy-kafa-buyuk.png"
-                        alt="Nexy"
-                        className="h-full w-full object-contain"
-                      />
-                    </div>
-                  </div>
-                  <div className="flex flex-col justify-center items-start">
-                    <div className="flex items-center gap-2">
-                      <p className="fun-text text-lg font-bold leading-none tracking-tight">
-                        Nexy
-                      </p>
-                    </div>
-                  </div>
-                </div>
-            <div className="flex-1 flex items-center justify-end gap-1">
-              <button
-                onClick={() => setShowSearch(!showSearch)}
-                className="h-8 w-8 rounded-full hover:bg-[var(--fun-stroke-1)] flex items-center justify-center fun-text transition-colors"
-              >
-                <SearchIcon className="h-4 w-4" />
-              </button>
-              <button
-                onClick={() => setIsMaximized(!isMaximized)}
-                className="h-8 w-8 rounded-full hover:bg-[var(--fun-stroke-1)] flex items-center justify-center fun-text transition-colors"
-              >
-                {isMaximized ? (
-                  <Minimize2 className="h-4 w-4" />
-                ) : (
-                  <Maximize2 className="h-4 w-4" />
-                )}
-              </button>
-              <button
-                onClick={() => setIsOpen(false)}
-                className="h-8 w-8 rounded-full hover:bg-[var(--fun-stroke-1)] flex items-center justify-center fun-text transition-colors"
-              >
-                <X className="h-4 w-4" />
-              </button>
-            </div>
-          </div>
-          {showSearch && (
-            <div className="px-5 py-3 border-b border-[var(--fun-stroke-1)] bg-[var(--fun-surface)] animate-in slide-in-from-top-2">
-              <input
-                autoFocus
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder={t("nexy.search_placeholder")}
-                className="w-full bg-transparent text-xs fun-text outline-none"
-              />
-            </div>
-          )}
-          <div
-            ref={scrollRef}
-            className={`flex-1 overflow-y-auto p-5 sm:p-8 space-y-6 sm:space-y-8 bg-dots scroll-smooth ${isMaximized ? "max-w-6xl mx-auto w-full" : ""}`}
-          >
-            {(searchQuery ? filteredMessages : chatMessages).map((m, i) => {
-              const isMsgTyping = m.role === "nexy" && m.displayedText !== m.text;
-              return (
                 <div
-                  key={i}
-                  className={`flex flex-col ${m.role === "user" ? "items-end" : "items-start"} ${isMsgTyping ? "" : "animate-in fade-in slide-in-from-bottom-4 duration-500"}`}
+                  className={`p-2 sm:p-3 border-b flex items-center bg-[var(--fun-surface)] ${isMaximized ? "rounded-none" : "rounded-t-[32px]"} h-20 sm:h-24`}
+                  style={{ borderColor: "var(--fun-stroke-1)" }}
                 >
-                  <div
-                    className={`relative group/msg max-w-[85%] sm:max-w-[75%] p-3.5 sm:p-4 rounded-2xl sm:rounded-3xl text-[13px] leading-relaxed break-words overflow-hidden ${m.role === "user" ? "bg-gradient-to-br from-[var(--fun-purple)] to-[#8E78FF] text-white rounded-br-none shadow-xl" : "bg-[var(--fun-surface)] fun-text rounded-bl-none border border-[var(--fun-stroke-1)] shadow-md"}`}
-                  >
-                    {formatText(m.displayedText || "")}
+                  <div className="flex flex-1 items-center gap-2">
+                    <button
+                      onClick={() => setSupportView("menu")}
+                      className="p-2 -ml-1 rounded-lg hover:bg-[var(--fun-stroke-1)] fun-text flex items-center justify-center shrink-0"
+                      title={t("cookies.cancel")}
+                    >
+                      <ChevronLeft className="h-5 w-5" />
+                    </button>
+                    {isMaximized && (
+                      <button
+                        onClick={() => setIsSidebarOpen(true)}
+                        className="p-2 rounded-lg hover:bg-[var(--fun-stroke-1)] fun-text md:hidden"
+                      >
+                        <Menu className="h-5 w-5" />
+                      </button>
+                    )}
+                    <div className="relative">
+                      <div
+                        className="h-12 w-12 sm:h-14 sm:w-14 rounded-xl overflow-hidden flex items-center justify-center p-1 border border-zinc-800"
+                        style={{ backgroundColor: "#000000" }}
+                      >
+                        <img
+                          src="/nexy-kafa-buyuk.png"
+                          alt="Nexy"
+                          className="h-full w-full object-contain"
+                        />
+                      </div>
+                    </div>
+                    <div className="flex flex-col justify-center items-start">
+                      <div className="flex items-center gap-2">
+                        <p className="fun-text text-lg font-bold leading-none tracking-tight">
+                          Nexy
+                        </p>
+                      </div>
+                    </div>
                   </div>
-                  {m.role === "nexy" && m.displayedText === m.text && (
-                    <div className="mt-2 flex items-center gap-2 px-1 animate-in fade-in slide-in-from-top-1">
-                      <button
-                        onClick={() => copyToClipboard(m.text, i)}
-                        className={`h-8 w-8 flex items-center justify-center rounded-full border border-[var(--fun-stroke-1)] transition-all active:scale-95 ${copiedId === i ? "bg-green-500 text-white border-green-500" : "bg-[var(--fun-card)] fun-text hover:bg-[var(--fun-purple)] hover:text-white"}`}
-                        title={t("nexy.copy_tooltip")}
+                  <div className="flex-1 flex items-center justify-end gap-1">
+                    <button
+                      onClick={() => setShowSearch(!showSearch)}
+                      className="h-8 w-8 rounded-full hover:bg-[var(--fun-stroke-1)] flex items-center justify-center fun-text transition-colors"
+                    >
+                      <SearchIcon className="h-4 w-4" />
+                    </button>
+                    <button
+                      onClick={() => setIsMaximized(!isMaximized)}
+                      className="h-8 w-8 rounded-full hover:bg-[var(--fun-stroke-1)] flex items-center justify-center fun-text transition-colors"
+                    >
+                      {isMaximized ? (
+                        <Minimize2 className="h-4 w-4" />
+                      ) : (
+                        <Maximize2 className="h-4 w-4" />
+                      )}
+                    </button>
+                    <button
+                      onClick={() => setIsOpen(false)}
+                      className="h-8 w-8 rounded-full hover:bg-[var(--fun-stroke-1)] flex items-center justify-center fun-text transition-colors"
+                    >
+                      <X className="h-4 w-4" />
+                    </button>
+                  </div>
+                </div>
+                {showSearch && (
+                  <div className="px-5 py-3 border-b border-[var(--fun-stroke-1)] bg-[var(--fun-surface)] animate-in slide-in-from-top-2">
+                    <input
+                      autoFocus
+                      type="text"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      placeholder={t("nexy.search_placeholder")}
+                      className="w-full bg-transparent text-xs fun-text outline-none"
+                    />
+                  </div>
+                )}
+                <div
+                  ref={scrollRef}
+                  className={`flex-1 overflow-y-auto p-5 sm:p-8 space-y-6 sm:space-y-8 bg-dots scroll-smooth ${isMaximized ? "max-w-6xl mx-auto w-full" : ""}`}
+                >
+                  {(searchQuery ? filteredMessages : chatMessages).map((m, i) => {
+                    const isMsgTyping = m.role === "nexy" && m.displayedText !== m.text;
+                    return (
+                      <div
+                        key={i}
+                        className={`flex flex-col ${m.role === "user" ? "items-end" : "items-start"} ${isMsgTyping ? "" : "animate-in fade-in slide-in-from-bottom-4 duration-500"}`}
                       >
-                        {copiedId === i ? (
-                          <svg
-                            className="h-4 w-4"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                            strokeWidth={3}
-                          >
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                          </svg>
-                        ) : (
-                          <Copy className="h-3.5 w-3.5" />
+                        <div
+                          className={`relative group/msg max-w-[85%] sm:max-w-[75%] p-3.5 sm:p-4 rounded-2xl sm:rounded-3xl text-[13px] leading-relaxed break-words overflow-hidden ${m.role === "user" ? "bg-gradient-to-br from-[var(--fun-purple)] to-[#8E78FF] text-white rounded-br-none shadow-xl" : "bg-[var(--fun-surface)] fun-text rounded-bl-none border border-[var(--fun-stroke-1)] shadow-md"}`}
+                        >
+                          {formatText(m.displayedText || "")}
+                        </div>
+                        {m.role === "nexy" && m.displayedText === m.text && (
+                          <div className="mt-2 flex items-center gap-2 px-1 animate-in fade-in slide-in-from-top-1">
+                            <button
+                              onClick={() => copyToClipboard(m.text, i)}
+                              className={`h-8 w-8 flex items-center justify-center rounded-full border border-[var(--fun-stroke-1)] transition-all active:scale-95 ${copiedId === i ? "bg-green-500 text-white border-green-500" : "bg-[var(--fun-card)] fun-text hover:bg-[var(--fun-purple)] hover:text-white"}`}
+                              title={t("nexy.copy_tooltip")}
+                            >
+                              {copiedId === i ? (
+                                <svg
+                                  className="h-4 w-4"
+                                  fill="none"
+                                  viewBox="0 0 24 24"
+                                  stroke="currentColor"
+                                  strokeWidth={3}
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    d="M5 13l4 4L19 7"
+                                  />
+                                </svg>
+                              ) : (
+                                <Copy className="h-3.5 w-3.5" />
+                              )}
+                            </button>
+                            <button
+                              onClick={() => speak(m.text, i)}
+                              className={`h-8 w-8 flex items-center justify-center rounded-full border border-[var(--fun-stroke-1)] transition-all active:scale-95 ${speakingMessageIndex === i ? "bg-red-500 text-white border-red-500" : "bg-[var(--fun-card)] fun-text hover:bg-[var(--fun-purple)] hover:text-white"}`}
+                              title={speakingMessageIndex === i ? "Durdur" : t("nexy.read_tooltip")}
+                            >
+                              {speakingMessageIndex === i ? (
+                                <VolumeX className="h-4 w-4" />
+                              ) : (
+                                <Volume2 className="h-3.5 w-3.5" />
+                              )}
+                            </button>
+                          </div>
                         )}
-                      </button>
-                      <button
-                        onClick={() => speak(m.text, i)}
-                        className={`h-8 w-8 flex items-center justify-center rounded-full border border-[var(--fun-stroke-1)] transition-all active:scale-95 ${speakingMessageIndex === i ? "bg-red-500 text-white border-red-500" : "bg-[var(--fun-card)] fun-text hover:bg-[var(--fun-purple)] hover:text-white"}`}
-                        title={speakingMessageIndex === i ? "Durdur" : t("nexy.read_tooltip")}
-                      >
-                        {speakingMessageIndex === i ? (
-                          <VolumeX className="h-4 w-4" />
-                        ) : (
-                          <Volume2 className="h-3.5 w-3.5" />
-                        )}
-                      </button>
+                      </div>
+                    );
+                  })}
+                  {isThinking && (
+                    <div className="flex justify-start animate-in fade-in slide-in-from-left-2 duration-300">
+                      <div className="bg-[var(--fun-surface)] fun-text p-4 rounded-2xl rounded-tl-none border border-[var(--fun-stroke-1)] shadow-sm">
+                        <TypingIndicator />
+                      </div>
                     </div>
                   )}
                 </div>
-              );
-            })}
-            {isThinking && (
-              <div className="flex justify-start animate-in fade-in slide-in-from-left-2 duration-300">
-                <div className="bg-[var(--fun-surface)] fun-text p-4 rounded-2xl rounded-tl-none border border-[var(--fun-stroke-1)] shadow-sm">
-                  <TypingIndicator />
-                </div>
+                <form
+                  onSubmit={handleSend}
+                  className={`p-4 sm:p-6 border-t space-y-2 bg-[var(--fun-surface)]/50 backdrop-blur-xl ${isMaximized ? "rounded-none sm:rounded-b-[32px]" : "rounded-b-[32px]"}`}
+                  style={{ borderColor: "var(--fun-stroke-1)" }}
+                >
+                  <div className={`relative ${isMaximized ? "max-w-4xl mx-auto w-full" : ""}`}>
+                    <textarea
+                      rows={1}
+                      value={userInput}
+                      onChange={(e) => setUserInput(e.target.value)}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" && !e.shiftKey) {
+                          e.preventDefault();
+                          handleSend();
+                        }
+                      }}
+                      disabled={!isOnline}
+                      placeholder={
+                        isOnline
+                          ? t("nexy.placeholder")
+                          : lang === "tr"
+                            ? "İnternet bağlantısı yok."
+                            : "No internet connection."
+                      }
+                      className="w-full rounded-[20px] bg-[var(--fun-surface)] border-2 border-[var(--fun-stroke-1)] py-3 pl-12 pr-14 text-[13px] outline-none focus:border-[var(--fun-purple)] focus:ring-4 focus:ring-[var(--fun-purple)]/10 transition-all fun-text shadow-inner resize-none h-[46px] overflow-hidden disabled:opacity-55 disabled:cursor-not-allowed"
+                    />
+                    <button
+                      type="button"
+                      disabled={!isOnline}
+                      onClick={startListening}
+                      className={`absolute left-2.5 top-[23px] -translate-y-1/2 h-8 w-8 rounded-full flex items-center justify-center transition-all z-10 disabled:opacity-40 disabled:cursor-not-allowed ${isListening ? "bg-red-500 text-white scale-110 shadow-lg shadow-red-500/40 animate-pulse" : "fun-text-muted hover:bg-[var(--fun-stroke-1)] hover:text-[var(--fun-purple)]"}`}
+                    >
+                      <Mic className="h-4 w-4" />
+                    </button>
+                    {isThinking ? (
+                      <button
+                        type="button"
+                        onClick={handleStopRequest}
+                        aria-label="Durdur"
+                        title="Durdur"
+                        className="absolute right-2.5 top-[23px] -translate-y-1/2 h-9 w-9 rounded-xl bg-red-500 text-white flex items-center justify-center hover:scale-105 active:scale-95 transition-all shadow-lg shadow-red-500/30 z-10"
+                      >
+                        <Square className="h-4 w-4 fill-white text-white" />
+                      </button>
+                    ) : (
+                      <button
+                        type="submit"
+                        disabled={!userInput.trim() || isThinking || !isOnline}
+                        aria-label={t("nexy.aria_send")}
+                        className="absolute right-2.5 top-[23px] -translate-y-1/2 h-9 w-9 rounded-xl bg-[var(--fun-purple)] text-white flex items-center justify-center hover:scale-105 active:scale-95 transition-all disabled:opacity-30 disabled:hover:scale-100 disabled:cursor-not-allowed shadow-lg shadow-purple-500/30 z-10"
+                      >
+                        <Send className="h-4 w-4" />
+                      </button>
+                    )}
+                  </div>
+                  <p className="text-[9px] text-center fun-text-muted font-medium opacity-50 px-2 tracking-wide">
+                    {t("nexy.disclaimer")}
+                  </p>
+                </form>
               </div>
-            )}
-          </div>
-          <form
-            onSubmit={handleSend}
-            className={`p-4 sm:p-6 border-t space-y-2 bg-[var(--fun-surface)]/50 backdrop-blur-xl ${isMaximized ? "rounded-none sm:rounded-b-[32px]" : "rounded-b-[32px]"}`}
-            style={{ borderColor: "var(--fun-stroke-1)" }}
-          >
-            <div className={`relative ${isMaximized ? "max-w-4xl mx-auto w-full" : ""}`}>
-              <textarea
-                rows={1}
-                value={userInput}
-                onChange={(e) => setUserInput(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" && !e.shiftKey) {
-                    e.preventDefault();
-                    handleSend();
-                  }
-                }}
-                disabled={!isOnline}
-                placeholder={isOnline ? t("nexy.placeholder") : (lang === "tr" ? "İnternet bağlantısı yok." : "No internet connection.")}
-                className="w-full rounded-[20px] bg-[var(--fun-surface)] border-2 border-[var(--fun-stroke-1)] py-3 pl-12 pr-14 text-[13px] outline-none focus:border-[var(--fun-purple)] focus:ring-4 focus:ring-[var(--fun-purple)]/10 transition-all fun-text shadow-inner resize-none h-[46px] overflow-hidden disabled:opacity-55 disabled:cursor-not-allowed"
-              />
-              <button
-                type="button"
-                disabled={!isOnline}
-                onClick={startListening}
-                className={`absolute left-2.5 top-[23px] -translate-y-1/2 h-8 w-8 rounded-full flex items-center justify-center transition-all z-10 disabled:opacity-40 disabled:cursor-not-allowed ${isListening ? "bg-red-500 text-white scale-110 shadow-lg shadow-red-500/40 animate-pulse" : "fun-text-muted hover:bg-[var(--fun-stroke-1)] hover:text-[var(--fun-purple)]"}`}
-              >
-                <Mic className="h-4 w-4" />
-              </button>
-              {isThinking ? (
-                <button
-                  type="button"
-                  onClick={handleStopRequest}
-                  aria-label="Durdur"
-                  title="Durdur"
-                  className="absolute right-2.5 top-[23px] -translate-y-1/2 h-9 w-9 rounded-xl bg-red-500 text-white flex items-center justify-center hover:scale-105 active:scale-95 transition-all shadow-lg shadow-red-500/30 z-10"
-                >
-                  <Square className="h-4 w-4 fill-white text-white" />
-                </button>
-              ) : (
-                <button
-                  type="submit"
-                  disabled={!userInput.trim() || isThinking || !isOnline}
-                  aria-label={t("nexy.aria_send")}
-                  className="absolute right-2.5 top-[23px] -translate-y-1/2 h-9 w-9 rounded-xl bg-[var(--fun-purple)] text-white flex items-center justify-center hover:scale-105 active:scale-95 transition-all disabled:opacity-30 disabled:hover:scale-100 disabled:cursor-not-allowed shadow-lg shadow-purple-500/30 z-10"
-                >
-                  <Send className="h-4 w-4" />
-                </button>
-              )}
-            </div>
-            <p className="text-[9px] text-center fun-text-muted font-medium opacity-50 px-2 tracking-wide">
-              {t("nexy.disclaimer")}
-            </p>
-          </form>
-          </div>
-          </>
+            </>
           )}
         </div>
       )}

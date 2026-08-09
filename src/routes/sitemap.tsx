@@ -24,7 +24,6 @@ function SitemapPage() {
       links: [
         { to: "/about", label: t("nav.about"), desc: t("nav.about.desc") },
         { to: "/team", label: t("nav.team"), desc: t("nav.team.desc") },
-
       ],
     },
     {
