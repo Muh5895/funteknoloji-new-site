@@ -419,7 +419,15 @@ export default function NexyAssistant() {
   const [speakingMessageIndex, setSpeakingMessageIndex] = useState<number | null>(null);
   const [supportView, setSupportView] = useState<
     "menu" | "chat" | "live_login" | "live_details" | "live_chat"
-  >("menu");
+  >(() => {
+    if (typeof window !== "undefined") {
+      const savedProfile = localStorage.getItem("oauth_user_profile");
+      if (savedProfile) {
+        return "chat";
+      }
+    }
+    return "live_login";
+  });
   const [liveUser, setLiveUser] = useState<{ email: string } | null>(null);
 
   // Sync Supabase Auth session with Live Support session
@@ -455,6 +463,7 @@ export default function NexyAssistant() {
       }
 
       if (userId && userEmail) {
+        setSupportView("chat");
         try {
           // Fetch past support tickets from DB securely
           const { data: dbTickets, error } = await supabase
@@ -475,6 +484,8 @@ export default function NexyAssistant() {
         } catch (e) {
           console.warn("Failed to retrieve past sessions on mount:", e);
         }
+      } else {
+        setSupportView("live_login");
       }
     };
     checkActiveSession();
@@ -484,6 +495,7 @@ export default function NexyAssistant() {
     } = supabase.auth.onAuthStateChange((event, session) => {
       if (session?.user?.email) {
         setLiveUser({ email: session.user.email });
+        setSupportView("chat");
         // Fetch past support tickets from DB securely on state change
         supabase
           .from("past_support_tickets")
@@ -505,6 +517,7 @@ export default function NexyAssistant() {
       } else if (event === "SIGNED_OUT") {
         setLiveUser(null);
         setPastSessions([]);
+        setSupportView("live_login");
       }
     });
 
@@ -563,7 +576,7 @@ export default function NexyAssistant() {
               };
               localStorage.setItem("oauth_user_profile", JSON.stringify(userObj));
               setLiveUser({ email: userObj.email });
-              setSupportView("live_details");
+              setSupportView("chat");
               setIsOpen(true); // Open the widget directly!
               toast.success(lang === "tr" ? "Giriş yapıldı!" : "Logged in successfully!");
             } catch (err) {
@@ -752,7 +765,12 @@ export default function NexyAssistant() {
     setIsOpen(!isOpen);
     setShowPopup(false);
     if (!isOpen) {
-      setSupportView("menu");
+      const savedProfile = localStorage.getItem("oauth_user_profile");
+      if (savedProfile) {
+        setSupportView("chat");
+      } else {
+        setSupportView("live_login");
+      }
     }
   };
 
@@ -1515,314 +1533,18 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
             </div>
           )}
 
-          {supportView === "menu" ? (
-            <div className="flex-1 flex flex-col h-full bg-[var(--fun-card)] select-none animate-in fade-in duration-300">
-              {/* Menu Header */}
-              <div
-                className="p-5 sm:p-6 border-b flex items-center justify-between bg-[var(--fun-surface)] h-20 sm:h-24"
-                style={{ borderColor: "var(--fun-stroke-1)" }}
-              >
-                <div>
-                  <h3 className="text-sm sm:text-base font-bold tracking-tight fun-text leading-tight">
-                    {t("help.menu.title")}
-                  </h3>
-                  <p className="text-[10px] sm:text-xs fun-text-muted mt-0.5">
-                    {t("help.menu.desc")}
-                  </p>
-                </div>
-                <div className="flex items-center gap-1">
-                  <button
-                    onClick={() => setIsOpen(false)}
-                    className="h-9 w-9 rounded-full hover:bg-[var(--fun-stroke-1)] flex items-center justify-center fun-text transition-colors"
-                  >
-                    <X className="h-5 w-5" />
-                  </button>
-                </div>
-              </div>
-
-              {/* Menu Body */}
-              <div className="flex-1 overflow-y-auto p-5 sm:p-6 flex flex-col justify-start gap-4 pt-8">
-                {systemStatus !== "on" && (
-                  <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-500 text-xs text-left leading-relaxed">
-                    <strong>
-                      {systemStatus === "maintenance"
-                        ? "Sistemimiz Bakımdadır"
-                        : "Sistem Kapalıdır"}
-                    </strong>
-                    {systemStatus === "maintenance" && (
-                      <>
-                        {maintenanceReason && (
-                          <p className="mt-1 font-semibold">Neden: {maintenanceReason}</p>
-                        )}
-                        {estimatedEndTime && (
-                          <p className="mt-0.5 opacity-80">
-                            Bitiş Süresi: {formatEstimatedEndTime(estimatedEndTime, lang)}
-                          </p>
-                        )}
-                      </>
-                    )}
-                  </div>
-                )}
-                {/* AI Assistant Card */}
-                <div
-                  onClick={() => {
-                    if (systemStatus !== "on") {
-                      toast.error(
-                        lang === "tr"
-                          ? "Sistem şu anda kapalı veya bakımdadır."
-                          : "System is currently offline or under maintenance.",
-                      );
-                      return;
-                    }
-                    setSupportView("chat");
-                    if (chats.length === 0) {
-                      createNewChat();
-                    }
-                  }}
-                  className={`group p-4 sm:p-5 rounded-2xl bg-[var(--fun-surface)] border border-[var(--fun-stroke-2)] hover:border-[var(--fun-purple)]/50 transition-all duration-300 cursor-pointer hover:scale-[1.02] shadow-sm flex items-start gap-4 ${systemStatus !== "on" ? "opacity-50 cursor-not-allowed" : ""}`}
-                >
-                  <div className="h-10 w-10 sm:h-11 sm:w-11 rounded-xl bg-[var(--fun-purple)]/10 text-[var(--fun-purple)] flex items-center justify-center shrink-0 group-hover:scale-110 transition-all overflow-hidden relative">
-                    <img
-                      src="/nexy-kafa-buyuk.png"
-                      alt="Nexy"
-                      className="absolute inset-0 h-full w-full object-cover"
-                    />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center justify-between">
-                      <h4 className="text-xs sm:text-sm font-bold fun-text tracking-tight">
-                        {t("help.menu.ai.title")}
-                      </h4>
-                    </div>
-                    <p className="text-[10px] sm:text-[11px] fun-text-muted mt-1 leading-normal">
-                      {t("help.menu.ai.desc")}
-                    </p>
-                  </div>
-                </div>
-
-                {/* Live Support Card */}
-                <div
-                  onClick={() => {
-                    if (systemStatus !== "on") {
-                      toast.error(
-                        lang === "tr"
-                          ? "Sistem şu anda kapalı veya bakımdadır."
-                          : "System is currently offline or under maintenance.",
-                      );
-                      return;
-                    }
-                    if (liveUser) {
-                      if (liveMessages.length > 0) {
-                        setSupportView("live_chat");
-                      } else {
-                        setSupportView("live_details");
-                      }
-                    } else {
-                      setSupportView("live_login");
-                    }
-                  }}
-                  className={`group p-4 sm:p-5 rounded-2xl bg-[var(--fun-surface)] border border-[var(--fun-stroke-2)] hover:border-[var(--fun-purple)]/50 transition-all duration-300 cursor-pointer hover:scale-[1.02] shadow-sm flex items-start gap-4 ${systemStatus !== "on" ? "opacity-50 cursor-not-allowed" : ""}`}
-                >
-                  <div className="h-10 w-10 sm:h-11 sm:w-11 rounded-xl bg-[var(--fun-purple)]/10 text-[var(--fun-purple)] flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
-                    <MessageSquare className="h-5 w-5" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center justify-between gap-2">
-                      <h4 className="text-xs sm:text-sm font-bold fun-text tracking-tight">
-                        {t("help.menu.live.title")}
-                      </h4>
-                    </div>
-                    <p className="text-[10px] sm:text-[11px] fun-text-muted mt-1 leading-normal">
-                      {t("help.menu.live.desc")}
-                    </p>
-                  </div>
-                </div>
-
-                {/* Past Sessions History List */}
-                {pastSessions.length > 0 && (
-                  <div className="mt-2 space-y-2 select-none">
-                    <h4 className="text-xs font-bold fun-text px-1">{t("help.past_tickets")}</h4>
-                    <div className="max-h-[160px] overflow-y-auto space-y-2 pr-1">
-                      {pastSessions.map((session) => (
-                        <div
-                          key={session.id}
-                          onClick={() => {
-                            setLiveMessages(session.messages);
-                            setIsPastSession(true);
-                            setSupportView("live_chat");
-                          }}
-                          className="p-3 rounded-xl bg-[var(--fun-surface)] border border-[var(--fun-stroke-2)] hover:border-[var(--fun-purple)] transition-colors cursor-pointer flex justify-between items-center text-xs"
-                        >
-                          <div className="min-w-0 flex-1 pr-2">
-                            <p className="font-semibold fun-text truncate">{session.subject}</p>
-                            <p className="text-[10px] fun-text-muted mt-0.5">
-                              {new Date(session.timestamp).toLocaleDateString([], {
-                                day: "numeric",
-                                month: "short",
-                              })}{" "}
-                              • {session.importance}
-                            </p>
-                          </div>
-                          <ChevronRight className="h-4 w-4 shrink-0 fun-text-muted" />
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-          ) : supportView === "live_login" ? (
+          {supportView === "live_login" ? (
             <LiveLoginView
-              onBack={() => setSupportView("menu")}
+              onBack={() => setIsOpen(false)}
               onLoginSuccess={(user) => {
                 setLiveUser(user);
-                setSupportView("live_details");
+                setSupportView("chat");
+                if (chats.length === 0) {
+                  createNewChat();
+                }
                 setIsOpen(true); // Open the widget directly!
               }}
               lang={lang}
-            />
-          ) : supportView === "live_details" ? (
-            <LiveTicketDetailsView
-              lang={lang}
-              onBack={() => setSupportView("menu")}
-              onSubmit={async (details) => {
-                // Save subject, importance & description to sessionStorage so they persist for archive saving and AI context
-                sessionStorage.setItem("live_support_subject", details.subject);
-                sessionStorage.setItem("live_support_importance", details.importance);
-                sessionStorage.setItem("live_support_description", details.description);
-
-                try {
-                  // Translate subject and description to English silently in the background
-                  const subjectEn = await translateAnyText(details.subject, lang, "en");
-                  const descriptionEn = await translateAnyText(details.description, lang, "en");
-
-                  const importanceMap: Record<string, string> = {
-                    Düşük: "Low",
-                    Orta: "Medium",
-                    Yüksek: "High",
-                    Kritik: "Critical",
-                    Low: "Low",
-                    Medium: "Medium",
-                    High: "High",
-                    Critical: "Critical",
-                  };
-                  const importanceEn = importanceMap[details.importance] || details.importance;
-
-                  sessionStorage.setItem("live_support_subject_en", subjectEn);
-                  sessionStorage.setItem("live_support_importance_en", importanceEn);
-                  sessionStorage.setItem("live_support_description_en", descriptionEn);
-                } catch (e) {
-                  console.error("Failed to translate ticket details to English:", e);
-                }
-
-                // Pre-populate chat with the compiled ticket details
-                const initialMsg = `**Yeni Canlı Destek Talebi**\n\n📌 **Konu:** ${details.subject}\n⚡ **Önem Seviyesi:** ${details.importance}\n📝 **Açıklama:** ${details.description}`;
-                setLiveMessages([
-                  {
-                    role: "user",
-                    text: initialMsg,
-                    id: "system-details-init",
-                    timestamp: Date.now(),
-                  },
-                ]);
-                setSupportView("live_chat");
-              }}
-            />
-          ) : supportView === "live_chat" ? (
-            <LiveChatView
-              user={liveUser!}
-              messages={liveMessages}
-              setMessages={setLiveMessages}
-              onBack={() => {
-                if (isPastSession) {
-                  setIsPastSession(false);
-                  const activeMsgs = localStorage.getItem("live_support_messages");
-                  setLiveMessages(activeMsgs ? JSON.parse(activeMsgs) : []);
-                }
-                setSupportView("menu");
-              }}
-              onEndSession={() => {
-                // Archive current session on close (keeps account logged in)
-                if (liveMessages.length > 0 && liveUser) {
-                  const cleanedMessages = cleanLiveMessagesForStorage(liveMessages);
-                  const newSession = {
-                    id: Math.random().toString(36).substring(2, 9),
-                    email: liveUser.email,
-                    subject: localStorage.getItem("live_support_subject") || "Destek Talebi",
-                    importance: localStorage.getItem("live_support_importance") || "Orta",
-                    timestamp: Date.now(),
-                    messages: cleanedMessages,
-                  };
-                  const updatedHistory = [newSession, ...pastSessions];
-                  setPastSessions(updatedHistory);
-
-                  // Also securely save to Supabase past_support_tickets table if authenticated
-                  (async () => {
-                    try {
-                      let userId = "";
-                      const savedProfile = localStorage.getItem("oauth_user_profile");
-                      if (savedProfile) {
-                        try {
-                          userId = JSON.parse(savedProfile).id;
-                        } catch (e) {}
-                      }
-                      if (!userId) {
-                        try {
-                          const {
-                            data: { user },
-                          } = await supabase.auth.getUser();
-                          if (user) userId = user.id;
-                        } catch (e) {}
-                      }
-
-                      if (userId) {
-                        await supabase.from("past_support_tickets").insert([
-                          {
-                            user_id: userId,
-                            subject:
-                              localStorage.getItem("live_support_subject") || "Destek Talebi",
-                            importance: localStorage.getItem("live_support_importance") || "Orta",
-                            description: localStorage.getItem("live_support_description") || "",
-                            messages: cleanedMessages,
-                          },
-                        ]);
-                      }
-                    } catch (dbErr) {
-                      console.error("Failed to save support ticket to database:", dbErr);
-                    }
-                  })();
-                }
-                setLiveMessages([]);
-                setSupportView("menu");
-                localStorage.removeItem("live_support_messages");
-                localStorage.removeItem("live_support_subject");
-                localStorage.removeItem("live_support_importance");
-                localStorage.removeItem("live_support_subject_en");
-                localStorage.removeItem("live_support_importance_en");
-                localStorage.removeItem("live_support_description_en");
-              }}
-              onLogout={() => {
-                // Log out from the live support account completely
-                setLiveUser(null);
-                setLiveMessages([]);
-                setSupportView("menu");
-                localStorage.removeItem("live_support_messages");
-                localStorage.removeItem("live_support_user");
-                localStorage.removeItem("live_support_subject");
-                localStorage.removeItem("live_support_importance");
-                localStorage.removeItem("live_support_subject_en");
-                localStorage.removeItem("live_support_importance_en");
-                localStorage.removeItem("live_support_description_en");
-                localStorage.removeItem("live_support_agent_name");
-                localStorage.removeItem("oauth_logged_in_id");
-                localStorage.removeItem("oauth_user_profile");
-              }}
-              lang={lang}
-              isAgentTyping={liveAgentTyping}
-              setIsAgentTyping={setLiveAgentTyping}
-              isMaximized={isMaximized}
-              setIsMaximized={setIsMaximized}
-              readOnly={isPastSession}
             />
           ) : (
             <>
@@ -1909,11 +1631,18 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
                 >
                   <div className="flex flex-1 items-center gap-2">
                     <button
-                      onClick={() => setSupportView("menu")}
-                      className="p-2 -ml-1 rounded-lg hover:bg-[var(--fun-stroke-1)] fun-text flex items-center justify-center shrink-0"
-                      title={t("cookies.cancel")}
+                      onClick={() => {
+                        setLiveUser(null);
+                        setSupportView("live_login");
+                        localStorage.removeItem("oauth_logged_in_id");
+                        localStorage.removeItem("oauth_user_profile");
+                        supabase.auth.signOut().catch(() => {});
+                        toast.success(lang === "tr" ? "Çıkış yapıldı!" : "Logged out successfully!");
+                      }}
+                      className="p-2 -ml-1 rounded-lg hover:bg-red-500/10 hover:text-red-500 fun-text flex items-center justify-center shrink-0 transition-colors"
+                      title={lang === "tr" ? "Çıkış Yap" : "Log Out"}
                     >
-                      <ChevronLeft className="h-5 w-5" />
+                      <LogOut className="h-5 w-5" />
                     </button>
                     {isMaximized && (
                       <button
