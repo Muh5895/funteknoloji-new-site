@@ -122,7 +122,7 @@ export const submitCookieConsent = async (payload: CookieConsentPayload) => {
     // Supplement with client-side latency calculation to standard API
     const finalPayload = {
       ...payload,
-      network_latency_ms: Date.now() - startTime
+      network_latency_ms: Date.now() - startTime,
     };
 
     const { error } = await supabase.from("cookies").insert([finalPayload]);

@@ -16,7 +16,8 @@ export type Lang =
 
 type Dict = Record<string, string>;
 
-const tr: Dict = {  "theme.system_short": "Sistem",
+const tr: Dict = {
+  "theme.system_short": "Sistem",
   "theme.dark_short": "Koyu",
   "theme.light_short": "Açık",
   "intro.skip": "Atla",
@@ -86,7 +87,8 @@ const tr: Dict = {  "theme.system_short": "Sistem",
   "brand_kit.colors.title": "Renk Paletimiz",
   "brand_kit.colors.purple": "Mor",
   "brand_kit.colors.black": "Siyah",
-  "brand_kit.desc": "Fun Teknoloji logolarını ve görsel materyallerini buradan indirebilir, kullanım kılavuzuna göz atabilirsiniz.",
+  "brand_kit.desc":
+    "Fun Teknoloji logolarını ve görsel materyallerini buradan indirebilir, kullanım kılavuzuna göz atabilirsiniz.",
   "brand_kit.download_png": "PNG İndir",
   "brand_kit.logos.fun_black.desc": "Açık renkli arka planlarda kullanım için siyah versiyon.",
   "brand_kit.logos.fun_black.title": "Fun Teknoloji Siyah Logo",
@@ -207,7 +209,8 @@ const tr: Dict = {  "theme.system_short": "Sistem",
   "home.faq.a1":
     "Fun Teknoloji, yapay zeka ve yenilikçi yazılım çözümleri üreten, geleceğin teknolojilerine odaklanmış bir vizyoner teknoloji girişimidir.",
   "home.faq.q2": "Geliştirdiğiniz projeler ve ürünler ücretli mi?",
-  "home.faq.a2": "Fun Teknoloji olarak kendi ürünlerimizi geliştiriyoruz. Her ürünümüzün kendine özgü kullanım modelleri ve esnek abonelik/lisanslama seçenekleri bulunmaktadır.",
+  "home.faq.a2":
+    "Fun Teknoloji olarak kendi ürünlerimizi geliştiriyoruz. Her ürünümüzün kendine özgü kullanım modelleri ve esnek abonelik/lisanslama seçenekleri bulunmaktadır.",
   "home.faq.a3":
     "Hayır, dışarıya özel (freelance/fason) işler yapmak yerine, tamamen kendi inovatif ürünlerimizi ve AR-GE projelerimizi tasarlayıp geliştirmeye odaklanıyoruz.",
   "home.faq.a4":
@@ -231,7 +234,8 @@ const tr: Dict = {  "theme.system_short": "Sistem",
   "home.features.card3.desc":
     "Yüksek performans, kesintisiz çalışma performansı ve sıfır hata prensibi ile ürünlerimizi sıfırdan kendi bünyemizde inşa ediyoruz.",
   "home.features.card3.title": "Kusursuz Mühendislik",
-  "home.features.desc": "Geleceğin teknolojilerini kendi bağımsız ve güvenli ekosistemimizde sıfırdan inşa ediyoruz.",
+  "home.features.desc":
+    "Geleceğin teknolojilerini kendi bağımsız ve güvenli ekosistemimizde sıfırdan inşa ediyoruz.",
   "home.features.title": "Neden Bizi Seçmelisiniz?",
   "home.hero.badge": "Türkiye'nin Yenilikçi Teknoloji Şirketi",
   "home.hero.desc":
@@ -240,7 +244,8 @@ const tr: Dict = {  "theme.system_short": "Sistem",
   "home.hero.start": "Bekleme Listesine Katıl",
   "home.hero.title": "Geleceğin Teknolojileri Bugün Bizimle",
   "home.howitworks.badge": "Geliştirme Döngümüz",
-  "home.howitworks.desc": "Geleceğin tescilli teknolojilerini sıfırdan nasıl hayata geçirdiğimizi keşfedin.",
+  "home.howitworks.desc":
+    "Geleceğin tescilli teknolojilerini sıfırdan nasıl hayata geçirdiğimizi keşfedin.",
   "home.howitworks.step1.desc":
     "Yenilikçi fikirleri derinlemesine analiz ediyor, Ar-Ge süreçleri ile geleceğin teknolojisini planlıyoruz.",
   "home.howitworks.step1.title": "Fikir ve Ar-Ge",
@@ -276,7 +281,7 @@ const tr: Dict = {  "theme.system_short": "Sistem",
   "home.stats.team": "Ekip Üyesi",
   "home.stats.users": "Aktif Kullanıcı",
   "home.stats.users_count": "10+",
-    "home.whatwedo.text":
+  "home.whatwedo.text":
     "Fun Teknoloji olarak, geleceği şekillendirmek için yapay zeka destekli yenilikçi ve öncü teknoloji çözümleri geliştiriyoruz.",
   "inline.contact.message_error": "Lütfen geçerli bir mesaj metni girin.",
   "inline.contact.subject_error": "Lütfen anlamlı bir konu başlığı girin.",
@@ -462,7 +467,8 @@ const tr: Dict = {  "theme.system_short": "Sistem",
   "quakesafe.features.4.title": "Aile Grupları",
   "quakesafe.features.5.desc": "İnternet kesildiğinde bile kritik rehberlere ve haritalara erişin.",
   "quakesafe.features.5.title": "Çevrimdışı Mod",
-  "quakesafe.features.6.desc": "Afet anında ve sonrasında acil durum rehberliği ve destek sağlayan yapay zeka sohbet asistanı.",
+  "quakesafe.features.6.desc":
+    "Afet anında ve sonrasında acil durum rehberliği ve destek sağlayan yapay zeka sohbet asistanı.",
   "quakesafe.features.6.title": "AI Sohbet",
   "quakesafe.features.7.desc": "Baz istasyonları çöktüğünde cihazlar arası iletişim yeteneği.",
   "quakesafe.features.7.title": "Mesh Ağı",
@@ -593,18 +599,22 @@ const tr: Dict = {  "theme.system_short": "Sistem",
   "nexy.use_now": "Hemen Kullan",
 
   "cookies.title": "Gizlilik ve Çerez Yönetimi",
-  "cookies.description": "Size en iyi deneyimi sunabilmek için çerezleri kullanıyoruz. Tercihlerinizi özelleştirebilirsiniz.",
+  "cookies.description":
+    "Size en iyi deneyimi sunabilmek için çerezleri kullanıyoruz. Tercihlerinizi özelleştirebilirsiniz.",
   "cookies.accept_all": "Hepsini Kabul Et",
   "cookies.reject_all": "Hepsini Reddet",
   "cookies.save_settings": "Seçimleri Kaydet",
   "cookies.customize": "Çerezleri Özelleştir",
   "cookies.required": "Zorunlu",
   "cookies.necessary.title": "Zorunlu Çerezler",
-  "cookies.necessary.desc": "Sitenin düzgün çalışması ve temel güvenlik özellikleri için gereklidir.",
+  "cookies.necessary.desc":
+    "Sitenin düzgün çalışması ve temel güvenlik özellikleri için gereklidir.",
   "cookies.analytics.title": "Analitik Çerezler",
-  "cookies.analytics.desc": "Kullanıcı deneyimini geliştirmek amacıyla ziyaret istatistiklerini anonim olarak analiz etmemizi sağlar.",
+  "cookies.analytics.desc":
+    "Kullanıcı deneyimini geliştirmek amacıyla ziyaret istatistiklerini anonim olarak analiz etmemizi sağlar.",
   "cookies.marketing.title": "Pazarlama Çerezleri",
-  "cookies.marketing.desc": "İlgi alanlarınıza uygun kişiselleştirilmiş içerikler sunmamıza yardımcı olur.",
+  "cookies.marketing.desc":
+    "İlgi alanlarınıza uygun kişiselleştirilmiş içerikler sunmamıza yardımcı olur.",
   "cookies.cancel": "Geri",
   "help.menu.title": "Yardım ve Destek",
   "help.menu.desc": "Size nasıl yardımcı olabiliriz?",
@@ -617,12 +627,14 @@ const tr: Dict = {  "theme.system_short": "Sistem",
   "live_support.image_limit_error": "En fazla 5 adet resim yükleyebilirsiniz.",
   "live_support.translation_warning": "Mesajlar otomatik olarak çevrilmektedir ve hatalı olabilir.",
   "live_support.confirm_close_title": "Görüşmeyi Sonlandır",
-  "live_support.confirm_close_desc": "Mevcut destek görüşmesini sonlandırmak istediğinize emin misiniz?",
+  "live_support.confirm_close_desc":
+    "Mevcut destek görüşmesini sonlandırmak istediğinize emin misiniz?",
   "live_support.confirm_close_yes": "Evet, Sonlandır",
   "live_support.confirm_close_no": "İptal",
 };
 
-const en: Dict = {  "theme.system_short": "System",
+const en: Dict = {
+  "theme.system_short": "System",
   "theme.dark_short": "Dark",
   "theme.light_short": "Light",
   "intro.skip": "Skip",
@@ -695,7 +707,8 @@ const en: Dict = {  "theme.system_short": "System",
   "brand_kit.colors.title": "Our Color Palette",
   "brand_kit.colors.purple": "Purple",
   "brand_kit.colors.black": "Black",
-  "brand_kit.desc": "You can download Fun Teknoloji logos and visual materials here and take a look at the usage guide.",
+  "brand_kit.desc":
+    "You can download Fun Teknoloji logos and visual materials here and take a look at the usage guide.",
   "brand_kit.download_png": "Download PNG",
   "brand_kit.logos.fun_black.desc": "Black version for use on light-colored backgrounds.",
   "brand_kit.logos.fun_black.title": "Fun Technology Black Logo",
@@ -816,14 +829,18 @@ const en: Dict = {  "theme.system_short": "System",
   "home.faq.a1":
     "Fun Technology is a visionary tech venture focused on building the future of artificial intelligence and innovative software solutions.",
   "home.faq.q2": "Are the projects and products you develop paid?",
-  "home.faq.a2": "As Fun Technology, we develop our own products. Each product has its own usage models and subscription options.",
+  "home.faq.a2":
+    "As Fun Technology, we develop our own products. Each product has its own usage models and subscription options.",
   "home.faq.a3":
     "No, rather than doing custom client work (freelance), we focus entirely on designing and developing our own innovative products and R&D projects.",
   "home.faq.a4":
     "Yes, we continue to work on many new projects in our lab focused on AI, cybersecurity, and data analytics.",
-  "home.faq.a5": "We are always open to meeting with investors who want to share our vision. You can contact us via our contact page.",
-  "home.faq.a6": "You can review our active products on our Projects page and start using them immediately.",
-  "home.faq.a7": "We are always open to talented engineers and visionary designers. You can follow our job postings on LinkedIn.",
+  "home.faq.a5":
+    "We are always open to meeting with investors who want to share our vision. You can contact us via our contact page.",
+  "home.faq.a6":
+    "You can review our active products on our Projects page and start using them immediately.",
+  "home.faq.a7":
+    "We are always open to talented engineers and visionary designers. You can follow our job postings on LinkedIn.",
   "home.faq.badge": "FAQ",
   "home.faq.desc": "Everything you wonder is here.",
   "home.faq.title": "Frequently Asked Questions",
@@ -847,7 +864,8 @@ const en: Dict = {  "theme.system_short": "System",
   "home.hero.start": "Join the Waitlist",
   "home.hero.title": "Technologies of the Future Are With Us Today",
   "home.howitworks.badge": "Our Development Cycle",
-  "home.howitworks.desc": "Discover how we conceptualize, develop, and deploy pioneering proprietary technologies from scratch.",
+  "home.howitworks.desc":
+    "Discover how we conceptualize, develop, and deploy pioneering proprietary technologies from scratch.",
   "home.howitworks.step1.desc":
     "We deeply analyze innovative ideas and plan the technology of the future through extensive R&D processes.",
   "home.howitworks.step1.title": "Idea and R&D",
@@ -883,7 +901,7 @@ const en: Dict = {  "theme.system_short": "System",
   "home.stats.team": "Expert Staff",
   "home.stats.users": "Active User",
   "home.stats.users_count": "10+",
-    "home.whatwedo.text":
+  "home.whatwedo.text":
     "As Fun Technology, we develop innovative and pioneering technology solutions supported by artificial intelligence to shape the future.",
   "inline.contact.message_error": "Please enter a valid message text.",
   "inline.contact.subject_error": "Please enter a meaningful subject title.",
@@ -1070,7 +1088,8 @@ const en: Dict = {  "theme.system_short": "System",
   "quakesafe.features.4.title": "Family Groups",
   "quakesafe.features.5.desc": "Access critical guides and maps even when the internet goes out.",
   "quakesafe.features.5.title": "Offline Mode",
-  "quakesafe.features.6.desc": "AI chat assistant providing emergency guidance and support during and after a disaster.",
+  "quakesafe.features.6.desc":
+    "AI chat assistant providing emergency guidance and support during and after a disaster.",
   "quakesafe.features.6.title": "AI Chat",
   "quakesafe.features.7.desc": "Ability to communicate between devices when base stations go down.",
   "quakesafe.features.7.title": "Mesh Network",
@@ -1202,16 +1221,19 @@ const en: Dict = {  "theme.system_short": "System",
   "nexy.use_now": "Use Now",
 
   "cookies.title": "Privacy and Cookie Management",
-  "cookies.description": "We use cookies to offer you the best experience. You can customize your preferences.",
+  "cookies.description":
+    "We use cookies to offer you the best experience. You can customize your preferences.",
   "cookies.accept_all": "Accept All",
   "cookies.reject_all": "Reject All",
   "cookies.save_settings": "Save Choices",
   "cookies.customize": "Customize Cookies",
   "cookies.required": "Required",
   "cookies.necessary.title": "Necessary Cookies",
-  "cookies.necessary.desc": "Required for the proper operation and basic security features of the site.",
+  "cookies.necessary.desc":
+    "Required for the proper operation and basic security features of the site.",
   "cookies.analytics.title": "Analytical Cookies",
-  "cookies.analytics.desc": "Allows us to anonymously analyze visit statistics to improve user experience.",
+  "cookies.analytics.desc":
+    "Allows us to anonymously analyze visit statistics to improve user experience.",
   "cookies.marketing.title": "Marketing Cookies",
   "cookies.marketing.desc": "Helps us deliver personalized content matching your interests.",
   "cookies.cancel": "Back",
@@ -1222,16 +1244,19 @@ const en: Dict = {  "theme.system_short": "System",
   "help.menu.live.title": "Live Support",
   "help.menu.live.desc": "Connect with our support representatives live.",
   "help.menu.live.status": "Offline",
-  "help.menu.live.toast": "Our live support team is currently offline. Please use our AI Assistant.",
+  "help.menu.live.toast":
+    "Our live support team is currently offline. Please use our AI Assistant.",
   "live_support.image_limit_error": "You can upload a maximum of 5 images.",
-  "live_support.translation_warning": "Messages are automatically translated and may contain errors.",
+  "live_support.translation_warning":
+    "Messages are automatically translated and may contain errors.",
   "live_support.confirm_close_title": "End Session",
   "live_support.confirm_close_desc": "Are you sure you want to end this live support session?",
   "live_support.confirm_close_yes": "Yes, End Session",
   "live_support.confirm_close_no": "Cancel",
 };
 
-const de: Dict = {  "theme.system_short": "System",
+const de: Dict = {
+  "theme.system_short": "System",
   "theme.dark_short": "Dunkel",
   "theme.light_short": "Hell",
   "intro.skip": "Überspringen",
@@ -1299,11 +1324,13 @@ const de: Dict = {  "theme.system_short": "System",
   "brand_kit.colors.title": "Unsere Farbpalette",
   "brand_kit.colors.purple": "Violett",
   "brand_kit.colors.black": "Schwarz",
-  "brand_kit.desc": "Hier können Sie die Logos und visuellen Materialien von Fun Teknoloji herunterladen und einen Blick auf die Nutzungsanleitung werfen.",
+  "brand_kit.desc":
+    "Hier können Sie die Logos und visuellen Materialien von Fun Teknoloji herunterladen und einen Blick auf die Nutzungsanleitung werfen.",
   "brand_kit.download_png": "PNG herunterladen",
   "brand_kit.logos.fun_black.desc": "Schwarze Version zur Verwendung auf hellen Hintergründen.",
   "brand_kit.logos.fun_black.title": "Fun Teknoloji Schwarzes Logo",
-  "brand_kit.logos.fun_main.desc": "Unser Logo mit transparentem Hintergrund für die Hauptverwendung.",
+  "brand_kit.logos.fun_main.desc":
+    "Unser Logo mit transparentem Hintergrund für die Hauptverwendung.",
   "brand_kit.logos.fun_main.title": "Fun Teknoloji Logo (Farbe)",
   "brand_kit.logos.fun_white.desc": "Weiße Version zur Verwendung auf dunklen Hintergründen.",
   "brand_kit.logos.fun_white.title": "Fun Teknoloji Weißes Logo",
@@ -1422,11 +1449,16 @@ const de: Dict = {  "theme.system_short": "System",
     "Fun Technology ist ein Technologieunternehmen, das sich auf künstliche Intelligenz, kundenspezifische Softwareentwicklung und digitale Transformation spezialisiert hat.",
   "home.faq.a2":
     "Ja, wir bieten rund um die Uhr technischen Support und Wartungsdienste für Ihre Projekte.",
-  "home.faq.a3": "Nein, anstatt freiberuflich/ausgelagert zu arbeiten, konzentrieren wir uns ausschließlich auf die Gestaltung und Entwicklung unserer eigenen innovativen Produkte und F&E-Projekte.",
-  "home.faq.a4": "Ja, wir arbeiten in unserem Labor weiterhin an vielen neuen Projekten mit den Schwerpunkten Künstliche Intelligenz, Cybersicherheit und Datenanalyse.",
-  "home.faq.a5": "Wir sind immer offen für Treffen mit Investoren, die unsere Vision teilen möchten. Sie können uns direkt über unsere Kontaktseite kontaktieren.",
-  "home.faq.a6": "Sie können unsere aktiven Produkte auf unserer Projektseite überprüfen und sofort mit der Nutzung unserer Assistenten wie Nexy beginnen.",
-  "home.faq.a7": "Unsere Tür steht talentierten Ingenieuren und visionären Designern immer offen. Sie können unsere offenen Stellen und Ankündigungen auf unserem LinkedIn-Konto verfolgen.",
+  "home.faq.a3":
+    "Nein, anstatt freiberuflich/ausgelagert zu arbeiten, konzentrieren wir uns ausschließlich auf die Gestaltung und Entwicklung unserer eigenen innovativen Produkte und F&E-Projekte.",
+  "home.faq.a4":
+    "Ja, wir arbeiten in unserem Labor weiterhin an vielen neuen Projekten mit den Schwerpunkten Künstliche Intelligenz, Cybersicherheit und Datenanalyse.",
+  "home.faq.a5":
+    "Wir sind immer offen für Treffen mit Investoren, die unsere Vision teilen möchten. Sie können uns direkt über unsere Kontaktseite kontaktieren.",
+  "home.faq.a6":
+    "Sie können unsere aktiven Produkte auf unserer Projektseite überprüfen und sofort mit der Nutzung unserer Assistenten wie Nexy beginnen.",
+  "home.faq.a7":
+    "Unsere Tür steht talentierten Ingenieuren und visionären Designern immer offen. Sie können unsere offenen Stellen und Ankündigungen auf unserem LinkedIn-Konto verfolgen.",
   "home.faq.badge": "FAQ",
   "home.faq.desc": "Alles, was Sie sich wundern, finden Sie hier.",
   "home.faq.title": "Häufig gestellte Fragen",
@@ -1487,7 +1519,7 @@ const de: Dict = {  "theme.system_short": "System",
   "home.stats.team": "Fachpersonal",
   "home.stats.users": "Aktiver Benutzer",
   "home.stats.users_count": "10+",
-    "home.whatwedo.text":
+  "home.whatwedo.text":
     "Als Fun Technology entwickeln wir innovative Softwarelösungen mit Unterstützung künstlicher Intelligenz, um Ihr Unternehmen fit für die Zukunft zu machen.",
   "inline.contact.message_error": "Bitte geben Sie einen gültigen Nachrichtentext ein.",
   "inline.contact.subject_error": "Bitte geben Sie einen aussagekräftigen Betrefftitel ein.",
@@ -1663,7 +1695,8 @@ const de: Dict = {  "theme.system_short": "System",
   "quakesafe.features.5.desc":
     "Greifen Sie auch dann auf wichtige Reiseführer und Karten zu, wenn das Internet ausfällt.",
   "quakesafe.features.5.title": "Offline-Modus",
-  "quakesafe.features.6.desc": "KI-Chat-Assistent für Notfallberatung und Unterstützung während und nach einer Katastrophe.",
+  "quakesafe.features.6.desc":
+    "KI-Chat-Assistent für Notfallberatung und Unterstützung während und nach einer Katastrophe.",
   "quakesafe.features.6.title": "KI-Chat",
   "quakesafe.features.7.desc":
     "Möglichkeit zur Kommunikation zwischen Geräten, wenn Basisstationen ausfallen.",
@@ -1719,7 +1752,7 @@ const de: Dict = {  "theme.system_short": "System",
   "help.popup": "Wie können wir Ihnen helfen?",
   "home.faq.q1": "Was ist Fun Technology?",
   "home.faq.q2": "Sind die von Ihnen entwickelten Projekte und Produkte kostenpflichtig?",
-              "blog.index.untitled": "Unbenannter Beitrag",
+  "blog.index.untitled": "Unbenannter Beitrag",
   "blog.index.category_default": "Technologie",
   "nexy.resp.pricing.0":
     "Fiyatlandırma politikalarımız üzerinde çalışıyoruz. En güncel paketler için Fiyatlandırma sayfamızı takip edebilirsiniz. Şu an için bekleme listemize katılmak en iyi seçenek!",
@@ -1811,18 +1844,22 @@ const de: Dict = {  "theme.system_short": "System",
   "nexy.use_now": "Jetzt nutzen",
 
   "cookies.title": "Datenschutz- und Cookie-Verwaltung",
-  "cookies.description": "Wir verwenden Cookies, um Ihnen das beste Erlebnis zu bieten. Sie können Ihre Einstellungen anpassen.",
+  "cookies.description":
+    "Wir verwenden Cookies, um Ihnen das beste Erlebnis zu bieten. Sie können Ihre Einstellungen anpassen.",
   "cookies.accept_all": "Alle akzeptieren",
   "cookies.reject_all": "Alle ablehnen",
   "cookies.save_settings": "Auswahl speichern",
   "cookies.customize": "Cookies anpassen",
   "cookies.required": "Erforderlich",
   "cookies.necessary.title": "Notwendige Cookies",
-  "cookies.necessary.desc": "Erforderlich für den ordnungsgemäßen Betrieb und grundlegende Sicherheitsfunktionen der Website.",
+  "cookies.necessary.desc":
+    "Erforderlich für den ordnungsgemäßen Betrieb und grundlegende Sicherheitsfunktionen der Website.",
   "cookies.analytics.title": "Analytische Cookies",
-  "cookies.analytics.desc": "Ermöglicht uns die anonyme Analyse von Besuchsstatistiken zur Verbesserung der Benutzererfahrung.",
+  "cookies.analytics.desc":
+    "Ermöglicht uns die anonyme Analyse von Besuchsstatistiken zur Verbesserung der Benutzererfahrung.",
   "cookies.marketing.title": "Marketing-Cookies",
-  "cookies.marketing.desc": "Hilft uns, personalisierte Inhalte bereitzustellen, die Ihren Interessen entsprechen.",
+  "cookies.marketing.desc":
+    "Hilft uns, personalisierte Inhalte bereitzustellen, die Ihren Interessen entsprechen.",
   "cookies.cancel": "Zurück",
   "help.menu.title": "Hilfe & Support",
   "help.menu.desc": "Wie können wir Ihnen helfen?",
@@ -1831,10 +1868,12 @@ const de: Dict = {  "theme.system_short": "System",
   "help.menu.live.title": "Live-Support",
   "help.menu.live.desc": "Verbinden Sie sich live mit unseren Support-Mitarbeitern.",
   "help.menu.live.status": "Offline",
-  "help.menu.live.toast": "Unser Live-Support-Team ist derzeit offline. Bitte nutzen Sie unseren KI-Assistenten.",
+  "help.menu.live.toast":
+    "Unser Live-Support-Team ist derzeit offline. Bitte nutzen Sie unseren KI-Assistenten.",
 };
 
-const fr: Dict = {  "theme.system_short": "Système",
+const fr: Dict = {
+  "theme.system_short": "Système",
   "theme.dark_short": "Sombre",
   "theme.light_short": "Clair",
   "intro.skip": "Passer",
@@ -1906,11 +1945,13 @@ const fr: Dict = {  "theme.system_short": "Système",
   "brand_kit.colors.title": "Notre palette de couleurs",
   "brand_kit.colors.purple": "Violet",
   "brand_kit.colors.black": "Noir",
-  "brand_kit.desc": "Vous pouvez télécharger les logos et le matériel visuel de Fun Teknoloji ici et consulter le guide d'utilisation.",
+  "brand_kit.desc":
+    "Vous pouvez télécharger les logos et le matériel visuel de Fun Teknoloji ici et consulter le guide d'utilisation.",
   "brand_kit.download_png": "Télécharger le PNG",
   "brand_kit.logos.fun_black.desc": "Version noire à utiliser sur des fonds clairs.",
   "brand_kit.logos.fun_black.title": "Logo noir de Fun Teknoloji",
-  "brand_kit.logos.fun_main.desc": "Notre logo avec un fond transparent pour l'utilisation principale.",
+  "brand_kit.logos.fun_main.desc":
+    "Notre logo avec un fond transparent pour l'utilisation principale.",
   "brand_kit.logos.fun_main.title": "Logo Fun Teknoloji (Couleur)",
   "brand_kit.logos.fun_white.desc": "Version blanche à utiliser sur des fonds sombres.",
   "brand_kit.logos.fun_white.title": "Logo blanc de Fun Teknoloji",
@@ -2029,11 +2070,16 @@ const fr: Dict = {  "theme.system_short": "Système",
     "Fun Technology est une entreprise technologique spécialisée dans l'intelligence artificielle, le développement de logiciels personnalisés et la transformation numérique.",
   "home.faq.a2":
     "Oui, nous proposons des services d'assistance technique et de maintenance 24h/24 et 7j/7 pour vos projets.",
-  "home.faq.a3": "Non, au lieu de faire du travail indépendant/externalisé, nous nous concentrons entièrement sur la conception et le développement de nos propres produits innovants et projets de R&D.",
-  "home.faq.a4": "Oui, nous continuons à travailler sur de nombreux nouveaux projets axés sur l'intelligence artificielle, la cybersécurité et l'analyse de données dans notre laboratoire.",
-  "home.faq.a5": "Nous sommes toujours ouverts à rencontrer des investisseurs qui souhaitent partager notre vision. Vous pouvez nous contacter directement via notre page Contact.",
-  "home.faq.a6": "Vous pouvez consulter nos produits actifs sur notre page Projets et commencer immédiatement à utiliser nos assistants tels que Nexy.",
-  "home.faq.a7": "Notre porte est toujours ouverte aux ingénieurs talentueux et aux designers visionnaires. Vous pouvez suivre nos postes vacants et nos annonces sur notre compte LinkedIn.",
+  "home.faq.a3":
+    "Non, au lieu de faire du travail indépendant/externalisé, nous nous concentrons entièrement sur la conception et le développement de nos propres produits innovants et projets de R&D.",
+  "home.faq.a4":
+    "Oui, nous continuons à travailler sur de nombreux nouveaux projets axés sur l'intelligence artificielle, la cybersécurité et l'analyse de données dans notre laboratoire.",
+  "home.faq.a5":
+    "Nous sommes toujours ouverts à rencontrer des investisseurs qui souhaitent partager notre vision. Vous pouvez nous contacter directement via notre page Contact.",
+  "home.faq.a6":
+    "Vous pouvez consulter nos produits actifs sur notre page Projets et commencer immédiatement à utiliser nos assistants tels que Nexy.",
+  "home.faq.a7":
+    "Notre porte est toujours ouverte aux ingénieurs talentueux et aux designers visionnaires. Vous pouvez suivre nos postes vacants et nos annonces sur notre compte LinkedIn.",
   "home.faq.badge": "FAQ",
   "home.faq.desc": "Tout ce que vous vous demandez est ici.",
   "home.faq.title": "Foire aux questions",
@@ -2095,7 +2141,7 @@ const fr: Dict = {  "theme.system_short": "Système",
   "home.stats.team": "Personnel expert",
   "home.stats.users": "Utilisateur actif",
   "home.stats.users_count": "10+",
-    "home.whatwedo.text":
+  "home.whatwedo.text":
     "En tant que Fun Technology, nous développons des solutions logicielles innovantes soutenues par l’intelligence artificielle pour préparer votre entreprise à l’avenir.",
   "inline.contact.message_error": "Veuillez saisir un texte de message valide.",
   "inline.contact.subject_error": "Veuillez saisir un titre de sujet significatif.",
@@ -2273,7 +2319,8 @@ const fr: Dict = {  "theme.system_short": "Système",
   "quakesafe.features.5.desc":
     "Accédez à des guides et des cartes critiques même lorsque Internet est coupé.",
   "quakesafe.features.5.title": "Mode hors ligne",
-  "quakesafe.features.6.desc": "Assistant de chat IA fournissant des conseils d'urgence et un soutien pendant et après une catastrophe.",
+  "quakesafe.features.6.desc":
+    "Assistant de chat IA fournissant des conseils d'urgence et un soutien pendant et après une catastrophe.",
   "quakesafe.features.6.title": "Chat IA",
   "quakesafe.features.7.desc":
     "Possibilité de communiquer entre les appareils lorsque les stations de base tombent en panne.",
@@ -2331,7 +2378,7 @@ const fr: Dict = {  "theme.system_short": "Système",
   "help.popup": "Comment pouvons-nous vous aider ?",
   "home.faq.q1": "Qu'est-ce que Fun Technology ?",
   "home.faq.q2": "Les projets et produits que vous développez sont-ils payants?",
-              "blog.index.untitled": "Article sans titre",
+  "blog.index.untitled": "Article sans titre",
   "blog.index.category_default": "Technologie",
   "nexy.resp.pricing.0":
     "Fiyatlandırma politikalarımız üzerinde çalışıyoruz. En güncel paketler için Fiyatlandırma sayfamızı takip edebilirsiniz. Şu an için bekleme listemize katılmak en iyi seçenek!",
@@ -2423,18 +2470,22 @@ const fr: Dict = {  "theme.system_short": "Système",
   "nexy.use_now": "Utiliser maintenant",
 
   "cookies.title": "Gestion de la confidentialité et des cookies",
-  "cookies.description": "Nous utilisons des cookies pour vous offrir la meilleure expérience possible. Vous pouvez personnaliser vos préférences.",
+  "cookies.description":
+    "Nous utilisons des cookies pour vous offrir la meilleure expérience possible. Vous pouvez personnaliser vos préférences.",
   "cookies.accept_all": "Tout accepter",
   "cookies.reject_all": "Tout refuser",
   "cookies.save_settings": "Enregistrer les choix",
   "cookies.customize": "Personnaliser les cookies",
   "cookies.required": "Requis",
   "cookies.necessary.title": "Cookies nécessaires",
-  "cookies.necessary.desc": "Requis pour le bon fonctionnement et les fonctionnalités de sécurité de base du site.",
+  "cookies.necessary.desc":
+    "Requis pour le bon fonctionnement et les fonctionnalités de sécurité de base du site.",
   "cookies.analytics.title": "Cookies analytiques",
-  "cookies.analytics.desc": "Permet d'analyser anonymement les statistiques de visite pour améliorer l'expérience utilisateur.",
+  "cookies.analytics.desc":
+    "Permet d'analyser anonymement les statistiques de visite pour améliorer l'expérience utilisateur.",
   "cookies.marketing.title": "Cookies marketing",
-  "cookies.marketing.desc": "Nous aide à proposer des contenus personnalisés adaptés à vos centres d'intérêt.",
+  "cookies.marketing.desc":
+    "Nous aide à proposer des contenus personnalisés adaptés à vos centres d'intérêt.",
   "cookies.cancel": "Retour",
   "help.menu.title": "Aide & Support",
   "help.menu.desc": "Comment pouvons-nous vous aider ?",
@@ -2443,10 +2494,12 @@ const fr: Dict = {  "theme.system_short": "Système",
   "help.menu.live.title": "Support en direct",
   "help.menu.live.desc": "Connectez-vous en direct avec nos conseillers.",
   "help.menu.live.status": "Hors ligne",
-  "help.menu.live.toast": "Notre équipe de support en direct est actuellement hors ligne. Veuillez utiliser notre assistant IA.",
+  "help.menu.live.toast":
+    "Notre équipe de support en direct est actuellement hors ligne. Veuillez utiliser notre assistant IA.",
 };
 
-const es: Dict = {  "theme.system_short": "Sistema",
+const es: Dict = {
+  "theme.system_short": "Sistema",
   "theme.dark_short": "Oscuro",
   "theme.light_short": "Claro",
   "intro.skip": "Saltar",
@@ -2514,7 +2567,8 @@ const es: Dict = {  "theme.system_short": "Sistema",
   "brand_kit.colors.title": "Nuestra paleta de colores",
   "brand_kit.colors.purple": "Púrpura",
   "brand_kit.colors.black": "Negro",
-  "brand_kit.desc": "Puede descargar los logotipos y materiales visuales de Fun Teknoloji aquí y echar un vistazo a la guía de uso.",
+  "brand_kit.desc":
+    "Puede descargar los logotipos y materiales visuales de Fun Teknoloji aquí y echar un vistazo a la guía de uso.",
   "brand_kit.download_png": "Descargar PNG",
   "brand_kit.logos.fun_black.desc": "Versión negra para usar en fondos de colores claros.",
   "brand_kit.logos.fun_black.title": "Logotipo negro de Fun Teknoloji",
@@ -2633,12 +2687,18 @@ const es: Dict = {  "theme.system_short": "Sistema",
   "home.cta.title": "Comience hoy.",
   "home.faq.a1":
     "Fun Technology es una empresa de tecnología especializada en inteligencia artificial, desarrollo de software personalizado y transformación digital.",
-  "home.faq.a2": "As Fun Technology, we develop our own products. Each product has its own usage models and subscription options.",
-  "home.faq.a3": "No, en lugar de trabajar como autónomos o subcontratados, nos centramos por completo en diseñar y desarrollar nuestros propios productos innovadores y proyectos de I+D.",
-  "home.faq.a4": "Sí, seguimos trabajando en muchos proyectos nuevos centrados en inteligencia artificial, ciberseguridad y análisis de datos en nuestro laboratorio.",
-  "home.faq.a5": "Siempre estamos abiertos a conocer inversores que quieran compartir nuestra visión. Puede contactarnos directamente a través de nuestra página de Contacto.",
-  "home.faq.a6": "Puede revisar nuestros productos activos en nuestra página de Proyectos y comenzar a utilizar nuestros asistentes como Nexy de inmediato.",
-  "home.faq.a7": "Nuestra puerta siempre está abierta a ingenieros talentosos y diseñadores visionarios. Puede seguir nuestras posiciones abiertas y anuncios en nuestra cuenta de LinkedIn.",
+  "home.faq.a2":
+    "As Fun Technology, we develop our own products. Each product has its own usage models and subscription options.",
+  "home.faq.a3":
+    "No, en lugar de trabajar como autónomos o subcontratados, nos centramos por completo en diseñar y desarrollar nuestros propios productos innovadores y proyectos de I+D.",
+  "home.faq.a4":
+    "Sí, seguimos trabajando en muchos proyectos nuevos centrados en inteligencia artificial, ciberseguridad y análisis de datos en nuestro laboratorio.",
+  "home.faq.a5":
+    "Siempre estamos abiertos a conocer inversores que quieran compartir nuestra visión. Puede contactarnos directamente a través de nuestra página de Contacto.",
+  "home.faq.a6":
+    "Puede revisar nuestros productos activos en nuestra página de Proyectos y comenzar a utilizar nuestros asistentes como Nexy de inmediato.",
+  "home.faq.a7":
+    "Nuestra puerta siempre está abierta a ingenieros talentosos y diseñadores visionarios. Puede seguir nuestras posiciones abiertas y anuncios en nuestra cuenta de LinkedIn.",
   "home.faq.badge": "Preguntas frecuentes",
   "home.faq.desc": "Todo lo que te preguntas está aquí.",
   "home.faq.title": "Preguntas frecuentes",
@@ -2698,7 +2758,7 @@ const es: Dict = {  "theme.system_short": "Sistema",
   "home.stats.team": "Personal experto",
   "home.stats.users": "Usuario activo",
   "home.stats.users_count": "10+",
-    "home.whatwedo.text":
+  "home.whatwedo.text":
     "Como Fun Technology, desarrollamos soluciones de software innovadoras respaldadas por inteligencia artificial para preparar su negocio para el futuro.",
   "inline.contact.message_error": "Por favor ingrese un texto de mensaje válido.",
   "inline.contact.subject_error": "Por favor ingrese un título de tema significativo.",
@@ -2873,7 +2933,8 @@ const es: Dict = {  "theme.system_short": "Sistema",
   "quakesafe.features.4.title": "Grupos familiares",
   "quakesafe.features.5.desc": "Acceda a guías y mapas críticos incluso cuando no haya Internet.",
   "quakesafe.features.5.title": "Modo sin conexión",
-  "quakesafe.features.6.desc": "Asistente de chat de IA que brinda orientación y apoyo de emergencia durante y después de un desastre.",
+  "quakesafe.features.6.desc":
+    "Asistente de chat de IA que brinda orientación y apoyo de emergencia durante y después de un desastre.",
   "quakesafe.features.6.title": "Chat de IA",
   "quakesafe.features.7.desc":
     "Capacidad de comunicarse entre dispositivos cuando las estaciones base fallan.",
@@ -2928,7 +2989,7 @@ const es: Dict = {  "theme.system_short": "Sistema",
   "help.popup": "¿Cómo podemos ayudarte?",
   "home.faq.q1": "¿Qué es Fun Technology?",
   "home.faq.q2": "¿Son de pago los proyectos y productos que desarrolla?",
-              "blog.index.untitled": "Publicación sin título",
+  "blog.index.untitled": "Publicación sin título",
   "blog.index.category_default": "Tecnología",
   "nexy.resp.pricing.0":
     "Fiyatlandırma politikalarımız üzerinde çalışıyoruz. En güncel paketler için Fiyatlandırma sayfamızı takip edebilirsiniz. Şu an için bekleme listemize katılmak en iyi seçenek!",
@@ -3020,16 +3081,19 @@ const es: Dict = {  "theme.system_short": "Sistema",
   "nexy.use_now": "Usar ahora",
 
   "cookies.title": "Gestión de privacidad y cookies",
-  "cookies.description": "Utilizamos cookies para ofrecerle la mejor experiencia. Puede personalizar sus preferencias.",
+  "cookies.description":
+    "Utilizamos cookies para ofrecerle la mejor experiencia. Puede personalizar sus preferencias.",
   "cookies.accept_all": "Aceptar todo",
   "cookies.reject_all": "Rechazar todo",
   "cookies.save_settings": "Guardar opciones",
   "cookies.customize": "Personalizar cookies",
   "cookies.required": "Obligatorio",
   "cookies.necessary.title": "Cookies necesarias",
-  "cookies.necessary.desc": "Requerido para el correcto funcionamiento y características de seguridad básicas del sitio.",
+  "cookies.necessary.desc":
+    "Requerido para el correcto funcionamiento y características de seguridad básicas del sitio.",
   "cookies.analytics.title": "Cookies analíticas",
-  "cookies.analytics.desc": "Permite analizar de forma anónima las estadísticas de visitas para mejorar la experiencia de usuario.",
+  "cookies.analytics.desc":
+    "Permite analizar de forma anónima las estadísticas de visitas para mejorar la experiencia de usuario.",
   "cookies.marketing.title": "Cookies de marketing",
   "cookies.marketing.desc": "Ayuda a ofrecer contenido personalizado según sus intereses.",
   "cookies.cancel": "Volver",
@@ -3040,10 +3104,12 @@ const es: Dict = {  "theme.system_short": "Sistema",
   "help.menu.live.title": "Soporte en vivo",
   "help.menu.live.desc": "Conéctate en vivo con nuestros representantes.",
   "help.menu.live.status": "Desconectado",
-  "help.menu.live.toast": "Nuestro equipo de soporte en vivo está desconectado. Por favor, usa nuestro asistente de IA.",
+  "help.menu.live.toast":
+    "Nuestro equipo de soporte en vivo está desconectado. Por favor, usa nuestro asistente de IA.",
 };
 
-const az: Dict = {  "theme.system_short": "Sistem",
+const az: Dict = {
+  "theme.system_short": "Sistem",
   "theme.dark_short": "Qaranlıq",
   "theme.light_short": "Açıq",
   "intro.skip": "Keç",
@@ -3111,7 +3177,8 @@ const az: Dict = {  "theme.system_short": "Sistem",
   "brand_kit.colors.title": "Rəng Palitramız",
   "brand_kit.colors.purple": "Bənövşəyi",
   "brand_kit.colors.black": "Qara",
-  "brand_kit.desc": "Fun Teknoloji loqolarını və vizual materiallarını buradan yükləyə və istifadə təlimatına baxa bilərsiniz.",
+  "brand_kit.desc":
+    "Fun Teknoloji loqolarını və vizual materiallarını buradan yükləyə və istifadə təlimatına baxa bilərsiniz.",
   "brand_kit.download_png": "PNG Yüklə",
   "brand_kit.logos.fun_black.desc": "Açıq rəngli fonlarda istifadə üçün qara versiya.",
   "brand_kit.logos.fun_black.title": "Fun Teknoloji Qara Loqo",
@@ -3231,12 +3298,18 @@ const az: Dict = {  "theme.system_short": "Sistem",
   "home.cta.title": "Bu gün başlayın.",
   "home.faq.a1":
     "Fun Teknoloji, süni intellekt, xüsusi proqram təminatının hazırlanması və rəqəmsal transformasiya sahələrində ixtisaslaşmış bir texnologiya şirkətidir.",
-  "home.faq.a2": "As Fun Technology, we develop our own products. Each product has its own usage models and subscription options.",
-  "home.faq.a3": "Xeyr, frilanser/outsorsing işi yerinə yetirmək əvəzinə, biz bütün diqqətimizi öz innovativ məhsullarımızı və Ar-Ge layihələrimizi dizayn və inkişaf etdirməyə yönəldirik.",
-  "home.faq.a4": "Bəli, biz laboratoriyamızda süni intellekt, kibertəhlükəsizlik və məlumat analitikasına yönəlmiş bir çox yeni layihələr üzərində işləməyə davam edirik.",
-  "home.faq.a5": "Vizyonumuzu bölüşmək istəyən investorlarla görüşə hər zaman açığıq. Bizimlə birbaşa Əlaqə səhifəmiz vasitəsilə əlaqə saxlaya bilərsiniz.",
-  "home.faq.a6": "Layihələr səhifəmizdə aktiv məhsullarımızı nəzərdən keçirə və dərhal Nexy kimi köməkçilərimizdən istifadə etməyə başlaya bilərsiniz.",
-  "home.faq.a7": "Qapımız hər zaman istedadlı mühəndislərə və uzaqgörən dizaynerlərə açıqdır. Açıq mövqelərimizi və elanlarımızı LinkedIn hesabımızda izləyə bilərsiniz.",
+  "home.faq.a2":
+    "As Fun Technology, we develop our own products. Each product has its own usage models and subscription options.",
+  "home.faq.a3":
+    "Xeyr, frilanser/outsorsing işi yerinə yetirmək əvəzinə, biz bütün diqqətimizi öz innovativ məhsullarımızı və Ar-Ge layihələrimizi dizayn və inkişaf etdirməyə yönəldirik.",
+  "home.faq.a4":
+    "Bəli, biz laboratoriyamızda süni intellekt, kibertəhlükəsizlik və məlumat analitikasına yönəlmiş bir çox yeni layihələr üzərində işləməyə davam edirik.",
+  "home.faq.a5":
+    "Vizyonumuzu bölüşmək istəyən investorlarla görüşə hər zaman açığıq. Bizimlə birbaşa Əlaqə səhifəmiz vasitəsilə əlaqə saxlaya bilərsiniz.",
+  "home.faq.a6":
+    "Layihələr səhifəmizdə aktiv məhsullarımızı nəzərdən keçirə və dərhal Nexy kimi köməkçilərimizdən istifadə etməyə başlaya bilərsiniz.",
+  "home.faq.a7":
+    "Qapımız hər zaman istedadlı mühəndislərə və uzaqgörən dizaynerlərə açıqdır. Açıq mövqelərimizi və elanlarımızı LinkedIn hesabımızda izləyə bilərsiniz.",
   "home.faq.badge": "Tez-tez verilən suallar",
   "home.faq.desc": "Sizi maraqlandıran hər şey buradadır.",
   "home.faq.title": "Tez-tez verilən suallar",
@@ -3294,7 +3367,7 @@ const az: Dict = {  "theme.system_short": "Sistem",
   "home.stats.team": "Ekspert Heyəti",
   "home.stats.users": "Aktiv İstifadəçi",
   "home.stats.users_count": "10+",
-    "home.whatwedo.text":
+  "home.whatwedo.text":
     "Fun Technology olaraq biznesinizi gələcəyə hazırlamaq üçün süni intellekt tərəfindən dəstəklənən innovativ proqram həlləri hazırlayırıq.",
   "inline.contact.message_error": "Etibarlı mesaj mətni daxil edin.",
   "inline.contact.subject_error": "Lütfən, mənalı mövzu başlığı daxil edin.",
@@ -3463,7 +3536,8 @@ const az: Dict = {  "theme.system_short": "Sistem",
   "quakesafe.features.5.desc":
     "Hətta internet kəsildikdə belə kritik bələdçilərə və xəritələrə daxil olun.",
   "quakesafe.features.5.title": "Oflayn rejim",
-  "quakesafe.features.6.desc": "Fəlakət zamanı və sonrasında təcili yardım təlimatı və dəstək verən süni intellekt söhbət köməkçisi.",
+  "quakesafe.features.6.desc":
+    "Fəlakət zamanı və sonrasında təcili yardım təlimatı və dəstək verən süni intellekt söhbət köməkçisi.",
   "quakesafe.features.6.title": "AI Söhbət",
   "quakesafe.features.7.desc":
     "Baza stansiyaları sıradan çıxdıqda cihazlar arasında əlaqə qurmaq imkanı.",
@@ -3518,7 +3592,7 @@ const az: Dict = {  "theme.system_short": "Sistem",
   "help.popup": "Sizə necə kömək edə bilərik?",
   "home.faq.q1": "Fun Teknoloji nədir?",
   "home.faq.q2": "Hazırladığınız layihə və məhsullar ödənişlidir?",
-              "blog.index.untitled": "Adsız Yazı",
+  "blog.index.untitled": "Adsız Yazı",
   "blog.index.category_default": "Texnologiya",
   "nexy.resp.pricing.0":
     "Fiyatlandırma politikalarımız üzerinde çalışıyoruz. En güncel paketler için Fiyatlandırma sayfamızı takip edebilirsiniz. Şu an için bekleme listemize katılmak en iyi seçenek!",
@@ -3610,16 +3684,19 @@ const az: Dict = {  "theme.system_short": "Sistem",
   "nexy.use_now": "İndi istifadə et",
 
   "cookies.title": "Məxfilik və Kuki İdarəetməsi",
-  "cookies.description": "Sizə ən yaxşı təcrübəni təqdim etmək üçün kukilərdən istifadə edirik. Seçimlərinizi fərdiləşdirə bilərsiniz.",
+  "cookies.description":
+    "Sizə ən yaxşı təcrübəni təqdim etmək üçün kukilərdən istifadə edirik. Seçimlərinizi fərdiləşdirə bilərsiniz.",
   "cookies.accept_all": "Hamısını Qəbul Et",
   "cookies.reject_all": "Hamısını Rədd Et",
   "cookies.save_settings": "Seçimləri Yadda Saxla",
   "cookies.customize": "Kukiləri Fərdiləşdir",
   "cookies.required": "Zəruri",
   "cookies.necessary.title": "Zəruri Kukilər",
-  "cookies.necessary.desc": "Saytın düzgün işləməsi və əsas təhlükəsizlik funksiyaları üçün tələb olunur.",
+  "cookies.necessary.desc":
+    "Saytın düzgün işləməsi və əsas təhlükəsizlik funksiyaları üçün tələb olunur.",
   "cookies.analytics.title": "Analitik Kukilər",
-  "cookies.analytics.desc": "İstifadəçi təcrübəsini təkmilləşdirmək üçün ziyarət statistikalarını anonim təhlil etməyə imkan verir.",
+  "cookies.analytics.desc":
+    "İstifadəçi təcrübəsini təkmilləşdirmək üçün ziyarət statistikalarını anonim təhlil etməyə imkan verir.",
   "cookies.marketing.title": "Marketinq Kukiləri",
   "cookies.marketing.desc": "Maraqlarınıza uyğun fərdiləşdirilmiş məzmun təqdim etməyə kömək edir.",
   "cookies.cancel": "Geri",
@@ -3630,10 +3707,12 @@ const az: Dict = {  "theme.system_short": "Sistem",
   "help.menu.live.title": "Nexy Dəstək",
   "help.menu.live.desc": "Dəstək assistanımız Nexy ile canlı olaraq danışın.",
   "help.menu.live.status": "Oflayn",
-  "help.menu.live.toast": "Dəstək komandamız hazırda oflayndır. Zəhmət olmasa AI Assistanımızı istifadə edin.",
+  "help.menu.live.toast":
+    "Dəstək komandamız hazırda oflayndır. Zəhmət olmasa AI Assistanımızı istifadə edin.",
 };
 
-const ru: Dict = {  "theme.system_short": "Система",
+const ru: Dict = {
+  "theme.system_short": "Система",
   "theme.dark_short": "Темная",
   "theme.light_short": "Светлая",
   "intro.skip": "Пропустить",
@@ -3700,7 +3779,8 @@ const ru: Dict = {  "theme.system_short": "Система",
   "brand_kit.colors.title": "Наша цветовая палитра",
   "brand_kit.colors.purple": "Фиолетовый",
   "brand_kit.colors.black": "Черный",
-  "brand_kit.desc": "Здесь вы можете скачать логотипы и визуальные материалы Fun Teknoloji, а также ознакомиться с руководством по использованию.",
+  "brand_kit.desc":
+    "Здесь вы можете скачать логотипы и визуальные материалы Fun Teknoloji, а также ознакомиться с руководством по использованию.",
   "brand_kit.download_png": "Скачать PNG",
   "brand_kit.logos.fun_black.desc": "Черная версия для использования на светлом фоне.",
   "brand_kit.logos.fun_black.title": "Черный логотип Fun Teknoloji",
@@ -3822,11 +3902,16 @@ const ru: Dict = {  "theme.system_short": "Система",
     "Fun Technology — это технологическая компания, специализирующаяся на искусственном интеллекте, разработке программного обеспечения на заказ и цифровой трансформации.",
   "home.faq.a2":
     "Да, мы предлагаем круглосуточную техническую поддержку и обслуживание ваших проектов.",
-  "home.faq.a3": "Нет, вместо того, чтобы выполнять внештатную/аутсорсинговую работу, мы полностью сосредотачиваемся на проектировании и разработке наших собственных инновационных продуктов и проектов исследований и разработок.",
-  "home.faq.a4": "Да, мы продолжаем работать над многими новыми проектами, ориентированными на искусственный интеллект, кибербезопасность и анализ данных в нашей лаборатории.",
-  "home.faq.a5": "Мы всегда открыты для встреч с инвесторами, которые хотят разделить наше видение. Вы можете связаться с нами напрямую через нашу страницу контактов.",
-  "home.faq.a6": "Вы можете просмотреть наши активные продукты на странице «Проекты» и сразу же начать использовать наших помощников, таких как Nexy.",
-  "home.faq.a7": "Наши двери всегда открыты для талантливых инженеров и дальновидных дизайнеров. Вы можете следить за нашими открытыми вакансиями и объявлениями в нашей учетной записи LinkedIn.",
+  "home.faq.a3":
+    "Нет, вместо того, чтобы выполнять внештатную/аутсорсинговую работу, мы полностью сосредотачиваемся на проектировании и разработке наших собственных инновационных продуктов и проектов исследований и разработок.",
+  "home.faq.a4":
+    "Да, мы продолжаем работать над многими новыми проектами, ориентированными на искусственный интеллект, кибербезопасность и анализ данных в нашей лаборатории.",
+  "home.faq.a5":
+    "Мы всегда открыты для встреч с инвесторами, которые хотят разделить наше видение. Вы можете связаться с нами напрямую через нашу страницу контактов.",
+  "home.faq.a6":
+    "Вы можете просмотреть наши активные продукты на странице «Проекты» и сразу же начать использовать наших помощников, таких как Nexy.",
+  "home.faq.a7":
+    "Наши двери всегда открыты для талантливых инженеров и дальновидных дизайнеров. Вы можете следить за нашими открытыми вакансиями и объявлениями в нашей учетной записи LinkedIn.",
   "home.faq.badge": "Часто задаваемые вопросы",
   "home.faq.desc": "Все, что вам интересно, здесь.",
   "home.faq.title": "Часто задаваемые вопросы",
@@ -3888,7 +3973,7 @@ const ru: Dict = {  "theme.system_short": "Система",
   "home.stats.team": "Экспертный персонал",
   "home.stats.users": "Активный пользователь",
   "home.stats.users_count": "10+",
-    "home.whatwedo.text":
+  "home.whatwedo.text":
     "Как Fun Technology, мы разрабатываем инновационные программные решения, поддерживаемые искусственным интеллектом, чтобы подготовить ваш бизнес к будущему.",
   "inline.contact.message_error": "Пожалуйста, введите действительный текст сообщения.",
   "inline.contact.subject_error": "Введите осмысленное название темы.",
@@ -4062,7 +4147,8 @@ const ru: Dict = {  "theme.system_short": "Система",
   "quakesafe.features.5.desc":
     "Доступ к важным руководствам и картам даже при отключении Интернета.",
   "quakesafe.features.5.title": "Автономный режим",
-  "quakesafe.features.6.desc": "Чат-ассистент с ИИ, предоставляющий инструкции и поддержку в чрезвычайных ситуациях во время и после катастрофы.",
+  "quakesafe.features.6.desc":
+    "Чат-ассистент с ИИ, предоставляющий инструкции и поддержку в чрезвычайных ситуациях во время и после катастрофы.",
   "quakesafe.features.6.title": "ИИ-чат",
   "quakesafe.features.7.desc":
     "Возможность связи между устройствами при выходе из строя базовых станций.",
@@ -4117,7 +4203,7 @@ const ru: Dict = {  "theme.system_short": "Система",
   "help.popup": "Как мы можем вам помочь?",
   "home.faq.q1": "Что такое Fun Technology?",
   "home.faq.q2": "Являются ли разрабатываемые вами проекты и продукты платными?",
-              "blog.index.untitled": "Без названия",
+  "blog.index.untitled": "Без названия",
   "blog.index.category_default": "Технологии",
   "nexy.resp.pricing.0":
     "Fiyatlandırma politikalarımız üzerinde çalışıyoruz. En güncel paketler için Fiyatlandırma sayfamızı takip edebilirsiniz. Şu an için bekleme listemize katılmak en iyi seçenek!",
@@ -4209,7 +4295,8 @@ const ru: Dict = {  "theme.system_short": "Система",
   "nexy.use_now": "Использовать сейчас",
 
   "cookies.title": "Конфиденциальность и управление файлами cookie",
-  "cookies.description": "Мы используем файлы cookie, чтобы предложить вам наилучший сервис. Вы можете настроить свои предпочтения.",
+  "cookies.description":
+    "Мы используем файлы cookie, чтобы предложить вам наилучший сервис. Вы можете настроить свои предпочтения.",
   "cookies.accept_all": "Принять все",
   "cookies.reject_all": "Отклонить все",
   "cookies.save_settings": "Сохранить настройки",
@@ -4218,9 +4305,11 @@ const ru: Dict = {  "theme.system_short": "Система",
   "cookies.necessary.title": "Необходимые файлы cookie",
   "cookies.necessary.desc": "Требуются для надлежащей работы и базовых функций безопасности сайта.",
   "cookies.analytics.title": "Аналитические файлы cookie",
-  "cookies.analytics.desc": "Позволяют нам анонимно анализировать статистику посещений для улучшения пользовательского интерфейса.",
+  "cookies.analytics.desc":
+    "Позволяют нам анонимно анализировать статистику посещений для улучшения пользовательского интерфейса.",
   "cookies.marketing.title": "Маркетинговые файлы cookie",
-  "cookies.marketing.desc": "Помогают нам предоставлять персонализированный контент в соответствии с вашими интересами.",
+  "cookies.marketing.desc":
+    "Помогают нам предоставлять персонализированный контент в соответствии с вашими интересами.",
   "cookies.cancel": "Назад",
   "help.menu.title": "Помощь и поддержка",
   "help.menu.desc": "Как мы можем вам помочь?",
@@ -4229,10 +4318,12 @@ const ru: Dict = {  "theme.system_short": "Система",
   "help.menu.live.title": "Живой чат",
   "help.menu.live.desc": "Свяжитесь с нашими специалистами поддержки в реальном времени.",
   "help.menu.live.status": "Офлайн",
-  "help.menu.live.toast": "Наша команда живой поддержки сейчас офлайн. Пожалуйста, используйте ИИ-ассистента.",
+  "help.menu.live.toast":
+    "Наша команда живой поддержки сейчас офлайн. Пожалуйста, используйте ИИ-ассистента.",
 };
 
-const ar: Dict = {  "theme.system_short": "النظام",
+const ar: Dict = {
+  "theme.system_short": "النظام",
   "theme.dark_short": "داكن",
   "theme.light_short": "فاتح",
   "intro.skip": "تخطى",
@@ -4297,7 +4388,8 @@ const ar: Dict = {  "theme.system_short": "النظام",
   "brand_kit.colors.title": "لوحة الألوان لدينا",
   "brand_kit.colors.purple": "بنفسجي",
   "brand_kit.colors.black": "أسود",
-  "brand_kit.desc": "يمكنك تنزيل شعارات Fun Teknoloji والمواد المرئية من هنا وإلقاء نظرة على دليل الاستخدام.",
+  "brand_kit.desc":
+    "يمكنك تنزيل شعارات Fun Teknoloji والمواد المرئية من هنا وإلقاء نظرة على دليل الاستخدام.",
   "brand_kit.download_png": "تنزيل PNG",
   "brand_kit.logos.fun_black.desc": "نسخة سوداء للاستخدام على الخلفيات فاتحة اللون.",
   "brand_kit.logos.fun_black.title": "شعار Fun Teknoloji الأسود",
@@ -4411,12 +4503,18 @@ const ar: Dict = {  "theme.system_short": "النظام",
   "home.cta.title": "ابدأ اليوم.",
   "home.faq.a1":
     "Fun Technology هي شركة تقنية متخصصة في الذكاء الاصطناعي وتطوير البرمجيات المخصصة والتحول الرقمي.",
-  "home.faq.a2": "As Fun Technology, we develop our own products. Each product has its own usage models and subscription options.",
-  "home.faq.a3": "لا، بدلاً من القيام بالعمل المستقل أو الاستعانة بمصادر خارجية، فإننا نركز بشكل كامل على تصميم وتطوير منتجاتنا المبتكرة ومشاريع البحث والتطوير.",
-  "home.faq.a4": "نعم، نواصل العمل على العديد من المشاريع الجديدة التي تركز على الذكاء الاصطناعي والأمن السيبراني وتحليل البيانات في مختبرنا.",
-  "home.faq.a5": "نحن منفتحون دائمًا على مقابلة المستثمرين الذين يرغبون في مشاركة رؤيتنا. يمكنكم التواصل معنا مباشرة عبر صفحة اتصل بنا.",
-  "home.faq.a6": "يمكنك مراجعة منتجاتنا النشطة على صفحة المشاريع لدينا والبدء في استخدام مساعدينا مثل Nexy على الفور.",
-  "home.faq.a7": "بابنا مفتوح دائمًا للمهندسين الموهوبين والمصممين ذوي الرؤية. يمكنكم متابعة مناصبنا وإعلاناتنا المفتوحة على حسابنا على LinkedIn.",
+  "home.faq.a2":
+    "As Fun Technology, we develop our own products. Each product has its own usage models and subscription options.",
+  "home.faq.a3":
+    "لا، بدلاً من القيام بالعمل المستقل أو الاستعانة بمصادر خارجية، فإننا نركز بشكل كامل على تصميم وتطوير منتجاتنا المبتكرة ومشاريع البحث والتطوير.",
+  "home.faq.a4":
+    "نعم، نواصل العمل على العديد من المشاريع الجديدة التي تركز على الذكاء الاصطناعي والأمن السيبراني وتحليل البيانات في مختبرنا.",
+  "home.faq.a5":
+    "نحن منفتحون دائمًا على مقابلة المستثمرين الذين يرغبون في مشاركة رؤيتنا. يمكنكم التواصل معنا مباشرة عبر صفحة اتصل بنا.",
+  "home.faq.a6":
+    "يمكنك مراجعة منتجاتنا النشطة على صفحة المشاريع لدينا والبدء في استخدام مساعدينا مثل Nexy على الفور.",
+  "home.faq.a7":
+    "بابنا مفتوح دائمًا للمهندسين الموهوبين والمصممين ذوي الرؤية. يمكنكم متابعة مناصبنا وإعلاناتنا المفتوحة على حسابنا على LinkedIn.",
   "home.faq.badge": "التعليمات",
   "home.faq.desc": "كل ما تتساءل عنه موجود هنا.",
   "home.faq.title": "الأسئلة المتداولة",
@@ -4467,7 +4565,7 @@ const ar: Dict = {  "theme.system_short": "النظام",
   "home.stats.team": "طاقم عمل خبير",
   "home.stats.users": "مستخدم نشط",
   "home.stats.users_count": "10+",
-    "home.whatwedo.text":
+  "home.whatwedo.text":
     "نحن في شركة Fun Technology نقوم بتطوير حلول برمجية مبتكرة مدعومة بالذكاء الاصطناعي لإعداد أعمالك للمستقبل.",
   "inline.contact.message_error": "الرجاء إدخال نص رسالة صالح.",
   "inline.contact.subject_error": "الرجاء إدخال عنوان موضوع ذي معنى.",
@@ -4626,7 +4724,8 @@ const ar: Dict = {  "theme.system_short": "النظام",
   "quakesafe.features.4.title": "المجموعات العائلية",
   "quakesafe.features.5.desc": "يمكنك الوصول إلى الأدلة والخرائط المهمة حتى عند انقطاع الإنترنت.",
   "quakesafe.features.5.title": "وضع غير متصل بالشبكة",
-  "quakesafe.features.6.desc": "مساعد دردشة الذكاء الاصطناعي لتقديم التوجيه والدعم في حالات الطوارئ أثناء وبعد الكارثة.",
+  "quakesafe.features.6.desc":
+    "مساعد دردشة الذكاء الاصطناعي لتقديم التوجيه والدعم في حالات الطوارئ أثناء وبعد الكارثة.",
   "quakesafe.features.6.title": "دردشة الذكاء الاصطناعي",
   "quakesafe.features.7.desc": "القدرة على التواصل بين الأجهزة عند تعطل المحطات الأساسية.",
   "quakesafe.features.7.title": "شبكة شبكية",
@@ -4678,7 +4777,7 @@ const ar: Dict = {  "theme.system_short": "النظام",
   "help.popup": "كيف يمكننا مساعدتك؟",
   "home.faq.q1": "ما هي Fun Technology؟",
   "home.faq.q2": "هل المشاريع والمنتجات التي تطورونها مدفوعة الأجر؟",
-              "blog.index.untitled": "مقال بدون عنوان",
+  "blog.index.untitled": "مقال بدون عنوان",
   "blog.index.category_default": "تكنولوجيا",
   "nexy.resp.pricing.0":
     "Fiyatlandırma politikalarımız üzerinde çalışıyoruz. En güncel paketler için Fiyatlandırma sayfamızı takip edebilirsiniz. Şu an için bekleme listemize katılmak en iyi seçenek!",
@@ -4770,7 +4869,8 @@ const ar: Dict = {  "theme.system_short": "النظام",
   "nexy.use_now": "استخدم الآن",
 
   "cookies.title": "إدارة الخصوصية وملفات تعريف الارتباط",
-  "cookies.description": "نحن نستخدم ملفات تعريف الارتباط لنقدم لك أفضل تجربة. يمكنك تخصيص تفضيلاتك.",
+  "cookies.description":
+    "نحن نستخدم ملفات تعريف الارتباط لنقدم لك أفضل تجربة. يمكنك تخصيص تفضيلاتك.",
   "cookies.accept_all": "قبول الكل",
   "cookies.reject_all": "رفض الكل",
   "cookies.save_settings": "حفظ الخيارات",
@@ -4790,10 +4890,12 @@ const ar: Dict = {  "theme.system_short": "النظام",
   "help.menu.live.title": "الدعم المباشر",
   "help.menu.live.desc": "تواصل مباشرة مع ممثلي الدعم لدينا.",
   "help.menu.live.status": "غير متصل",
-  "help.menu.live.toast": "فريق الدعم المباشر لدينا غير متصل حاليًا. يرجى استخدام مساعد الذكاء الاصطناعي.",
+  "help.menu.live.toast":
+    "فريق الدعم المباشر لدينا غير متصل حاليًا. يرجى استخدام مساعد الذكاء الاصطناعي.",
 };
 
-const it: Dict = {  "theme.system_short": "Sistema",
+const it: Dict = {
+  "theme.system_short": "Sistema",
   "theme.dark_short": "Scuro",
   "theme.light_short": "Chiaro",
   "intro.skip": "Salta",
@@ -4860,7 +4962,8 @@ const it: Dict = {  "theme.system_short": "Sistema",
   "brand_kit.colors.title": "La nostra tavolozza dei colori",
   "brand_kit.colors.purple": "Viola",
   "brand_kit.colors.black": "Nero",
-  "brand_kit.desc": "È possibile scaricare i loghi e i materiali visivi di Fun Teknoloji qui e dare un'occhiata alla guida all'uso.",
+  "brand_kit.desc":
+    "È possibile scaricare i loghi e i materiali visivi di Fun Teknoloji qui e dare un'occhiata alla guida all'uso.",
   "brand_kit.download_png": "Scarica PNG",
   "brand_kit.logos.fun_black.desc": "Versione nera da utilizzare su sfondi chiari.",
   "brand_kit.logos.fun_black.title": "Logo nero di Fun Teknoloji",
@@ -4868,7 +4971,8 @@ const it: Dict = {  "theme.system_short": "Sistema",
   "brand_kit.logos.fun_main.title": "Logo Fun Teknoloji (A colori)",
   "brand_kit.logos.fun_white.desc": "Versione bianca da utilizzare su sfondi scuri.",
   "brand_kit.logos.fun_white.title": "Logo bianco di Fun Teknoloji",
-  "brand_kit.logos.nexy.desc": "Versione PNG del nostro assistente di intelligenza artificiale Nexy.",
+  "brand_kit.logos.nexy.desc":
+    "Versione PNG del nostro assistente di intelligenza artificiale Nexy.",
   "brand_kit.logos.nexy.title": "Assistente Nexy",
   "brand_kit.logos.quakesafe.desc": "Logo ufficiale del nostro progetto QuakeSafe.",
   "brand_kit.logos.quakesafe.title": "Logo QuakeSafe",
@@ -4978,12 +5082,18 @@ const it: Dict = {  "theme.system_short": "Sistema",
   "home.cta.title": "Inizia oggi.",
   "home.faq.a1":
     "Fun Technology è un'azienda tecnologica specializzata in intelligenza artificiale, sviluppo software personalizzato e trasformazione digitale.",
-  "home.faq.a2": "As Fun Technology, we develop our own products. Each product has its own usage models and subscription options.",
-  "home.faq.a3": "No, invece di svolgere lavoro freelance/in outsourcing, ci concentriamo interamente sulla progettazione e sullo sviluppo dei nostri prodotti innovativi e progetti di ricerca e sviluppo.",
-  "home.faq.a4": "Sì, continuiamo a lavorare su tanti nuovi progetti incentrati su intelligenza artificiale, sicurezza informatica e analisi dei dati nel nostro laboratorio.",
-  "home.faq.a5": "Siamo sempre aperti a incontrare investitori che desiderano condividere la nostra visione. Puoi contattarci direttamente tramite la nostra pagina Contatti.",
-  "home.faq.a6": "Puoi rivedere i nostri prodotti attivi sulla nostra pagina Progetti e iniziare subito a utilizzare i nostri assistenti come Nexy.",
-  "home.faq.a7": "La nostra porta è sempre aperta a ingegneri di talento e designer visionari. Puoi seguire le nostre posizioni aperte e gli annunci sul nostro account LinkedIn.",
+  "home.faq.a2":
+    "As Fun Technology, we develop our own products. Each product has its own usage models and subscription options.",
+  "home.faq.a3":
+    "No, invece di svolgere lavoro freelance/in outsourcing, ci concentriamo interamente sulla progettazione e sullo sviluppo dei nostri prodotti innovativi e progetti di ricerca e sviluppo.",
+  "home.faq.a4":
+    "Sì, continuiamo a lavorare su tanti nuovi progetti incentrati su intelligenza artificiale, sicurezza informatica e analisi dei dati nel nostro laboratorio.",
+  "home.faq.a5":
+    "Siamo sempre aperti a incontrare investitori che desiderano condividere la nostra visione. Puoi contattarci direttamente tramite la nostra pagina Contatti.",
+  "home.faq.a6":
+    "Puoi rivedere i nostri prodotti attivi sulla nostra pagina Progetti e iniziare subito a utilizzare i nostri assistenti come Nexy.",
+  "home.faq.a7":
+    "La nostra porta è sempre aperta a ingegneri di talento e designer visionari. Puoi seguire le nostre posizioni aperte e gli annunci sul nostro account LinkedIn.",
   "home.faq.badge": "Domande frequenti",
   "home.faq.desc": "Tutto ciò che ti chiedi è qui.",
   "home.faq.title": "Domande frequenti",
@@ -5043,7 +5153,7 @@ const it: Dict = {  "theme.system_short": "Sistema",
   "home.stats.team": "Personale esperto",
   "home.stats.users": "Utente attivo",
   "home.stats.users_count": "10+",
-    "home.whatwedo.text":
+  "home.whatwedo.text":
     "Come Fun Technology, sviluppiamo soluzioni software innovative supportate dall'intelligenza artificiale per preparare la tua azienda al futuro.",
   "inline.contact.message_error": "Inserisci un testo del messaggio valido.",
   "inline.contact.subject_error": "Inserisci un titolo dell'oggetto significativo.",
@@ -5216,7 +5326,8 @@ const it: Dict = {  "theme.system_short": "Sistema",
   "quakesafe.features.5.desc":
     "Accedi a guide e mappe critiche anche quando Internet non è disponibile.",
   "quakesafe.features.5.title": "Modalità offline",
-  "quakesafe.features.6.desc": "Assistente chat IA che fornisce guida e supporto di emergenza durante e dopo un disastro.",
+  "quakesafe.features.6.desc":
+    "Assistente chat IA che fornisce guida e supporto di emergenza durante e dopo un disastro.",
   "quakesafe.features.6.title": "Chat IA",
   "quakesafe.features.7.desc":
     "Capacità di comunicare tra dispositivi quando le stazioni base non funzionano.",
@@ -5272,7 +5383,7 @@ const it: Dict = {  "theme.system_short": "Sistema",
   "help.popup": "Come possiamo aiutarti?",
   "home.faq.q1": "Cos'è Fun Technology?",
   "home.faq.q2": "I progetti e i prodotti che sviluppate sono a pagamento?",
-              "blog.index.untitled": "Post senza titolo",
+  "blog.index.untitled": "Post senza titolo",
   "blog.index.category_default": "Tecnologia",
   "nexy.resp.pricing.0":
     "Fiyatlandırma politikalarımız üzerinde çalışıyoruz. En güncel paketler için Fiyatlandırma sayfamızı takip edebilirsiniz. Şu an için bekleme listemize katılmak en iyi seçenek!",
@@ -5364,18 +5475,22 @@ const it: Dict = {  "theme.system_short": "Sistema",
   "nexy.use_now": "Usa ora",
 
   "cookies.title": "Gestione della privacy e dei cookie",
-  "cookies.description": "Utilizziamo i cookie per offrirti la migliore esperienza possibile. Puoi personalizzare le tue preferenze.",
+  "cookies.description":
+    "Utilizziamo i cookie per offrirti la migliore esperienza possibile. Puoi personalizzare le tue preferenze.",
   "cookies.accept_all": "Accetta tutto",
   "cookies.reject_all": "Rifiuta tutto",
   "cookies.save_settings": "Salva scelte",
   "cookies.customize": "Personalizza cookie",
   "cookies.required": "Richiesto",
   "cookies.necessary.title": "Cookie necessari",
-  "cookies.necessary.desc": "Richiesto per il corretto funzionamento e le funzionalità di sicurezza di base del sito.",
+  "cookies.necessary.desc":
+    "Richiesto per il corretto funzionamento e le funzionalità di sicurezza di base del sito.",
   "cookies.analytics.title": "Cookie analitici",
-  "cookies.analytics.desc": "Consente di analizzare in modo anonimo le statistiche delle visite per migliorare l'esperienza dell'utente.",
+  "cookies.analytics.desc":
+    "Consente di analizzare in modo anonimo le statistiche delle visite per migliorare l'esperienza dell'utente.",
   "cookies.marketing.title": "Cookie di marketing",
-  "cookies.marketing.desc": "Ci aiuta a fornire contenuti personalizzati in linea con i tuoi interessi.",
+  "cookies.marketing.desc":
+    "Ci aiuta a fornire contenuti personalizzati in linea con i tuoi interessi.",
   "cookies.cancel": "Indietro",
   "help.menu.title": "Aiuto e Supporto",
   "help.menu.desc": "Come possiamo aiutarti?",
@@ -5384,10 +5499,12 @@ const it: Dict = {  "theme.system_short": "Sistema",
   "help.menu.live.title": "Supporto dal vivo",
   "help.menu.live.desc": "Connettiti dal vivo con i nostri operatori.",
   "help.menu.live.status": "Offline",
-  "help.menu.live.toast": "Il nostro team di supporto dal vivo è offline. Ti preghiamo di usare il nostro assistente IA.",
+  "help.menu.live.toast":
+    "Il nostro team di supporto dal vivo è offline. Ti preghiamo di usare il nostro assistente IA.",
 };
 
-const pt: Dict = {  "theme.system_short": "Sistema",
+const pt: Dict = {
+  "theme.system_short": "Sistema",
   "theme.dark_short": "Escuro",
   "theme.light_short": "Claro",
   "intro.skip": "Pular",
@@ -5455,7 +5572,8 @@ const pt: Dict = {  "theme.system_short": "Sistema",
   "brand_kit.colors.title": "Nossa Paleta de Cores",
   "brand_kit.colors.purple": "Roxo",
   "brand_kit.colors.black": "Preto",
-  "brand_kit.desc": "Você pode baixar os logotipos e materiais visuais da Fun Teknoloji aqui e dar uma olhada no guia de uso.",
+  "brand_kit.desc":
+    "Você pode baixar os logotipos e materiais visuais da Fun Teknoloji aqui e dar uma olhada no guia de uso.",
   "brand_kit.download_png": "Baixar PNG",
   "brand_kit.logos.fun_black.desc": "Versão preta para uso em fundos de cores claras.",
   "brand_kit.logos.fun_black.title": "Logotipo Preto da Fun Teknoloji",
@@ -5574,12 +5692,18 @@ const pt: Dict = {  "theme.system_short": "Sistema",
   "home.cta.title": "Comece hoje.",
   "home.faq.a1":
     "A Fun Technology è uma empresa de tecnologia especializada em inteligência artificial, desenvolvimento de software personalizado e transformação digital.",
-  "home.faq.a2": "As Fun Technology, we develop our own products. Each product has its own usage models and subscription options.",
-  "home.faq.a3": "Não, em vez de fazer trabalho freelance/terceirizado, nos concentramos inteiramente em projetar e desenvolver nossos próprios produtos inovadores e projetos de P&D.",
-  "home.faq.a4": "Sim, continuamos trabalhando em muitos novos projetos focados em inteligência artificial, segurança cibernética e análise de dados em nosso laboratório.",
-  "home.faq.a5": "Estamos sempre abertos a conhecer investidores que queiram compartilhar nossa visão. Você pode entrar em contato conosco diretamente através da nossa página de contato.",
-  "home.faq.a6": "Você pode revisar nossos produtos ativos em nossa página Projetos e começar a usar nossos assistentes como o Nexy imediatamente.",
-  "home.faq.a7": "Nossa porta está sempre aberta para engenheiros talentosos e designers visionários. Você pode acompanhar nossas vagas abertas e anúncios em nossa conta do LinkedIn.",
+  "home.faq.a2":
+    "As Fun Technology, we develop our own products. Each product has its own usage models and subscription options.",
+  "home.faq.a3":
+    "Não, em vez de fazer trabalho freelance/terceirizado, nos concentramos inteiramente em projetar e desenvolver nossos próprios produtos inovadores e projetos de P&D.",
+  "home.faq.a4":
+    "Sim, continuamos trabalhando em muitos novos projetos focados em inteligência artificial, segurança cibernética e análise de dados em nosso laboratório.",
+  "home.faq.a5":
+    "Estamos sempre abertos a conhecer investidores que queiram compartilhar nossa visão. Você pode entrar em contato conosco diretamente através da nossa página de contato.",
+  "home.faq.a6":
+    "Você pode revisar nossos produtos ativos em nossa página Projetos e começar a usar nossos assistentes como o Nexy imediatamente.",
+  "home.faq.a7":
+    "Nossa porta está sempre aberta para engenheiros talentosos e designers visionários. Você pode acompanhar nossas vagas abertas e anúncios em nossa conta do LinkedIn.",
   "home.faq.badge": "Perguntas frequentes",
   "home.faq.desc": "Tudo o que você quer saber está aqui.",
   "home.faq.title": "Perguntas frequentes",
@@ -5640,7 +5764,7 @@ const pt: Dict = {  "theme.system_short": "Sistema",
   "home.stats.team": "Equipe especializada",
   "home.stats.users": "Usuário ativo",
   "home.stats.users_count": "10+",
-    "home.whatwedo.text":
+  "home.whatwedo.text":
     "Como Fun Technology, desenvolvemos soluções de software inovadoras apoiadas em inteligência artificial para preparar o seu negócio para o futuro.",
   "inline.contact.message_error": "Por favor insira um texto de mensagem válido.",
   "inline.contact.subject_error": "Insira um título de assunto significativo.",
@@ -5813,7 +5937,8 @@ const pt: Dict = {  "theme.system_short": "Sistema",
   "quakesafe.features.5.desc":
     "Acesse guias e mapas críticos mesmo quando a Internet estiver desligada.",
   "quakesafe.features.5.title": "Modo off-line",
-  "quakesafe.features.6.desc": "Assistente de chat de IA que fornece orientação e suporte de emrgência durante e após um desastre.",
+  "quakesafe.features.6.desc":
+    "Assistente de chat de IA que fornece orientação e suporte de emrgência durante e após um desastre.",
   "quakesafe.features.6.title": "Chat de IA",
   "quakesafe.features.7.desc":
     "Capacidade de comunicação entre dispositivos quando as estações base ficam inoperantes.",
@@ -5868,7 +5993,7 @@ const pt: Dict = {  "theme.system_short": "Sistema",
   "help.popup": "Como podemos ajudar?",
   "home.faq.q1": "O que é Fun Technology?",
   "home.faq.q2": "Os projetos e produtos que você desenvolve são pagos?",
-              "blog.index.untitled": "Post sem título",
+  "blog.index.untitled": "Post sem título",
   "blog.index.category_default": "Tecnologia",
   "nexy.resp.pricing.0":
     "Fiyatlandırma politikalarımız üzerinde çalışıyoruz. En güncel paketler için Fiyatlandırma sayfamızı takip edebilirsiniz. Şu an için bekleme listemize katılmak en iyi seçenek!",
@@ -5960,18 +6085,22 @@ const pt: Dict = {  "theme.system_short": "Sistema",
   "nexy.use_now": "Use agora",
 
   "cookies.title": "Gerenciamento de Privacidade e Cookies",
-  "cookies.description": "Utilizamos cookies para lhe oferecer a melhor experiência possível. Você pode personalizar suas preferências.",
+  "cookies.description":
+    "Utilizamos cookies para lhe oferecer a melhor experiência possível. Você pode personalizar suas preferências.",
   "cookies.accept_all": "Aceitar Todos",
   "cookies.reject_all": "Rejeitar Todos",
   "cookies.save_settings": "Salvar Escolhas",
   "cookies.customize": "Personalizar Cookies",
   "cookies.required": "Obrigatório",
   "cookies.necessary.title": "Cookies Necessários",
-  "cookies.necessary.desc": "Necessários para o funcionamento correto e recursos básicos de segurança do site.",
+  "cookies.necessary.desc":
+    "Necessários para o funcionamento correto e recursos básicos de segurança do site.",
   "cookies.analytics.title": "Cookies Analíticos",
-  "cookies.analytics.desc": "Permite-nos analisar anonimamente as estatísticas de visitas para melhorar a experiência do usuário.",
+  "cookies.analytics.desc":
+    "Permite-nos analisar anonimamente as estatísticas de visitas para melhorar a experiência do usuário.",
   "cookies.marketing.title": "Cookies de Marketing",
-  "cookies.marketing.desc": "Ajuda-nos a fornecer conteúdos personalizados adequados aos seus interesses.",
+  "cookies.marketing.desc":
+    "Ajuda-nos a fornecer conteúdos personalizados adequados aos seus interesses.",
   "cookies.cancel": "Voltar",
   "help.menu.title": "Ajuda e Suporte",
   "help.menu.desc": "Como podemos ajudar?",
@@ -5980,10 +6109,12 @@ const pt: Dict = {  "theme.system_short": "Sistema",
   "help.menu.live.title": "Suporte ao vivo",
   "help.menu.live.desc": "Fale ao vivo com nossos representantes de suporte.",
   "help.menu.live.status": "Offline",
-  "help.menu.live.toast": "Nossa equipe de suporte ao vivo está offline. Por favor, use nosso assistente de IA.",
+  "help.menu.live.toast":
+    "Nossa equipe de suporte ao vivo está offline. Por favor, use nosso assistente de IA.",
 };
 
-const ja: Dict = {  "theme.system_short": "システム",
+const ja: Dict = {
+  "theme.system_short": "システム",
   "theme.dark_short": "ダーク",
   "theme.light_short": "ライト",
   "intro.skip": "スキップ",
@@ -6049,7 +6180,8 @@ const ja: Dict = {  "theme.system_short": "システム",
   "brand_kit.colors.title": "カラーパレット",
   "brand_kit.colors.purple": "紫",
   "brand_kit.colors.black": "黒",
-  "brand_kit.desc": "ここからFun Teknolojiのロゴやビジュアル素材をダウンロードし、使用ガイドを確認できます。",
+  "brand_kit.desc":
+    "ここからFun Teknolojiのロゴやビジュアル素材をダウンロードし、使用ガイドを確認できます。",
   "brand_kit.download_png": "PNGをダウンロード",
   "brand_kit.logos.fun_black.desc": "明るい背景で使用するためのブラックバージョン。",
   "brand_kit.logos.fun_black.title": "Fun Teknoloji ブラックロゴ",
@@ -6172,11 +6304,16 @@ const ja: Dict = {  "theme.system_short": "システム",
     "Fun Technologyは、人工知能、カスタムソフトウェア開発、デジタルトランスフォーメーションを専門とするテクノロジー企業です。",
   "home.faq.a2":
     "はい、お客様のプロジェクトに対して24時間年中無休のテクニカルサポートとメンテナンスサービスを提供しています。",
-  "home.faq.a3": "いいえ、フリーランス/外部委託の仕事をする代わりに、私たちは独自の革新的な製品と研究開発プロジェクトの設計と開発に専念しています。",
-  "home.faq.a4": "はい、私たちは研究室で人工知能、サイバーセキュリティ、データ分析に焦点を当てた多くの新しいプロジェクトに取り組み続けています。",
-  "home.faq.a5": "私たちは、私たちのビジョンを共有したい投資家との出会いをいつでも歓迎しています。お問い合わせページから直接ご連絡いただけます。",
-  "home.faq.a6": "プロジェクト ページでアクティブな製品を確認し、Nexy などのアシスタントをすぐに使い始めることができます。",
-  "home.faq.a7": "私たちの門戸は、才能あるエンジニアや先見の明のあるデザイナーに対して常に開かれています。 LinkedIn アカウントで募集中のポジションやお知らせをフォローできます。",
+  "home.faq.a3":
+    "いいえ、フリーランス/外部委託の仕事をする代わりに、私たちは独自の革新的な製品と研究開発プロジェクトの設計と開発に専念しています。",
+  "home.faq.a4":
+    "はい、私たちは研究室で人工知能、サイバーセキュリティ、データ分析に焦点を当てた多くの新しいプロジェクトに取り組み続けています。",
+  "home.faq.a5":
+    "私たちは、私たちのビジョンを共有したい投資家との出会いをいつでも歓迎しています。お問い合わせページから直接ご連絡いただけます。",
+  "home.faq.a6":
+    "プロジェクト ページでアクティブな製品を確認し、Nexy などのアシスタントをすぐに使い始めることができます。",
+  "home.faq.a7":
+    "私たちの門戸は、才能あるエンジニアや先見の明のあるデザイナーに対して常に開かれています。 LinkedIn アカウントで募集中のポジションやお知らせをフォローできます。",
   "home.faq.badge": "よくある質問",
   "home.faq.desc": "あなたが疑問に思うすべてがここにあります。",
   "home.faq.title": "よくある質問",
@@ -6234,7 +6371,7 @@ const ja: Dict = {  "theme.system_short": "システム",
   "home.stats.team": "専門スタッフ",
   "home.stats.users": "アクティブなユーザー",
   "home.stats.users_count": "10+",
-    "home.whatwedo.text":
+  "home.whatwedo.text":
     "Fun Technology として、私たちはお客様のビジネスを将来に備えるために、人工知能によってサポートされる革新的なソフトウェア ソリューションを開発しています。",
   "inline.contact.message_error": "有効なメッセージ テキストを入力してください。",
   "inline.contact.subject_error": "意味のある件名を入力してください。",
@@ -6396,7 +6533,8 @@ const ja: Dict = {  "theme.system_short": "システム",
   "quakesafe.features.5.desc":
     "インターネットが切断された場合でも、重要なガイドや地図にアクセスできます。",
   "quakesafe.features.5.title": "オフラインモード",
-  "quakesafe.features.6.desc": "災害中および災害後に緊急のガイダンスとサポートを提供するAIチャットアシスタント。",
+  "quakesafe.features.6.desc":
+    "災害中および災害後に緊急のガイダンスとサポートを提供するAIチャットアシスタント。",
   "quakesafe.features.6.title": "AIチャット",
   "quakesafe.features.7.desc": "基地局がダウンした場合でもデバイス間で通信できる機能。",
   "quakesafe.features.7.title": "メッシュネットワーク",
@@ -6448,7 +6586,7 @@ const ja: Dict = {  "theme.system_short": "システム",
   "help.popup": "何かお手伝いしましょうか？",
   "home.faq.q1": "Fun Technologyとは何ですか？",
   "home.faq.q2": "開発しているプロジェクトや製品は有料ですか？",
-              "blog.index.untitled": "無題の記事",
+  "blog.index.untitled": "無題の記事",
   "blog.index.category_default": "テクノロジー",
   "nexy.resp.pricing.0":
     "Fiyatlandırma politikalarımız üzerinde çalışıyoruz. En güncel paketler için Fiyatlandırma sayfamızı takip edebilirsiniz. Şu an için bekleme listemize katılmak en iyi seçenek!",
@@ -6540,7 +6678,8 @@ const ja: Dict = {  "theme.system_short": "システム",
   "nexy.use_now": "今すぐ使う",
 
   "cookies.title": "プライバシーとクッキーの管理",
-  "cookies.description": "最適な体験を提供するためにクッキーを使用しています。設定をカスタマイズできます。",
+  "cookies.description":
+    "最適な体験を提供するためにクッキーを使用しています。設定をカスタマイズできます。",
   "cookies.accept_all": "すべて同意する",
   "cookies.reject_all": "すべて拒否する",
   "cookies.save_settings": "選択を保存する",
@@ -6549,9 +6688,11 @@ const ja: Dict = {  "theme.system_short": "システム",
   "cookies.necessary.title": "必須のクッキー",
   "cookies.necessary.desc": "サイトの適切な動作と基本的なセキュリティ機能のために必要です。",
   "cookies.analytics.title": "分析用クッキー",
-  "cookies.analytics.desc": "ユーザー体験を向上させるために、訪問統計を匿名で分析することを可能にします。",
+  "cookies.analytics.desc":
+    "ユーザー体験を向上させるために、訪問統計を匿名で分析することを可能にします。",
   "cookies.marketing.title": "マーケティング用クッキー",
-  "cookies.marketing.desc": "興味関心に合わせたパーソナライズされたコンテンツの提供をサポートします。",
+  "cookies.marketing.desc":
+    "興味関心に合わせたパーソナライズされたコンテンツの提供をサポートします。",
   "cookies.cancel": "戻る",
   "help.menu.title": "ヘルプ＆サポート",
   "help.menu.desc": "どのようなご用件でしょうか？",
@@ -6560,10 +6701,12 @@ const ja: Dict = {  "theme.system_short": "システム",
   "help.menu.live.title": "ライブサポート",
   "help.menu.live.desc": "サポート担当者とライブでつながります。",
   "help.menu.live.status": "オフライン",
-  "help.menu.live.toast": "現在ライブサポートチームはオフラインです。AIアシスタントをご利用ください。",
+  "help.menu.live.toast":
+    "現在ライブサポートチームはオフラインです。AIアシスタントをご利用ください。",
 };
 
-const zh: Dict = {  "theme.system_short": "系统",
+const zh: Dict = {
+  "theme.system_short": "系统",
   "theme.dark_short": "深色",
   "theme.light_short": "浅色",
   "intro.skip": "跳过",
@@ -6734,12 +6877,17 @@ const zh: Dict = {  "theme.system_short": "系统",
   "home.cta.title": "今天就开始吧。",
   "home.faq.a1":
     "趣味科技（Fun Technology）是一家专注于人工智能、定制软件开发和数字化转型的科技公司。",
-  "home.faq.a2": "As Fun Technology, we develop our own products. Each product has its own usage models and subscription options.",
-  "home.faq.a3": "不，我们不做自由职业/外包工作，而是完全专注于设计和开发我们自己的创新产品和研发项目。",
+  "home.faq.a2":
+    "As Fun Technology, we develop our own products. Each product has its own usage models and subscription options.",
+  "home.faq.a3":
+    "不，我们不做自由职业/外包工作，而是完全专注于设计和开发我们自己的创新产品和研发项目。",
   "home.faq.a4": "是的，我们实验室继续致力于许多专注于人工智能、网络安全和数据分析的新项目。",
-  "home.faq.a5": "我们始终愿意与愿意分享我们愿景的投资者会面。您可以通过我们的联系页面直接联系我们。",
-  "home.faq.a6": "您可以在我们的项目页面上查看我们的活跃产品，并立即开始使用我们的助手，例如 Nexy。",
-  "home.faq.a7": "我们的大门始终向有才华的工程师和有远见的设计师敞开。您可以在我们的 LinkedIn 帐户上关注我们的空缺职位和公告。",
+  "home.faq.a5":
+    "我们始终愿意与愿意分享我们愿景的投资者会面。您可以通过我们的联系页面直接联系我们。",
+  "home.faq.a6":
+    "您可以在我们的项目页面上查看我们的活跃产品，并立即开始使用我们的助手，例如 Nexy。",
+  "home.faq.a7":
+    "我们的大门始终向有才华的工程师和有远见的设计师敞开。您可以在我们的 LinkedIn 帐户上关注我们的空缺职位和公告。",
   "home.faq.badge": "常问问题",
   "home.faq.desc": "你想知道的一切都在这里。",
   "home.faq.title": "常见问题解答",
@@ -6787,7 +6935,7 @@ const zh: Dict = {  "theme.system_short": "系统",
   "home.stats.team": "专家团队",
   "home.stats.users": "活跃用户",
   "home.stats.users_count": "10+",
-          "home.whatwedo.text":
+  "home.whatwedo.text":
     "作为 Fun Technology，我们开发由人工智能支持的创新软件解决方案，帮助您的业务为未来做好准备。",
   "inline.contact.message_error": "请输入有效的消息文本。",
   "inline.contact.subject_error": "请输入有意义的主题标题。",
@@ -6989,7 +7137,7 @@ const zh: Dict = {  "theme.system_short": "系统",
   "help.popup": "我们能为您提供什么帮助？",
   "home.faq.q1": "什么是趣味科技？",
   "home.faq.q2": "您开发的项目和产品是收费的的吗？",
-              "blog.index.untitled": "无题文章",
+  "blog.index.untitled": "无题文章",
   "blog.index.category_default": "科技",
   "nexy.resp.pricing.0":
     "Fiyatlandırma politikalarımız üzerinde çalışıyoruz. En güncel paketler için Fiyatlandırma sayfamızı takip edebilirsiniz. Şu an için bekleme listemize katılmak en iyi seçenek!",
@@ -7123,7 +7271,7 @@ const LangCtx = createContext<Ctx>({
       return dict[key] || dicts.tr[key] || key;
     }
     return key;
-  }
+  },
 });
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
@@ -7205,7 +7353,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
             "title.privacy_policy": "Gizlilik Politikası - Fun Teknoloji",
             "title.nexy": "Nexy Asistan - Fun Teknoloji",
             "title.sitemap": "Site Haritası - Fun Teknoloji",
-};
+          };
           if (fallbacks[titleKey]) {
             document.title = fallbacks[titleKey];
           }

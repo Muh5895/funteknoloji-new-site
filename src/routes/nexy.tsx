@@ -2,24 +2,51 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useLang } from "../lib/i18n";
 import ScrollReveal from "../components/ScrollReveal";
 import ArrowButton from "../components/ArrowButton";
-import { Sparkles, BrainCircuit, MessageCircle, Zap, Globe, Shield, Search, Clock, Languages, ShieldCheck } from "lucide-react";
+import {
+  Sparkles,
+  BrainCircuit,
+  MessageCircle,
+  Zap,
+  Globe,
+  Shield,
+  Search,
+  Clock,
+  Languages,
+  ShieldCheck,
+} from "lucide-react";
 
 export const Route = createFileRoute("/nexy")({
   head: () => ({
     meta: [
       { title: "Nexy - Yapay Zeka Tabanlı Akıllı İş Asistanı" },
-      { name: "description", content: "Nexy; Fun Teknoloji tarafından geliştirilen, 12+ dilde destek veren ve 7/24 kesintisiz, insan benzeri akıcı konuşmalar kurabilen yenilikçi yapay zeka asistanıdır." },
-      { name: "keywords", content: "Nexy, yapay zeka asistanı, akıllı arama, çok dilli yapay zeka, chatbot, Fun Teknoloji AI, müşteri desteği otomasyonu" },
+      {
+        name: "description",
+        content:
+          "Nexy; Fun Teknoloji tarafından geliştirilen, 12+ dilde destek veren ve 7/24 kesintisiz, insan benzeri akıcı konuşmalar kurabilen yenilikçi yapay zeka asistanıdır.",
+      },
+      {
+        name: "keywords",
+        content:
+          "Nexy, yapay zeka asistanı, akıllı arama, çok dilli yapay zeka, chatbot, Fun Teknoloji AI, müşteri desteği otomasyonu",
+      },
       { name: "robots", content: "index, follow" },
       { property: "og:title", content: "Nexy - Yapay Zeka Tabanlı Akıllı İş Asistanı" },
-      { property: "og:description", content: "Saniyeler içinde akıllı yanıtlar, döküman aramaları ve gelişmiş çok dilli diyalog yetenekleriyle Nexy her an yanınızda." },
+      {
+        property: "og:description",
+        content:
+          "Saniyeler içinde akıllı yanıtlar, döküman aramaları ve gelişmiş çok dilli diyalog yetenekleriyle Nexy her an yanınızda.",
+      },
       { property: "og:url", content: "https://funteknoloji.com/nexy" },
       { property: "og:type", content: "website" },
       { property: "og:image", content: "https://funteknoloji.com/nexy.png" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@funteknoloji_" },
       { name: "twitter:title", content: "Nexy - Fun Teknoloji AI Asistanı" },
-      { name: "twitter:description", content: "İşlerinizi kolaylaştıran, dökümanlarınız arasında akıllı arama yapabilen yapay zeka destekli dijital asistan." },
+      {
+        name: "twitter:description",
+        content:
+          "İşlerinizi kolaylaştıran, dökümanlarınız arasında akıllı arama yapabilen yapay zeka destekli dijital asistan.",
+      },
       { name: "twitter:image", content: "https://funteknoloji.com/nexy.png" },
     ],
     links: [{ rel: "canonical", href: "https://funteknoloji.com/nexy" }],
@@ -109,7 +136,9 @@ function NexyPage() {
                         <h2 className="text-2xl sm:text-3xl font-bold text-white">Nexy</h2>
                         <div className="flex items-center gap-2 mt-1">
                           <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-                          <span className="text-xs text-green-500 font-medium uppercase tracking-widest">{t("nexy.status.active")}</span>
+                          <span className="text-xs text-green-500 font-medium uppercase tracking-widest">
+                            {t("nexy.status.active")}
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -199,7 +228,9 @@ function NexyPage() {
                     </div>
                     <div>
                       <h4 className="font-extrabold fun-text text-xl mb-1">24/7</h4>
-                      <p className="text-xs fun-text-muted font-medium">{t("home.stats.support")}</p>
+                      <p className="text-xs fun-text-muted font-medium">
+                        {t("home.stats.support")}
+                      </p>
                     </div>
                   </div>
                   <div className="p-6 rounded-3xl bg-[var(--fun-card)] border border-[var(--fun-stroke-1)] flex items-start gap-4">
@@ -208,7 +239,9 @@ function NexyPage() {
                     </div>
                     <div>
                       <h4 className="font-extrabold fun-text text-xl mb-1">12+</h4>
-                      <p className="text-xs fun-text-muted font-medium">{t("nexy.capabilities.3.title")}</p>
+                      <p className="text-xs fun-text-muted font-medium">
+                        {t("nexy.capabilities.3.title")}
+                      </p>
                     </div>
                   </div>
                   <div className="p-6 rounded-3xl bg-[var(--fun-card)] border border-[var(--fun-stroke-1)] flex items-start gap-4">
@@ -217,7 +250,9 @@ function NexyPage() {
                     </div>
                     <div>
                       <h4 className="font-extrabold fun-text text-xl mb-1">∞</h4>
-                      <p className="text-xs fun-text-muted font-medium">{t("nexy.capabilities.4.title")}</p>
+                      <p className="text-xs fun-text-muted font-medium">
+                        {t("nexy.capabilities.4.title")}
+                      </p>
                     </div>
                   </div>
                   <div className="p-6 rounded-3xl bg-[var(--fun-card)] border border-[var(--fun-stroke-1)] flex items-start gap-4">
@@ -226,7 +261,9 @@ function NexyPage() {
                     </div>
                     <div>
                       <h4 className="font-extrabold fun-text text-xl mb-1">AI</h4>
-                      <p className="text-xs fun-text-muted font-medium">{t("nexy.capabilities.1.title")}</p>
+                      <p className="text-xs fun-text-muted font-medium">
+                        {t("nexy.capabilities.1.title")}
+                      </p>
                     </div>
                   </div>
                 </div>

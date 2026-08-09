@@ -158,8 +158,7 @@ function PostPage() {
           const trimmed = line.trim();
           if (!trimmed) return false;
           // Skip table separator lines
-          if (trimmed.includes("|") && trimmed.replace(/[|:\s-]/g, "").length === 0)
-            return false;
+          if (trimmed.includes("|") && trimmed.replace(/[|:\s-]/g, "").length === 0) return false;
           // Skip lines that are just dashes
           if (trimmed.replace(/[\s-]/g, "").length === 0) return false;
           // Skip code blocks
@@ -481,7 +480,7 @@ function PostPage() {
                 title="X (Twitter)"
               >
                 <svg className="h-3.5 w-3.5 fill-current" viewBox="0 0 24 24">
-                  <path d="M18.244 2.25h3.308l-7.227 7.75 8.502 11.25H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.285L1.254 2.25h6.81l4.7 6.228 5.48-6.228zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z"/>
+                  <path d="M18.244 2.25h3.308l-7.227 7.75 8.502 11.25H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.285L1.254 2.25h6.81l4.7 6.228 5.48-6.228zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z" />
                 </svg>
               </a>
               {/* LinkedIn */}
@@ -493,7 +492,7 @@ function PostPage() {
                 title="LinkedIn"
               >
                 <svg className="h-3.5 w-3.5 fill-current" viewBox="0 0 24 24">
-                  <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.5-.79-1.5-1.764s.534-1.764 1.5-1.764 1.5.79 1.5 1.764-.534 1.764-1.5 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                  <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.5-.79-1.5-1.764s.534-1.764 1.5-1.764 1.5.79 1.5 1.764-.534 1.764-1.5 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
                 </svg>
               </a>
               {/* Facebook */}
@@ -505,7 +504,7 @@ function PostPage() {
                 title="Facebook"
               >
                 <svg className="h-4 w-4 fill-current" viewBox="0 0 24 24">
-                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
                 </svg>
               </a>
               {/* Copy Link Button */}
@@ -517,9 +516,21 @@ function PostPage() {
                 className="h-9 w-9 flex items-center justify-center rounded-full bg-[var(--fun-purple)] hover:bg-[var(--fun-purple)]/90 text-white transition-colors"
                 title="Copy Link"
               >
-                <svg className="h-4 w-4 fill-none stroke-current" strokeWidth={2.5} viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.75" />
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M10.81 15.312a4.5 4.5 0 01-1.242-7.244l4.5-4.5a4.5 4.5 0 016.364 6.364l-1.757 1.75" />
+                <svg
+                  className="h-4 w-4 fill-none stroke-current"
+                  strokeWidth={2.5}
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.75"
+                  />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M10.81 15.312a4.5 4.5 0 01-1.242-7.244l4.5-4.5a4.5 4.5 0 016.364 6.364l-1.757 1.75"
+                  />
                 </svg>
               </button>
             </div>

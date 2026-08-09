@@ -20,19 +20,44 @@ export const Route = createFileRoute("/quakesafe")({
   head: () => ({
     meta: [
       { title: "QuakeSafe - Yapay Zeka Destekli Deprem Güvenliği Altyapısı" },
-      { name: "description", content: "QuakeSafe; yapay zeka ve akıllı sensör ağları kullanarak deprem öncesi, anı ve sonrasında saniyelerin kritik olduğu zamanlarda hayat kurtaran bir deprem güvenliği teknolojisidir." },
-      { name: "keywords", content: "QuakeSafe, deprem güvenliği, anlık deprem uyarısı, afet yönetimi, deprem takip sistemi, mesh ağı, acil durum yardımı" },
+      {
+        name: "description",
+        content:
+          "QuakeSafe; yapay zeka ve akıllı sensör ağları kullanarak deprem öncesi, anı ve sonrasında saniyelerin kritik olduğu zamanlarda hayat kurtaran bir deprem güvenliği teknolojisidir.",
+      },
+      {
+        name: "keywords",
+        content:
+          "QuakeSafe, deprem güvenliği, anlık deprem uyarısı, afet yönetimi, deprem takip sistemi, mesh ağı, acil durum yardımı",
+      },
       { name: "robots", content: "index, follow" },
-      { property: "og:title", content: "QuakeSafe - Yapay Zeka Destekli Deprem Güvenliği Altyapısı" },
-      { property: "og:description", content: "Deprem dalgaları ulaşmadan saniyeler önce kritik uyarılar alın, sevdiklerinizin konumunu anlık takip edin." },
+      {
+        property: "og:title",
+        content: "QuakeSafe - Yapay Zeka Destekli Deprem Güvenliği Altyapısı",
+      },
+      {
+        property: "og:description",
+        content:
+          "Deprem dalgaları ulaşmadan saniyeler önce kritik uyarılar alın, sevdiklerinizin konumunu anlık takip edin.",
+      },
       { property: "og:url", content: "https://funteknoloji.com/quakesafe" },
       { property: "og:type", content: "website" },
-      { property: "og:image", content: "https://funteknoloji.com/assets/logos/quakesafe_seffaf.png" },
+      {
+        property: "og:image",
+        content: "https://funteknoloji.com/assets/logos/quakesafe_seffaf.png",
+      },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@funteknoloji_" },
       { name: "twitter:title", content: "QuakeSafe - Deprem Güvenliği Teknolojileri" },
-      { name: "twitter:description", content: "Deprem anında sevdiklerinizle güvende kalın. Yapay zeka ve mesh ağları ile kesintisiz iletişim." },
-      { name: "twitter:image", content: "https://funteknoloji.com/assets/logos/quakesafe_seffaf.png" },
+      {
+        name: "twitter:description",
+        content:
+          "Deprem anında sevdiklerinizle güvende kalın. Yapay zeka ve mesh ağları ile kesintisiz iletişim.",
+      },
+      {
+        name: "twitter:image",
+        content: "https://funteknoloji.com/assets/logos/quakesafe_seffaf.png",
+      },
     ],
     links: [{ rel: "canonical", href: "https://funteknoloji.com/quakesafe" }],
   }),
@@ -120,7 +145,9 @@ function QuakeSafePage() {
                     className="h-full w-full object-cover"
                   />
                 </div>
-                <span className="text-3xl font-extrabold text-white tracking-tighter">QuakeSafe</span>
+                <span className="text-3xl font-extrabold text-white tracking-tighter">
+                  QuakeSafe
+                </span>
               </div>
 
               <h1 className="text-heading-2 md:text-heading-1 lg:text-heading-huge font-extrabold text-white leading-tight capitalize mb-6">
@@ -184,7 +211,9 @@ function QuakeSafePage() {
               <div className="absolute top-0 left-0 w-full h-full bg-grid-white" />
             </div>
             <div className="relative z-10">
-              <h2 className="text-3xl md:text-6xl font-extrabold mb-8">{t("quakesafe.cta.title")}</h2>
+              <h2 className="text-3xl md:text-6xl font-extrabold mb-8">
+                {t("quakesafe.cta.title")}
+              </h2>
               <p className="text-xl md:text-2xl text-white/80 max-w-[800px] mx-auto mb-12">
                 {t("quakesafe.cta.desc")}
               </p>

@@ -21,7 +21,7 @@ export interface ParsedUA {
  */
 export function parseUserAgent(ua: string, preciseOsVersion?: string): ParsedUA {
   let osName = "Windows"; // Default fallback
-  let osVersion = "11";    // Default fallback
+  let osVersion = "11"; // Default fallback
   let browserName = "Chrome"; // Default fallback
   let browserVersion = "120.0.0"; // Default fallback
 
@@ -130,7 +130,12 @@ export function parseUserAgent(ua: string, preciseOsVersion?: string): ParsedUA 
     browserVersion = match ? match[1] : "11.0";
   } else {
     // Generic fallback parser to find ANY browser-like token
-    const slashTokens = ua.split(/\s+/).filter(token => token.includes("/") && !/Mozilla|AppleWebKit|Gecko|Safari|Chrome|KHTML/i.test(token));
+    const slashTokens = ua
+      .split(/\s+/)
+      .filter(
+        (token) =>
+          token.includes("/") && !/Mozilla|AppleWebKit|Gecko|Safari|Chrome|KHTML/i.test(token),
+      );
     if (slashTokens.length > 0) {
       const lastToken = slashTokens[slashTokens.length - 1];
       const parts = lastToken.split("/");
@@ -163,14 +168,17 @@ export function getResolutionAndScaling(): string {
  */
 export function getNetworkStats() {
   if (typeof window === "undefined") return { effectiveType: "unknown", downlink: 0, rtt: 0 };
-  const conn = (navigator as any).connection || (navigator as any).mozConnection || (navigator as any).webkitConnection;
+  const conn =
+    (navigator as any).connection ||
+    (navigator as any).mozConnection ||
+    (navigator as any).webkitConnection;
   if (!conn) {
     return { effectiveType: "unknown", downlink: 0, rtt: 0 };
   }
   return {
     effectiveType: conn.effectiveType || "unknown",
     downlink: conn.downlink || 0,
-    rtt: conn.rtt || 0
+    rtt: conn.rtt || 0,
   };
 }
 
@@ -195,7 +203,9 @@ if (typeof window !== "undefined") {
   console.error = function (...args) {
     originalConsoleError.apply(console, args);
     try {
-      const msg = args.map(arg => typeof arg === "object" ? JSON.stringify(arg) : String(arg)).join(" ");
+      const msg = args
+        .map((arg) => (typeof arg === "object" ? JSON.stringify(arg) : String(arg)))
+        .join(" ");
       errorLogBuffer.push(`[Console Error]: ${msg}`);
     } catch (_) {}
   };

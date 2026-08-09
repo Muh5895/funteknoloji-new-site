@@ -1,11 +1,41 @@
 import { useState, useRef, useEffect } from "react";
-import { X, ChevronLeft, ArrowLeft, Send, MessageSquare, LogOut, Eye, EyeOff, Bot, Languages, Image as ImageIcon, AlertCircle, Download, Copy, Volume2, VolumeX, Star, Paperclip, FileText, Search as SearchIcon, Maximize2, Minimize2 } from "lucide-react";
+import {
+  X,
+  ChevronLeft,
+  ArrowLeft,
+  Send,
+  MessageSquare,
+  LogOut,
+  Eye,
+  EyeOff,
+  Bot,
+  Languages,
+  Image as ImageIcon,
+  AlertCircle,
+  Download,
+  Copy,
+  Volume2,
+  VolumeX,
+  Star,
+  Paperclip,
+  FileText,
+  Search as SearchIcon,
+  Maximize2,
+  Minimize2,
+  LogIn,
+  ShieldCheck,
+  IdCard,
+} from "lucide-react";
 import { supabase } from "../lib/supabase";
 import { toast } from "sonner";
 import { translateText, translateAnyText } from "../lib/translate";
 import { KNOWLEDGE_BASE } from "../lib/knowledge";
 
-const translateTextHelper = async (text: string, source: string, target: string): Promise<string> => {
+const translateTextHelper = async (
+  text: string,
+  source: string,
+  target: string,
+): Promise<string> => {
   if (!text || source === target) return text;
   try {
     const placeholders: string[] = [];
@@ -44,7 +74,7 @@ const translateTextHelper = async (text: string, source: string, target: string)
     }
 
     const response = await fetch(
-      `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${source}&tl=${target}&dt=t&q=${encodeURIComponent(processedText)}`
+      `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${source}&tl=${target}&dt=t&q=${encodeURIComponent(processedText)}`,
     );
     const data = await response.json();
     let result = data[0].map((item: any) => item[0]).join("");
@@ -69,7 +99,11 @@ const translateTextHelper = async (text: string, source: string, target: string)
   }
 };
 
-const translateTextWithCodeBlocks = async (text: string, source: string, target: string): Promise<string> => {
+const translateTextWithCodeBlocks = async (
+  text: string,
+  source: string,
+  target: string,
+): Promise<string> => {
   if (!text || source === target) return text;
 
   const parts = text.split(/(```[\s\S]*?```)/g);
@@ -90,9 +124,9 @@ const translateTextWithCodeBlocks = async (text: string, source: string, target:
 const cleanLeadingDashes = (text: string): string => {
   if (!text) return text;
   let lines = text.split("\n");
-  const isMultiItemList = lines.filter(l => l.trim().startsWith("-")).length > 1;
+  const isMultiItemList = lines.filter((l) => l.trim().startsWith("-")).length > 1;
   if (!isMultiItemList) {
-    lines = lines.map(line => {
+    lines = lines.map((line) => {
       const trimmed = line.trim();
       if (trimmed.startsWith("- ") && !trimmed.startsWith("- -")) {
         return trimmed.substring(2);
@@ -160,7 +194,7 @@ const translateToTurkish = async (text: string, sourceLang: string): Promise<str
   if (!text || sourceLang === "tr") return text;
   try {
     const response = await fetch(
-      `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${sourceLang}&tl=tr&dt=t&q=${encodeURIComponent(text)}`
+      `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${sourceLang}&tl=tr&dt=t&q=${encodeURIComponent(text)}`,
     );
     const data = await response.json();
     return data[0].map((item: any) => item[0]).join("");
@@ -332,14 +366,16 @@ const localTrans: Record<string, any> = {
     description: "Description",
     descriptionPlaceholder: "Veuillez décrire votre problème en détail...",
     startChat: "Démarrer le chat",
-    translationWarning: "Les messages sont traduits automatiquement et peuvent contenir des erreurs.",
+    translationWarning:
+      "Les messages sont traduits automatiquement et peuvent contenir des erreurs.",
     imageLimitError: "Vous pouvez télécharger un maximum de 5 images.",
     archivedWarning: "Ce chat est terminé. Impossible d'envoyer de nouveaux messages.",
     online: "En ligne",
     onlineAgent: "Agent de support",
     typeMessage: "Tapez votre message...",
     logout: "Se déconnecter",
-    errorInvalidCredentials: "Identifiants de connexion invalides. Veuillez vérifier votre e-mail et mot de passe.",
+    errorInvalidCredentials:
+      "Identifiants de connexion invalides. Veuillez vérifier votre e-mail et mot de passe.",
     errorEmailNotConfirmed: "L'adresse e-mail n'a pas encore été vérifiée.",
     errorUserNotFound: "Utilisateur non trouvé.",
     errorNetwork: "Une erreur réseau est survenue. Veuillez vérifier votre connexion Internet.",
@@ -385,7 +421,8 @@ const localTrans: Record<string, any> = {
     onlineAgent: "Agente de soporte",
     typeMessage: "Escriba su mensaje...",
     logout: "Cerrar sesión",
-    errorInvalidCredentials: "Credenciales de inicio de sesión no válidas. Por favor verifique su correo y contraseña.",
+    errorInvalidCredentials:
+      "Credenciales de inicio de sesión no válidas. Por favor verifique su correo y contraseña.",
     errorEmailNotConfirmed: "La dirección de correo electrónico aún no ha sido verificada.",
     errorUserNotFound: "Usuario no encontrado.",
     errorNetwork: "Ocurrió un error de red. Por favor verifique su conexión a Internet.",
@@ -431,7 +468,8 @@ const localTrans: Record<string, any> = {
     onlineAgent: "Dəstək Nümayəndəsi",
     typeMessage: "Mesajınızı yazın...",
     logout: "Çıxış et",
-    errorInvalidCredentials: "Yanlış giriş məlumatları. Zəhmət olmasa e-poçt və şifrənizi yoxlayın.",
+    errorInvalidCredentials:
+      "Yanlış giriş məlumatları. Zəhmət olmasa e-poçt və şifrənizi yoxlayın.",
     errorEmailNotConfirmed: "E-poçt ünvanı hələ təsdiqlənməyib.",
     errorUserNotFound: "İstifadəçi tapılmadı.",
     errorNetwork: "Şəbəkə xətası baş verdi. Zəhmət olmasa internet bağlantınızı yoxlayın.",
@@ -477,7 +515,8 @@ const localTrans: Record<string, any> = {
     onlineAgent: "Агент поддержки",
     typeMessage: "Введите ваше сообщение...",
     logout: "Выйти",
-    errorInvalidCredentials: "Неверные учетные данные. Пожалуйста, проверьте адрес электронной почты и пароль.",
+    errorInvalidCredentials:
+      "Неверные учетные данные. Пожалуйста, проверьте адрес электронной почты и пароль.",
     errorEmailNotConfirmed: "Адрес электронной почты еще не подтвержден.",
     errorUserNotFound: "Пользователь не найден.",
     errorNetwork: "Произошла сетевая ошибка. Пожалуйста, проверьте подключение к Интернету.",
@@ -523,7 +562,8 @@ const localTrans: Record<string, any> = {
     onlineAgent: "وكيل الدعم",
     typeMessage: "اكتب رسالتك...",
     logout: "تسجيل الخروج",
-    errorInvalidCredentials: "بيانات الاعتماد غير صالحة. يرجى التحقق من البريد الإلكتروني وكلمة المرور.",
+    errorInvalidCredentials:
+      "بيانات الاعتماد غير صالحة. يرجى التحقق من البريد الإلكتروني وكلمة المرور.",
     errorEmailNotConfirmed: "لم يتم تأكيد عنوان البريد الإلكتروني بعد.",
     errorUserNotFound: "المستخدم غير موجود.",
     errorNetwork: "حدث خطأ في الشبكة. يرجى التحقق من اتصالك بالإنترنت.",
@@ -569,10 +609,12 @@ const localTrans: Record<string, any> = {
     onlineAgent: "Agente di supporto",
     typeMessage: "Digita il tuo messaggio...",
     logout: "Esci",
-    errorInvalidCredentials: "Credenziali di accesso non valide. Si prega di controllare l'e-mail e la password.",
+    errorInvalidCredentials:
+      "Credenziali di accesso non valide. Si prega di controllare l'e-mail e la password.",
     errorEmailNotConfirmed: "L'indirizzo e-mail non è stato ancora verificato.",
     errorUserNotFound: "Utente non trovato.",
-    errorNetwork: "Si è verificato un errore di rete. Si prega di controllare la connessione Internet.",
+    errorNetwork:
+      "Si è verificato un errore di rete. Si prega di controllare la connessione Internet.",
     errorGeneric: "Si è verificato un errore durante l'accesso.",
     confirmCloseTitle: "Termina sessione",
     confirmCloseDesc: "Sei sicuro di voler terminare questa sessione di supporto live?",
@@ -615,7 +657,8 @@ const localTrans: Record<string, any> = {
     onlineAgent: "Agente de suporte",
     typeMessage: "Digite sua mensagem...",
     logout: "Sair",
-    errorInvalidCredentials: "Credenciais de login inválidas. Por favor, verifique seu e-mail e senha.",
+    errorInvalidCredentials:
+      "Credenciais de login inválidas. Por favor, verifique seu e-mail e senha.",
     errorEmailNotConfirmed: "O endereço de e-mail ainda não foi verificado.",
     errorUserNotFound: "Usuário não encontrado.",
     errorNetwork: "Ocorreu um erro de rede. Por favor, verifique sua conexão com a Internet.",
@@ -661,7 +704,8 @@ const localTrans: Record<string, any> = {
     onlineAgent: "サポート担当者",
     typeMessage: "メッセージを入力してください...",
     logout: "ログアウト",
-    errorInvalidCredentials: "ログイン情報が無効です。メールアドレスとパスワードを確認してください。",
+    errorInvalidCredentials:
+      "ログイン情報が無効です。メールアドレスとパスワードを確認してください。",
     errorEmailNotConfirmed: "メールアドレスがまだ確認されていません。",
     errorUserNotFound: "ユーザーが見つかりません。",
     errorNetwork: "ネットワークエラーが発生しました。インターネット接続を確認してください。",
@@ -723,7 +767,7 @@ const localTrans: Record<string, any> = {
     statusClosed: "已关闭",
     statusOpen: "已开启",
     searchPlaceholder: "搜索消息...",
-  }
+  },
 };
 
 const getTranslation = (lang: string, key: string): string => {
@@ -739,59 +783,340 @@ interface LiveLoginViewProps {
   lang: string;
 }
 
-export function LiveLoginView({ onBack, onLoginSuccess, lang }: LiveLoginViewProps) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
+const oauthTrans: Record<string, Record<string, string>> = {
+  tr: {
+    oauthLoginTitle: "FunID ile Giriş Yap",
+    authSecure: "Güvenli Kimlik Doğrulama",
+    authSecureDesc:
+      "Canlı destek sistemimiz FunID tescilli ekosistemiyle korunmaktadır. Lütfen aşağıdaki butona tıklayarak giriş yapın.",
+    btnOAuthLogin: "FunID ile Giriş Yap",
+    btnOAuthConnecting: "Bağlanıyor...",
+    authPopupNote:
+      "Giriş yaptıktan sonra bu pencere otomatik olarak kapanacak ve canlı destek ekranına yönlendirileceksiniz.",
+    oauthFail: "Giriş başarısız oldu. Lütfen tekrar deneyin.",
+    popupBlocker: "Pop-up engelleyiciyi kaldırıp tekrar deneyin.",
+    oauthStateFail: "Kimlik doğrulama durumu doğrulaması başarısız oldu.",
+    back: "Geri",
+    loginSuccess: "Giriş başarılı!",
+  },
+  en: {
+    oauthLoginTitle: "Login with FunID",
+    authSecure: "Secure Authentication",
+    authSecureDesc:
+      "Our live support system is secured by the FunID proprietary ecosystem. Please click the button below to sign in.",
+    btnOAuthLogin: "Log In with FunID",
+    btnOAuthConnecting: "Connecting...",
+    authPopupNote:
+      "After logging in, this window will automatically close and you will be redirected to live support.",
+    oauthFail: "Login failed. Please try again.",
+    popupBlocker: "Please disable your pop-up blocker and try again.",
+    oauthStateFail: "Security state validation failed.",
+    back: "Back",
+    loginSuccess: "Login successful!",
+  },
+  de: {
+    oauthLoginTitle: "Mit FunID einloggen",
+    authSecure: "Sichere Authentifizierung",
+    authSecureDesc:
+      "Unser Live-Support-System wird durch das proprietäre FunID-Ökosystem gesichert. Bitte klicken Sie auf die Schaltfläche unten, um sich anzumelden.",
+    btnOAuthLogin: "Mit FunID anmelden",
+    btnOAuthConnecting: "Verbinden...",
+    authPopupNote:
+      "Nach dem Einloggen schließt sich dieses Fenster automatisch und Sie werden zum Live-Support weitergeleitet.",
+    oauthFail: "Anmeldung fehlgeschlagen. Bitte versuchen Sie es erneut.",
+    popupBlocker: "Bitte deaktivieren Sie Ihren Pop-up-Blocker und versuchen Sie es erneut.",
+    oauthStateFail: "Validierung des Sicherheitszustands fehlgeschlagen.",
+    back: "Zurück",
+    loginSuccess: "Anmeldung erfolgreich!",
+  },
+  fr: {
+    oauthLoginTitle: "Se connecter avec FunID",
+    authSecure: "Authentification sécurisée",
+    authSecureDesc:
+      "Notre système de support en direct est sécurisé par l'écosystème exclusif FunID. Veuillez cliquer sur le bouton ci-dessous pour vous connecter.",
+    btnOAuthLogin: "Se connecter avec FunID",
+    btnOAuthConnecting: "Connexion...",
+    authPopupNote:
+      "Après vous être connecté, cette fenêtre se fermera automatiquement et vous serez redirigé vers le support en direct.",
+    oauthFail: "Échec de la connexion. Veuillez réessayer.",
+    popupBlocker: "Veuillez désactiver votre bloqueur de pop-up et réessayer.",
+    oauthStateFail: "Échec de la validation de l'état de sécurité.",
+    back: "Retour",
+    loginSuccess: "Connexion réussie !",
+  },
+  es: {
+    oauthLoginTitle: "Iniciar sesión con FunID",
+    authSecure: "Autenticación segura",
+    authSecureDesc:
+      "Nuestro sistema de soporte en vivo está protegido por el ecosistema patentado de FunID. Haga clic en el botón de abajo para iniciar sesión.",
+    btnOAuthLogin: "Iniciar sesión con FunID",
+    btnOAuthConnecting: "Conectando...",
+    authPopupNote:
+      "Después de iniciar sesión, esta ventana se cerrará automáticamente y será redirigido al soporte en vivo.",
+    oauthFail: "Error de inicio de sesión. Por favor, inténtelo de nuevo.",
+    popupBlocker: "Desactive su bloqueador de ventanas emergentes e inténtelo de nuevo.",
+    oauthStateFail: "Error de validación del estado de seguridad.",
+    back: "Atrás",
+    loginSuccess: "¡Inicio de sesión correcto!",
+  },
+  az: {
+    oauthLoginTitle: "FunID ilə Giriş Et",
+    authSecure: "Təhlükəsiz Kimlik Doğrulaması",
+    authSecureDesc:
+      "Canlı dəstək sistemimiz FunID patentli ekosistemi ilə qorunur. Giriş etmək üçün aşağıdakı düyməyə klikləyin.",
+    btnOAuthLogin: "FunID ilə Giriş Et",
+    btnOAuthConnecting: "Bağlanır...",
+    authPopupNote:
+      "Giriş etdikdən sonra bu pəncərə avtomatik bağlanacaq və canlı dəstək ekranına yönləndiriləceksiniz.",
+    oauthFail: "Giriş uğursuz oldu. Zəhmət olmasa yenidən cəhd edin.",
+    popupBlocker: "Pop-up əngəlləyicini söndürüb yenidən cəhd edin.",
+    oauthStateFail: "Təhlükəsizlik vəziyyəti doğrulaması uğursuz oldu.",
+    back: "Geri",
+    loginSuccess: "Giriş uğurludur!",
+  },
+  ru: {
+    oauthLoginTitle: "Войти через FunID",
+    authSecure: "Безопасная аутентификация",
+    authSecureDesc:
+      "Наша система живой поддержки защищена запатентованной экосистемой FunID. Пожалуйста, нажмите кнопку ниже для входа.",
+    btnOAuthLogin: "Войти через FunID",
+    btnOAuthConnecting: "Соединение...",
+    authPopupNote:
+      "После входа это окно автоматически закроется, и вы будете перенаправлены в живой чат.",
+    oauthFail: "Ошибка входа. Пожалуйста, попробуйте еще раз.",
+    popupBlocker: "Пожалуйста, отключите блокировщик всплывающих окон и попробуйте еще раз.",
+    oauthStateFail: "Ошибка проверки состояния безопасности.",
+    back: "Назад",
+    loginSuccess: "Вход выполнен успешно!",
+  },
+  ar: {
+    oauthLoginTitle: "تسجيل الدخول باستخدام FunID",
+    authSecure: "المصادقة الآمنة",
+    authSecureDesc:
+      "نظام الدعم المباشر لدينا محمي بنظام FunID المتكامل. يرجى النقر على الزر أدناه لتسجيل الدخول.",
+    btnOAuthLogin: "تسجيل الدخول باستخدام FunID",
+    btnOAuthConnecting: "جاري الاتصال...",
+    authPopupNote: "بعد تسجيل الدخول، ستغلق هذه النافذة تلقائيًا وسيتم توجيهك إلى الدعم المباشر.",
+    oauthFail: "فشل تسجيل الدخول. يرجى المحاولة مرة أخرى.",
+    popupBlocker: "يرجى تعطيل مانع النوافذ المنبثقة والمحاولة مرة أخرى.",
+    oauthStateFail: "فشل التحقق من حالة الأمان.",
+    back: "رجوع",
+    loginSuccess: "تم تسجيل الدخول بنجاح!",
+  },
+  it: {
+    oauthLoginTitle: "Accedi con FunID",
+    authSecure: "Autenticazione sicura",
+    authSecureDesc:
+      "Il nostro sistema di supporto dal vivo è protetto dall'ecosistema proprietario FunID. Fare clic sul pulsante sottostante per accedere.",
+    btnOAuthLogin: "Accedi con FunID",
+    btnOAuthConnecting: "Connessione in corso...",
+    authPopupNote:
+      "Dopo l'accesso, questa finestra si chiuderà automaticamente e verrai reindirizzato al supporto dal vivo.",
+    oauthFail: "Accesso fallito. Riprova.",
+    popupBlocker: "Disattiva il blocco pop-up e riprova.",
+    oauthStateFail: "Convalida dello stato di sicurezza fallita.",
+    back: "Indietro",
+    loginSuccess: "Accesso effettuato con successo!",
+  },
+  pt: {
+    oauthLoginTitle: "Entrar com FunID",
+    authSecure: "Autenticação Segura",
+    authSecureDesc:
+      "Nosso sistema de suporte ao vivo é protegido pelo ecossistema proprietário FunID. Clique no botão abaixo para entrar.",
+    btnOAuthLogin: "Entrar com FunID",
+    btnOAuthConnecting: "Conectando...",
+    authPopupNote:
+      "Depois de entrar, esta janela será fechada automaticamente e você será redirecionado para o suporte ao vivo.",
+    oauthFail: "Falha no login. Por favor, tente novamente.",
+    popupBlocker: "Desative o bloqueador de pop-ups e tente novamente.",
+    oauthStateFail: "Falha na validação do estado de segurança.",
+    back: "Voltar",
+    loginSuccess: "Login bem-sucedido!",
+  },
+  ja: {
+    oauthLoginTitle: "FunIDでログイン",
+    authSecure: "安全な認証",
+    authSecureDesc:
+      "当社のライブサポートシステムは、FunID独自のシステムで保護されています。下のボタンをクリックしてログインしてください。",
+    btnOAuthLogin: "FunIDでログイン",
+    btnOAuthConnecting: "接続中...",
+    authPopupNote:
+      "ログイン後、このウィンドウは自動的に閉じられ、ライブサポートにリダイレクトされます。",
+    oauthFail: "ログインに失敗しました。もう一度お試しください。",
+    popupBlocker: "ポップアップブロックを解除してもう一度お試しください。",
+    oauthStateFail: "セキュリティ状態の検証に失敗しました。",
+    back: "戻る",
+    loginSuccess: "ログインに成功しました！",
+  },
+  zh: {
+    oauthLoginTitle: "使用 FunID 登录",
+    authSecure: "安全身份验证",
+    authSecureDesc: "我们的在线客服系统受 FunID 专有生态系统保护。请点击下方按钮登录。",
+    btnOAuthLogin: "使用 FunID 登录",
+    btnOAuthConnecting: "正在连接...",
+    authPopupNote: "登录后，此窗口将自动关闭，您将被重定向到在线客服。",
+    oauthFail: "登录失败。请重试。",
+    popupBlocker: "请禁用弹出窗口拦截器并重试。",
+    oauthStateFail: "安全状态验证失败。",
+    back: "返回",
+    loginSuccess: "登录成功！",
+  },
+};
 
-  const translateSupabaseError = (msg: string): string => {
-    const m = msg.toLowerCase();
-    if (m.includes("invalid login credentials") || m.includes("invalid credentials")) {
-      return getTranslation(lang, "errorInvalidCredentials");
-    }
-    if (m.includes("email not confirmed")) {
-      return getTranslation(lang, "errorEmailNotConfirmed");
-    }
-    if (m.includes("user not found")) {
-      return getTranslation(lang, "errorUserNotFound");
-    }
-    if (m.includes("network")) {
-      return getTranslation(lang, "errorNetwork");
-    }
-    return getTranslation(lang, "errorGeneric") || msg;
+export function LiveLoginView({ onBack, onLoginSuccess, lang }: LiveLoginViewProps) {
+  const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  const getOAuthTrans = (key: string): string => {
+    const normalizedLang = (lang || "tr").toLowerCase();
+    const dict = oauthTrans[normalizedLang] || oauthTrans.en;
+    return dict[key] || oauthTrans.en[key] || key;
   };
 
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!email || !password) {
-      toast.error(getTranslation(lang, "fillFields"));
-      return;
-    }
-    if (!email.includes("@")) {
-      toast.error(getTranslation(lang, "validEmail"));
-      return;
-    }
-
+  const loginWithOAuthId = async (id: string) => {
     setLoading(true);
+    setErrorMessage(null);
     try {
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
+      // 1. Save ID in localStorage to keep user logged in across page reloads
+      localStorage.setItem("oauth_logged_in_id", id);
 
-      if (error) {
-        toast.error(translateSupabaseError(error.message));
-      } else if (data?.user) {
-        toast.success(getTranslation(lang, "loginSuccess"));
-        onLoginSuccess({ email: data.user.email || email });
+      // 2. Fetch profile from Supabase profiles table
+      const { data: profile, error } = await supabase
+        .from("profiles")
+        .select("*")
+        .eq("id", id)
+        .single();
+
+      if (profile && !error) {
+        const userObj = {
+          email: profile.email || `${profile.username || "kullanici"}@funteknoloji.com`,
+          name: profile.full_name || profile.username || "Kullanıcı",
+          id: id,
+        };
+        localStorage.setItem("oauth_user_profile", JSON.stringify(userObj));
+        toast.success(getOAuthTrans("loginSuccess"));
+        onLoginSuccess({ email: userObj.email });
+      } else {
+        // Fallback profile if Supabase profile cannot be queried
+        const fallbackUser = {
+          email: `${id.substring(0, 8)}@funteknoloji.com`,
+          name: "Değerli Müşterimiz",
+          id: id,
+        };
+        localStorage.setItem("oauth_user_profile", JSON.stringify(fallbackUser));
+        toast.success(getOAuthTrans("loginSuccess"));
+        onLoginSuccess({ email: fallbackUser.email });
       }
-    } catch (err: any) {
-      toast.error(translateSupabaseError(err.message || "Login error"));
+    } catch (err) {
+      console.error("OAuth login failed:", err);
+      setErrorMessage(getOAuthTrans("oauthFail"));
     } finally {
       setLoading(false);
     }
   };
+
+  const handleOAuthLogin = () => {
+    setErrorMessage(null);
+    // 1. Set active oauth state in sessionStorage to authorize the callback
+    sessionStorage.setItem("oauth_state_active", "true");
+
+    // 2. Open login popup
+    const width = 520;
+    const height = 620;
+    const left = window.screen.width / 2 - width / 2;
+    const top = window.screen.height / 2 - height / 2;
+
+    const popup = window.open(
+      "https://auth.funteknoloji.com/oauth/login/nexy",
+      "FunID_OAuth_Login",
+      `width=${width},height=${height},left=${left},top=${top},status=no,resizable=yes,scrollbars=yes`,
+    );
+
+    if (!popup) {
+      setErrorMessage(getOAuthTrans("popupBlocker"));
+      return;
+    }
+
+    setLoading(true);
+
+    // 3. Poll the popup URL to detect authentication completion
+    const interval = setInterval(() => {
+      if (!popup || popup.closed) {
+        clearInterval(interval);
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const popupUrl = popup.location.href;
+        if (popupUrl && (popupUrl.includes("id=") || popupUrl.includes("status=success"))) {
+          const urlObj = new URL(popupUrl);
+          const id = urlObj.searchParams.get("id");
+          const status = urlObj.searchParams.get("status");
+
+          if (status === "success" && id) {
+            clearInterval(interval);
+            popup.close();
+
+            const oauthStateActive = sessionStorage.getItem("oauth_state_active") === "true";
+            if (oauthStateActive) {
+              sessionStorage.removeItem("oauth_state_active");
+              loginWithOAuthId(id);
+            } else {
+              setLoading(false);
+              setErrorMessage(getOAuthTrans("oauthStateFail"));
+            }
+          }
+        }
+      } catch (e) {
+        // Expected cross-origin error until redirect matches our domain
+      }
+    }, 500);
+  };
+
+  // Listen to secure postMessage from popup window
+  useEffect(() => {
+    const handleOAuthMessage = (event: MessageEvent) => {
+      // Only accept same-origin messages
+      if (event.origin !== window.location.origin) return;
+
+      if (event.data && event.data.type === "OAUTH_LOGIN_SUCCESS") {
+        const { id } = event.data;
+        if (id) {
+          const oauthStateActive = sessionStorage.getItem("oauth_state_active") === "true";
+          if (oauthStateActive) {
+            sessionStorage.removeItem("oauth_state_active");
+            loginWithOAuthId(id);
+          }
+        }
+      }
+    };
+
+    window.addEventListener("message", handleOAuthMessage);
+    return () => {
+      window.removeEventListener("message", handleOAuthMessage);
+    };
+  }, []);
+
+  // Listen to direct redirects as an alternative/robust fail-safe
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const id = urlParams.get("id");
+    const status = urlParams.get("status");
+
+    if (status === "success" && id) {
+      const oauthStateActive = sessionStorage.getItem("oauth_state_active") === "true";
+      if (oauthStateActive) {
+        sessionStorage.removeItem("oauth_state_active");
+
+        // Clean URL params for beauty and security
+        const cleanUrl = window.location.origin + window.location.pathname;
+        window.history.replaceState({}, document.title, cleanUrl);
+
+        loginWithOAuthId(id);
+      }
+    }
+  }, []);
 
   return (
     <div className="flex-1 flex flex-col h-full bg-[var(--fun-card)] select-none animate-in fade-in duration-300">
@@ -804,91 +1129,59 @@ export function LiveLoginView({ onBack, onLoginSuccess, lang }: LiveLoginViewPro
           <button
             onClick={onBack}
             className="p-2 -ml-1 rounded-lg hover:bg-[var(--fun-stroke-1)] fun-text flex items-center justify-center shrink-0"
-            title={lang === "tr" ? "Geri" : "Back"}
+            title={getOAuthTrans("back")}
           >
             <ChevronLeft className="h-5 w-5" />
           </button>
           <div>
             <h3 className="text-sm sm:text-base font-bold tracking-tight fun-text leading-tight">
-              {getTranslation(lang, "loginTitle")}
+              {getOAuthTrans("oauthLoginTitle")}
             </h3>
-            <p className="text-[10px] sm:text-xs fun-text-muted mt-0.5">
-              {getTranslation(lang, "loginDesc")}
-            </p>
           </div>
         </div>
       </div>
 
-      {/* Form - Top Aligned for proper aesthetic spacing and symmetry */}
-      <form onSubmit={handleLogin} className="flex-1 p-5 sm:p-6 flex flex-col justify-start pt-6 gap-4">
-        <div className="space-y-1.5">
-          <label className="text-xs font-semibold fun-text">
-            {getTranslation(lang, "email")}
-          </label>
-          <input
-            type="email"
-            placeholder="ornek@funteknoloji.com"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="w-full rounded-xl bg-[var(--fun-surface)] border border-[var(--fun-stroke-2)] px-4 py-3 text-xs outline-none focus:border-[var(--fun-purple)] focus:ring-2 focus:ring-[var(--fun-purple)]/20 transition-all fun-text"
-          />
+      {/* Modern Pop-up Login trigger view */}
+      <div className="flex-1 p-6 flex flex-col items-center justify-center text-center gap-6">
+        <div className="w-16 h-16 rounded-3xl bg-[var(--fun-purple)]/10 flex items-center justify-center border border-[var(--fun-purple)]/20 shadow-inner">
+          <IdCard className="h-8 w-8 text-[var(--fun-purple)]" />
         </div>
 
-        <div className="space-y-1.5 relative">
-          <label className="text-xs font-semibold fun-text">
-            {getTranslation(lang, "password")}
-          </label>
-          <div className="relative">
-            <input
-              type={showPassword ? "text" : "password"}
-              placeholder="••••••••"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full rounded-xl bg-[var(--fun-surface)] border border-[var(--fun-stroke-2)] pl-4 pr-10 py-3 text-xs outline-none focus:border-[var(--fun-purple)] focus:ring-2 focus:ring-[var(--fun-purple)]/20 transition-all fun-text"
-            />
-            <button
-              type="button"
-              onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-200 transition-colors"
-            >
-              {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-            </button>
-          </div>
-        </div>
-
-        <div className="flex justify-end -mt-2">
-          <a
-            href="https://account.funteknoloji.com/forgot-password"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-[11px] font-semibold text-[var(--fun-purple)] hover:underline"
-          >
-            {getTranslation(lang, "forgotPassword")}
-          </a>
+        <div className="space-y-2 max-w-sm">
+          <h4 className="text-sm font-bold fun-text">{getOAuthTrans("authSecure")}</h4>
+          <p className="text-xs fun-text-muted leading-relaxed">
+            {getOAuthTrans("authSecureDesc")}
+          </p>
         </div>
 
         <button
-          type="submit"
+          onClick={handleOAuthLogin}
           disabled={loading}
-          className="w-full py-3 px-4 mt-1 rounded-xl bg-[var(--fun-purple)] text-white font-bold text-xs flex items-center justify-center gap-2 hover:scale-[1.01] transition-all shadow-lg shadow-purple-500/20 active:scale-95 disabled:opacity-50"
+          className="w-full max-w-xs py-3.5 px-6 rounded-xl bg-[var(--fun-purple)] text-white font-bold text-xs flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-95 transition-all shadow-lg shadow-purple-500/25 disabled:opacity-50"
         >
-          {loading ? getTranslation(lang, "loggingIn") : getTranslation(lang, "loginBtn")}
+          {loading ? (
+            <>
+              <div className="h-4 w-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+              <span>{getOAuthTrans("btnOAuthConnecting")}</span>
+            </>
+          ) : (
+            <>
+              <LogIn className="h-4 w-4" />
+              <span>{getOAuthTrans("btnOAuthLogin")}</span>
+            </>
+          )}
         </button>
 
-        <div className="text-center mt-1">
-          <span className="text-[11px] fun-text-muted">
-            {getTranslation(lang, "dontHaveAccount")}
-            <a
-              href="https://account.funteknoloji.com/register"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-bold text-[var(--fun-purple)] hover:underline"
-            >
-              {getTranslation(lang, "createOne")}
-            </a>
-          </span>
+        {errorMessage && (
+          <div className="text-[11px] text-red-500 font-semibold max-w-xs leading-normal animate-in fade-in duration-200">
+            {errorMessage}
+          </div>
+        )}
+
+        <div className="text-[10px] fun-text-muted max-w-xs leading-normal">
+          {getOAuthTrans("authPopupNote")}
         </div>
-      </form>
+      </div>
     </div>
   );
 }
@@ -910,9 +1203,40 @@ export function LiveTicketDetailsView({ lang, onBack, onSubmit }: LiveTicketDeta
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const { data: { user } } = await supabase.auth.getUser();
+        // 1. First, check if there is an OAuth session in localStorage
+        const savedProfile = localStorage.getItem("oauth_user_profile");
+        if (savedProfile) {
+          const parsed = JSON.parse(savedProfile);
+          if (parsed.name) {
+            setUserName(parsed.name);
+          }
+          // Fetch real-time from Supabase profiles table as well to make it highly accurate
+          if (parsed.id) {
+            const { data: dbProfile } = await supabase
+              .from("profiles")
+              .select("full_name, username")
+              .eq("id", parsed.id)
+              .single();
+            if (dbProfile) {
+              const name = dbProfile.full_name || dbProfile.username || parsed.name;
+              setUserName(name);
+              // Update localStorage cached profile with the fresh fetched name
+              parsed.name = name;
+              localStorage.setItem("oauth_user_profile", JSON.stringify(parsed));
+            }
+          }
+          return;
+        }
+
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
         if (user) {
-          const fullName = user.user_metadata?.full_name || user.user_metadata?.name || user.email?.split("@")[0] || "Müşteri";
+          const fullName =
+            user.user_metadata?.full_name ||
+            user.user_metadata?.name ||
+            user.email?.split("@")[0] ||
+            "Müşteri";
           setUserName(fullName);
         }
       } catch (err) {
@@ -958,10 +1282,13 @@ export function LiveTicketDetailsView({ lang, onBack, onSubmit }: LiveTicketDeta
       </div>
 
       {/* Form */}
-      <form onSubmit={handleSubmit} className="flex-1 p-5 sm:p-6 flex flex-col gap-4 overflow-y-auto">
+      <form
+        onSubmit={handleSubmit}
+        className="flex-1 p-5 sm:p-6 flex flex-col gap-4 overflow-y-auto"
+      >
         {userName && (
           <div className="text-[11px] sm:text-xs text-[var(--fun-purple)] font-bold px-1">
-            {`${getTranslation(lang, "activeProfile")}${userName}`}
+            {lang === "tr" ? `Aktif Oturum: ${userName}` : `Active Session: ${userName}`}
           </div>
         )}
 
@@ -1023,8 +1350,28 @@ export function LiveTicketDetailsView({ lang, onBack, onSubmit }: LiveTicketDeta
 // LIVE CHAT VIEW (Supports image sending, auto-translation system, auto-translation warning, read-only session)
 interface LiveChatViewProps {
   user: { email: string };
-  messages: { role: "agent" | "user"; text: string; id: string; timestamp: number; files?: AttachedFile[]; englishText?: string; displayedText?: string }[];
-  setMessages: React.Dispatch<React.SetStateAction<{ role: "agent" | "user"; text: string; id: string; timestamp: number; files?: AttachedFile[]; englishText?: string; displayedText?: string }[]>>;
+  messages: {
+    role: "agent" | "user";
+    text: string;
+    id: string;
+    timestamp: number;
+    files?: AttachedFile[];
+    englishText?: string;
+    displayedText?: string;
+  }[];
+  setMessages: React.Dispatch<
+    React.SetStateAction<
+      {
+        role: "agent" | "user";
+        text: string;
+        id: string;
+        timestamp: number;
+        files?: AttachedFile[];
+        englishText?: string;
+        displayedText?: string;
+      }[]
+    >
+  >;
   onBack: () => void;
   onEndSession: () => void;
   onLogout: () => void;
@@ -1052,7 +1399,11 @@ const extractDownloadableData = (text: string): { type: "csv" | "json"; data: st
   return null;
 };
 
-const triggerDataDownload = (data: string, type: "csv" | "json", filename = "funteknoloji-data") => {
+const triggerDataDownload = (
+  data: string,
+  type: "csv" | "json",
+  filename = "funteknoloji-data",
+) => {
   try {
     const mimeType = type === "json" ? "application/json" : "text/csv";
     const extension = type === "json" ? "json" : "csv";
@@ -1090,7 +1441,9 @@ export function LiveChatView({
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [selectedDocument, setSelectedDocument] = useState<AttachedFile | null>(null);
   const [lastSentTimestamp, setLastSentTimestamp] = useState<number>(0);
-  const [isOnline, setIsOnline] = useState<boolean>(typeof window !== "undefined" ? navigator.onLine : true);
+  const [isOnline, setIsOnline] = useState<boolean>(
+    typeof window !== "undefined" ? navigator.onLine : true,
+  );
   const [showSearch, setShowSearch] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [thinkingStage, setThinkingStage] = useState<"checking" | "typing">("checking");
@@ -1115,9 +1468,18 @@ export function LiveChatView({
           accountContext = `\n[USER ACCOUNT CONTEXT]\nEmail: ${userProfile.email}\nFull Name: ${userProfile.name}\nAccount Created At: ${userProfile.createdAt ? new Date(userProfile.createdAt).toLocaleString("tr-TR") : "N/A"}\nEmail Verification Status: ${userProfile.emailConfirmed ? "Verified" : "Unverified"}\nLast Sign-In: ${userProfile.lastSignIn ? new Date(userProfile.lastSignIn).toLocaleString("tr-TR") : "N/A"}\n`;
         }
 
-        const ticketSubject = sessionStorage.getItem("live_support_subject_en") || sessionStorage.getItem("live_support_subject") || "General Support";
-        const ticketImportance = sessionStorage.getItem("live_support_importance_en") || sessionStorage.getItem("live_support_importance") || "Medium";
-        const ticketDescription = sessionStorage.getItem("live_support_description_en") || sessionStorage.getItem("live_support_description") || "";
+        const ticketSubject =
+          sessionStorage.getItem("live_support_subject_en") ||
+          sessionStorage.getItem("live_support_subject") ||
+          "General Support";
+        const ticketImportance =
+          sessionStorage.getItem("live_support_importance_en") ||
+          sessionStorage.getItem("live_support_importance") ||
+          "Medium";
+        const ticketDescription =
+          sessionStorage.getItem("live_support_description_en") ||
+          sessionStorage.getItem("live_support_description") ||
+          "";
 
         let ticketContext = `\n[USER TICKET DETAILS]\nSubject: ${ticketSubject}\nImportance Level: ${ticketImportance}\nUser's Description of the Issue: "${ticketDescription}"\n`;
 
@@ -1130,7 +1492,7 @@ ${KNOWLEDGE_BASE}
 ${accountContext}
 ${ticketContext}
 Do not mention any third-party services like Pollinations or Pulsar. Respond directly in the language of the chat: ${lang}.`,
-          }
+          },
         ];
 
         const historyMessages = messages
@@ -1176,7 +1538,9 @@ Do not mention any third-party services like Pollinations or Pulsar. Respond dir
           let englishResponse = "";
           let token = "";
           try {
-            const { data: { session } } = await supabase.auth.getSession();
+            const {
+              data: { session },
+            } = await supabase.auth.getSession();
             token = session?.access_token || "";
           } catch (e) {}
 
@@ -1184,7 +1548,7 @@ Do not mention any third-party services like Pollinations or Pulsar. Respond dir
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-              ...(token ? { "Authorization": `Bearer ${token}` } : {})
+              ...(token ? { Authorization: `Bearer ${token}` } : {}),
             },
             body: JSON.stringify({
               messages: cleanedMessages,
@@ -1194,7 +1558,7 @@ Do not mention any third-party services like Pollinations or Pulsar. Respond dir
               ticketImportance,
               ticketDescription,
               model: "gemma-3-1b-it",
-              isLiveSupport: true
+              isLiveSupport: true,
             }),
           });
 
@@ -1226,8 +1590,8 @@ Do not mention any third-party services like Pollinations or Pulsar. Respond dir
               id: agentMsgId,
               timestamp: Date.now(),
               displayedText: "",
-              englishText: englishResponse
-            }
+              englishText: englishResponse,
+            },
           ]);
 
           setThinkingStage("typing");
@@ -1235,7 +1599,6 @@ Do not mention any third-party services like Pollinations or Pulsar. Respond dir
             setIsAgentTyping(false);
             setTimeout(() => typeAgentMessage(agentText, agentMsgId), 50);
           }, 800);
-
         } catch (err) {
           setIsAgentTyping(false);
           setPendingOfflineInput(textToResend);
@@ -1312,9 +1675,16 @@ Do not mention any third-party services like Pollinations or Pulsar. Respond dir
     }
 
     // Checking details fallback
-    const mentionsQuery = lastUserText.includes("öde") || lastUserText.includes("abonelik") || lastUserText.includes("bilet") || lastUserText.includes("ticket") || lastUserText.includes("fatura");
+    const mentionsQuery =
+      lastUserText.includes("öde") ||
+      lastUserText.includes("abonelik") ||
+      lastUserText.includes("bilet") ||
+      lastUserText.includes("ticket") ||
+      lastUserText.includes("fatura");
     if (mentionsQuery) {
-      return lang === "tr" ? "Hesap Bilgileriniz Sorgulanıyor..." : "Sourcing secure account details...";
+      return lang === "tr"
+        ? "Hesap Bilgileriniz Sorgulanıyor..."
+        : "Sourcing secure account details...";
     }
 
     return lang === "tr" ? "Düşünüyor..." : "Thinking...";
@@ -1341,12 +1711,34 @@ Do not mention any third-party services like Pollinations or Pulsar. Respond dir
   // Fetch Supabase Auth account details on mount
   useEffect(() => {
     const fetchProfile = async () => {
+      // 1. Check if there is an OAuth user session first
+      const savedProfile = localStorage.getItem("oauth_user_profile");
+      if (savedProfile) {
+        try {
+          const parsed = JSON.parse(savedProfile);
+          setUserProfile({
+            email: parsed.email,
+            name: parsed.name,
+            createdAt: new Date().toISOString(),
+            emailConfirmed: true,
+            lastSignIn: new Date().toISOString(),
+          });
+          return;
+        } catch (e) {}
+      }
+
       try {
-        const { data: { user: sbUser } } = await supabase.auth.getUser();
+        const {
+          data: { user: sbUser },
+        } = await supabase.auth.getUser();
         if (sbUser) {
           setUserProfile({
             email: sbUser.email,
-            name: sbUser.user_metadata?.full_name || sbUser.user_metadata?.name || sbUser.email?.split("@")[0] || "Değerli Müşterimiz",
+            name:
+              sbUser.user_metadata?.full_name ||
+              sbUser.user_metadata?.name ||
+              sbUser.email?.split("@")[0] ||
+              "Değerli Müşterimiz",
             createdAt: sbUser.created_at,
             emailConfirmed: !!sbUser.email_confirmed_at,
             lastSignIn: sbUser.last_sign_in_at,
@@ -1374,9 +1766,7 @@ Do not mention any third-party services like Pollinations or Pulsar. Respond dir
       if (charIndex < fullText.length) {
         currentText += fullText[charIndex];
         setMessages((prev) =>
-          prev.map((m) =>
-            m.id === msgId ? { ...m, displayedText: currentText } : m
-          )
+          prev.map((m) => (m.id === msgId ? { ...m, displayedText: currentText } : m)),
         );
         charIndex++;
       } else {
@@ -1395,15 +1785,18 @@ Do not mention any third-party services like Pollinations or Pulsar. Respond dir
   useEffect(() => {
     if (readOnly) return;
 
-    const inactivityTimeout = setTimeout(() => {
-      toast.info(
-        lang === "tr"
-          ? "Görüşme 5 dakika boyunca hareketsiz kaldığı için otomatik olarak sonlandırıldı."
-          : "Session was automatically closed due to 5 minutes of inactivity."
-      );
-      // Cleanly end support session rather than completely signing out of the entire account
-      onEndSession();
-    }, 5 * 60 * 1000);
+    const inactivityTimeout = setTimeout(
+      () => {
+        toast.info(
+          lang === "tr"
+            ? "Görüşme 5 dakika boyunca hareketsiz kaldığı için otomatik olarak sonlandırıldı."
+            : "Session was automatically closed due to 5 minutes of inactivity.",
+        );
+        // Cleanly end support session rather than completely signing out of the entire account
+        onEndSession();
+      },
+      5 * 60 * 1000,
+    );
 
     return () => {
       clearTimeout(inactivityTimeout);
@@ -1435,9 +1828,10 @@ Do not mention any third-party services like Pollinations or Pulsar. Respond dir
       localStorage.removeItem("live_support_user");
 
       e.preventDefault();
-      e.returnValue = lang === "tr"
-        ? "Canlı destek görüşmeniz devam ediyor. Ayrılmak istediğinize emin misiniz? Çıkarsanız görüşmeniz sonlandırılacaktır."
-        : "Your live support session is active. Are you sure you want to leave? Your session will be terminated.";
+      e.returnValue =
+        lang === "tr"
+          ? "Canlı destek görüşmeniz devam ediyor. Ayrılmak istediğinize emin misiniz? Çıkarsanız görüşmeniz sonlandırılacaktır."
+          : "Your live support session is active. Are you sure you want to leave? Your session will be terminated.";
       return e.returnValue;
     };
 
@@ -1454,7 +1848,7 @@ Do not mention any third-party services like Pollinations or Pulsar. Respond dir
     toast.error(
       lang === "tr"
         ? "Oturum süreniz doldu veya geçersiz. Güvenliğiniz için tekrar giriş yapın."
-        : "Session expired or invalid. Please log in again for your security."
+        : "Session expired or invalid. Please log in again for your security.",
     );
   };
 
@@ -1467,9 +1861,18 @@ Do not mention any third-party services like Pollinations or Pulsar. Respond dir
       setThinkingStage("checking");
       setIsAgentTyping(true);
 
-      const ticketSubject = sessionStorage.getItem("live_support_subject_en") || sessionStorage.getItem("live_support_subject") || "General Support";
-      const ticketImportance = sessionStorage.getItem("live_support_importance_en") || sessionStorage.getItem("live_support_importance") || "Medium";
-      const ticketDescription = sessionStorage.getItem("live_support_description_en") || sessionStorage.getItem("live_support_description") || "";
+      const ticketSubject =
+        sessionStorage.getItem("live_support_subject_en") ||
+        sessionStorage.getItem("live_support_subject") ||
+        "General Support";
+      const ticketImportance =
+        sessionStorage.getItem("live_support_importance_en") ||
+        sessionStorage.getItem("live_support_importance") ||
+        "Medium";
+      const ticketDescription =
+        sessionStorage.getItem("live_support_description_en") ||
+        sessionStorage.getItem("live_support_description") ||
+        "";
 
       const accountContext = `\n[USER ACCOUNT CONTEXT]\nEmail: ${userProfile.email}\nFull Name: ${userProfile.name}\nAccount Created At: ${userProfile.createdAt ? new Date(userProfile.createdAt).toLocaleString("tr-TR") : "N/A"}\nEmail Verification Status: ${userProfile.emailConfirmed ? "Verified" : "Unverified"}\nLast Sign-In: ${userProfile.lastSignIn ? new Date(userProfile.lastSignIn).toLocaleString("tr-TR") : "N/A"}\n`;
 
@@ -1497,7 +1900,7 @@ Do not promote any third-party services like Pollinations or Pulsar. Respond dir
         {
           role: "user",
           content: "Write your welcome message now.",
-        }
+        },
       ];
 
       const cleanMessagesForAPI = (msgs: any[]) => {
@@ -1535,7 +1938,9 @@ Do not promote any third-party services like Pollinations or Pulsar. Respond dir
           // Fetch local Supabase Session securely if user session is available
           let token = "";
           try {
-            const { data: { session } } = await supabase.auth.getSession();
+            const {
+              data: { session },
+            } = await supabase.auth.getSession();
             token = session?.access_token || "";
           } catch (e) {}
 
@@ -1543,7 +1948,7 @@ Do not promote any third-party services like Pollinations or Pulsar. Respond dir
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-              ...(token ? { "Authorization": `Bearer ${token}` } : {})
+              ...(token ? { Authorization: `Bearer ${token}` } : {}),
             },
             body: JSON.stringify({
               messages: cleanedMessages,
@@ -1553,7 +1958,7 @@ Do not promote any third-party services like Pollinations or Pulsar. Respond dir
               ticketImportance,
               ticketDescription,
               model: "gemma-3-1b-it",
-              isLiveSupport: true
+              isLiveSupport: true,
             }),
           });
 
@@ -1575,7 +1980,8 @@ Do not promote any third-party services like Pollinations or Pulsar. Respond dir
           englishResponse = agentText;
         }
 
-        agentText = agentText || `Hello ${userProfile.name}! I am ${agentName}. How can I assist you today?`;
+        agentText =
+          agentText || `Hello ${userProfile.name}! I am ${agentName}. How can I assist you today?`;
         englishResponse = englishResponse || agentText;
 
         agentText = agentText.replace(/\[inceliyor\]/gi, "");
@@ -1597,8 +2003,8 @@ Do not promote any third-party services like Pollinations or Pulsar. Respond dir
             id: agentMsgId,
             timestamp: Date.now(),
             displayedText: "",
-            englishText: englishResponse
-          }
+            englishText: englishResponse,
+          },
         ]);
 
         // Transition stage to typing with organic delay
@@ -1607,7 +2013,6 @@ Do not promote any third-party services like Pollinations or Pulsar. Respond dir
           setIsAgentTyping(false);
           setTimeout(() => typeAgentMessage(agentText, agentMsgId), 50);
         }, 800);
-
       } catch (err) {
         setIsAgentTyping(false);
       }
@@ -1703,11 +2108,11 @@ Do not promote any third-party services like Pollinations or Pulsar. Respond dir
           apikey: "helloworld",
           base64image: base64Image,
           filetype: fileTypeParam,
-          language: "tur"
-        })
+          language: "tur",
+        }),
       });
       if (response.ok) {
-        const data = await response.json() as any;
+        const data = (await response.json()) as any;
         if (data && data.ParsedResults && data.ParsedResults[0]) {
           return data.ParsedResults[0].ParsedText || "";
         }
@@ -1736,10 +2141,10 @@ Do not promote any third-party services like Pollinations or Pulsar. Respond dir
         {
           method: "POST",
           body: blob,
-        }
+        },
       );
       if (response.ok) {
-        const data = await response.json() as any;
+        const data = (await response.json()) as any;
         if (data && data[0] && data[0].generated_text) {
           return data[0].generated_text;
         }
@@ -1766,7 +2171,7 @@ Do not promote any third-party services like Pollinations or Pulsar. Respond dir
         type: file.type || "application/octet-stream",
         size: sizeStr,
         base64: "",
-        isAnalyzing: true
+        isAnalyzing: true,
       };
 
       // Add to list immediately as analyzing placeholder
@@ -1775,7 +2180,7 @@ Do not promote any third-party services like Pollinations or Pulsar. Respond dir
       // Read as base64
       const base64 = await new Promise<string>((resolve) => {
         const reader = new FileReader();
-        reader.onloadend = () => resolve(reader.result as string || "");
+        reader.onloadend = () => resolve((reader.result as string) || "");
         reader.readAsDataURL(file);
       });
 
@@ -1788,7 +2193,7 @@ Do not promote any third-party services like Pollinations or Pulsar. Respond dir
       if (file.type.includes("text/plain") || file.name.endsWith(".txt")) {
         const txtContent = await new Promise<string>((resolve) => {
           const reader = new FileReader();
-          reader.onload = () => resolve(reader.result as string || "");
+          reader.onload = () => resolve((reader.result as string) || "");
           reader.readAsText(file);
         });
         fileObj.extractedText = txtContent;
@@ -1797,7 +2202,7 @@ Do not promote any third-party services like Pollinations or Pulsar. Respond dir
         // Run OCR and Visual Captioning concurrently
         const [ocrText, visualDesc] = await Promise.all([
           runOcrOnImage(base64, file.type || file.name),
-          describeImage(base64)
+          describeImage(base64),
         ]);
 
         let combined = "";
@@ -1817,7 +2222,9 @@ Do not promote any third-party services like Pollinations or Pulsar. Respond dir
       } else if (file.type.includes("pdf") || file.name.endsWith(".pdf")) {
         // Run PDF OCR
         const ocrText = await runOcrOnImage(base64, file.type || file.name);
-        fileObj.extractedText = ocrText ? `PDF Extracted Content:\n${ocrText}` : "[An empty PDF document]";
+        fileObj.extractedText = ocrText
+          ? `PDF Extracted Content:\n${ocrText}`
+          : "[An empty PDF document]";
         fileObj.isAnalyzing = false;
       } else {
         fileObj.extractedText = `[File attachment name: ${file.name}]`;
@@ -1825,9 +2232,7 @@ Do not promote any third-party services like Pollinations or Pulsar. Respond dir
       }
 
       // Update state with finalized file details
-      setAttachedFiles((prev) =>
-        prev.map((f) => (f.name === file.name ? { ...fileObj } : f))
-      );
+      setAttachedFiles((prev) => prev.map((f) => (f.name === file.name ? { ...fileObj } : f)));
     }
 
     if (fileInputRef.current) {
@@ -1852,7 +2257,7 @@ Do not promote any third-party services like Pollinations or Pulsar. Respond dir
       toast.warning(
         lang === "tr"
           ? "Çok hızlı mesaj gönderiyorsunuz. Lütfen biraz bekleyin."
-          : "You are sending messages too fast. Please wait a moment."
+          : "You are sending messages too fast. Please wait a moment.",
       );
       return;
     }
@@ -1873,16 +2278,17 @@ Do not promote any third-party services like Pollinations or Pulsar. Respond dir
           text: userText,
           id: Math.random().toString(36).substring(2, 9),
           timestamp: Date.now(),
-          files: currentAttachedFiles
+          files: currentAttachedFiles,
         };
 
         const systemWarnMsg = {
           role: "agent" as const,
-          text: lang === "tr"
-            ? "⚠️ **İnternet Bağlantısı Yok.** Bağlantınız geri geldiğinde sorunuz otomatik olarak iletilecek ve yanıtlanacaktır."
-            : "⚠️ **No Internet Connection.** Your question will be automatically forwarded and answered once connection is restored.",
+          text:
+            lang === "tr"
+              ? "⚠️ **İnternet Bağlantısı Yok.** Bağlantınız geri geldiğinde sorunuz otomatik olarak iletilecek ve yanıtlanacaktır."
+              : "⚠️ **No Internet Connection.** Your question will be automatically forwarded and answered once connection is restored.",
           id: "system-offline-warn-" + Math.random().toString(36).substring(2, 5),
-          timestamp: Date.now()
+          timestamp: Date.now(),
         };
 
         setMessages((prev) => [...prev, offlineMsg, systemWarnMsg]);
@@ -1899,7 +2305,7 @@ Do not promote any third-party services like Pollinations or Pulsar. Respond dir
         text: userText,
         id: Math.random().toString(36).substring(2, 9),
         timestamp: Date.now(),
-        files: currentAttachedFiles
+        files: currentAttachedFiles,
       };
 
       setMessages((prev) => [...prev, userMsg]);
@@ -1910,9 +2316,16 @@ Do not promote any third-party services like Pollinations or Pulsar. Respond dir
 
       // Combine any pre-extracted OCR text or plain text content from the attached files
       let ocrCombinedText = "";
-      const filesWithText = currentAttachedFiles.filter((f) => f.extractedText && f.extractedText.trim().length > 0);
+      const filesWithText = currentAttachedFiles.filter(
+        (f) => f.extractedText && f.extractedText.trim().length > 0,
+      );
       if (filesWithText.length > 0) {
-        ocrCombinedText = filesWithText.map((f, idx) => `[Attached File #${idx + 1} "${f.name}" Content/OCR Text: "${f.extractedText}"]`).join("\n");
+        ocrCombinedText = filesWithText
+          .map(
+            (f, idx) =>
+              `[Attached File #${idx + 1} "${f.name}" Content/OCR Text: "${f.extractedText}"]`,
+          )
+          .join("\n");
       }
 
       let userTextWithOcr = userText;
@@ -1926,9 +2339,18 @@ Do not promote any third-party services like Pollinations or Pulsar. Respond dir
         accountContext = `\n[USER ACCOUNT CONTEXT]\nEmail: ${userProfile.email}\nFull Name: ${userProfile.name}\nAccount Created At: ${userProfile.createdAt ? new Date(userProfile.createdAt).toLocaleString("tr-TR") : "N/A"}\nEmail Verification Status: ${userProfile.emailConfirmed ? "Verified" : "Unverified"}\nLast Sign-In: ${userProfile.lastSignIn ? new Date(userProfile.lastSignIn).toLocaleString("tr-TR") : "N/A"}\n`;
       }
 
-      const ticketSubject = sessionStorage.getItem("live_support_subject_en") || sessionStorage.getItem("live_support_subject") || "General Support";
-      const ticketImportance = sessionStorage.getItem("live_support_importance_en") || sessionStorage.getItem("live_support_importance") || "Medium";
-      const ticketDescription = sessionStorage.getItem("live_support_description_en") || sessionStorage.getItem("live_support_description") || "";
+      const ticketSubject =
+        sessionStorage.getItem("live_support_subject_en") ||
+        sessionStorage.getItem("live_support_subject") ||
+        "General Support";
+      const ticketImportance =
+        sessionStorage.getItem("live_support_importance_en") ||
+        sessionStorage.getItem("live_support_importance") ||
+        "Medium";
+      const ticketDescription =
+        sessionStorage.getItem("live_support_description_en") ||
+        sessionStorage.getItem("live_support_description") ||
+        "";
 
       let ticketContext = `\n[USER TICKET DETAILS]\nSubject: ${ticketSubject}\nImportance Level: ${ticketImportance}\nUser's Description of the Issue: "${ticketDescription}"\n`;
 
@@ -2033,7 +2455,9 @@ CRITICAL RULES:
           // Fetch local Supabase Session securely if user session is available
           let token = "";
           try {
-            const { data: { session } } = await supabase.auth.getSession();
+            const {
+              data: { session },
+            } = await supabase.auth.getSession();
             token = session?.access_token || "";
           } catch (e) {}
 
@@ -2042,7 +2466,7 @@ CRITICAL RULES:
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-              ...(token ? { "Authorization": `Bearer ${token}` } : {})
+              ...(token ? { Authorization: `Bearer ${token}` } : {}),
             },
             body: JSON.stringify({
               messages: cleanedMessages,
@@ -2052,7 +2476,7 @@ CRITICAL RULES:
               ticketImportance,
               ticketDescription,
               model: "gemma-3-1b-it",
-              isLiveSupport: true
+              isLiveSupport: true,
             }),
           });
 
@@ -2064,8 +2488,15 @@ CRITICAL RULES:
           if (response.ok) {
             const data = await response.json();
             const textCandidate = data.text || "";
-            if (textCandidate.includes("geçici bir yoğunluk") || textCandidate.includes("temporary system congestion") || textCandidate.includes("meşgul") || textCandidate.includes("Sorgunuz işlenirken bir hata oluştu")) {
-              throw new Error("Backend returned a congestion/error response, forcing direct frontend fallback");
+            if (
+              textCandidate.includes("geçici bir yoğunluk") ||
+              textCandidate.includes("temporary system congestion") ||
+              textCandidate.includes("meşgul") ||
+              textCandidate.includes("Sorgunuz işlenirken bir hata oluştu")
+            ) {
+              throw new Error(
+                "Backend returned a congestion/error response, forcing direct frontend fallback",
+              );
             }
             agentText = textCandidate;
             englishResponse = data.englishText || agentText;
@@ -2074,9 +2505,12 @@ CRITICAL RULES:
           }
         } catch (proxyErr) {
           console.error("Vercel backend proxy call failed in handleSend:", proxyErr);
-          const fallbackErrMsg = "Şu an sistemlerimizde geçici bir yoğunluk var. Lütfen biraz sonra tekrar deneyiniz.";
-          const englishErrMsg = "A temporary system congestion occurred. Please try again in a moment.";
-          const translatedMsg = lang === "tr" ? fallbackErrMsg : await translateTextHelper(fallbackErrMsg, "en", lang);
+          const fallbackErrMsg =
+            "Şu an sistemlerimizde geçici bir yoğunluk var. Lütfen biraz sonra tekrar deneyiniz.";
+          const englishErrMsg =
+            "A temporary system congestion occurred. Please try again in a moment.";
+          const translatedMsg =
+            lang === "tr" ? fallbackErrMsg : await translateTextHelper(fallbackErrMsg, "en", lang);
           agentText = translatedMsg;
           englishResponse = englishErrMsg;
         }
@@ -2101,8 +2535,8 @@ CRITICAL RULES:
             id: agentMsgId,
             timestamp: Date.now(),
             displayedText: "",
-            englishText: englishResponse
-          }
+            englishText: englishResponse,
+          },
         ]);
 
         // Transition stage to typing with organic delay
@@ -2111,17 +2545,19 @@ CRITICAL RULES:
           setIsAgentTyping(false);
           setTimeout(() => typeAgentMessage(agentText, agentMsgId), 50);
         }, 800);
-
       } catch (e) {
         setTimeout(() => {
           setMessages((prev) => [
             ...prev,
             {
               role: "agent" as const,
-              text: lang === "tr" ? "Bağlantı hatası oluştu, lütfen tekrar deneyin." : "Connection error, please try again.",
+              text:
+                lang === "tr"
+                  ? "Bağlantı hatası oluştu, lütfen tekrar deneyin."
+                  : "Connection error, please try again.",
               id: Math.random().toString(36).substring(2, 9),
-              timestamp: Date.now()
-            }
+              timestamp: Date.now(),
+            },
           ]);
           setIsAgentTyping(false);
         }, 1500);
@@ -2132,7 +2568,7 @@ CRITICAL RULES:
   };
 
   const filteredMessages = messages.filter((m) =>
-    m.text.toLowerCase().includes(searchQuery.toLowerCase())
+    m.text.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
   return (
@@ -2174,7 +2610,9 @@ CRITICAL RULES:
             <h3 className="text-sm sm:text-base font-bold tracking-tight fun-text leading-tight">
               {agentName}
             </h3>
-            <p className={`text-[10px] sm:text-xs font-semibold mt-0.5 ${readOnly ? "text-red-600 dark:text-red-500 font-bold" : "fun-text-muted"}`}>
+            <p
+              className={`text-[10px] sm:text-xs font-semibold mt-0.5 ${readOnly ? "text-red-600 dark:text-red-500 font-bold" : "fun-text-muted"}`}
+            >
               {readOnly ? getTranslation(lang, "statusClosed") : getTranslation(lang, "statusOpen")}
             </p>
           </div>
@@ -2190,14 +2628,18 @@ CRITICAL RULES:
           {setIsMaximized && (
             <button
               onClick={() => setIsMaximized(!isMaximized)}
-              title={isMaximized ? (lang === "tr" ? "Küçült" : "Minimize") : (lang === "tr" ? "Büyüt" : "Maximize")}
+              title={
+                isMaximized
+                  ? lang === "tr"
+                    ? "Küçült"
+                    : "Minimize"
+                  : lang === "tr"
+                    ? "Büyüt"
+                    : "Maximize"
+              }
               className="h-8 w-8 rounded-full hover:bg-[var(--fun-stroke-1)] flex items-center justify-center fun-text transition-colors"
             >
-              {isMaximized ? (
-                <Minimize2 className="h-4 w-4" />
-              ) : (
-                <Maximize2 className="h-4 w-4" />
-              )}
+              {isMaximized ? <Minimize2 className="h-4 w-4" /> : <Maximize2 className="h-4 w-4" />}
             </button>
           )}
           {!readOnly && (
@@ -2255,7 +2697,9 @@ CRITICAL RULES:
                 {lang === "tr" ? "Destek Sohbeti Başlatıldı" : "Support Chat Started"}
               </p>
               <p className="text-[10px] sm:text-[11px] fun-text-muted max-w-[200px] mt-1 leading-normal">
-                {lang === "tr" ? `Destek asistanımız ${agentName} kısa süre içinde size yardımcı olacaktır.` : `Our support assistant ${agentName} will assist you shortly.`}
+                {lang === "tr"
+                  ? `Destek asistanımız ${agentName} kısa süre içinde size yardımcı olacaktır.`
+                  : `Our support assistant ${agentName} will assist you shortly.`}
               </p>
             </div>
           </div>
@@ -2286,7 +2730,13 @@ CRITICAL RULES:
             cleanedText = cleanedText.trim();
 
             if (!cleanedText && extractDownloadableData(text)) {
-              return <p className="italic text-zinc-400 dark:text-zinc-500">{lang === "tr" ? "Dosyanız başarıyla oluşturuldu:" : "Your file was successfully generated:"}</p>;
+              return (
+                <p className="italic text-zinc-400 dark:text-zinc-500">
+                  {lang === "tr"
+                    ? "Dosyanız başarıyla oluşturuldu:"
+                    : "Your file was successfully generated:"}
+                </p>
+              );
             }
 
             const lines = cleanedText.split("\n");
@@ -2299,7 +2749,10 @@ CRITICAL RULES:
               return parts.map((part, pi) => {
                 if (part.startsWith("**") && part.endsWith("**")) {
                   return (
-                    <strong key={`${key}-${pi}`} className="font-extrabold text-[var(--fun-purple)] dark:text-purple-300">
+                    <strong
+                      key={`${key}-${pi}`}
+                      className="font-extrabold text-[var(--fun-purple)] dark:text-purple-300"
+                    >
                       {part.slice(2, -2)}
                     </strong>
                   );
@@ -2343,9 +2796,15 @@ CRITICAL RULES:
                     </thead>
                     <tbody>
                       {rows.map((row, rowIdx) => (
-                        <tr key={rowIdx} className="hover:bg-[var(--fun-surface)]/50 transition-colors">
+                        <tr
+                          key={rowIdx}
+                          className="hover:bg-[var(--fun-surface)]/50 transition-colors"
+                        >
                           {row.map((cell, cellIdx) => (
-                            <td key={cellIdx} className="p-2.5 border-t border-[var(--fun-stroke-1)]">
+                            <td
+                              key={cellIdx}
+                              className="p-2.5 border-t border-[var(--fun-stroke-1)]"
+                            >
                               {processLine(cell, `td-${rowIdx}-${cellIdx}`)}
                             </td>
                           ))}
@@ -2407,12 +2866,12 @@ CRITICAL RULES:
               {isSystemMsg ? (
                 <div className="w-full max-w-[90%] rounded-2xl p-4 bg-purple-500/5 border border-purple-500/20 text-xs font-medium leading-relaxed fun-text shadow-sm relative overflow-hidden my-2">
                   <div className="absolute top-0 left-0 w-1.5 h-full bg-[var(--fun-purple)]" />
-                  <div className="pl-2">
-                    {renderMessageText(m.text)}
-                  </div>
+                  <div className="pl-2">{renderMessageText(m.text)}</div>
                 </div>
               ) : (
-                <div className={`w-full flex flex-col ${m.role === "user" ? "items-end" : "items-start"}`}>
+                <div
+                  className={`w-full flex flex-col ${m.role === "user" ? "items-end" : "items-start"}`}
+                >
                   <div
                     className={`max-w-[80%] rounded-2xl px-4 py-2.5 text-xs font-medium leading-relaxed break-words overflow-hidden ${m.role === "user" ? "bg-[var(--fun-purple)] text-white rounded-br-none shadow-lg shadow-purple-500/10" : "bg-[var(--fun-surface)] fun-text border border-[var(--fun-stroke-1)] rounded-bl-none shadow-sm"}`}
                   >
@@ -2421,16 +2880,24 @@ CRITICAL RULES:
                       <div className="mb-2.5 space-y-2 max-w-full">
                         {/* Render Images in a Grid */}
                         {m.files.filter((f) => f.type.startsWith("image/")).length > 0 && (
-                          <div className={`grid ${m.files.filter((f) => f.type.startsWith("image/")).length === 1 ? "grid-cols-1" : "grid-cols-2"} gap-2`}>
+                          <div
+                            className={`grid ${m.files.filter((f) => f.type.startsWith("image/")).length === 1 ? "grid-cols-1" : "grid-cols-2"} gap-2`}
+                          >
                             {m.files
                               .filter((f) => f.type.startsWith("image/"))
                               .map((file, idx) => (
                                 <div
                                   key={idx}
-                                  onClick={() => setSelectedImage(file.base64 || file.thumbnail || "")}
+                                  onClick={() =>
+                                    setSelectedImage(file.base64 || file.thumbnail || "")
+                                  }
                                   className="relative h-20 w-20 sm:h-24 sm:w-24 rounded-xl overflow-hidden border border-white/10 shadow-sm cursor-zoom-in hover:scale-[1.03] transition-transform"
                                 >
-                                  <img src={file.base64 || file.thumbnail} alt="Message attachment" className="h-full w-full object-cover" />
+                                  <img
+                                    src={file.base64 || file.thumbnail}
+                                    alt="Message attachment"
+                                    className="h-full w-full object-cover"
+                                  />
                                 </div>
                               ))}
                           </div>
@@ -2466,7 +2933,11 @@ CRITICAL RULES:
 
                     {m.text && (
                       <div className="whitespace-pre-wrap">
-                        {m.role === "user" ? m.text : renderMessageText(m.displayedText !== undefined ? m.displayedText : m.text)}
+                        {m.role === "user"
+                          ? m.text
+                          : renderMessageText(
+                              m.displayedText !== undefined ? m.displayedText : m.text,
+                            )}
 
                         {/* Beautiful One-Time File Download Card directly inside the message bubble */}
                         {(() => {
@@ -2485,7 +2956,9 @@ CRITICAL RULES:
                                       funteknoloji-veri.{extension}
                                     </span>
                                     <span className="text-[9px] text-zinc-500 dark:text-zinc-400 mt-0.5">
-                                      {lang === "tr" ? "Tek Seferlik İndirme" : "One-Time Download Link"}
+                                      {lang === "tr"
+                                        ? "Tek Seferlik İndirme"
+                                        : "One-Time Download Link"}
                                     </span>
                                   </div>
                                 </div>
@@ -2495,7 +2968,11 @@ CRITICAL RULES:
                                     disabled
                                     className="w-full py-1.5 px-3 rounded-lg bg-zinc-200 dark:bg-zinc-850 text-zinc-400 dark:text-zinc-500 text-[10px] font-bold flex items-center justify-center gap-1 cursor-not-allowed"
                                   >
-                                    <span>{lang === "tr" ? "İndirildi (Süresi Doldu)" : "Downloaded (Expired)"}</span>
+                                    <span>
+                                      {lang === "tr"
+                                        ? "İndirildi (Süresi Doldu)"
+                                        : "Downloaded (Expired)"}
+                                    </span>
                                   </button>
                                 ) : (
                                   <button
@@ -2528,7 +3005,13 @@ CRITICAL RULES:
                         title={lang === "tr" ? "Kopyala" : "Copy"}
                       >
                         {copiedId === m.id ? (
-                          <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                          <svg
+                            className="h-3 w-3"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            strokeWidth={3}
+                          >
                             <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                           </svg>
                         ) : (
@@ -2538,7 +3021,13 @@ CRITICAL RULES:
                       <button
                         onClick={() => speak(m.text, m.id)}
                         className={`h-7 w-7 flex items-center justify-center rounded-full border border-[var(--fun-stroke-1)] bg-[var(--fun-card)] fun-text hover:bg-[var(--fun-purple)] hover:text-white transition-all active:scale-95 ${speakingMessageIndex === m.id ? "bg-red-500 text-white border-red-500 hover:bg-red-500" : ""}`}
-                        title={speakingMessageIndex === m.id ? "Durdur" : (lang === "tr" ? "Dinle" : "Speak")}
+                        title={
+                          speakingMessageIndex === m.id
+                            ? "Durdur"
+                            : lang === "tr"
+                              ? "Dinle"
+                              : "Speak"
+                        }
                       >
                         {speakingMessageIndex === m.id ? (
                           <VolumeX className="h-3 w-3" />
@@ -2551,12 +3040,18 @@ CRITICAL RULES:
                         if (downloadable) {
                           return (
                             <button
-                              onClick={() => triggerDataDownload(downloadable.data, downloadable.type)}
+                              onClick={() =>
+                                triggerDataDownload(downloadable.data, downloadable.type)
+                              }
                               className="h-7 px-2.5 flex items-center justify-center gap-1 rounded-full border border-[var(--fun-stroke-1)] bg-[var(--fun-card)] fun-text hover:bg-[var(--fun-purple)] hover:text-white text-[10px] font-bold transition-all active:scale-95"
                               title={lang === "tr" ? "Dosyayı İndir" : "Download File"}
                             >
                               <Download className="h-3 w-3" />
-                              <span>{downloadable.type.toUpperCase() === "JSON" ? "JSON İndir" : "CSV İndir"}</span>
+                              <span>
+                                {downloadable.type.toUpperCase() === "JSON"
+                                  ? "JSON İndir"
+                                  : "CSV İndir"}
+                              </span>
                             </button>
                           );
                         }
@@ -2568,7 +3063,10 @@ CRITICAL RULES:
               )}
               {!isSystemMsg && (
                 <span className="text-[9px] fun-text-muted mt-1 px-1 font-medium opacity-50">
-                  {new Date(m.timestamp).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+                  {new Date(m.timestamp).toLocaleTimeString([], {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })}
                 </span>
               )}
             </div>
@@ -2590,16 +3088,24 @@ CRITICAL RULES:
                     {getAgentThinkingText()}
                   </span>
                   <div className="flex gap-1 items-center shrink-0">
-                    <span className="h-1.5 w-1-5 rounded-full bg-zinc-400 animate-bounce" style={{ animationDelay: "0ms" }}></span>
-                    <span className="h-1.5 w-1-5 rounded-full bg-zinc-400 animate-bounce" style={{ animationDelay: "150ms" }}></span>
-                    <span className="h-1.5 w-1-5 rounded-full bg-zinc-400 animate-bounce" style={{ animationDelay: "300ms" }}></span>
+                    <span
+                      className="h-1.5 w-1-5 rounded-full bg-zinc-400 animate-bounce"
+                      style={{ animationDelay: "0ms" }}
+                    ></span>
+                    <span
+                      className="h-1.5 w-1-5 rounded-full bg-zinc-400 animate-bounce"
+                      style={{ animationDelay: "150ms" }}
+                    ></span>
+                    <span
+                      className="h-1.5 w-1-5 rounded-full bg-zinc-400 animate-bounce"
+                      style={{ animationDelay: "300ms" }}
+                    ></span>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         )}
-
       </div>
 
       {/* Confirmation Close Modal Pop-up */}
@@ -2647,7 +3153,9 @@ CRITICAL RULES:
               {lang === "tr" ? "Görüşmeyi Değerlendirin" : "Rate the Support Session"}
             </h4>
             <p className="text-xs fun-text-muted mb-4 leading-relaxed">
-              {lang === "tr" ? "Hizmet kalitemizi artırmamıza yardımcı olun." : "Help us improve our support quality."}
+              {lang === "tr"
+                ? "Hizmet kalitemizi artırmamıza yardımcı olun."
+                : "Help us improve our support quality."}
             </p>
 
             {/* Stars */}
@@ -2674,7 +3182,11 @@ CRITICAL RULES:
 
             {/* Comment Textarea */}
             <textarea
-              placeholder={lang === "tr" ? "Yorumunuzu veya değerlendirmenizi buraya yazabilirsiniz..." : "Leave your comments or feedback here..."}
+              placeholder={
+                lang === "tr"
+                  ? "Yorumunuzu veya değerlendirmenizi buraya yazabilirsiniz..."
+                  : "Leave your comments or feedback here..."
+              }
               value={comment}
               onChange={(e) => setComment(e.target.value)}
               rows={3}
@@ -2688,11 +3200,16 @@ CRITICAL RULES:
                 // Fix: Verify and fetch the authentic, logged-in user session dynamically before inserting feedback to prevent failures
                 // Securely save the ticket details, rating, and feedback directly into the database on session end
                 try {
-                  const { data: { user } } = await supabase.auth.getUser();
+                  const {
+                    data: { user },
+                  } = await supabase.auth.getUser();
                   if (user) {
-                    const ticketSubject = sessionStorage.getItem("live_support_subject") || "Destek Talebi";
-                    const ticketImportance = sessionStorage.getItem("live_support_importance") || "Orta";
-                    const ticketDescription = sessionStorage.getItem("live_support_description") || "";
+                    const ticketSubject =
+                      sessionStorage.getItem("live_support_subject") || "Destek Talebi";
+                    const ticketImportance =
+                      sessionStorage.getItem("live_support_importance") || "Orta";
+                    const ticketDescription =
+                      sessionStorage.getItem("live_support_description") || "";
 
                     await supabase.from("ai_support_feedback").insert([
                       {
@@ -2701,8 +3218,8 @@ CRITICAL RULES:
                         description: ticketDescription,
                         importance: ticketImportance,
                         rating: rating,
-                        evaluation: comment || ""
-                      }
+                        evaluation: comment || "",
+                      },
                     ]);
                   }
                 } catch (dbErr) {
@@ -2712,8 +3229,11 @@ CRITICAL RULES:
                 toast.success(
                   lang === "tr" ? "Değerlendirmeniz Gönderildi" : "Feedback Submitted",
                   {
-                    description: lang === "tr" ? "Geri bildiriminiz için çok teşekkür ederiz." : "Thank you so much for your feedback.",
-                  }
+                    description:
+                      lang === "tr"
+                        ? "Geri bildiriminiz için çok teşekkür ederiz."
+                        : "Thank you so much for your feedback.",
+                  },
                 );
                 // Call actual close sequence
                 onEndSession();
@@ -2731,21 +3251,46 @@ CRITICAL RULES:
 
       {/* Draft Attached Files previews bar */}
       {attachedFiles.length > 0 && (
-        <div className="h-12 px-3 border-t bg-[var(--fun-surface)]/80 flex items-center gap-2 overflow-x-auto shrink-0 w-full max-w-full no-scrollbar" style={{ borderColor: "var(--fun-stroke-1)" }}>
+        <div
+          className="h-12 px-3 border-t bg-[var(--fun-surface)]/80 flex items-center gap-2 overflow-x-auto shrink-0 w-full max-w-full no-scrollbar"
+          style={{ borderColor: "var(--fun-stroke-1)" }}
+        >
           {attachedFiles.map((file, idx) => {
             const isImg = file.type.startsWith("image/");
             return (
-              <div key={idx} className="relative flex items-center gap-1.5 px-2 py-1 bg-[var(--fun-card)] border border-[var(--fun-stroke-2)] rounded-lg shrink-0 h-8 group">
+              <div
+                key={idx}
+                className="relative flex items-center gap-1.5 px-2 py-1 bg-[var(--fun-card)] border border-[var(--fun-stroke-2)] rounded-lg shrink-0 h-8 group"
+              >
                 {file.isAnalyzing ? (
                   <div className="h-6 w-6 rounded bg-[var(--fun-purple)]/5 border border-[var(--fun-purple)]/25 flex items-center justify-center shrink-0">
-                    <svg className="animate-spin h-3.5 w-3.5 text-[var(--fun-purple)]" fill="none" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.3 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                    <svg
+                      className="animate-spin h-3.5 w-3.5 text-[var(--fun-purple)]"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                      />
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.3 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                      />
                     </svg>
                   </div>
                 ) : isImg ? (
                   <div className="h-6 w-6 rounded overflow-hidden shrink-0 border border-black/10 dark:border-white/10">
-                    <img src={file.base64 || file.thumbnail} alt="draft preview" className="h-full w-full object-cover" />
+                    <img
+                      src={file.base64 || file.thumbnail}
+                      alt="draft preview"
+                      className="h-full w-full object-cover"
+                    />
                   </div>
                 ) : (
                   <div className="h-6 w-6 rounded bg-[var(--fun-purple)]/10 text-[var(--fun-purple)] flex items-center justify-center shrink-0">
@@ -2784,7 +3329,9 @@ CRITICAL RULES:
           className="p-4 border-t bg-[var(--fun-surface)]/50 backdrop-blur-xl shrink-0"
           style={{ borderColor: "var(--fun-stroke-1)" }}
         >
-          <div className={`flex items-center gap-2 ${isMaximized ? "max-w-4xl mx-auto w-full" : ""}`}>
+          <div
+            className={`flex items-center gap-2 ${isMaximized ? "max-w-4xl mx-auto w-full" : ""}`}
+          >
             {/* Generic File Attachment trigger button */}
             <input
               type="file"
@@ -2816,12 +3363,20 @@ CRITICAL RULES:
                   }
                 }}
                 disabled={!isOnline}
-                placeholder={isOnline ? getTranslation(lang, "typeMessage") : (lang === "tr" ? "İnternet bağlantısı yok." : "No internet connection.")}
+                placeholder={
+                  isOnline
+                    ? getTranslation(lang, "typeMessage")
+                    : lang === "tr"
+                      ? "İnternet bağlantısı yok."
+                      : "No internet connection."
+                }
                 className="w-full rounded-[20px] bg-[var(--fun-surface)] border border-[var(--fun-stroke-2)] py-3 pl-4 pr-12 text-xs outline-none focus:border-[var(--fun-purple)] focus:ring-4 focus:ring-[var(--fun-purple)]/10 transition-all fun-text shadow-inner resize-none h-[42px] overflow-y-auto disabled:opacity-55 disabled:cursor-not-allowed"
               />
               <button
                 type="submit"
-                disabled={(!input.trim() && attachedFiles.length === 0) || isAgentTyping || !isOnline}
+                disabled={
+                  (!input.trim() && attachedFiles.length === 0) || isAgentTyping || !isOnline
+                }
                 className="absolute right-2.5 top-[21px] -translate-y-1/2 h-8 w-8 rounded-xl bg-[var(--fun-purple)] text-white flex items-center justify-center hover:scale-105 active:scale-95 transition-all disabled:opacity-30 disabled:hover:scale-100 disabled:cursor-not-allowed shadow-lg shadow-purple-500/30 cursor-pointer z-10"
               >
                 <Send className="h-3.5 w-3.5" />
@@ -2831,15 +3386,21 @@ CRITICAL RULES:
         </form>
       )}
 
-
       {/* Image zoom modal */}
       {selectedImage && (
         <div
           className="fixed inset-0 z-[300] bg-black/80 backdrop-blur-md flex items-center justify-center p-4"
           onClick={() => setSelectedImage(null)}
         >
-          <div className="relative max-w-full max-h-[85vh] animate-in zoom-in-95 duration-200" onClick={(e) => e.stopPropagation()}>
-            <img src={selectedImage} alt="Fullscreen Attachment" className="max-w-full max-h-[80vh] rounded-2xl object-contain shadow-2xl" />
+          <div
+            className="relative max-w-full max-h-[85vh] animate-in zoom-in-95 duration-200"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <img
+              src={selectedImage}
+              alt="Fullscreen Attachment"
+              className="max-w-full max-h-[80vh] rounded-2xl object-contain shadow-2xl"
+            />
             <div className="absolute -top-12 right-0 flex gap-2">
               <a
                 href={selectedImage}
@@ -2903,7 +3464,9 @@ CRITICAL RULES:
                 <div className="h-full flex flex-col items-center justify-center text-center p-4 space-y-2">
                   <FileText className="h-8 w-8 text-zinc-400 animate-pulse" />
                   <p className="text-xs fun-text-muted">
-                    {lang === "tr" ? "Bu belgede okunabilir bir metin içeriği bulunamadı." : "No readable text content found in this document."}
+                    {lang === "tr"
+                      ? "Bu belgede okunabilir bir metin içeriği bulunamadı."
+                      : "No readable text content found in this document."}
                   </p>
                 </div>
               )}
@@ -2916,7 +3479,10 @@ CRITICAL RULES:
                   if (selectedDocument.extractedText) {
                     navigator.clipboard.writeText(selectedDocument.extractedText);
                     toast.success(lang === "tr" ? "Kopyalandı" : "Copied", {
-                      description: lang === "tr" ? "Belge içeriği kopyalandı." : "Document content copied to clipboard."
+                      description:
+                        lang === "tr"
+                          ? "Belge içeriği kopyalandı."
+                          : "Document content copied to clipboard.",
                     });
                   }
                 }}

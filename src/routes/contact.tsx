@@ -10,19 +10,41 @@ export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
       { title: "İletişim ve Destek - Fun Teknoloji" },
-      { name: "description", content: "Fun Teknoloji ile iletişime geçin. Proje teklifleri, teknik destek soruları veya genel bilgi almak için iletişim formumuzu kullanabilirsiniz." },
-      { name: "keywords", content: "Fun Teknoloji iletişim, yazılım teklifi, teknik destek, yapay zeka entegrasyonu, Discord topluluk, support@funteknoloji.com" },
+      {
+        name: "description",
+        content:
+          "Fun Teknoloji ile iletişime geçin. Proje teklifleri, teknik destek soruları veya genel bilgi almak için iletişim formumuzu kullanabilirsiniz.",
+      },
+      {
+        name: "keywords",
+        content:
+          "Fun Teknoloji iletişim, yazılım teklifi, teknik destek, yapay zeka entegrasyonu, Discord topluluk, support@funteknoloji.com",
+      },
       { name: "robots", content: "index, follow" },
       { property: "og:title", content: "İletişim ve Destek - Fun Teknoloji" },
-      { property: "og:description", content: "Sorularınız için buradayız. Fun Teknoloji destek ekibi ve topluluğumuzla doğrudan iletişim kurun." },
+      {
+        property: "og:description",
+        content:
+          "Sorularınız için buradayız. Fun Teknoloji destek ekibi ve topluluğumuzla doğrudan iletişim kurun.",
+      },
       { property: "og:url", content: "https://funteknoloji.com/contact" },
       { property: "og:type", content: "website" },
-      { property: "og:image", content: "https://funteknoloji.com/assets/logos/Fun%20Teknoloji%20Siyah%20Logo.png" },
+      {
+        property: "og:image",
+        content: "https://funteknoloji.com/assets/logos/Fun%20Teknoloji%20Siyah%20Logo.png",
+      },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@funteknoloji_" },
       { name: "twitter:title", content: "İletişim ve Destek - Fun Teknoloji" },
-      { name: "twitter:description", content: "Özel yapay zeka ve yazılım geliştirme projeleriniz için hızlıca bizimle iletişime geçin." },
-      { name: "twitter:image", content: "https://funteknoloji.com/assets/logos/Fun%20Teknoloji%20Siyah%20Logo.png" },
+      {
+        name: "twitter:description",
+        content:
+          "Özel yapay zeka ve yazılım geliştirme projeleriniz için hızlıca bizimle iletişime geçin.",
+      },
+      {
+        name: "twitter:image",
+        content: "https://funteknoloji.com/assets/logos/Fun%20Teknoloji%20Siyah%20Logo.png",
+      },
     ],
     links: [{ rel: "canonical", href: "https://funteknoloji.com/contact" }],
   }),
@@ -254,11 +276,30 @@ function ContactPage() {
                       required
                     />
                   </div>
-                  <button type="submit" disabled={loading} className="btn-fun btn-fun-dark w-full sm:w-auto flex items-center justify-center gap-2">
+                  <button
+                    type="submit"
+                    disabled={loading}
+                    className="btn-fun btn-fun-dark w-full sm:w-auto flex items-center justify-center gap-2"
+                  >
                     {loading ? (
-                      <svg className="animate-spin h-4 w-4 text-current" fill="none" viewBox="0 0 24 24">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                      <svg
+                        className="animate-spin h-4 w-4 text-current"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <circle
+                          className="opacity-25"
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          stroke="currentColor"
+                          strokeWidth="4"
+                        />
+                        <path
+                          className="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                        />
                       </svg>
                     ) : (
                       <>
@@ -368,9 +409,24 @@ function ContactPage() {
                 className="flex-1 btn-fun btn-fun-dark !py-3 flex items-center justify-center"
               >
                 {loading ? (
-                  <svg className="animate-spin h-4 w-4 text-current" fill="none" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                  <svg
+                    className="animate-spin h-4 w-4 text-current"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    />
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    />
                   </svg>
                 ) : (
                   t("contact.captcha.verify")

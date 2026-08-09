@@ -231,7 +231,6 @@ export default function Header() {
               >
                 {t("nav.team")}
               </Link>
-
             </MobileAccordion>
 
             <MobileAccordion label={t("nav.platform")}>

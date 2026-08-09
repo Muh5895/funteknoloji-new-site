@@ -42,7 +42,9 @@ export default defineConfig({
                   // Mock VercelRequest and VercelResponse
                   const vercelReq = Object.assign(req, {
                     body,
-                    query: Object.fromEntries(new URL(req.url || "", `http://${req.headers.host}`).searchParams),
+                    query: Object.fromEntries(
+                      new URL(req.url || "", `http://${req.headers.host}`).searchParams,
+                    ),
                   }) as any;
 
                   const vercelRes = {
@@ -58,10 +60,15 @@ export default defineConfig({
                       res.end(text);
                       return vercelRes;
                     },
+                    json(data: any) {
+                      res.setHeader("Content-Type", "application/json");
+                      res.end(JSON.stringify(data));
+                      return vercelRes;
+                    },
                     end() {
                       res.end();
                       return vercelRes;
-                    }
+                    },
                   } as any;
 
                   await handler(vercelReq, vercelRes);
@@ -74,8 +81,8 @@ export default defineConfig({
             }
             next();
           });
-        }
-      }
+        },
+      },
     ],
     server: {
       proxy: {

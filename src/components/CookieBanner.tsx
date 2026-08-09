@@ -1,7 +1,12 @@
 import { useState, useEffect } from "react";
 import { useLang } from "../lib/i18n";
 import { submitCookieConsent } from "../lib/engine";
-import { parseUserAgent, getResolutionAndScaling, getNetworkStats, getCapturedConsoleErrors } from "../lib/utils";
+import {
+  parseUserAgent,
+  getResolutionAndScaling,
+  getNetworkStats,
+  getCapturedConsoleErrors,
+} from "../lib/utils";
 import { Settings, ShieldCheck } from "lucide-react";
 
 export default function CookieBanner() {
@@ -64,7 +69,11 @@ export default function CookieBanner() {
     if (/(tablet|ipad|playbook|silk)|(android(?!.*mobi))/i.test(ua)) {
       return "tablet";
     }
-    if (/Mobile|iP(hone|od)|Android|BlackBerry|IEMobile|Kindle|Silk-Accelerated|(hpw|web)OS|Opera M(obi|ini)/i.test(ua)) {
+    if (
+      /Mobile|iP(hone|od)|Android|BlackBerry|IEMobile|Kindle|Silk-Accelerated|(hpw|web)OS|Opera M(obi|ini)/i.test(
+        ua,
+      )
+    ) {
       return "mobile";
     }
     return "desktop";
@@ -88,7 +97,7 @@ export default function CookieBanner() {
           "platformVersion",
           "architecture",
           "model",
-          "uaFullVersion"
+          "uaFullVersion",
         ]);
         if (highEntropyValues.platformVersion) {
           const majorVersion = parseInt(highEntropyValues.platformVersion.split(".")[0], 10);
@@ -135,7 +144,7 @@ export default function CookieBanner() {
       network_rtt: network.rtt,
 
       // Captured Console error details
-      console_errors: consoleErrors || undefined
+      console_errors: consoleErrors || undefined,
     };
 
     await submitCookieConsent(payload);
@@ -150,7 +159,7 @@ export default function CookieBanner() {
         style={{
           backgroundColor: "var(--fun-card)",
           borderColor: "var(--fun-stroke-1)",
-          color: "var(--fun-text)"
+          color: "var(--fun-text)",
         }}
       >
         <div className="flex items-center gap-3">
@@ -162,9 +171,7 @@ export default function CookieBanner() {
 
         {!showSettings ? (
           <div className="mt-3.5 space-y-4">
-            <p className="text-xs fun-text-muted leading-relaxed">
-              {t("cookies.description")}
-            </p>
+            <p className="text-xs fun-text-muted leading-relaxed">{t("cookies.description")}</p>
             <div className="flex flex-col sm:flex-row gap-2.5 pt-0.5">
               <button
                 onClick={() => handleConsent(true, true)}
@@ -189,9 +196,13 @@ export default function CookieBanner() {
                 <div className="flex-1 pr-3">
                   <div className="flex items-center gap-1.5">
                     <h4 className="text-xs font-bold">{t("cookies.necessary.title")}</h4>
-                    <span className="text-[9px] font-semibold bg-[var(--fun-purple)]/10 text-[var(--fun-purple)] px-1.5 py-0.5 rounded-md uppercase tracking-wider">{t("cookies.required")}</span>
+                    <span className="text-[9px] font-semibold bg-[var(--fun-purple)]/10 text-[var(--fun-purple)] px-1.5 py-0.5 rounded-md uppercase tracking-wider">
+                      {t("cookies.required")}
+                    </span>
                   </div>
-                  <p className="text-[10px] fun-text-muted mt-0.5 leading-normal">{t("cookies.necessary.desc")}</p>
+                  <p className="text-[10px] fun-text-muted mt-0.5 leading-normal">
+                    {t("cookies.necessary.desc")}
+                  </p>
                 </div>
                 <label className="relative inline-flex items-center cursor-not-allowed shrink-0">
                   <input type="checkbox" checked disabled className="sr-only peer" />
@@ -202,48 +213,46 @@ export default function CookieBanner() {
               {/* Analytics */}
               <div
                 className="flex items-center justify-between p-3 rounded-xl bg-[var(--fun-surface)] border border-[var(--fun-stroke-2)] hover:border-[var(--fun-purple)]/30 transition-all cursor-pointer select-none"
-                onClick={() => setConsent(prev => ({ ...prev, analytics: !prev.analytics }))}
+                onClick={() => setConsent((prev) => ({ ...prev, analytics: !prev.analytics }))}
               >
                 <div className="flex-1 pr-3">
                   <h4 className="text-xs font-bold">{t("cookies.analytics.title")}</h4>
-                  <p className="text-[10px] fun-text-muted mt-0.5 leading-normal">{t("cookies.analytics.desc")}</p>
+                  <p className="text-[10px] fun-text-muted mt-0.5 leading-normal">
+                    {t("cookies.analytics.desc")}
+                  </p>
                 </div>
                 <div className="relative inline-flex items-center shrink-0 pointer-events-none">
-                  <input
-                    type="checkbox"
-                    checked={consent.analytics}
-                    readOnly
-                    className="sr-only"
-                  />
-                  <div className={`w-8 h-4.5 rounded-full transition-colors relative after:content-[''] after:absolute after:top-[2px] after:bg-white after:rounded-full after:h-3.5 after:w-3.5 after:transition-all ${
-                    consent.analytics
-                      ? "bg-[var(--fun-purple)] after:right-[2px]"
-                      : "bg-gray-300 dark:bg-zinc-700 after:left-[2px]"
-                  }`}></div>
+                  <input type="checkbox" checked={consent.analytics} readOnly className="sr-only" />
+                  <div
+                    className={`w-8 h-4.5 rounded-full transition-colors relative after:content-[''] after:absolute after:top-[2px] after:bg-white after:rounded-full after:h-3.5 after:w-3.5 after:transition-all ${
+                      consent.analytics
+                        ? "bg-[var(--fun-purple)] after:right-[2px]"
+                        : "bg-gray-300 dark:bg-zinc-700 after:left-[2px]"
+                    }`}
+                  ></div>
                 </div>
               </div>
 
               {/* Marketing */}
               <div
                 className="flex items-center justify-between p-3 rounded-xl bg-[var(--fun-surface)] border border-[var(--fun-stroke-2)] hover:border-[var(--fun-purple)]/30 transition-all cursor-pointer select-none"
-                onClick={() => setConsent(prev => ({ ...prev, marketing: !prev.marketing }))}
+                onClick={() => setConsent((prev) => ({ ...prev, marketing: !prev.marketing }))}
               >
                 <div className="flex-1 pr-3">
                   <h4 className="text-xs font-bold">{t("cookies.marketing.title")}</h4>
-                  <p className="text-[10px] fun-text-muted mt-0.5 leading-normal">{t("cookies.marketing.desc")}</p>
+                  <p className="text-[10px] fun-text-muted mt-0.5 leading-normal">
+                    {t("cookies.marketing.desc")}
+                  </p>
                 </div>
                 <div className="relative inline-flex items-center shrink-0 pointer-events-none">
-                  <input
-                    type="checkbox"
-                    checked={consent.marketing}
-                    readOnly
-                    className="sr-only"
-                  />
-                  <div className={`w-8 h-4.5 rounded-full transition-colors relative after:content-[''] after:absolute after:top-[2px] after:bg-white after:rounded-full after:h-3.5 after:w-3.5 after:transition-all ${
-                    consent.marketing
-                      ? "bg-[var(--fun-purple)] after:right-[2px]"
-                      : "bg-gray-300 dark:bg-zinc-700 after:left-[2px]"
-                  }`}></div>
+                  <input type="checkbox" checked={consent.marketing} readOnly className="sr-only" />
+                  <div
+                    className={`w-8 h-4.5 rounded-full transition-colors relative after:content-[''] after:absolute after:top-[2px] after:bg-white after:rounded-full after:h-3.5 after:w-3.5 after:transition-all ${
+                      consent.marketing
+                        ? "bg-[var(--fun-purple)] after:right-[2px]"
+                        : "bg-gray-300 dark:bg-zinc-700 after:left-[2px]"
+                    }`}
+                  ></div>
                 </div>
               </div>
             </div>
