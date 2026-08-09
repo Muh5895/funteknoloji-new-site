@@ -1645,14 +1645,21 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
                   <div className="flex flex-1 items-center gap-2">
                     <button
                       onClick={() => {
-                        setLiveUser(null);
-                        setSupportView("live_login");
-                        localStorage.removeItem("oauth_logged_in_id");
-                        localStorage.removeItem("oauth_user_profile");
-                        supabase.auth.signOut().catch(() => {});
-                        toast.success(lang === "tr" ? "Çıkış yapıldı!" : "Logged out successfully!");
+                        const confirmLogout = window.confirm(
+                          lang === "tr"
+                            ? "Hesabınızdan çıkış yapmak istediğinize emin misiniz?"
+                            : "Are you sure you want to log out of your account?"
+                        );
+                        if (confirmLogout) {
+                          setLiveUser(null);
+                          setSupportView("live_login");
+                          localStorage.removeItem("oauth_logged_in_id");
+                          localStorage.removeItem("oauth_user_profile");
+                          supabase.auth.signOut().catch(() => {});
+                          toast.success(lang === "tr" ? "Çıkış yapıldı!" : "Logged out successfully!");
+                        }
                       }}
-                      className="p-2 -ml-1 rounded-lg hover:bg-red-500/10 hover:text-red-500 fun-text flex items-center justify-center shrink-0 transition-colors"
+                      className="p-2 -ml-1 rounded-lg text-red-500 hover:bg-red-500/10 hover:text-red-600 flex items-center justify-center shrink-0 transition-colors"
                       title={lang === "tr" ? "Çıkış Yap" : "Log Out"}
                     >
                       <LogOut className="h-5 w-5" />

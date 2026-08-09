@@ -76,7 +76,7 @@ export default function Footer() {
                         : "/assets/logos/nextsosyal-black.png"
                     }
                     alt="Next Sosyal"
-                    className="h-5 w-5 object-contain"
+                    className="h-5 w-5 object-contain rounded"
                   />
                 </SocialLink>
               </div>
