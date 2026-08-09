@@ -2,9 +2,6 @@
   "functions": {
     "api/nexy.ts": {
       "maxDuration": 60
-    },
-    "api/helper.ts": {
-      "maxDuration": 60
     }
   },
   "rewrites": [
@@ -15,10 +12,6 @@
     {
       "source": "/auth/v1/(.*)",
       "destination": "https://eiecuiberhqmyvvlrakn.supabase.co/auth/v1/$1"
-    },
-    {
-      "source": "/api/nexy/helper",
-      "destination": "/api/helper"
     },
     {
       "source": "/api/nexy",

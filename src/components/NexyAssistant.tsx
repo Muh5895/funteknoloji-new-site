@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useLang } from "../lib/i18n";
 import { useNavigate } from "@tanstack/react-router";
-import { LiveLoginView, LiveChatView, LiveTicketDetailsView } from "./LiveSupportViews";
+import { LiveLoginView } from "./LiveSupportViews";
 import { KNOWLEDGE_BASE } from "../lib/knowledge";
 import { toast } from "sonner";
 import { translateAnyText } from "../lib/translate";
@@ -928,11 +928,24 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
     let isStream = false;
 
     try {
+      let token = "";
+      try {
+        const {
+          data: { session },
+        } = await supabase.auth.getSession();
+        token = session?.access_token || "";
+      } catch (e) {}
+
+      if (!token) {
+        token = localStorage.getItem("oauth_logged_in_id") || "";
+      }
+
       // Direct call to Vercel backend proxy /api/nexy (acts as central fallback orchestrator)
       const response = await fetch("/api/nexy", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
         },
         body: JSON.stringify({
           messages: cleanedMessages,
