@@ -739,9 +739,174 @@ interface LiveLoginViewProps {
   lang: string;
 }
 
+const oauthTrans: Record<string, Record<string, string>> = {
+  tr: {
+    oauthLoginTitle: "FunID ile Giriş Yap",
+    authSecure: "Güvenli Kimlik Doğrulama",
+    authSecureDesc: "Canlı destek sistemimiz FunID tescilli ekosistemiyle korunmaktadır. Lütfen aşağıdaki butona tıklayarak giriş yapın.",
+    btnOAuthLogin: "FunID ile Giriş Yap",
+    btnOAuthConnecting: "Bağlanıyor...",
+    authPopupNote: "Giriş yaptıktan sonra bu pencere otomatik olarak kapanacak ve canlı destek ekranına yönlendirileceksiniz.",
+    oauthFail: "Giriş başarısız oldu. Lütfen tekrar deneyin.",
+    popupBlocker: "Pop-up engelleyiciyi kaldırıp tekrar deneyin.",
+    oauthStateFail: "Kimlik doğrulama durumu doğrulaması başarısız oldu.",
+    back: "Geri",
+    loginSuccess: "Giriş başarılı!"
+  },
+  en: {
+    oauthLoginTitle: "Login with FunID",
+    authSecure: "Secure Authentication",
+    authSecureDesc: "Our live support system is secured by the FunID proprietary ecosystem. Please click the button below to sign in.",
+    btnOAuthLogin: "Log In with FunID",
+    btnOAuthConnecting: "Connecting...",
+    authPopupNote: "After logging in, this window will automatically close and you will be redirected to live support.",
+    oauthFail: "Login failed. Please try again.",
+    popupBlocker: "Please disable your pop-up blocker and try again.",
+    oauthStateFail: "Security state validation failed.",
+    back: "Back",
+    loginSuccess: "Login successful!"
+  },
+  de: {
+    oauthLoginTitle: "Mit FunID einloggen",
+    authSecure: "Sichere Authentifizierung",
+    authSecureDesc: "Unser Live-Support-System wird durch das proprietäre FunID-Ökosystem gesichert. Bitte klicken Sie auf die Schaltfläche unten, um sich anzumelden.",
+    btnOAuthLogin: "Mit FunID anmelden",
+    btnOAuthConnecting: "Verbinden...",
+    authPopupNote: "Nach dem Einloggen schließt sich dieses Fenster automatisch und Sie werden zum Live-Support weitergeleitet.",
+    oauthFail: "Anmeldung fehlgeschlagen. Bitte versuchen Sie es erneut.",
+    popupBlocker: "Bitte deaktivieren Sie Ihren Pop-up-Blocker und versuchen Sie es erneut.",
+    oauthStateFail: "Validierung des Sicherheitszustands fehlgeschlagen.",
+    back: "Zurück",
+    loginSuccess: "Anmeldung erfolgreich!"
+  },
+  fr: {
+    oauthLoginTitle: "Se connecter avec FunID",
+    authSecure: "Authentification sécurisée",
+    authSecureDesc: "Notre système de support en direct est sécurisé par l'écosystème exclusif FunID. Veuillez cliquer sur le bouton ci-dessous pour vous connecter.",
+    btnOAuthLogin: "Se connecter avec FunID",
+    btnOAuthConnecting: "Connexion...",
+    authPopupNote: "Après vous être connecté, cette fenêtre se fermera automatiquement et vous serez redirigé vers le support en direct.",
+    oauthFail: "Échec de la connexion. Veuillez réessayer.",
+    popupBlocker: "Veuillez désactiver votre bloqueur de pop-up et réessayer.",
+    oauthStateFail: "Échec de la validation de l'état de sécurité.",
+    back: "Retour",
+    loginSuccess: "Connexion réussie !"
+  },
+  es: {
+    oauthLoginTitle: "Iniciar sesión con FunID",
+    authSecure: "Autenticación segura",
+    authSecureDesc: "Nuestro sistema de soporte en vivo está protegido por el ecosistema patentado de FunID. Haga clic en el botón de abajo para iniciar sesión.",
+    btnOAuthLogin: "Iniciar sesión con FunID",
+    btnOAuthConnecting: "Conectando...",
+    authPopupNote: "Después de iniciar sesión, esta ventana se cerrará automáticamente y será redirigido al soporte en vivo.",
+    oauthFail: "Error de inicio de sesión. Por favor, inténtelo de nuevo.",
+    popupBlocker: "Desactive su bloqueador de ventanas emergentes e inténtelo de nuevo.",
+    oauthStateFail: "Error de validación del estado de seguridad.",
+    back: "Atrás",
+    loginSuccess: "¡Inicio de sesión correcto!"
+  },
+  az: {
+    oauthLoginTitle: "FunID ilə Giriş Et",
+    authSecure: "Təhlükəsiz Kimlik Doğrulaması",
+    authSecureDesc: "Canlı dəstək sistemimiz FunID patentli ekosistemi ilə qorunur. Giriş etmək üçün aşağıdakı düyməyə klikləyin.",
+    btnOAuthLogin: "FunID ilə Giriş Et",
+    btnOAuthConnecting: "Bağlanır...",
+    authPopupNote: "Giriş etdikdən sonra bu pəncərə avtomatik bağlanacaq və canlı dəstək ekranına yönləndiriləceksiniz.",
+    oauthFail: "Giriş uğursuz oldu. Zəhmət olmasa yenidən cəhd edin.",
+    popupBlocker: "Pop-up əngəlləyicini söndürüb yenidən cəhd edin.",
+    oauthStateFail: "Təhlükəsizlik vəziyyəti doğrulaması uğursuz oldu.",
+    back: "Geri",
+    loginSuccess: "Giriş uğurludur!"
+  },
+  ru: {
+    oauthLoginTitle: "Войти через FunID",
+    authSecure: "Безопасная аутентификация",
+    authSecureDesc: "Наша система живой поддержки защищена запатентованной экосистемой FunID. Пожалуйста, нажмите кнопку ниже для входа.",
+    btnOAuthLogin: "Войти через FunID",
+    btnOAuthConnecting: "Соединение...",
+    authPopupNote: "После входа это окно автоматически закроется, и вы будете перенаправлены в живой чат.",
+    oauthFail: "Ошибка входа. Пожалуйста, попробуйте еще раз.",
+    popupBlocker: "Пожалуйста, отключите блокировщик всплывающих окон и попробуйте еще раз.",
+    oauthStateFail: "Ошибка проверки состояния безопасности.",
+    back: "Назад",
+    loginSuccess: "Вход выполнен успешно!"
+  },
+  ar: {
+    oauthLoginTitle: "تسجيل الدخول باستخدام FunID",
+    authSecure: "المصادقة الآمنة",
+    authSecureDesc: "نظام الدعم المباشر لدينا محمي بنظام FunID المتكامل. يرجى النقر على الزر أدناه لتسجيل الدخول.",
+    btnOAuthLogin: "تسجيل الدخول باستخدام FunID",
+    btnOAuthConnecting: "جاري الاتصال...",
+    authPopupNote: "بعد تسجيل الدخول، ستغلق هذه النافذة تلقائيًا وسيتم توجيهك إلى الدعم المباشر.",
+    oauthFail: "فشل تسجيل الدخول. يرجى المحاولة مرة أخرى.",
+    popupBlocker: "يرجى تعطيل مانع النوافذ المنبثقة والمحاولة مرة أخرى.",
+    oauthStateFail: "فشل التحقق من حالة الأمان.",
+    back: "رجوع",
+    loginSuccess: "تم تسجيل الدخول بنجاح!"
+  },
+  it: {
+    oauthLoginTitle: "Accedi con FunID",
+    authSecure: "Autenticazione sicura",
+    authSecureDesc: "Il nostro sistema di supporto dal vivo è protetto dall'ecosistema proprietario FunID. Fare clic sul pulsante sottostante per accedere.",
+    btnOAuthLogin: "Accedi con FunID",
+    btnOAuthConnecting: "Connessione in corso...",
+    authPopupNote: "Dopo l'accesso, questa finestra si chiuderà automaticamente e verrai reindirizzato al supporto dal vivo.",
+    oauthFail: "Accesso fallito. Riprova.",
+    popupBlocker: "Disattiva il blocco pop-up e riprova.",
+    oauthStateFail: "Convalida dello stato di sicurezza fallita.",
+    back: "Indietro",
+    loginSuccess: "Accesso effettuato con successo!"
+  },
+  pt: {
+    oauthLoginTitle: "Entrar com FunID",
+    authSecure: "Autenticação Segura",
+    authSecureDesc: "Nosso sistema de suporte ao vivo é protegido pelo ecossistema proprietário FunID. Clique no botão abaixo para entrar.",
+    btnOAuthLogin: "Entrar com FunID",
+    btnOAuthConnecting: "Conectando...",
+    authPopupNote: "Depois de entrar, esta janela será fechada automaticamente e você será redirecionado para o suporte ao vivo.",
+    oauthFail: "Falha no login. Por favor, tente novamente.",
+    popupBlocker: "Desative o bloqueador de pop-ups e tente novamente.",
+    oauthStateFail: "Falha na validação do estado de segurança.",
+    back: "Voltar",
+    loginSuccess: "Login bem-sucedido!"
+  },
+  ja: {
+    oauthLoginTitle: "FunIDでログイン",
+    authSecure: "安全な認証",
+    authSecureDesc: "当社のライブサポートシステムは、FunID独自のシステムで保護されています。下のボタンをクリックしてログインしてください。",
+    btnOAuthLogin: "FunIDでログイン",
+    btnOAuthConnecting: "接続中...",
+    authPopupNote: "ログイン後、このウィンドウは自動的に閉じられ、ライブサポートにリダイレクトされます。",
+    oauthFail: "ログインに失敗しました。もう一度お試しください。",
+    popupBlocker: "ポップアップブロックを解除してもう一度お試しください。",
+    oauthStateFail: "セキュリティ状態の検証に失敗しました。",
+    back: "戻る",
+    loginSuccess: "ログインに成功しました！"
+  },
+  zh: {
+    oauthLoginTitle: "使用 FunID 登录",
+    authSecure: "安全身份验证",
+    authSecureDesc: "我们的在线客服系统受 FunID 专有生态系统保护。请点击下方按钮登录。",
+    btnOAuthLogin: "使用 FunID 登录",
+    btnOAuthConnecting: "正在连接...",
+    authPopupNote: "登录后，此窗口将自动关闭，您将被重定向到在线客服。",
+    oauthFail: "登录失败。请重试。",
+    popupBlocker: "请禁用弹出窗口拦截器并重试。",
+    oauthStateFail: "安全状态验证失败。",
+    back: "返回",
+    loginSuccess: "登录成功！"
+  }
+};
+
 export function LiveLoginView({ onBack, onLoginSuccess, lang }: LiveLoginViewProps) {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  const getOAuthTrans = (key: string): string => {
+    const normalizedLang = (lang || "tr").toLowerCase();
+    const dict = oauthTrans[normalizedLang] || oauthTrans.en;
+    return dict[key] || oauthTrans.en[key] || key;
+  };
 
   const loginWithOAuthId = async (id: string) => {
     setLoading(true);
@@ -764,7 +929,7 @@ export function LiveLoginView({ onBack, onLoginSuccess, lang }: LiveLoginViewPro
           id: id
         };
         localStorage.setItem("oauth_user_profile", JSON.stringify(userObj));
-        toast.success(lang === "tr" ? "Giriş yapıldı!" : "Logged in successfully!");
+        toast.success(getOAuthTrans("loginSuccess"));
         onLoginSuccess({ email: userObj.email });
       } else {
         // Fallback profile if Supabase profile cannot be queried
@@ -774,16 +939,12 @@ export function LiveLoginView({ onBack, onLoginSuccess, lang }: LiveLoginViewPro
           id: id
         };
         localStorage.setItem("oauth_user_profile", JSON.stringify(fallbackUser));
-        toast.success(lang === "tr" ? "Giriş yapıldı!" : "Logged in successfully!");
+        toast.success(getOAuthTrans("loginSuccess"));
         onLoginSuccess({ email: fallbackUser.email });
       }
     } catch (err) {
       console.error("OAuth login failed:", err);
-      setErrorMessage(
-        lang === "tr"
-          ? "Giriş başarısız oldu. Lütfen tekrar deneyin."
-          : "Login failed. Please try again."
-      );
+      setErrorMessage(getOAuthTrans("oauthFail"));
     } finally {
       setLoading(false);
     }
@@ -807,11 +968,7 @@ export function LiveLoginView({ onBack, onLoginSuccess, lang }: LiveLoginViewPro
     );
 
     if (!popup) {
-      setErrorMessage(
-        lang === "tr"
-          ? "Pop-up engelleyiciyi kaldırıp tekrar deneyin."
-          : "Please disable your pop-up blocker and try again."
-      );
+      setErrorMessage(getOAuthTrans("popupBlocker"));
       return;
     }
 
@@ -842,11 +999,7 @@ export function LiveLoginView({ onBack, onLoginSuccess, lang }: LiveLoginViewPro
               loginWithOAuthId(id);
             } else {
               setLoading(false);
-              setErrorMessage(
-                lang === "tr"
-                  ? "Kimlik doğrulama durumu doğrulaması başarısız oldu."
-                  : "Security state validation failed."
-              );
+              setErrorMessage(getOAuthTrans("oauthStateFail"));
             }
           }
         }
@@ -911,13 +1064,13 @@ export function LiveLoginView({ onBack, onLoginSuccess, lang }: LiveLoginViewPro
           <button
             onClick={onBack}
             className="p-2 -ml-1 rounded-lg hover:bg-[var(--fun-stroke-1)] fun-text flex items-center justify-center shrink-0"
-            title={lang === "tr" ? "Geri" : "Back"}
+            title={getOAuthTrans("back")}
           >
             <ChevronLeft className="h-5 w-5" />
           </button>
           <div>
             <h3 className="text-sm sm:text-base font-bold tracking-tight fun-text leading-tight">
-              {lang === "tr" ? "FunID ile Giriş Yap" : "Login with FunID"}
+              {getOAuthTrans("oauthLoginTitle")}
             </h3>
           </div>
         </div>
@@ -931,12 +1084,10 @@ export function LiveLoginView({ onBack, onLoginSuccess, lang }: LiveLoginViewPro
 
         <div className="space-y-2 max-w-sm">
           <h4 className="text-sm font-bold fun-text">
-            {lang === "tr" ? "Güvenli Kimlik Doğrulama" : "Secure Authentication"}
+            {getOAuthTrans("authSecure")}
           </h4>
           <p className="text-xs fun-text-muted leading-relaxed">
-            {lang === "tr"
-              ? "Canlı destek sistemimiz FunID tescilli ekosistemiyle korunmaktadır. Lütfen aşağıdaki butona tıklayarak giriş yapın."
-              : "Our live support system is secured by the FunID proprietary ecosystem. Please click the button below to sign in."}
+            {getOAuthTrans("authSecureDesc")}
           </p>
         </div>
 
@@ -948,12 +1099,12 @@ export function LiveLoginView({ onBack, onLoginSuccess, lang }: LiveLoginViewPro
           {loading ? (
             <>
               <div className="h-4 w-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-              <span>{lang === "tr" ? "Bağlanıyor..." : "Connecting..."}</span>
+              <span>{getOAuthTrans("btnOAuthConnecting")}</span>
             </>
           ) : (
             <>
               <LogIn className="h-4 w-4" />
-              <span>{lang === "tr" ? "FunID ile Giriş Yap" : "Log In with FunID"}</span>
+              <span>{getOAuthTrans("btnOAuthLogin")}</span>
             </>
           )}
         </button>
@@ -965,9 +1116,7 @@ export function LiveLoginView({ onBack, onLoginSuccess, lang }: LiveLoginViewPro
         )}
 
         <div className="text-[10px] fun-text-muted max-w-xs leading-normal">
-          {lang === "tr"
-            ? "Giriş yaptıktan sonra bu pencere otomatik olarak kapanacak ve canlı destek ekranına yönlendirileceksiniz."
-            : "After logging in, this window will automatically close and you will be redirected to live support."}
+          {getOAuthTrans("authPopupNote")}
         </div>
       </div>
     </div>
