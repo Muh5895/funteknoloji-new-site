@@ -425,22 +425,37 @@ export default function NexyAssistant() {
   // Sync Supabase Auth session with Live Support session
   useEffect(() => {
     const checkActiveSession = async () => {
+      let userId = "";
+      let userEmail = "";
+
       // Check if there is an OAuth session first
       const savedProfile = localStorage.getItem("oauth_user_profile");
       if (savedProfile) {
         try {
           const parsed = JSON.parse(savedProfile);
-          setLiveUser({ email: parsed.email });
-          return;
+          userId = parsed.id || "";
+          userEmail = parsed.email || "";
+          if (userEmail) {
+            setLiveUser({ email: userEmail });
+          }
         } catch (e) {}
       }
 
-      try {
-        const {
-          data: { user },
-        } = await supabase.auth.getUser();
-        if (user && user.email) {
-          setLiveUser({ email: user.email });
+      if (!userId) {
+        try {
+          const {
+            data: { user },
+          } = await supabase.auth.getUser();
+          if (user && user.email) {
+            userId = user.id;
+            userEmail = user.email;
+            setLiveUser({ email: userEmail });
+          }
+        } catch (e) {}
+      }
+
+      if (userId && userEmail) {
+        try {
           // Fetch past support tickets from DB securely
           const { data: dbTickets, error } = await supabase
             .from("past_support_tickets")
@@ -449,7 +464,7 @@ export default function NexyAssistant() {
           if (dbTickets && !error) {
             const formatted = dbTickets.map((t) => ({
               id: t.id,
-              email: user.email,
+              email: userEmail,
               subject: t.subject,
               importance: t.importance,
               timestamp: new Date(t.created_at).getTime(),
@@ -457,9 +472,9 @@ export default function NexyAssistant() {
             }));
             setPastSessions(formatted);
           }
+        } catch (e) {
+          console.warn("Failed to retrieve past sessions on mount:", e);
         }
-      } catch (e) {
-        console.warn("Failed to retrieve active session on mount:", e);
       }
     };
     checkActiveSession();
@@ -1744,13 +1759,26 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
                   // Also securely save to Supabase past_support_tickets table if authenticated
                   (async () => {
                     try {
-                      const {
-                        data: { user },
-                      } = await supabase.auth.getUser();
-                      if (user) {
+                      let userId = "";
+                      const savedProfile = localStorage.getItem("oauth_user_profile");
+                      if (savedProfile) {
+                        try {
+                          userId = JSON.parse(savedProfile).id;
+                        } catch (e) {}
+                      }
+                      if (!userId) {
+                        try {
+                          const {
+                            data: { user },
+                          } = await supabase.auth.getUser();
+                          if (user) userId = user.id;
+                        } catch (e) {}
+                      }
+
+                      if (userId) {
                         await supabase.from("past_support_tickets").insert([
                           {
-                            user_id: user.id,
+                            user_id: userId,
                             subject:
                               localStorage.getItem("live_support_subject") || "Destek Talebi",
                             importance: localStorage.getItem("live_support_importance") || "Orta",
@@ -1772,8 +1800,6 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
                 localStorage.removeItem("live_support_subject_en");
                 localStorage.removeItem("live_support_importance_en");
                 localStorage.removeItem("live_support_description_en");
-                localStorage.removeItem("oauth_logged_in_id");
-                localStorage.removeItem("oauth_user_profile");
               }}
               onLogout={() => {
                 // Log out from the live support account completely

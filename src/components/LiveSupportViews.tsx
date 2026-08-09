@@ -1544,6 +1544,10 @@ Do not mention any third-party services like Pollinations or Pulsar. Respond dir
             token = session?.access_token || "";
           } catch (e) {}
 
+          if (!token) {
+            token = localStorage.getItem("oauth_logged_in_id") || "";
+          }
+
           const response = await fetch("/api/nexy/helper", {
             method: "POST",
             headers: {
@@ -1559,6 +1563,7 @@ Do not mention any third-party services like Pollinations or Pulsar. Respond dir
               ticketDescription,
               model: "gemma-3-1b-it",
               isLiveSupport: true,
+              userProfile,
             }),
           });
 
@@ -1944,6 +1949,10 @@ Do not promote any third-party services like Pollinations or Pulsar. Respond dir
             token = session?.access_token || "";
           } catch (e) {}
 
+          if (!token) {
+            token = localStorage.getItem("oauth_logged_in_id") || "";
+          }
+
           const response = await fetch("/api/nexy/helper", {
             method: "POST",
             headers: {
@@ -1959,6 +1968,7 @@ Do not promote any third-party services like Pollinations or Pulsar. Respond dir
               ticketDescription,
               model: "gemma-3-1b-it",
               isLiveSupport: true,
+              userProfile,
             }),
           });
 
@@ -2461,6 +2471,10 @@ CRITICAL RULES:
             token = session?.access_token || "";
           } catch (e) {}
 
+          if (!token) {
+            token = localStorage.getItem("oauth_logged_in_id") || "";
+          }
+
           // Route all requests directly to Vercel backend proxy /api/nexy/helper (acts as central fallback orchestrator)
           const response = await fetch("/api/nexy/helper", {
             method: "POST",
@@ -2477,6 +2491,7 @@ CRITICAL RULES:
               ticketDescription,
               model: "gemma-3-1b-it",
               isLiveSupport: true,
+              userProfile,
             }),
           });
 
@@ -3200,10 +3215,24 @@ CRITICAL RULES:
                 // Fix: Verify and fetch the authentic, logged-in user session dynamically before inserting feedback to prevent failures
                 // Securely save the ticket details, rating, and feedback directly into the database on session end
                 try {
-                  const {
-                    data: { user },
-                  } = await supabase.auth.getUser();
-                  if (user) {
+                  let userId = "";
+                  const savedProfile = localStorage.getItem("oauth_user_profile");
+                  if (savedProfile) {
+                    try {
+                      userId = JSON.parse(savedProfile).id;
+                    } catch (e) {}
+                  }
+
+                  if (!userId) {
+                    try {
+                      const {
+                        data: { user },
+                      } = await supabase.auth.getUser();
+                      if (user) userId = user.id;
+                    } catch (e) {}
+                  }
+
+                  if (userId) {
                     const ticketSubject =
                       sessionStorage.getItem("live_support_subject") || "Destek Talebi";
                     const ticketImportance =
@@ -3213,7 +3242,7 @@ CRITICAL RULES:
 
                     await supabase.from("ai_support_feedback").insert([
                       {
-                        user_id: user.id,
+                        user_id: userId,
                         subject: ticketSubject,
                         description: ticketDescription,
                         importance: ticketImportance,
