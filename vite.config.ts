@@ -87,11 +87,11 @@ export default defineConfig({
     server: {
       proxy: {
         "/rest/v1": {
-          target: "https://eiecuiberhqmyvvlrakn.supabase.co",
+          target: "https://db.funteknoloji.com",
           changeOrigin: true,
         },
         "/auth/v1": {
-          target: "https://eiecuiberhqmyvvlrakn.supabase.co",
+          target: "https://db.funteknoloji.com",
           changeOrigin: true,
         },
       },

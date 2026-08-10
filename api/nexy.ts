@@ -224,8 +224,8 @@ const getSupabaseClient = (isAdmin = false) => {
   if (isAdmin && supabaseAdminClient) return supabaseAdminClient;
   if (!isAdmin && supabaseClient) return supabaseClient;
 
-  const supabaseUrl = process.env.SUPABASE_URL;
-  const supabaseAnonKey = process.env.SUPABASE_ANON_KEY;
+  const supabaseUrl = process.env.SUPABASE_URL || "https://db.funteknoloji.com/";
+  const supabaseAnonKey = process.env.SUPABASE_ANON_KEY || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3ODU4NTgyMjAsImV4cCI6MTg5MzQ1NjAwMCwicm9sZSI6ImFub24iLCJpc3MiOiJzdXBhYmFzZSJ9.NBXjLy1dzdVwJG7w5YWIANy9aj6bU1-7ZYAEa3LIkCg";
   const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SERVICE_ROLE_KEY;
 
   if (!supabaseUrl) return null;
