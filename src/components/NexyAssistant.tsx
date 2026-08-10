@@ -430,6 +430,57 @@ export default function NexyAssistant() {
   });
   const [liveUser, setLiveUser] = useState<{ email: string } | null>(null);
 
+  const [showLogoutConfirmModal, setShowLogoutConfirmModal] = useState(false);
+  const pressTimeoutRef = useRef<any>(null);
+  const pressStartRef = useRef<number>(0);
+  const longPressTriggeredRef = useRef<boolean>(false);
+
+  const handleXPressStart = () => {
+    longPressTriggeredRef.current = false;
+    pressStartRef.current = Date.now();
+
+    // Start 5-second long press timer
+    pressTimeoutRef.current = setTimeout(() => {
+      longPressTriggeredRef.current = true;
+      setShowLogoutConfirmModal(true);
+
+      // Vibrate if available on mobile
+      if (typeof navigator !== "undefined" && navigator.vibrate) {
+        navigator.vibrate(100);
+      }
+    }, 5000);
+  };
+
+  const handleXPressEnd = (e: React.MouseEvent | React.TouchEvent) => {
+    e.preventDefault();
+    if (pressTimeoutRef.current) {
+      clearTimeout(pressTimeoutRef.current);
+      pressTimeoutRef.current = null;
+    }
+
+    if (!longPressTriggeredRef.current) {
+      // Normal click: close the assistant
+      setIsOpen(false);
+    }
+  };
+
+  const handleXPressCancel = () => {
+    if (pressTimeoutRef.current) {
+      clearTimeout(pressTimeoutRef.current);
+      pressTimeoutRef.current = null;
+    }
+  };
+
+  const handleLogout = () => {
+    setLiveUser(null);
+    setSupportView("live_login");
+    localStorage.removeItem("oauth_logged_in_id");
+    localStorage.removeItem("oauth_user_profile");
+    supabase.auth.signOut().catch(() => {});
+    setShowLogoutConfirmModal(false);
+    toast.success(lang === "tr" ? "Çıkış yapıldı!" : "Logged out successfully!");
+  };
+
   // Sync Supabase Auth session with Live Support session
   useEffect(() => {
     const checkActiveSession = async () => {
@@ -1502,6 +1553,36 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
         <div
           className={`${isMaximized ? "fixed inset-0 z-[200] rounded-none" : "fixed bottom-24 right-6 w-[320px] sm:w-[420px] h-[550px] z-[100] rounded-[32px]"} bg-[var(--fun-card)] border border-[var(--fun-stroke-1)] shadow-2xl flex flex-row overflow-hidden animate-in fade-in zoom-in-95 duration-500 origin-bottom-right transition-all`}
         >
+          {showLogoutConfirmModal && (
+            <div className="absolute inset-0 bg-black/90 backdrop-blur-md z-[9999] flex flex-col items-center justify-center p-6 text-center select-none animate-in fade-in duration-300">
+              <div className="h-16 w-16 rounded-2xl bg-red-500/10 border border-red-500/20 flex items-center justify-center p-2 mb-4 text-red-500 shadow-inner">
+                <LogOut className="h-8 w-8 animate-pulse" />
+              </div>
+              <h3 className="text-lg font-bold text-white mb-2">
+                {lang === "tr" ? "Oturumu Kapat" : "Log Out"}
+              </h3>
+              <p className="text-xs text-zinc-400 max-w-[280px] leading-relaxed mb-6">
+                {lang === "tr"
+                  ? "Hesabınızdan çıkış yapmak istediğinize emin misiniz? Sohbet geçmişiniz ve aktif oturumunuz sonlandırılacaktır."
+                  : "Are you sure you want to log out of your account? Your chat history and active session will be terminated."}
+              </p>
+              <div className="flex gap-3 w-full max-w-[280px]">
+                <button
+                  onClick={() => setShowLogoutConfirmModal(false)}
+                  className="flex-1 py-3 px-4 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-white font-bold text-xs transition-all active:scale-95"
+                >
+                  {lang === "tr" ? "İptal" : "Cancel"}
+                </button>
+                <button
+                  onClick={handleLogout}
+                  className="flex-1 py-3 px-4 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-xs transition-all active:scale-95 shadow-lg shadow-red-600/20"
+                >
+                  {lang === "tr" ? "Çıkış Yap" : "Log Out"}
+                </button>
+              </div>
+            </div>
+          )}
+
           {systemStatus !== "on" && (
             <div className="absolute inset-0 bg-black/90 backdrop-blur-md z-[999] flex flex-col items-center justify-center p-6 text-center select-none animate-in fade-in duration-300">
               <div className="h-16 w-16 rounded-2xl bg-zinc-900 border border-zinc-800 flex items-center justify-center p-2 mb-4 text-[var(--fun-purple)]">
@@ -1644,34 +1725,12 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
                 >
                   <div className="flex flex-1 items-center gap-2">
                     <button
-                      onClick={() => {
-                        const confirmLogout = window.confirm(
-                          lang === "tr"
-                            ? "Hesabınızdan çıkış yapmak istediğinize emin misiniz?"
-                            : "Are you sure you want to log out of your account?"
-                        );
-                        if (confirmLogout) {
-                          setLiveUser(null);
-                          setSupportView("live_login");
-                          localStorage.removeItem("oauth_logged_in_id");
-                          localStorage.removeItem("oauth_user_profile");
-                          supabase.auth.signOut().catch(() => {});
-                          toast.success(lang === "tr" ? "Çıkış yapıldı!" : "Logged out successfully!");
-                        }
-                      }}
-                      className="p-2 -ml-1 rounded-lg text-red-500 hover:bg-red-500/10 hover:text-red-600 flex items-center justify-center shrink-0 transition-colors"
-                      title={lang === "tr" ? "Çıkış Yap" : "Log Out"}
+                      onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+                      className="p-2 -ml-1 rounded-lg hover:bg-[var(--fun-stroke-1)] fun-text flex items-center justify-center shrink-0 transition-colors"
+                      title={lang === "tr" ? "Sohbet Geçmişi" : "Chat History"}
                     >
-                      <LogOut className="h-5 w-5" />
+                      <Menu className="h-5 w-5" />
                     </button>
-                    {isMaximized && (
-                      <button
-                        onClick={() => setIsSidebarOpen(true)}
-                        className="p-2 rounded-lg hover:bg-[var(--fun-stroke-1)] fun-text md:hidden"
-                      >
-                        <Menu className="h-5 w-5" />
-                      </button>
-                    )}
                     <div className="relative">
                       <div
                         className="h-12 w-12 sm:h-14 sm:w-14 rounded-xl overflow-hidden flex items-center justify-center p-1 border border-zinc-800"
@@ -1710,8 +1769,13 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
                       )}
                     </button>
                     <button
-                      onClick={() => setIsOpen(false)}
-                      className="h-8 w-8 rounded-full hover:bg-[var(--fun-stroke-1)] flex items-center justify-center fun-text transition-colors"
+                      onMouseDown={handleXPressStart}
+                      onMouseUp={handleXPressEnd}
+                      onMouseLeave={handleXPressCancel}
+                      onTouchStart={handleXPressStart}
+                      onTouchEnd={handleXPressEnd}
+                      className="h-8 w-8 rounded-full hover:bg-[var(--fun-stroke-1)] flex items-center justify-center fun-text transition-colors select-none"
+                      title={lang === "tr" ? "Kapat (Çıkış yapmak için 5 saniye basılı tutun)" : "Close (Hold for 5 seconds to log out)"}
                     >
                       <X className="h-4 w-4" />
                     </button>

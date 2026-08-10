@@ -35,7 +35,8 @@ export default defineConfig({
                   }
 
                   // Load handler logic dynamically based on URL path
-                  const modulePath = "/api/nexy.ts";
+                  const pathname = new URL(req.url || "", `http://${req.headers.host}`).pathname;
+                  const modulePath = pathname.startsWith("/api/nexy/helper") ? "/api/helper.ts" : "/api/nexy.ts";
                   const { default: handler } = await server.ssrLoadModule(modulePath);
 
                   // Mock VercelRequest and VercelResponse
