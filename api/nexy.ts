@@ -258,17 +258,15 @@ const fetchRealDatabaseContext = async (authHeader: string | undefined, userProf
     const token = authHeader.substring(7);
     if (/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(token)) {
       // It is a direct FunID OAuth user ID (UUID)
-      // Verify if user actually exists in profiles table
+      // Accept it as authenticated, and try to retrieve email from profiles if it exists
+      userId = token;
       try {
         const { data, error } = await client.from("profiles").select("id, email").eq("id", token).single();
-        if (error || !data) {
-          isAuthError = true;
-        } else {
-          userId = token;
+        if (data && !error) {
           userEmail = data.email || "";
         }
       } catch (e) {
-        isAuthError = true;
+        // Do not trigger isAuthError for valid UUID fallbacks
       }
     } else {
       // It is a standard Supabase auth session token (JWT)

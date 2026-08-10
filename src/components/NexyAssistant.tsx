@@ -1724,13 +1724,15 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
                   style={{ borderColor: "var(--fun-stroke-1)" }}
                 >
                   <div className="flex flex-1 items-center gap-2">
-                    <button
-                      onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-                      className="p-2 -ml-1 rounded-lg hover:bg-[var(--fun-stroke-1)] fun-text flex items-center justify-center shrink-0 transition-colors"
-                      title={lang === "tr" ? "Sohbet Geçmişi" : "Chat History"}
-                    >
-                      <Menu className="h-5 w-5" />
-                    </button>
+                    {isMaximized && (
+                      <button
+                        onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+                        className="p-2 -ml-1 rounded-lg hover:bg-[var(--fun-stroke-1)] fun-text flex items-center justify-center shrink-0 transition-colors"
+                        title={lang === "tr" ? "Sohbet Geçmişi" : "Chat History"}
+                      >
+                        <Menu className="h-5 w-5" />
+                      </button>
+                    )}
                     <div className="relative">
                       <div
                         className="h-12 w-12 sm:h-14 sm:w-14 rounded-xl overflow-hidden flex items-center justify-center p-1 border border-zinc-800"
