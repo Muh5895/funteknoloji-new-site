@@ -2,8 +2,8 @@ import { Link } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { useLang } from "../lib/i18n";
 
-const LOGO_DARK = "/assets/logos/Fun Teknoloji Siyah Logo.png";
-const LOGO_LIGHT = "/assets/logos/Fun Teknoloji BGSİZ.png";
+const LOGO_DARK = "/assets/logos/ust-bar-beyaz.png";
+const LOGO_LIGHT = "/assets/logos/ust-bar-siyah.png";
 
 export default function Footer() {
   const { t } = useLang();
@@ -27,6 +27,14 @@ export default function Footer() {
           {/* Logo & description */}
           <div className="col-span-12 lg:col-span-4">
             <div className="max-w-[306px]">
+              <Link to="/" className="inline-block cursor-pointer">
+                <img
+                  src={isDark ? LOGO_DARK : LOGO_LIGHT}
+                  alt="Fun Teknoloji Logo"
+                  onContextMenu={(e) => e.preventDefault()}
+                  className="h-10 w-auto max-w-[150px] object-contain mb-4"
+                />
+              </Link>
               <p className="mt-4 mb-7 fun-text-muted text-tagline-1">{t("footer.description")}</p>
               <div className="flex items-center gap-3">
                 <SocialLink href="https://discord.com/invite/f8K8FuZRTX" label="Discord">

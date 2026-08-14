@@ -21,8 +21,8 @@ import {
   ShieldAlert,
 } from "lucide-react";
 
-const LOGO_DARK = "/assets/logos/Fun Teknoloji Siyah Logo.png";
-const LOGO_LIGHT = "/assets/logos/Fun Teknoloji BGSİZ.png";
+const LOGO_DARK = "/assets/logos/ust-bar-beyaz.png";
+const LOGO_LIGHT = "/assets/logos/ust-bar-siyah.png";
 
 export default function Header() {
   const { t } = useLang();
@@ -66,7 +66,7 @@ export default function Header() {
           aria-label="Fun Teknoloji – Ana sayfa"
         >
           <img
-            src="/assets/logos/ust-bar.png"
+            src={isDark ? LOGO_DARK : LOGO_LIGHT}
             alt="Fun Teknoloji Logo"
             onContextMenu={(e) => e.preventDefault()}
             className="h-11 w-auto max-w-[150px] object-contain"
