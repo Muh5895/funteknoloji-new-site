@@ -27,16 +27,6 @@ export default function Footer() {
           {/* Logo & description */}
           <div className="col-span-12 lg:col-span-4">
             <div className="max-w-[306px]">
-              <div className="flex items-center gap-2">
-                <img
-                  src={isDark ? LOGO_LIGHT : LOGO_DARK}
-                  alt="Fun Teknoloji"
-                  width={40}
-                  height={40}
-                  className="h-10 w-10 object-contain"
-                />
-                <span className="text-lg font-semibold fun-text">Fun Teknoloji</span>
-              </div>
               <p className="mt-4 mb-7 fun-text-muted text-tagline-1">{t("footer.description")}</p>
               <div className="flex items-center gap-3">
                 <SocialLink href="https://discord.com/invite/f8K8FuZRTX" label="Discord">

@@ -62,17 +62,15 @@ export default function Header() {
         {/* Logo */}
         <Link
           to="/"
-          className="flex cursor-pointer items-center gap-2.5 transition-transform hover:scale-[1.03]"
+          className="flex cursor-pointer items-center transition-transform hover:scale-[1.03]"
           aria-label="Fun Teknoloji – Ana sayfa"
         >
           <img
-            src={isDark ? LOGO_LIGHT : LOGO_DARK}
-            alt="Fun Teknoloji"
-            width={44}
-            height={44}
-            className="h-11 w-11 object-contain"
+            src="/assets/logos/ust-bar.png"
+            alt="Fun Teknoloji Logo"
+            onContextMenu={(e) => e.preventDefault()}
+            className="h-11 w-auto max-w-[150px] object-contain"
           />
-          <span className="hidden text-lg font-semibold sm:block fun-text">Fun Teknoloji</span>
         </Link>
 
         {/* Desktop Nav */}
