@@ -1,9 +1,8 @@
 import { createClient } from "@supabase/supabase-js";
 
-// MASKED URL: Using relative paths proxied via vercel.json / vite.config.ts
-const supabaseUrl =
-  typeof window !== "undefined" ? window.location.origin : "https://funteknoloji.com";
+// UNMASKED URL: Direct database endpoint
+const supabaseUrl = "https://db.funteknoloji.com/";
 const supabaseAnonKey =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVpZWN1aWJlcmhxbXl2dmxyYWtuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEyNjEzNDcsImV4cCI6MjA4NjgzNzM0N30.fq7MTsxB86XfZzfkRXS9avf7XK-kAsDAqms6WI84qbM";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3ODU4NTgyMjAsImV4cCI6MTg5MzQ1NjAwMCwicm9sZSI6ImFub24iLCJpc3MiOiJzdXBhYmFzZSJ9.NBXjLy1dzdVwJG7w5YWIANy9aj6bU1-7ZYAEa3LIkCg";
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);

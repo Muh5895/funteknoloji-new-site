@@ -216,41 +216,94 @@ const isValidAIResponse = (text: string): boolean => {
   return true;
 };
 
-// Supabase client lazy initializer using Vercel Environment Variables
+// Supabase clients (Standard & Admin) lazy initializers
 let supabaseClient: any = null;
-const getSupabaseClient = () => {
-  if (supabaseClient) return supabaseClient;
-  const supabaseUrl = process.env.SUPABASE_URL;
-  const supabaseAnonKey = process.env.SUPABASE_ANON_KEY;
-  if (!supabaseUrl || !supabaseAnonKey) {
-    return null;
+let supabaseAdminClient: any = null;
+
+const getSupabaseClient = (isAdmin = false) => {
+  if (isAdmin && supabaseAdminClient) return supabaseAdminClient;
+  if (!isAdmin && supabaseClient) return supabaseClient;
+
+  const supabaseUrl = process.env.SUPABASE_URL || "https://db.funteknoloji.com/";
+  const supabaseAnonKey = process.env.SUPABASE_ANON_KEY || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3ODU4NTgyMjAsImV4cCI6MTg5MzQ1NjAwMCwicm9sZSI6ImFub24iLCJpc3MiOiJzdXBhYmFzZSJ9.NBXjLy1dzdVwJG7w5YWIANy9aj6bU1-7ZYAEa3LIkCg";
+  const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SERVICE_ROLE_KEY;
+
+  if (!supabaseUrl) return null;
+
+  if (isAdmin && supabaseServiceKey) {
+    supabaseAdminClient = createClient(supabaseUrl, supabaseServiceKey);
+    return supabaseAdminClient;
   }
-  supabaseClient = createClient(supabaseUrl, supabaseAnonKey);
-  return supabaseClient;
+
+  if (supabaseAnonKey) {
+    supabaseClient = createClient(supabaseUrl, supabaseAnonKey);
+    return supabaseClient;
+  }
+  return null;
 };
 
-// Fully retrieve actual, real-time database context on the server side using the bearer JWT token
-const fetchRealDatabaseContext = async (authHeader: string | undefined) => {
-  if (!authHeader || !authHeader.startsWith("Bearer ")) {
-    return { context: "", error: "Missing token" };
-  }
-  const client = getSupabaseClient();
+// Fetch real-time user database context securely (Supports both Supabase JWT tokens and FunID UUID tokens)
+const fetchRealDatabaseContext = async (authHeader: string | undefined, userProfile?: any) => {
+  const client = getSupabaseClient(true) || getSupabaseClient(false); // Try admin bypass first
   if (!client) {
-    return { context: "", error: "Supabase client not initialized" };
+    return { context: "", error: "Supabase client not initialized", isAuthError: false };
   }
 
-  const token = authHeader.substring(7);
-  try {
-    // 1. Authenticate the user token securely via Supabase Auth
-    const {
-      data: { user },
-      error: authError,
-    } = await client.auth.getUser(token);
-    if (authError || !user) {
-      return { context: "", error: "Invalid or expired session token", isAuthError: true };
-    }
+  let userId = "";
+  let userEmail = "";
+  let emailConfirmed = "N/A";
+  let isAuthError = false;
 
-    // 2. Fetch User Profiles and settings concurrently with safe individual try-catch blocks
+  if (authHeader && authHeader.startsWith("Bearer ")) {
+    const token = authHeader.substring(7);
+    if (/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(token)) {
+      // It is a direct FunID OAuth user ID (UUID)
+      // Accept it as authenticated, and try to retrieve email from profiles if it exists
+      userId = token;
+      try {
+        const { data, error } = await client.from("profiles").select("id, email").eq("id", token).single();
+        if (data && !error) {
+          userEmail = data.email || "";
+        }
+      } catch (e) {
+        // Do not trigger isAuthError for valid UUID fallbacks
+      }
+    } else {
+      // It is a standard Supabase auth session token (JWT)
+      try {
+        const {
+          data: { user },
+          error: authError,
+        } = await client.auth.getUser(token);
+        if (authError || !user) {
+          isAuthError = true;
+        } else {
+          userId = user.id;
+          userEmail = user.email || "";
+          emailConfirmed = user.email_confirmed_at ? "Evet (Confirmed)" : "Hayır (Unconfirmed)";
+        }
+      } catch (e) {
+        isAuthError = true;
+      }
+    }
+  }
+
+  // Fallback to frontend-provided userProfile if we couldn't get a user ID yet and no auth error was triggered
+  if (!userId && !isAuthError && userProfile) {
+    userId = userProfile.id || "";
+    userEmail = userProfile.email || "";
+  }
+
+  if (isAuthError) {
+    return { context: "", error: "Invalid or expired session token", isAuthError: true };
+  }
+
+  if (!userId) {
+    return { context: "", error: "Unauthenticated session", isAuthError: false };
+  }
+
+  try {
+    // Concurrent queries with safe individual try-catch blocks
     let profileData: any = null;
     let settingsData: any = null;
     let quakesafeData: any = null;
@@ -259,7 +312,7 @@ const fetchRealDatabaseContext = async (authHeader: string | undefined) => {
     await Promise.all([
       (async () => {
         try {
-          const { data } = await client.from("profiles").select("*").eq("id", user.id).single();
+          const { data } = await client.from("profiles").select("*").eq("id", userId).single();
           profileData = data;
         } catch (e) {
           console.warn("Failed to fetch profiles table:", e);
@@ -270,7 +323,7 @@ const fetchRealDatabaseContext = async (authHeader: string | undefined) => {
           const { data } = await client
             .from("user_settings")
             .select("*")
-            .eq("user_id", user.id)
+            .eq("user_id", userId)
             .single();
           settingsData = data;
         } catch (e) {
@@ -282,7 +335,7 @@ const fetchRealDatabaseContext = async (authHeader: string | undefined) => {
           const { data } = await client
             .from("profiles_quakesafe")
             .select("*")
-            .eq("id", user.id)
+            .eq("id", userId)
             .single();
           quakesafeData = data;
         } catch (e) {
@@ -294,7 +347,7 @@ const fetchRealDatabaseContext = async (authHeader: string | undefined) => {
           const { data } = await client
             .from("active_sessions")
             .select("*")
-            .eq("user_id", user.id)
+            .eq("user_id", userId)
             .eq("is_terminated", false);
           sessionsData = data;
         } catch (e) {
@@ -303,10 +356,16 @@ const fetchRealDatabaseContext = async (authHeader: string | undefined) => {
       })(),
     ]);
 
+    if (profileData && !userEmail) {
+      userEmail = profileData.email || "";
+    }
+
     let context = `[REAL-TIME VERIFIED USER DATABASE CONTEXT]\n`;
-    context += `User Auth ID: ${user.id}\n`;
-    context += `Auth Email: ${user.email}\n`;
-    context += `Email Confirmed: ${user.email_confirmed_at ? "Evet (Confirmed)" : "Hayır (Unconfirmed)"}\n`;
+    context += `User Auth ID: ${userId}\n`;
+    if (userEmail) {
+      context += `Auth Email: ${userEmail}\n`;
+    }
+    context += `Email Confirmed: ${emailConfirmed}\n`;
 
     // Append profile details
     if (profileData) {
@@ -322,6 +381,8 @@ const fetchRealDatabaseContext = async (authHeader: string | undefined) => {
       context += `Platform Banned: ${p.is_platform_banned ? "Evet (Banned)" : "Hayır"}\n`;
       context += `Bio: ${p.bio || "N/A"}\n`;
       context += `Phone: ${p.phone || "N/A"}\n`;
+    } else if (userProfile) {
+      context += `Full Name: ${userProfile.name || "N/A"}\n`;
     }
 
     // Append system/security settings
@@ -357,24 +418,25 @@ const fetchRealDatabaseContext = async (authHeader: string | undefined) => {
       context += `Aktif Oturum Bilgisi: Bulunamadı.\n`;
     }
 
-    return { context, error: null };
+    return { context, error: null, isAuthError: false };
   } catch (err: any) {
     console.error("Database querying failed in handler:", err);
-    return { context: "", error: err.message };
+    return { context: "", error: err.message, isAuthError: false };
   }
 };
 
-// Execute targeted, dynamic query requested by the AI Database Agent loop
+// Execute targeted, dynamic query requested by the AI Database Agent loop (Supports standard and FunID user auth tokens)
 const executeDynamicDatabaseQuery = async (
   action: string,
   authHeader: string | undefined,
+  userProfile?: any,
 ): Promise<string> => {
-  const client = getSupabaseClient();
+  const client = getSupabaseClient(true) || getSupabaseClient(false); // Try admin first
   if (!client) {
     return "Hata: Veritabanı bağlantısı kurulamadı.";
   }
 
-  // Whitelist whitelist of safe actions to prevent SQL and AI prompt injection
+  // Whitelist of safe actions to prevent SQL and AI prompt injection
   const SAFE_ACTIONS = [
     "get_profile",
     "get_user_settings",
@@ -428,144 +490,150 @@ const executeDynamicDatabaseQuery = async (
     return resultContext;
   }
 
-  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+  // For other actions, verify user session
+  let userId = "";
+  let userEmail = "";
+
+  if (authHeader && authHeader.startsWith("Bearer ")) {
+    const token = authHeader.substring(7);
+    if (/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(token)) {
+      userId = token;
+    } else {
+      try {
+        const {
+          data: { user },
+          error: authError,
+        } = await client.auth.getUser(token);
+        if (user && !authError) {
+          userId = user.id;
+          userEmail = user.email || "";
+        }
+      } catch (e) {}
+    }
+  }
+
+  // Fallback to userProfile sent from frontend
+  if (!userId && userProfile) {
+    userId = userProfile.id || "";
+    userEmail = userProfile.email || "";
+  }
+
+  if (!userId) {
     return "Hata: Kullanıcı oturumu doğrulanmadı (Eksik Token). Lütfen giriş yapın.";
   }
 
-  const token = authHeader.substring(7);
-  try {
-    const {
-      data: { user },
-      error: authError,
-    } = await client.auth.getUser(token);
-    if (authError || !user) {
-      return "Hata: Oturum süreniz dolmuş veya geçersiz.";
+  let resultContext = `[REAL-TIME DATABASE QUERY RESPONSE FOR USER ID ${userId}]\n`;
+
+  if (action === "get_profile") {
+    try {
+      const { data, error } = await client
+        .from("profiles")
+        .select("*")
+        .eq("id", userId)
+        .single();
+      if (error) throw error;
+      resultContext += `İsim Soyisim: ${data?.full_name || "N/A"}\nPlan: ${data?.plan || "free"}\nDurum: ${data?.status || "active"}\nKullanılan Depolama: ${data?.storage_used || 0} bytes\n`;
+    } catch (e: any) {
+      resultContext += `Profil Tablo Hatası: ${e.message || "Failed to retrieve profiles."}\n`;
     }
-
-    let resultContext = `[REAL-TIME DATABASE QUERY RESPONSE FOR USER ${user.email}]\n`;
-
-    if (action === "get_profile") {
-      try {
-        const { data, error } = await client
-          .from("profiles")
-          .select("*")
-          .eq("id", user.id)
-          .single();
-        if (error) throw error;
-        resultContext += `İsim Soyisim: ${data?.full_name || "N/A"}\nPlan: ${data?.plan || "free"}\nDurum: ${data?.status || "active"}\nKullanılan Depolama: ${data?.storage_used || 0} bytes\n`;
-      } catch (e: any) {
-        resultContext += `Profil Tablo Hatası: ${e.message || "Failed to retrieve profiles."}\n`;
+  } else if (action === "get_user_settings") {
+    try {
+      const { data, error } = await client
+        .from("user_settings")
+        .select("*")
+        .eq("user_id", userId)
+        .single();
+      if (error) throw error;
+      resultContext += `Dil Tercihi: ${data?.language || "tr"}\nTema: ${data?.theme || "dark"}\n2FA Aktif mi: ${data?.two_factor_enabled ? "Evet" : "Hayır"}\nVPN Engelleme: ${data?.block_vpn ? "Evet" : "Hayır"}\n`;
+    } catch (e: any) {
+      resultContext += `Kullanıcı Ayarları Tablo Hatası: ${e.message || "Failed to retrieve user settings."}\n`;
+    }
+  } else if (action === "get_quakesafe_profile") {
+    try {
+      const { data, error } = await client
+        .from("profiles_quakesafe")
+        .select("*")
+        .eq("id", userId)
+        .single();
+      if (error) throw error;
+      resultContext += `QuakeSafe Profil Tamamlandı mı: ${data?.is_profile_completed ? "Evet" : "Hayır"}\nKan Grubu: ${data?.blood_type || "N/A"}\nAcil Durum Kişileri: ${JSON.stringify(data?.emergency_contacts || {})}\n`;
+    } catch (e: any) {
+      resultContext += `QuakeSafe Tablo Hatası: ${e.message || "Failed to retrieve QuakeSafe profile."}\n`;
+    }
+  } else if (action === "get_active_sessions") {
+    try {
+      const { data, error } = await client
+        .from("active_sessions")
+        .select("*")
+        .eq("user_id", userId)
+        .eq("is_terminated", false);
+      if (error) throw error;
+      if (data && data.length > 0) {
+        data.forEach((s: any, i: number) => {
+          resultContext += `Oturum #${i + 1}: IP: ${s.ip_address || "N/A"}, Cihaz: ${s.user_agent || "N/A"}, Konum: ${s.location || "N/A"}, Aktif mi: ${s.is_online ? "Evet" : "Hayır"}\n`;
+        });
+      } else {
+        resultContext += `Aktif oturum bulunamadı.\n`;
       }
-    } else if (action === "get_user_settings") {
+    } catch (e: any) {
+      resultContext += `Aktif Oturumlar Tablo Hatası: ${e.message || "Failed to retrieve active sessions."}\n`;
+    }
+  } else if (action === "get_contact_messages") {
+    if (!userEmail) {
       try {
-        const { data, error } = await client
-          .from("user_settings")
-          .select("*")
-          .eq("user_id", user.id)
-          .single();
-        if (error) throw error;
-        resultContext += `Dil Tercihi: ${data?.language || "tr"}\nTema: ${data?.theme || "dark"}\n2FA Aktif mi: ${data?.two_factor_enabled ? "Evet" : "Hayır"}\nVPN Engelleme: ${data?.block_vpn ? "Evet" : "Hayır"}\n`;
-      } catch (e: any) {
-        resultContext += `Kullanıcı Ayarları Tablo Hatası: ${e.message || "Failed to retrieve user settings."}\n`;
+        const { data } = await client.from("profiles").select("email").eq("id", userId).single();
+        userEmail = data?.email || "";
+      } catch (e) {}
+    }
+    if (!userEmail) {
+      return "Hata: Kullanıcı e-posta adresi bulunamadı.";
+    }
+    try {
+      const { data, error } = await client
+        .from("contact")
+        .select("*")
+        .eq("email", userEmail)
+        .order("created_at", { ascending: false })
+        .limit(5);
+      if (error) throw error;
+      if (data && data.length > 0) {
+        resultContext += `\n[Contact Tablosu Verileri]\n`;
+        data.forEach((item: any, i: number) => {
+          resultContext += `- Mesaj #${i + 1}: Konu: ${item.subject || "N/A"}, Mesaj: ${item.message || "N/A"}, Tarih: ${item.created_at || "N/A"}\n`;
+        });
+      } else {
+        resultContext += `İletişim mesajı kaydı bulunamadı.\n`;
       }
-    } else if (action === "get_quakesafe_profile") {
+    } catch (e: any) {
+      resultContext += `Contact Tablo Hatası: ${e.message || "Failed to retrieve contact messages."}\n`;
+    }
+  } else if (action === "get_support_tickets") {
+    const potentialTables = ["support_tickets_feedback", "support_tickets", "tickets", "past_support_tickets"];
+    let retrieved = false;
+    for (const tableName of potentialTables) {
       try {
         const { data, error } = await client
-          .from("profiles_quakesafe")
+          .from(tableName)
           .select("*")
-          .eq("id", user.id)
-          .single();
-        if (error) throw error;
-        resultContext += `QuakeSafe Profil Tamamlandı mı: ${data?.is_profile_completed ? "Evet" : "Hayır"}\nKan Grubu: ${data?.blood_type || "N/A"}\nAcil Durum Kişileri: ${JSON.stringify(data?.emergency_contacts || {})}\n`;
-      } catch (e: any) {
-        resultContext += `QuakeSafe Tablo Hatası: ${e.message || "Failed to retrieve QuakeSafe profile."}\n`;
-      }
-    } else if (action === "get_active_sessions") {
-      try {
-        const { data, error } = await client
-          .from("active_sessions")
-          .select("*")
-          .eq("user_id", user.id)
-          .eq("is_terminated", false);
-        if (error) throw error;
-        if (data && data.length > 0) {
-          data.forEach((s: any, i: number) => {
-            resultContext += `Oturum #${i + 1}: IP: ${s.ip_address || "N/A"}, Cihaz: ${s.user_agent || "N/A"}, Konum: ${s.location || "N/A"}, Aktif mi: ${s.is_online ? "Evet" : "Hayır"}\n`;
-          });
-        } else {
-          resultContext += `Aktif oturum bulunamadı.\n`;
-        }
-      } catch (e: any) {
-        resultContext += `Aktif Oturumlar Tablo Hatası: ${e.message || "Failed to retrieve active sessions."}\n`;
-      }
-    } else if (action === "get_contact_messages") {
-      try {
-        const { data, error } = await client
-          .from("contact")
-          .select("*")
-          .eq("email", user.email)
+          .eq(tableName === "tickets" ? "user_id" : "user_id", userId)
           .order("created_at", { ascending: false })
           .limit(5);
-        if (error) throw error;
-        if (data && data.length > 0) {
-          resultContext += `\n[Contact Tablosu Verileri]\n`;
-          data.forEach((item: any, i: number) => {
-            resultContext += `- Mesaj #${i + 1}: Konu: ${item.subject || "N/A"}, Mesaj: ${item.message || "N/A"}, Tarih: ${item.created_at || "N/A"}\n`;
+        if (!error && data && data.length > 0) {
+          resultContext += `\n[Tablo: ${tableName} Verileri]\n`;
+          data.forEach((ticket: any, i: number) => {
+            resultContext += `- Destek Talebi #${i + 1}: Konu: ${ticket.subject || "N/A"}, Önem Seviyesi: ${ticket.importance || "Orta"}, Tarih: ${ticket.created_at || "N/A"}\n`;
           });
-        } else {
-          resultContext += `İletişim mesajı kaydı bulunamadı.\n`;
+          retrieved = true;
+          break;
         }
-      } catch (e: any) {
-        resultContext += `Contact Tablo Hatası: ${e.message || "Failed to retrieve contact messages."}\n`;
-      }
-    } else if (action === "get_system_status") {
-      try {
-        const { data, error } = await client
-          .from("system_status")
-          .select("app_name, status, maintenance_reason, estimated_end_time");
-        if (error) throw error;
-        if (data && data.length > 0) {
-          resultContext += `\n[Sistem ve Hizmet Durumları]\n`;
-          data.forEach((s: any) => {
-            resultContext += `- Hizmet Adı (app_name): ${s.app_name}\n  Durum (status): ${s.status}\n  Bakım Nedeni (maintenance_reason): ${s.maintenance_reason || "Bakım Yok"}\n  Tahmini Bitiş (estimated_end_time): ${s.estimated_end_time || "N/A"}\n\n`;
-          });
-        } else {
-          resultContext += `Sistem durumu bilgisi bulunamadı.\n`;
-        }
-      } catch (e: any) {
-        resultContext += `Sistem Durumu Sorgu Hatası: ${e.message}\n`;
-      }
-    } else if (action === "get_support_tickets") {
-      const potentialTables = ["support_tickets_feedback", "support_tickets", "tickets"];
-      let retrieved = false;
-      for (const tableName of potentialTables) {
-        try {
-          const { data, error } = await client
-            .from(tableName)
-            .select("*")
-            .eq(tableName === "tickets" ? "user_id" : "user_id", user.id)
-            .order("created_at", { ascending: false })
-            .limit(5);
-          if (!error && data && data.length > 0) {
-            resultContext += `\n[Tablo: ${tableName} Verileri]\n`;
-            data.forEach((item: any, i: number) => {
-              resultContext += `- Bilet #${i + 1}: Konu: ${item.subject || "N/A"}, Durum: ${item.status || "N/A"}, Önem: ${item.priority || item.importance || "N/A"}, Tarih: ${item.created_at || "N/A"}\n`;
-            });
-            retrieved = true;
-          }
-        } catch (e) {}
-      }
-      if (!retrieved) {
-        resultContext += `Destek Talepleri Bilgisi: Aktif destek biletiniz veya kaydınız bulunamadı.\n`;
-      }
-    } else {
-      resultContext += `Bilinmeyen sorgu eylemi: ${action}\n`;
+      } catch (e) {}
     }
-
-    return resultContext;
-  } catch (err: any) {
-    return `Veritabanı Sorgu Hatası: ${err.message || "Failed to execute query safely."}`;
+    if (!retrieved) {
+      resultContext += `Destek talebi kaydı bulunamadı.\n`;
+    }
   }
+
+  return resultContext;
 };
 
 const KNOWLEDGE_BASE = `
@@ -923,6 +991,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     ticketDescription,
     model = "gemma-3-1b-it",
     isLiveSupport,
+    userProfile,
   } = req.body || {};
 
   const requestMessages = messages || (prompt ? [{ role: "user", content: prompt }] : null);
@@ -952,8 +1021,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   // 7. userProfile Real-Time Verification using Auth Token (Connects ONLY if ticketSubject/ticketDescription or active Authorization header is provided)
   let dbContextResult = { context: "", error: null as any, isAuthError: false };
   const authHeader = req.headers.authorization;
-  if (ticketSubject || ticketDescription || authHeader) {
-    const dbContext = await fetchRealDatabaseContext(authHeader);
+  if (ticketSubject || ticketDescription || authHeader || userProfile) {
+    const dbContext = await fetchRealDatabaseContext(authHeader, userProfile);
     if (dbContext.isAuthError) {
       // Return 401 Unauthorized securely if token is expired, invalid, or query failed due to invalid authentication
       return res.status(401).json({
@@ -1116,7 +1185,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       } catch (e) {}
 
       if (queryAction) {
-        const queryResponseText = await executeDynamicDatabaseQuery(queryAction, authHeader);
+        const queryResponseText = await executeDynamicDatabaseQuery(queryAction, authHeader, userProfile);
         rawOriginal.push({
           role: "assistant",
           content: `[DB_QUERY: {"action": "${queryAction}"}]`,

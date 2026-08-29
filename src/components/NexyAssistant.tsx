@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useLang } from "../lib/i18n";
 import { useNavigate } from "@tanstack/react-router";
-import { LiveLoginView, LiveChatView, LiveTicketDetailsView } from "./LiveSupportViews";
+import { LiveLoginView } from "./LiveSupportViews";
 import { KNOWLEDGE_BASE } from "../lib/knowledge";
 import { toast } from "sonner";
 import { translateAnyText } from "../lib/translate";
@@ -419,28 +419,103 @@ export default function NexyAssistant() {
   const [speakingMessageIndex, setSpeakingMessageIndex] = useState<number | null>(null);
   const [supportView, setSupportView] = useState<
     "menu" | "chat" | "live_login" | "live_details" | "live_chat"
-  >("menu");
+  >(() => {
+    if (typeof window !== "undefined") {
+      const savedProfile = localStorage.getItem("oauth_user_profile");
+      if (savedProfile) {
+        return "chat";
+      }
+    }
+    return "live_login";
+  });
   const [liveUser, setLiveUser] = useState<{ email: string } | null>(null);
+
+  const [showLogoutConfirmModal, setShowLogoutConfirmModal] = useState(false);
+  const pressTimeoutRef = useRef<any>(null);
+  const pressStartRef = useRef<number>(0);
+  const longPressTriggeredRef = useRef<boolean>(false);
+
+  const handleXPressStart = () => {
+    longPressTriggeredRef.current = false;
+    pressStartRef.current = Date.now();
+
+    // Start 5-second long press timer
+    pressTimeoutRef.current = setTimeout(() => {
+      longPressTriggeredRef.current = true;
+      setShowLogoutConfirmModal(true);
+
+      // Vibrate if available on mobile
+      if (typeof navigator !== "undefined" && navigator.vibrate) {
+        navigator.vibrate(100);
+      }
+    }, 5000);
+  };
+
+  const handleXPressEnd = (e: React.MouseEvent | React.TouchEvent) => {
+    e.preventDefault();
+    if (pressTimeoutRef.current) {
+      clearTimeout(pressTimeoutRef.current);
+      pressTimeoutRef.current = null;
+    }
+
+    if (!longPressTriggeredRef.current) {
+      // Normal click: close the assistant
+      setIsOpen(false);
+    }
+  };
+
+  const handleXPressCancel = () => {
+    if (pressTimeoutRef.current) {
+      clearTimeout(pressTimeoutRef.current);
+      pressTimeoutRef.current = null;
+    }
+  };
+
+  const handleLogout = () => {
+    setLiveUser(null);
+    setSupportView("live_login");
+    localStorage.removeItem("oauth_logged_in_id");
+    localStorage.removeItem("oauth_user_profile");
+    supabase.auth.signOut().catch(() => {});
+    setShowLogoutConfirmModal(false);
+    toast.success(lang === "tr" ? "Çıkış yapıldı!" : "Logged out successfully!");
+  };
 
   // Sync Supabase Auth session with Live Support session
   useEffect(() => {
     const checkActiveSession = async () => {
+      let userId = "";
+      let userEmail = "";
+
       // Check if there is an OAuth session first
       const savedProfile = localStorage.getItem("oauth_user_profile");
       if (savedProfile) {
         try {
           const parsed = JSON.parse(savedProfile);
-          setLiveUser({ email: parsed.email });
-          return;
+          userId = parsed.id || "";
+          userEmail = parsed.email || "";
+          if (userEmail) {
+            setLiveUser({ email: userEmail });
+          }
         } catch (e) {}
       }
 
-      try {
-        const {
-          data: { user },
-        } = await supabase.auth.getUser();
-        if (user && user.email) {
-          setLiveUser({ email: user.email });
+      if (!userId) {
+        try {
+          const {
+            data: { user },
+          } = await supabase.auth.getUser();
+          if (user && user.email) {
+            userId = user.id;
+            userEmail = user.email;
+            setLiveUser({ email: userEmail });
+          }
+        } catch (e) {}
+      }
+
+      if (userId && userEmail) {
+        setSupportView("chat");
+        try {
           // Fetch past support tickets from DB securely
           const { data: dbTickets, error } = await supabase
             .from("past_support_tickets")
@@ -449,7 +524,7 @@ export default function NexyAssistant() {
           if (dbTickets && !error) {
             const formatted = dbTickets.map((t) => ({
               id: t.id,
-              email: user.email,
+              email: userEmail,
               subject: t.subject,
               importance: t.importance,
               timestamp: new Date(t.created_at).getTime(),
@@ -457,9 +532,11 @@ export default function NexyAssistant() {
             }));
             setPastSessions(formatted);
           }
+        } catch (e) {
+          console.warn("Failed to retrieve past sessions on mount:", e);
         }
-      } catch (e) {
-        console.warn("Failed to retrieve active session on mount:", e);
+      } else {
+        setSupportView("live_login");
       }
     };
     checkActiveSession();
@@ -469,6 +546,7 @@ export default function NexyAssistant() {
     } = supabase.auth.onAuthStateChange((event, session) => {
       if (session?.user?.email) {
         setLiveUser({ email: session.user.email });
+        setSupportView("chat");
         // Fetch past support tickets from DB securely on state change
         supabase
           .from("past_support_tickets")
@@ -490,6 +568,7 @@ export default function NexyAssistant() {
       } else if (event === "SIGNED_OUT") {
         setLiveUser(null);
         setPastSessions([]);
+        setSupportView("live_login");
       }
     });
 
@@ -548,7 +627,7 @@ export default function NexyAssistant() {
               };
               localStorage.setItem("oauth_user_profile", JSON.stringify(userObj));
               setLiveUser({ email: userObj.email });
-              setSupportView("live_details");
+              setSupportView("chat");
               setIsOpen(true); // Open the widget directly!
               toast.success(lang === "tr" ? "Giriş yapıldı!" : "Logged in successfully!");
             } catch (err) {
@@ -737,7 +816,12 @@ export default function NexyAssistant() {
     setIsOpen(!isOpen);
     setShowPopup(false);
     if (!isOpen) {
-      setSupportView("menu");
+      const savedProfile = localStorage.getItem("oauth_user_profile");
+      if (savedProfile) {
+        setSupportView("chat");
+      } else {
+        setSupportView("live_login");
+      }
     }
   };
 
@@ -895,11 +979,24 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
     let isStream = false;
 
     try {
+      let token = "";
+      try {
+        const {
+          data: { session },
+        } = await supabase.auth.getSession();
+        token = session?.access_token || "";
+      } catch (e) {}
+
+      if (!token) {
+        token = localStorage.getItem("oauth_logged_in_id") || "";
+      }
+
       // Direct call to Vercel backend proxy /api/nexy (acts as central fallback orchestrator)
       const response = await fetch("/api/nexy", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
         },
         body: JSON.stringify({
           messages: cleanedMessages,
@@ -1456,6 +1553,36 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
         <div
           className={`${isMaximized ? "fixed inset-0 z-[200] rounded-none" : "fixed bottom-24 right-6 w-[320px] sm:w-[420px] h-[550px] z-[100] rounded-[32px]"} bg-[var(--fun-card)] border border-[var(--fun-stroke-1)] shadow-2xl flex flex-row overflow-hidden animate-in fade-in zoom-in-95 duration-500 origin-bottom-right transition-all`}
         >
+          {showLogoutConfirmModal && (
+            <div className="absolute inset-0 bg-black/90 backdrop-blur-md z-[9999] flex flex-col items-center justify-center p-6 text-center select-none animate-in fade-in duration-300">
+              <div className="h-16 w-16 rounded-2xl bg-red-500/10 border border-red-500/20 flex items-center justify-center p-2 mb-4 text-red-500 shadow-inner">
+                <LogOut className="h-8 w-8 animate-pulse" />
+              </div>
+              <h3 className="text-lg font-bold text-white mb-2">
+                {lang === "tr" ? "Oturumu Kapat" : "Log Out"}
+              </h3>
+              <p className="text-xs text-zinc-400 max-w-[280px] leading-relaxed mb-6">
+                {lang === "tr"
+                  ? "Hesabınızdan çıkış yapmak istediğinize emin misiniz? Sohbet geçmişiniz ve aktif oturumunuz sonlandırılacaktır."
+                  : "Are you sure you want to log out of your account? Your chat history and active session will be terminated."}
+              </p>
+              <div className="flex gap-3 w-full max-w-[280px]">
+                <button
+                  onClick={() => setShowLogoutConfirmModal(false)}
+                  className="flex-1 py-3 px-4 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-white font-bold text-xs transition-all active:scale-95"
+                >
+                  {lang === "tr" ? "İptal" : "Cancel"}
+                </button>
+                <button
+                  onClick={handleLogout}
+                  className="flex-1 py-3 px-4 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-xs transition-all active:scale-95 shadow-lg shadow-red-600/20"
+                >
+                  {lang === "tr" ? "Çıkış Yap" : "Log Out"}
+                </button>
+              </div>
+            </div>
+          )}
+
           {systemStatus !== "on" && (
             <div className="absolute inset-0 bg-black/90 backdrop-blur-md z-[999] flex flex-col items-center justify-center p-6 text-center select-none animate-in fade-in duration-300">
               <div className="h-16 w-16 rounded-2xl bg-zinc-900 border border-zinc-800 flex items-center justify-center p-2 mb-4 text-[var(--fun-purple)]">
@@ -1500,303 +1627,18 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
             </div>
           )}
 
-          {supportView === "menu" ? (
-            <div className="flex-1 flex flex-col h-full bg-[var(--fun-card)] select-none animate-in fade-in duration-300">
-              {/* Menu Header */}
-              <div
-                className="p-5 sm:p-6 border-b flex items-center justify-between bg-[var(--fun-surface)] h-20 sm:h-24"
-                style={{ borderColor: "var(--fun-stroke-1)" }}
-              >
-                <div>
-                  <h3 className="text-sm sm:text-base font-bold tracking-tight fun-text leading-tight">
-                    {t("help.menu.title")}
-                  </h3>
-                  <p className="text-[10px] sm:text-xs fun-text-muted mt-0.5">
-                    {t("help.menu.desc")}
-                  </p>
-                </div>
-                <div className="flex items-center gap-1">
-                  <button
-                    onClick={() => setIsOpen(false)}
-                    className="h-9 w-9 rounded-full hover:bg-[var(--fun-stroke-1)] flex items-center justify-center fun-text transition-colors"
-                  >
-                    <X className="h-5 w-5" />
-                  </button>
-                </div>
-              </div>
-
-              {/* Menu Body */}
-              <div className="flex-1 overflow-y-auto p-5 sm:p-6 flex flex-col justify-start gap-4 pt-8">
-                {systemStatus !== "on" && (
-                  <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-500 text-xs text-left leading-relaxed">
-                    <strong>
-                      {systemStatus === "maintenance"
-                        ? "Sistemimiz Bakımdadır"
-                        : "Sistem Kapalıdır"}
-                    </strong>
-                    {systemStatus === "maintenance" && (
-                      <>
-                        {maintenanceReason && (
-                          <p className="mt-1 font-semibold">Neden: {maintenanceReason}</p>
-                        )}
-                        {estimatedEndTime && (
-                          <p className="mt-0.5 opacity-80">
-                            Bitiş Süresi: {formatEstimatedEndTime(estimatedEndTime, lang)}
-                          </p>
-                        )}
-                      </>
-                    )}
-                  </div>
-                )}
-                {/* AI Assistant Card */}
-                <div
-                  onClick={() => {
-                    if (systemStatus !== "on") {
-                      toast.error(
-                        lang === "tr"
-                          ? "Sistem şu anda kapalı veya bakımdadır."
-                          : "System is currently offline or under maintenance.",
-                      );
-                      return;
-                    }
-                    setSupportView("chat");
-                    if (chats.length === 0) {
-                      createNewChat();
-                    }
-                  }}
-                  className={`group p-4 sm:p-5 rounded-2xl bg-[var(--fun-surface)] border border-[var(--fun-stroke-2)] hover:border-[var(--fun-purple)]/50 transition-all duration-300 cursor-pointer hover:scale-[1.02] shadow-sm flex items-start gap-4 ${systemStatus !== "on" ? "opacity-50 cursor-not-allowed" : ""}`}
-                >
-                  <div className="h-10 w-10 sm:h-11 sm:w-11 rounded-xl bg-[var(--fun-purple)]/10 text-[var(--fun-purple)] flex items-center justify-center shrink-0 group-hover:scale-110 transition-all overflow-hidden relative">
-                    <img
-                      src="/nexy-kafa-buyuk.png"
-                      alt="Nexy"
-                      className="absolute inset-0 h-full w-full object-cover"
-                    />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center justify-between">
-                      <h4 className="text-xs sm:text-sm font-bold fun-text tracking-tight">
-                        {t("help.menu.ai.title")}
-                      </h4>
-                    </div>
-                    <p className="text-[10px] sm:text-[11px] fun-text-muted mt-1 leading-normal">
-                      {t("help.menu.ai.desc")}
-                    </p>
-                  </div>
-                </div>
-
-                {/* Live Support Card */}
-                <div
-                  onClick={() => {
-                    if (systemStatus !== "on") {
-                      toast.error(
-                        lang === "tr"
-                          ? "Sistem şu anda kapalı veya bakımdadır."
-                          : "System is currently offline or under maintenance.",
-                      );
-                      return;
-                    }
-                    if (liveUser) {
-                      if (liveMessages.length > 0) {
-                        setSupportView("live_chat");
-                      } else {
-                        setSupportView("live_details");
-                      }
-                    } else {
-                      setSupportView("live_login");
-                    }
-                  }}
-                  className={`group p-4 sm:p-5 rounded-2xl bg-[var(--fun-surface)] border border-[var(--fun-stroke-2)] hover:border-[var(--fun-purple)]/50 transition-all duration-300 cursor-pointer hover:scale-[1.02] shadow-sm flex items-start gap-4 ${systemStatus !== "on" ? "opacity-50 cursor-not-allowed" : ""}`}
-                >
-                  <div className="h-10 w-10 sm:h-11 sm:w-11 rounded-xl bg-[var(--fun-purple)]/10 text-[var(--fun-purple)] flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
-                    <MessageSquare className="h-5 w-5" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center justify-between gap-2">
-                      <h4 className="text-xs sm:text-sm font-bold fun-text tracking-tight">
-                        {t("help.menu.live.title")}
-                      </h4>
-                    </div>
-                    <p className="text-[10px] sm:text-[11px] fun-text-muted mt-1 leading-normal">
-                      {t("help.menu.live.desc")}
-                    </p>
-                  </div>
-                </div>
-
-                {/* Past Sessions History List */}
-                {pastSessions.length > 0 && (
-                  <div className="mt-2 space-y-2 select-none">
-                    <h4 className="text-xs font-bold fun-text px-1">{t("help.past_tickets")}</h4>
-                    <div className="max-h-[160px] overflow-y-auto space-y-2 pr-1">
-                      {pastSessions.map((session) => (
-                        <div
-                          key={session.id}
-                          onClick={() => {
-                            setLiveMessages(session.messages);
-                            setIsPastSession(true);
-                            setSupportView("live_chat");
-                          }}
-                          className="p-3 rounded-xl bg-[var(--fun-surface)] border border-[var(--fun-stroke-2)] hover:border-[var(--fun-purple)] transition-colors cursor-pointer flex justify-between items-center text-xs"
-                        >
-                          <div className="min-w-0 flex-1 pr-2">
-                            <p className="font-semibold fun-text truncate">{session.subject}</p>
-                            <p className="text-[10px] fun-text-muted mt-0.5">
-                              {new Date(session.timestamp).toLocaleDateString([], {
-                                day: "numeric",
-                                month: "short",
-                              })}{" "}
-                              • {session.importance}
-                            </p>
-                          </div>
-                          <ChevronRight className="h-4 w-4 shrink-0 fun-text-muted" />
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-          ) : supportView === "live_login" ? (
+          {supportView === "live_login" ? (
             <LiveLoginView
-              onBack={() => setSupportView("menu")}
+              onBack={() => setIsOpen(false)}
               onLoginSuccess={(user) => {
                 setLiveUser(user);
-                setSupportView("live_details");
+                setSupportView("chat");
+                if (chats.length === 0) {
+                  createNewChat();
+                }
                 setIsOpen(true); // Open the widget directly!
               }}
               lang={lang}
-            />
-          ) : supportView === "live_details" ? (
-            <LiveTicketDetailsView
-              lang={lang}
-              onBack={() => setSupportView("menu")}
-              onSubmit={async (details) => {
-                // Save subject, importance & description to sessionStorage so they persist for archive saving and AI context
-                sessionStorage.setItem("live_support_subject", details.subject);
-                sessionStorage.setItem("live_support_importance", details.importance);
-                sessionStorage.setItem("live_support_description", details.description);
-
-                try {
-                  // Translate subject and description to English silently in the background
-                  const subjectEn = await translateAnyText(details.subject, lang, "en");
-                  const descriptionEn = await translateAnyText(details.description, lang, "en");
-
-                  const importanceMap: Record<string, string> = {
-                    Düşük: "Low",
-                    Orta: "Medium",
-                    Yüksek: "High",
-                    Kritik: "Critical",
-                    Low: "Low",
-                    Medium: "Medium",
-                    High: "High",
-                    Critical: "Critical",
-                  };
-                  const importanceEn = importanceMap[details.importance] || details.importance;
-
-                  sessionStorage.setItem("live_support_subject_en", subjectEn);
-                  sessionStorage.setItem("live_support_importance_en", importanceEn);
-                  sessionStorage.setItem("live_support_description_en", descriptionEn);
-                } catch (e) {
-                  console.error("Failed to translate ticket details to English:", e);
-                }
-
-                // Pre-populate chat with the compiled ticket details
-                const initialMsg = `**Yeni Canlı Destek Talebi**\n\n📌 **Konu:** ${details.subject}\n⚡ **Önem Seviyesi:** ${details.importance}\n📝 **Açıklama:** ${details.description}`;
-                setLiveMessages([
-                  {
-                    role: "user",
-                    text: initialMsg,
-                    id: "system-details-init",
-                    timestamp: Date.now(),
-                  },
-                ]);
-                setSupportView("live_chat");
-              }}
-            />
-          ) : supportView === "live_chat" ? (
-            <LiveChatView
-              user={liveUser!}
-              messages={liveMessages}
-              setMessages={setLiveMessages}
-              onBack={() => {
-                if (isPastSession) {
-                  setIsPastSession(false);
-                  const activeMsgs = localStorage.getItem("live_support_messages");
-                  setLiveMessages(activeMsgs ? JSON.parse(activeMsgs) : []);
-                }
-                setSupportView("menu");
-              }}
-              onEndSession={() => {
-                // Archive current session on close (keeps account logged in)
-                if (liveMessages.length > 0 && liveUser) {
-                  const cleanedMessages = cleanLiveMessagesForStorage(liveMessages);
-                  const newSession = {
-                    id: Math.random().toString(36).substring(2, 9),
-                    email: liveUser.email,
-                    subject: localStorage.getItem("live_support_subject") || "Destek Talebi",
-                    importance: localStorage.getItem("live_support_importance") || "Orta",
-                    timestamp: Date.now(),
-                    messages: cleanedMessages,
-                  };
-                  const updatedHistory = [newSession, ...pastSessions];
-                  setPastSessions(updatedHistory);
-
-                  // Also securely save to Supabase past_support_tickets table if authenticated
-                  (async () => {
-                    try {
-                      const {
-                        data: { user },
-                      } = await supabase.auth.getUser();
-                      if (user) {
-                        await supabase.from("past_support_tickets").insert([
-                          {
-                            user_id: user.id,
-                            subject:
-                              localStorage.getItem("live_support_subject") || "Destek Talebi",
-                            importance: localStorage.getItem("live_support_importance") || "Orta",
-                            description: localStorage.getItem("live_support_description") || "",
-                            messages: cleanedMessages,
-                          },
-                        ]);
-                      }
-                    } catch (dbErr) {
-                      console.error("Failed to save support ticket to database:", dbErr);
-                    }
-                  })();
-                }
-                setLiveMessages([]);
-                setSupportView("menu");
-                localStorage.removeItem("live_support_messages");
-                localStorage.removeItem("live_support_subject");
-                localStorage.removeItem("live_support_importance");
-                localStorage.removeItem("live_support_subject_en");
-                localStorage.removeItem("live_support_importance_en");
-                localStorage.removeItem("live_support_description_en");
-                localStorage.removeItem("oauth_logged_in_id");
-                localStorage.removeItem("oauth_user_profile");
-              }}
-              onLogout={() => {
-                // Log out from the live support account completely
-                setLiveUser(null);
-                setLiveMessages([]);
-                setSupportView("menu");
-                localStorage.removeItem("live_support_messages");
-                localStorage.removeItem("live_support_user");
-                localStorage.removeItem("live_support_subject");
-                localStorage.removeItem("live_support_importance");
-                localStorage.removeItem("live_support_subject_en");
-                localStorage.removeItem("live_support_importance_en");
-                localStorage.removeItem("live_support_description_en");
-                localStorage.removeItem("live_support_agent_name");
-                localStorage.removeItem("oauth_logged_in_id");
-                localStorage.removeItem("oauth_user_profile");
-              }}
-              lang={lang}
-              isAgentTyping={liveAgentTyping}
-              setIsAgentTyping={setLiveAgentTyping}
-              isMaximized={isMaximized}
-              setIsMaximized={setIsMaximized}
-              readOnly={isPastSession}
             />
           ) : (
             <>
@@ -1882,17 +1724,11 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
                   style={{ borderColor: "var(--fun-stroke-1)" }}
                 >
                   <div className="flex flex-1 items-center gap-2">
-                    <button
-                      onClick={() => setSupportView("menu")}
-                      className="p-2 -ml-1 rounded-lg hover:bg-[var(--fun-stroke-1)] fun-text flex items-center justify-center shrink-0"
-                      title={t("cookies.cancel")}
-                    >
-                      <ChevronLeft className="h-5 w-5" />
-                    </button>
                     {isMaximized && (
                       <button
-                        onClick={() => setIsSidebarOpen(true)}
-                        className="p-2 rounded-lg hover:bg-[var(--fun-stroke-1)] fun-text md:hidden"
+                        onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+                        className="p-2 -ml-1 rounded-lg hover:bg-[var(--fun-stroke-1)] fun-text flex items-center justify-center shrink-0 transition-colors"
+                        title={lang === "tr" ? "Sohbet Geçmişi" : "Chat History"}
                       >
                         <Menu className="h-5 w-5" />
                       </button>
@@ -1935,8 +1771,13 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
                       )}
                     </button>
                     <button
-                      onClick={() => setIsOpen(false)}
-                      className="h-8 w-8 rounded-full hover:bg-[var(--fun-stroke-1)] flex items-center justify-center fun-text transition-colors"
+                      onMouseDown={handleXPressStart}
+                      onMouseUp={handleXPressEnd}
+                      onMouseLeave={handleXPressCancel}
+                      onTouchStart={handleXPressStart}
+                      onTouchEnd={handleXPressEnd}
+                      className="h-8 w-8 rounded-full hover:bg-[var(--fun-stroke-1)] flex items-center justify-center fun-text transition-colors select-none"
+                      title={lang === "tr" ? "Kapat (Çıkış yapmak için 5 saniye basılı tutun)" : "Close (Hold for 5 seconds to log out)"}
                     >
                       <X className="h-4 w-4" />
                     </button>

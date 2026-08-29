@@ -10,11 +10,11 @@
   "rewrites": [
     {
       "source": "/rest/v1/(.*)",
-      "destination": "https://eiecuiberhqmyvvlrakn.supabase.co/rest/v1/$1"
+      "destination": "https://db.funteknoloji.com/rest/v1/$1"
     },
     {
       "source": "/auth/v1/(.*)",
-      "destination": "https://eiecuiberhqmyvvlrakn.supabase.co/auth/v1/$1"
+      "destination": "https://db.funteknoloji.com/auth/v1/$1"
     },
     {
       "source": "/api/nexy/helper",
