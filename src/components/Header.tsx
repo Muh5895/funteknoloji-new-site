@@ -21,8 +21,8 @@ import {
   ShieldAlert,
 } from "lucide-react";
 
-const LOGO_DARK = "/assets/logos/Fun Teknoloji Siyah Logo.png";
-const LOGO_LIGHT = "/assets/logos/Fun Teknoloji BGSİZ.png";
+const LOGO_DARK = "/assets/logos/ust-bar-beyaz.png";
+const LOGO_LIGHT = "/assets/logos/ust-bar-siyah.png";
 
 export default function Header() {
   const { t } = useLang();
@@ -62,17 +62,15 @@ export default function Header() {
         {/* Logo */}
         <Link
           to="/"
-          className="flex cursor-pointer items-center gap-2.5 transition-transform hover:scale-[1.03]"
+          className="flex cursor-pointer items-center transition-transform hover:scale-[1.03]"
           aria-label="Fun Teknoloji – Ana sayfa"
         >
           <img
-            src={isDark ? LOGO_LIGHT : LOGO_DARK}
-            alt="Fun Teknoloji"
-            width={44}
-            height={44}
-            className="h-11 w-11 object-contain"
+            src={isDark ? LOGO_DARK : LOGO_LIGHT}
+            alt="Fun Teknoloji Logo"
+            onContextMenu={(e) => e.preventDefault()}
+            className="h-11 w-auto max-w-[150px] object-contain"
           />
-          <span className="hidden text-lg font-semibold sm:block fun-text">Fun Teknoloji</span>
         </Link>
 
         {/* Desktop Nav */}
