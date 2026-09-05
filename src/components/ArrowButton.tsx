@@ -3,6 +3,8 @@ import { Link } from "@tanstack/react-router";
 interface ArrowButtonProps {
   to?: string;
   href?: string;
+  target?: string;
+  rel?: string;
   children: React.ReactNode;
   variant?: "dark" | "light" | "green";
   className?: string;
@@ -13,6 +15,8 @@ interface ArrowButtonProps {
 export default function ArrowButton({
   to,
   href,
+  target,
+  rel,
   children,
   variant = "dark",
   className = "",
@@ -76,7 +80,12 @@ export default function ArrowButton({
       </Link>
     );
   return (
-    <a href={href || "#"} className={cls}>
+    <a
+      href={href || "#"}
+      target={target}
+      rel={rel || (target === "_blank" ? "noopener noreferrer" : undefined)}
+      className={cls}
+    >
       {content}
     </a>
   );

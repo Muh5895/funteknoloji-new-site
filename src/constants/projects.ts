@@ -1,5 +1,13 @@
 export const projects = [
   {
+    id: "funapi",
+    name: "FunApi",
+    descKey: "projects.funapi.desc",
+    link: "https://api.funteknoloji.com",
+    logo: "/assets/logos/Fun Teknoloji BGSİZ.png",
+    color: "purple",
+  },
+  {
     id: "quakesafe",
     name: "QuakeSafe",
     descKey: "projects.quakesafe.desc",

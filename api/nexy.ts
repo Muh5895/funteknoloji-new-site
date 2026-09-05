@@ -225,7 +225,9 @@ const getSupabaseClient = (isAdmin = false) => {
   if (!isAdmin && supabaseClient) return supabaseClient;
 
   const supabaseUrl = process.env.SUPABASE_URL || "https://db.funteknoloji.com/";
-  const supabaseAnonKey = process.env.SUPABASE_ANON_KEY || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3ODU4NTgyMjAsImV4cCI6MTg5MzQ1NjAwMCwicm9sZSI6ImFub24iLCJpc3MiOiJzdXBhYmFzZSJ9.NBXjLy1dzdVwJG7w5YWIANy9aj6bU1-7ZYAEa3LIkCg";
+  const supabaseAnonKey =
+    process.env.SUPABASE_ANON_KEY ||
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3ODU4NTgyMjAsImV4cCI6MTg5MzQ1NjAwMCwicm9sZSI6ImFub24iLCJpc3MiOiJzdXBhYmFzZSJ9.NBXjLy1dzdVwJG7w5YWIANy9aj6bU1-7ZYAEa3LIkCg";
   const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SERVICE_ROLE_KEY;
 
   if (!supabaseUrl) return null;
@@ -261,7 +263,11 @@ const fetchRealDatabaseContext = async (authHeader: string | undefined, userProf
       // Accept it as authenticated, and try to retrieve email from profiles if it exists
       userId = token;
       try {
-        const { data, error } = await client.from("profiles").select("id, email").eq("id", token).single();
+        const { data, error } = await client
+          .from("profiles")
+          .select("id, email")
+          .eq("id", token)
+          .single();
         if (data && !error) {
           userEmail = data.email || "";
         }
@@ -526,11 +532,7 @@ const executeDynamicDatabaseQuery = async (
 
   if (action === "get_profile") {
     try {
-      const { data, error } = await client
-        .from("profiles")
-        .select("*")
-        .eq("id", userId)
-        .single();
+      const { data, error } = await client.from("profiles").select("*").eq("id", userId).single();
       if (error) throw error;
       resultContext += `İsim Soyisim: ${data?.full_name || "N/A"}\nPlan: ${data?.plan || "free"}\nDurum: ${data?.status || "active"}\nKullanılan Depolama: ${data?.storage_used || 0} bytes\n`;
     } catch (e: any) {
@@ -608,7 +610,12 @@ const executeDynamicDatabaseQuery = async (
       resultContext += `Contact Tablo Hatası: ${e.message || "Failed to retrieve contact messages."}\n`;
     }
   } else if (action === "get_support_tickets") {
-    const potentialTables = ["support_tickets_feedback", "support_tickets", "tickets", "past_support_tickets"];
+    const potentialTables = [
+      "support_tickets_feedback",
+      "support_tickets",
+      "tickets",
+      "past_support_tickets",
+    ];
     let retrieved = false;
     for (const tableName of potentialTables) {
       try {
@@ -1083,7 +1090,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       } catch (e) {}
 
       if (queryAction) {
-        const queryResponseText = await executeDynamicDatabaseQuery(queryAction, authHeader, userProfile);
+        const queryResponseText = await executeDynamicDatabaseQuery(
+          queryAction,
+          authHeader,
+          userProfile,
+        );
         rawOriginal.push({
           role: "assistant",
           content: `[DB_QUERY: {"action": "${queryAction}"}]`,
