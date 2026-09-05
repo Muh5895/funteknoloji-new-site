@@ -419,15 +419,7 @@ export default function NexyAssistant() {
   const [speakingMessageIndex, setSpeakingMessageIndex] = useState<number | null>(null);
   const [supportView, setSupportView] = useState<
     "menu" | "chat" | "live_login" | "live_details" | "live_chat"
-  >(() => {
-    if (typeof window !== "undefined") {
-      const savedProfile = localStorage.getItem("oauth_user_profile");
-      if (savedProfile) {
-        return "chat";
-      }
-    }
-    return "live_login";
-  });
+  >("chat");
   const [liveUser, setLiveUser] = useState<{ email: string } | null>(null);
 
   const [showLogoutConfirmModal, setShowLogoutConfirmModal] = useState(false);
@@ -473,7 +465,7 @@ export default function NexyAssistant() {
 
   const handleLogout = () => {
     setLiveUser(null);
-    setSupportView("live_login");
+    setSupportView("chat");
     localStorage.removeItem("oauth_logged_in_id");
     localStorage.removeItem("oauth_user_profile");
     supabase.auth.signOut().catch(() => {});
@@ -536,7 +528,7 @@ export default function NexyAssistant() {
           console.warn("Failed to retrieve past sessions on mount:", e);
         }
       } else {
-        setSupportView("live_login");
+        setSupportView("chat");
       }
     };
     checkActiveSession();
@@ -568,7 +560,7 @@ export default function NexyAssistant() {
       } else if (event === "SIGNED_OUT") {
         setLiveUser(null);
         setPastSessions([]);
-        setSupportView("live_login");
+        setSupportView("chat");
       }
     });
 
@@ -816,12 +808,7 @@ export default function NexyAssistant() {
     setIsOpen(!isOpen);
     setShowPopup(false);
     if (!isOpen) {
-      const savedProfile = localStorage.getItem("oauth_user_profile");
-      if (savedProfile) {
-        setSupportView("chat");
-      } else {
-        setSupportView("live_login");
-      }
+      setSupportView("chat");
     }
   };
 
@@ -1777,7 +1764,11 @@ Answer questions based on the knowledge base. Do not promote any third-party ser
                       onTouchStart={handleXPressStart}
                       onTouchEnd={handleXPressEnd}
                       className="h-8 w-8 rounded-full hover:bg-[var(--fun-stroke-1)] flex items-center justify-center fun-text transition-colors select-none"
-                      title={lang === "tr" ? "Kapat (Çıkış yapmak için 5 saniye basılı tutun)" : "Close (Hold for 5 seconds to log out)"}
+                      title={
+                        lang === "tr"
+                          ? "Kapat (Çıkış yapmak için 5 saniye basılı tutun)"
+                          : "Close (Hold for 5 seconds to log out)"
+                      }
                     >
                       <X className="h-4 w-4" />
                     </button>

@@ -44,13 +44,24 @@ function ProjectsPage() {
                 </div>
                 <h2 className="text-3xl font-bold fun-text mb-4">{project.name}</h2>
                 <p className="fun-text-muted text-lg mb-8 flex-1">{t(project.descKey)}</p>
-                <ArrowButton
-                  to={project.link as any}
-                  variant="dark"
-                  className="w-full justify-center relative z-10"
-                >
-                  {t("projects.view")}
-                </ArrowButton>
+                {project.link.startsWith("http") ? (
+                  <ArrowButton
+                    href={project.link}
+                    target="_blank"
+                    variant="dark"
+                    className="w-full justify-center relative z-10"
+                  >
+                    {t("projects.view")}
+                  </ArrowButton>
+                ) : (
+                  <ArrowButton
+                    to={project.link as any}
+                    variant="dark"
+                    className="w-full justify-center relative z-10"
+                  >
+                    {t("projects.view")}
+                  </ArrowButton>
+                )}
               </div>
             </ScrollReveal>
           ))}

@@ -440,6 +440,7 @@ const tr: Dict = {
   "pricing.title": "Yeni Paketlerimiz Yakında Burada",
   "projects.hero.desc": "Yenilikçi teknolojilerle geliştirdiğimiz çözüm odaklı projelerimiz.",
   "projects.hero.title": "Geleceği İnşa Ediyoruz",
+  "projects.funapi.desc": "Ücretsiz API hizmetimizdir.",
   "projects.nexy.desc":
     "Fun Teknoloji'nin yapay zeka tabanlı dijital asistanı. İşletmeler ve kullanıcılar için akıllı rehber.",
   "projects.quakesafe.desc":
@@ -1061,6 +1062,7 @@ const en: Dict = {
   "pricing.title": "Our New Packages Are Here Soon",
   "projects.hero.desc": "Our solution-oriented projects developed with innovative technologies.",
   "projects.hero.title": "We are building the future",
+  "projects.funapi.desc": "Our free API service.",
   "projects.nexy.desc":
     "Fun Technology's artificial intelligence-based digital assistant. Smart guide for businesses and users.",
   "projects.quakesafe.desc":
@@ -1661,6 +1663,7 @@ const de: Dict = {
   "projects.hero.desc":
     "Unsere lösungsorientierten Projekte werden mit innovativen Technologien entwickelt.",
   "projects.hero.title": "Wir bauen die Zukunft",
+  "projects.funapi.desc": "Unser kostenloser API-Dienst.",
   "projects.nexy.desc":
     "Der auf künstlicher Intelligenz basierende digitale Assistent von Fun Technology. Intelligenter Leitfaden für Unternehmen und Benutzer.",
   "projects.quakesafe.desc":
@@ -2284,6 +2287,7 @@ const fr: Dict = {
   "projects.hero.desc":
     "Nos projets orientés solutions développés avec des technologies innovantes.",
   "projects.hero.title": "Nous construisons l'avenir",
+  "projects.funapi.desc": "Notre service API gratuit.",
   "projects.nexy.desc":
     "L'assistant numérique basé sur l'intelligence artificielle de Fun Technology. Guide intelligent pour les entreprises et les utilisateurs.",
   "projects.quakesafe.desc":
@@ -2899,6 +2903,7 @@ const es: Dict = {
   "projects.hero.desc":
     "Nuestros proyectos orientados a soluciones desarrollados con tecnologías innovadoras.",
   "projects.hero.title": "Estamos construyendo el futuro",
+  "projects.funapi.desc": "Nuestro servicio de API gratuito.",
   "projects.nexy.desc":
     "El asistente digital basado en inteligencia artificial de Fun Technology. Guía inteligente para empresas y usuarios.",
   "projects.quakesafe.desc":
@@ -3503,6 +3508,7 @@ const az: Dict = {
   "pricing.title": "Yeni Paketlərimiz Tezliklə",
   "projects.hero.desc": "Həll yönümlü layihələrimiz innovativ texnologiyalarla hazırlanmışdır.",
   "projects.hero.title": "Biz gələcəyi qururuq",
+  "projects.funapi.desc": "Bizim pulsuz API xidmətimizdir.",
   "projects.nexy.desc":
     "Fun Technology-nin süni intellektə əsaslanan rəqəmsal köməkçisi. Biznes və istifadəçilər üçün ağıllı bələdçi.",
   "projects.quakesafe.desc":
@@ -4114,6 +4120,7 @@ const ru: Dict = {
   "projects.hero.desc":
     "Наши ориентированные на решения проекты разработаны с использованием инновационных технологий.",
   "projects.hero.title": "Мы строим будущее",
+  "projects.funapi.desc": "Наш бесплатный API-сервис.",
   "projects.nexy.desc":
     "Цифровой помощник на основе искусственного интеллекта от Fun Technology. Умное руководство для бизнеса и пользователей.",
   "projects.quakesafe.desc":
@@ -4698,6 +4705,7 @@ const ar: Dict = {
   "pricing.title": "باقاتنا الجديدة متاحة قريبًا",
   "projects.hero.desc": "تم تطوير مشاريعنا الموجهة نحو الحلول باستخدام تقنيات مبتكرة.",
   "projects.hero.title": "نحن نبني المستقبل",
+  "projects.funapi.desc": "خدمة API المجانية الخاصة بنا.",
   "projects.nexy.desc":
     "المساعد الرقمي القائم على الذكاء الاصطناعي من Fun Technology. دليل ذكي للشركات والمستخدمين.",
   "projects.quakesafe.desc":
@@ -5293,6 +5301,7 @@ const it: Dict = {
   "projects.hero.desc":
     "I nostri progetti orientati alla soluzione sviluppati con tecnologie innovative.",
   "projects.hero.title": "Stiamo costruendo il futuro",
+  "projects.funapi.desc": "Il nostro servizio API gratuito.",
   "projects.nexy.desc":
     "L'assistente digitale basato sull'intelligenza artificiale di Fun Technology. Guida intelligente per aziende e utenti.",
   "projects.quakesafe.desc":
@@ -5904,6 +5913,7 @@ const pt: Dict = {
   "projects.hero.desc":
     "Nossos projetos orientados a soluções desenvolvidos com tecnologias inovadoras.",
   "projects.hero.title": "Estamos construindo o futuro",
+  "projects.funapi.desc": "Nosso serviço de API gratuito.",
   "projects.nexy.desc":
     "Assistente digital baseado em inteligência artificial da Fun Technology. Guia inteligente para empresas e usuários.",
   "projects.quakesafe.desc":
@@ -6506,6 +6516,7 @@ const ja: Dict = {
   "projects.hero.desc":
     "当社のソリューション指向プロジェクトは、革新的なテクノロジーを使用して開発されました。",
   "projects.hero.title": "私たちは未来を築いています",
+  "projects.funapi.desc": "私たちの無料APIサービスです。",
   "projects.nexy.desc":
     "Fun Technology の人工知能ベースのデジタル アシスタント。企業とユーザーのためのスマートなガイド。",
   "projects.quakesafe.desc":
@@ -7064,6 +7075,7 @@ const zh: Dict = {
   "pricing.title": "我们的新套餐即将推出",
   "projects.hero.desc": "我们以解决方案为导向的项目采用创新技术开发。",
   "projects.hero.title": "我们正在建设未来",
+  "projects.funapi.desc": "我们的免费 API 服务。",
   "projects.nexy.desc": "趣科技基于人工智能的数字助理。为企业和用户提供智能指南。",
   "projects.quakesafe.desc": "灾难安全技术的新时代。在地震期间和地震后拯救生命的智能系统。",
   "projects.soon.desc": "我们将继续致力于令人兴奋的新项目。",
